@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         private const string UnknownValue = "Unknown";
         private const string AvroValue = "Avro";
+        private const string ProtoBufValue = "ProtoBuf";
+        private const string JsonValue = "Json";
 
         /// <summary> Unknown. </summary>
         public static EventHubsSchemaType Unknown { get; } = new EventHubsSchemaType(UnknownValue);
         /// <summary> Avro. </summary>
         public static EventHubsSchemaType Avro { get; } = new EventHubsSchemaType(AvroValue);
+        /// <summary> ProtoBuf. </summary>
+        public static EventHubsSchemaType ProtoBuf { get; } = new EventHubsSchemaType(ProtoBufValue);
+        /// <summary> Json. </summary>
+        public static EventHubsSchemaType Json { get; } = new EventHubsSchemaType(JsonValue);
         /// <summary> Determines if two <see cref="EventHubsSchemaType"/> values are the same. </summary>
         public static bool operator ==(EventHubsSchemaType left, EventHubsSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsSchemaType"/> values are not the same. </summary>

@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("autoUpgradeProfileStatus"u8);
                 writer.WriteObjectValue(AutoUpgradeProfileStatus, options);
             }
+            if (Optional.IsDefined(TargetKubernetesVersion))
+            {
+                writer.WritePropertyName("targetKubernetesVersion"u8);
+                writer.WriteStringValue(TargetKubernetesVersion);
+            }
+            if (Optional.IsDefined(LongTermSupport))
+            {
+                writer.WritePropertyName("longTermSupport"u8);
+                writer.WriteBooleanValue(LongTermSupport.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -109,6 +119,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             AutoUpgradeNodeImageSelection nodeImageSelection = default;
             bool? disabled = default;
             AutoUpgradeProfileStatus autoUpgradeProfileStatus = default;
+            string targetKubernetesVersion = default;
+            bool? longTermSupport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,6 +221,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             autoUpgradeProfileStatus = AutoUpgradeProfileStatus.DeserializeAutoUpgradeProfileStatus(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("targetKubernetesVersion"u8))
+                        {
+                            targetKubernetesVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("longTermSupport"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            longTermSupport = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -230,6 +256,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 nodeImageSelection,
                 disabled,
                 autoUpgradeProfileStatus,
+                targetKubernetesVersion,
+                longTermSupport,
                 serializedAdditionalRawData);
         }
 

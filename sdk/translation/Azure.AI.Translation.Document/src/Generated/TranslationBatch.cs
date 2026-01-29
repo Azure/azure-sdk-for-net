@@ -58,10 +58,12 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Initializes a new instance of <see cref="TranslationBatch"/>. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        /// <param name="options"> The batch operation options. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationBatch(IList<DocumentTranslationInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationBatch(IList<DocumentTranslationInput> inputs, BatchOptions options, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Inputs = inputs;
+            Options = options;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,5 +74,7 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> The input list of documents or folders containing documents. </summary>
         public IList<DocumentTranslationInput> Inputs { get; }
+        /// <summary> The batch operation options. </summary>
+        public BatchOptions Options { get; set; }
     }
 }

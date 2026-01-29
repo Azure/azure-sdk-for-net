@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ConnectedRegistryLoginServer))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistryParent))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistryPatch))]
-    [ModelReaderWriterBuildable(typeof(ConnectedRegistryPropertiesActivation))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistryResource))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistryStatusDetail))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistrySyncProperties))]

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of Kusto database principals. </summary>
+        [WirePath("value")]
         public IList<KustoDatabasePrincipal> Value { get; }
     }
 }

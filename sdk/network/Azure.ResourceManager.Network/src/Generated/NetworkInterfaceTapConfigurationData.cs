@@ -39,10 +39,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The reference to the Virtual Network Tap resource. </summary>
+        [WirePath("properties.virtualNetworkTap")]
         public VirtualNetworkTapData VirtualNetworkTap { get; set; }
         /// <summary> The provisioning state of the network interface tap configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of items which needs to be included to the endpoint scope. </summary>
+        [WirePath("include")]
         public IList<ConnectionMonitorEndpointScopeItem> Include { get; }
         /// <summary> List of items which needs to be excluded from the endpoint scope. </summary>
+        [WirePath("exclude")]
         public IList<ConnectionMonitorEndpointScopeItem> Exclude { get; }
     }
 }

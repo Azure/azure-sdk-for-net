@@ -63,10 +63,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Connection monitor output destination type. Currently, only "Workspace" is supported. </summary>
+        [WirePath("type")]
         public OutputType? OutputType { get; set; }
         /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
         internal ConnectionMonitorWorkspaceSettings WorkspaceSettings { get; set; }
         /// <summary> Log analytics workspace resource ID. </summary>
+        [WirePath("workspaceSettings.workspaceResourceId")]
         public ResourceIdentifier WorkspaceResourceId
         {
             get => WorkspaceSettings is null ? default : WorkspaceSettings.WorkspaceResourceId;

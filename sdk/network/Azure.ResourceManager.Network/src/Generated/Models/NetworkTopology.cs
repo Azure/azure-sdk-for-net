@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> GUID representing the operation id. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The datetime when the topology was initially created for the resource group. </summary>
+        [WirePath("createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The datetime when the topology was last modified. </summary>
+        [WirePath("lastModified")]
         public DateTimeOffset? LastModified { get; }
         /// <summary> A list of topology resources. </summary>
+        [WirePath("resources")]
         public IReadOnlyList<TopologyResourceInfo> Resources { get; }
     }
 }

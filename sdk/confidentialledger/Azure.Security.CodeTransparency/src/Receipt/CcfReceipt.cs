@@ -9,7 +9,7 @@ using System.Formats.Cbor;
 namespace Azure.Security.CodeTransparency.Receipt
 {
     /// <summary>
-    /// CcfReceipt class which enables encoding, decoding and verification of receipts issued from the Code Transparency Service.
+    /// CcfReceipt class which enables encoding, decoding and verification of receipts issued from the Signing Transparency Service.
     /// This class encapsulates the representation and the available operations of CBOR encoded CCF SCITT receipts.
     /// This is a reference implementation for a proposed draft IETF specification: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ .
     /// </summary>

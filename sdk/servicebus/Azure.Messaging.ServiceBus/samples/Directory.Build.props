@@ -11,6 +11,7 @@
   <Import Project="..\Directory.Build.props" />
 
   <PropertyGroup>
+    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
     <InheritDocEnabled>false</InheritDocEnabled>
     <IsShippingLibrary>false</IsShippingLibrary>
   </PropertyGroup>

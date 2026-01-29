@@ -22,7 +22,7 @@ namespace Azure.Generator.StubLibrary
         {
             if (!type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) &&
                 !type.Name.StartsWith("Unknown", StringComparison.Ordinal) &&
-                !type.Name.Equals("MultiPartFormDataBinaryContent", StringComparison.Ordinal))
+                !type.Name.Equals("MultiPartFormDataRequestContent", StringComparison.Ordinal))
                 return null;
 
             type.Update(xmlDocs: _emptyDocs);
@@ -80,7 +80,7 @@ namespace Azure.Generator.StubLibrary
         protected override FieldProvider? VisitField(FieldProvider field)
         {
             // For ClientOptions, keep the non-public field as this currently represents the latest service version for a client.
-            return field.Modifiers.HasFlag(FieldModifiers.Public) || field.EnclosingType.Implements.Any(i => i.Equals(typeof(ClientOptions)))
+            return field.Modifiers.HasFlag(FieldModifiers.Public) || field.EnclosingType.BaseType?.Equals(typeof(ClientOptions)) == true
                 ? field
                 : null;
         }

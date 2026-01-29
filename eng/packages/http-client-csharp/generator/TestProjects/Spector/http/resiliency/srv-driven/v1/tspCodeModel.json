@@ -82,7 +82,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Resiliency.ServiceDriven"
           },
           "parameters": [],
           "response": {},
@@ -109,8 +110,9 @@
             "parameters": [
               {
                 "$id": "9",
+                "kind": "query",
                 "name": "parameter",
-                "nameInRequest": "parameter",
+                "serializedName": "parameter",
                 "doc": "I am a required parameter",
                 "type": {
                   "$id": "10",
@@ -119,15 +121,13 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.parameter",
+                "readOnly": false
               }
             ],
             "responses": [
@@ -146,13 +146,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Resiliency.ServiceDriven"
           },
           "parameters": [
             {
               "$id": "11",
+              "kind": "method",
               "name": "parameter",
-              "nameInRequest": "parameter",
+              "serializedName": "parameter",
               "doc": "I am a required parameter",
               "type": {
                 "$id": "12",
@@ -163,13 +165,12 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.parameter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -196,8 +197,9 @@
             "parameters": [
               {
                 "$id": "15",
+                "kind": "query",
                 "name": "parameter",
-                "nameInRequest": "parameter",
+                "serializedName": "parameter",
                 "doc": "I am an optional parameter",
                 "type": {
                   "$id": "16",
@@ -206,15 +208,13 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.parameter",
+                "readOnly": false
               }
             ],
             "responses": [
@@ -233,13 +233,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Resiliency.ServiceDriven"
           },
           "parameters": [
             {
               "$id": "17",
+              "kind": "method",
               "name": "parameter",
-              "nameInRequest": "parameter",
+              "serializedName": "parameter",
               "doc": "I am an optional parameter",
               "type": {
                 "$id": "18",
@@ -250,13 +252,12 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.parameter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -269,8 +270,9 @@
       "parameters": [
         {
           "$id": "19",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
             "$id": "20",
@@ -278,20 +280,20 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
-          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint"
         },
         {
           "$id": "21",
+          "kind": "endpoint",
           "name": "serviceDeploymentVersion",
-          "nameInRequest": "serviceDeploymentVersion",
+          "serializedName": "serviceDeploymentVersion",
           "doc": "Pass in either 'v1' or 'v2'. This represents a version of the service deployment in history. 'v1' is for the deployment when the service had only one api version. 'v2' is for the deployment when the service had api-versions 'v1' and 'v2'.",
           "type": {
             "$id": "22",
@@ -300,20 +302,20 @@
             "crossLanguageDefinitionId": "TypeSpec.string",
             "decorators": []
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": false,
+          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
-          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion"
         },
         {
           "$id": "23",
+          "kind": "endpoint",
           "name": "apiVersion",
-          "nameInRequest": "apiVersion",
+          "serializedName": "apiVersion",
           "doc": "Pass in 'v1'. This represents the API version of the service. Will grow up in the next deployment to be both 'v1' and 'v2'",
           "type": {
             "$id": "24",
@@ -322,14 +324,10 @@
             "crossLanguageDefinitionId": "TypeSpec.string",
             "decorators": []
           },
-          "location": "Uri",
           "isApiVersion": true,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": false,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "25",
@@ -339,14 +337,19 @@
             },
             "value": "v1"
           },
-          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Resiliency.ServiceDriven",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

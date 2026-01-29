@@ -1,10 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- https://github.com/Azure/azure-sdk-for-net/issues/53975 -->
+    <!-- <PackageReference Include="Azure.Core" /> -->
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NUnit" />

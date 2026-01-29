@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// cipher suite set type that will be used for Https
-    /// Serialized Name: AfdCipherSuiteSetType
-    /// </summary>
+    /// <summary> cipher suite set type that will be used for Https. </summary>
     public readonly partial struct AfdCipherSuiteSetType : IEquatable<AfdCipherSuiteSetType>
     {
         private readonly string _value;
@@ -30,10 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string Tls1_2_2022Value = "TLS12_2022";
         private const string Tls1_2_2023Value = "TLS12_2023";
 
-        /// <summary>
-        /// Customized
-        /// Serialized Name: AfdCipherSuiteSetType.Customized
-        /// </summary>
+        /// <summary> Customized. </summary>
         public static AfdCipherSuiteSetType Customized { get; } = new AfdCipherSuiteSetType(CustomizedValue);
         /// <summary> Determines if two <see cref="AfdCipherSuiteSetType"/> values are the same. </summary>
         public static bool operator ==(AfdCipherSuiteSetType left, AfdCipherSuiteSetType right) => left.Equals(right);

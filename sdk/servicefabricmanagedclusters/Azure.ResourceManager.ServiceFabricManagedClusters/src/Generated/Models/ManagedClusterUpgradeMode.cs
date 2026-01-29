@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterUpgradeMode : IEquatable<ManagedClusterUpgradeMode>
     {
         private readonly string _value;
+        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, <b>clusterUpgradeCadence</b> will determine when the upgrade starts after the new version becomes available. </summary>
+        private const string AutomaticValue = "Automatic";
+        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the <b>clusterCodeVersion</b> property in the cluster resource. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterUpgradeMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AutomaticValue = "Automatic";
-        private const string ManualValue = "Manual";
-
-        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, **clusterUpgradeCadence** will determine when the upgrade starts after the new version becomes available. </summary>
+        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, <b>clusterUpgradeCadence</b> will determine when the upgrade starts after the new version becomes available. </summary>
         public static ManagedClusterUpgradeMode Automatic { get; } = new ManagedClusterUpgradeMode(AutomaticValue);
-        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the **clusterCodeVersion** property in the cluster resource. </summary>
+
+        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the <b>clusterCodeVersion</b> property in the cluster resource. </summary>
         public static ManagedClusterUpgradeMode Manual { get; } = new ManagedClusterUpgradeMode(ManualValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterUpgradeMode left, ManagedClusterUpgradeMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterUpgradeMode left, ManagedClusterUpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterUpgradeMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterUpgradeMode(string value) => new ManagedClusterUpgradeMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterUpgradeMode?(string value) => value == null ? null : new ManagedClusterUpgradeMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterUpgradeMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterUpgradeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

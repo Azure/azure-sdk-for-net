@@ -88,6 +88,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ArmClient
                 .GetEventHubResource(GetEventHubResourceIdentifier(eventHubName))
                 .GetEventHubsConsumerGroups()
+                .AsEnumerable()
                 .Select(c => c.Data.Name)
                 .ToList();
 

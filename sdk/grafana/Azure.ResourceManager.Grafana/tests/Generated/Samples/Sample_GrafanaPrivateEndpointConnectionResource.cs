@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: 2024-11-01-preview/PrivateEndpointConnections_Get.json
+            // Generated from example definition: 2025-08-01/PrivateEndpointConnections_Get.json
             // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_PrivateEndpointConnectionsDelete()
         {
-            // Generated from example definition: 2024-11-01-preview/PrivateEndpointConnections_Delete.json
+            // Generated from example definition: 2025-08-01/PrivateEndpointConnections_Delete.json
             // this example is just showing the usage of "PrivateEndpointConnection_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PrivateEndpointConnectionsApprove()
         {
-            // Generated from example definition: 2024-11-01-preview/PrivateEndpointConnections_Approve.json
+            // Generated from example definition: 2025-08-01/PrivateEndpointConnections_Approve.json
             // this example is just showing the usage of "PrivateEndpointConnection_Approve" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

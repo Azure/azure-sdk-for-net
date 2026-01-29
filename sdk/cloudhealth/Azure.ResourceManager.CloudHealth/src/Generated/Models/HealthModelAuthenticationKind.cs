@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.CloudHealth.Models
     internal readonly partial struct HealthModelAuthenticationKind : IEquatable<HealthModelAuthenticationKind>
     {
         private readonly string _value;
+        private const string ManagedIdentityValue = "ManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="HealthModelAuthenticationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthModelAuthenticationKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ManagedIdentityValue = "ManagedIdentity";
-
-        /// <summary> ManagedIdentity. </summary>
+        /// <summary> Gets the ManagedIdentity. </summary>
         public static HealthModelAuthenticationKind ManagedIdentity { get; } = new HealthModelAuthenticationKind(ManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="HealthModelAuthenticationKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthModelAuthenticationKind left, HealthModelAuthenticationKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HealthModelAuthenticationKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthModelAuthenticationKind left, HealthModelAuthenticationKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthModelAuthenticationKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HealthModelAuthenticationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HealthModelAuthenticationKind(string value) => new HealthModelAuthenticationKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HealthModelAuthenticationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HealthModelAuthenticationKind?(string value) => value == null ? null : new HealthModelAuthenticationKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HealthModelAuthenticationKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HealthModelAuthenticationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

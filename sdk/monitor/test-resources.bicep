@@ -293,12 +293,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
 
 // OUTPUT VALUES USED BY TEST ENVIRONMENT
 output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
+output TENANT_ID string = tenant().tenantId
 
 output CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
 output WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
+output WORKSPACE_KEY string = listKeys(LogAnalyticsWorkspace1.id, '2020-08-01').primarySharedKey
 
 output SECONDARY_CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output SECONDARY_WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
+output SECONDARY_WORKSPACE_KEY string = listKeys(LogAnalyticsWorkspace2.id, '2020-08-01').primarySharedKey
 
 // VALUES NEEDED FOR AZURE.MONITOR.QUERY
 output WORKSPACE_PRIMARY_RESOURCE_ID string = LogAnalyticsWorkspace1.id
@@ -311,5 +314,5 @@ output METRICS_RESOURCE_NAMESPACE string = 'Microsoft.OperationalInsights/worksp
 // VALUES NEEDED FOR AZURE.MONITOR.INGESTION
 output INGESTION_DATA_COLLECTION_RULE_ID string = dataCollectionRule1.id
 output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule1.properties.immutableId
-output MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT string = dataCollectionEndpoint1.properties.logsIngestion.endpoint
+output INGESTION_DATA_COLLECTION_ENDPOINT string = dataCollectionEndpoint1.properties.logsIngestion.endpoint
 output INGESTION_STREAM_NAME string = streamName

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The network virtual appliance instance id for which boot diagnostic logs is being requested. </summary>
+        [WirePath("instanceId")]
         public int? InstanceId { get; }
     }
 }

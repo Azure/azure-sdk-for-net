@@ -13,7 +13,7 @@ Conversation PII detection another feature offered by Azure AI Language, which i
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs]
 
 > [!NOTE]
-> Conversational Authoring is not supported in version 2.0.0-beta.1. If you use Conversational Authoring, please continue to use version 1.1.0. You can find the [samples][conversationalauthoring_samples] here.
+> Conversational Authoring is not supported from version 2.0.0-beta.1. If you use Conversational Authoring, please use the separate Conversation Authoring SDK. You can find the [samples][conversationalauthoring_samples] here.
 
 ## Getting started
 
@@ -101,6 +101,8 @@ The client library targets the latest service API version by default. A client i
 
 |SDK version  |Supported API version of service
 |-------------|---------------------------------------------------------------------------------------------------------------------------
+|2.0.0-beta.5 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-11-01, 2025-05-15-preview, 2025-11-15-preview (default)
+|2.0.0-beta.4 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview, 2025-05-15-preview (default)
 |2.0.0-beta.3 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview, 2025-05-15-preview (default)
 |2.0.0-beta.2 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview (default)
 |2.0.0-beta.1 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview (default)
@@ -116,7 +118,7 @@ For example,
 ```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 
@@ -150,18 +152,18 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/amber-ccc/azure-sdk-for-net/tree/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples).
 
-* [Analyze a conversation - Conversation project](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample1_AnalyzeConversation_ConversationPrediction.md)
-* [Analyze a conversation - Orchestration project](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample2_AnalyzeConversation_OrchestrationPrediction.md)
-* [Analyze a conversation in a different language](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample3_AnalyzeConversationWithLanguage.md)
-* [Analyze a conversation using extra options](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample4_AnalyzeConversationWithOptions.md)
-* [Analyze a conversation - Conversational AI project](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample10_AnalyzeConversation_ConversationalAIPrediction.md)
-* [Analyze a conversation with Conversation Summarization](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample5_AnalyzeConversation_ConversationSummarization.md)
-* [Analyze a conversation with Conversation PII](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample6_AnalyzeConversation_ConversationPii.md)
-* [Analyze a Conversation for PII Using Character Masking](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample7_AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy.md)
-* [Analyze a Conversation for PII Using Entity Masking](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample8_AnalyzeConversation_ConversationPiiWithEntityMaskPolicy.md)
-* [Analyze a Conversation for PII With No Masking](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample9_AnalyzeConversation_ConversationPiiWithNoMaskPolicy.md)
+* [Analyze a conversation - Conversation project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample1_AnalyzeConversation_ConversationPrediction.md)
+* [Analyze a conversation - Orchestration project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample2_AnalyzeConversation_OrchestrationPrediction.md)
+* [Analyze a conversation in a different language](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample3_AnalyzeConversationWithLanguage.md)
+* [Analyze a conversation using extra options](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample4_AnalyzeConversationWithOptions.md)
+* [Analyze a conversation - Conversational AI project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample10_AnalyzeConversation_ConversationalAIPrediction.md)
+* [Analyze a conversation with Conversation Summarization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample5_AnalyzeConversation_ConversationSummarization.md)
+* [Analyze a conversation with Conversation PII](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample6_AnalyzeConversation_ConversationPii.md)
+* [Analyze a Conversation for PII Using Character Masking](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample7_AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy.md)
+* [Analyze a Conversation for PII Using Entity Masking](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample8_AnalyzeConversation_ConversationPiiWithEntityMaskPolicy.md)
+* [Analyze a Conversation for PII With No Masking](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample9_AnalyzeConversation_ConversationPiiWithNoMaskPolicy.md)
 
 ## Troubleshooting
 

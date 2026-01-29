@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> Defines an Azure DevOps organization. </summary>
     public partial class DevOpsOrganization
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsOrganization"/>. </summary>
         /// <param name="uri"> The Azure DevOps organization URL in which the pool should be created. </param>
@@ -60,25 +32,32 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="uri"> The Azure DevOps organization URL in which the pool should be created. </param>
         /// <param name="projects"> Optional list of projects in which the pool should be created. </param>
         /// <param name="parallelism"> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsOrganization(Uri uri, IList<string> projects, int? parallelism, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="openAccess"> Determines if the pool should have open access to all projects in this organization. </param>
+        /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsOrganization(Uri uri, IList<string> projects, int? parallelism, bool? openAccess, string @alias, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Projects = projects;
             Parallelism = parallelism;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevOpsOrganization"/> for deserialization. </summary>
-        internal DevOpsOrganization()
-        {
+            OpenAccess = openAccess;
+            Alias = @alias;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure DevOps organization URL in which the pool should be created. </summary>
         public Uri Uri { get; set; }
+
         /// <summary> Optional list of projects in which the pool should be created. </summary>
         public IList<string> Projects { get; }
+
         /// <summary> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </summary>
         public int? Parallelism { get; set; }
+
+        /// <summary> Determines if the pool should have open access to all projects in this organization. </summary>
+        public bool? OpenAccess { get; set; }
+
+        /// <summary> An alias to reference the Azure DevOps pool name. </summary>
+        public string Alias { get; set; }
     }
 }

@@ -194,6 +194,11 @@ stages:
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
+                    - template: /eng/common/pipelines/templates/steps/mark-release-completion.yml
+                      parameters:
+                        ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
+                        PackageArtifactName: ${{artifact.name}}
+                        SourceRootPath: $(sdk-repo-path)
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS

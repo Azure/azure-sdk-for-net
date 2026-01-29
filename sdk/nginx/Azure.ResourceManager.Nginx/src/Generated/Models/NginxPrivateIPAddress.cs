@@ -12,40 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxPrivateIPAddress. </summary>
+    /// <summary> Nginx Private IP Address. </summary>
     public partial class NginxPrivateIPAddress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         public NginxPrivateIPAddress()
@@ -54,22 +25,24 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         /// <param name="privateIPAddress"></param>
-        /// <param name="privateIPAllocationMethod"></param>
+        /// <param name="privateIPAllocationMethod"> Nginx Private IP Allocation Method. </param>
         /// <param name="subnetId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxPrivateIPAddress(IPAddress privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxPrivateIPAddress(IPAddress privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             SubnetId = subnetId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the private ip address. </summary>
+        /// <summary> Gets or sets the PrivateIPAddress. </summary>
         public IPAddress PrivateIPAddress { get; set; }
-        /// <summary> Gets or sets the private ip allocation method. </summary>
+
+        /// <summary> Nginx Private IP Allocation Method. </summary>
         public NginxPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
-        /// <summary> Gets or sets the subnet id. </summary>
+
+        /// <summary> Gets or sets the SubnetId. </summary>
         public ResourceIdentifier SubnetId { get; set; }
     }
 }

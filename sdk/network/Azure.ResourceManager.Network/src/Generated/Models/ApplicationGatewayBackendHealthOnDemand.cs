@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Reference to an ApplicationGatewayBackendAddressPool resource. </summary>
+        [WirePath("backendAddressPool")]
         public ApplicationGatewayBackendAddressPool BackendAddressPool { get; }
         /// <summary> Application gateway BackendHealthHttp settings. </summary>
+        [WirePath("backendHealthHttpSettings")]
         public ApplicationGatewayBackendHealthHttpSettings BackendHealthHttpSettings { get; }
     }
 }

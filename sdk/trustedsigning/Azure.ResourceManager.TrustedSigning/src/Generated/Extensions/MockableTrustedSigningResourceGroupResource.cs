@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableTrustedSigningResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableTrustedSigningResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableTrustedSigningResourceGroupResource for mocking. </summary>
         protected MockableTrustedSigningResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTrustedSigningResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableTrustedSigningResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableTrustedSigningResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of TrustedSigningAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of TrustedSigningAccountResources and their operations over a TrustedSigningAccountResource. </returns>
+        /// <summary> Gets a collection of TrustedSigningAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TrustedSigningAccounts and their operations over a TrustedSigningAccountResource. </returns>
         public virtual TrustedSigningAccountCollection GetTrustedSigningAccounts()
         {
             return GetCachedClient(client => new TrustedSigningAccountCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<TrustedSigningAccountResource>> GetTrustedSigningAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return await GetTrustedSigningAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         [ForwardsClientCalls]
         public virtual Response<TrustedSigningAccountResource> GetTrustedSigningAccount(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return GetTrustedSigningAccounts().Get(accountName, cancellationToken);
         }
     }

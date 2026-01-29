@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The serviceProviderName. </summary>
+        [WirePath("serviceProviderName")]
         public string ServiceProviderName { get; set; }
         /// <summary> The peering location. </summary>
+        [WirePath("peeringLocation")]
         public string PeeringLocation { get; set; }
         /// <summary> The BandwidthInMbps. </summary>
+        [WirePath("bandwidthInMbps")]
         public int? BandwidthInMbps { get; set; }
     }
 }

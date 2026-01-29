@@ -82,12 +82,16 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The subnet resource id. </summary>
+        [WirePath("subnetId")]
         public string SubnetId { get; set; }
         /// <summary> Engine service's public IP address resource id. </summary>
+        [WirePath("enginePublicIpId")]
         public string EnginePublicIPId { get; set; }
         /// <summary> Data management's service public IP address resource id. </summary>
+        [WirePath("dataManagementPublicIpId")]
         public string DataManagementPublicIPId { get; set; }
         /// <summary> When enabled, the cluster is deployed into the configured subnet, when disabled it will be removed from the subnet. </summary>
+        [WirePath("state")]
         public KustoClusterVnetState? State { get; set; }
     }
 }

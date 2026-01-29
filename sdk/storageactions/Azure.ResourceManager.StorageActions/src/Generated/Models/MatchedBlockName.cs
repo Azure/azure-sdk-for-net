@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.StorageActions.Models
     public readonly partial struct MatchedBlockName : IEquatable<MatchedBlockName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MatchedBlockName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MatchedBlockName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IfValue = "If";
         private const string ElseValue = "Else";
         private const string NoneValue = "None";
 
-        /// <summary> If. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchedBlockName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MatchedBlockName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the If. </summary>
         public static MatchedBlockName If { get; } = new MatchedBlockName(IfValue);
-        /// <summary> Else. </summary>
+
+        /// <summary> Gets the Else. </summary>
         public static MatchedBlockName Else { get; } = new MatchedBlockName(ElseValue);
-        /// <summary> None. </summary>
+
+        /// <summary> Gets the None. </summary>
         public static MatchedBlockName None { get; } = new MatchedBlockName(NoneValue);
+
         /// <summary> Determines if two <see cref="MatchedBlockName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MatchedBlockName left, MatchedBlockName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MatchedBlockName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MatchedBlockName left, MatchedBlockName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MatchedBlockName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MatchedBlockName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MatchedBlockName(string value) => new MatchedBlockName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MatchedBlockName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MatchedBlockName?(string value) => value == null ? null : new MatchedBlockName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MatchedBlockName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MatchedBlockName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

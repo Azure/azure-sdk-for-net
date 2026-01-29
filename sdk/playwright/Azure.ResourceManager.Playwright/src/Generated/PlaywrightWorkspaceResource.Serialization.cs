@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Playwright
 {
+    /// <summary></summary>
     public partial class PlaywrightWorkspaceResource : IJsonModel<PlaywrightWorkspaceData>
     {
-        private static PlaywrightWorkspaceData s_dataDeserializationInstance;
-        private static PlaywrightWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PlaywrightWorkspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PlaywrightWorkspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PlaywrightWorkspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlaywrightWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PlaywrightWorkspaceData>)Data).Write(writer, options);
 
-        PlaywrightWorkspaceData IJsonModel<PlaywrightWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlaywrightWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlaywrightWorkspaceData IJsonModel<PlaywrightWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PlaywrightWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlaywrightWorkspaceData>(Data, options, AzureResourceManagerPlaywrightContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PlaywrightWorkspaceData IPersistableModel<PlaywrightWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlaywrightWorkspaceData>(data, options, AzureResourceManagerPlaywrightContext.Default);
 
-        string IPersistableModel<PlaywrightWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlaywrightWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PlaywrightWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

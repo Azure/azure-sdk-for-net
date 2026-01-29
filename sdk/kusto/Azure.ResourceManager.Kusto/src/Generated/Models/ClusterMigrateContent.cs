@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Resource ID of the destination cluster or kusto pool. </summary>
+        [WirePath("clusterResourceId")]
         public string ClusterResourceId { get; }
     }
 }

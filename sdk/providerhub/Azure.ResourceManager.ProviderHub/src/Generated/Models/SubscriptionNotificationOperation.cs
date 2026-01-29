@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SubscriptionNotificationOperation. </summary>
+    /// <summary> The action. </summary>
     public readonly partial struct SubscriptionNotificationOperation : IEquatable<SubscriptionNotificationOperation>
     {
         private readonly string _value;

@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-using Azure.AI.Agents.Persistent;
-
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
@@ -53,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 content is null
                     ? throw new ArgumentNullException(nameof(content))
-                    : BinaryData.FromObjectAsJson(content))
+                    : BinaryData.FromString(JsonSerializer.Serialize(content, StringSerializerContext.Default.String)))
         {
             // Calls the generated constructor (MessageRole, BinaryData).
         }
@@ -112,7 +110,8 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Serialize the array of JsonElements into a single BinaryData.
-            return BinaryData.FromObjectAsJson(jsonElements);
+            var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
+            return BinaryData.FromString(jsonString);
         }
 
         /// <summary>
@@ -126,7 +125,7 @@ namespace Azure.AI.Agents.Persistent
         /// Use this method when you know or expect that <see cref="Content"/> was originally provided as a single plain-text string.
         /// For richer content, see <see cref="GetContentBlocks()"/>.
         /// </remarks>
-        public string GetTextContent() => Content.ToObjectFromJson<string>();
+        public string GetTextContent() => JsonSerializer.Deserialize(Content.ToString(), StringSerializerContext.Default.String);
 
         /// <summary>
         /// Deserializes the underlying message content (stored as <see cref="BinaryData"/>) into a
@@ -144,6 +143,14 @@ namespace Azure.AI.Agents.Persistent
         /// this may cause a deserialization error.
         /// </remarks>
         public IEnumerable<MessageInputContentBlock> GetContentBlocks()
-            => Content.ToObjectFromJson<IEnumerable<MessageInputContentBlock>>();
+        {
+            List<MessageInputContentBlock> results = [];
+            List<JsonElement> elements = JsonSerializer.Deserialize(Content.ToString(), JsonElementSerializer.Default.ListJsonElement);
+            foreach (JsonElement element in elements)
+            {
+                results.Add(MessageInputContentBlock.DeserializeMessageInputContentBlock(element));
+            }
+            return results;
+        }
     }
 }

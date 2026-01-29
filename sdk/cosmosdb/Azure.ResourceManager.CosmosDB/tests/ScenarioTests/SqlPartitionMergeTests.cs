@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
+        /* Partition merge is not supported in API version 2025-10-15.
         [Test]
         [RecordedTest]
         public async Task SqlDatabasePartitionMerge()
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Assert.IsTrue(e.Message.Contains("Merge feature is not available") || e.Message.Contains("Merge operation feature is not available/enabled"));
             }
         }
+        */
 
         internal async Task<CosmosDBSqlDatabaseResource> CreateSqlDatabase(AutoscaleSettings autoscale)
         {

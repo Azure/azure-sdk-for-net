@@ -166,9 +166,19 @@ namespace Azure.Storage.Files.Shares
             V2025_07_05 = 27,
 
             /// <summary>
-            /// 2025-11-05 service version.
+            /// The 2025-11-05 service version.
             /// </summary>
-            V2025_11_05 = 28
+            V2025_11_05 = 28,
+
+            /// <summary>
+            /// The 2026-02-06 service version.
+            /// </summary>
+            V2026_02_06 = 29,
+
+            /// <summary>
+            /// The 2026-04-06 service version.
+            /// </summary>
+            V2026_04_06 = 30
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -235,28 +245,6 @@ namespace Azure.Storage.Files.Shares
 
             this.Initialize();
             AddHeadersAndQueryParameters();
-        }
-
-        /// <summary>
-        /// Initializes new instance of <see cref="ShareClientOptions"/>
-        /// with the same values.
-        /// </summary>
-        /// <param name="options"></param>
-        internal ShareClientOptions(ShareClientOptions options)
-            : base(options.Diagnostics)
-        {
-            Transport = options.Transport;
-            RetryPolicy = options.RetryPolicy;
-            Version = options.Version;
-            TransferValidation = options.TransferValidation;
-            AllowTrailingDot = options.AllowTrailingDot;
-            AllowSourceTrailingDot = options.AllowSourceTrailingDot;
-            ShareTokenIntent = options.ShareTokenIntent;
-            Retry.Mode = options.Retry.Mode;
-            Retry.MaxRetries = options.Retry.MaxRetries;
-            Retry.MaxDelay = options.Retry.MaxDelay;
-            Retry.NetworkTimeout = options.Retry.NetworkTimeout;
-            Retry.Delay = options.Retry.Delay;
         }
 
         /// <summary>

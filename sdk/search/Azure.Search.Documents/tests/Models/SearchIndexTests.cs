@@ -14,7 +14,27 @@ namespace Azure.Search.Documents.Tests.Models
         [TestCase("\"0123abcd\"", "\"0123abcd\"")]
         public void ParsesETag(string value, string expected)
         {
-            SearchIndex sut = new SearchIndex(null, null, new SearchField[0], null, null, null, null, null, null, null, null, null, null, null, null, null, null, value, serializedAdditionalRawData: null);
+            SearchIndex sut = new SearchIndex(
+                name: null,
+                description: null,
+                new SearchField[0],
+                scoringProfiles: null,
+                defaultScoringProfile: null,
+                corsOptions: null,
+                suggesters: null,
+                analyzers: null,
+                tokenizers: null,
+                tokenFilters: null,
+                charFilters: null,
+                normalizers: null,
+                encryptionKey: null,
+                similarity: null,
+                semanticSearch: null,
+                vectorSearch: null,
+                permissionFilterOption: null,
+                purviewEnabled: null,
+                etag: value,
+                serializedAdditionalRawData: null);
             Assert.AreEqual(expected, sut.ETag?.ToString());
         }
 

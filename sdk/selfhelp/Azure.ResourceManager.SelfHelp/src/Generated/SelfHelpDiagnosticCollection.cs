@@ -8,8 +8,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SelfHelp
 {
@@ -20,42 +22,38 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SelfHelpDiagnosticCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _selfHelpDiagnosticDiagnosticsClientDiagnostics;
-        private readonly DiagnosticsRestOperations _selfHelpDiagnosticDiagnosticsRestClient;
+        private readonly ClientDiagnostics _diagnosticResourcesClientDiagnostics;
+        private readonly DiagnosticResources _diagnosticResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SelfHelpDiagnosticCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticCollection for mocking. </summary>
         protected SelfHelpDiagnosticCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SelfHelpDiagnosticCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SelfHelpDiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _selfHelpDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SelfHelpDiagnosticResource.ResourceType, out string selfHelpDiagnosticDiagnosticsApiVersion);
-            _selfHelpDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpDiagnosticDiagnosticsApiVersion);
+            TryGetApiVersion(SelfHelpDiagnosticResource.ResourceType, out string selfHelpDiagnosticApiVersion);
+            _diagnosticResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpDiagnosticResource.ResourceType.Namespace, Diagnostics);
+            _diagnosticResourcesRestClient = new DiagnosticResources(_diagnosticResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpDiagnosticApiVersion ?? "2024-03-01-preview");
         }
 
         /// <summary>
         /// Creates a diagnostic for the specific resource using solutionId from discovery solutions. &lt;br/&gt;Diagnostics are powerful solutions that access product resources or other relevant data and provide the root cause of the issue and the steps to address the issue.&lt;br/&gt;&lt;br/&gt;
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,21 +61,33 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.CreateAsync(Id, diagnosticsResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id, diagnosticsResourceName, SelfHelpDiagnosticData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
+                    new SelfHelpDiagnosticOperationSource(Client),
+                    _diagnosticResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -91,20 +101,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// Creates a diagnostic for the specific resource using solutionId from discovery solutions. &lt;br/&gt;Diagnostics are powerful solutions that access product resources or other relevant data and provide the root cause of the issue and the steps to address the issue.&lt;br/&gt;&lt;br/&gt;
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,21 +118,33 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SelfHelpDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Create(Id, diagnosticsResourceName, data, cancellationToken);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id, diagnosticsResourceName, SelfHelpDiagnosticData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
+                    new SelfHelpDiagnosticOperationSource(Client),
+                    _diagnosticResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -140,38 +158,42 @@ namespace Azure.ResourceManager.SelfHelp
         /// Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SelfHelpDiagnosticResource>> GetAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id, diagnosticsResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SelfHelpDiagnosticData> response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -185,38 +207,42 @@ namespace Azure.ResourceManager.SelfHelp
         /// Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SelfHelpDiagnosticResource> Get(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id, diagnosticsResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SelfHelpDiagnosticData> response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,36 +256,50 @@ namespace Azure.ResourceManager.SelfHelp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id, diagnosticsResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SelfHelpDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,36 +313,50 @@ namespace Azure.ResourceManager.SelfHelp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id, diagnosticsResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SelfHelpDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,38 +370,54 @@ namespace Azure.ResourceManager.SelfHelp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SelfHelpDiagnosticResource>> GetIfExistsAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id, diagnosticsResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SelfHelpDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SelfHelpDiagnosticResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,38 +431,54 @@ namespace Azure.ResourceManager.SelfHelp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SelfHelpDiagnosticResource> GetIfExists(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
+            using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id, diagnosticsResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SelfHelpDiagnosticData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpDiagnosticData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SelfHelpDiagnosticResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

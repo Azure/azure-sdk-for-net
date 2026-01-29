@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The content as a base64 encoded string. </summary>
+        [WirePath("encodedContent")]
         public string EncodedContent { get; }
     }
 }

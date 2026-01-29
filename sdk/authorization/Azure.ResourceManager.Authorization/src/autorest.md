@@ -67,6 +67,9 @@ rename-mapping:
   UserSet: RoleManagementUserInfo
   UserType: RoleManagementUserType
 
+models-to-treat-empty-string-as-null:
+  - RoleAssignmentData
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'applicationId': 'uuid'

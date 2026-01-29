@@ -62,6 +62,7 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(MessageTemplateVideo))]
     [ModelReaderWriterBuildable(typeof(NotificationContent))]
     [ModelReaderWriterBuildable(typeof(ReactionNotificationContent))]
+    [ModelReaderWriterBuildable(typeof(ReadReceiptContent))]
     [ModelReaderWriterBuildable(typeof(RemoveParticipantsOptions))]
     [ModelReaderWriterBuildable(typeof(RemoveParticipantsResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]

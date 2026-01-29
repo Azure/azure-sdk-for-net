@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoggingHiddenPropertyPaths"/>. </summary>
-        /// <param name="hiddenPathsOnRequest"></param>
-        /// <param name="hiddenPathsOnResponse"></param>
+        /// <param name="hiddenPathsOnRequest"> The hidden paths on request. </param>
+        /// <param name="hiddenPathsOnResponse"> The hidden paths on response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LoggingHiddenPropertyPaths(IList<string> hiddenPathsOnRequest, IList<string> hiddenPathsOnResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the hidden paths on request. </summary>
+        /// <summary> The hidden paths on request. </summary>
         public IList<string> HiddenPathsOnRequest { get; }
-        /// <summary> Gets the hidden paths on response. </summary>
+        /// <summary> The hidden paths on response. </summary>
         public IList<string> HiddenPathsOnResponse { get; }
     }
 }

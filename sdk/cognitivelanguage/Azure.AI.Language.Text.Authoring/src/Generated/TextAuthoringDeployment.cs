@@ -85,7 +85,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -104,7 +103,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/:delete-from-resources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -164,7 +162,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

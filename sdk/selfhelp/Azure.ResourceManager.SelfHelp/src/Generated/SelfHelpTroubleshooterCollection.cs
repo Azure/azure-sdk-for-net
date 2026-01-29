@@ -8,8 +8,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SelfHelp
 {
@@ -20,42 +22,38 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SelfHelpTroubleshooterCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _selfHelpTroubleshooterTroubleshootersClientDiagnostics;
-        private readonly TroubleshootersRestOperations _selfHelpTroubleshooterTroubleshootersRestClient;
+        private readonly ClientDiagnostics _troubleshooterResourcesClientDiagnostics;
+        private readonly TroubleshooterResources _troubleshooterResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SelfHelpTroubleshooterCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SelfHelpTroubleshooterCollection for mocking. </summary>
         protected SelfHelpTroubleshooterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SelfHelpTroubleshooterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpTroubleshooterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SelfHelpTroubleshooterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _selfHelpTroubleshooterTroubleshootersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpTroubleshooterResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SelfHelpTroubleshooterResource.ResourceType, out string selfHelpTroubleshooterTroubleshootersApiVersion);
-            _selfHelpTroubleshooterTroubleshootersRestClient = new TroubleshootersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpTroubleshooterTroubleshootersApiVersion);
+            TryGetApiVersion(SelfHelpTroubleshooterResource.ResourceType, out string selfHelpTroubleshooterApiVersion);
+            _troubleshooterResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpTroubleshooterResource.ResourceType.Namespace, Diagnostics);
+            _troubleshooterResourcesRestClient = new TroubleshooterResources(_troubleshooterResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpTroubleshooterApiVersion ?? "2024-03-01-preview");
         }
 
         /// <summary>
         /// Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Azure Troubleshooters help with hard to classify issues, reducing the gap between customer observed problems and solutions by guiding the user effortlessly through the troubleshooting process. Each Troubleshooter flow represents a problem area within Azure and has a complex tree-like structure that addresses many root causes. These flows are prepared with the help of Subject Matter experts and customer support engineers by carefully considering previous support requests raised by customers. Troubleshooters terminate at a well curated solution based off of resource backend signals and customer manual selections.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,23 +61,30 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="data"> The required request body for this Troubleshooter resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SelfHelpTroubleshooterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpTroubleshooterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.CreateAsync(Id, troubleshooterName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _selfHelpTroubleshooterTroubleshootersRestClient.CreateCreateRequestUri(Id, troubleshooterName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SelfHelpArmOperation<SelfHelpTroubleshooterResource>(Response.FromValue(new SelfHelpTroubleshooterResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateCreateRequest(Id, troubleshooterName, SelfHelpTroubleshooterData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SelfHelpArmOperation<SelfHelpTroubleshooterResource> operation = new SelfHelpArmOperation<SelfHelpTroubleshooterResource>(Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -93,20 +98,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Azure Troubleshooters help with hard to classify issues, reducing the gap between customer observed problems and solutions by guiding the user effortlessly through the troubleshooting process. Each Troubleshooter flow represents a problem area within Azure and has a complex tree-like structure that addresses many root causes. These flows are prepared with the help of Subject Matter experts and customer support engineers by carefully considering previous support requests raised by customers. Troubleshooters terminate at a well curated solution based off of resource backend signals and customer manual selections.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,23 +115,30 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="data"> The required request body for this Troubleshooter resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SelfHelpTroubleshooterResource> CreateOrUpdate(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpTroubleshooterResource> CreateOrUpdate(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Create(Id, troubleshooterName, data, cancellationToken);
-                var uri = _selfHelpTroubleshooterTroubleshootersRestClient.CreateCreateRequestUri(Id, troubleshooterName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SelfHelpArmOperation<SelfHelpTroubleshooterResource>(Response.FromValue(new SelfHelpTroubleshooterResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateCreateRequest(Id, troubleshooterName, SelfHelpTroubleshooterData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SelfHelpArmOperation<SelfHelpTroubleshooterResource> operation = new SelfHelpArmOperation<SelfHelpTroubleshooterResource>(Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -144,38 +152,42 @@ namespace Azure.ResourceManager.SelfHelp
         /// Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SelfHelpTroubleshooterResource>> GetAsync(string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.GetAsync(Id, troubleshooterName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,38 +201,42 @@ namespace Azure.ResourceManager.SelfHelp
         /// Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SelfHelpTroubleshooterResource> Get(string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Get(Id, troubleshooterName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -234,36 +250,50 @@ namespace Azure.ResourceManager.SelfHelp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.GetAsync(Id, troubleshooterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SelfHelpTroubleshooterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpTroubleshooterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -277,36 +307,50 @@ namespace Azure.ResourceManager.SelfHelp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Get(Id, troubleshooterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SelfHelpTroubleshooterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpTroubleshooterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,38 +364,54 @@ namespace Azure.ResourceManager.SelfHelp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SelfHelpTroubleshooterResource>> GetIfExistsAsync(string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.GetAsync(Id, troubleshooterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SelfHelpTroubleshooterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpTroubleshooterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SelfHelpTroubleshooterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -365,38 +425,54 @@ namespace Azure.ResourceManager.SelfHelp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SelfHelpTroubleshooterResource> GetIfExists(string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
+            using DiagnosticScope scope = _troubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Get(Id, troubleshooterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SelfHelpTroubleshooterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpTroubleshooterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SelfHelpTroubleshooterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

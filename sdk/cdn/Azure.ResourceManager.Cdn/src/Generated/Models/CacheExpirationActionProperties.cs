@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the cache expiration action.
-    /// Serialized Name: CacheExpirationActionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for the cache expiration action. </summary>
     public partial class CacheExpirationActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
-        /// <param name="cacheBehavior">
-        /// Caching behavior for the requests
-        /// Serialized Name: CacheExpirationActionParameters.cacheBehavior
-        /// </param>
-        /// <param name="cacheType">
-        /// The level at which the content needs to be cached.
-        /// Serialized Name: CacheExpirationActionParameters.cacheType
-        /// </param>
+        /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
+        /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         public CacheExpirationActionProperties(CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType)
         {
             CacheBehavior = cacheBehavior;
@@ -33,20 +24,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="cacheBehavior">
-        /// Caching behavior for the requests
-        /// Serialized Name: CacheExpirationActionParameters.cacheBehavior
-        /// </param>
-        /// <param name="cacheType">
-        /// The level at which the content needs to be cached.
-        /// Serialized Name: CacheExpirationActionParameters.cacheType
-        /// </param>
-        /// <param name="cacheDuration">
-        /// The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss
-        /// Serialized Name: CacheExpirationActionParameters.cacheDuration
-        /// </param>
+        /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
+        /// <param name="cacheType"> The level at which the content needs to be cached. </param>
+        /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
         internal CacheExpirationActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDuration) : base(typeName, serializedAdditionalRawData)
         {
             CacheBehavior = cacheBehavior;
@@ -60,20 +42,14 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Caching behavior for the requests
-        /// Serialized Name: CacheExpirationActionParameters.cacheBehavior
-        /// </summary>
+        /// <summary> Caching behavior for the requests. </summary>
+        [WirePath("cacheBehavior")]
         public CacheBehaviorSetting CacheBehavior { get; set; }
-        /// <summary>
-        /// The level at which the content needs to be cached.
-        /// Serialized Name: CacheExpirationActionParameters.cacheType
-        /// </summary>
+        /// <summary> The level at which the content needs to be cached. </summary>
+        [WirePath("cacheType")]
         public CdnCacheLevel CacheType { get; set; }
-        /// <summary>
-        /// The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss
-        /// Serialized Name: CacheExpirationActionParameters.cacheDuration
-        /// </summary>
+        /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
+        [WirePath("cacheDuration")]
         public TimeSpan? CacheDuration { get; set; }
     }
 }

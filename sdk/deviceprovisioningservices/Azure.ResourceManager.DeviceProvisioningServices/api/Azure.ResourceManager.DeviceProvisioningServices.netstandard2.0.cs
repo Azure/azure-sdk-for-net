@@ -272,12 +272,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeProperties CertificateVerificationCodeProperties(string verificationCode = null, string subject = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.BinaryData thumbprint = null, bool? isVerified = default(bool?), System.BinaryData certificate = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeResult CertificateVerificationCodeResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceData DeviceProvisioningServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties properties, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo sku) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceData DeviceProvisioningServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), string resourceGroup = null, string subscriptionId = null, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties properties = null, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState? state = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterRule> ipFilterRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription> iotHubs = null, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription deviceRegistryNamespace = null, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy?), string serviceOperationsHostName = null, string deviceProvisioningHostName = null, string idScope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = null, bool? isDataResidencyEnabled = default(bool?), string portalOperationsHostName = null) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState? state, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterRule> ipFilterRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription> iotHubs, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState? state = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterRule> ipFilterRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription> iotHubs = null, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy?), string serviceOperationsHostName = null, string deviceProvisioningHostName = null, string idScope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = null, bool? isDataResidencyEnabled = default(bool?), string portalOperationsHostName = null) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateData DeviceProvisioningServicesCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateProperties DeviceProvisioningServicesCertificateProperties(string subject = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.BinaryData thumbprint = null, bool? isVerified = default(bool?), System.BinaryData certificate = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult DeviceProvisioningServicesNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason? reason = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason?), string message = null) { throw null; }
@@ -286,9 +284,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkResourceProperties DeviceProvisioningServicesPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuDefinition DeviceProvisioningServicesSkuDefinition(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku? name = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku?)) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo DeviceProvisioningServicesSkuInfo(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku? name = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku?), string tier = null, long? capacity = default(long?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy, int? allocationWeight, string name, string connectionString, Azure.Core.AzureLocation location) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = default(bool?), int? allocationWeight = default(int?), string name = null, string connectionString = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier selectedUserAssignedIdentityResourceId = null) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = default(bool?), int? allocationWeight = default(int?), string name = null, string connectionString = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation)) { throw null; }
     }
     public partial class CertificateVerificationCodeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeContent>
     {
@@ -348,6 +344,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy? AllocationPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> AuthorizationPolicies { get { throw null; } }
         public string DeviceProvisioningHostName { get { throw null; } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription DeviceRegistryNamespace { get { throw null; } set { } }
         public string IdScope { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription> IotHubs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterRule> IPFilterRules { get { throw null; } }
@@ -378,9 +375,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight RegistrationStatusWrite { get { throw null; } }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight ServiceConfig { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight (string value) { throw null; }
@@ -397,9 +392,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy Hashed { get { throw null; } }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy (string value) { throw null; }
@@ -432,9 +425,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose ClientAuthentication { get { throw null; } }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose ServerAuthentication { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose (string value) { throw null; }
@@ -539,9 +530,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason (string value) { throw null; }
@@ -597,9 +586,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus (string value) { throw null; }
@@ -615,9 +602,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess (string value) { throw null; }
@@ -646,9 +631,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public DeviceProvisioningServicesSku(string value) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku S1 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku (string value) { throw null; }
@@ -698,9 +681,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Suspending { get { throw null; } }
         public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Transitioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState (string value) { throw null; }
@@ -708,23 +689,33 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IotHubAuthenticationType : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType>
+    public readonly partial struct DeviceRegistryNamespaceAuthenticationType : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public IotHubAuthenticationType(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType KeyBased { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public DeviceRegistryNamespaceAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType left, Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType left, Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DeviceRegistryNamespaceDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription>
+    {
+        public DeviceRegistryNamespaceDescription(Azure.Core.ResourceIdentifier resourceId, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType authenticationType) { }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceAuthenticationType AuthenticationType { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SelectedUserAssignedIdentityResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceRegistryNamespaceDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class IotHubDefinitionDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription>
     {
@@ -732,11 +723,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public IotHubDefinitionDescription(string connectionString, Azure.Core.AzureLocation location) { }
         public int? AllocationWeight { get { throw null; } set { } }
         public bool? ApplyAllocationPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SelectedUserAssignedIdentityResourceId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

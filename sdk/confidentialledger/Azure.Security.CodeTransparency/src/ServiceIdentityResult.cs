@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Core;
 
 namespace Azure.Security.CodeTransparency
 {

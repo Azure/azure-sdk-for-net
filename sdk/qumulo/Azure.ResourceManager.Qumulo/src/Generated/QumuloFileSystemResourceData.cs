@@ -14,142 +14,178 @@ using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    /// <summary>
-    /// A class representing the QumuloFileSystemResource data model.
-    /// A FileSystem Resource by Qumulo
-    /// </summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class QumuloFileSystemResourceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="storageSku"> Storage Sku. </param>
-        /// <param name="userDetails"> User Details. </param>
-        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
-        /// <param name="adminPassword"> Initial administrator password of the resource. </param>
-        /// <param name="initialCapacity"> Storage capacity in TB. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceDetails"/>, <paramref name="userDetails"/>, <paramref name="delegatedSubnetId"/> or <paramref name="adminPassword"/> is null. </exception>
-        public QumuloFileSystemResourceData(AzureLocation location, MarketplaceDetails marketplaceDetails, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) : base(location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public QumuloFileSystemResourceData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
-            Argument.AssertNotNull(delegatedSubnetId, nameof(delegatedSubnetId));
-            Argument.AssertNotNull(adminPassword, nameof(adminPassword));
-
-            MarketplaceDetails = marketplaceDetails;
-            StorageSku = storageSku;
-            UserDetails = userDetails;
-            DelegatedSubnetId = delegatedSubnetId;
-            PrivateIPs = new ChangeTrackingList<IPAddress>();
-            AdminPassword = adminPassword;
-            InitialCapacity = initialCapacity;
         }
 
         /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="storageSku"> Storage Sku. </param>
-        /// <param name="userDetails"> User Details. </param>
-        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
-        /// <param name="clusterLoginUri"> File system Id of the resource. </param>
-        /// <param name="privateIPs"> Private IPs of the resource. </param>
-        /// <param name="adminPassword"> Initial administrator password of the resource. </param>
-        /// <param name="initialCapacity"> Storage capacity in TB. </param>
-        /// <param name="availabilityZone"> Availability zone. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MarketplaceDetails marketplaceDetails, QumuloProvisioningState? provisioningState, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, Uri clusterLoginUri, IList<IPAddress> privateIPs, string adminPassword, int initialCapacity, string availabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="initialCapacity"></param>
+        internal QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FileSystemResourceProperties properties, ManagedServiceIdentity identity, int initialCapacity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            MarketplaceDetails = marketplaceDetails;
-            ProvisioningState = provisioningState;
-            StorageSku = storageSku;
-            UserDetails = userDetails;
-            DelegatedSubnetId = delegatedSubnetId;
-            ClusterLoginUri = clusterLoginUri;
-            PrivateIPs = privateIPs;
-            AdminPassword = adminPassword;
             InitialCapacity = initialCapacity;
-            AvailabilityZone = availabilityZone;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceData"/> for deserialization. </summary>
-        internal QumuloFileSystemResourceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FileSystemResourceProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Marketplace details. </summary>
-        public MarketplaceDetails MarketplaceDetails { get; set; }
-        /// <summary> Provisioning State of the resource. </summary>
-        public QumuloProvisioningState? ProvisioningState { get; }
-        /// <summary> Storage Sku. </summary>
-        public StorageSku StorageSku { get; set; }
-        /// <summary> User Details. </summary>
-        internal QumuloUserDetails UserDetails { get; set; }
-        /// <summary> User Email. </summary>
-        public string UserDetailsEmail
+        public MarketplaceDetails MarketplaceDetails
         {
-            get => UserDetails is null ? default : UserDetails.Email;
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceDetails;
+            }
             set
             {
-                if (UserDetails is null)
-                    UserDetails = new QumuloUserDetails();
-                UserDetails.Email = value;
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.MarketplaceDetails = value;
+            }
+        }
+
+        /// <summary> Provisioning State of the resource. </summary>
+        public QumuloArmProvisioningState? ArmProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArmProvisioningState;
+            }
+        }
+
+        /// <summary> Storage Sku. </summary>
+        public string StorageSkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageSkuName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.StorageSkuName = value;
             }
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
-        public string DelegatedSubnetId { get; set; }
+        public string DelegatedSubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DelegatedSubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.DelegatedSubnetId = value;
+            }
+        }
+
         /// <summary> File system Id of the resource. </summary>
-        public Uri ClusterLoginUri { get; set; }
+        public Uri ClusterLoginUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterLoginUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.ClusterLoginUri = value;
+            }
+        }
+
         /// <summary> Private IPs of the resource. </summary>
-        public IList<IPAddress> PrivateIPs { get; }
+        public IList<IPAddress> PrivateIPs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPs;
+            }
+        }
+
         /// <summary> Initial administrator password of the resource. </summary>
-        public string AdminPassword { get; set; }
-        /// <summary> Storage capacity in TB. </summary>
-        public int InitialCapacity { get; set; }
+        public string AdminPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.AdminPassword = value;
+            }
+        }
+
         /// <summary> Availability zone. </summary>
-        public string AvailabilityZone { get; set; }
+        public string AvailabilityZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.AvailabilityZone = value;
+            }
+        }
+
+        /// <summary> User Email. </summary>
+        public string UserDetailsEmail
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserDetailsEmail;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.UserDetailsEmail = value;
+            }
+        }
     }
 }

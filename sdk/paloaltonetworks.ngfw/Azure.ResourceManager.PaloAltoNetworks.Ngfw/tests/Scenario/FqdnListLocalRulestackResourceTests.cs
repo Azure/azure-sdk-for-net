@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Due to issue: https://github.com/Azure/azure-sdk-for-net/issues/53815")]
         public void CreateResourceIdentifier()
         {
             string name = LocalRulestackFqdnListResource.Data.Name;

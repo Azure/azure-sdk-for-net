@@ -12,5 +12,7 @@
 Initial Release
       ]]>
 		</PackageReleaseNotes>
+		<IncludeAutorestDependency>true</IncludeAutorestDependency>
+		<AotCompatOptOut>true</AotCompatOptOut>
 	</PropertyGroup>
 </Project>

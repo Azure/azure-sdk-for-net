@@ -52,13 +52,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs, options);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
                 foreach (var item in EffectiveOutboundIPs)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +172,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerContainerServiceContext.Default));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default));
+                        }
                     }
                     effectiveOutboundIPs = array;
                     continue;
@@ -304,7 +316,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                         builder.AppendLine("[");
                         foreach (var item in EffectiveOutboundIPs)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  effectiveOutboundIPs: ");
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
                         }
                         builder.AppendLine("  ]");
                     }

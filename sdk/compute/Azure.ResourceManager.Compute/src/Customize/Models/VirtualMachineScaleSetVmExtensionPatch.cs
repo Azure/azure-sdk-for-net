@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -43,8 +44,8 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ProtectedSettingsFromKeyVault
         {
-            get => BinaryData.FromObjectAsJson(KeyVaultProtectedSettings);
-            set => KeyVaultProtectedSettings = value.ToObjectFromJson<KeyVaultSecretReference>();
+            get => ((IJsonModel<KeyVaultSecretReference>)KeyVaultProtectedSettings).Write(ModelSerializationExtensions.WireOptions);
+            set => KeyVaultProtectedSettings = ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
         }
     }
 }

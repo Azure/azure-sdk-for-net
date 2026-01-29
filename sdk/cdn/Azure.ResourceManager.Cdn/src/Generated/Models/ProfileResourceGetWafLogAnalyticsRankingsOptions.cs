@@ -41,18 +41,25 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The metrics. </summary>
+        [WirePath("metrics")]
         public IList<WafMetric> Metrics { get; }
         /// <summary> The dateTimeBegin. </summary>
+        [WirePath("dateTimeBegin")]
         public DateTimeOffset DateTimeBegin { get; }
         /// <summary> The dateTimeEnd. </summary>
+        [WirePath("dateTimeEnd")]
         public DateTimeOffset DateTimeEnd { get; }
         /// <summary> The maxRanking. </summary>
+        [WirePath("maxRanking")]
         public int MaxRanking { get; }
         /// <summary> The rankings. </summary>
+        [WirePath("rankings")]
         public IList<WafRankingType> Rankings { get; }
         /// <summary> The actions. </summary>
+        [WirePath("actions")]
         public IList<WafAction> Actions { get; }
         /// <summary> The ruleTypes. </summary>
+        [WirePath("ruleTypes")]
         public IList<WafRuleType> RuleTypes { get; }
     }
 }

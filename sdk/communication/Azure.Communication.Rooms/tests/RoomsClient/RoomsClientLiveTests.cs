@@ -159,7 +159,7 @@ namespace Azure.Communication.Rooms.Tests
         public async Task CreateRoom_WithNoAttributes_Succeed()
         {
             // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var roomsClient = CreateClientWithAzureKeyCredential(apiVersion: RoomsClientOptions.ServiceVersion.V2025_03_13);
 
             // Act
             var createdRoom = await roomsClient.CreateRoomAsync();

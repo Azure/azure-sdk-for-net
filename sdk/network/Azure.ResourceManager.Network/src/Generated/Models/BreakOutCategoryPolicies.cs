@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Flag to control breakout of o365 allow category. </summary>
+        [WirePath("allow")]
         public bool? Allow { get; set; }
         /// <summary> Flag to control breakout of o365 optimize category. </summary>
+        [WirePath("optimize")]
         public bool? Optimize { get; set; }
         /// <summary> Flag to control breakout of o365 default category. </summary>
+        [WirePath("default")]
         public bool? Default { get; set; }
     }
 }

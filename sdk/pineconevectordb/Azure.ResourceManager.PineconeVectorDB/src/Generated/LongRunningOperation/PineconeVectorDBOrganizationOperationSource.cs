@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PineconeVectorDB
 {
-    internal class PineconeVectorDBOrganizationOperationSource : IOperationSource<PineconeVectorDBOrganizationResource>
+    /// <summary></summary>
+    internal partial class PineconeVectorDBOrganizationOperationSource : IOperationSource<PineconeVectorDBOrganizationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PineconeVectorDBOrganizationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PineconeVectorDBOrganizationResource IOperationSource<PineconeVectorDBOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPineconeVectorDBContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PineconeVectorDBOrganizationData data = PineconeVectorDBOrganizationData.DeserializePineconeVectorDBOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PineconeVectorDBOrganizationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PineconeVectorDBOrganizationResource> IOperationSource<PineconeVectorDBOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPineconeVectorDBContext.Default);
-            return await Task.FromResult(new PineconeVectorDBOrganizationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PineconeVectorDBOrganizationData data = PineconeVectorDBOrganizationData.DeserializePineconeVectorDBOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PineconeVectorDBOrganizationResource(_client, data);
         }
     }
 }

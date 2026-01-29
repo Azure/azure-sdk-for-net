@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     /// <summary> EncryptionIdentityProperties of Dell FileSystem resource. </summary>
     public partial class DellFileSystemEncryptionIdentityProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionIdentityProperties"/>. </summary>
         public DellFileSystemEncryptionIdentityProperties()
@@ -54,16 +25,17 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionIdentityProperties"/>. </summary>
         /// <param name="identityType"> Identity type - SystemAssigned/UserAssigned - Only UserAssigned is supported now. </param>
         /// <param name="identityResourceId"> User-assigned identity resource id - Only when user opts for UserAssigned identity and hence optional. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemEncryptionIdentityProperties(DellFileSystemEncryptionIdentityType? identityType, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DellFileSystemEncryptionIdentityProperties(DellFileSystemEncryptionIdentityType? identityType, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             IdentityResourceId = identityResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Identity type - SystemAssigned/UserAssigned - Only UserAssigned is supported now. </summary>
         public DellFileSystemEncryptionIdentityType? IdentityType { get; set; }
+
         /// <summary> User-assigned identity resource id - Only when user opts for UserAssigned identity and hence optional. </summary>
         public ResourceIdentifier IdentityResourceId { get; set; }
     }

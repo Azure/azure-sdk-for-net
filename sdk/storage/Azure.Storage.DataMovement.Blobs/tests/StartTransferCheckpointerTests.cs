@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Check the transfer files made and the source and destination

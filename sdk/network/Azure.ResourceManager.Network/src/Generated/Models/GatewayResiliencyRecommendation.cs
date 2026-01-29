@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Recommendation Title. </summary>
+        [WirePath("recommendationTitle")]
         public string RecommendationTitle { get; }
         /// <summary> Recommendation Id. </summary>
+        [WirePath("recommendationId")]
         public string RecommendationId { get; }
         /// <summary> Impact associated with the recommendation. </summary>
+        [WirePath("severity")]
         public string Severity { get; }
         /// <summary> Recommendation details. </summary>
+        [WirePath("recommendationText")]
         public string RecommendationText { get; }
         /// <summary> Acton items to apply the recommendation. </summary>
+        [WirePath("callToActionText")]
         public string CallToActionText { get; }
         /// <summary> Link to the public documentation for the associated recommendation. </summary>
+        [WirePath("callToActionLink")]
         public string CallToActionLink { get; }
     }
 }

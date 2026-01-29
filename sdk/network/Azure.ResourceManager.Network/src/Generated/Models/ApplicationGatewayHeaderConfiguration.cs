@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Header name of the header configuration. </summary>
+        [WirePath("headerName")]
         public string HeaderName { get; set; }
         /// <summary> An optional field under "Rewrite Action". It lets you capture and modify the value(s) of a specific header when multiple headers with the same name exist. Currently supported for Set-Cookie Response header only. For more details, visit https://aka.ms/appgwheadercrud. </summary>
+        [WirePath("headerValueMatcher")]
         public HeaderValueMatcher HeaderValueMatcher { get; set; }
         /// <summary> Header value of the header configuration. </summary>
+        [WirePath("headerValue")]
         public string HeaderValue { get; set; }
     }
 }

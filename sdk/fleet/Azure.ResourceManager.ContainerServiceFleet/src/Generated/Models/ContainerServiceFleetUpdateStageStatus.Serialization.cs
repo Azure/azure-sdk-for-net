@@ -54,6 +54,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BeforeGates))
+            {
+                writer.WritePropertyName("beforeGates"u8);
+                writer.WriteStartArray();
+                foreach (var item in BeforeGates)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AfterGates))
+            {
+                writer.WritePropertyName("afterGates"u8);
+                writer.WriteStartArray();
+                foreach (var item in AfterGates)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(AfterStageWaitStatus))
             {
                 writer.WritePropertyName("afterStageWaitStatus"u8);
@@ -99,6 +119,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             ContainerServiceFleetUpdateStatus status = default;
             string name = default;
             IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups = default;
+            IReadOnlyList<UpdateRunGateStatus> beforeGates = default;
+            IReadOnlyList<UpdateRunGateStatus> afterGates = default;
             ContainerServiceFleetWaitStatus afterStageWaitStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -132,6 +154,34 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     groups = array;
                     continue;
                 }
+                if (property.NameEquals("beforeGates"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UpdateRunGateStatus> array = new List<UpdateRunGateStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UpdateRunGateStatus.DeserializeUpdateRunGateStatus(item, options));
+                    }
+                    beforeGates = array;
+                    continue;
+                }
+                if (property.NameEquals("afterGates"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UpdateRunGateStatus> array = new List<UpdateRunGateStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UpdateRunGateStatus.DeserializeUpdateRunGateStatus(item, options));
+                    }
+                    afterGates = array;
+                    continue;
+                }
                 if (property.NameEquals("afterStageWaitStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -147,7 +197,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerServiceFleetUpdateStageStatus(status, name, groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>(), afterStageWaitStatus, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateStageStatus(
+                status,
+                name,
+                groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>(),
+                beforeGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),
+                afterGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),
+                afterStageWaitStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateStageStatus>.Write(ModelReaderWriterOptions options)

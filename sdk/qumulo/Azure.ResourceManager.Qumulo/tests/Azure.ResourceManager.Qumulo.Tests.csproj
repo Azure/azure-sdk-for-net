@@ -3,9 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Qumulo.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>

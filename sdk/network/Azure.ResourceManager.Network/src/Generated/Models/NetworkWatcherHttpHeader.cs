@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name in HTTP header. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The value in HTTP header. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

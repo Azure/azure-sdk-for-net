@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -132,6 +133,105 @@ namespace Azure.ResourceManager.Network.Models
             return new TroubleshootingRecommendedActions(actionId, actionText, actionUri, actionUriText, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionId))
+                {
+                    builder.Append("  actionId: ");
+                    if (ActionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ActionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ActionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionText), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionText: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionText))
+                {
+                    builder.Append("  actionText: ");
+                    if (ActionText.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ActionText}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ActionText}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionUri))
+                {
+                    builder.Append("  actionUri: ");
+                    builder.AppendLine($"'{ActionUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionUriText), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionUriText: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionUriText))
+                {
+                    builder.Append("  actionUriText: ");
+                    if (ActionUriText.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ActionUriText}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ActionUriText}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TroubleshootingRecommendedActions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingRecommendedActions>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +240,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support writing '{options.Format}' format.");
             }

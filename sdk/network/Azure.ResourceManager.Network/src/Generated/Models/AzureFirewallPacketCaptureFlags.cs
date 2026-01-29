@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Flags to capture. </summary>
+        [WirePath("type")]
         public AzureFirewallPacketCaptureFlagsType? FlagsType { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Microsoft Defender settings for the security profile. </summary>
+    /// <summary>
+    /// Microsoft Defender settings for the security profile.
+    /// Serialized Name: ManagedClusterSecurityProfileDefender
+    /// </summary>
     public partial class ManagedClusterSecurityProfileDefender
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
-        /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </param>
-        /// <param name="securityMonitoring"> Microsoft Defender threat detection for Cloud settings for the security profile. </param>
+        /// <param name="logAnalyticsWorkspaceResourceId">
+        /// Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty.
+        /// Serialized Name: ManagedClusterSecurityProfileDefender.logAnalyticsWorkspaceResourceId
+        /// </param>
+        /// <param name="securityMonitoring">
+        /// Microsoft Defender threat detection for Cloud settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfileDefender.securityMonitoring
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,12 +71,21 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </summary>
+        /// <summary>
+        /// Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty.
+        /// Serialized Name: ManagedClusterSecurityProfileDefender.logAnalyticsWorkspaceResourceId
+        /// </summary>
         [WirePath("logAnalyticsWorkspaceResourceId")]
         public ResourceIdentifier LogAnalyticsWorkspaceResourceId { get; set; }
-        /// <summary> Microsoft Defender threat detection for Cloud settings for the security profile. </summary>
+        /// <summary>
+        /// Microsoft Defender threat detection for Cloud settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfileDefender.securityMonitoring
+        /// </summary>
         internal ManagedClusterSecurityProfileDefenderSecurityMonitoring SecurityMonitoring { get; set; }
-        /// <summary> Whether to enable Defender threat detection. </summary>
+        /// <summary>
+        /// Whether to enable Defender threat detection
+        /// Serialized Name: ManagedClusterSecurityProfileDefenderSecurityMonitoring.enabled
+        /// </summary>
         [WirePath("securityMonitoring.enabled")]
         public bool? IsSecurityMonitoringEnabled
         {

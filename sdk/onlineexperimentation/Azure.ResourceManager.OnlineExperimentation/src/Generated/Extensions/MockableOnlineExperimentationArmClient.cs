@@ -6,44 +6,51 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.OnlineExperimentation;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableOnlineExperimentationArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableOnlineExperimentationArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableOnlineExperimentationArmClient for mocking. </summary>
         protected MockableOnlineExperimentationArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOnlineExperimentationArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableOnlineExperimentationArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableOnlineExperimentationArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableOnlineExperimentationArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="OnlineExperimentationWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OnlineExperimentationWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="OnlineExperimentationWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="OnlineExperimentationWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OnlineExperimentationWorkspaceResource"/> object. </returns>
         public virtual OnlineExperimentationWorkspaceResource GetOnlineExperimentationWorkspaceResource(ResourceIdentifier id)
         {
             OnlineExperimentationWorkspaceResource.ValidateResourceId(id);
             return new OnlineExperimentationWorkspaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OnlineExperimentationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OnlineExperimentationPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual OnlineExperimentationPrivateEndpointConnectionResource GetOnlineExperimentationPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            OnlineExperimentationPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new OnlineExperimentationPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OnlineExperimentationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OnlineExperimentationPrivateLinkResource"/> object. </returns>
+        public virtual OnlineExperimentationPrivateLinkResource GetOnlineExperimentationPrivateLinkResource(ResourceIdentifier id)
+        {
+            OnlineExperimentationPrivateLinkResource.ValidateResourceId(id);
+            return new OnlineExperimentationPrivateLinkResource(Client, id);
         }
     }
 }

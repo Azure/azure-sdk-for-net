@@ -34,9 +34,6 @@ namespace Azure.Generator.Providers
 
         public override HttpMessageApi ToExpression() => this;
 
-        public override MethodBodyStatement ApplyResponseClassifier(StatusCodeClassifierApi statusCodeClassifier)
-            => MethodBodyStatement.Empty;
-
         public override MethodBodyStatement ApplyRequestOptions(HttpRequestOptionsApi options)
             => MethodBodyStatement.Empty;
     }

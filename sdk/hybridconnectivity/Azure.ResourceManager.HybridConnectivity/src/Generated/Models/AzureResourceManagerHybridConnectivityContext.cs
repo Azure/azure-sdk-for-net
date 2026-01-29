@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HybridConnectivity.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,8 +14,9 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AADProfileProperties))]
     [ModelReaderWriterBuildable(typeof(AwsCloudProfile))]
     [ModelReaderWriterBuildable(typeof(AwsCloudProfileUpdate))]
     [ModelReaderWriterBuildable(typeof(EndpointsList))]
@@ -23,16 +25,18 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(HybridConnectivityEndpointData))]
     [ModelReaderWriterBuildable(typeof(HybridConnectivityEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(HybridConnectivityEndpointResource))]
-    [ModelReaderWriterBuildable(typeof(HybridConnectivityOperationStatus))]
     [ModelReaderWriterBuildable(typeof(HybridConnectivityServiceConfigurationData))]
     [ModelReaderWriterBuildable(typeof(HybridConnectivityServiceConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(HybridConnectivityServiceConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(HybridConnectivityTrackedResourcePatch))]
     [ModelReaderWriterBuildable(typeof(IngressGatewayAsset))]
+    [ModelReaderWriterBuildable(typeof(IngressProfileProperties))]
     [ModelReaderWriterBuildable(typeof(InventoryResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ListCredentialsContent))]
     [ModelReaderWriterBuildable(typeof(ListIngressGatewayCredentialsContent))]
     [ModelReaderWriterBuildable(typeof(ManagedProxyAsset))]
     [ModelReaderWriterBuildable(typeof(ManagedProxyContent))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorData))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorListResult))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorPatch))]
@@ -52,8 +56,11 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryData))]
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryProperties))]
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryResource))]
+    [ModelReaderWriterBuildable(typeof(RelayNamespaceAccessProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceConfigurationList))]
+    [ModelReaderWriterBuildable(typeof(ServiceConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(ServiceConfigurationPropertiesPatch))]
     [ModelReaderWriterBuildable(typeof(SolutionConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(SolutionConfigurationPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(SolutionTypeResourceListResult))]

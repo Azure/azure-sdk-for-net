@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     public readonly partial struct DataResilienceTier : IEquatable<DataResilienceTier>
     {
         private readonly string _value;
+        /// <summary> Not data resilient. </summary>
+        private const string NotDataResilientValue = "NotDataResilient";
+        /// <summary> Data resilient. </summary>
+        private const string DataResilientValue = "DataResilient";
 
         /// <summary> Initializes a new instance of <see cref="DataResilienceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataResilienceTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotDataResilientValue = "NotDataResilient";
-        private const string DataResilientValue = "DataResilient";
+            _value = value;
+        }
 
         /// <summary> Not data resilient. </summary>
         public static DataResilienceTier NotDataResilient { get; } = new DataResilienceTier(NotDataResilientValue);
+
         /// <summary> Data resilient. </summary>
         public static DataResilienceTier DataResilient { get; } = new DataResilienceTier(DataResilientValue);
+
         /// <summary> Determines if two <see cref="DataResilienceTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataResilienceTier left, DataResilienceTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataResilienceTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataResilienceTier left, DataResilienceTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataResilienceTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataResilienceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataResilienceTier(string value) => new DataResilienceTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataResilienceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataResilienceTier?(string value) => value == null ? null : new DataResilienceTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataResilienceTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataResilienceTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

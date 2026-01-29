@@ -29,11 +29,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="server"> Server name for connection. Type: string. </param>
+        /// <param name="port"> The port for the connection. Type: integer. </param>
+        /// <param name="uid"> Username for authentication. Type: string. </param>
+        /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="securityLevel"> Specifies the security level for the driver connection to the data store. PreferredUnSecured : prefer unsecured, allow fallback to secured connection if required. OnlyUnSecured : strictly unsecured, no fallback. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal NetezzaLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal NetezzaLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> uid, DataFactoryElement<string> database, NetezzaSecurityLevelType? securityLevel, DataFactoryKeyVaultSecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
+            Server = server;
+            Port = port;
+            Uid = uid;
+            Database = database;
+            SecurityLevel = securityLevel;
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Netezza";
@@ -41,6 +51,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
+        /// <summary> Server name for connection. Type: string. </summary>
+        public DataFactoryElement<string> Server { get; set; }
+        /// <summary> The port for the connection. Type: integer. </summary>
+        public DataFactoryElement<int> Port { get; set; }
+        /// <summary> Username for authentication. Type: string. </summary>
+        public DataFactoryElement<string> Uid { get; set; }
+        /// <summary> Database name for connection. Type: string. </summary>
+        public DataFactoryElement<string> Database { get; set; }
+        /// <summary> Specifies the security level for the driver connection to the data store. PreferredUnSecured : prefer unsecured, allow fallback to secured connection if required. OnlyUnSecured : strictly unsecured, no fallback. </summary>
+        public NetezzaSecurityLevelType? SecurityLevel { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>

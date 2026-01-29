@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
-    internal partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
+    public partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ZooAddressListListResult"/> for deserialization. </summary>
         internal ZooAddressListListResult()
@@ -51,7 +51,7 @@ namespace MgmtTypeSpec.Models
                     writer.WriteNullValue();
                     continue;
                 }
-                ((IJsonModel<SubResource>)item).Write(ModelSerializationExtensions.WireOptions);
+                ((IJsonModel<SubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -117,7 +117,7 @@ namespace MgmtTypeSpec.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default));
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default));
                         }
                     }
                     value = array;
@@ -129,7 +129,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ZooAddressListListResult)} does not support writing '{options.Format}' format.");
             }
@@ -168,7 +168,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeZooAddressListListResult(document.RootElement, options);
                     }
@@ -180,11 +180,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ZooAddressListListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ZooAddressListListResult"/> from. </param>
-        internal static ZooAddressListListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ZooAddressListListResult"/> from. </param>
+        internal static ZooAddressListListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeZooAddressListListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

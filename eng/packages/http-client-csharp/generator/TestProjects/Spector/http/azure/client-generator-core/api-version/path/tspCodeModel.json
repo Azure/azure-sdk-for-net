@@ -67,8 +67,9 @@
             "parameters": [
               {
                 "$id": "7",
+                "kind": "path",
                 "name": "version",
-                "nameInRequest": "version",
+                "serializedName": "version",
                 "type": {
                   "$id": "8",
                   "kind": "string",
@@ -76,13 +77,11 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Path",
-                "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
+                "isApiVersion": true,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
                 "defaultValue": {
                   "type": {
                     "$id": "9",
@@ -92,8 +91,11 @@
                   },
                   "value": "2025-01-01"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion.version"
               }
             ],
             "responses": [
@@ -112,7 +114,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.AlternateApiVersion.Service.Path"
           },
           "parameters": [],
           "response": {},
@@ -125,8 +128,9 @@
       "parameters": [
         {
           "$id": "10",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "11",
@@ -134,14 +138,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "12",
@@ -151,14 +151,49 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.endpoint"
+        },
+        {
+          "$id": "13",
+          "kind": "method",
+          "name": "version",
+          "serializedName": "version",
+          "type": {
+            "$id": "14",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "15",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2025-01-01"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion.version",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path",
       "apiVersions": [
         "2025-01-01"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

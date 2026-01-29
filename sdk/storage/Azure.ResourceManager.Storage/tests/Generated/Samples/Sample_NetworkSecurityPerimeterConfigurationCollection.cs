@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkSecurityPerimeterConfigurationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/NetworkSecurityPerimeterConfigurationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/NetworkSecurityPerimeterConfigurationGet.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkSecurityPerimeterConfigurationList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/NetworkSecurityPerimeterConfigurationList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/NetworkSecurityPerimeterConfigurationList.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkSecurityPerimeterConfigurationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/NetworkSecurityPerimeterConfigurationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/NetworkSecurityPerimeterConfigurationGet.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkSecurityPerimeterConfigurationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/NetworkSecurityPerimeterConfigurationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/NetworkSecurityPerimeterConfigurationGet.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyTitle>Azure.Monitor.OpenTelemetry.Exporter shared code library</AssemblyTitle>
@@ -9,6 +9,8 @@
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);LIVE_METRICS_PROJECT;</DefineConstants>
     <NoWarn>$(NoWarn);AZC0011</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
 

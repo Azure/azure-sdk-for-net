@@ -81,8 +81,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alternateName"> Alternate name for namespace. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
+        /// <param name="platformCapabilities"></param>
+        /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions, PlatformCapabilities platformCapabilities, GeoDataReplicationProperties geoDataReplication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -100,6 +102,8 @@ namespace Azure.ResourceManager.ServiceBus
             AlternateName = alternateName;
             PublicNetworkAccess = publicNetworkAccess;
             PremiumMessagingPartitions = premiumMessagingPartitions;
+            PlatformCapabilities = platformCapabilities;
+            GeoDataReplication = geoDataReplication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -156,5 +160,23 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </summary>
         [WirePath("properties.premiumMessagingPartitions")]
         public int? PremiumMessagingPartitions { get; set; }
+        /// <summary> Gets or sets the platform capabilities. </summary>
+        internal PlatformCapabilities PlatformCapabilities { get; set; }
+        /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
+        [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
+        public ServiceBusConfidentialComputeMode? ConfidentialComputeMode
+        {
+            get => PlatformCapabilities is null ? default : PlatformCapabilities.ConfidentialComputeMode;
+            set
+            {
+                if (PlatformCapabilities is null)
+                    PlatformCapabilities = new PlatformCapabilities();
+                PlatformCapabilities.ConfidentialComputeMode = value;
+            }
+        }
+
+        /// <summary> Geo Data Replication settings for the namespace. </summary>
+        [WirePath("properties.geoDataReplication")]
+        public GeoDataReplicationProperties GeoDataReplication { get; set; }
     }
 }

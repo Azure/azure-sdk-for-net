@@ -79,10 +79,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Verbosity level. </summary>
+        [WirePath("verbosityLevel")]
         public VerbosityLevel? VerbosityLevel { get; set; }
         /// <summary> List of network configuration diagnostic profiles. </summary>
+        [WirePath("profiles")]
         public IList<NetworkConfigurationDiagnosticProfile> Profiles { get; }
     }
 }

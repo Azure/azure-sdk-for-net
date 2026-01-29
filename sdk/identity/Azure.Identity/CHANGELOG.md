@@ -1,8 +1,74 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
+## 1.18.0-beta.3 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+- Renamed `WorkloadIdentityCredentialOptions.IsAzureKubernetesTokenProxyEnabled` to `IsAzureProxyEnabled` to follow .NET naming conventions for boolean properties.
+
+### Bugs Fixed
+
+- Disabled MSAL's internal retry logic for `ConfidentialClientApplication` and `PublicClientApplication` to prevent double retries when combined with Azure SDK's retry policy. Only the configured Azure SDK retry policy is applied, avoiding unexpected additional retry attempts.
+
+### Other Changes
+
+## 1.18.0-beta.2 (2025-11-19)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.78.0.
+
+## 1.17.1 (2025-11-18)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.78.0.
+
+## 1.18.0-beta.1 (2025-11-14)
+
+### Features Added
+
+- Added Kubernetes token proxy support (identity binding mode) to `WorkloadIdentityCredential`. When enabled via the `IsAzureKubernetesTokenProxyEnabled` option, the credential redirects token requests to an AKS-provided proxy to support scenarios exceeding the [20 federated identity credential limit](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview#use-managed-identity-as-a-federated-identity-credential-fic-on-an-entra-id-app) per Entra ID application. This feature is opt-in and only available when using `WorkloadIdentityCredential` directly (not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`).
+
+### Other Changes
+
+- Deprecated legacy `ManagedIdentityCredential` constructors. Use `ManagedIdentityCredential(ManagedIdentityId id)` or `ManagedIdentityCredential(ManagedIdentityCredentialOptions options)` instead for clearer intent when specifying system-assigned or user-assigned managed identity. ([#53800](https://github.com/Azure/azure-sdk-for-net/issues/53800))
+
+## 1.17.0 (2025-10-07)
+
+### Bugs Fixed
+
+- TenantId is now configured via MSAL's `WithTenantId` instead of `WithTenantIdFromAuthority` to prevent malformed Uris to the authority.
+
+### Other Changes
+
+- Deprecated `BrowserCustomizationOptions.UseEmbeddedWebView` property. This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead.
+
+## 1.16.0 (2025-09-09)
+
+### Features Added
+
+- Added a new `DefaultAzureCredential` constructor that accepts a custom environment variable name for credential configuration. This provides flexibility beyond the default `AZURE_TOKEN_CREDENTIALS` environment variable. The constructor accepts any environment variable name and uses the same credential selection logic as the existing `AZURE_TOKEN_CREDENTIALS` processing.
+- Added `DefaultAzureCredential.DefaultEnvironmentVariableName` constant property that returns `"AZURE_TOKEN_CREDENTIALS"` for convenience when referencing the default environment variable name.
+- `AzureCliCredential`, `AzurePowerShellCredential`, and `AzureDeveloperCliCredential` now throw an `AuthenticationFailedException` when the `TokenRequestContext` includes claims, as these credentials do not support claims challenges. The exception message includes guidance for handling such scenarios.
+- When `AZURE_TOKEN_CREDENTIALS` or the equivalent custom environment variable is configured to `ManagedIdentityCredential`, the `DefaultAzureCredential` does not issue a probe request and performs retries with exponential backoff.
+
+### Bugs Fixed
+
+- Fixed `AzureDeveloperCliCredential` hanging when the `AZD_DEBUG` environment variable is set by adding the `--no-prompt` flag to prevent interactive prompts ([#52005](https://github.com/Azure/azure-sdk-for-net/issues/52005)).
+- `BrokerCredential` is now included in the chain when `AZURE_TOKEN_CREDENTIALS` is set to `dev`.
+- Fixed an issue that prevented ManagedIdentityCredential from utilizing the token cache in Workload Identity Federation environments.
+- Fixed a bug in `DefaultAzureCredential` that caused the credential chain to be constructed incorrectly when using AZURE_TOKEN_CREDENTIALS in combination with `DefaultAzureCredentialOptions`.
+
+### Other Changes
+
+- The `BrokerCredential` is now always included in the `DefaultAzureCredential` chain. If the `Azure.Identity.Broker` package is not referenced, an exception will be thrown when `GetToken` is called, making its behavior consistent with the rest of the credentials in the chain.
+- Updated `Microsoft.Identity.Client` dependency to version 4.76.0.
+- Updated `Microsoft.Identity.Client.Extensions.Msal` dependency to version 4.76.0.
+
+## 1.15.0 (2025-08-11)
 
 ### Breaking Changes
 

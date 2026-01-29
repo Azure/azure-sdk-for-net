@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -125,6 +126,74 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoLanguageExtension(languageExtensionName, languageExtensionImageName, languageExtensionCustomImageName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LanguageExtensionName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  languageExtensionName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LanguageExtensionName))
+                {
+                    builder.Append("  languageExtensionName: ");
+                    builder.AppendLine($"'{LanguageExtensionName.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LanguageExtensionImageName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  languageExtensionImageName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LanguageExtensionImageName))
+                {
+                    builder.Append("  languageExtensionImageName: ");
+                    builder.AppendLine($"'{LanguageExtensionImageName.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LanguageExtensionCustomImageName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  languageExtensionCustomImageName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LanguageExtensionCustomImageName))
+                {
+                    builder.Append("  languageExtensionCustomImageName: ");
+                    if (LanguageExtensionCustomImageName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LanguageExtensionCustomImageName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LanguageExtensionCustomImageName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KustoLanguageExtension>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoLanguageExtension>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +202,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support writing '{options.Format}' format.");
             }

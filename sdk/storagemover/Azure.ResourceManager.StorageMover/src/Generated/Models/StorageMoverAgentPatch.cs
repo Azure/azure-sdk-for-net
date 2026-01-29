@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Agent resource. </summary>
     public partial class StorageMoverAgentPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPatch"/>. </summary>
         public StorageMoverAgentPatch()
@@ -51,28 +22,44 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPatch"/>. </summary>
-        /// <param name="description"> A description for the Agent. </param>
-        /// <param name="uploadLimitSchedule"> The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverAgentPatch(string description, UploadLimitSchedule uploadLimitSchedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverAgentPatch(AgentUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
-            UploadLimitSchedule = uploadLimitSchedule;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the Properties. </summary>
+        internal AgentUpdateProperties Properties { get; set; }
+
         /// <summary> A description for the Agent. </summary>
-        public string Description { get; set; }
-        /// <summary> The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time. </summary>
-        internal UploadLimitSchedule UploadLimitSchedule { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </summary>
         public IList<UploadLimitWeeklyRecurrence> UploadLimitScheduleWeeklyRecurrences
         {
             get
             {
-                if (UploadLimitSchedule is null)
-                    UploadLimitSchedule = new UploadLimitSchedule();
-                return UploadLimitSchedule.WeeklyRecurrences;
+                if (Properties is null)
+                {
+                    Properties = new AgentUpdateProperties();
+                }
+                return Properties.UploadLimitScheduleWeeklyRecurrences;
             }
         }
     }

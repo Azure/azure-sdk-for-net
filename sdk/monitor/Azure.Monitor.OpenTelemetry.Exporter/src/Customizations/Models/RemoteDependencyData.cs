@@ -22,13 +22,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 activityTagsProcessor.activityType &= ~OperationType.V2;
             }
 
+            // Process based on operation type
             switch (activityTagsProcessor.activityType)
             {
                 case OperationType.Http:
                     SetHttpDependencyPropertiesAndDependencyName(activity, ref activityTagsProcessor.MappedTags, isNewSchemaVersion, out dependencyName);
                     break;
                 case OperationType.Db:
-                    SetDbDependencyProperties(ref activityTagsProcessor.MappedTags);
+                    SetDbDependencyProperties(ref activityTagsProcessor.MappedTags, isNewSchemaVersion);
                     break;
                 case OperationType.Messaging:
                     SetMessagingDependencyProperties(activity, ref activityTagsProcessor.MappedTags);
@@ -36,6 +37,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 default:
                     Target = activityTagsProcessor.MappedTags.GetTargetUsingServerAddressAndPort();
                     break;
+            }
+
+            // Check for Microsoft override attributes only if present (avoids overhead for standalone OTel usage)
+            if (activityTagsProcessor.HasOverrideAttributes)
+            {
+                var overrideData = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyData)?.ToString();
+                var overrideName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyName)?.ToString();
+                var overrideTarget = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyTarget)?.ToString();
+                var overrideType = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyType)?.ToString();
+                var overrideResultCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyResultCode)?.ToString();
+
+                // Apply overrides if present (these take precedence)
+                if (!string.IsNullOrEmpty(overrideData))
+                {
+                    Data = overrideData.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideName))
+                {
+                    dependencyName = overrideName;
+                }
+
+                if (!string.IsNullOrEmpty(overrideTarget))
+                {
+                    Target = overrideTarget.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideType))
+                {
+                    Type = overrideType.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideResultCode))
+                {
+                    ResultCode = overrideResultCode.Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength);
+                }
             }
 
             dependencyName ??= activity.DisplayName;
@@ -46,13 +83,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 : SchemaConstants.Duration_MaxValue;
             Success = activity.Status != ActivityStatusCode.Error;
 
+            // Set Type from Azure namespace if present (unless already set by override attribute)
             if (activityTagsProcessor.AzureNamespace != null)
             {
-                Type = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
+                if (string.IsNullOrEmpty(Type))
+                {
+                    Type = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
+                }
             }
             else if (activity.Kind == ActivityKind.Internal)
             {
-                Type = "InProc";
+                if (string.IsNullOrEmpty(Type))
+                {
+                    Type = "InProc";
+                }
             }
 
             TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);
@@ -86,11 +130,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             ResultCode = resultCode?.Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength) ?? "0";
         }
 
-        private void SetDbDependencyProperties(ref AzMonList dbTagObjects)
+        private void SetDbDependencyProperties(ref AzMonList dbTagObjects, bool isNewSchemaVersion)
         {
-            var dbAttributeTagObjects = AzMonList.GetTagValues(ref dbTagObjects, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
+            string statementAttributeKey;
+            string statementSystemKey;
+            if (isNewSchemaVersion)
+            {
+                statementAttributeKey = SemanticConventions.AttributeDbQueryText;
+                statementSystemKey = SemanticConventions.AttributeDbSystemName;
+            }
+            else
+            {
+                statementAttributeKey = SemanticConventions.AttributeDbStatement;
+                statementSystemKey = SemanticConventions.AttributeDbSystem;
+            }
+            var dbAttributeTagObjects = AzMonList.GetTagValues(ref dbTagObjects, statementAttributeKey, statementSystemKey);
             Data = dbAttributeTagObjects[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            var (DbName, DbTarget) = dbTagObjects.GetDbDependencyTargetAndName();
+            var (DbName, DbTarget) = dbTagObjects.GetDbDependencyTargetAndName(isNewSchemaVersion);
             Target = DbTarget?.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
             Type = AzMonListExtensions.s_dbSystems.Contains(dbAttributeTagObjects[1]?.ToString()) ? "SQL" : dbAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
 

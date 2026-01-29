@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2025-08-29)
+
+This release marks the general availability of the `Azure.Developer.Playwright.NUnit` package.
+
+### Breaking Changes
+
+- Removed useCloudHostedBrowsers.
 
 ## 1.0.0-beta.2 (2025-08-06)
 

@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
     public class FirmwareTest : IotFirmwareDefenseManagementTestBase
     {
-        private static readonly string rgName = "testRg";
         private static ResourceGroupResource rg;
         private static IotFirmwareData testFirmware;
+        private string firmwareName = "93abdfa3-7ab9-43f2-a0a1-ee6c72bd8c6a";
 
         public FirmwareTest(bool isAsync)
             : base(isAsync)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             var workspace = await getWorkspace();
             var response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                Recording.GenerateAssetName("resource"),
+                firmwareName,
                 testFirmware);
             response.Value.Data.Name.Should().Equals(testFirmware.Name);
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             var workspace = await getWorkspace();
             var _ = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                Recording.GenerateAssetName("resource"),
+                firmwareName,
                 testFirmware);
             var response = await workspace.GetIotFirmwareAsync(_.Value.Data.Name);
             response.Value.Data.Name.Should().Equals(testFirmware.Name);
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [RecordedTest]
         public async Task TestUpdateFirmware()
         {
-            var name = Recording.GenerateAssetName("resource");
             var updatedFirmware = new IotFirmwareData()
             {
                 Description = "updatedDescription"
@@ -73,13 +72,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             var workspace = await getWorkspace();
             var response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                name,
+                firmwareName,
                 testFirmware);
             response.Value.Data.Description.Should().Equals(testFirmware.Description);
 
             response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                name,
+                firmwareName,
                 updatedFirmware);
             response.Value.Data.Description.Should().Equals(updatedFirmware.Description);
         }
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             var workspace = await getWorkspace();
             var _ = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                Recording.GenerateAssetName("resource"),
+                firmwareName,
                 testFirmware);
             var testFirmwareId = _.Value.Data.Name;
             var response = await workspace.GetIotFirmwareAsync(testFirmwareId);
@@ -103,11 +102,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
         private async Task<FirmwareAnalysisWorkspaceResource> getWorkspace()
         {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
+            rg = await CreateResourceGroup(DefaultSubscription, rgName, AzureLocation.EastUS);
             var _ = await rg.GetFirmwareAnalysisWorkspaces().CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                Recording.GenerateAssetName("resource"),
+                firmwareName,
                 new FirmwareAnalysisWorkspaceData(AzureLocation.EastUS));
             return _.Value;
         }

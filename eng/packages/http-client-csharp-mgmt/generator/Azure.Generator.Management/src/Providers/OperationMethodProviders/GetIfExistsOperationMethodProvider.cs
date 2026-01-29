@@ -8,7 +8,6 @@ using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
@@ -18,12 +17,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class GetIfExistsOperationMethodProvider(
         ResourceCollectionClientProvider collection,
+        OperationContext operationContext,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
         bool isAsync)
         : ResourceOperationMethodProvider(
             collection,
-            collection.ContextualPath,
+            operationContext,
             restClientInfo,
             method,
             isAsync,
@@ -62,6 +62,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             );
 
             return statements;
+        }
+
+        protected override IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
+            VariableExpression messageVariable,
+            VariableExpression contextVariable,
+            out ScopedApi<Response> responseVariable)
+        {
+            return BuildExistsOperationPipelineProcessing(messageVariable, contextVariable, out responseVariable);
         }
     }
 }

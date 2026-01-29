@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The JSON object that contains the properties to secure a domain.
-    /// Serialized Name: AFDDomainHttpsParameters
-    /// </summary>
+    /// <summary> The JSON object that contains the properties to secure a domain. </summary>
     public partial class FrontDoorCustomDomainHttpsContent
     {
         /// <summary>
@@ -51,36 +48,18 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
-        /// <param name="certificateType">
-        /// Defines the source of the SSL certificate.
-        /// Serialized Name: AFDDomainHttpsParameters.certificateType
-        /// </param>
+        /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
         public FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType)
         {
             CertificateType = certificateType;
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
-        /// <param name="certificateType">
-        /// Defines the source of the SSL certificate.
-        /// Serialized Name: AFDDomainHttpsParameters.certificateType
-        /// </param>
-        /// <param name="cipherSuiteSetType">
-        /// cipher suite set type that will be used for Https
-        /// Serialized Name: AFDDomainHttpsParameters.cipherSuiteSetType
-        /// </param>
-        /// <param name="minimumTlsVersion">
-        /// TLS protocol version that will be used for Https when cipherSuiteSetType is Customized.
-        /// Serialized Name: AFDDomainHttpsParameters.minimumTlsVersion
-        /// </param>
-        /// <param name="customizedCipherSuiteSet">
-        /// Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized.
-        /// Serialized Name: AFDDomainHttpsParameters.customizedCipherSuiteSet
-        /// </param>
-        /// <param name="secret">
-        /// Resource reference to the secret. ie. subs/rg/profile/secret
-        /// Serialized Name: AFDDomainHttpsParameters.secret
-        /// </param>
+        /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
+        /// <param name="cipherSuiteSetType"> cipher suite set type that will be used for Https. </param>
+        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </param>
+        /// <param name="customizedCipherSuiteSet"> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </param>
+        /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, WritableSubResource secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -97,32 +76,22 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Defines the source of the SSL certificate.
-        /// Serialized Name: AFDDomainHttpsParameters.certificateType
-        /// </summary>
+        /// <summary> Defines the source of the SSL certificate. </summary>
+        [WirePath("certificateType")]
         public FrontDoorCertificateType CertificateType { get; set; }
-        /// <summary>
-        /// cipher suite set type that will be used for Https
-        /// Serialized Name: AFDDomainHttpsParameters.cipherSuiteSetType
-        /// </summary>
+        /// <summary> cipher suite set type that will be used for Https. </summary>
+        [WirePath("cipherSuiteSetType")]
         public AfdCipherSuiteSetType? CipherSuiteSetType { get; set; }
-        /// <summary>
-        /// TLS protocol version that will be used for Https when cipherSuiteSetType is Customized.
-        /// Serialized Name: AFDDomainHttpsParameters.minimumTlsVersion
-        /// </summary>
+        /// <summary> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </summary>
+        [WirePath("minimumTlsVersion")]
         public FrontDoorMinimumTlsVersion? MinimumTlsVersion { get; set; }
-        /// <summary>
-        /// Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized.
-        /// Serialized Name: AFDDomainHttpsParameters.customizedCipherSuiteSet
-        /// </summary>
+        /// <summary> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </summary>
+        [WirePath("customizedCipherSuiteSet")]
         public FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet CustomizedCipherSuiteSet { get; set; }
-        /// <summary>
-        /// Resource reference to the secret. ie. subs/rg/profile/secret
-        /// Serialized Name: AFDDomainHttpsParameters.secret
-        /// </summary>
+        /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
         internal WritableSubResource Secret { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("secret.id")]
         public ResourceIdentifier SecretId
         {
             get => Secret is null ? default : Secret.Id;

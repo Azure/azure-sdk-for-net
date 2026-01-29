@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The nat gateway SKU. </summary>
         internal NatGatewaySku Sku { get; set; }
         /// <summary> Name of Nat Gateway SKU. </summary>
+        [WirePath("sku.name")]
         public NatGatewaySkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -80,24 +81,33 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The idle timeout of the nat gateway. </summary>
+        [WirePath("properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddresses")]
         public IList<WritableSubResource> PublicIPAddresses { get; }
         /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddressesV6")]
         public IList<WritableSubResource> PublicIPAddressesV6 { get; }
         /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixes")]
         public IList<WritableSubResource> PublicIPPrefixes { get; }
         /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixesV6")]
         public IList<WritableSubResource> PublicIPPrefixesV6 { get; }
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
+        [WirePath("properties.subnets")]
         public IReadOnlyList<WritableSubResource> Subnets { get; }
         /// <summary> A reference to the source virtual network using this nat gateway resource. </summary>
         internal WritableSubResource SourceVirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.sourceVirtualNetwork.id")]
         public ResourceIdentifier SourceVirtualNetworkId
         {
             get => SourceVirtualNetwork is null ? default : SourceVirtualNetwork.Id;
@@ -110,8 +120,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The resource GUID property of the NAT gateway resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the NAT gateway resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -40,10 +40,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Reference of the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference of the PublicIP resource. Null for private only bastion. </summary>
         internal WritableSubResource PublicIPAddress { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.publicIPAddress.id")]
         public ResourceIdentifier PublicIPAddressId
         {
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;
@@ -70,8 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the bastion host IP configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Private IP allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
         public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
     }
 }

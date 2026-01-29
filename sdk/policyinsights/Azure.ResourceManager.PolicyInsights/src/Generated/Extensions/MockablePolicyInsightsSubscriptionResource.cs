@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private PolicyStatesRestOperations _policyStatesRestClient;
         private ClientDiagnostics _policyRestrictionsClientDiagnostics;
         private PolicyRestrictionsRestOperations _policyRestrictionsRestClient;
+        private ClientDiagnostics _componentPolicyStatesClientDiagnostics;
+        private ComponentPolicyStatesRestOperations _componentPolicyStatesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsSubscriptionResource"/> class for mocking. </summary>
         protected MockablePolicyInsightsSubscriptionResource()
@@ -47,6 +49,8 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private PolicyStatesRestOperations PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PolicyRestrictionsClientDiagnostics => _policyRestrictionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PolicyRestrictionsRestOperations PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ComponentPolicyStatesClientDiagnostics => _componentPolicyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ComponentPolicyStatesRestOperations ComponentPolicyStatesRestClient => _componentPolicyStatesRestClient ??= new ComponentPolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +282,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +315,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,7 +348,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,7 +381,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,7 +409,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,7 +437,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,7 +464,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -487,7 +491,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +529,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -563,7 +567,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -596,7 +600,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -629,7 +633,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -661,7 +665,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -693,7 +697,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -726,7 +730,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -759,7 +763,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -791,7 +795,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,7 +827,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -856,7 +860,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -889,7 +893,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -921,7 +925,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -953,7 +957,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -991,7 +995,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1014,6 +1018,180 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Queries component policy states under subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries component policy states under subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStates(SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, options.PolicyDefinitionName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionComponentPolicyStates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStates(SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, options.PolicyDefinitionName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionComponentPolicyStates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, options.PolicyAssignmentName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, options.PolicyAssignmentName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates", "value", null, cancellationToken);
         }
     }
 }

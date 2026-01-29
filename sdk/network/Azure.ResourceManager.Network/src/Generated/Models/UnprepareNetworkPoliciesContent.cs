@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the service for which subnet is being unprepared for. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; set; }
     }
 }

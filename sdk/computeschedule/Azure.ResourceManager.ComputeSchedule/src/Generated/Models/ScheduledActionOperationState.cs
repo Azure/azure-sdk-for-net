@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionOperationState : IEquatable<ScheduledActionOperationState>
     {
         private readonly string _value;
+        /// <summary> The default value for the operation state enum. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Operations that are pending scheduling. </summary>
+        private const string PendingSchedulingValue = "PendingScheduling";
+        /// <summary> Operations that have been scheduled. </summary>
+        private const string ScheduledValue = "Scheduled";
+        /// <summary> Operations that are waiting to be executed. </summary>
+        private const string PendingExecutionValue = "PendingExecution";
+        /// <summary> Operations that are in the process of being executed. </summary>
+        private const string ExecutingValue = "Executing";
+        /// <summary> Operations that suceeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Operations that have failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Operations that have been Cancelled by the user. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Operations that are blocked. </summary>
+        private const string BlockedValue = "Blocked";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionOperationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionOperationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string PendingSchedulingValue = "PendingScheduling";
-        private const string ScheduledValue = "Scheduled";
-        private const string PendingExecutionValue = "PendingExecution";
-        private const string ExecutingValue = "Executing";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string BlockedValue = "Blocked";
+            _value = value;
+        }
 
         /// <summary> The default value for the operation state enum. </summary>
         public static ScheduledActionOperationState Unknown { get; } = new ScheduledActionOperationState(UnknownValue);
+
         /// <summary> Operations that are pending scheduling. </summary>
         public static ScheduledActionOperationState PendingScheduling { get; } = new ScheduledActionOperationState(PendingSchedulingValue);
+
         /// <summary> Operations that have been scheduled. </summary>
         public static ScheduledActionOperationState Scheduled { get; } = new ScheduledActionOperationState(ScheduledValue);
+
         /// <summary> Operations that are waiting to be executed. </summary>
         public static ScheduledActionOperationState PendingExecution { get; } = new ScheduledActionOperationState(PendingExecutionValue);
+
         /// <summary> Operations that are in the process of being executed. </summary>
         public static ScheduledActionOperationState Executing { get; } = new ScheduledActionOperationState(ExecutingValue);
+
         /// <summary> Operations that suceeded. </summary>
         public static ScheduledActionOperationState Succeeded { get; } = new ScheduledActionOperationState(SucceededValue);
+
         /// <summary> Operations that have failed. </summary>
         public static ScheduledActionOperationState Failed { get; } = new ScheduledActionOperationState(FailedValue);
+
         /// <summary> Operations that have been Cancelled by the user. </summary>
         public static ScheduledActionOperationState Cancelled { get; } = new ScheduledActionOperationState(CancelledValue);
+
         /// <summary> Operations that are blocked. </summary>
         public static ScheduledActionOperationState Blocked { get; } = new ScheduledActionOperationState(BlockedValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionOperationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionOperationState left, ScheduledActionOperationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionOperationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionOperationState left, ScheduledActionOperationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionOperationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionOperationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionOperationState(string value) => new ScheduledActionOperationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionOperationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionOperationState?(string value) => value == null ? null : new ScheduledActionOperationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionOperationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionOperationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

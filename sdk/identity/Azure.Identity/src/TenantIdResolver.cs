@@ -42,7 +42,7 @@ namespace Azure.Identity
 
             if (explicitTenantId != null && !string.Equals(resolvedTenantId, explicitTenantId, StringComparison.OrdinalIgnoreCase) && additionallyAllowedTenantIds != AllTenants && Array.BinarySearch(additionallyAllowedTenantIds, resolvedTenantId, StringComparer.OrdinalIgnoreCase) < 0)
             {
-                throw new AuthenticationFailedException($"The current credential is not configured to acquire tokens for tenant {resolvedTenantId}. To enable acquiring tokens for this tenant add it to the AdditionallyAllowedTenants on the credential options, or add \"*\" to AdditionallyAllowedTenants to allow acquiring tokens for any tenant. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/multitenant/troubleshoot");
+                throw new AuthenticationFailedException($"The current credential is not configured to acquire tokens for tenant {resolvedTenantId}. To enable token acquisition for this tenant, see the guidance at https://aka.ms/azsdk/net/identity/multitenant/troubleshoot.");
             }
 
             return resolvedTenantId;

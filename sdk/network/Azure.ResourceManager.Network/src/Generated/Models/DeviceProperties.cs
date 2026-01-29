@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the device Vendor. </summary>
+        [WirePath("deviceVendor")]
         public string DeviceVendor { get; set; }
         /// <summary> Model of the device. </summary>
+        [WirePath("deviceModel")]
         public string DeviceModel { get; set; }
         /// <summary> Link speed. </summary>
+        [WirePath("linkSpeedInMbps")]
         public int? LinkSpeedInMbps { get; set; }
     }
 }

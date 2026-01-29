@@ -212,7 +212,7 @@ namespace Azure.AI.Language.Text.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(e), ClientDiagnostics, _pipeline, "TextAuthoringModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(e), ClientDiagnostics, _pipeline, "TextAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. </summary>
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.Text.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(e), ClientDiagnostics, _pipeline, "TextAuthoringModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TextAuthoringDocumentEvalResult.DeserializeTextAuthoringDocumentEvalResult(e), ClientDiagnostics, _pipeline, "TextAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -253,7 +253,7 @@ namespace Azure.AI.Language.Text.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await EvaluateModelAsync(waitUntil,content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringEvaluationJobResultFromTextAuthoringEvaluationState, ClientDiagnostics, "TextAuthoringModel.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringEvaluationJobResultFromTextAuthoringEvaluationState, ClientDiagnostics, "TextAuthoringTrainedModel.EvaluateModel");
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -272,7 +272,7 @@ namespace Azure.AI.Language.Text.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = EvaluateModel(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringEvaluationJobResultFromTextAuthoringEvaluationState, ClientDiagnostics, "TextAuthoringModel.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringEvaluationJobResultFromTextAuthoringEvaluationState, ClientDiagnostics, "TextAuthoringTrainedModel.EvaluateModel");
         }
 
         /// <summary> Deletes a trained model. </summary>
@@ -352,7 +352,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetTrainedModel");
             scope.Start();
             try
             {
@@ -389,7 +389,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetTrainedModel");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetEvaluationStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetEvaluationStatus");
             scope.Start();
             try
             {
@@ -467,7 +467,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetEvaluationStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetEvaluationStatus");
             scope.Start();
             try
             {
@@ -504,7 +504,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetModelTextAuthoringEvalSummary");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetModelTextAuthoringEvalSummary");
             scope.Start();
             try
             {
@@ -541,7 +541,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetModelTextAuthoringEvalSummary");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetModelTextAuthoringEvalSummary");
             scope.Start();
             try
             {
@@ -580,7 +580,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetLoadSnapshotStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetLoadSnapshotStatus");
             scope.Start();
             try
             {
@@ -619,7 +619,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.GetLoadSnapshotStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetLoadSnapshotStatus");
             scope.Start();
             try
             {
@@ -663,7 +663,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TextAuthoringModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TextAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TextAuthoringModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TextAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -725,12 +725,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.EvaluateModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.EvaluateModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateEvaluateModelRequest(_projectName, _trainedModelLabel, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringTrainedModel.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -765,12 +765,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringModel.EvaluateModel");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.EvaluateModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateEvaluateModelRequest(_projectName, _trainedModelLabel, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "TextAuthoringTrainedModel.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

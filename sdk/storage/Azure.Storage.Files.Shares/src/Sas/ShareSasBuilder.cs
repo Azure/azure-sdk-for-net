@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Sas
 {
@@ -132,6 +134,13 @@ namespace Azure.Storage.Sas
         /// Override the value returned for Cache-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2025-07-05, this value  specifies the Entra ID of the user would is authorized to
+        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
+        /// issued to the user specified in this value.
+        /// </summary>
+        public string DelegatedUserObjectId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
@@ -350,6 +359,109 @@ namespace Azure.Storage.Sas
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
+        }
+
+        /// <summary>
+        /// Use an account's <see cref="UserDelegationKey"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="userDelegationKey">
+        /// A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// </param>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <returns>
+        /// The <see cref="ShareSasQueryParameters"/> used for authenticating requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public ShareSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
+            => ToSasQueryParameters(userDelegationKey, accountName, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="UserDelegationKey"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="userDelegationKey">
+        /// A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// </param>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <returns>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// </param>
+        /// The <see cref="SasQueryParameters"/> used for authenticating requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public ShareSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName, out string stringToSign)
+        {
+            userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
+
+            EnsureState();
+
+            stringToSign = ToStringToSign(userDelegationKey, accountName);
+
+            string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+
+            ShareSasQueryParameters p = new ShareSasQueryParameters(
+                version: Version,
+                services: default,
+                resourceTypes: default,
+                protocol: Protocol,
+                startsOn: StartsOn,
+                expiresOn: ExpiresOn,
+                ipRange: IPRange,
+                identifier: null,
+                resource: Resource,
+                permissions: Permissions,
+                signature: signature,
+                keyOid: userDelegationKey.SignedObjectId,
+                keyTid: userDelegationKey.SignedTenantId,
+                keyStart: userDelegationKey.SignedStartsOn,
+                keyExpiry: userDelegationKey.SignedExpiresOn,
+                keyService: userDelegationKey.SignedService,
+                keyVersion: userDelegationKey.SignedVersion,
+                cacheControl: CacheControl,
+                contentDisposition: ContentDisposition,
+                contentEncoding: ContentEncoding,
+                contentLanguage: ContentLanguage,
+                contentType: ContentType,
+                delegatedUserObjectId: DelegatedUserObjectId,
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
+            return p;
+        }
+
+        private string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
+        {
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+
+            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(accountName, ShareName ?? string.Empty, FilePath ?? string.Empty),
+                    userDelegationKey.SignedObjectId,
+                    userDelegationKey.SignedTenantId,
+                    signedStart,
+                    signedExpiry,
+                    userDelegationKey.SignedService,
+                    userDelegationKey.SignedVersion,
+                    userDelegationKey.SignedDelegatedUserTenantId,
+                    DelegatedUserObjectId,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
         }
 
         /// <summary>

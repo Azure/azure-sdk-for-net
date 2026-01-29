@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct EntityImpact : IEquatable<EntityImpact>
     {
         private readonly string _value;
+        /// <summary> Standard impact. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Limited impact. </summary>
+        private const string LimitedValue = "Limited";
+        /// <summary> Suppressed impact. </summary>
+        private const string SuppressedValue = "Suppressed";
 
         /// <summary> Initializes a new instance of <see cref="EntityImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityImpact(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string LimitedValue = "Limited";
-        private const string SuppressedValue = "Suppressed";
+            _value = value;
+        }
 
         /// <summary> Standard impact. </summary>
         public static EntityImpact Standard { get; } = new EntityImpact(StandardValue);
+
         /// <summary> Limited impact. </summary>
         public static EntityImpact Limited { get; } = new EntityImpact(LimitedValue);
+
         /// <summary> Suppressed impact. </summary>
         public static EntityImpact Suppressed { get; } = new EntityImpact(SuppressedValue);
+
         /// <summary> Determines if two <see cref="EntityImpact"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityImpact left, EntityImpact right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityImpact"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityImpact left, EntityImpact right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityImpact"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityImpact(string value) => new EntityImpact(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityImpact?(string value) => value == null ? null : new EntityImpact(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityImpact other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityImpact other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

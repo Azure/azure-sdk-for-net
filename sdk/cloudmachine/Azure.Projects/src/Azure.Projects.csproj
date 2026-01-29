@@ -10,6 +10,7 @@
     <NoWarn>CS1591</NoWarn>
     <NoWarn>OPENAI001</NoWarn>
     <NoWarn>AZC0007</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,8 +25,6 @@
     <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.Search.Documents" />
-    <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>

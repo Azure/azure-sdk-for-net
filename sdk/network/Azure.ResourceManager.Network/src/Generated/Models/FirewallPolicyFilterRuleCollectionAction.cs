@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The type of action. </summary>
+        [WirePath("type")]
         public FirewallPolicyFilterRuleCollectionActionType? ActionType { get; set; }
     }
 }

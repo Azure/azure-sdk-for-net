@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct JobRunStatus : IEquatable<JobRunStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="JobRunStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobRunStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string QueuedValue = "Queued";
         private const string StartedValue = "Started";
         private const string RunningValue = "Running";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.StorageMover.Models
         private const string SucceededValue = "Succeeded";
         private const string PausedByBandwidthManagementValue = "PausedByBandwidthManagement";
 
-        /// <summary> Queued. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public JobRunStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Queued. </summary>
         public static JobRunStatus Queued { get; } = new JobRunStatus(QueuedValue);
-        /// <summary> Started. </summary>
+
+        /// <summary> Gets the Started. </summary>
         public static JobRunStatus Started { get; } = new JobRunStatus(StartedValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static JobRunStatus Running { get; } = new JobRunStatus(RunningValue);
-        /// <summary> CancelRequested. </summary>
+
+        /// <summary> Gets the CancelRequested. </summary>
         public static JobRunStatus CancelRequested { get; } = new JobRunStatus(CancelRequestedValue);
-        /// <summary> Canceling. </summary>
+
+        /// <summary> Gets the Canceling. </summary>
         public static JobRunStatus Canceling { get; } = new JobRunStatus(CancelingValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static JobRunStatus Canceled { get; } = new JobRunStatus(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static JobRunStatus Failed { get; } = new JobRunStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static JobRunStatus Succeeded { get; } = new JobRunStatus(SucceededValue);
-        /// <summary> PausedByBandwidthManagement. </summary>
+
+        /// <summary> Gets the PausedByBandwidthManagement. </summary>
         public static JobRunStatus PausedByBandwidthManagement { get; } = new JobRunStatus(PausedByBandwidthManagementValue);
+
         /// <summary> Determines if two <see cref="JobRunStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobRunStatus left, JobRunStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobRunStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobRunStatus left, JobRunStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobRunStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobRunStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobRunStatus(string value) => new JobRunStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobRunStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobRunStatus?(string value) => value == null ? null : new JobRunStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobRunStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobRunStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

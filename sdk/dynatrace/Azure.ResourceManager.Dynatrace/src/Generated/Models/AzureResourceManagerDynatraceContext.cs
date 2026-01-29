@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,17 +14,25 @@ namespace Azure.ResourceManager.Dynatrace
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AppServiceListResponse))]
-    [ModelReaderWriterBuildable(typeof(DynatraceAccountCredentialsInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceAccountInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceBillingPlanInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceEnvironmentInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceEnvironmentProperties))]
+    [ModelReaderWriterBuildable(typeof(DynatraceManageAgentDetails))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMetricsStatusResult))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMetricStatusContent))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorData))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMonitoredResourceContent))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitoredResourceDetails))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMonitoredSubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMonitoredSubscriptionProperties))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMonitoredSubscriptionResource))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMonitoredSubscriptionStatus))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorPatch))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMonitorProperties))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorResource))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorResourceFilteringTag))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorResourceLogRules))]
@@ -38,20 +47,25 @@ namespace Azure.ResourceManager.Dynatrace
     [ModelReaderWriterBuildable(typeof(DynatraceSsoDetailsContent))]
     [ModelReaderWriterBuildable(typeof(DynatraceSsoDetailsResult))]
     [ModelReaderWriterBuildable(typeof(DynatraceTagRuleData))]
-    [ModelReaderWriterBuildable(typeof(DynatraceTagRulePatch))]
+    [ModelReaderWriterBuildable(typeof(DynatraceTagRuleProperties))]
     [ModelReaderWriterBuildable(typeof(DynatraceTagRuleResource))]
+    [ModelReaderWriterBuildable(typeof(DynatraceUpgradePlanContent))]
     [ModelReaderWriterBuildable(typeof(DynatraceVmExtensionPayload))]
     [ModelReaderWriterBuildable(typeof(LinkableEnvironmentContent))]
     [ModelReaderWriterBuildable(typeof(LinkableEnvironmentListResponse))]
     [ModelReaderWriterBuildable(typeof(LinkableEnvironmentResult))]
+    [ModelReaderWriterBuildable(typeof(ManageAgentInstallationContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSResourceDetailsContent))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSResourceDetailsResult))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitorResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(MonitorUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VmHostsListResponse))]
+    [ModelReaderWriterBuildable(typeof(VmHostsListResult))]
     public partial class AzureResourceManagerDynatraceContext : ModelReaderWriterContext
     {
     }

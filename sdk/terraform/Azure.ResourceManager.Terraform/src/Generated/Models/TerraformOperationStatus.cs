@@ -7,89 +7,69 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    /// <summary> The status of the LRO operation. </summary>
+    /// <summary> The status of the LRO (Long Running Operation) and the export result. </summary>
     public partial class TerraformOperationStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TerraformOperationStatus"/>. </summary>
         /// <param name="status"> The operation status. </param>
-        internal TerraformOperationStatus(TerraformResourceProvisioningState status)
+        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
+        internal TerraformOperationStatus(TerraformResourceProvisioningState status, string id)
         {
             Status = status;
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="TerraformOperationStatus"/>. </summary>
         /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
         /// <param name="status"> The operation status. </param>
+        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
         /// <param name="name"> The name of the  operationStatus resource. </param>
         /// <param name="startOn"> Operation start time. </param>
         /// <param name="endOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerraformOperationStatus(TerraformExportResult properties, TerraformResourceProvisioningState status, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TerraformOperationStatus(TerraformExportResult properties, TerraformResourceProvisioningState status, string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Status = status;
+            Id = id;
             Name = name;
             StartOn = startOn;
             EndOn = endOn;
             PercentComplete = percentComplete;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TerraformOperationStatus"/> for deserialization. </summary>
-        internal TerraformOperationStatus()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </summary>
         public TerraformExportResult Properties { get; }
+
         /// <summary> The operation status. </summary>
         public TerraformResourceProvisioningState Status { get; }
+
+        /// <summary> The unique identifier for the operationStatus resource. </summary>
+        public string Id { get; }
+
         /// <summary> The name of the  operationStatus resource. </summary>
         public string Name { get; }
+
         /// <summary> Operation start time. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> Operation complete time. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> The progress made toward completing the operation. </summary>
         public double? PercentComplete { get; }
+
         /// <summary> Errors that occurred if the operation ended with Canceled or Failed status. </summary>
         public ResponseError Error { get; }
     }

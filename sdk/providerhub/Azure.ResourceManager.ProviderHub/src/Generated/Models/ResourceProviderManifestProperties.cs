@@ -49,29 +49,58 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceProviderManifestProperties()
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
+            Services = new ChangeTrackingList<ResourceProviderService>();
             RequiredFeatures = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<ResourceProviderCapabilities>();
+            GlobalNotificationEndpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
+            Notifications = new ChangeTrackingList<ProviderNotification>();
+            LinkedNotificationRules = new ChangeTrackingList<FanoutLinkedNotificationRule>();
+            ResourceHydrationAccounts = new ChangeTrackingList<ResourceHydrationAccount>();
+            ManagementGroupGlobalNotificationEndpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
+            OptionalFeatures = new ChangeTrackingList<string>();
+            LegacyRegistrations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifestProperties"/>. </summary>
-        /// <param name="providerAuthentication"></param>
-        /// <param name="providerAuthorizations"></param>
-        /// <param name="namespace"></param>
-        /// <param name="providerVersion"></param>
-        /// <param name="providerType"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="requestHeaderOptions"></param>
-        /// <param name="management"></param>
-        /// <param name="capabilities"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="templateDeploymentOptions"></param>
+        /// <param name="providerAuthentication"> The provider authentication. </param>
+        /// <param name="providerAuthorizations"> The provider authorizations. </param>
+        /// <param name="namespace"> The namespace. </param>
+        /// <param name="services"> The services. </param>
+        /// <param name="serviceName"> The service name. </param>
+        /// <param name="providerVersion"> The provider version. </param>
+        /// <param name="providerType"> The provider type. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="featuresRule"> The features rule. </param>
+        /// <param name="requestHeaderOptions"> The request header options. </param>
+        /// <param name="management"> The resource provider management. </param>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="crossTenantTokenValidation"> The cross tenant token validation. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="templateDeploymentOptions"> The template deployment options. </param>
+        /// <param name="globalNotificationEndpoints"> The global notification endpoints. </param>
+        /// <param name="enableTenantLinkedNotification"> The enable tenant linked notification. </param>
+        /// <param name="notifications"> The notifications. </param>
+        /// <param name="linkedNotificationRules"> The linked notification rules. </param>
+        /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
+        /// <param name="dstsConfiguration"> The dsts configuration. </param>
+        /// <param name="notificationOptions"> Notification options. </param>
+        /// <param name="resourceHydrationAccounts"> resource hydration accounts. </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="managementGroupGlobalNotificationEndpoints"> Management groups global notification endpoints. </param>
+        /// <param name="optionalFeatures"> Optional features. </param>
+        /// <param name="resourceGroupLockOptionDuringMove"> Resource group lock option during move. </param>
+        /// <param name="responseOptions"> Response options. </param>
+        /// <param name="legacyNamespace"> Legacy namespace. </param>
+        /// <param name="legacyRegistrations"> Legacy registrations. </param>
+        /// <param name="customManifestVersion"> Custom manifest version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ProviderDstsConfiguration dstsConfiguration, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
             Namespace = @namespace;
+            Services = services;
+            ServiceName = serviceName;
             ProviderVersion = providerVersion;
             ProviderType = providerType;
             RequiredFeatures = requiredFeatures;
@@ -79,62 +108,73 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequestHeaderOptions = requestHeaderOptions;
             Management = management;
             Capabilities = capabilities;
+            CrossTenantTokenValidation = crossTenantTokenValidation;
             Metadata = metadata;
             TemplateDeploymentOptions = templateDeploymentOptions;
+            GlobalNotificationEndpoints = globalNotificationEndpoints;
+            EnableTenantLinkedNotification = enableTenantLinkedNotification;
+            Notifications = notifications;
+            LinkedNotificationRules = linkedNotificationRules;
+            ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
+            DstsConfiguration = dstsConfiguration;
+            NotificationOptions = notificationOptions;
+            ResourceHydrationAccounts = resourceHydrationAccounts;
+            NotificationSettings = notificationSettings;
+            ManagementGroupGlobalNotificationEndpoints = managementGroupGlobalNotificationEndpoints;
+            OptionalFeatures = optionalFeatures;
+            ResourceGroupLockOptionDuringMove = resourceGroupLockOptionDuringMove;
+            ResponseOptions = responseOptions;
+            LegacyNamespace = legacyNamespace;
+            LegacyRegistrations = legacyRegistrations;
+            CustomManifestVersion = customManifestVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the provider authentication. </summary>
+        /// <summary> The provider authentication. </summary>
         internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
-        /// <summary> Gets or sets the provider authentication allowed audiences. </summary>
+        /// <summary> The allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
             set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
-        /// <summary> Gets the provider authorizations. </summary>
+        /// <summary> The provider authorizations. </summary>
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
-        /// <summary> Gets or sets the namespace. </summary>
+        /// <summary> The namespace. </summary>
         public string Namespace { get; set; }
-        /// <summary> Gets or sets the provider version. </summary>
+        /// <summary> The services. </summary>
+        public IList<ResourceProviderService> Services { get; }
+        /// <summary> The service name. </summary>
+        public string ServiceName { get; set; }
+        /// <summary> The provider version. </summary>
         public string ProviderVersion { get; set; }
-        /// <summary> Gets or sets the provider type. </summary>
+        /// <summary> The provider type. </summary>
         public ResourceProviderType? ProviderType { get; set; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
-        /// <summary> Gets or sets the features rule. </summary>
-        internal FeaturesRule FeaturesRule { get; set; }
-        /// <summary> Gets or sets the required features policy. </summary>
+        /// <summary> The features rule. </summary>
+        internal ProviderFeaturesRule FeaturesRule { get; set; }
+        /// <summary> The required feature policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
             set
             {
-                FeaturesRule = value.HasValue ? new FeaturesRule(value.Value) : null;
+                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : null;
             }
         }
 
-        /// <summary> Gets or sets the request header options. </summary>
-        internal RequestHeaderOptions RequestHeaderOptions { get; set; }
-        /// <summary> Gets or sets the opt in headers. </summary>
-        public OptInHeaderType? OptInHeaders
-        {
-            get => RequestHeaderOptions is null ? default : RequestHeaderOptions.OptInHeaders;
-            set
-            {
-                if (RequestHeaderOptions is null)
-                    RequestHeaderOptions = new RequestHeaderOptions();
-                RequestHeaderOptions.OptInHeaders = value;
-            }
-        }
-
-        /// <summary> Gets or sets the management. </summary>
+        /// <summary> The request header options. </summary>
+        public ProviderRequestHeaderOptions RequestHeaderOptions { get; set; }
+        /// <summary> The resource provider management. </summary>
         public ResourceProviderManagement Management { get; set; }
-        /// <summary> Gets the capabilities. </summary>
+        /// <summary> The capabilities. </summary>
         public IList<ResourceProviderCapabilities> Capabilities { get; }
+        /// <summary> The cross tenant token validation. </summary>
+        public CrossTenantTokenValidation? CrossTenantTokenValidation { get; set; }
         /// <summary>
-        /// Anything
+        /// The metadata.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -164,7 +204,86 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary> Gets or sets the template deployment options. </summary>
+        /// <summary> The template deployment options. </summary>
         public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
+        /// <summary> The global notification endpoints. </summary>
+        public IList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
+        /// <summary> The enable tenant linked notification. </summary>
+        public bool? EnableTenantLinkedNotification { get; set; }
+        /// <summary> The notifications. </summary>
+        public IList<ProviderNotification> Notifications { get; }
+        /// <summary> The linked notification rules. </summary>
+        public IList<FanoutLinkedNotificationRule> LinkedNotificationRules { get; }
+        /// <summary> The resource provider authorization rules. </summary>
+        internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; set; }
+        /// <summary> The async operation polling rules. </summary>
+        public AsyncOperationPollingRules AsyncOperationPollingRules
+        {
+            get => ResourceProviderAuthorizationRules is null ? default : ResourceProviderAuthorizationRules.AsyncOperationPollingRules;
+            set
+            {
+                if (ResourceProviderAuthorizationRules is null)
+                    ResourceProviderAuthorizationRules = new ResourceProviderAuthorizationRules();
+                ResourceProviderAuthorizationRules.AsyncOperationPollingRules = value;
+            }
+        }
+
+        /// <summary> The dsts configuration. </summary>
+        public ProviderDstsConfiguration DstsConfiguration { get; set; }
+        /// <summary> Notification options. </summary>
+        public ProviderNotificationOption? NotificationOptions { get; set; }
+        /// <summary> resource hydration accounts. </summary>
+        public IList<ResourceHydrationAccount> ResourceHydrationAccounts { get; }
+        /// <summary> Notification settings. </summary>
+        internal ResourceProviderManifestNotificationSettings NotificationSettings { get; set; }
+        /// <summary> Gets the notification subscriber settings. </summary>
+        public IList<SubscriberSetting> NotificationSubscriberSettings
+        {
+            get
+            {
+                if (NotificationSettings is null)
+                    NotificationSettings = new ResourceProviderManifestNotificationSettings();
+                return NotificationSettings.SubscriberSettings;
+            }
+        }
+
+        /// <summary> Management groups global notification endpoints. </summary>
+        public IList<ResourceProviderEndpoint> ManagementGroupGlobalNotificationEndpoints { get; }
+        /// <summary> Optional features. </summary>
+        public IList<string> OptionalFeatures { get; }
+        /// <summary> Resource group lock option during move. </summary>
+        internal ResourceProviderManifestResourceGroupLockOptionDuringMove ResourceGroupLockOptionDuringMove { get; set; }
+        /// <summary> The action verb that will be blocked when the resource group is locked during move. </summary>
+        public BlockActionVerb? ResourceGroupLockOptionDuringMoveBlockActionVerb
+        {
+            get => ResourceGroupLockOptionDuringMove is null ? default : ResourceGroupLockOptionDuringMove.BlockActionVerb;
+            set
+            {
+                if (ResourceGroupLockOptionDuringMove is null)
+                    ResourceGroupLockOptionDuringMove = new ResourceProviderManifestResourceGroupLockOptionDuringMove();
+                ResourceGroupLockOptionDuringMove.BlockActionVerb = value;
+            }
+        }
+
+        /// <summary> Response options. </summary>
+        internal ResourceProviderManifestResponseOptions ResponseOptions { get; set; }
+        /// <summary> Gets or sets the service client options type. </summary>
+        public ServiceClientOptionsType? ServiceClientOptionsType
+        {
+            get => ResponseOptions is null ? default : ResponseOptions.ServiceClientOptionsType;
+            set
+            {
+                if (ResponseOptions is null)
+                    ResponseOptions = new ResourceProviderManifestResponseOptions();
+                ResponseOptions.ServiceClientOptionsType = value;
+            }
+        }
+
+        /// <summary> Legacy namespace. </summary>
+        public string LegacyNamespace { get; set; }
+        /// <summary> Legacy registrations. </summary>
+        public IList<string> LegacyRegistrations { get; }
+        /// <summary> Custom manifest version. </summary>
+        public string CustomManifestVersion { get; set; }
     }
 }

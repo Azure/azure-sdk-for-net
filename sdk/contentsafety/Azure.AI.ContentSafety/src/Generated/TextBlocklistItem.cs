@@ -46,7 +46,7 @@ namespace Azure.AI.ContentSafety
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TextBlocklistItem"/>. </summary>
-        /// <param name="text"> BlocklistItem content. </param>
+        /// <param name="text"> BlocklistItem content. The length is counted using Unicode code point. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public TextBlocklistItem(string text)
         {
@@ -58,13 +58,15 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of <see cref="TextBlocklistItem"/>. </summary>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="description"> BlocklistItem description. </param>
-        /// <param name="text"> BlocklistItem content. </param>
+        /// <param name="text"> BlocklistItem content. The length is counted using Unicode code point. </param>
+        /// <param name="isRegex"> An optional properties indicating whether this item is to be matched as a regular expression. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextBlocklistItem(string blocklistItemId, string description, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TextBlocklistItem(string blocklistItemId, string description, string text, bool? isRegex, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlocklistItemId = blocklistItemId;
             Description = description;
             Text = text;
+            IsRegex = isRegex;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,7 +79,9 @@ namespace Azure.AI.ContentSafety
         public string BlocklistItemId { get; }
         /// <summary> BlocklistItem description. </summary>
         public string Description { get; set; }
-        /// <summary> BlocklistItem content. </summary>
+        /// <summary> BlocklistItem content. The length is counted using Unicode code point. </summary>
         public string Text { get; set; }
+        /// <summary> An optional properties indicating whether this item is to be matched as a regular expression. </summary>
+        public bool? IsRegex { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -66,7 +67,8 @@ internal static class CancellationHelper
             throw CreateOperationCanceledException(
                 innerException,
                 timeoutToken,
-                $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");
+                $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
+                    $"The default timeout can be adjusted by passing a custom {nameof(ClientPipelineOptions)}.{nameof(ClientPipelineOptions.NetworkTimeout)} value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.");
         }
     }
 }

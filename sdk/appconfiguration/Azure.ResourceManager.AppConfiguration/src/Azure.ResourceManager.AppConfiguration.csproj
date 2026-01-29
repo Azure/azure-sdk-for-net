@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.AppConfiguration</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.AppConfiguration.</Description>
     <PackageTags>azure;management;appconfiguration</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

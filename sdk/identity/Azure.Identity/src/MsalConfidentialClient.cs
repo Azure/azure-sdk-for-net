@@ -72,7 +72,7 @@ namespace Azure.Identity
                 enableCae ? cp1Capabilities : Array.Empty<string>();
 
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline), false)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
 
             // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
@@ -169,8 +169,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {
@@ -211,8 +210,7 @@ namespace Azure.Identity
             var builder = client.AcquireTokenSilent(scopes, account);
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {
@@ -254,8 +252,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {
@@ -297,8 +294,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {

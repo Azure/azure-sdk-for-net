@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HealthDataAIServices;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHealthDataAIServicesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHealthDataAIServicesResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHealthDataAIServicesResourceGroupResource for mocking. </summary>
         protected MockableHealthDataAIServicesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHealthDataAIServicesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHealthDataAIServicesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHealthDataAIServicesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DeidServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeidServiceResources and their operations over a DeidServiceResource. </returns>
+        /// <summary> Gets a collection of DeidServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DeidServices and their operations over a DeidServiceResource. </returns>
         public virtual DeidServiceCollection GetDeidServices()
         {
             return GetCachedClient(client => new DeidServiceCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         /// Get a DeidService
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeidServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeidServiceResource>> GetDeidServiceAsync(string deidServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
+
             return await GetDeidServices().GetAsync(deidServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         /// Get a DeidService
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeidServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeidServiceResource> GetDeidService(string deidServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
+
             return GetDeidServices().Get(deidServiceName, cancellationToken);
         }
     }

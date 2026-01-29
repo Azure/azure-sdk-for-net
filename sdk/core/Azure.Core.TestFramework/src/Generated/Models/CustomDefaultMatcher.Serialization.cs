@@ -35,6 +35,11 @@ namespace Azure.Core.TestFramework.Models
                 writer.WritePropertyName("ignoredQueryParameters"u8);
                 writer.WriteStringValue(IgnoredQueryParameters);
             }
+            if (Optional.IsDefined(IgnoreQueryOrdering))
+            {
+                writer.WritePropertyName("ignoreQueryOrdering"u8);
+                writer.WriteBooleanValue(IgnoreQueryOrdering.Value);
+            }
             writer.WriteEndObject();
         }
     }

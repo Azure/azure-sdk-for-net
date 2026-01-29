@@ -160,6 +160,7 @@ public partial class SiteSlotHybridConnectionNamespaceRelay : ProvisionableResou
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _relayName = DefineProperty<string>("RelayName", ["properties", "relayName"], isRequired: true);
         _hostname = DefineProperty<string>("Hostname", ["properties", "hostname"]);

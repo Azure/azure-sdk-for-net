@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The FeaturesPolicy. </summary>
+    /// <summary> The required feature policy. </summary>
     public readonly partial struct FeaturesPolicy : IEquatable<FeaturesPolicy>
     {
         private readonly string _value;

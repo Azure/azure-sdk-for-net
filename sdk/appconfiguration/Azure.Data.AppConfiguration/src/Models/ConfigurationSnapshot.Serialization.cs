@@ -9,15 +9,8 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class ConfigurationSnapshot : IUtf8JsonSerializable
+    public partial class ConfigurationSnapshot
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, ModelSerializationExtensions.WireOptions);
-            writer.WriteEndObject();
-        }
-
         internal static ConfigurationSnapshot DeserializeSnapshot(JsonElement element)
         {
             string name = default;

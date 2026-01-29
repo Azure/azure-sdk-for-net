@@ -53,13 +53,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of <see cref="PolicyEvaluationResult"/>. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
-        /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
+        /// <param name="checkRestrictionEvaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
+        /// <param name="effectDetails"> The details of the effect that was applied to the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, PolicyEvaluationDetails evaluationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails, PolicyEffectDetails effectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyInfo = policyInfo;
             EvaluationResult = evaluationResult;
-            EvaluationDetails = evaluationDetails;
+            CheckRestrictionEvaluationDetails = checkRestrictionEvaluationDetails;
+            EffectDetails = effectDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,6 +70,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </summary>
         public string EvaluationResult { get; }
         /// <summary> The detailed results of the policy expressions and values that were evaluated. </summary>
-        public PolicyEvaluationDetails EvaluationDetails { get; }
+        public CheckRestrictionEvaluationDetails CheckRestrictionEvaluationDetails { get; }
+        /// <summary> The details of the effect that was applied to the resource. </summary>
+        internal PolicyEffectDetails EffectDetails { get; }
+        /// <summary> The effect that was applied to the resource. http://aka.ms/policyeffects. </summary>
+        public string PolicyEffect
+        {
+            get => EffectDetails?.PolicyEffect;
+        }
     }
 }

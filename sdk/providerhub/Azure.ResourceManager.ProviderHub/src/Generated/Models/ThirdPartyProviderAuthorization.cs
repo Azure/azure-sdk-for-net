@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThirdPartyProviderAuthorization"/>. </summary>
-        /// <param name="authorizations"></param>
-        /// <param name="managedByTenantId"></param>
+        /// <param name="authorizations"> The authorizations. </param>
+        /// <param name="managedByTenantId"> The managed by tenant id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThirdPartyProviderAuthorization(IList<LightHouseAuthorization> authorizations, string managedByTenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the authorizations. </summary>
+        /// <summary> The authorizations. </summary>
         public IList<LightHouseAuthorization> Authorizations { get; }
-        /// <summary> Gets or sets the managed by tenant id. </summary>
+        /// <summary> The managed by tenant id. </summary>
         public string ManagedByTenantId { get; set; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> An invariant to describe the feature. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> An invariant if the feature is measured by quantity. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

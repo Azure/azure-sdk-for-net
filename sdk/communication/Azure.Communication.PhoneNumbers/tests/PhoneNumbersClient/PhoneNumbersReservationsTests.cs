@@ -117,6 +117,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             Assert.IsNotNull(response.Value);
             Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+
+            browseRequest = new PhoneNumbersBrowseOptions("IE", PhoneNumberType.Mobile);
+
+            response = await client.BrowseAvailableNumbersAsync(browseRequest);
+
+            Assert.IsNotNull(response.Value);
+            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+            Assert.IsTrue(response.Value.PhoneNumbers[0].PhoneNumberType == PhoneNumberType.Mobile);
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "BrowseAvailableNumbersUsingConnectionString")]
@@ -132,6 +140,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             Assert.IsNotNull(response.Value);
             Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+            Assert.IsTrue(response.Value.PhoneNumbers[0].PhoneNumberType == PhoneNumberType.TollFree);
+
+            browseRequest = new PhoneNumbersBrowseOptions("IE", PhoneNumberType.Mobile);
+
+            response = client.BrowseAvailableNumbers(browseRequest);
+
+            Assert.IsNotNull(response.Value);
+            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
+            Assert.IsTrue(response.Value.PhoneNumbers[0].PhoneNumberType == PhoneNumberType.Mobile);
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumbersReservationsAsyncWithConnectionString")]
@@ -203,15 +220,21 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(_initialReservationState!.Status, reservation.Status);
         }
 
-        [TestCase(AuthMethod.ConnectionString, TestName = "CreateOrUpdateReservationAsyncUsingConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, TestName = "CreateOrUpdateReservationAsyncUsingAzureKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, TestName = "CreateOrUpdateReservationAsyncUsingTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, "US", "tollFree", TestName = "CreateOrUpdateReservationAsyncTollFreeUsingConnectionString")]
+        [TestCase(AuthMethod.ConnectionString, "US", "geographic", TestName = "CreateOrUpdateReservationAsyncGeographicUsingConnectionString")]
+        [TestCase(AuthMethod.ConnectionString, "IE", "mobile", TestName = "CreateOrUpdateReservationAsyncMobileUsingConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "US", "tollFree", TestName = "CreateOrUpdateReservationAsyncTollFreeUsingKeyCredential")]
+        [TestCase(AuthMethod.KeyCredential, "US", "geographic", TestName = "CreateOrUpdateReservationAsyncGeographicUsingKeyCredential")]
+        [TestCase(AuthMethod.KeyCredential, "IE", "mobile", TestName = "CreateOrUpdateReservationAsyncMobileUsingKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "US", "tollFree", TestName = "CreateOrUpdateReservationAsyncTollFreeUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, "US", "geographic", TestName = "CreateOrUpdateReservationAsyncGeographicUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, "IE", "mobile", TestName = "CreateOrUpdateReservationAsyncMobileUsingTokenCredential")]
         [AsyncOnly]
         [Order(2)] // This test is executed after tests that depend on the initial reservation state.
-        public async Task CreateOrUpdateReservationAsync(AuthMethod authMethod)
+        public async Task CreateOrUpdateReservationAsync(AuthMethod authMethod, string countryCode, string phoneNumberType)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
-            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions(countryCode, phoneNumberType);
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
             var availablePhoneNumbers = response.Value.PhoneNumbers;
 
@@ -251,15 +274,21 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsFalse(reservationAfterRemove.PhoneNumbers.ContainsKey(phoneNumberIdToRemove));
         }
 
-        [TestCase(AuthMethod.ConnectionString, TestName = "CreateOrUpdateReservationUsingConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, TestName = "CreateOrUpdateReservationUsingAzureKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, TestName = "CreateOrUpdateReservationUsingTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, "US", "tollFree", TestName = "CreateOrUpdateReservationTollFreeUsingConnectionString")]
+        [TestCase(AuthMethod.ConnectionString, "US", "geographic", TestName = "CreateOrUpdateReservationGeographicUsingConnectionString")]
+        [TestCase(AuthMethod.ConnectionString, "IE", "mobile", TestName = "CreateOrUpdateReservationMobileUsingConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "US", "tollFree", TestName = "CreateOrUpdateReservationTollFreeUsingKeyCredential")]
+        [TestCase(AuthMethod.KeyCredential, "US", "geographic", TestName = "CreateOrUpdateReservationGeographicUsingKeyCredential")]
+        [TestCase(AuthMethod.KeyCredential, "IE", "mobile", TestName = "CreateOrUpdateReservationMobileUsingKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "US", "tollFree", TestName = "CreateOrUpdateReservationTollFreeUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, "US", "geographic", TestName = "CreateOrUpdateReservationGeographicUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, "IE", "mobile", TestName = "CreateOrUpdateReservationMobileUsingTokenCredential")]
         [SyncOnly]
         [Order(2)] // This test is executed after tests that depend on the initial reservation state.
-        public void CreateOrUpdateReservation(AuthMethod authMethod)
+        public void CreateOrUpdateReservation(AuthMethod authMethod, string countryCode, string phoneNumberType)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
-            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions(countryCode, phoneNumberType);
             var response = client.BrowseAvailableNumbers(browseRequest);
             var availablePhoneNumbers = response.Value.PhoneNumbers;
 

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Workload identity settings for the security profile. </summary>
+    /// <summary>
+    /// Workload identity settings for the security profile.
+    /// Serialized Name: ManagedClusterSecurityProfileWorkloadIdentity
+    /// </summary>
     internal partial class ManagedClusterSecurityProfileWorkloadIdentity
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
-        /// <param name="isWorkloadIdentityEnabled"> Whether to enable workload identity. </param>
+        /// <param name="isWorkloadIdentityEnabled">
+        /// Whether to enable workload identity.
+        /// Serialized Name: ManagedClusterSecurityProfileWorkloadIdentity.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterSecurityProfileWorkloadIdentity(bool? isWorkloadIdentityEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether to enable workload identity. </summary>
+        /// <summary>
+        /// Whether to enable workload identity.
+        /// Serialized Name: ManagedClusterSecurityProfileWorkloadIdentity.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsWorkloadIdentityEnabled { get; set; }
     }

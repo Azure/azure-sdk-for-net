@@ -41,6 +41,8 @@ namespace Azure.ResourceManager.DataFactory
         private readonly IntegrationRuntimeObjectMetadataRestOperations _integrationRuntimeObjectMetadataRestClient;
         private readonly ClientDiagnostics _integrationRuntimeNodesClientDiagnostics;
         private readonly IntegrationRuntimeNodesRestOperations _integrationRuntimeNodesRestClient;
+        private readonly ClientDiagnostics _integrationRuntimeClientDiagnostics;
+        private readonly IntegrationRuntimeRestOperations _integrationRuntimeRestClient;
         private readonly DataFactoryIntegrationRuntimeData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -72,6 +74,8 @@ namespace Azure.ResourceManager.DataFactory
             _integrationRuntimeObjectMetadataRestClient = new IntegrationRuntimeObjectMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _integrationRuntimeNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _integrationRuntimeNodesRestClient = new IntegrationRuntimeNodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _integrationRuntimeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _integrationRuntimeRestClient = new IntegrationRuntimeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -1722,6 +1726,166 @@ namespace Azure.ResourceManager.DataFactory
             {
                 var response = _integrationRuntimeNodesRestClient.GetIPAddress(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enable interactive authoring of Managed Virtual Network integration runtime.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/enableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationRuntime_EnableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The enable interactive authoring integration runtime properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> EnableInteractiveQueryIntegrationRuntimeAsync(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.EnableInteractiveQueryIntegrationRuntime");
+            scope.Start();
+            try
+            {
+                var response = await _integrationRuntimeRestClient.EnableInteractiveQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(new DataFactoryIntegrationRuntimeOperationSource(Client), _integrationRuntimeClientDiagnostics, Pipeline, _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enable interactive authoring of Managed Virtual Network integration runtime.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/enableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationRuntime_EnableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The enable interactive authoring integration runtime properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> EnableInteractiveQueryIntegrationRuntime(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.EnableInteractiveQueryIntegrationRuntime");
+            scope.Start();
+            try
+            {
+                var response = _integrationRuntimeRestClient.EnableInteractiveQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(new DataFactoryIntegrationRuntimeOperationSource(Client), _integrationRuntimeClientDiagnostics, Pipeline, _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable interactive authoring of Managed Virtual Network integration runtime.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/disableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationRuntime_DisableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> DisableInteractiveQueryIntegrationRuntimeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DisableInteractiveQueryIntegrationRuntime");
+            scope.Start();
+            try
+            {
+                var response = await _integrationRuntimeRestClient.DisableInteractiveQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(new DataFactoryIntegrationRuntimeOperationSource(Client), _integrationRuntimeClientDiagnostics, Pipeline, _integrationRuntimeRestClient.CreateDisableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable interactive authoring of Managed Virtual Network integration runtime.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/disableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationRuntime_DisableInteractiveQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> DisableInteractiveQueryIntegrationRuntime(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DisableInteractiveQueryIntegrationRuntime");
+            scope.Start();
+            try
+            {
+                var response = _integrationRuntimeRestClient.DisableInteractiveQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(new DataFactoryIntegrationRuntimeOperationSource(Client), _integrationRuntimeClientDiagnostics, Pipeline, _integrationRuntimeRestClient.CreateDisableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

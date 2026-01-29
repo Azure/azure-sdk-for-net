@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PlanetaryComputer
 {
-    internal class PlanetaryComputerGeoCatalogOperationSource : IOperationSource<PlanetaryComputerGeoCatalogResource>
+    /// <summary></summary>
+    internal partial class PlanetaryComputerGeoCatalogOperationSource : IOperationSource<PlanetaryComputerGeoCatalogResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PlanetaryComputerGeoCatalogOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PlanetaryComputerGeoCatalogResource IOperationSource<PlanetaryComputerGeoCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlanetaryComputerGeoCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlanetaryComputerContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PlanetaryComputerGeoCatalogData data = PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PlanetaryComputerGeoCatalogResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PlanetaryComputerGeoCatalogResource> IOperationSource<PlanetaryComputerGeoCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlanetaryComputerGeoCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlanetaryComputerContext.Default);
-            return await Task.FromResult(new PlanetaryComputerGeoCatalogResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PlanetaryComputerGeoCatalogData data = PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PlanetaryComputerGeoCatalogResource(_client, data);
         }
     }
 }

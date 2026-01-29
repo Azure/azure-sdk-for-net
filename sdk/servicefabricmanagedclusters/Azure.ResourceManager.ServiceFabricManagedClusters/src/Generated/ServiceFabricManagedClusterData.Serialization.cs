@@ -8,19 +8,25 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedClusterData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClusterData>
+    /// <summary> The managed cluster resource. </summary>
+    public partial class ServiceFabricManagedClusterData : TrackedResourceData, IJsonModel<ServiceFabricManagedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterData"/> for deserialization. </summary>
+        internal ServiceFabricManagedClusterData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricManagedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,13 +38,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -46,887 +56,151 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(DnsName))
-            {
-                writer.WritePropertyName("dnsName"u8);
-                writer.WriteStringValue(DnsName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
-            {
-                writer.WritePropertyName("fqdn"u8);
-                writer.WriteStringValue(Fqdn);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
-            {
-                writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(IPv4Address.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
-            {
-                writer.WritePropertyName("clusterId"u8);
-                writer.WriteStringValue(ClusterId.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterState))
-            {
-                writer.WritePropertyName("clusterState"u8);
-                writer.WriteStringValue(ClusterState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ClusterCertificateThumbprints))
-            {
-                writer.WritePropertyName("clusterCertificateThumbprints"u8);
-                writer.WriteStartArray();
-                foreach (var item in ClusterCertificateThumbprints)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ClientConnectionPort))
-            {
-                writer.WritePropertyName("clientConnectionPort"u8);
-                writer.WriteNumberValue(ClientConnectionPort.Value);
-            }
-            if (Optional.IsDefined(HttpGatewayConnectionPort))
-            {
-                writer.WritePropertyName("httpGatewayConnectionPort"u8);
-                writer.WriteNumberValue(HttpGatewayConnectionPort.Value);
-            }
-            if (Optional.IsDefined(AdminUserName))
-            {
-                writer.WritePropertyName("adminUserName"u8);
-                writer.WriteStringValue(AdminUserName);
-            }
-            if (Optional.IsDefined(AdminPassword))
-            {
-                writer.WritePropertyName("adminPassword"u8);
-                writer.WriteStringValue(AdminPassword);
-            }
-            if (Optional.IsCollectionDefined(LoadBalancingRules))
-            {
-                writer.WritePropertyName("loadBalancingRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in LoadBalancingRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsRdpAccessAllowed))
-            {
-                writer.WritePropertyName("allowRdpAccess"u8);
-                writer.WriteBooleanValue(IsRdpAccessAllowed.Value);
-            }
-            if (Optional.IsCollectionDefined(NetworkSecurityRules))
-            {
-                writer.WritePropertyName("networkSecurityRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in NetworkSecurityRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Clients))
-            {
-                writer.WritePropertyName("clients"u8);
-                writer.WriteStartArray();
-                foreach (var item in Clients)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AzureActiveDirectory))
-            {
-                writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory, options);
-            }
-            if (Optional.IsCollectionDefined(FabricSettings))
-            {
-                writer.WritePropertyName("fabricSettings"u8);
-                writer.WriteStartArray();
-                foreach (var item in FabricSettings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(ClusterCodeVersion))
-            {
-                writer.WritePropertyName("clusterCodeVersion"u8);
-                writer.WriteStringValue(ClusterCodeVersion);
-            }
-            if (Optional.IsDefined(ClusterUpgradeMode))
-            {
-                writer.WritePropertyName("clusterUpgradeMode"u8);
-                writer.WriteStringValue(ClusterUpgradeMode.Value.ToString());
-            }
-            if (Optional.IsDefined(ClusterUpgradeCadence))
-            {
-                writer.WritePropertyName("clusterUpgradeCadence"u8);
-                writer.WriteStringValue(ClusterUpgradeCadence.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AddOnFeatures))
-            {
-                writer.WritePropertyName("addonFeatures"u8);
-                writer.WriteStartArray();
-                foreach (var item in AddOnFeatures)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsAutoOSUpgradeEnabled))
-            {
-                writer.WritePropertyName("enableAutoOSUpgrade"u8);
-                writer.WriteBooleanValue(IsAutoOSUpgradeEnabled.Value);
-            }
-            if (Optional.IsDefined(HasZoneResiliency))
-            {
-                writer.WritePropertyName("zonalResiliency"u8);
-                writer.WriteBooleanValue(HasZoneResiliency.Value);
-            }
-            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
-            {
-                writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy, options);
-            }
-            if (Optional.IsDefined(IsIPv6Enabled))
-            {
-                writer.WritePropertyName("enableIpv6"u8);
-                writer.WriteBooleanValue(IsIPv6Enabled.Value);
-            }
-            if (Optional.IsDefined(SubnetId))
-            {
-                writer.WritePropertyName("subnetId"u8);
-                writer.WriteStringValue(SubnetId);
-            }
-            if (Optional.IsCollectionDefined(IPTags))
-            {
-                writer.WritePropertyName("ipTags"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPTags)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
-            {
-                writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteStringValue(IPv6Address.ToString());
-            }
-            if (Optional.IsDefined(IsServicePublicIPEnabled))
-            {
-                writer.WritePropertyName("enableServicePublicIP"u8);
-                writer.WriteBooleanValue(IsServicePublicIPEnabled.Value);
-            }
-            if (Optional.IsCollectionDefined(AuxiliarySubnets))
-            {
-                writer.WritePropertyName("auxiliarySubnets"u8);
-                writer.WriteStartArray();
-                foreach (var item in AuxiliarySubnets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServiceEndpoints))
-            {
-                writer.WritePropertyName("serviceEndpoints"u8);
-                writer.WriteStartArray();
-                foreach (var item in ServiceEndpoints)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ZonalUpdateMode))
-            {
-                writer.WritePropertyName("zonalUpdateMode"u8);
-                writer.WriteStringValue(ZonalUpdateMode.Value.ToString());
-            }
-            if (Optional.IsDefined(UseCustomVnet))
-            {
-                writer.WritePropertyName("useCustomVnet"u8);
-                writer.WriteBooleanValue(UseCustomVnet.Value);
-            }
-            if (Optional.IsDefined(PublicIPPrefixId))
-            {
-                writer.WritePropertyName("publicIPPrefixId"u8);
-                writer.WriteStringValue(PublicIPPrefixId);
-            }
-            if (Optional.IsDefined(PublicIPv6PrefixId))
-            {
-                writer.WritePropertyName("publicIPv6PrefixId"u8);
-                writer.WriteStringValue(PublicIPv6PrefixId);
-            }
-            if (Optional.IsDefined(DdosProtectionPlanId))
-            {
-                writer.WritePropertyName("ddosProtectionPlanId"u8);
-                writer.WriteStringValue(DdosProtectionPlanId);
-            }
-            if (Optional.IsDefined(UpgradeDescription))
-            {
-                writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription, options);
-            }
-            if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
-            {
-                writer.WritePropertyName("httpGatewayTokenAuthConnectionPort"u8);
-                writer.WriteNumberValue(HttpGatewayTokenAuthConnectionPort.Value);
-            }
-            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
-            {
-                writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
-                writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
-            }
-            if (Optional.IsDefined(AutoGeneratedDomainNameLabelScope))
-            {
-                writer.WritePropertyName("autoGeneratedDomainNameLabelScope"u8);
-                writer.WriteStringValue(AutoGeneratedDomainNameLabelScope.Value.ToString());
-            }
-            if (Optional.IsDefined(AllocatedOutboundPorts))
-            {
-                writer.WritePropertyName("allocatedOutboundPorts"u8);
-                writer.WriteNumberValue(AllocatedOutboundPorts.Value);
-            }
-            if (Optional.IsDefined(VmImage))
-            {
-                writer.WritePropertyName("VMImage"u8);
-                writer.WriteStringValue(VmImage);
-            }
-            writer.WriteEndObject();
         }
 
-        ServiceFabricManagedClusterData IJsonModel<ServiceFabricManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedClusterData IJsonModel<ServiceFabricManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceFabricManagedClusterData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceFabricManagedClusterData(document.RootElement, options);
         }
 
-        internal static ServiceFabricManagedClusterData DeserializeServiceFabricManagedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceFabricManagedClusterData DeserializeServiceFabricManagedClusterData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            ServiceFabricManagedClustersSku sku = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string dnsName = default;
-            string fqdn = default;
-            IPAddress ipv4Address = default;
-            Guid? clusterId = default;
-            ServiceFabricManagedClusterState? clusterState = default;
-            IReadOnlyList<BinaryData> clusterCertificateThumbprints = default;
-            int? clientConnectionPort = default;
-            int? httpGatewayConnectionPort = default;
-            string adminUserName = default;
-            string adminPassword = default;
-            IList<ManagedClusterLoadBalancingRule> loadBalancingRules = default;
-            bool? allowRdpAccess = default;
-            IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = default;
-            IList<ManagedClusterClientCertificate> clients = default;
-            ManagedClusterAzureActiveDirectory azureActiveDirectory = default;
-            IList<ClusterFabricSettingsSection> fabricSettings = default;
-            ServiceFabricManagedResourceProvisioningState? provisioningState = default;
-            string clusterCodeVersion = default;
-            ManagedClusterUpgradeMode? clusterUpgradeMode = default;
-            ManagedClusterUpgradeCadence? clusterUpgradeCadence = default;
-            IList<ManagedClusterAddOnFeature> addonFeatures = default;
-            bool? enableAutoOSUpgrade = default;
-            bool? zonalResiliency = default;
-            ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default;
-            bool? enableIPv6 = default;
-            string subnetId = default;
-            IList<ManagedClusterIPTag> ipTags = default;
-            IPAddress ipv6Address = default;
-            bool? enableServicePublicIP = default;
-            IList<ManagedClusterSubnet> auxiliarySubnets = default;
-            IList<ManagedClusterServiceEndpoint> serviceEndpoints = default;
-            ZonalUpdateMode? zonalUpdateMode = default;
-            bool? useCustomVnet = default;
-            ResourceIdentifier publicIPPrefixId = default;
-            ResourceIdentifier publicIPv6PrefixId = default;
-            ResourceIdentifier ddosProtectionPlanId = default;
-            ManagedClusterUpgradePolicy upgradeDescription = default;
-            int? httpGatewayTokenAuthConnectionPort = default;
-            bool? enableHttpGatewayExclusiveAuthMode = default;
-            AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default;
-            int? allocatedOutboundPorts = default;
-            string vmImage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ManagedClusterProperties properties = default;
+            ETag? eTag = default;
+            ServiceFabricManagedClustersSku sku = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    sku = ServiceFabricManagedClustersSku.DeserializeServiceFabricManagedClustersSku(property.Value, options);
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    properties = ManagedClusterProperties.DeserializeManagedClusterProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("dnsName"u8))
-                        {
-                            dnsName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fqdn"u8))
-                        {
-                            fqdn = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv4Address"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipv4Address = IPAddress.Parse(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
-                            {
-                                continue;
-                            }
-                            clusterId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterState = new ServiceFabricManagedClusterState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterCertificateThumbprints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<BinaryData> array = new List<BinaryData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(BinaryData.FromString(item.GetRawText()));
-                                }
-                            }
-                            clusterCertificateThumbprints = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("clientConnectionPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientConnectionPort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpGatewayConnectionPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            httpGatewayConnectionPort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("adminUserName"u8))
-                        {
-                            adminUserName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("adminPassword"u8))
-                        {
-                            adminPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("loadBalancingRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedClusterLoadBalancingRule> array = new List<ManagedClusterLoadBalancingRule>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedClusterLoadBalancingRule.DeserializeManagedClusterLoadBalancingRule(item, options));
-                            }
-                            loadBalancingRules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("allowRdpAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowRdpAccess = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkSecurityRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item, options));
-                            }
-                            networkSecurityRules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("clients"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedClusterClientCertificate> array = new List<ManagedClusterClientCertificate>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedClusterClientCertificate.DeserializeManagedClusterClientCertificate(item, options));
-                            }
-                            clients = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("azureActiveDirectory"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            azureActiveDirectory = ManagedClusterAzureActiveDirectory.DeserializeManagedClusterAzureActiveDirectory(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("fabricSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClusterFabricSettingsSection> array = new List<ClusterFabricSettingsSection>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ClusterFabricSettingsSection.DeserializeClusterFabricSettingsSection(item, options));
-                            }
-                            fabricSettings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ServiceFabricManagedResourceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterCodeVersion"u8))
-                        {
-                            clusterCodeVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterUpgradeMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterUpgradeMode = new ManagedClusterUpgradeMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterUpgradeCadence"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterUpgradeCadence = new ManagedClusterUpgradeCadence(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("addonFeatures"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedClusterAddOnFeature> array = new List<ManagedClusterAddOnFeature>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new ManagedClusterAddOnFeature(item.GetString()));
-                            }
-                            addonFeatures = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enableAutoOSUpgrade"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableAutoOSUpgrade = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("zonalResiliency"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zonalResiliency = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("enableIpv6"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableIPv6 = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("subnetId"u8))
-                        {
-                            subnetId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipTags"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedClusterIPTag> array = new List<ManagedClusterIPTag>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedClusterIPTag.DeserializeManagedClusterIPTag(item, options));
-                            }
-                            ipTags = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv6Address"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipv6Address = IPAddress.Parse(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enableServicePublicIP"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableServicePublicIP = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("auxiliarySubnets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedClusterSubnet> array = new List<ManagedClusterSubnet>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedClusterSubnet.DeserializeManagedClusterSubnet(item, options));
-                            }
-                            auxiliarySubnets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceEndpoints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedClusterServiceEndpoint> array = new List<ManagedClusterServiceEndpoint>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedClusterServiceEndpoint.DeserializeManagedClusterServiceEndpoint(item, options));
-                            }
-                            serviceEndpoints = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("zonalUpdateMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zonalUpdateMode = new ZonalUpdateMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("useCustomVnet"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useCustomVnet = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("publicIPPrefixId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicIPPrefixId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicIPv6PrefixId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicIPv6PrefixId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ddosProtectionPlanId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ddosProtectionPlanId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradeDescription"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            upgradeDescription = ManagedClusterUpgradePolicy.DeserializeManagedClusterUpgradePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("httpGatewayTokenAuthConnectionPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            httpGatewayTokenAuthConnectionPort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableHttpGatewayExclusiveAuthMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableHttpGatewayExclusiveAuthMode = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("autoGeneratedDomainNameLabelScope"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoGeneratedDomainNameLabelScope = new AutoGeneratedDomainNameLabelScope(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("allocatedOutboundPorts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allocatedOutboundPorts = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("VMImage"u8))
-                        {
-                            vmImage = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    sku = ServiceFabricManagedClustersSku.DeserializeServiceFabricManagedClustersSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricManagedClusterData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                dnsName,
-                fqdn,
-                ipv4Address,
-                clusterId,
-                clusterState,
-                clusterCertificateThumbprints ?? new ChangeTrackingList<BinaryData>(),
-                clientConnectionPort,
-                httpGatewayConnectionPort,
-                adminUserName,
-                adminPassword,
-                loadBalancingRules ?? new ChangeTrackingList<ManagedClusterLoadBalancingRule>(),
-                allowRdpAccess,
-                networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>(),
-                clients ?? new ChangeTrackingList<ManagedClusterClientCertificate>(),
-                azureActiveDirectory,
-                fabricSettings ?? new ChangeTrackingList<ClusterFabricSettingsSection>(),
-                provisioningState,
-                clusterCodeVersion,
-                clusterUpgradeMode,
-                clusterUpgradeCadence,
-                addonFeatures ?? new ChangeTrackingList<ManagedClusterAddOnFeature>(),
-                enableAutoOSUpgrade,
-                zonalResiliency,
-                applicationTypeVersionsCleanupPolicy,
-                enableIPv6,
-                subnetId,
-                ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>(),
-                ipv6Address,
-                enableServicePublicIP,
-                auxiliarySubnets ?? new ChangeTrackingList<ManagedClusterSubnet>(),
-                serviceEndpoints ?? new ChangeTrackingList<ManagedClusterServiceEndpoint>(),
-                zonalUpdateMode,
-                useCustomVnet,
-                publicIPPrefixId,
-                publicIPv6PrefixId,
-                ddosProtectionPlanId,
-                upgradeDescription,
-                httpGatewayTokenAuthConnectionPort,
-                enableHttpGatewayExclusiveAuthMode,
-                autoGeneratedDomainNameLabelScope,
-                allocatedOutboundPorts,
-                vmImage,
-                etag,
-                sku,
-                serializedAdditionalRawData);
+                properties,
+                eTag,
+                sku);
         }
 
-        BinaryData IPersistableModel<ServiceFabricManagedClusterData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceFabricManagedClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -936,15 +210,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        ServiceFabricManagedClusterData IPersistableModel<ServiceFabricManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedClusterData IPersistableModel<ServiceFabricManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedClusterData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceFabricManagedClusterData(document.RootElement, options);
                     }
                 default:
@@ -952,6 +231,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceFabricManagedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceFabricManagedClusterData"> The <see cref="ServiceFabricManagedClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricManagedClusterData serviceFabricManagedClusterData)
+        {
+            if (serviceFabricManagedClusterData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(serviceFabricManagedClusterData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedClusterData"/> from. </param>
+        internal static ServiceFabricManagedClusterData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeServiceFabricManagedClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Number of backend instances associated to the LB rule that are considered healthy. </summary>
+        [WirePath("up")]
         public int? Up { get; }
         /// <summary> Number of backend instances associated to the LB rule that are considered unhealthy. </summary>
+        [WirePath("down")]
         public int? Down { get; }
         /// <summary> Information about the health per rule of the backend addresses. </summary>
+        [WirePath("loadBalancerBackendAddresses")]
         public IReadOnlyList<LoadBalancerHealthPerRulePerBackendAddress> LoadBalancerBackendAddresses { get; }
     }
 }

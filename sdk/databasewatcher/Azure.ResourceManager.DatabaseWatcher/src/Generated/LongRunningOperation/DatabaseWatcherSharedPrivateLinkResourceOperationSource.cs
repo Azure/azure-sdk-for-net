@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
-    internal class DatabaseWatcherSharedPrivateLinkResourceOperationSource : IOperationSource<DatabaseWatcherSharedPrivateLinkResource>
+    /// <summary></summary>
+    internal partial class DatabaseWatcherSharedPrivateLinkResourceOperationSource : IOperationSource<DatabaseWatcherSharedPrivateLinkResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DatabaseWatcherSharedPrivateLinkResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DatabaseWatcherSharedPrivateLinkResource IOperationSource<DatabaseWatcherSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DatabaseWatcherSharedPrivateLinkResourceData data = DatabaseWatcherSharedPrivateLinkResourceData.DeserializeDatabaseWatcherSharedPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DatabaseWatcherSharedPrivateLinkResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DatabaseWatcherSharedPrivateLinkResource> IOperationSource<DatabaseWatcherSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
-            return await Task.FromResult(new DatabaseWatcherSharedPrivateLinkResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DatabaseWatcherSharedPrivateLinkResourceData data = DatabaseWatcherSharedPrivateLinkResourceData.DeserializeDatabaseWatcherSharedPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DatabaseWatcherSharedPrivateLinkResource(_client, data);
         }
     }
 }

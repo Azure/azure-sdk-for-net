@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The connection resource whose inbound routes are being requested. </summary>
+        [WirePath("resourceUri")]
         public Uri ResourceUri { get; set; }
         /// <summary> The type of the specified connection resource like ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </summary>
+        [WirePath("connectionType")]
         public string ConnectionType { get; set; }
     }
 }

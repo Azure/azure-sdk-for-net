@@ -1,13 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
-using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
-using Azure.Generator.Tests.Common;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -153,28 +149,10 @@ namespace Azure.Generator.Management.Tests.Providers
             var (resource, restClient) = GetResourceClientProvider();
             var mockUpdateMethodProvider = CreateMockUpdateMethodProvider(resource);
 
-            // Get the appropriate tag method provider based on method name and async flag
-            // find the clientDiagnosticField
-            var clientDiagnosticField = resource.Fields.SingleOrDefault(f => f.Name.EndsWith("ClientDiagnostics"))!;
-            Assert.IsNotNull(clientDiagnosticField);
-            // find the restClientField
-            var restClientField = resource.Fields.SingleOrDefault(f => f.Name.EndsWith("RestClient"))!;
-            Assert.IsNotNull(restClientField);
-
-            var restClientInfo = new RestClientInfo(restClient, restClientField, clientDiagnosticField);
-            BaseTagMethodProvider tagMethodProvider = methodName switch
-            {
-                "AddTag" or "AddTagAsync" => new AddTagMethodProvider(resource, mockUpdateMethodProvider, restClientInfo, isAsync),
-                "RemoveTag" or "RemoveTagAsync" => new RemoveTagMethodProvider(resource, mockUpdateMethodProvider, restClientInfo, isAsync),
-                "SetTags" or "SetTagsAsync" => new SetTagsMethodProvider(resource, mockUpdateMethodProvider, restClientInfo, isAsync),
-                _ => throw new ArgumentException($"Unknown tag method: {methodName}")
-            };
-
-            // Use implicit conversion to MethodProvider
-            MethodProvider method = tagMethodProvider;
-            Assert.NotNull(method);
-            Assert.AreEqual(methodName, method.Signature.Name);
-            return method;
+            // validate the tag related methods are generated in the resource
+            var method = resource.Methods.SingleOrDefault(m => m.Signature.Name == methodName);
+            Assert.IsNotNull(method);
+            return method!;
         }
 
         private static MethodProvider CreateMockUpdateMethodProvider(ResourceClientProvider resourceClientProvider)

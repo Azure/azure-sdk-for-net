@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
+    /// <summary></summary>
     public partial class ConnectedClusterLoadBalancerResource : IJsonModel<ConnectedClusterLoadBalancerData>
     {
-        private static ConnectedClusterLoadBalancerData s_dataDeserializationInstance;
-        private static ConnectedClusterLoadBalancerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ConnectedClusterLoadBalancerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ConnectedClusterLoadBalancerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConnectedClusterLoadBalancerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectedClusterLoadBalancerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterLoadBalancerData>)Data).Write(writer, options);
 
-        ConnectedClusterLoadBalancerData IJsonModel<ConnectedClusterLoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterLoadBalancerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedClusterLoadBalancerData IJsonModel<ConnectedClusterLoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConnectedClusterLoadBalancerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedClusterLoadBalancerData>(Data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ConnectedClusterLoadBalancerData IPersistableModel<ConnectedClusterLoadBalancerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
-        string IPersistableModel<ConnectedClusterLoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterLoadBalancerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectedClusterLoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

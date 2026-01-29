@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Batch</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Batch.</Description>
     <PackageTags>azure;management;arm;resource manager;batch</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

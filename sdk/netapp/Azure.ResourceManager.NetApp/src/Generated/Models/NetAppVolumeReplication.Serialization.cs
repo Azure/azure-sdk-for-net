@@ -56,6 +56,21 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);
             }
+            if (options.Format != "W" && Optional.IsDefined(MirrorState))
+            {
+                writer.WritePropertyName("mirrorState"u8);
+                writer.WriteStringValue(MirrorState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationCreationOn))
+            {
+                writer.WritePropertyName("replicationCreationTime"u8);
+                writer.WriteStringValue(ReplicationCreationOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationDeletionOn))
+            {
+                writer.WritePropertyName("replicationDeletionTime"u8);
+                writer.WriteStringValue(ReplicationDeletionOn.Value, "O");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -98,6 +113,9 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
             string remoteVolumeRegion = default;
+            ReplicationMirrorState? mirrorState = default;
+            DateTimeOffset? replicationCreationTime = default;
+            DateTimeOffset? replicationDeletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,6 +153,33 @@ namespace Azure.ResourceManager.NetApp.Models
                     remoteVolumeRegion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("mirrorState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mirrorState = new ReplicationMirrorState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("replicationCreationTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    replicationCreationTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("replicationDeletionTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    replicationDeletionTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -147,6 +192,9 @@ namespace Azure.ResourceManager.NetApp.Models
                 replicationSchedule,
                 remoteVolumeResourceId,
                 remoteVolumeRegion,
+                mirrorState,
+                replicationCreationTime,
+                replicationDeletionTime,
                 serializedAdditionalRawData);
         }
 

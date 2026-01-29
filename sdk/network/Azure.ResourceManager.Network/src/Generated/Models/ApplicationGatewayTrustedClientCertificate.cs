@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary>
         /// Certificate public data.
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.data")]
         public BinaryData Data { get; set; }
         /// <summary>
         /// Validated certificate data.
@@ -101,10 +103,13 @@ namespace Azure.ResourceManager.Network.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.validatedCertData")]
         public BinaryData ValidatedCertData { get; }
         /// <summary> Distinguished name of client certificate issuer. </summary>
+        [WirePath("properties.clientCertIssuerDN")]
         public string ClientCertIssuerDN { get; }
         /// <summary> The provisioning state of the trusted client certificate resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

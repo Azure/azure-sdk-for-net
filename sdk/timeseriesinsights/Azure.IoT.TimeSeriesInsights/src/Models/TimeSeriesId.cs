@@ -82,7 +82,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public bool Equals(TimeSeriesId other)
         {
             return _keys.Length == other.ToStringArray().Length
-                && _keys.SequenceEqual(other.ToStringArray());
+                && Enumerable.SequenceEqual(_keys, other.ToStringArray());
         }
 
         /// <inheritdoc/>

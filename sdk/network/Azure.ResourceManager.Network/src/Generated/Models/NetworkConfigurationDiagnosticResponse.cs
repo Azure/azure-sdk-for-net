@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of network configuration diagnostic results. </summary>
+        [WirePath("results")]
         public IReadOnlyList<NetworkConfigurationDiagnosticResult> Results { get; }
     }
 }

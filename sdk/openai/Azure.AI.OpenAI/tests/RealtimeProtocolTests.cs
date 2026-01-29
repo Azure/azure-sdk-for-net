@@ -29,7 +29,7 @@ public class RealtimeProtocolTests : RealtimeTestFixtureBase
     public async Task ProtocolCanConfigureSession(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         BinaryData configureSessionCommand = BinaryData.FromString("""
             {

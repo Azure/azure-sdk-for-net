@@ -77,12 +77,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Identifier for the managed rule. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; set; }
         /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
+        [WirePath("enabledState")]
         public ManagedRuleEnabledState? EnabledState { get; set; }
         /// <summary> Describes the override action to be applied when rule matches. </summary>
+        [WirePath("action")]
         public RuleMatchActionType? Action { get; set; }
         /// <summary> Describes the exclusions that are applied to this specific rule. </summary>
+        [WirePath("exclusions")]
         public IList<ManagedRuleExclusion> Exclusions { get; }
     }
 }

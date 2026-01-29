@@ -3,6 +3,7 @@ $CI_YAML_FILE = "ci.yml"
 $TSP_LOCATION_FILE = "tsp-location.yaml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "ChangeLog-Operations.ps1")
 
 #mgmt: swagger directory name to sdk directory name map
 $packageNameHash = [ordered]@{
@@ -676,6 +677,47 @@ function Invoke-GenerateAndBuildSDK () {
     }
 }
 
+function New-ChangeLogIfNotExists()
+{
+    param(
+        [string]$projectFolder,
+        [string]$version
+    )
+
+    $changeLogPath = Join-Path $projectFolder "CHANGELOG.md"
+    
+    if (!(Test-Path $changeLogPath)) {
+        Write-Host "CHANGELOG.md does not exist at $changeLogPath. Creating a new one with version $version"
+        
+        try {
+            # Create a new changelog entry using the helper function
+            $newEntry = New-ChangeLogEntry -Version $version -Status "Unreleased" -InitialAtxHeader "#"
+            
+            if ($newEntry) {
+                # Create the changelog content
+                $changeLogContent = @()
+                $changeLogContent += "# Release History"
+                $changeLogContent += ""
+                $changeLogContent += $newEntry.ReleaseTitle
+                $changeLogContent += $newEntry.ReleaseContent
+                
+                # Write the changelog file
+                Set-Content -Path $changeLogPath -Value $changeLogContent
+                Write-Host "Successfully created CHANGELOG.md with initial entry for version $version"
+            }
+            else {
+                Write-Warning "Failed to create changelog entry for version $version. The New-ChangeLogEntry function returned null, which may indicate an invalid version format."
+            }
+        }
+        catch {
+            Write-Warning "Failed to create CHANGELOG.md for version $version. Error: $_"
+        }
+    }
+    else {
+        Write-Host "CHANGELOG.md exists at $changeLogPath"
+    }
+}
+
 function GeneratePackage()
 {
     param(
@@ -701,6 +743,7 @@ function GeneratePackage()
     $content = ""
     $result = "succeeded"
     $isGenerateSuccess = $true
+    $version = ""
 
     # Generate Code
     $srcPath = Join-Path $projectFolder 'src'
@@ -719,7 +762,22 @@ function GeneratePackage()
         }
     }
 
-    if ($isGenerateSuccess) {
+    if ($isGenerateSuccess -and $serviceType -eq "data-plane") {
+        # Get the version from csproj before building
+        $projectFile = Join-Path $srcPath "$packageName.csproj"
+        $csproj = new-object xml
+        $csproj.PreserveWhitespace = $true
+        $csproj.Load($projectFile)
+        $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
+        if ($versionNode) {
+            $version = $versionNode.InnerText
+        }
+        
+        # Create CHANGELOG.md if it doesn't exist
+        if (![string]::IsNullOrWhiteSpace($version)) {
+            New-ChangeLogIfNotExists -projectFolder $projectFolder -version $version
+        }
+        
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
@@ -825,16 +883,6 @@ function GeneratePackage()
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
 
-    # get the sdk version
-    $version = ""
-    $projectFile = Join-Path $srcPath "$packageName.csproj"
-    $csproj = new-object xml
-    $csproj.PreserveWhitespace = $true
-    $csproj.Load($projectFile)
-    $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
-    if ($versionNode) {
-        $version = $versionNode.InnerText
-    }
     $packageDetails = @{
         version=$version;
         packageName="$packageName";
@@ -911,25 +959,125 @@ function GetSDKProjectFolder()
 
     Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $yml = ConvertFrom-YAML $tspConfigYaml
-    $service = ""
-    $packageDir = ""
+    $service = $null
+    $namespace = $null
+    $packageDir = $null
+    $packageName = $null
+    $emitterOutputDir = $null
+
     if ($yml) {
-        if ($yml["parameters"] -And $yml["parameters"]["service-dir"]) {
-            $service = $yml["parameters"]["service-dir"]["default"];
+        if ($yml["parameters"] -and $yml["parameters"]["service-dir"]) {
+            $service = $yml["parameters"]["service-dir"]["default"]
         }
-        if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"]) {
-            $csharpOpts = $yml["options"]["@azure-tools/typespec-csharp"]
+
+        $csharpOptionKeys = @(
+            "@azure-tools/typespec-csharp",
+            "@azure-typespec/http-client-csharp",
+            "@azure-typespec/http-client-csharp-mgmt"
+        )
+
+        $csharpOpts = $null
+        if ($yml["options"]) {
+            foreach ($key in $csharpOptionKeys) {
+                if ($yml["options"]["$key"]) {
+                    $csharpOpts = $yml["options"]["$key"]
+                    break
+                }
+            }
+        }
+
+        if ($csharpOpts) {
+            if ($csharpOpts["namespace"]) {
+                $namespace = $csharpOpts["namespace"]
+            }
+
+            # TODO: This is should be removed once all package-dir usages are removed in spec repo
             if ($csharpOpts["package-dir"]) {
                 $packageDir = $csharpOpts["package-dir"]
             }
+
+            if ($csharpOpts["package-name"]) {
+                $packageName = $csharpOpts["package-name"]
+            }
+
             if ($csharpOpts["service-dir"]) {
                 $service = $csharpOpts["service-dir"]
             }
+
+            if ($csharpOpts["emitter-output-dir"]) {
+                $emitterOutputDir = $csharpOpts["emitter-output-dir"]
+            }
         }
     }
-    if (!$service || !$packageDir) {
-        throw "[ERROR] 'serviceDir' or 'packageDir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+
+    if (-not [string]::IsNullOrWhiteSpace($emitterOutputDir)) {
+        $relativePath = $emitterOutputDir
+        $prefix = "{output-dir}/"
+        if ($relativePath.StartsWith($prefix)) {
+            $relativePath = $relativePath.Substring($prefix.Length)
+        }
+
+        $resolvedSegments = @()
+        $segments = $relativePath -split "/"
+        foreach ($segment in $segments) {
+            switch ($segment) {
+                "{service-dir}" {
+                    if ([string]::IsNullOrWhiteSpace($service)) {
+                        throw "[ERROR] 'service-dir' must be provided when '{service-dir}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedService = ($service -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedService | Where-Object { $_ })
+                    continue
+                }
+                "{namespace}" {
+                    if ([string]::IsNullOrWhiteSpace($namespace)) {
+                        throw "[ERROR] 'namespace' must be provided when '{namespace}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedNamespace = ($namespace -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedNamespace | Where-Object { $_ })
+                    continue
+                }
+                "{package-name}" {
+                    if ([string]::IsNullOrWhiteSpace($packageName)) {
+                        throw "[ERROR] 'package-name' must be provided when '{package-name}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedPackageName = ($packageName -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedPackageName | Where-Object { $_ })
+                    continue
+                }
+                default {
+                    if (![string]::IsNullOrWhiteSpace($segment)) {
+                        $resolvedSegments += $segment
+                    }
+                }
+            }
+        }
+
+        if ($resolvedSegments.Count -eq 0) {
+            throw "[ERROR] Unable to resolve SDK project path from 'emitter-output-dir'."
+        }
+
+        $projectFolder = $sdkRepoRoot
+        foreach ($resolvedSegment in $resolvedSegments) {
+            $projectFolder = Join-Path $projectFolder $resolvedSegment
+        }
+
+        return $projectFolder
     }
-    $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
-    return $projectFolder
+
+    if ([string]::IsNullOrWhiteSpace($packageDir)) {
+        if (![string]::IsNullOrWhiteSpace($packageName)) {
+            Write-Host "Package directory is reset by package name: $packageName"
+            $packageDir = $packageName
+        } else {
+            Write-Host "Package directory is reset by namespace: $namespace"
+            $packageDir = $namespace
+        }
+    }
+
+    if ([string]::IsNullOrWhiteSpace($service) -or [string]::IsNullOrWhiteSpace($namespace)) {
+        throw "[ERROR] 'service-dir' or 'namespace'/'package-dir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+    }
+
+    return (Join-Path $sdkRepoRoot $service $packageDir)
 }

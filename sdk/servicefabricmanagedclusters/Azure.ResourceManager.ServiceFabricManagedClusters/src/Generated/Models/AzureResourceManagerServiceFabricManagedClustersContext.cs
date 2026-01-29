@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -14,14 +15,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdditionalNetworkInterfaceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ApplicationFetchHealthContent))]
     [ModelReaderWriterBuildable(typeof(ApplicationHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationResourceList))]
+    [ModelReaderWriterBuildable(typeof(ApplicationResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationTypeResourceList))]
+    [ModelReaderWriterBuildable(typeof(ApplicationTypeResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionResourceList))]
+    [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionsCleanupPolicy))]
+    [ModelReaderWriterBuildable(typeof(ApplicationUpdateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationUserAssignedIdentityInfo))]
     [ModelReaderWriterBuildable(typeof(AveragePartitionLoadScalingTrigger))]
@@ -36,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(FaultSimulationDetails))]
     [ModelReaderWriterBuildable(typeof(FaultSimulationIdContent))]
     [ModelReaderWriterBuildable(typeof(FaultSimulationListResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedAzResiliencyStatus))]
+    [ModelReaderWriterBuildable(typeof(Models.ManagedAzResiliencyStatus))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterAzureActiveDirectory))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterClientCertificate))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterHealthPolicy))]
@@ -44,11 +50,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(ManagedClusterListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterLoadBalancingRule))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterMonitoringPolicy))]
+    [ModelReaderWriterBuildable(typeof(ManagedClusterProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterServiceEndpoint))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterSubnet))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterUpgradeDeltaHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterUpgradePolicy))]
-    [ModelReaderWriterBuildable(typeof(ManagedMaintenanceWindowStatus))]
+    [ModelReaderWriterBuildable(typeof(ManagedClusterVersionDetails))]
+    [ModelReaderWriterBuildable(typeof(Models.ManagedMaintenanceWindowStatus))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceBaseProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceCorrelation))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
@@ -56,10 +64,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(ManagedServicePartitionScheme))]
     [ModelReaderWriterBuildable(typeof(ManagedServicePlacementPolicy))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceRestartReplicaContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceScalingPolicy))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceScalingTrigger))]
-    [ModelReaderWriterBuildable(typeof(ManagedVmSizesResult))]
     [ModelReaderWriterBuildable(typeof(NamedPartitionAddOrRemoveScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(NamedPartitionScheme))]
     [ModelReaderWriterBuildable(typeof(NodeTypeActionContent))]
@@ -79,8 +87,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(PartitionInstanceCountScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(ResourceAzStatus))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RestartDeployedCodePackageContent))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradeMonitoringPolicy))]
+    [ModelReaderWriterBuildable(typeof(RuntimeApplicationHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(RuntimeResumeApplicationUpgradeContent))]
+    [ModelReaderWriterBuildable(typeof(RuntimeRollingUpgradeUpdateMonitoringPolicy))]
+    [ModelReaderWriterBuildable(typeof(RuntimeServiceTypeHealthPolicy))]
+    [ModelReaderWriterBuildable(typeof(RuntimeUpdateApplicationUpgradeContent))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedApplicationData))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedApplicationPatch))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedApplicationResource))]
@@ -100,12 +113,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedNetworkSecurityRule))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedNodeTypeData))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedNodeTypePatch))]
+    [ModelReaderWriterBuildable(typeof(ServiceFabricManagedNodeTypeProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedNodeTypeResource))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedServiceData))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedServicePatch))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedServiceResource))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedUnsupportedVmSize))]
+    [ModelReaderWriterBuildable(typeof(ServiceFabricManagedUnsupportedVmSizeListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedVmApplication))]
+    [ModelReaderWriterBuildable(typeof(ServiceFabricManagedVmSizeProperties))]
     [ModelReaderWriterBuildable(typeof(ServicePlacementInvalidDomainPolicy))]
     [ModelReaderWriterBuildable(typeof(ServicePlacementNonPartiallyPlaceServicePolicy))]
     [ModelReaderWriterBuildable(typeof(ServicePlacementPreferPrimaryDomainPolicy))]
@@ -116,6 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(SingletonPartitionScheme))]
     [ModelReaderWriterBuildable(typeof(StatefulServiceProperties))]
     [ModelReaderWriterBuildable(typeof(StatelessServiceProperties))]
+    [ModelReaderWriterBuildable(typeof(Models.SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UniformInt64RangePartitionScheme))]
     [ModelReaderWriterBuildable(typeof(UnknownFaultSimulationContent))]
@@ -127,7 +144,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmImagePlan))]
     [ModelReaderWriterBuildable(typeof(VmManagedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VmSize))]
+    [ModelReaderWriterBuildable(typeof(VmssExtensionProperties))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneFaultSimulationContent))]
     public partial class AzureResourceManagerServiceFabricManagedClustersContext : ModelReaderWriterContext

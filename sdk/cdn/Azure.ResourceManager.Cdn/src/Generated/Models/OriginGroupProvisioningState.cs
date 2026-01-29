@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Provisioning status of the origin group.
-    /// Serialized Name: OriginGroupProvisioningState
-    /// </summary>
+    /// <summary> Provisioning status of the origin group. </summary>
     public readonly partial struct OriginGroupProvisioningState : IEquatable<OriginGroupProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: OriginGroupProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static OriginGroupProvisioningState Succeeded { get; } = new OriginGroupProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: OriginGroupProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static OriginGroupProvisioningState Failed { get; } = new OriginGroupProvisioningState(FailedValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: OriginGroupProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static OriginGroupProvisioningState Updating { get; } = new OriginGroupProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: OriginGroupProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static OriginGroupProvisioningState Deleting { get; } = new OriginGroupProvisioningState(DeletingValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: OriginGroupProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static OriginGroupProvisioningState Creating { get; } = new OriginGroupProvisioningState(CreatingValue);
         /// <summary> Determines if two <see cref="OriginGroupProvisioningState"/> values are the same. </summary>
         public static bool operator ==(OriginGroupProvisioningState left, OriginGroupProvisioningState right) => left.Equals(right);

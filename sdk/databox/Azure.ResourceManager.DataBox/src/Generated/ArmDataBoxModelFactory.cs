@@ -9,79 +9,366 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDataBoxModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DataBox.DataBoxJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="transferType"> Type of the data transfer. </param>
-        /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
-        /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
-        /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
-        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
-        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
-        /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
-        /// <param name="status"> Name of the stage which is in progress. </param>
-        /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
-        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
-        /// <param name="error"> Top level error for the job. </param>
-        /// <param name="details">
-        /// Details of a job run. This field will only be sent for expand details filter.
-        /// Please note <see cref="Models.DataBoxBasicJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataBoxJobDetails"/>, <see cref="Models.DataBoxCustomerDiskJobDetails"/>, <see cref="Models.DataBoxDiskJobDetails"/> and <see cref="Models.DataBoxHeavyJobDetails"/>.
-        /// </param>
-        /// <param name="cancellationReason"> Reason for cancellation. </param>
-        /// <param name="deliveryType"> Delivery type of Job. </param>
-        /// <param name="deliveryInfoScheduledOn"> Delivery Info of Job. </param>
-        /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
-        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
-        /// <param name="sku"> The sku type. </param>
-        /// <param name="identity"> Msi identity of the resource. </param>
-        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
-        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataBoxJobTransferType transferType = default, bool? isCancellable = null, bool? isDeletable = null, bool? isShippingAddressEditable = null, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = null, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = null, bool? isPrepareToShipEnabled = null, DataBoxStageName? status = null, DataBoxStageName? delayedStage = null, DateTimeOffset? startOn = null, ResponseError error = null, DataBoxBasicJobDetails details = null, string cancellationReason = null, JobDeliveryType? deliveryType = null, DateTimeOffset? deliveryInfoScheduledOn = null, bool? isCancellableWithoutFee = null, bool? areAllDevicesLost = null, DataBoxSku sku = null, ManagedServiceIdentity identity = null)
-        {
-            tags ??= new Dictionary<string, string>();
 
-            return new DataBoxJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                transferType,
-                isCancellable,
-                isDeletable,
-                isShippingAddressEditable,
-                reverseShippingDetailsUpdate,
-                reverseTransportPreferenceUpdate,
-                isPrepareToShipEnabled,
-                status,
-                delayedStage,
-                startOn,
-                error,
-                details,
-                cancellationReason,
-                deliveryType,
-                deliveryInfoScheduledOn != null ? new JobDeliveryInfo(deliveryInfoScheduledOn, serializedAdditionalRawData: null) : null,
-                isCancellableWithoutFee,
-                areAllDevicesLost,
-                sku,
-                identity,
-                serializedAdditionalRawData: null);
+        /// <summary>
+        /// Job details.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxCustomerDiskJobDetails"/>, <see cref="Models.DataBoxDiskJobDetails"/>, <see cref="Models.DataBoxHeavyJobDetails"/>, and <see cref="Models.DataBoxJobDetails"/>.
+        /// </summary>
+        /// <param name="jobStages"> List of stages that run in the job. </param>
+        /// <param name="contactDetails"> Contact details for notification and shipping. </param>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deliveryPackage"> Delivery package shipping details. </param>
+        /// <param name="returnPackage"> Return package shipping details. </param>
+        /// <param name="dataImportDetails"> Details of the data to be imported into azure. </param>
+        /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
+        /// <param name="jobDetailsType"> Indicates the type of job details. </param>
+        /// <param name="preferences"> Preferences for the order. </param>
+        /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
+        /// <param name="copyLogDetails"> List of copy log details. </param>
+        /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
+        /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
+        /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
+        /// <param name="keyEncryptionKey"> Details about which key encryption type is being used. </param>
+        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
+        /// <param name="actions"> Available actions on the job. </param>
+        /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
+        /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
+        /// <param name="dataCenterCode"> DataCenter code. </param>
+        /// <returns> A new <see cref="Models.DataBoxBasicJobDetails"/> instance for mocking. </returns>
+        public static DataBoxBasicJobDetails DataBoxBasicJobDetails(IEnumerable<DataBoxJobStage> jobStages = default, DataBoxContactDetails contactDetails = default, DataBoxShippingAddress shippingAddress = default, PackageShippingDetails deliveryPackage = default, PackageShippingDetails returnPackage = default, IEnumerable<DataImportDetails> dataImportDetails = default, IEnumerable<DataExportDetails> dataExportDetails = default, string jobDetailsType = default, DataBoxOrderPreferences preferences = default, ReverseShippingDetails reverseShippingDetails = default, IEnumerable<CopyLogDetails> copyLogDetails = default, string reverseShipmentLabelSasKey = default, string chainOfCustodySasKey = default, DeviceErasureDetails deviceErasureDetails = default, DataBoxKeyEncryptionKey keyEncryptionKey = default, int? expectedDataSizeInTerabytes = default, IEnumerable<CustomerResolutionCode> actions = default, LastMitigationActionOnJob lastMitigationActionOnJob = default, DataCenterAddressResult dataCenterAddress = default, DataCenterCode? dataCenterCode = default)
+        {
+            jobStages ??= new ChangeTrackingList<DataBoxJobStage>();
+            dataImportDetails ??= new ChangeTrackingList<DataImportDetails>();
+            dataExportDetails ??= new ChangeTrackingList<DataExportDetails>();
+            copyLogDetails ??= new ChangeTrackingList<CopyLogDetails>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
+
+            return new UnknownJobDetails(
+                jobStages.ToList(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails.ToList(),
+                dataExportDetails.ToList(),
+                jobDetailsType.ToDataBoxOrderType(),
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails.ToList(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions.ToList(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxBasicJobDetails"/>. </summary>
+        /// <summary> Job stages. </summary>
+        /// <param name="stageName"> Name of the job stage. </param>
+        /// <param name="displayName"> Display name of the job stage. </param>
+        /// <param name="stageStatus"> Status of the job stage. </param>
+        /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
+        /// <param name="jobStageDetails"> Job Stage Details. </param>
+        /// <param name="delayInformation"> Delay information for the job stages. </param>
+        /// <returns> A new <see cref="Models.DataBoxJobStage"/> instance for mocking. </returns>
+        public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName = default, string displayName = default, DataBoxStageStatus? stageStatus = default, DateTimeOffset? stageTime = default, BinaryData jobStageDetails = default, IEnumerable<JobDelayDetails> delayInformation = default)
+        {
+            delayInformation ??= new ChangeTrackingList<JobDelayDetails>();
+
+            return new DataBoxJobStage(
+                stageName,
+                displayName,
+                stageStatus,
+                stageTime,
+                jobStageDetails,
+                delayInformation.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Job Delay Notification details. </summary>
+        /// <param name="status"> Status of notification. </param>
+        /// <param name="errorCode"> Delay Error code. </param>
+        /// <param name="description"> Description of the delay. </param>
+        /// <param name="startOn"> Timestamp when the delay notification was created. </param>
+        /// <param name="resolutionOn"> Timestamp when the delay notification was resolved. </param>
+        /// <returns> A new <see cref="Models.JobDelayDetails"/> instance for mocking. </returns>
+        public static JobDelayDetails JobDelayDetails(DelayNotificationStatus? status = default, PortalDelayErrorCode? errorCode = default, string description = default, DateTimeOffset? startOn = default, DateTimeOffset? resolutionOn = default)
+        {
+            return new JobDelayDetails(
+                status,
+                errorCode,
+                description,
+                startOn,
+                resolutionOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Contact Details. </summary>
+        /// <param name="contactName"> Contact name of the person. </param>
+        /// <param name="phone"> Phone number of the contact person. </param>
+        /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
+        /// <param name="mobile"> Mobile number of the contact person. </param>
+        /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
+        /// <param name="notificationPreference"> Notification preference for a job stage. </param>
+        /// <returns> A new <see cref="Models.DataBoxContactDetails"/> instance for mocking. </returns>
+        public static DataBoxContactDetails DataBoxContactDetails(string contactName = default, string phone = default, string phoneExtension = default, string mobile = default, IEnumerable<string> emailList = default, IEnumerable<NotificationPreference> notificationPreference = default)
+        {
+            emailList ??= new ChangeTrackingList<string>();
+            notificationPreference ??= new ChangeTrackingList<NotificationPreference>();
+
+            return new DataBoxContactDetails(
+                contactName,
+                phone,
+                phoneExtension,
+                mobile,
+                emailList.ToList(),
+                notificationPreference.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> package shipping details. </summary>
+        /// <param name="trackingUri"> Url where shipment can be tracked. </param>
+        /// <param name="carrierName"> Name of the carrier. </param>
+        /// <param name="trackingId"> Tracking Id of shipment. </param>
+        /// <returns> A new <see cref="Models.PackageShippingDetails"/> instance for mocking. </returns>
+        public static PackageShippingDetails PackageShippingDetails(Uri trackingUri = default, string carrierName = default, string trackingId = default)
+        {
+            return new PackageShippingDetails(trackingUri, carrierName, trackingId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the filtering the transfer of data. </summary>
+        /// <param name="dataAccountType"> Type of the account of data. </param>
+        /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
+        /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>
+        /// <param name="filterFileDetails"> Details of the filter files to be used for data transfer. </param>
+        /// <returns> A new <see cref="Models.TransferFilterDetails"/> instance for mocking. </returns>
+        public static TransferFilterDetails TransferFilterDetails(DataAccountType dataAccountType = default, BlobFilterDetails blobFilterDetails = default, AzureFileFilterDetails azureFileFilterDetails = default, IEnumerable<FilterFileDetails> filterFileDetails = default)
+        {
+            filterFileDetails ??= new ChangeTrackingList<FilterFileDetails>();
+
+            return new TransferFilterDetails(dataAccountType, blobFilterDetails, azureFileFilterDetails, filterFileDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Filter details to transfer Azure Blobs. </summary>
+        /// <param name="blobPrefixList"> Prefix list of the Azure blobs to be transferred. </param>
+        /// <param name="blobPathList"> List of full path of the blobs to be transferred. </param>
+        /// <param name="containerList"> List of blob containers to be transferred. </param>
+        /// <returns> A new <see cref="Models.BlobFilterDetails"/> instance for mocking. </returns>
+        public static BlobFilterDetails BlobFilterDetails(IEnumerable<string> blobPrefixList = default, IEnumerable<string> blobPathList = default, IEnumerable<string> containerList = default)
+        {
+            blobPrefixList ??= new ChangeTrackingList<string>();
+            blobPathList ??= new ChangeTrackingList<string>();
+            containerList ??= new ChangeTrackingList<string>();
+
+            return new BlobFilterDetails(blobPrefixList.ToList(), blobPathList.ToList(), containerList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Filter details to transfer Azure files. </summary>
+        /// <param name="filePrefixList"> Prefix list of the Azure files to be transferred. </param>
+        /// <param name="filePathList"> List of full path of the files to be transferred. </param>
+        /// <param name="fileShareList"> List of file shares to be transferred. </param>
+        /// <returns> A new <see cref="Models.AzureFileFilterDetails"/> instance for mocking. </returns>
+        public static AzureFileFilterDetails AzureFileFilterDetails(IEnumerable<string> filePrefixList = default, IEnumerable<string> filePathList = default, IEnumerable<string> fileShareList = default)
+        {
+            filePrefixList ??= new ChangeTrackingList<string>();
+            filePathList ??= new ChangeTrackingList<string>();
+            fileShareList ??= new ChangeTrackingList<string>();
+
+            return new AzureFileFilterDetails(filePrefixList.ToList(), filePathList.ToList(), fileShareList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Preferences related to the order. </summary>
+        /// <param name="preferredDataCenterRegion"> Preferred data center region. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        /// <param name="reverseTransportPreferences"> Optional Preferences related to the reverse shipment logistics of the sku. </param>
+        /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
+        /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
+        /// <returns> A new <see cref="Models.DataBoxOrderPreferences"/> instance for mocking. </returns>
+        public static DataBoxOrderPreferences DataBoxOrderPreferences(IEnumerable<string> preferredDataCenterRegion = default, TransportPreferences transportPreferences = default, TransportPreferences reverseTransportPreferences = default, DataBoxEncryptionPreferences encryptionPreferences = default, IEnumerable<string> storageAccountAccessTierPreferences = default)
+        {
+            preferredDataCenterRegion ??= new ChangeTrackingList<string>();
+            storageAccountAccessTierPreferences ??= new ChangeTrackingList<string>();
+
+            return new DataBoxOrderPreferences(
+                preferredDataCenterRegion.ToList(),
+                transportPreferences,
+                reverseTransportPreferences,
+                encryptionPreferences,
+                storageAccountAccessTierPreferences.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Preferences related to the shipment logistics of the sku. </summary>
+        /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
+        /// <param name="isUpdated"> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </param>
+        /// <returns> A new <see cref="Models.TransportPreferences"/> instance for mocking. </returns>
+        public static TransportPreferences TransportPreferences(TransportShipmentType preferredShipmentType = default, bool? isUpdated = default)
+        {
+            return new TransportPreferences(preferredShipmentType, isUpdated, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reverse Shipping Address and contact details for a job. </summary>
+        /// <param name="contactDetails"> Contact Info. </param>
+        /// <param name="shippingAddress"> Shipping address where customer wishes to receive the device. </param>
+        /// <param name="isUpdated">
+        /// A flag to indicate whether Reverse Shipping details are updated or not after device has been prepared.
+        /// Read only field
+        /// </param>
+        /// <returns> A new <see cref="Models.ReverseShippingDetails"/> instance for mocking. </returns>
+        public static ReverseShippingDetails ReverseShippingDetails(ContactInfo contactDetails = default, DataBoxShippingAddress shippingAddress = default, bool? isUpdated = default)
+        {
+            return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Copy log details for a storage account of a DataBox job. </summary>
+        /// <param name="accountName"> Account name. </param>
+        /// <param name="copyLogLink"> Link for copy logs. </param>
+        /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
+        /// <returns> A new <see cref="Models.DataBoxAccountCopyLogDetails"/> instance for mocking. </returns>
+        public static DataBoxAccountCopyLogDetails DataBoxAccountCopyLogDetails(string accountName = default, string copyLogLink = default, string copyVerboseLogLink = default)
+        {
+            return new DataBoxAccountCopyLogDetails(DataBoxOrderType.DataBox, additionalBinaryDataProperties: null, accountName, copyLogLink, copyVerboseLogLink);
+        }
+
+        /// <summary> Copy Log Details for customer disk. </summary>
+        /// <param name="serialNumber"> Disk Serial Number. </param>
+        /// <param name="errorLogLink"> Link for copy error logs. </param>
+        /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
+        /// <returns> A new <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/> instance for mocking. </returns>
+        public static DataBoxCustomerDiskCopyLogDetails DataBoxCustomerDiskCopyLogDetails(string serialNumber = default, string errorLogLink = default, string verboseLogLink = default)
+        {
+            return new DataBoxCustomerDiskCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, additionalBinaryDataProperties: null, serialNumber, errorLogLink, verboseLogLink);
+        }
+
+        /// <summary> Copy Log Details for a disk. </summary>
+        /// <param name="diskSerialNumber"> Disk Serial Number. </param>
+        /// <param name="errorLogLink"> Link for copy error logs. </param>
+        /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
+        /// <returns> A new <see cref="Models.DataBoxDiskCopyLogDetails"/> instance for mocking. </returns>
+        public static DataBoxDiskCopyLogDetails DataBoxDiskCopyLogDetails(string diskSerialNumber = default, string errorLogLink = default, string verboseLogLink = default)
+        {
+            return new DataBoxDiskCopyLogDetails(DataBoxOrderType.DataBoxDisk, additionalBinaryDataProperties: null, diskSerialNumber, errorLogLink, verboseLogLink);
+        }
+
+        /// <summary> Copy log details for a storage account for Databox heavy. </summary>
+        /// <param name="accountName"> Account name. </param>
+        /// <param name="copyLogLink"> Link for copy logs. </param>
+        /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
+        /// <returns> A new <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/> instance for mocking. </returns>
+        public static DataBoxHeavyAccountCopyLogDetails DataBoxHeavyAccountCopyLogDetails(string accountName = default, IEnumerable<string> copyLogLink = default, IEnumerable<string> copyVerboseLogLink = default)
+        {
+            copyLogLink ??= new ChangeTrackingList<string>();
+            copyVerboseLogLink ??= new ChangeTrackingList<string>();
+
+            return new DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType.DataBoxHeavy, additionalBinaryDataProperties: null, accountName, copyLogLink.ToList(), copyVerboseLogLink.ToList());
+        }
+
+        /// <summary> Device erasure details with erasure completion status, secure erasure sas key and erasureordestructionlog sas key. </summary>
+        /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
+        /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
+        /// <param name="secureErasureCertificateSasKey"> Shared access key to download secure erasure certificate for the device. </param>
+        /// <returns> A new <see cref="Models.DeviceErasureDetails"/> instance for mocking. </returns>
+        public static DeviceErasureDetails DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus = default, string erasureOrDestructionCertificateSasKey = default, string secureErasureCertificateSasKey = default)
+        {
+            return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Last Mitigation Action Performed On Job. </summary>
+        /// <param name="actionPerformedOn"> Action performed date time. </param>
+        /// <param name="isPerformedByCustomer">
+        /// Action performed by customer,
+        /// possibility is that mitigation might happen by customer or service or by ops
+        /// </param>
+        /// <param name="customerResolution"> Resolution code provided by customer. </param>
+        /// <returns> A new <see cref="Models.LastMitigationActionOnJob"/> instance for mocking. </returns>
+        public static LastMitigationActionOnJob LastMitigationActionOnJob(DateTimeOffset? actionPerformedOn = default, bool? isPerformedByCustomer = default, CustomerResolutionCode? customerResolution = default)
+        {
+            return new LastMitigationActionOnJob(actionPerformedOn, isPerformedByCustomer, customerResolution, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Datacenter address for given storage location.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
+        /// </summary>
+        /// <param name="datacenterAddressType"> Data center address type. </param>
+        /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
+        /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
+        /// <returns> A new <see cref="Models.DataCenterAddressResult"/> instance for mocking. </returns>
+        public static DataCenterAddressResult DataCenterAddressResult(string datacenterAddressType = default, IEnumerable<string> supportedCarriersForReturnShipment = default, AzureLocation? dataCenterAzureLocation = default)
+        {
+            supportedCarriersForReturnShipment ??= new ChangeTrackingList<string>();
+
+            return new UnknownDataCenterAddressResponse(datacenterAddressType.ToDatacenterAddressType(), supportedCarriersForReturnShipment.ToList(), dataCenterAzureLocation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Datacenter instruction for given storage location. </summary>
+        /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
+        /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
+        /// <param name="communicationInstruction"> Data center communication instruction. </param>
+        /// <returns> A new <see cref="Models.DataCenterAddressInstructionResult"/> instance for mocking. </returns>
+        public static DataCenterAddressInstructionResult DataCenterAddressInstructionResult(IEnumerable<string> supportedCarriersForReturnShipment = default, AzureLocation? dataCenterAzureLocation = default, string communicationInstruction = default)
+        {
+            supportedCarriersForReturnShipment ??= new ChangeTrackingList<string>();
+
+            return new DataCenterAddressInstructionResult(DatacenterAddressType.DatacenterAddressInstruction, supportedCarriersForReturnShipment.ToList(), dataCenterAzureLocation, additionalBinaryDataProperties: null, communicationInstruction);
+        }
+
+        /// <summary> Datacenter address for given storage location. </summary>
+        /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
+        /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
+        /// <param name="contactPersonName"> Contact person name. </param>
+        /// <param name="company"> Company name. </param>
+        /// <param name="street1"> Street address line 1. </param>
+        /// <param name="street2"> Street address line 2. </param>
+        /// <param name="street3"> Street address line 3. </param>
+        /// <param name="city"> City name. </param>
+        /// <param name="state"> name of the state. </param>
+        /// <param name="zip"> Zip code. </param>
+        /// <param name="country"> name of the country. </param>
+        /// <param name="phone"> Phone number. </param>
+        /// <param name="phoneExtension"> Phone extension. </param>
+        /// <param name="addressType"> Address type. </param>
+        /// <param name="additionalShippingInformation"> Special instruction for shipping. </param>
+        /// <returns> A new <see cref="Models.DataCenterAddressLocationResult"/> instance for mocking. </returns>
+        public static DataCenterAddressLocationResult DataCenterAddressLocationResult(IEnumerable<string> supportedCarriersForReturnShipment = default, AzureLocation? dataCenterAzureLocation = default, string contactPersonName = default, string company = default, string street1 = default, string street2 = default, string street3 = default, string city = default, string state = default, string zip = default, string country = default, string phone = default, string phoneExtension = default, string addressType = default, string additionalShippingInformation = default)
+        {
+            supportedCarriersForReturnShipment ??= new ChangeTrackingList<string>();
+
+            return new DataCenterAddressLocationResult(
+                DatacenterAddressType.DatacenterAddressLocation,
+                supportedCarriersForReturnShipment.ToList(),
+                dataCenterAzureLocation,
+                additionalBinaryDataProperties: null,
+                contactPersonName,
+                company,
+                street1,
+                street2,
+                street3,
+                city,
+                state,
+                zip,
+                country,
+                phone,
+                phoneExtension,
+                addressType,
+                additionalShippingInformation);
+        }
+
+        /// <summary> Customer disk job details. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -91,11 +378,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
         /// <param name="preferences"> Preferences for the order. </param>
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
-        /// <param name="copyLogDetails">
-        /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
-        /// </param>
+        /// <param name="copyLogDetails"> List of copy log details. </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
         /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
@@ -103,426 +386,78 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="dataCenterAddress">
-        /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
-        /// </param>
+        /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <returns> A new <see cref="Models.DataBoxBasicJobDetails"/> instance for mocking. </returns>
-        public static DataBoxBasicJobDetails DataBoxBasicJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null)
+        /// <param name="importDiskDetails"> Contains the map of disk serial number to the disk details for import jobs. </param>
+        /// <param name="exportDiskDetails"> Contains the map of disk serial number to the disk details for export jobs. </param>
+        /// <param name="copyProgress"> Copy progress per disk. </param>
+        /// <param name="deliverToDataCenterPackageDetails"> Delivery package shipping details. </param>
+        /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
+        /// <param name="enableManifestBackup"> Flag to indicate if disk manifest should be backed-up in the Storage Account. </param>
+        /// <returns> A new <see cref="Models.DataBoxCustomerDiskJobDetails"/> instance for mocking. </returns>
+        public static DataBoxCustomerDiskJobDetails DataBoxCustomerDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = default, DataBoxContactDetails contactDetails = default, DataBoxShippingAddress shippingAddress = default, PackageShippingDetails deliveryPackage = default, PackageShippingDetails returnPackage = default, IEnumerable<DataImportDetails> dataImportDetails = default, IEnumerable<DataExportDetails> dataExportDetails = default, DataBoxOrderPreferences preferences = default, ReverseShippingDetails reverseShippingDetails = default, IEnumerable<CopyLogDetails> copyLogDetails = default, string reverseShipmentLabelSasKey = default, string chainOfCustodySasKey = default, DeviceErasureDetails deviceErasureDetails = default, DataBoxKeyEncryptionKey keyEncryptionKey = default, int? expectedDataSizeInTerabytes = default, IEnumerable<CustomerResolutionCode> actions = default, LastMitigationActionOnJob lastMitigationActionOnJob = default, DataCenterAddressResult dataCenterAddress = default, DataCenterCode? dataCenterCode = default, IDictionary<string, ImportDiskDetails> importDiskDetails = default, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails = default, IEnumerable<DataBoxCustomerDiskCopyProgress> copyProgress = default, PackageCarrierInfo deliverToDataCenterPackageDetails = default, PackageCarrierDetails returnToCustomerPackageDetails = default, bool? enableManifestBackup = default)
         {
-            jobStages ??= new List<DataBoxJobStage>();
-            dataImportDetails ??= new List<DataImportDetails>();
-            dataExportDetails ??= new List<DataExportDetails>();
-            copyLogDetails ??= new List<CopyLogDetails>();
-            actions ??= new List<CustomerResolutionCode>();
+            jobStages ??= new ChangeTrackingList<DataBoxJobStage>();
+            dataImportDetails ??= new ChangeTrackingList<DataImportDetails>();
+            dataExportDetails ??= new ChangeTrackingList<DataExportDetails>();
+            copyLogDetails ??= new ChangeTrackingList<CopyLogDetails>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
+            importDiskDetails ??= new ChangeTrackingDictionary<string, ImportDiskDetails>();
+            exportDiskDetails ??= new ChangeTrackingDictionary<string, ExportDiskDetails>();
+            copyProgress ??= new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>();
 
-            return new UnknownJobDetails(
-                jobStages?.ToList(),
+            return new DataBoxCustomerDiskJobDetails(
+                jobStages.ToList(),
                 contactDetails,
                 shippingAddress,
                 deliveryPackage,
                 returnPackage,
-                dataImportDetails?.ToList(),
-                dataExportDetails?.ToList(),
-                default,
+                dataImportDetails.ToList(),
+                dataExportDetails.ToList(),
+                DataBoxOrderType.DataBoxCustomerDisk,
                 preferences,
                 reverseShippingDetails,
-                copyLogDetails?.ToList(),
+                copyLogDetails.ToList(),
                 reverseShipmentLabelSasKey,
                 chainOfCustodySasKey,
                 deviceErasureDetails,
                 keyEncryptionKey,
                 expectedDataSizeInTerabytes,
-                actions?.ToList(),
+                actions.ToList(),
                 lastMitigationActionOnJob,
                 dataCenterAddress,
                 dataCenterCode,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                importDiskDetails,
+                exportDiskDetails,
+                copyProgress.ToList(),
+                deliverToDataCenterPackageDetails,
+                returnToCustomerPackageDetails,
+                enableManifestBackup);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
-        /// <param name="stageName"> Name of the job stage. </param>
-        /// <param name="displayName"> Display name of the job stage. </param>
-        /// <param name="stageStatus"> Status of the job stage. </param>
-        /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
-        /// <param name="jobStageDetails"> Job Stage Details. </param>
-        /// <param name="delayInformation"> Delay information for the job stages. </param>
-        /// <returns> A new <see cref="Models.DataBoxJobStage"/> instance for mocking. </returns>
-        public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName = null, string displayName = null, DataBoxStageStatus? stageStatus = null, DateTimeOffset? stageTime = null, BinaryData jobStageDetails = null, IEnumerable<JobDelayDetails> delayInformation = null)
+        /// <summary> Import disk details. </summary>
+        /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
+        /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
+        /// <param name="bitLockerKey"> BitLocker key used to encrypt the disk. </param>
+        /// <param name="backupManifestCloudPath"> Path to backed up manifest, only returned if enableManifestBackup is true. </param>
+        /// <returns> A new <see cref="Models.ImportDiskDetails"/> instance for mocking. </returns>
+        public static ImportDiskDetails ImportDiskDetails(string manifestFile = default, string manifestHash = default, string bitLockerKey = default, string backupManifestCloudPath = default)
         {
-            delayInformation ??= new List<JobDelayDetails>();
-
-            return new DataBoxJobStage(
-                stageName,
-                displayName,
-                stageStatus,
-                stageTime,
-                jobStageDetails,
-                delayInformation?.ToList(),
-                serializedAdditionalRawData: null);
+            return new ImportDiskDetails(manifestFile, manifestHash, bitLockerKey, backupManifestCloudPath, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.JobDelayDetails"/>. </summary>
-        /// <param name="status"> Status of notification. </param>
-        /// <param name="errorCode"> Delay Error code. </param>
-        /// <param name="description"> Description of the delay. </param>
-        /// <param name="startOn"> Timestamp when the delay notification was created. </param>
-        /// <param name="resolutionOn"> Timestamp when the delay notification was resolved. </param>
-        /// <returns> A new <see cref="Models.JobDelayDetails"/> instance for mocking. </returns>
-        public static JobDelayDetails JobDelayDetails(DelayNotificationStatus? status = null, PortalDelayErrorCode? errorCode = null, string description = null, DateTimeOffset? startOn = null, DateTimeOffset? resolutionOn = null)
+        /// <summary> Export disk details. </summary>
+        /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
+        /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
+        /// <param name="backupManifestCloudPath"> Path to backed up manifest, only returned if enableManifestBackup is true. </param>
+        /// <returns> A new <see cref="Models.ExportDiskDetails"/> instance for mocking. </returns>
+        public static ExportDiskDetails ExportDiskDetails(string manifestFile = default, string manifestHash = default, string backupManifestCloudPath = default)
         {
-            return new JobDelayDetails(
-                status,
-                errorCode,
-                description,
-                startOn,
-                resolutionOn,
-                serializedAdditionalRawData: null);
+            return new ExportDiskDetails(manifestFile, manifestHash, backupManifestCloudPath, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PackageShippingDetails"/>. </summary>
-        /// <param name="trackingUri"> Url where shipment can be tracked. </param>
-        /// <param name="carrierName"> Name of the carrier. </param>
-        /// <param name="trackingId"> Tracking Id of shipment. </param>
-        /// <returns> A new <see cref="Models.PackageShippingDetails"/> instance for mocking. </returns>
-        public static PackageShippingDetails PackageShippingDetails(Uri trackingUri = null, string carrierName = null, string trackingId = null)
-        {
-            return new PackageShippingDetails(trackingUri, carrierName, trackingId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TransportPreferences"/>. </summary>
-        /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
-        /// <param name="isUpdated"> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </param>
-        /// <returns> A new <see cref="Models.TransportPreferences"/> instance for mocking. </returns>
-        public static TransportPreferences TransportPreferences(TransportShipmentType preferredShipmentType = default, bool? isUpdated = null)
-        {
-            return new TransportPreferences(preferredShipmentType, isUpdated, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReverseShippingDetails"/>. </summary>
-        /// <param name="contactDetails"> Contact Info. </param>
-        /// <param name="shippingAddress"> Shipping address where customer wishes to receive the device. </param>
-        /// <param name="isUpdated">
-        /// A flag to indicate whether Reverse Shipping details are updated or not after device has been prepared.
-        /// Read only field
-        /// </param>
-        /// <returns> A new <see cref="Models.ReverseShippingDetails"/> instance for mocking. </returns>
-        public static ReverseShippingDetails ReverseShippingDetails(ContactInfo contactDetails = null, DataBoxShippingAddress shippingAddress = null, bool? isUpdated = null)
-        {
-            return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DeviceErasureDetails"/>. </summary>
-        /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
-        /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
-        /// <returns> A new <see cref="Models.DeviceErasureDetails"/> instance for mocking. </returns>
-        public static DeviceErasureDetails DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus = null, string erasureOrDestructionCertificateSasKey = null)
-        {
-            return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LastMitigationActionOnJob"/>. </summary>
-        /// <param name="actionPerformedOn"> Action performed date time. </param>
-        /// <param name="isPerformedByCustomer">
-        /// Action performed by customer,
-        /// possibility is that mitigation might happen by customer or service or by ops
-        /// </param>
-        /// <param name="customerResolution"> Resolution code provided by customer. </param>
-        /// <returns> A new <see cref="Models.LastMitigationActionOnJob"/> instance for mocking. </returns>
-        public static LastMitigationActionOnJob LastMitigationActionOnJob(DateTimeOffset? actionPerformedOn = null, bool? isPerformedByCustomer = null, CustomerResolutionCode? customerResolution = null)
-        {
-            return new LastMitigationActionOnJob(actionPerformedOn, isPerformedByCustomer, customerResolution, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressResult"/>. </summary>
-        /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
-        /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        /// <returns> A new <see cref="Models.DataCenterAddressResult"/> instance for mocking. </returns>
-        public static DataCenterAddressResult DataCenterAddressResult(IEnumerable<string> supportedCarriersForReturnShipment = null, AzureLocation? dataCenterAzureLocation = null)
-        {
-            supportedCarriersForReturnShipment ??= new List<string>();
-
-            return new UnknownDataCenterAddressResponse(default, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MitigateJobContent"/>. </summary>
-        /// <param name="customerResolutionCode"> Resolution code for the job. </param>
-        /// <param name="serialNumberCustomerResolutionMap"> Serial number and the customer resolution code corresponding to each serial number. </param>
-        /// <returns> A new <see cref="Models.MitigateJobContent"/> instance for mocking. </returns>
-        public static MitigateJobContent MitigateJobContent(CustomerResolutionCode customerResolutionCode = default, IDictionary<string, CustomerResolutionCode> serialNumberCustomerResolutionMap = null)
-        {
-            serialNumberCustomerResolutionMap ??= new Dictionary<string, CustomerResolutionCode>();
-
-            return new MitigateJobContent(customerResolutionCode, serialNumberCustomerResolutionMap, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AvailableSkusContent"/>. </summary>
-        /// <param name="transferType"> Type of the transfer. </param>
-        /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
-        /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        /// <param name="skuNames"> Sku Names to filter for available skus. </param>
-        /// <returns> A new <see cref="Models.AvailableSkusContent"/> instance for mocking. </returns>
-        public static AvailableSkusContent AvailableSkusContent(DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default, IEnumerable<DataBoxSkuName> skuNames = null)
-        {
-            skuNames ??= new List<DataBoxSkuName>();
-
-            return new AvailableSkusContent(transferType, country, location, skuNames?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuInformation"/>. </summary>
-        /// <param name="sku"> The Sku. </param>
-        /// <param name="isEnabled"> The sku is enabled or not. </param>
-        /// <param name="dataLocationToServiceLocationMap"> The map of data location to service location. </param>
-        /// <param name="capacity"> Capacity of the Sku. </param>
-        /// <param name="costs"> Cost of the Sku. </param>
-        /// <param name="apiVersions"> Api versions that support this Sku. </param>
-        /// <param name="disabledReason"> Reason why the Sku is disabled. </param>
-        /// <param name="disabledReasonMessage"> Message for why the Sku is disabled. </param>
-        /// <param name="requiredFeature"> Required feature to access the sku. </param>
-        /// <param name="countriesWithinCommerceBoundary"> List of all the Countries in the SKU specific commerce boundary. </param>
-        /// <returns> A new <see cref="Models.DataBoxSkuInformation"/> instance for mocking. </returns>
-        public static DataBoxSkuInformation DataBoxSkuInformation(DataBoxSku sku = null, bool? isEnabled = null, IEnumerable<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = null, DataBoxSkuCapacity capacity = null, IEnumerable<DataBoxSkuCost> costs = null, IEnumerable<string> apiVersions = null, SkuDisabledReason? disabledReason = null, string disabledReasonMessage = null, string requiredFeature = null, IEnumerable<string> countriesWithinCommerceBoundary = null)
-        {
-            dataLocationToServiceLocationMap ??= new List<DataLocationToServiceLocationMap>();
-            costs ??= new List<DataBoxSkuCost>();
-            apiVersions ??= new List<string>();
-            countriesWithinCommerceBoundary ??= new List<string>();
-
-            return new DataBoxSkuInformation(
-                sku,
-                isEnabled,
-                dataLocationToServiceLocationMap?.ToList(),
-                capacity,
-                costs?.ToList(),
-                apiVersions?.ToList(),
-                disabledReason,
-                disabledReasonMessage,
-                requiredFeature,
-                countriesWithinCommerceBoundary?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataLocationToServiceLocationMap"/>. </summary>
-        /// <param name="dataLocation"> Location of the data. </param>
-        /// <param name="serviceLocation"> Location of the service. </param>
-        /// <returns> A new <see cref="Models.DataLocationToServiceLocationMap"/> instance for mocking. </returns>
-        public static DataLocationToServiceLocationMap DataLocationToServiceLocationMap(AzureLocation? dataLocation = null, AzureLocation? serviceLocation = null)
-        {
-            return new DataLocationToServiceLocationMap(dataLocation, serviceLocation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCapacity"/>. </summary>
-        /// <param name="usable"> Usable capacity in TB. </param>
-        /// <param name="maximum"> Maximum capacity in TB. </param>
-        /// <param name="individualSkuUsable"> Maximum capacity per device in TB. </param>
-        /// <returns> A new <see cref="Models.DataBoxSkuCapacity"/> instance for mocking. </returns>
-        public static DataBoxSkuCapacity DataBoxSkuCapacity(string usable = null, string maximum = null, string individualSkuUsable = null)
-        {
-            return new DataBoxSkuCapacity(usable, maximum, individualSkuUsable, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCost"/>. </summary>
-        /// <param name="meterId"> Meter id of the Sku. </param>
-        /// <param name="meterType"> The type of the meter. </param>
-        /// <param name="multiplier"> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </param>
-        /// <returns> A new <see cref="Models.DataBoxSkuCost"/> instance for mocking. </returns>
-        public static DataBoxSkuCost DataBoxSkuCost(Guid? meterId = null, string meterType = null, double? multiplier = null)
-        {
-            return new DataBoxSkuCost(meterId, meterType, multiplier, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidateAddressContent"/>. </summary>
-        /// <param name="shippingAddress"> Shipping address of the customer. </param>
-        /// <param name="deviceType"> Device type to be used for the job. </param>
-        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
-        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        /// <returns> A new <see cref="Models.DataBoxValidateAddressContent"/> instance for mocking. </returns>
-        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress = null, DataBoxSkuName deviceType = default, TransportPreferences transportPreferences = null, DeviceModelName? model = null)
-        {
-            return new DataBoxValidateAddressContent(
-                DataBoxValidationInputDiscriminator.ValidateAddress,
-                serializedAdditionalRawData: null,
-                shippingAddress,
-                deviceType,
-                transportPreferences,
-                model);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AddressValidationResult"/>. </summary>
-        /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="validationStatus"> The address validation status. </param>
-        /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        /// <returns> A new <see cref="Models.AddressValidationResult"/> instance for mocking. </returns>
-        public static AddressValidationResult AddressValidationResult(ResponseError error = null, AddressValidationStatus? validationStatus = null, IEnumerable<DataBoxShippingAddress> alternateAddresses = null)
-        {
-            alternateAddresses ??= new List<DataBoxShippingAddress>();
-
-            return new AddressValidationResult(DataBoxValidationInputDiscriminator.ValidateAddress, error, serializedAdditionalRawData: null, validationStatus, alternateAddresses?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationInputResult"/>. </summary>
-        /// <param name="error"> Error code and message of validation response. </param>
-        /// <returns> A new <see cref="Models.DataBoxValidationInputResult"/> instance for mocking. </returns>
-        public static DataBoxValidationInputResult DataBoxValidationInputResult(ResponseError error = null)
-        {
-            return new UnknownValidationInputResponse(default, error, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationResult"/>. </summary>
-        /// <param name="status"> Overall validation status. </param>
-        /// <param name="individualResponseDetails">
-        /// List of response details contain validationType and its response as key and value respectively.
-        /// Please note <see cref="Models.DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AddressValidationResult"/>, <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="Models.DataTransferDetailsValidationResult"/>, <see cref="Models.PreferencesValidationResult"/>, <see cref="Models.SkuAvailabilityValidationResult"/> and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.DataBoxValidationResult"/> instance for mocking. </returns>
-        public static DataBoxValidationResult DataBoxValidationResult(OverallValidationStatus? status = null, IEnumerable<DataBoxValidationInputResult> individualResponseDetails = null)
-        {
-            individualResponseDetails ??= new List<DataBoxValidationInputResult>();
-
-            return new DataBoxValidationResult(status, individualResponseDetails?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxShipmentPickUpResult"/>. </summary>
-        /// <param name="confirmationNumber"> Confirmation number for the pick up request. </param>
-        /// <param name="readyBy"> Time by which shipment should be ready for pick up, this is in local time of pick up area. </param>
-        /// <returns> A new <see cref="Models.DataBoxShipmentPickUpResult"/> instance for mocking. </returns>
-        public static DataBoxShipmentPickUpResult DataBoxShipmentPickUpResult(string confirmationNumber = null, DateTimeOffset? readyBy = null)
-        {
-            return new DataBoxShipmentPickUpResult(confirmationNumber, readyBy, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.UnencryptedCredentials"/>. </summary>
-        /// <param name="jobName"> Name of the job. </param>
-        /// <param name="jobSecrets">
-        /// Secrets related to this job.
-        /// Please note <see cref="Models.JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataBoxJobSecrets"/>, <see cref="Models.CustomerDiskJobSecrets"/>, <see cref="Models.DataBoxDiskJobSecrets"/> and <see cref="Models.DataBoxHeavyJobSecrets"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.UnencryptedCredentials"/> instance for mocking. </returns>
-        public static UnencryptedCredentials UnencryptedCredentials(string jobName = null, JobSecrets jobSecrets = null)
-        {
-            return new UnencryptedCredentials(jobName, jobSecrets, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.JobSecrets"/>. </summary>
-        /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
-        /// <param name="error"> Error while fetching the secrets. </param>
-        /// <returns> A new <see cref="Models.JobSecrets"/> instance for mocking. </returns>
-        public static JobSecrets JobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null)
-        {
-            return new UnknownJobSecrets(default, dataCenterAccessSecurityCode, error, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAccessSecurityCode"/>. </summary>
-        /// <param name="reverseDataCenterAccessCode"> Reverse Dc access security code. </param>
-        /// <param name="forwardDataCenterAccessCode"> Forward Dc access security code. </param>
-        /// <returns> A new <see cref="Models.DataCenterAccessSecurityCode"/> instance for mocking. </returns>
-        public static DataCenterAccessSecurityCode DataCenterAccessSecurityCode(string reverseDataCenterAccessCode = null, string forwardDataCenterAccessCode = null)
-        {
-            return new DataCenterAccessSecurityCode(reverseDataCenterAccessCode, forwardDataCenterAccessCode, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScheduleAvailabilityContent"/>. </summary>
-        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        /// <param name="country"> Country in which storage location should be supported. </param>
-        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        /// <returns> A new <see cref="Models.ScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static ScheduleAvailabilityContent ScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null)
-        {
-            return new UnknownScheduleAvailabilityRequest(storageLocation, default, country, model, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressContent"/>. </summary>
-        /// <param name="storageLocation"> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        /// <param name="skuName"> Sku Name for which the data center address requested. </param>
-        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        /// <returns> A new <see cref="Models.DataCenterAddressContent"/> instance for mocking. </returns>
-        public static DataCenterAddressContent DataCenterAddressContent(AzureLocation storageLocation = default, DataBoxSkuName skuName = default, DeviceModelName? model = null)
-        {
-            return new DataCenterAddressContent(storageLocation, skuName, model, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RegionConfigurationResult"/>. </summary>
-        /// <param name="scheduleAvailabilityResponseAvailableDates"> Schedule availability for given sku in a region. </param>
-        /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
-        /// <param name="dataCenterAddressResponse">
-        /// Datacenter address for given sku in a region.
-        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
-        /// </param>
-        /// <param name="deviceCapabilityDetails"> Device capabilities available for a given sku in a region. </param>
-        /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
-        public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates = null, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails = null, DataCenterAddressResult dataCenterAddressResponse = null, IEnumerable<DeviceCapabilityDetails> deviceCapabilityDetails = null)
-        {
-            scheduleAvailabilityResponseAvailableDates ??= new List<DateTimeOffset>();
-            transportAvailabilityDetails ??= new List<TransportAvailabilityDetails>();
-            deviceCapabilityDetails ??= new List<DeviceCapabilityDetails>();
-
-            return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates != null ? new ScheduleAvailabilityResponse(scheduleAvailabilityResponseAvailableDates?.ToList(), serializedAdditionalRawData: null) : null, transportAvailabilityDetails != null ? new TransportAvailabilityResponse(transportAvailabilityDetails?.ToList(), serializedAdditionalRawData: null) : null, dataCenterAddressResponse, deviceCapabilityDetails != null ? new DeviceCapabilityResponse(deviceCapabilityDetails?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TransportAvailabilityDetails"/>. </summary>
-        /// <param name="shipmentType"> Transport Shipment Type supported for given region. </param>
-        /// <returns> A new <see cref="Models.TransportAvailabilityDetails"/> instance for mocking. </returns>
-        public static TransportAvailabilityDetails TransportAvailabilityDetails(TransportShipmentType? shipmentType = null)
-        {
-            return new TransportAvailabilityDetails(shipmentType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DeviceCapabilityDetails"/>. </summary>
-        /// <param name="hardwareEncryption"> Hardware encryption support for a given sku for a given region. </param>
-        /// <returns> A new <see cref="Models.DeviceCapabilityDetails"/> instance for mocking. </returns>
-        public static DeviceCapabilityDetails DeviceCapabilityDetails(HardwareEncryption? hardwareEncryption = null)
-        {
-            return new DeviceCapabilityDetails(hardwareEncryption, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxAccountCredentialDetails"/>. </summary>
-        /// <param name="accountName"> Name of the account. </param>
-        /// <param name="dataAccountType"> Type of the account. </param>
-        /// <param name="accountConnectionString"> Connection string of the account endpoint to use the account as a storage endpoint on the device. </param>
-        /// <param name="shareCredentialDetails"> Per share level unencrypted access credentials. </param>
-        /// <returns> A new <see cref="Models.DataBoxAccountCredentialDetails"/> instance for mocking. </returns>
-        public static DataBoxAccountCredentialDetails DataBoxAccountCredentialDetails(string accountName = null, DataAccountType? dataAccountType = null, string accountConnectionString = null, IEnumerable<ShareCredentialDetails> shareCredentialDetails = null)
-        {
-            shareCredentialDetails ??= new List<ShareCredentialDetails>();
-
-            return new DataBoxAccountCredentialDetails(accountName, dataAccountType, accountConnectionString, shareCredentialDetails?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ShareCredentialDetails"/>. </summary>
-        /// <param name="shareName"> Name of the share. </param>
-        /// <param name="shareType"> Type of the share. </param>
-        /// <param name="userName"> User name for the share. </param>
-        /// <param name="password"> Password for the share. </param>
-        /// <param name="supportedAccessProtocols"> Access protocols supported on the device. </param>
-        /// <returns> A new <see cref="Models.ShareCredentialDetails"/> instance for mocking. </returns>
-        public static ShareCredentialDetails ShareCredentialDetails(string shareName = null, ShareDestinationFormatType? shareType = null, string userName = null, string password = null, IEnumerable<DataBoxAccessProtocol> supportedAccessProtocols = null)
-        {
-            supportedAccessProtocols ??= new List<DataBoxAccessProtocol>();
-
-            return new ShareCredentialDetails(
-                shareName,
-                shareType,
-                userName,
-                password,
-                supportedAccessProtocols?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplianceNetworkConfiguration"/>. </summary>
-        /// <param name="name"> Name of the network. </param>
-        /// <param name="macAddress"> Mac Address. </param>
-        /// <returns> A new <see cref="Models.ApplianceNetworkConfiguration"/> instance for mocking. </returns>
-        public static ApplianceNetworkConfiguration ApplianceNetworkConfiguration(string name = null, string macAddress = null)
-        {
-            return new ApplianceNetworkConfiguration(name, macAddress, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskCopyProgress"/>. </summary>
+        /// <summary> DataBox CustomerDisk Copy Progress. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -546,9 +481,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="copyStatus"> The Status of the copy. </param>
         /// <returns> A new <see cref="Models.DataBoxCustomerDiskCopyProgress"/> instance for mocking. </returns>
-        public static DataBoxCustomerDiskCopyProgress DataBoxCustomerDiskCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null, string serialNumber = null, DataBoxCopyStatus? copyStatus = null)
+        public static DataBoxCustomerDiskCopyProgress DataBoxCustomerDiskCopyProgress(string storageAccountName = default, DataBoxJobTransferType? transferType = default, DataAccountType? dataAccountType = default, ResourceIdentifier accountId = default, long? bytesProcessed = default, long? totalBytesToProcess = default, long? filesProcessed = default, long? totalFilesToProcess = default, long? invalidFilesProcessed = default, long? invalidFileBytesUploaded = default, long? renamedContainerCount = default, long? filesErroredOut = default, long? directoriesErroredOut = default, long? invalidDirectoriesProcessed = default, bool? isEnumerationInProgress = default, ResponseError error = default, IEnumerable<CustomerResolutionCode> actions = default, string serialNumber = default, DataBoxCopyStatus? copyStatus = default)
         {
-            actions ??= new List<CustomerResolutionCode>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
 
             return new DataBoxCustomerDiskCopyProgress(
                 storageAccountName,
@@ -567,13 +502,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 invalidDirectoriesProcessed,
                 isEnumerationInProgress,
                 error,
-                actions?.ToList(),
-                serializedAdditionalRawData: null,
+                actions.ToList(),
+                additionalBinaryDataProperties: null,
                 serialNumber,
                 copyStatus);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCopyProgress"/>. </summary>
+        /// <summary> Copy progress. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -595,9 +530,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Error, if any, in the stage. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <returns> A new <see cref="Models.DataBoxCopyProgress"/> instance for mocking. </returns>
-        public static DataBoxCopyProgress DataBoxCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null)
+        public static DataBoxCopyProgress DataBoxCopyProgress(string storageAccountName = default, DataBoxJobTransferType? transferType = default, DataAccountType? dataAccountType = default, ResourceIdentifier accountId = default, long? bytesProcessed = default, long? totalBytesToProcess = default, long? filesProcessed = default, long? totalFilesToProcess = default, long? invalidFilesProcessed = default, long? invalidFileBytesUploaded = default, long? renamedContainerCount = default, long? filesErroredOut = default, long? directoriesErroredOut = default, long? invalidDirectoriesProcessed = default, bool? isEnumerationInProgress = default, ResponseError error = default, IEnumerable<CustomerResolutionCode> actions = default)
         {
-            actions ??= new List<CustomerResolutionCode>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
 
             return new DataBoxCopyProgress(
                 storageAccountName,
@@ -616,76 +551,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 invalidDirectoriesProcessed,
                 isEnumerationInProgress,
                 error,
-                actions?.ToList(),
-                serializedAdditionalRawData: null);
+                actions.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GranularCopyProgress"/>. </summary>
-        /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
-        /// <param name="transferType"> Transfer type of data. </param>
-        /// <param name="dataAccountType"> Data Account Type. </param>
-        /// <param name="accountId"> Id of the account where the data needs to be uploaded. </param>
-        /// <param name="bytesProcessed"> To indicate bytes transferred. </param>
-        /// <param name="totalBytesToProcess"> Total amount of data to be processed by the job. </param>
-        /// <param name="filesProcessed"> Number of files processed. </param>
-        /// <param name="totalFilesToProcess"> Total files to process. </param>
-        /// <param name="invalidFilesProcessed"> Number of files not adhering to azure naming conventions which were processed by automatic renaming. </param>
-        /// <param name="invalidFileBytesUploaded"> Total amount of data not adhering to azure naming conventions which were processed by automatic renaming. </param>
-        /// <param name="renamedContainerCount"> Number of folders not adhering to azure naming conventions which were processed by automatic renaming. </param>
-        /// <param name="filesErroredOut"> Number of files which could not be copied. </param>
-        /// <param name="directoriesErroredOut"> To indicate directories errored out in the job. </param>
-        /// <param name="invalidDirectoriesProcessed"> To indicate directories renamed. </param>
-        /// <param name="isEnumerationInProgress">
-        /// To indicate if enumeration of data is in progress.
-        /// Until this is true, the TotalBytesToProcess may not be valid.
-        /// </param>
-        /// <param name="error"> Error, if any, in the stage. </param>
-        /// <param name="actions"> Available actions on the job. </param>
-        /// <returns> A new <see cref="Models.GranularCopyProgress"/> instance for mocking. </returns>
-        public static GranularCopyProgress GranularCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null)
-        {
-            actions ??= new List<CustomerResolutionCode>();
-
-            return new GranularCopyProgress(
-                storageAccountName,
-                transferType,
-                dataAccountType,
-                accountId,
-                bytesProcessed,
-                totalBytesToProcess,
-                filesProcessed,
-                totalFilesToProcess,
-                invalidFilesProcessed,
-                invalidFileBytesUploaded,
-                renamedContainerCount,
-                filesErroredOut,
-                directoriesErroredOut,
-                invalidDirectoriesProcessed,
-                isEnumerationInProgress,
-                error,
-                actions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>. </summary>
-        /// <param name="deviceType"> Device type to be used for the job. </param>
-        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
-        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType = default, DeviceModelName? model = null)
-        {
-            return new CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, serializedAdditionalRawData: null, deviceType, model);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>. </summary>
-        /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="status"> Create order limit validation status. </param>
-        /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/> instance for mocking. </returns>
-        public static CreateOrderLimitForSubscriptionValidationResult CreateOrderLimitForSubscriptionValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
-        {
-            return new CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, error, serializedAdditionalRawData: null, status);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskJobDetails"/>. </summary>
+        /// <summary> DataBox Disk Job Details. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -695,11 +565,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
         /// <param name="preferences"> Preferences for the order. </param>
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
-        /// <param name="copyLogDetails">
-        /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
-        /// </param>
+        /// <param name="copyLogDetails"> List of copy log details. </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
         /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
@@ -707,210 +573,59 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="dataCenterAddress">
-        /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
-        /// </param>
+        /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="importDiskDetails"> Contains the map of disk serial number to the disk details for import jobs. </param>
-        /// <param name="exportDiskDetails"> Contains the map of disk serial number to the disk details for export jobs. </param>
+        /// <param name="preferredDisks"> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
-        /// <param name="deliverToDataCenterPackageDetails"> Delivery package shipping details. </param>
-        /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
-        /// <param name="enableManifestBackup"> Flag to indicate if disk manifest should be backed-up in the Storage Account. </param>
-        /// <returns> A new <see cref="Models.DataBoxCustomerDiskJobDetails"/> instance for mocking. </returns>
-        public static DataBoxCustomerDiskJobDetails DataBoxCustomerDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, ImportDiskDetails> importDiskDetails = null, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails = null, IEnumerable<DataBoxCustomerDiskCopyProgress> copyProgress = null, PackageCarrierInfo deliverToDataCenterPackageDetails = null, PackageCarrierDetails returnToCustomerPackageDetails = null, bool? enableManifestBackup = null)
+        /// <param name="granularCopyProgress"> Copy progress per disk. </param>
+        /// <param name="granularCopyLogDetails"> Copy progress per disk. </param>
+        /// <param name="disksAndSizeDetails"> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </param>
+        /// <param name="passkey"> User entered passkey for DataBox Disk job. </param>
+        /// <returns> A new <see cref="Models.DataBoxDiskJobDetails"/> instance for mocking. </returns>
+        public static DataBoxDiskJobDetails DataBoxDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = default, DataBoxContactDetails contactDetails = default, DataBoxShippingAddress shippingAddress = default, PackageShippingDetails deliveryPackage = default, PackageShippingDetails returnPackage = default, IEnumerable<DataImportDetails> dataImportDetails = default, IEnumerable<DataExportDetails> dataExportDetails = default, DataBoxOrderPreferences preferences = default, ReverseShippingDetails reverseShippingDetails = default, IEnumerable<CopyLogDetails> copyLogDetails = default, string reverseShipmentLabelSasKey = default, string chainOfCustodySasKey = default, DeviceErasureDetails deviceErasureDetails = default, DataBoxKeyEncryptionKey keyEncryptionKey = default, int? expectedDataSizeInTerabytes = default, IEnumerable<CustomerResolutionCode> actions = default, LastMitigationActionOnJob lastMitigationActionOnJob = default, DataCenterAddressResult dataCenterAddress = default, DataCenterCode? dataCenterCode = default, IDictionary<string, int> preferredDisks = default, IEnumerable<DataBoxDiskCopyProgress> copyProgress = default, IEnumerable<DataBoxDiskGranularCopyProgress> granularCopyProgress = default, IEnumerable<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = default, IReadOnlyDictionary<string, int> disksAndSizeDetails = default, string passkey = default)
         {
-            jobStages ??= new List<DataBoxJobStage>();
-            dataImportDetails ??= new List<DataImportDetails>();
-            dataExportDetails ??= new List<DataExportDetails>();
-            copyLogDetails ??= new List<CopyLogDetails>();
-            actions ??= new List<CustomerResolutionCode>();
-            importDiskDetails ??= new Dictionary<string, ImportDiskDetails>();
-            exportDiskDetails ??= new Dictionary<string, ExportDiskDetails>();
-            copyProgress ??= new List<DataBoxCustomerDiskCopyProgress>();
+            jobStages ??= new ChangeTrackingList<DataBoxJobStage>();
+            dataImportDetails ??= new ChangeTrackingList<DataImportDetails>();
+            dataExportDetails ??= new ChangeTrackingList<DataExportDetails>();
+            copyLogDetails ??= new ChangeTrackingList<CopyLogDetails>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
+            preferredDisks ??= new ChangeTrackingDictionary<string, int>();
+            copyProgress ??= new ChangeTrackingList<DataBoxDiskCopyProgress>();
+            granularCopyProgress ??= new ChangeTrackingList<DataBoxDiskGranularCopyProgress>();
+            granularCopyLogDetails ??= new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>();
+            disksAndSizeDetails ??= new ChangeTrackingDictionary<string, int>();
 
-            return new DataBoxCustomerDiskJobDetails(
-                jobStages?.ToList(),
+            return new DataBoxDiskJobDetails(
+                jobStages.ToList(),
                 contactDetails,
                 shippingAddress,
                 deliveryPackage,
                 returnPackage,
-                dataImportDetails?.ToList(),
-                dataExportDetails?.ToList(),
-                DataBoxOrderType.DataBoxCustomerDisk,
+                dataImportDetails.ToList(),
+                dataExportDetails.ToList(),
+                DataBoxOrderType.DataBoxDisk,
                 preferences,
                 reverseShippingDetails,
-                copyLogDetails?.ToList(),
+                copyLogDetails.ToList(),
                 reverseShipmentLabelSasKey,
                 chainOfCustodySasKey,
                 deviceErasureDetails,
                 keyEncryptionKey,
                 expectedDataSizeInTerabytes,
-                actions?.ToList(),
+                actions.ToList(),
                 lastMitigationActionOnJob,
                 dataCenterAddress,
                 dataCenterCode,
-                serializedAdditionalRawData: null,
-                importDiskDetails,
-                exportDiskDetails,
-                copyProgress?.ToList(),
-                deliverToDataCenterPackageDetails,
-                returnToCustomerPackageDetails,
-                enableManifestBackup);
+                additionalBinaryDataProperties: null,
+                preferredDisks,
+                copyProgress.ToList(),
+                granularCopyProgress.ToList(),
+                granularCopyLogDetails.ToList(),
+                disksAndSizeDetails,
+                passkey);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImportDiskDetails"/>. </summary>
-        /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
-        /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
-        /// <param name="bitLockerKey"> BitLocker key used to encrypt the disk. </param>
-        /// <param name="backupManifestCloudPath"> Path to backed up manifest, only returned if enableManifestBackup is true. </param>
-        /// <returns> A new <see cref="Models.ImportDiskDetails"/> instance for mocking. </returns>
-        public static ImportDiskDetails ImportDiskDetails(string manifestFile = null, string manifestHash = null, string bitLockerKey = null, string backupManifestCloudPath = null)
-        {
-            return new ImportDiskDetails(manifestFile, manifestHash, bitLockerKey, backupManifestCloudPath, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExportDiskDetails"/>. </summary>
-        /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
-        /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
-        /// <param name="backupManifestCloudPath"> Path to backed up manifest, only returned if enableManifestBackup is true. </param>
-        /// <returns> A new <see cref="Models.ExportDiskDetails"/> instance for mocking. </returns>
-        public static ExportDiskDetails ExportDiskDetails(string manifestFile = null, string manifestHash = null, string backupManifestCloudPath = null)
-        {
-            return new ExportDiskDetails(manifestFile, manifestHash, backupManifestCloudPath, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomerDiskJobSecrets"/>. </summary>
-        /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
-        /// <param name="error"> Error while fetching the secrets. </param>
-        /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
-        /// <param name="carrierAccountNumber"> Carrier Account Number of the customer. </param>
-        /// <returns> A new <see cref="Models.CustomerDiskJobSecrets"/> instance for mocking. </returns>
-        public static CustomerDiskJobSecrets CustomerDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxDiskSecret> diskSecrets = null, string carrierAccountNumber = null)
-        {
-            diskSecrets ??= new List<DataBoxDiskSecret>();
-
-            return new CustomerDiskJobSecrets(
-                DataBoxOrderType.DataBoxCustomerDisk,
-                dataCenterAccessSecurityCode,
-                error,
-                serializedAdditionalRawData: null,
-                diskSecrets?.ToList(),
-                carrierAccountNumber);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskSecret"/>. </summary>
-        /// <param name="diskSerialNumber"> Serial number of the assigned disk. </param>
-        /// <param name="bitLockerKey"> Bit Locker key of the disk which can be used to unlock the disk to copy data. </param>
-        /// <returns> A new <see cref="Models.DataBoxDiskSecret"/> instance for mocking. </returns>
-        public static DataBoxDiskSecret DataBoxDiskSecret(string diskSerialNumber = null, string bitLockerKey = null)
-        {
-            return new DataBoxDiskSecret(diskSerialNumber, bitLockerKey, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressInstructionResult"/>. </summary>
-        /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
-        /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        /// <param name="communicationInstruction"> Data center communication instruction. </param>
-        /// <returns> A new <see cref="Models.DataCenterAddressInstructionResult"/> instance for mocking. </returns>
-        public static DataCenterAddressInstructionResult DataCenterAddressInstructionResult(IEnumerable<string> supportedCarriersForReturnShipment = null, AzureLocation? dataCenterAzureLocation = null, string communicationInstruction = null)
-        {
-            supportedCarriersForReturnShipment ??= new List<string>();
-
-            return new DataCenterAddressInstructionResult(DataCenterAddressType.DataCenterAddressInstruction, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, serializedAdditionalRawData: null, communicationInstruction);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressLocationResult"/>. </summary>
-        /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
-        /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        /// <param name="contactPersonName"> Contact person name. </param>
-        /// <param name="company"> Company name. </param>
-        /// <param name="street1"> Street address line 1. </param>
-        /// <param name="street2"> Street address line 2. </param>
-        /// <param name="street3"> Street address line 3. </param>
-        /// <param name="city"> City name. </param>
-        /// <param name="state"> name of the state. </param>
-        /// <param name="zip"> Zip code. </param>
-        /// <param name="country"> name of the country. </param>
-        /// <param name="phone"> Phone number. </param>
-        /// <param name="phoneExtension"> Phone extension. </param>
-        /// <param name="addressType"> Address type. </param>
-        /// <param name="additionalShippingInformation"> Special instruction for shipping. </param>
-        /// <returns> A new <see cref="Models.DataCenterAddressLocationResult"/> instance for mocking. </returns>
-        public static DataCenterAddressLocationResult DataCenterAddressLocationResult(IEnumerable<string> supportedCarriersForReturnShipment = null, AzureLocation? dataCenterAzureLocation = null, string contactPersonName = null, string company = null, string street1 = null, string street2 = null, string street3 = null, string city = null, string state = null, string zip = null, string country = null, string phone = null, string phoneExtension = null, string addressType = null, string additionalShippingInformation = null)
-        {
-            supportedCarriersForReturnShipment ??= new List<string>();
-
-            return new DataCenterAddressLocationResult(
-                DataCenterAddressType.DataCenterAddressLocation,
-                supportedCarriersForReturnShipment?.ToList(),
-                dataCenterAzureLocation,
-                serializedAdditionalRawData: null,
-                contactPersonName,
-                company,
-                street1,
-                street2,
-                street3,
-                city,
-                state,
-                zip,
-                country,
-                phone,
-                phoneExtension,
-                addressType,
-                additionalShippingInformation);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxAccountCopyLogDetails"/>. </summary>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="copyLogLink"> Link for copy logs. </param>
-        /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
-        /// <returns> A new <see cref="Models.DataBoxAccountCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxAccountCopyLogDetails DataBoxAccountCopyLogDetails(string accountName = null, string copyLogLink = null, string copyVerboseLogLink = null)
-        {
-            return new DataBoxAccountCopyLogDetails(DataBoxOrderType.DataBox, serializedAdditionalRawData: null, accountName, copyLogLink, copyVerboseLogLink);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>. </summary>
-        /// <param name="serialNumber"> Disk Serial Number. </param>
-        /// <param name="errorLogLink"> Link for copy error logs. </param>
-        /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        /// <returns> A new <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxCustomerDiskCopyLogDetails DataBoxCustomerDiskCopyLogDetails(string serialNumber = null, string errorLogLink = null, string verboseLogLink = null)
-        {
-            return new DataBoxCustomerDiskCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, serializedAdditionalRawData: null, serialNumber, errorLogLink, verboseLogLink);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskCopyLogDetails"/>. </summary>
-        /// <param name="diskSerialNumber"> Disk Serial Number. </param>
-        /// <param name="errorLogLink"> Link for copy error logs. </param>
-        /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        /// <returns> A new <see cref="Models.DataBoxDiskCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxDiskCopyLogDetails DataBoxDiskCopyLogDetails(string diskSerialNumber = null, string errorLogLink = null, string verboseLogLink = null)
-        {
-            return new DataBoxDiskCopyLogDetails(DataBoxOrderType.DataBoxDisk, serializedAdditionalRawData: null, diskSerialNumber, errorLogLink, verboseLogLink);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskGranularCopyLogDetails"/>. </summary>
-        /// <param name="serialNumber"> Disk Serial Number. </param>
-        /// <param name="accountId"> Account id. </param>
-        /// <param name="errorLogLink"> Link for copy error logs. </param>
-        /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        /// <returns> A new <see cref="Models.DataBoxDiskGranularCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxDiskGranularCopyLogDetails DataBoxDiskGranularCopyLogDetails(string serialNumber = null, ResourceIdentifier accountId = null, string errorLogLink = null, string verboseLogLink = null)
-        {
-            return new DataBoxDiskGranularCopyLogDetails(
-                DataBoxOrderType.DataBoxCustomerDisk,
-                serializedAdditionalRawData: null,
-                serialNumber,
-                accountId,
-                errorLogLink,
-                verboseLogLink);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskCopyProgress"/>. </summary>
+        /// <summary> DataBox Disk Copy Progress. </summary>
         /// <param name="serialNumber"> The serial number of the disk. </param>
         /// <param name="bytesCopied"> Bytes copied during the copy of disk. </param>
         /// <param name="percentComplete"> Indicates the percentage completed for the copy of the disk. </param>
@@ -918,9 +633,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Error, if any, in the stage. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskCopyProgress"/> instance for mocking. </returns>
-        public static DataBoxDiskCopyProgress DataBoxDiskCopyProgress(string serialNumber = null, long? bytesCopied = null, int? percentComplete = null, DataBoxCopyStatus? status = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null)
+        public static DataBoxDiskCopyProgress DataBoxDiskCopyProgress(string serialNumber = default, long? bytesCopied = default, int? percentComplete = default, DataBoxCopyStatus? status = default, ResponseError error = default, IEnumerable<CustomerResolutionCode> actions = default)
         {
-            actions ??= new List<CustomerResolutionCode>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
 
             return new DataBoxDiskCopyProgress(
                 serialNumber,
@@ -928,11 +643,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 percentComplete,
                 status,
                 error,
-                actions?.ToList(),
-                serializedAdditionalRawData: null);
+                actions.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskGranularCopyProgress"/>. </summary>
+        /// <summary> DataBox Disk Granular Copy Progress. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -956,9 +671,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="copyStatus"> The Status of the copy. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskGranularCopyProgress"/> instance for mocking. </returns>
-        public static DataBoxDiskGranularCopyProgress DataBoxDiskGranularCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null, string serialNumber = null, DataBoxCopyStatus? copyStatus = null)
+        public static DataBoxDiskGranularCopyProgress DataBoxDiskGranularCopyProgress(string storageAccountName = default, DataBoxJobTransferType? transferType = default, DataAccountType? dataAccountType = default, ResourceIdentifier accountId = default, long? bytesProcessed = default, long? totalBytesToProcess = default, long? filesProcessed = default, long? totalFilesToProcess = default, long? invalidFilesProcessed = default, long? invalidFileBytesUploaded = default, long? renamedContainerCount = default, long? filesErroredOut = default, long? directoriesErroredOut = default, long? invalidDirectoriesProcessed = default, bool? isEnumerationInProgress = default, ResponseError error = default, IEnumerable<CustomerResolutionCode> actions = default, string serialNumber = default, DataBoxCopyStatus? copyStatus = default)
         {
-            actions ??= new List<CustomerResolutionCode>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
 
             return new DataBoxDiskGranularCopyProgress(
                 storageAccountName,
@@ -977,13 +692,77 @@ namespace Azure.ResourceManager.DataBox.Models
                 invalidDirectoriesProcessed,
                 isEnumerationInProgress,
                 error,
-                actions?.ToList(),
-                serializedAdditionalRawData: null,
+                actions.ToList(),
+                additionalBinaryDataProperties: null,
                 serialNumber,
                 copyStatus);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobDetails"/>. </summary>
+        /// <summary> Granular Copy progress. </summary>
+        /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
+        /// <param name="transferType"> Transfer type of data. </param>
+        /// <param name="dataAccountType"> Data Account Type. </param>
+        /// <param name="accountId"> Id of the account where the data needs to be uploaded. </param>
+        /// <param name="bytesProcessed"> To indicate bytes transferred. </param>
+        /// <param name="totalBytesToProcess"> Total amount of data to be processed by the job. </param>
+        /// <param name="filesProcessed"> Number of files processed. </param>
+        /// <param name="totalFilesToProcess"> Total files to process. </param>
+        /// <param name="invalidFilesProcessed"> Number of files not adhering to azure naming conventions which were processed by automatic renaming. </param>
+        /// <param name="invalidFileBytesUploaded"> Total amount of data not adhering to azure naming conventions which were processed by automatic renaming. </param>
+        /// <param name="renamedContainerCount"> Number of folders not adhering to azure naming conventions which were processed by automatic renaming. </param>
+        /// <param name="filesErroredOut"> Number of files which could not be copied. </param>
+        /// <param name="directoriesErroredOut"> To indicate directories errored out in the job. </param>
+        /// <param name="invalidDirectoriesProcessed"> To indicate directories renamed. </param>
+        /// <param name="isEnumerationInProgress">
+        /// To indicate if enumeration of data is in progress.
+        /// Until this is true, the TotalBytesToProcess may not be valid.
+        /// </param>
+        /// <param name="error"> Error, if any, in the stage. </param>
+        /// <param name="actions"> Available actions on the job. </param>
+        /// <returns> A new <see cref="Models.GranularCopyProgress"/> instance for mocking. </returns>
+        public static GranularCopyProgress GranularCopyProgress(string storageAccountName = default, DataBoxJobTransferType? transferType = default, DataAccountType? dataAccountType = default, ResourceIdentifier accountId = default, long? bytesProcessed = default, long? totalBytesToProcess = default, long? filesProcessed = default, long? totalFilesToProcess = default, long? invalidFilesProcessed = default, long? invalidFileBytesUploaded = default, long? renamedContainerCount = default, long? filesErroredOut = default, long? directoriesErroredOut = default, long? invalidDirectoriesProcessed = default, bool? isEnumerationInProgress = default, ResponseError error = default, IEnumerable<CustomerResolutionCode> actions = default)
+        {
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
+
+            return new GranularCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Granular Copy Log Details for customer disk. </summary>
+        /// <param name="serialNumber"> Disk Serial Number. </param>
+        /// <param name="accountId"> Account id. </param>
+        /// <param name="errorLogLink"> Link for copy error logs. </param>
+        /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
+        /// <returns> A new <see cref="Models.DataBoxDiskGranularCopyLogDetails"/> instance for mocking. </returns>
+        public static DataBoxDiskGranularCopyLogDetails DataBoxDiskGranularCopyLogDetails(string serialNumber = default, ResourceIdentifier accountId = default, string errorLogLink = default, string verboseLogLink = default)
+        {
+            return new DataBoxDiskGranularCopyLogDetails(
+                DataBoxOrderType.DataBoxCustomerDisk,
+                additionalBinaryDataProperties: null,
+                serialNumber,
+                accountId,
+                errorLogLink,
+                verboseLogLink);
+        }
+
+        /// <summary> Databox Heavy Device Job Details. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -993,11 +772,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
         /// <param name="preferences"> Preferences for the order. </param>
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
-        /// <param name="copyLogDetails">
-        /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
-        /// </param>
+        /// <param name="copyLogDetails"> List of copy log details. </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
         /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
@@ -1005,393 +780,495 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="dataCenterAddress">
-        /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
-        /// </param>
+        /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="preferredDisks"> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </param>
-        /// <param name="copyProgress"> Copy progress per disk. </param>
-        /// <param name="granularCopyProgress"> Copy progress per disk. </param>
-        /// <param name="granularCopyLogDetails"> Copy progress per disk. </param>
-        /// <param name="disksAndSizeDetails"> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </param>
-        /// <param name="passkey"> User entered passkey for DataBox Disk job. </param>
-        /// <returns> A new <see cref="Models.DataBoxDiskJobDetails"/> instance for mocking. </returns>
-        public static DataBoxDiskJobDetails DataBoxDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, int> preferredDisks = null, IEnumerable<DataBoxDiskCopyProgress> copyProgress = null, IEnumerable<DataBoxDiskGranularCopyProgress> granularCopyProgress = null, IEnumerable<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = null, IReadOnlyDictionary<string, int> disksAndSizeDetails = null, string passkey = null)
+        /// <param name="copyProgress"> Copy progress per account. </param>
+        /// <param name="devicePassword"> Set Device password for unlocking Databox Heavy. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
+        /// <returns> A new <see cref="Models.DataBoxHeavyJobDetails"/> instance for mocking. </returns>
+        public static DataBoxHeavyJobDetails DataBoxHeavyJobDetails(IEnumerable<DataBoxJobStage> jobStages = default, DataBoxContactDetails contactDetails = default, DataBoxShippingAddress shippingAddress = default, PackageShippingDetails deliveryPackage = default, PackageShippingDetails returnPackage = default, IEnumerable<DataImportDetails> dataImportDetails = default, IEnumerable<DataExportDetails> dataExportDetails = default, DataBoxOrderPreferences preferences = default, ReverseShippingDetails reverseShippingDetails = default, IEnumerable<CopyLogDetails> copyLogDetails = default, string reverseShipmentLabelSasKey = default, string chainOfCustodySasKey = default, DeviceErasureDetails deviceErasureDetails = default, DataBoxKeyEncryptionKey keyEncryptionKey = default, int? expectedDataSizeInTerabytes = default, IEnumerable<CustomerResolutionCode> actions = default, LastMitigationActionOnJob lastMitigationActionOnJob = default, DataCenterAddressResult dataCenterAddress = default, DataCenterCode? dataCenterCode = default, IEnumerable<DataBoxCopyProgress> copyProgress = default, string devicePassword = default)
         {
-            jobStages ??= new List<DataBoxJobStage>();
-            dataImportDetails ??= new List<DataImportDetails>();
-            dataExportDetails ??= new List<DataExportDetails>();
-            copyLogDetails ??= new List<CopyLogDetails>();
-            actions ??= new List<CustomerResolutionCode>();
-            preferredDisks ??= new Dictionary<string, int>();
-            copyProgress ??= new List<DataBoxDiskCopyProgress>();
-            granularCopyProgress ??= new List<DataBoxDiskGranularCopyProgress>();
-            granularCopyLogDetails ??= new List<DataBoxDiskGranularCopyLogDetails>();
-            disksAndSizeDetails ??= new Dictionary<string, int>();
+            jobStages ??= new ChangeTrackingList<DataBoxJobStage>();
+            dataImportDetails ??= new ChangeTrackingList<DataImportDetails>();
+            dataExportDetails ??= new ChangeTrackingList<DataExportDetails>();
+            copyLogDetails ??= new ChangeTrackingList<CopyLogDetails>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
+            copyProgress ??= new ChangeTrackingList<DataBoxCopyProgress>();
 
-            return new DataBoxDiskJobDetails(
-                jobStages?.ToList(),
+            return new DataBoxHeavyJobDetails(
+                jobStages.ToList(),
                 contactDetails,
                 shippingAddress,
                 deliveryPackage,
                 returnPackage,
-                dataImportDetails?.ToList(),
-                dataExportDetails?.ToList(),
-                DataBoxOrderType.DataBoxDisk,
+                dataImportDetails.ToList(),
+                dataExportDetails.ToList(),
+                DataBoxOrderType.DataBoxHeavy,
                 preferences,
                 reverseShippingDetails,
-                copyLogDetails?.ToList(),
+                copyLogDetails.ToList(),
                 reverseShipmentLabelSasKey,
                 chainOfCustodySasKey,
                 deviceErasureDetails,
                 keyEncryptionKey,
                 expectedDataSizeInTerabytes,
-                actions?.ToList(),
+                actions.ToList(),
                 lastMitigationActionOnJob,
                 dataCenterAddress,
                 dataCenterCode,
-                serializedAdditionalRawData: null,
-                preferredDisks,
-                copyProgress?.ToList(),
-                granularCopyProgress?.ToList(),
-                granularCopyLogDetails?.ToList(),
-                disksAndSizeDetails,
-                passkey);
+                additionalBinaryDataProperties: null,
+                copyProgress.ToList(),
+                devicePassword);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobSecrets"/>. </summary>
+        /// <summary> Databox Job Details. </summary>
+        /// <param name="jobStages"> List of stages that run in the job. </param>
+        /// <param name="contactDetails"> Contact details for notification and shipping. </param>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deliveryPackage"> Delivery package shipping details. </param>
+        /// <param name="returnPackage"> Return package shipping details. </param>
+        /// <param name="dataImportDetails"> Details of the data to be imported into azure. </param>
+        /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
+        /// <param name="preferences"> Preferences for the order. </param>
+        /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
+        /// <param name="copyLogDetails"> List of copy log details. </param>
+        /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
+        /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
+        /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
+        /// <param name="keyEncryptionKey"> Details about which key encryption type is being used. </param>
+        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
+        /// <param name="actions"> Available actions on the job. </param>
+        /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
+        /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
+        /// <param name="dataCenterCode"> DataCenter code. </param>
+        /// <param name="copyProgress"> Copy progress per storage account. </param>
+        /// <param name="devicePassword"> Set Device password for unlocking Databox. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
+        /// <returns> A new <see cref="Models.DataBoxJobDetails"/> instance for mocking. </returns>
+        public static DataBoxJobDetails DataBoxJobDetails(IEnumerable<DataBoxJobStage> jobStages = default, DataBoxContactDetails contactDetails = default, DataBoxShippingAddress shippingAddress = default, PackageShippingDetails deliveryPackage = default, PackageShippingDetails returnPackage = default, IEnumerable<DataImportDetails> dataImportDetails = default, IEnumerable<DataExportDetails> dataExportDetails = default, DataBoxOrderPreferences preferences = default, ReverseShippingDetails reverseShippingDetails = default, IEnumerable<CopyLogDetails> copyLogDetails = default, string reverseShipmentLabelSasKey = default, string chainOfCustodySasKey = default, DeviceErasureDetails deviceErasureDetails = default, DataBoxKeyEncryptionKey keyEncryptionKey = default, int? expectedDataSizeInTerabytes = default, IEnumerable<CustomerResolutionCode> actions = default, LastMitigationActionOnJob lastMitigationActionOnJob = default, DataCenterAddressResult dataCenterAddress = default, DataCenterCode? dataCenterCode = default, IEnumerable<DataBoxCopyProgress> copyProgress = default, string devicePassword = default)
+        {
+            jobStages ??= new ChangeTrackingList<DataBoxJobStage>();
+            dataImportDetails ??= new ChangeTrackingList<DataImportDetails>();
+            dataExportDetails ??= new ChangeTrackingList<DataExportDetails>();
+            copyLogDetails ??= new ChangeTrackingList<CopyLogDetails>();
+            actions ??= new ChangeTrackingList<CustomerResolutionCode>();
+            copyProgress ??= new ChangeTrackingList<DataBoxCopyProgress>();
+
+            return new DataBoxJobDetails(
+                jobStages.ToList(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails.ToList(),
+                dataExportDetails.ToList(),
+                DataBoxOrderType.DataBox,
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails.ToList(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions.ToList(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                additionalBinaryDataProperties: null,
+                copyProgress.ToList(),
+                devicePassword);
+        }
+
+        /// <param name="details"> Details of a job to be updated. </param>
+        /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="Models.DataBoxJobPatch"/> instance for mocking. </returns>
+        public static DataBoxJobPatch DataBoxJobPatch(UpdateJobDetails details = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataBoxJobPatch(details is null ? default : new UpdateJobProperties(details, null), tags, identity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Shipment pick up request details. </summary>
+        /// <param name="startOn"> Minimum date after which the pick up should commence, this must be in local time of pick up area. </param>
+        /// <param name="endOn"> Maximum date before which the pick up should commence, this must be in local time of pick up area. </param>
+        /// <param name="shipmentLocation"> Shipment Location in the pickup place. Eg.front desk. </param>
+        /// <returns> A new <see cref="Models.ShipmentPickUpContent"/> instance for mocking. </returns>
+        public static ShipmentPickUpContent ShipmentPickUpContent(DateTimeOffset startOn = default, DateTimeOffset endOn = default, string shipmentLocation = default)
+        {
+            return new ShipmentPickUpContent(startOn, endOn, shipmentLocation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Shipment pick up response. </summary>
+        /// <param name="confirmationNumber"> Confirmation number for the pick up request. </param>
+        /// <param name="readyBy"> Time by which shipment should be ready for pick up, this is in local time of pick up area. </param>
+        /// <returns> A new <see cref="Models.DataBoxShipmentPickUpResult"/> instance for mocking. </returns>
+        public static DataBoxShipmentPickUpResult DataBoxShipmentPickUpResult(string confirmationNumber = default, DateTimeOffset? readyBy = default)
+        {
+            return new DataBoxShipmentPickUpResult(confirmationNumber, readyBy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reason for cancellation. </summary>
+        /// <param name="reason"> Reason for cancellation. </param>
+        /// <returns> A new <see cref="Models.DataBoxJobCancellationReason"/> instance for mocking. </returns>
+        public static DataBoxJobCancellationReason DataBoxJobCancellationReason(string reason = default)
+        {
+            return new DataBoxJobCancellationReason(reason, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Unencrypted credentials for accessing device. </summary>
+        /// <param name="jobName"> Name of the job. </param>
+        /// <param name="jobSecrets"> Secrets related to this job. </param>
+        /// <returns> A new <see cref="Models.UnencryptedCredentials"/> instance for mocking. </returns>
+        public static UnencryptedCredentials UnencryptedCredentials(string jobName = default, JobSecrets jobSecrets = default)
+        {
+            return new UnencryptedCredentials(jobName, jobSecrets, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The base class for the secrets
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CustomerDiskJobSecrets"/>, <see cref="Models.DataBoxDiskJobSecrets"/>, <see cref="Models.DataBoxHeavyJobSecrets"/>, and <see cref="Models.DataBoxJobSecrets"/>.
+        /// </summary>
+        /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
+        /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
+        /// <param name="error"> Error while fetching the secrets. </param>
+        /// <returns> A new <see cref="Models.JobSecrets"/> instance for mocking. </returns>
+        public static JobSecrets JobSecrets(string jobSecretsType = default, DataCenterAccessSecurityCode dataCenterAccessSecurityCode = default, ResponseError error = default)
+        {
+            return new UnknownJobSecrets(jobSecretsType.ToDataBoxOrderType(), dataCenterAccessSecurityCode, error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Dc access security code. </summary>
+        /// <param name="reverseDataCenterAccessCode"> Reverse Dc access security code. </param>
+        /// <param name="forwardDataCenterAccessCode"> Forward Dc access security code. </param>
+        /// <returns> A new <see cref="Models.DataCenterAccessSecurityCode"/> instance for mocking. </returns>
+        public static DataCenterAccessSecurityCode DataCenterAccessSecurityCode(string reverseDataCenterAccessCode = default, string forwardDataCenterAccessCode = default)
+        {
+            return new DataCenterAccessSecurityCode(reverseDataCenterAccessCode, forwardDataCenterAccessCode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The secrets related to customer disk job. </summary>
+        /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
+        /// <param name="error"> Error while fetching the secrets. </param>
+        /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
+        /// <param name="carrierAccountNumber"> Carrier Account Number of the customer. </param>
+        /// <returns> A new <see cref="Models.CustomerDiskJobSecrets"/> instance for mocking. </returns>
+        public static CustomerDiskJobSecrets CustomerDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = default, ResponseError error = default, IEnumerable<DataBoxDiskSecret> diskSecrets = default, string carrierAccountNumber = default)
+        {
+            diskSecrets ??= new ChangeTrackingList<DataBoxDiskSecret>();
+
+            return new CustomerDiskJobSecrets(
+                DataBoxOrderType.DataBoxCustomerDisk,
+                dataCenterAccessSecurityCode,
+                error,
+                additionalBinaryDataProperties: null,
+                diskSecrets.ToList(),
+                carrierAccountNumber);
+        }
+
+        /// <summary> Contains all the secrets of a Disk. </summary>
+        /// <param name="diskSerialNumber"> Serial number of the assigned disk. </param>
+        /// <param name="bitLockerKey"> Bit Locker key of the disk which can be used to unlock the disk to copy data. </param>
+        /// <returns> A new <see cref="Models.DataBoxDiskSecret"/> instance for mocking. </returns>
+        public static DataBoxDiskSecret DataBoxDiskSecret(string diskSerialNumber = default, string bitLockerKey = default)
+        {
+            return new DataBoxDiskSecret(diskSerialNumber, bitLockerKey, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The secrets related to disk job. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="passkey"> PassKey for the disk Job. </param>
         /// <param name="isPasskeyUserDefined"> Whether passkey was provided by user. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskJobSecrets"/> instance for mocking. </returns>
-        public static DataBoxDiskJobSecrets DataBoxDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxDiskSecret> diskSecrets = null, string passkey = null, bool? isPasskeyUserDefined = null)
+        public static DataBoxDiskJobSecrets DataBoxDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = default, ResponseError error = default, IEnumerable<DataBoxDiskSecret> diskSecrets = default, string passkey = default, bool? isPasskeyUserDefined = default)
         {
-            diskSecrets ??= new List<DataBoxDiskSecret>();
+            diskSecrets ??= new ChangeTrackingList<DataBoxDiskSecret>();
 
             return new DataBoxDiskJobSecrets(
                 DataBoxOrderType.DataBoxDisk,
                 dataCenterAccessSecurityCode,
                 error,
-                serializedAdditionalRawData: null,
-                diskSecrets?.ToList(),
+                additionalBinaryDataProperties: null,
+                diskSecrets.ToList(),
                 passkey,
                 isPasskeyUserDefined);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>. </summary>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="copyLogLink"> Link for copy logs. </param>
-        /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
-        /// <returns> A new <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxHeavyAccountCopyLogDetails DataBoxHeavyAccountCopyLogDetails(string accountName = null, IEnumerable<string> copyLogLink = null, IEnumerable<string> copyVerboseLogLink = null)
-        {
-            copyLogLink ??= new List<string>();
-            copyVerboseLogLink ??= new List<string>();
-
-            return new DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType.DataBoxHeavy, serializedAdditionalRawData: null, accountName, copyLogLink?.ToList(), copyVerboseLogLink?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyJobDetails"/>. </summary>
-        /// <param name="jobStages"> List of stages that run in the job. </param>
-        /// <param name="contactDetails"> Contact details for notification and shipping. </param>
-        /// <param name="shippingAddress"> Shipping address of the customer. </param>
-        /// <param name="deliveryPackage"> Delivery package shipping details. </param>
-        /// <param name="returnPackage"> Return package shipping details. </param>
-        /// <param name="dataImportDetails"> Details of the data to be imported into azure. </param>
-        /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
-        /// <param name="preferences"> Preferences for the order. </param>
-        /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
-        /// <param name="copyLogDetails">
-        /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
-        /// </param>
-        /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
-        /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
-        /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
-        /// <param name="keyEncryptionKey"> Details about which key encryption type is being used. </param>
-        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
-        /// <param name="actions"> Available actions on the job. </param>
-        /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="dataCenterAddress">
-        /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
-        /// </param>
-        /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="copyProgress"> Copy progress per account. </param>
-        /// <param name="devicePassword"> Set Device password for unlocking Databox Heavy. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        /// <returns> A new <see cref="Models.DataBoxHeavyJobDetails"/> instance for mocking. </returns>
-        public static DataBoxHeavyJobDetails DataBoxHeavyJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IEnumerable<DataBoxCopyProgress> copyProgress = null, string devicePassword = null)
-        {
-            jobStages ??= new List<DataBoxJobStage>();
-            dataImportDetails ??= new List<DataImportDetails>();
-            dataExportDetails ??= new List<DataExportDetails>();
-            copyLogDetails ??= new List<CopyLogDetails>();
-            actions ??= new List<CustomerResolutionCode>();
-            copyProgress ??= new List<DataBoxCopyProgress>();
-
-            return new DataBoxHeavyJobDetails(
-                jobStages?.ToList(),
-                contactDetails,
-                shippingAddress,
-                deliveryPackage,
-                returnPackage,
-                dataImportDetails?.ToList(),
-                dataExportDetails?.ToList(),
-                DataBoxOrderType.DataBoxHeavy,
-                preferences,
-                reverseShippingDetails,
-                copyLogDetails?.ToList(),
-                reverseShipmentLabelSasKey,
-                chainOfCustodySasKey,
-                deviceErasureDetails,
-                keyEncryptionKey,
-                expectedDataSizeInTerabytes,
-                actions?.ToList(),
-                lastMitigationActionOnJob,
-                dataCenterAddress,
-                dataCenterCode,
-                serializedAdditionalRawData: null,
-                copyProgress?.ToList(),
-                devicePassword);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyJobSecrets"/>. </summary>
+        /// <summary> The secrets related to a databox heavy job. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
         /// <returns> A new <see cref="Models.DataBoxHeavyJobSecrets"/> instance for mocking. </returns>
-        public static DataBoxHeavyJobSecrets DataBoxHeavyJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxHeavySecret> cabinetPodSecrets = null)
+        public static DataBoxHeavyJobSecrets DataBoxHeavyJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = default, ResponseError error = default, IEnumerable<DataBoxHeavySecret> cabinetPodSecrets = default)
         {
-            cabinetPodSecrets ??= new List<DataBoxHeavySecret>();
+            cabinetPodSecrets ??= new ChangeTrackingList<DataBoxHeavySecret>();
 
-            return new DataBoxHeavyJobSecrets(DataBoxOrderType.DataBoxHeavy, dataCenterAccessSecurityCode, error, serializedAdditionalRawData: null, cabinetPodSecrets?.ToList());
+            return new DataBoxHeavyJobSecrets(DataBoxOrderType.DataBoxHeavy, dataCenterAccessSecurityCode, error, additionalBinaryDataProperties: null, cabinetPodSecrets.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavySecret"/>. </summary>
+        /// <summary> The secrets related to a databox heavy. </summary>
         /// <param name="deviceSerialNumber"> Serial number of the assigned device. </param>
         /// <param name="devicePassword"> Password for out of the box experience on device. </param>
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
         /// <param name="encodedValidationCertPubKey"> The base 64 encoded public key to authenticate with the device. </param>
         /// <param name="accountCredentialDetails"> Per account level access credentials. </param>
         /// <returns> A new <see cref="Models.DataBoxHeavySecret"/> instance for mocking. </returns>
-        public static DataBoxHeavySecret DataBoxHeavySecret(string deviceSerialNumber = null, string devicePassword = null, IEnumerable<ApplianceNetworkConfiguration> networkConfigurations = null, string encodedValidationCertPubKey = null, IEnumerable<DataBoxAccountCredentialDetails> accountCredentialDetails = null)
+        public static DataBoxHeavySecret DataBoxHeavySecret(string deviceSerialNumber = default, string devicePassword = default, IEnumerable<ApplianceNetworkConfiguration> networkConfigurations = default, string encodedValidationCertPubKey = default, IEnumerable<DataBoxAccountCredentialDetails> accountCredentialDetails = default)
         {
-            networkConfigurations ??= new List<ApplianceNetworkConfiguration>();
-            accountCredentialDetails ??= new List<DataBoxAccountCredentialDetails>();
+            networkConfigurations ??= new ChangeTrackingList<ApplianceNetworkConfiguration>();
+            accountCredentialDetails ??= new ChangeTrackingList<DataBoxAccountCredentialDetails>();
 
             return new DataBoxHeavySecret(
                 deviceSerialNumber,
                 devicePassword,
-                networkConfigurations?.ToList(),
+                networkConfigurations.ToList(),
                 encodedValidationCertPubKey,
-                accountCredentialDetails?.ToList(),
-                serializedAdditionalRawData: null);
+                accountCredentialDetails.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobDetails"/>. </summary>
-        /// <param name="jobStages"> List of stages that run in the job. </param>
-        /// <param name="contactDetails"> Contact details for notification and shipping. </param>
-        /// <param name="shippingAddress"> Shipping address of the customer. </param>
-        /// <param name="deliveryPackage"> Delivery package shipping details. </param>
-        /// <param name="returnPackage"> Return package shipping details. </param>
-        /// <param name="dataImportDetails"> Details of the data to be imported into azure. </param>
-        /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
-        /// <param name="preferences"> Preferences for the order. </param>
-        /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
-        /// <param name="copyLogDetails">
-        /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
-        /// </param>
-        /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
-        /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
-        /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
-        /// <param name="keyEncryptionKey"> Details about which key encryption type is being used. </param>
-        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
-        /// <param name="actions"> Available actions on the job. </param>
-        /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="dataCenterAddress">
-        /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
-        /// </param>
-        /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="copyProgress"> Copy progress per storage account. </param>
-        /// <param name="devicePassword"> Set Device password for unlocking Databox. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        /// <returns> A new <see cref="Models.DataBoxJobDetails"/> instance for mocking. </returns>
-        public static DataBoxJobDetails DataBoxJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IEnumerable<DataBoxCopyProgress> copyProgress = null, string devicePassword = null)
+        /// <summary> The Network Adapter configuration of a DataBox. </summary>
+        /// <param name="name"> Name of the network. </param>
+        /// <param name="macAddress"> Mac Address. </param>
+        /// <returns> A new <see cref="Models.ApplianceNetworkConfiguration"/> instance for mocking. </returns>
+        public static ApplianceNetworkConfiguration ApplianceNetworkConfiguration(string name = default, string macAddress = default)
         {
-            jobStages ??= new List<DataBoxJobStage>();
-            dataImportDetails ??= new List<DataImportDetails>();
-            dataExportDetails ??= new List<DataExportDetails>();
-            copyLogDetails ??= new List<CopyLogDetails>();
-            actions ??= new List<CustomerResolutionCode>();
-            copyProgress ??= new List<DataBoxCopyProgress>();
-
-            return new DataBoxJobDetails(
-                jobStages?.ToList(),
-                contactDetails,
-                shippingAddress,
-                deliveryPackage,
-                returnPackage,
-                dataImportDetails?.ToList(),
-                dataExportDetails?.ToList(),
-                DataBoxOrderType.DataBox,
-                preferences,
-                reverseShippingDetails,
-                copyLogDetails?.ToList(),
-                reverseShipmentLabelSasKey,
-                chainOfCustodySasKey,
-                deviceErasureDetails,
-                keyEncryptionKey,
-                expectedDataSizeInTerabytes,
-                actions?.ToList(),
-                lastMitigationActionOnJob,
-                dataCenterAddress,
-                dataCenterCode,
-                serializedAdditionalRawData: null,
-                copyProgress?.ToList(),
-                devicePassword);
+            return new ApplianceNetworkConfiguration(name, macAddress, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobSecrets"/>. </summary>
+        /// <summary> Credential details of the account. </summary>
+        /// <param name="accountName"> Name of the account. </param>
+        /// <param name="dataAccountType"> Type of the account. </param>
+        /// <param name="accountConnectionString"> Connection string of the account endpoint to use the account as a storage endpoint on the device. </param>
+        /// <param name="shareCredentialDetails"> Per share level unencrypted access credentials. </param>
+        /// <returns> A new <see cref="Models.DataBoxAccountCredentialDetails"/> instance for mocking. </returns>
+        public static DataBoxAccountCredentialDetails DataBoxAccountCredentialDetails(string accountName = default, DataAccountType? dataAccountType = default, string accountConnectionString = default, IEnumerable<ShareCredentialDetails> shareCredentialDetails = default)
+        {
+            shareCredentialDetails ??= new ChangeTrackingList<ShareCredentialDetails>();
+
+            return new DataBoxAccountCredentialDetails(accountName, dataAccountType, accountConnectionString, shareCredentialDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Credential details of the shares in account. </summary>
+        /// <param name="shareName"> Name of the share. </param>
+        /// <param name="shareType"> Type of the share. </param>
+        /// <param name="userName"> User name for the share. </param>
+        /// <param name="password"> Password for the share. </param>
+        /// <param name="supportedAccessProtocols"> Access protocols supported on the device. </param>
+        /// <returns> A new <see cref="Models.ShareCredentialDetails"/> instance for mocking. </returns>
+        public static ShareCredentialDetails ShareCredentialDetails(string shareName = default, ShareDestinationFormatType? shareType = default, string userName = default, string password = default, IEnumerable<DataBoxAccessProtocol> supportedAccessProtocols = default)
+        {
+            supportedAccessProtocols ??= new ChangeTrackingList<DataBoxAccessProtocol>();
+
+            return new ShareCredentialDetails(
+                shareName,
+                shareType,
+                userName,
+                password,
+                supportedAccessProtocols.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The secrets related to a databox job. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
         /// <returns> A new <see cref="Models.DataBoxJobSecrets"/> instance for mocking. </returns>
-        public static DataBoxJobSecrets DataBoxJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxSecret> podSecrets = null)
+        public static DataBoxJobSecrets DataBoxJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = default, ResponseError error = default, IEnumerable<DataBoxSecret> podSecrets = default)
         {
-            podSecrets ??= new List<DataBoxSecret>();
+            podSecrets ??= new ChangeTrackingList<DataBoxSecret>();
 
-            return new DataBoxJobSecrets(DataBoxOrderType.DataBox, dataCenterAccessSecurityCode, error, serializedAdditionalRawData: null, podSecrets?.ToList());
+            return new DataBoxJobSecrets(DataBoxOrderType.DataBox, dataCenterAccessSecurityCode, error, additionalBinaryDataProperties: null, podSecrets.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSecret"/>. </summary>
+        /// <summary> The secrets related to a DataBox. </summary>
         /// <param name="deviceSerialNumber"> Serial number of the assigned device. </param>
         /// <param name="devicePassword"> Password for out of the box experience on device. </param>
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
         /// <param name="encodedValidationCertPubKey"> The base 64 encoded public key to authenticate with the device. </param>
         /// <param name="accountCredentialDetails"> Per account level access credentials. </param>
         /// <returns> A new <see cref="Models.DataBoxSecret"/> instance for mocking. </returns>
-        public static DataBoxSecret DataBoxSecret(string deviceSerialNumber = null, string devicePassword = null, IEnumerable<ApplianceNetworkConfiguration> networkConfigurations = null, string encodedValidationCertPubKey = null, IEnumerable<DataBoxAccountCredentialDetails> accountCredentialDetails = null)
+        public static DataBoxSecret DataBoxSecret(string deviceSerialNumber = default, string devicePassword = default, IEnumerable<ApplianceNetworkConfiguration> networkConfigurations = default, string encodedValidationCertPubKey = default, IEnumerable<DataBoxAccountCredentialDetails> accountCredentialDetails = default)
         {
-            networkConfigurations ??= new List<ApplianceNetworkConfiguration>();
-            accountCredentialDetails ??= new List<DataBoxAccountCredentialDetails>();
+            networkConfigurations ??= new ChangeTrackingList<ApplianceNetworkConfiguration>();
+            accountCredentialDetails ??= new ChangeTrackingList<DataBoxAccountCredentialDetails>();
 
             return new DataBoxSecret(
                 deviceSerialNumber,
                 devicePassword,
-                networkConfigurations?.ToList(),
+                networkConfigurations.ToList(),
                 encodedValidationCertPubKey,
-                accountCredentialDetails?.ToList(),
-                serializedAdditionalRawData: null);
+                accountCredentialDetails.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxScheduleAvailabilityContent"/>. </summary>
+        /// <summary> The request body to provide the delivery package details of job. </summary>
+        /// <param name="deliverToDataCenterPackageDetails"> Delivery package details. </param>
+        /// <returns> A new <see cref="Models.MarkDevicesShippedContent"/> instance for mocking. </returns>
+        public static MarkDevicesShippedContent MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails = default)
+        {
+            return new MarkDevicesShippedContent(deliverToDataCenterPackageDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Request body to get the availability for scheduling orders.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxScheduleAvailabilityContent"/>, <see cref="Models.DiskScheduleAvailabilityContent"/>, and <see cref="Models.HeavyScheduleAvailabilityContent"/>.
+        /// </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        /// <returns> A new <see cref="Models.ScheduleAvailabilityContent"/> instance for mocking. </returns>
+        public static ScheduleAvailabilityContent ScheduleAvailabilityContent(AzureLocation storageLocation = default, string skuName = default, string country = default, DeviceModelName? model = default)
+        {
+            return new UnknownScheduleAvailabilityRequest(storageLocation, skuName.ToDataBoxSkuName(), country, model, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body to get the availability for scheduling data box orders orders. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.DataBoxScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null)
+        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = default, DeviceModelName? model = default)
         {
-            return new DataBoxScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBox, country, model, serializedAdditionalRawData: null);
+            return new DataBoxScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBox, country, model, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataTransferDetailsValidationContent"/>. </summary>
-        /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
-        /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
-        /// <param name="deviceType"> Device type. </param>
-        /// <param name="transferType"> Type of the transfer. </param>
-        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        /// <returns> A new <see cref="Models.DataTransferDetailsValidationContent"/> instance for mocking. </returns>
-        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails = null, IEnumerable<DataImportDetails> dataImportDetails = null, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, DeviceModelName? model = null)
-        {
-            dataExportDetails ??= new List<DataExportDetails>();
-            dataImportDetails ??= new List<DataImportDetails>();
-
-            return new DataTransferDetailsValidationContent(
-                DataBoxValidationInputDiscriminator.ValidateDataTransferDetails,
-                serializedAdditionalRawData: null,
-                dataExportDetails?.ToList(),
-                dataImportDetails?.ToList(),
-                deviceType,
-                transferType,
-                model);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataTransferDetailsValidationResult"/>. </summary>
-        /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="status"> Data transfer details validation status. </param>
-        /// <returns> A new <see cref="Models.DataTransferDetailsValidationResult"/> instance for mocking. </returns>
-        public static DataTransferDetailsValidationResult DataTransferDetailsValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
-        {
-            return new DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, error, serializedAdditionalRawData: null, status);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DiskScheduleAvailabilityContent"/>. </summary>
+        /// <summary> Request body to get the availability for scheduling disk orders. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <returns> A new <see cref="Models.DiskScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null, int expectedDataSizeInTerabytes = default)
+        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = default, DeviceModelName? model = default, int expectedDataSizeInTerabytes = default)
         {
             return new DiskScheduleAvailabilityContent(
                 storageLocation,
                 DataBoxSkuName.DataBoxDisk,
                 country,
                 model,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 expectedDataSizeInTerabytes);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HeavyScheduleAvailabilityContent"/>. </summary>
+        /// <summary> Request body to get the availability for scheduling heavy orders. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.HeavyScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null)
+        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = default, DeviceModelName? model = default)
         {
-            return new HeavyScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxHeavy, country, model, serializedAdditionalRawData: null);
+            return new HeavyScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxHeavy, country, model, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PreferencesValidationContent"/>. </summary>
+        /// <summary> Request body to get the datacenter address. </summary>
+        /// <param name="storageLocation"> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the data center address requested. </param>
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        /// <returns> A new <see cref="Models.DataCenterAddressContent"/> instance for mocking. </returns>
+        public static DataCenterAddressContent DataCenterAddressContent(AzureLocation storageLocation = default, DataBoxSkuName skuName = default, DeviceModelName? model = default)
+        {
+            return new DataCenterAddressContent(storageLocation, skuName, model, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="scheduleAvailabilityResponseAvailableDates"> List of dates available to schedule. </param>
+        /// <param name="transportAvailabilityDetails"> List of transport availability details for given region. </param>
+        /// <param name="dataCenterAddressResponse"> Datacenter address for given sku in a region. </param>
+        /// <param name="deviceCapabilityDetails"> List of device capabilities available for a given region and a given sku. </param>
+        /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
+        public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates = default, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails = default, DataCenterAddressResult dataCenterAddressResponse = default, IEnumerable<DeviceCapabilityDetails> deviceCapabilityDetails = default)
+        {
+            return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates is null ? default : new ScheduleAvailabilityResponse((scheduleAvailabilityResponseAvailableDates ?? new ChangeTrackingList<DateTimeOffset>()).ToList(), null), transportAvailabilityDetails is null ? default : new TransportAvailabilityResponse((transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>()).ToList(), null), dataCenterAddressResponse, deviceCapabilityDetails is null ? default : new DeviceCapabilityResponse((deviceCapabilityDetails ?? new ChangeTrackingList<DeviceCapabilityDetails>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Transport options availability details for given region. </summary>
+        /// <param name="shipmentType"> Transport Shipment Type supported for given region. </param>
+        /// <returns> A new <see cref="Models.TransportAvailabilityDetails"/> instance for mocking. </returns>
+        public static TransportAvailabilityDetails TransportAvailabilityDetails(TransportShipmentType? shipmentType = default)
+        {
+            return new TransportAvailabilityDetails(shipmentType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Device capability details for a given sku for a given region. </summary>
+        /// <param name="hardwareEncryption"> Hardware encryption support for a given sku for a given region. </param>
+        /// <returns> A new <see cref="Models.DeviceCapabilityDetails"/> instance for mocking. </returns>
+        public static DeviceCapabilityDetails DeviceCapabilityDetails(HardwareEncryption? hardwareEncryption = default)
+        {
+            return new DeviceCapabilityDetails(hardwareEncryption, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The requirements to validate customer address where the device needs to be shipped. </summary>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        /// <returns> A new <see cref="Models.DataBoxValidateAddressContent"/> instance for mocking. </returns>
+        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress = default, DataBoxSkuName deviceType = default, TransportPreferences transportPreferences = default, DeviceModelName? model = default)
+        {
+            return new DataBoxValidateAddressContent(
+                DataBoxValidationInputDiscriminator.ValidateAddress,
+                additionalBinaryDataProperties: null,
+                shippingAddress,
+                deviceType,
+                transportPreferences,
+                model);
+        }
+
+        /// <summary> Request to validate create order limit for current subscription. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
+        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType = default, DeviceModelName? model = default)
+        {
+            return new CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, additionalBinaryDataProperties: null, deviceType, model);
+        }
+
+        /// <summary> Request to validate export and import data details. </summary>
+        /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
+        /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
+        /// <param name="deviceType"> Device type. </param>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        /// <returns> A new <see cref="Models.DataTransferDetailsValidationContent"/> instance for mocking. </returns>
+        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails = default, IEnumerable<DataImportDetails> dataImportDetails = default, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, DeviceModelName? model = default)
+        {
+            dataExportDetails ??= new ChangeTrackingList<DataExportDetails>();
+            dataImportDetails ??= new ChangeTrackingList<DataImportDetails>();
+
+            return new DataTransferDetailsValidationContent(
+                DataBoxValidationInputDiscriminator.ValidateDataTransferDetails,
+                additionalBinaryDataProperties: null,
+                dataExportDetails.ToList(),
+                dataImportDetails.ToList(),
+                deviceType,
+                transferType,
+                model);
+        }
+
+        /// <summary> Request to validate preference of transport and data center. </summary>
         /// <param name="preference"> Preference of transport and data center. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.PreferencesValidationContent"/> instance for mocking. </returns>
-        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference = null, DataBoxSkuName deviceType = default, DeviceModelName? model = null)
+        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference = default, DataBoxSkuName deviceType = default, DeviceModelName? model = default)
         {
-            return new PreferencesValidationContent(DataBoxValidationInputDiscriminator.ValidatePreferences, serializedAdditionalRawData: null, preference, deviceType, model);
+            return new PreferencesValidationContent(DataBoxValidationInputDiscriminator.ValidatePreferences, additionalBinaryDataProperties: null, preference, deviceType, model);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PreferencesValidationResult"/>. </summary>
-        /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="status"> Validation status of requested data center and transport. </param>
-        /// <returns> A new <see cref="Models.PreferencesValidationResult"/> instance for mocking. </returns>
-        public static PreferencesValidationResult PreferencesValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
-        {
-            return new PreferencesValidationResult(DataBoxValidationInputDiscriminator.ValidatePreferences, error, serializedAdditionalRawData: null, status);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SkuAvailabilityValidationContent"/>. </summary>
+        /// <summary> Request to validate sku availability. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationContent"/> instance for mocking. </returns>
-        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default, DeviceModelName? model = null)
+        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = default, AzureLocation location = default, DeviceModelName? model = default)
         {
             return new SkuAvailabilityValidationContent(
                 DataBoxValidationInputDiscriminator.ValidateSkuAvailability,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 deviceType,
                 transferType,
                 country,
@@ -1399,25 +1276,182 @@ namespace Azure.ResourceManager.DataBox.Models
                 model);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuAvailabilityValidationResult"/>. </summary>
+        /// <summary> Output of the address validation api. </summary>
+        /// <param name="properties"> The address validation properties. </param>
+        /// <returns> A new <see cref="Models.AddressValidationOutput"/> instance for mocking. </returns>
+        public static AddressValidationOutput AddressValidationOutput(AddressValidationResult properties = default)
+        {
+            return new AddressValidationOutput(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The address validation output. </summary>
+        /// <param name="error"> Error code and message of validation response. </param>
+        /// <param name="validationStatus"> The address validation status. </param>
+        /// <param name="alternateAddresses"> List of alternate addresses. </param>
+        /// <returns> A new <see cref="Models.AddressValidationResult"/> instance for mocking. </returns>
+        public static AddressValidationResult AddressValidationResult(ResponseError error = default, AddressValidationStatus? validationStatus = default, IEnumerable<DataBoxShippingAddress> alternateAddresses = default)
+        {
+            alternateAddresses ??= new ChangeTrackingList<DataBoxShippingAddress>();
+
+            return new AddressValidationResult(DataBoxValidationInputDiscriminator.ValidateAddress, error, additionalBinaryDataProperties: null, validationStatus, alternateAddresses.ToList());
+        }
+
+        /// <summary>
+        /// Minimum properties that should be present in each individual validation response.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AddressValidationResult"/>, <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="Models.DataTransferDetailsValidationResult"/>, <see cref="Models.PreferencesValidationResult"/>, <see cref="Models.SkuAvailabilityValidationResult"/>, and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/>.
+        /// </summary>
+        /// <param name="validationType"> Identifies the type of validation response. </param>
+        /// <param name="error"> Error code and message of validation response. </param>
+        /// <returns> A new <see cref="Models.DataBoxValidationInputResult"/> instance for mocking. </returns>
+        public static DataBoxValidationInputResult DataBoxValidationInputResult(string validationType = default, ResponseError error = default)
+        {
+            return new UnknownValidationInputResponse(validationType.ToDataBoxValidationInputDiscriminator(), error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of create order limit for subscription validation response. </summary>
+        /// <param name="error"> Error code and message of validation response. </param>
+        /// <param name="status"> Create order limit validation status. </param>
+        /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/> instance for mocking. </returns>
+        public static CreateOrderLimitForSubscriptionValidationResult CreateOrderLimitForSubscriptionValidationResult(ResponseError error = default, DataBoxValidationStatus? status = default)
+        {
+            return new CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, error, additionalBinaryDataProperties: null, status);
+        }
+
+        /// <summary> Properties of data transfer details validation response. </summary>
+        /// <param name="error"> Error code and message of validation response. </param>
+        /// <param name="status"> Data transfer details validation status. </param>
+        /// <returns> A new <see cref="Models.DataTransferDetailsValidationResult"/> instance for mocking. </returns>
+        public static DataTransferDetailsValidationResult DataTransferDetailsValidationResult(ResponseError error = default, DataBoxValidationStatus? status = default)
+        {
+            return new DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, error, additionalBinaryDataProperties: null, status);
+        }
+
+        /// <summary> Properties of data center and transport preference validation response. </summary>
+        /// <param name="error"> Error code and message of validation response. </param>
+        /// <param name="status"> Validation status of requested data center and transport. </param>
+        /// <returns> A new <see cref="Models.PreferencesValidationResult"/> instance for mocking. </returns>
+        public static PreferencesValidationResult PreferencesValidationResult(ResponseError error = default, DataBoxValidationStatus? status = default)
+        {
+            return new PreferencesValidationResult(DataBoxValidationInputDiscriminator.ValidatePreferences, error, additionalBinaryDataProperties: null, status);
+        }
+
+        /// <summary> Properties of sku availability validation response. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Sku availability validation status. </param>
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationResult"/> instance for mocking. </returns>
-        public static SkuAvailabilityValidationResult SkuAvailabilityValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
+        public static SkuAvailabilityValidationResult SkuAvailabilityValidationResult(ResponseError error = default, DataBoxValidationStatus? status = default)
         {
-            return new SkuAvailabilityValidationResult(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, error, serializedAdditionalRawData: null, status);
+            return new SkuAvailabilityValidationResult(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, error, additionalBinaryDataProperties: null, status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/>. </summary>
+        /// <summary> Properties of subscription permission to create job validation response. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of subscription permission to create job. </param>
         /// <returns> A new <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/> instance for mocking. </returns>
-        public static SubscriptionIsAllowedToCreateJobValidationResult SubscriptionIsAllowedToCreateJobValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
+        public static SubscriptionIsAllowedToCreateJobValidationResult SubscriptionIsAllowedToCreateJobValidationResult(ResponseError error = default, DataBoxValidationStatus? status = default)
         {
-            return new SubscriptionIsAllowedToCreateJobValidationResult(DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob, error, serializedAdditionalRawData: null, status);
+            return new SubscriptionIsAllowedToCreateJobValidationResult(DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob, error, additionalBinaryDataProperties: null, status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.DataBoxJobData" />. </summary>
+        /// <summary>
+        /// Minimum request requirement of any validation category.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateJobValidationContent"/>.
+        /// </summary>
+        /// <param name="individualRequestDetails"> List of request details contain validationType and its request as key and value respectively. </param>
+        /// <returns> A new <see cref="Models.DataBoxValidationContent"/> instance for mocking. </returns>
+        public static DataBoxValidationContent DataBoxValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails = default)
+        {
+            individualRequestDetails ??= new ChangeTrackingList<DataBoxValidationInputContent>();
+
+            return new UnknownValidationRequest("JobCreationValidation", individualRequestDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> It does all pre-job creation validations. </summary>
+        /// <param name="individualRequestDetails"> List of request details contain validationType and its request as key and value respectively. </param>
+        /// <returns> A new <see cref="Models.CreateJobValidationContent"/> instance for mocking. </returns>
+        public static CreateJobValidationContent CreateJobValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails = default)
+        {
+            individualRequestDetails ??= new ChangeTrackingList<DataBoxValidationInputContent>();
+
+            return new CreateJobValidationContent("JobCreationValidation", individualRequestDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="status"> Overall validation status. </param>
+        /// <param name="individualResponseDetails"> List of response details contain validationType and its response as key and value respectively. </param>
+        /// <returns> A new <see cref="Models.DataBoxValidationResult"/> instance for mocking. </returns>
+        public static DataBoxValidationResult DataBoxValidationResult(OverallValidationStatus? status = default, IEnumerable<DataBoxValidationInputResult> individualResponseDetails = default)
+        {
+            return new DataBoxValidationResult(status is null && individualResponseDetails is null ? default : new ValidationResponseProperties(status, (individualResponseDetails ?? new ChangeTrackingList<DataBoxValidationInputResult>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The filters for showing the available skus. </summary>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
+        /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuNames"> Sku Names to filter for available skus. </param>
+        /// <returns> A new <see cref="Models.AvailableSkusContent"/> instance for mocking. </returns>
+        public static AvailableSkusContent AvailableSkusContent(DataBoxJobTransferType transferType = default, string country = default, AzureLocation location = default, IEnumerable<DataBoxSkuName> skuNames = default)
+        {
+            skuNames ??= new ChangeTrackingList<DataBoxSkuName>();
+
+            return new AvailableSkusContent(transferType, country, location, skuNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="sku"> The Sku. </param>
+        /// <param name="isEnabled"> The sku is enabled or not. </param>
+        /// <param name="dataLocationToServiceLocationMap"> The map of data location to service location. </param>
+        /// <param name="capacity"> Capacity of the Sku. </param>
+        /// <param name="costs"> Cost of the Sku. </param>
+        /// <param name="apiVersions"> Api versions that support this Sku. </param>
+        /// <param name="disabledReason"> Reason why the Sku is disabled. </param>
+        /// <param name="disabledReasonMessage"> Message for why the Sku is disabled. </param>
+        /// <param name="requiredFeature"> Required feature to access the sku. </param>
+        /// <param name="countriesWithinCommerceBoundary"> List of all the Countries in the SKU specific commerce boundary. </param>
+        /// <returns> A new <see cref="Models.DataBoxSkuInformation"/> instance for mocking. </returns>
+        public static DataBoxSkuInformation DataBoxSkuInformation(DataBoxSku sku = default, bool? isEnabled = default, IEnumerable<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = default, DataBoxSkuCapacity capacity = default, IEnumerable<DataBoxSkuCost> costs = default, IEnumerable<string> apiVersions = default, SkuDisabledReason? disabledReason = default, string disabledReasonMessage = default, string requiredFeature = default, IEnumerable<string> countriesWithinCommerceBoundary = default)
+        {
+            return new DataBoxSkuInformation(sku, isEnabled, dataLocationToServiceLocationMap is null && capacity is null && costs is null && apiVersions is null && disabledReason is null && disabledReasonMessage is null && requiredFeature is null && countriesWithinCommerceBoundary is null ? default : new SkuProperties(
+                (dataLocationToServiceLocationMap ?? new ChangeTrackingList<DataLocationToServiceLocationMap>()).ToList(),
+                capacity,
+                (costs ?? new ChangeTrackingList<DataBoxSkuCost>()).ToList(),
+                (apiVersions ?? new ChangeTrackingList<string>()).ToList(),
+                disabledReason,
+                disabledReasonMessage,
+                requiredFeature,
+                (countriesWithinCommerceBoundary ?? new ChangeTrackingList<string>()).ToList(),
+                null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Map of data location to service location. </summary>
+        /// <param name="dataLocation"> Location of the data. </param>
+        /// <param name="serviceLocation"> Location of the service. </param>
+        /// <returns> A new <see cref="Models.DataLocationToServiceLocationMap"/> instance for mocking. </returns>
+        public static DataLocationToServiceLocationMap DataLocationToServiceLocationMap(AzureLocation? dataLocation = default, AzureLocation? serviceLocation = default)
+        {
+            return new DataLocationToServiceLocationMap(dataLocation, serviceLocation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Capacity of the sku. </summary>
+        /// <param name="usable"> Usable capacity in TB. </param>
+        /// <param name="maximum"> Maximum capacity in TB. </param>
+        /// <param name="individualSkuUsable"> Maximum capacity per device in TB. </param>
+        /// <returns> A new <see cref="Models.DataBoxSkuCapacity"/> instance for mocking. </returns>
+        public static DataBoxSkuCapacity DataBoxSkuCapacity(string usable = default, string maximum = default, string individualSkuUsable = default)
+        {
+            return new DataBoxSkuCapacity(usable, maximum, individualSkuUsable, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes metadata for retrieving price info. </summary>
+        /// <param name="meterId"> Meter id of the Sku. </param>
+        /// <param name="meterType"> The type of the meter. </param>
+        /// <param name="multiplier"> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </param>
+        /// <returns> A new <see cref="Models.DataBoxSkuCost"/> instance for mocking. </returns>
+        public static DataBoxSkuCost DataBoxSkuCost(Guid? meterId = default, string meterType = default, double? multiplier = default)
+        {
+            return new DataBoxSkuCost(meterId, meterType, multiplier, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBox.DataBoxJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1432,62 +1466,85 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
         /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
         /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
         /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="details">
         /// Details of a job run. This field will only be sent for expand details filter.
-        /// Please note <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxJobDetails" />, <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails" />, <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails" /> and <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails" />.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , ,  and .
         /// </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="deliveryType"> Delivery type of Job. </param>
         /// <param name="deliveryInfoScheduledOn"> Delivery Info of Job. </param>
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.DataBox.DataBoxJobData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, DateTimeOffset? deliveryInfoScheduledOn, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity)
+        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
+        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataBoxJobTransferType transferType = 0, bool? isCancellable = default, bool? isDeletable = default, bool? isShippingAddressEditable = default, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = default, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default, bool? isPrepareToShipEnabled = default, DataBoxStageName? status = default, DataBoxStageName? delayedStage = default, DateTimeOffset? startOn = default, ResponseError error = default, DataBoxBasicJobDetails details = default, string cancellationReason = default, JobDeliveryType? deliveryType = default, DateTimeOffset? deliveryInfoScheduledOn = default, bool? isCancellableWithoutFee = default, bool? areAllDevicesLost = default, DataBoxSku sku = default, ManagedServiceIdentity identity = default)
         {
-            return DataBoxJobData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, transferType: transferType, isCancellable: isCancellable, isDeletable: isDeletable, isShippingAddressEditable: isShippingAddressEditable, reverseShippingDetailsUpdate: reverseShippingDetailsUpdate, reverseTransportPreferenceUpdate: reverseTransportPreferenceUpdate, isPrepareToShipEnabled: isPrepareToShipEnabled, status: status, delayedStage: default, startOn: startOn, error: error, details: details, cancellationReason: cancellationReason, deliveryType: deliveryType, deliveryInfoScheduledOn: deliveryInfoScheduledOn, isCancellableWithoutFee: isCancellableWithoutFee, areAllDevicesLost: default, sku: sku, identity: identity);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataBoxJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                sku,
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxJobStage" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceErasureDetails"/>. </summary>
+        /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
+        /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
+        /// <returns> A new <see cref="Models.DeviceErasureDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeviceErasureDetails DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey)
+        {
+            return DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
         /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
         /// <param name="jobStageDetails"> Job Stage Details. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxJobStage" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DataBoxJobStage"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails)
         {
-            return DataBoxJobStage(stageName: stageName, displayName: displayName, stageStatus: stageStatus, stageTime: stageTime, jobStageDetails: jobStageDetails, delayInformation: default);
+            return DataBoxJobStage(stageName, displayName, stageStatus, stageTime, jobStageDetails, delayInformation: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCapacity"/>. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DataBoxSkuCapacity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxSkuCapacity DataBoxSkuCapacity(string usable, string maximum)
         {
-            return DataBoxSkuCapacity(usable: usable, maximum: maximum, individualSkuUsable: default);
+            return DataBoxSkuCapacity(usable, maximum, individualSkuUsable: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.Models.RegionConfigurationResult" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RegionConfigurationResult"/>. </summary>
         /// <param name="scheduleAvailabilityResponseAvailableDates"> Schedule availability for given sku in a region. </param>
         /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
         /// <param name="dataCenterAddressResponse">
         /// Datacenter address for given sku in a region.
-        /// Please note <see cref="T:Azure.ResourceManager.DataBox.Models.DataCenterAddressResult" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="T:Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult" /> and <see cref="T:Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult" />.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include  and .
         /// </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.DataBox.Models.RegionConfigurationResult" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails, DataCenterAddressResult dataCenterAddressResponse)
         {
-            return RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates: scheduleAvailabilityResponseAvailableDates, transportAvailabilityDetails: transportAvailabilityDetails, dataCenterAddressResponse: dataCenterAddressResponse, deviceCapabilityDetails: default);
+            return RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates, transportAvailabilityDetails, dataCenterAddressResponse, deviceCapabilityDetails: default);
         }
     }
 }

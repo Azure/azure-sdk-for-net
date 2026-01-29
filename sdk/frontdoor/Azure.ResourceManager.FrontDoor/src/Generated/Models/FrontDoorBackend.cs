@@ -83,28 +83,40 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Location of the backend (IP address or FQDN). </summary>
+        [WirePath("address")]
         public string Address { get; set; }
         /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
+        [WirePath("privateLinkAlias")]
         public string PrivateLinkAlias { get; set; }
         /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
+        [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
+        [WirePath("privateLinkLocation")]
         public AzureLocation? PrivateLinkLocation { get; set; }
         /// <summary> The Approval status for the connection to the Private Link. </summary>
+        [WirePath("privateEndpointStatus")]
         public BackendPrivateEndpointStatus? PrivateEndpointStatus { get; }
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
+        [WirePath("privateLinkApprovalMessage")]
         public string PrivateLinkApprovalMessage { get; set; }
         /// <summary> The HTTP TCP port number. Must be between 1 and 65535. </summary>
+        [WirePath("httpPort")]
         public int? HttpPort { get; set; }
         /// <summary> The HTTPS TCP port number. Must be between 1 and 65535. </summary>
+        [WirePath("httpsPort")]
         public int? HttpsPort { get; set; }
         /// <summary> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("enabledState")]
         public BackendEnabledState? EnabledState { get; set; }
         /// <summary> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
         /// <summary> Weight of this endpoint for load balancing purposes. </summary>
+        [WirePath("weight")]
         public int? Weight { get; set; }
         /// <summary> The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host. </summary>
+        [WirePath("backendHostHeader")]
         public string BackendHostHeader { get; set; }
     }
 }

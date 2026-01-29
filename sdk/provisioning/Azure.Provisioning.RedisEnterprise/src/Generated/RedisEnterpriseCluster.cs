@@ -99,6 +99,19 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
     private BicepValue<RedisEnterpriseTlsVersion>? _minimumTlsVersion;
 
     /// <summary>
+    /// Whether or not public network traffic can access the Redis cluster.
+    /// Only &apos;Enabled&apos; or &apos;Disabled&apos; can be set. null is
+    /// returned only for clusters created using an old API version which do
+    /// not have this property and cannot be set.
+    /// </summary>
+    public BicepValue<RedisEnterprisePublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<RedisEnterprisePublicNetworkAccess>? _publicNetworkAccess;
+
+    /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
     public BicepDictionary<string> Tags 
@@ -149,11 +162,11 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
     /// List of private endpoint connections associated with the specified
     /// Redis Enterprise cluster.
     /// </summary>
-    public BicepList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections 
+    public BicepList<RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections 
     {
         get { Initialize(); return _privateEndpointConnections!; }
     }
-    private BicepList<RedisEnterprisePrivateEndpointConnectionData>? _privateEndpointConnections;
+    private BicepList<RedisEnterprisePrivateEndpointConnection>? _privateEndpointConnections;
 
     /// <summary>
     /// Current provisioning status of the cluster.
@@ -212,7 +225,7 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the RedisEnterpriseCluster.</param>
     public RedisEnterpriseCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Cache/redisEnterprise", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.Cache/redisEnterprise", resourceVersion ?? "2025-07-01")
     {
     }
 
@@ -229,12 +242,13 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
         _highAvailability = DefineProperty<RedisEnterpriseHighAvailability>("HighAvailability", ["properties", "highAvailability"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _minimumTlsVersion = DefineProperty<RedisEnterpriseTlsVersion>("MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
+        _publicNetworkAccess = DefineProperty<RedisEnterprisePublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _zones = DefineListProperty<string>("Zones", ["zones"]);
         _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _kind = DefineProperty<RedisEnterpriseKind>("Kind", ["kind"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<RedisEnterprisePrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<RedisEnterprisePrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _provisioningState = DefineProperty<RedisEnterpriseProvisioningStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _redisVersion = DefineProperty<string>("RedisVersion", ["properties", "redisVersion"], isOutput: true);
         _redundancyMode = DefineProperty<RedisEnterpriseRedundancyMode>("RedundancyMode", ["properties", "redundancyMode"], isOutput: true);
@@ -247,6 +261,11 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

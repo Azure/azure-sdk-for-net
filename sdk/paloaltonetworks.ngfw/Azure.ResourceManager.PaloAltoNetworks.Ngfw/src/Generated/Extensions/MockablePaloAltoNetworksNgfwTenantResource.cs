@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockablePaloAltoNetworksNgfwTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePaloAltoNetworksNgfwTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePaloAltoNetworksNgfwTenantResource for mocking. </summary>
         protected MockablePaloAltoNetworksNgfwTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePaloAltoNetworksNgfwTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePaloAltoNetworksNgfwTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePaloAltoNetworksNgfwTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of GlobalRulestackResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of GlobalRulestackResources and their operations over a GlobalRulestackResource. </returns>
+        /// <summary> Gets a collection of GlobalRulestacks in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of GlobalRulestacks and their operations over a GlobalRulestackResource. </returns>
         public virtual GlobalRulestackCollection GetGlobalRulestacks()
         {
             return GetCachedClient(client => new GlobalRulestackCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// Get a GlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<GlobalRulestackResource>> GetGlobalRulestackAsync(string globalRulestackName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+
             return await GetGlobalRulestacks().GetAsync(globalRulestackName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// Get a GlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         [ForwardsClientCalls]
         public virtual Response<GlobalRulestackResource> GetGlobalRulestack(string globalRulestackName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+
             return GetGlobalRulestacks().Get(globalRulestackName, cancellationToken);
         }
     }

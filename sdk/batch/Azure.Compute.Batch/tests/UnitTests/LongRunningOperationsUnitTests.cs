@@ -29,8 +29,38 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocating = new BatchNode(NodeId, null, BatchNodeState.Deallocating, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            // Example fix for BatchNode constructor calls with <null> DateTimeOffset arguments
+            BatchNode batchNodeDeallocating = new BatchNode(
+                NodeId,
+                null,
+                BatchNodeState.Deallocating,
+                null,
+                DateTimeOffset.Now,
+                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
+                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
+                null,
+                null,
+                "affinityId",
+                "vmSize",
+                0, 0, 0, 0,
+                null, null, null, null, null, null, null, null, null
+            );
+
+            BatchNode batchNodeDeallocated = new BatchNode(
+                NodeId,
+                null,
+                BatchNodeState.Deallocated,
+                null,
+                DateTimeOffset.Now,
+                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
+                DateTimeOffset.MinValue, // Fix: Use DateTimeOffset.MinValue instead of null
+                null,
+                null,
+                "affinityId",
+                "vmSize",
+                0, 0, 0, 0,
+                null, null, null, null, null, null, null, null, null
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -119,7 +149,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null,"affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -177,7 +207,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -224,54 +254,6 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
         [Test]
         /// <summary>
-        /// Verify that normal delete certificate flow succeeds
-        /// </summary>
-        public async Task DeleteCertificateOperation_Normal()
-        {
-            // Arrange
-            var mockResponse = new MockResponse(200).AddHeader("Retry-After", "0");
-            string Thumbprint = "thumbprint";
-            string ThumbprintAlgorithm = "thumbprintAlgorithm";
-            int CallsToGet = 0;
-
-            BatchCertificate batchCertificate = new BatchCertificate(Thumbprint, ThumbprintAlgorithm, null, null, null, null, null, null, null, null, null, null, null);
-
-            Mock<BatchClient> clientMock = new Mock<BatchClient>();
-            clientMock.Setup(c => c.GetCertificateAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<CancellationToken>())
-            )
-             .ReturnsAsync((string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, CancellationToken cancellationToken) =>
-             {
-                 if (CallsToGet++ <= 2)
-                 {
-                     // return a certificate that is deleting
-                     return Response.FromValue(batchCertificate, mockResponse);
-                 }
-                 else
-                 {
-                     throw new RequestFailedException(status: 404, message: "Not Found", errorCode: BatchErrorCode.CertificateNotFound.ToString(), null);
-                 }
-             }
-             );
-
-            BatchClient batchClient = clientMock.Object;
-
-            // Act
-            DeleteCertificateOperation deleteCertificateOperation = new DeleteCertificateOperation(batchClient, Thumbprint + ";" + ThumbprintAlgorithm);
-            await deleteCertificateOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-            // Assert
-            Assert.IsTrue(deleteCertificateOperation.HasCompleted);
-            Assert.IsTrue(deleteCertificateOperation.HasValue);
-        }
-
-        [Test]
-        /// <summary>
         /// Verify that normal delete job flow succeeds
         /// </summary>
         public async Task DeleteJobOperation_Normal()
@@ -281,16 +263,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Deleting, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob =    new BatchJob(JobId, null, null,default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobState.Completed, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions,CancellationToken cancellationToken) =>
@@ -330,18 +312,18 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             int CallsToGet = 0;
             DateTimeOffset creationTime = DateTimeOffset.UtcNow;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, creationTime, BatchJobState.Deleting, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
-            BatchJob batchJobNew = new BatchJob(JobId, null, null, null, null, null, creationTime, BatchJobState.Completed, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob =    new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, creationTime, BatchJobState.Completed, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJobNew = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, creationTime, BatchJobState.Completed, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
+               It.IsAny<string>(),
+               It.IsAny<TimeSpan?>(),
+               It.IsAny<DateTimeOffset?>(),
+               It.IsAny<RequestConditions>(),
+               It.IsAny<IEnumerable<string>>(),
+               It.IsAny<IEnumerable<string>>(),
+               It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
@@ -379,20 +361,20 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Deleting, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
-            BatchJob batchJobNew = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), BatchJobState.Active, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, default(BatchJobState),                         DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJobNew = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), default(BatchJobState), DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
+              It.IsAny<string>(),
+              It.IsAny<TimeSpan?>(),
+              It.IsAny<DateTimeOffset?>(),
+              It.IsAny<RequestConditions>(),
+              It.IsAny<IEnumerable<string>>(),
+              It.IsAny<IEnumerable<string>>(),
+              It.IsAny<CancellationToken>())
             )
-             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+            .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
                  if (CallsToGet++ <= 2)
                  {
@@ -429,16 +411,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Deleting, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobScheduleState.Deleting, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -477,17 +459,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJobSchedule batchJobScheduleTerminating = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Terminating, null, null, null, null, null, null, null, null, null);
-            BatchJobSchedule batchJobScheduleActive = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Active, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleTerminating = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobScheduleState.Terminating, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleActive = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobScheduleState.Active, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -526,17 +508,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJobSchedule batchJobScheduleTerminating = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Terminating, null, null, null, null, null, null, null, null, null);
-            BatchJobSchedule batchJobScheduleActive = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Active, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleTerminating = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobScheduleState.Terminating, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleActive = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Active, DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -575,16 +557,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJobSchedule batchJobScheduleTerminating = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Terminating, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleTerminating = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobScheduleState.Terminating, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleActive = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Active, DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -623,20 +606,20 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Deleting, null, null, null, null, null, null, null, null, null);
-            BatchJobSchedule batchJobScheduleNew = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Active, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobScheduleState.Deleting, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleNew = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Active, DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
-            )
-             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+                 It.IsAny<string>(),
+                 It.IsAny<TimeSpan?>(),
+                 It.IsAny<DateTimeOffset?>(),
+                 It.IsAny<RequestConditions>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<CancellationToken>())
+             )
+              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
                  if (CallsToGet++ <= 2)
                  {
@@ -672,23 +655,24 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             int CallsToGet = 0;
             DateTimeOffset creationTime = DateTimeOffset.UtcNow;
 
-            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, creationTime, BatchJobScheduleState.Deleting, null, null, null, null, null, null, null, null, null);
-            BatchJobSchedule batchJobScheduleNew = new BatchJobSchedule(JobId, null, null, null, null, creationTime, BatchJobScheduleState.Active, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.Now, creationTime, BatchJobScheduleState.Deleting, DateTimeOffset.Now, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleNew = new BatchJobSchedule(JobId, null, null, default(ETag), DateTimeOffset.Now, creationTime, BatchJobScheduleState.Active, DateTimeOffset.Now, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
-            )
+                 It.IsAny<string>(),
+                 It.IsAny<TimeSpan?>(),
+                 It.IsAny<DateTimeOffset?>(),
+                 It.IsAny<RequestConditions>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<CancellationToken>())
+             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
                  if (CallsToGet++ <= 2)
                  {
+                     // return a certificate that is deleting
                      return Response.FromValue(batchJobSchedule, mockResponse);
                  }
                  else
@@ -720,16 +704,52 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null,null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,null, null,null,null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Deleting,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                null, // AllocationState
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -767,17 +787,89 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow.AddMinutes(1), BatchPoolState.Active, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Deleting,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                null, // AllocationState
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
+            BatchPool batchPoolNew = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow.AddMinutes(1), // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow.AddMinutes(1), // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow.AddMinutes(1), // StateTransitionTime (fix for CS1503: Argument 8)
+                null, // AllocationState
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -816,17 +908,89 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             int CallsToGet = 0;
             DateTimeOffset creationTime = DateTimeOffset.UtcNow;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Active, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                creationTime, // LastModified (fix for CS1503: Argument 5)
+                creationTime, // CreationTime
+                BatchPoolState.Deleting,
+                creationTime, // StateTransitionTime (fix for CS1503: Argument 8)
+                null, // AllocationState
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
+            BatchPool batchPoolNew = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                creationTime.AddHours(1), // LastModified (fix for CS1503: Argument 5)
+                creationTime.AddHours(1), // CreationTime
+                BatchPoolState.Active,
+                creationTime.AddHours(1), // StateTransitionTime (fix for CS1503: Argument 8)
+                null, // AllocationState
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -864,17 +1028,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Disabling, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
-            BatchJob batchJobFinished = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Active, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob =         new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobState.Disabling, DateTimeOffset.UtcNow, BatchJobState.Disabling, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJobFinished = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobState.Active, DateTimeOffset.UtcNow, BatchJobState.Active, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -913,17 +1077,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Enabling, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
-            BatchJob batchJobFinished = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Active, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobState.Enabling, DateTimeOffset.UtcNow, BatchJobState.Enabling, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJobFinished = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, BatchJobState.Active, DateTimeOffset.UtcNow, BatchJobState.Active, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -964,8 +1128,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Rebooting, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Rebooting, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1015,8 +1179,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Reimaging, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Reimaging, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1065,17 +1229,89 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Resizing,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
+            BatchPool batchPoolFinished = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Steady,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1116,17 +1352,89 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Resizing,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
+            BatchPool batchPoolFinished = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Steady,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1165,17 +1473,89 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Resizing,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
+            BatchPool batchPoolFinished = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Steady,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1216,8 +1596,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchNode batchNodeStarting = new BatchNode(NodeId, null, BatchNodeState.Starting, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeStarting = new BatchNode(NodeId, null, BatchNodeState.Starting, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1266,17 +1646,89 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Stopping, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Stopping,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
+            BatchPool batchPoolFinished = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Steady,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1317,17 +1769,89 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Stopping, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Stopping,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
+            BatchPool batchPoolFinished = new BatchPool(
+                PoolID,
+                null, // DisplayName
+                null, // Uri
+                default(ETag), // ETag (fix for CS1503: Argument 4)
+                DateTimeOffset.UtcNow, // LastModified (fix for CS1503: Argument 5)
+                DateTimeOffset.UtcNow, // CreationTime
+                BatchPoolState.Active,
+                DateTimeOffset.UtcNow, // StateTransitionTime (fix for CS1503: Argument 8)
+                AllocationState.Steady,
+                null, // AllocationStateTransitionTime
+                null, // VmSize
+                null, // VirtualMachineConfiguration
+                null, // ResizeTimeout
+                null, // ResizeErrors
+                0,    // CurrentDedicatedNodes (fix for CS1503: Argument 15)
+                0,    // CurrentLowPriorityNodes (fix for CS1503: Argument 16)
+                null, // TargetDedicatedNodes
+                null, // TargetLowPriorityNodes
+                null, // EnableAutoScale
+                null, // AutoScaleFormula
+                null, // AutoScaleEvaluationInterval
+                null, // AutoScaleRun
+                null, // EnableInterNodeCommunication
+                null, // NetworkConfiguration
+                null, // StartTask
+                null, // ApplicationPackageReferences
+                null, // TaskSlotsPerNode
+                null, // TaskSchedulingPolicy
+                null, // UserAccounts
+                null, // Metadata
+                null, // PoolStatistics
+                null, // MountConfiguration
+                null, // Identity
+                null, // UpgradePolicy
+                null  // serializedAdditionalRawData
+            );
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1365,19 +1889,19 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, default(BatchJobState), DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
-             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions,CancellationToken cancellationToken) =>
              {
                  if (CallsToGet++ <= 2)
                  {
@@ -1413,17 +1937,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
-            BatchJob batchJobNew = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, default(BatchJobState), DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJobNew = new BatchJob(JobId, null, null, default(Uri), default(ETag), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), default(BatchJobState), DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>

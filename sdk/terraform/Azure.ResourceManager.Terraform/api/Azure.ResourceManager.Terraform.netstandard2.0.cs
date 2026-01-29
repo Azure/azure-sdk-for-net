@@ -25,20 +25,27 @@ namespace Azure.ResourceManager.Terraform.Models
 {
     public static partial class ArmTerraformModelFactory
     {
-        public static Azure.ResourceManager.Terraform.Models.ExportQueryTerraform ExportQueryTerraform(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? targetProvider = default(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider?), bool? isOutputFullPropertiesEnabled = default(bool?), bool? isMaskSensitiveEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> azureResourcesToExclude = null, System.Collections.Generic.IEnumerable<string> terraformResourcesToExclude = null, string query = null, string namePattern = null, bool? isRecursive = default(bool?), string table = null, Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter? authorizationScopeFilter = default(Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter?)) { throw null; }
-        public static Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform ExportResourceGroupTerraform(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? targetProvider = default(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider?), bool? isOutputFullPropertiesEnabled = default(bool?), bool? isMaskSensitiveEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> azureResourcesToExclude = null, System.Collections.Generic.IEnumerable<string> terraformResourcesToExclude = null, string resourceGroupName = null, string namePattern = null) { throw null; }
+        public static Azure.ResourceManager.Terraform.Models.CommonExportProperties CommonExportProperties(string type = null, Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? targetProvider = default(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider?), bool? isOutputFullPropertiesEnabled = default(bool?), bool? isMaskSensitiveEnabled = default(bool?), bool? includeRoleAssignment = default(bool?), bool? includeManagedResource = default(bool?), System.Collections.Generic.IEnumerable<string> azureResourcesToExclude = null, System.Collections.Generic.IEnumerable<string> terraformResourcesToExclude = null) { throw null; }
+        public static Azure.ResourceManager.Terraform.Models.ExportQueryTerraform ExportQueryTerraform(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? targetProvider = default(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider?), bool? isOutputFullPropertiesEnabled = default(bool?), bool? isMaskSensitiveEnabled = default(bool?), bool? includeRoleAssignment = default(bool?), bool? includeManagedResource = default(bool?), System.Collections.Generic.IEnumerable<string> azureResourcesToExclude = null, System.Collections.Generic.IEnumerable<string> terraformResourcesToExclude = null, string query = null, string namePattern = null, bool? isRecursive = default(bool?), bool? includeResourceGroup = default(bool?), string table = null, Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter? authorizationScopeFilter = default(Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter?)) { throw null; }
+        public static Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform ExportResourceGroupTerraform(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? targetProvider = default(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider?), bool? isOutputFullPropertiesEnabled = default(bool?), bool? isMaskSensitiveEnabled = default(bool?), bool? includeRoleAssignment = default(bool?), bool? includeManagedResource = default(bool?), System.Collections.Generic.IEnumerable<string> azureResourcesToExclude = null, System.Collections.Generic.IEnumerable<string> terraformResourcesToExclude = null, string resourceGroupName = null, string namePattern = null) { throw null; }
+        public static Azure.ResourceManager.Terraform.Models.ExportResourceTerraform ExportResourceTerraform(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? targetProvider = default(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider?), bool? isOutputFullPropertiesEnabled = default(bool?), bool? isMaskSensitiveEnabled = default(bool?), bool? includeRoleAssignment = default(bool?), bool? includeManagedResource = default(bool?), System.Collections.Generic.IEnumerable<string> azureResourcesToExclude = null, System.Collections.Generic.IEnumerable<string> terraformResourcesToExclude = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null, string resourceName = null, string resourceType = null, string namePattern = null, bool? recursive = default(bool?), bool? includeResourceGroup = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Terraform.Models.TerraformExportResult TerraformExportResult(string configuration = null, string import = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> skippedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.ResourceManager.Terraform.Models.TerraformOperationStatus TerraformOperationStatus(Azure.ResourceManager.Terraform.Models.TerraformExportResult properties = null, Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState status = default(Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState), string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), double? percentComplete = default(double?), Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.Terraform.Models.TerraformOperationStatus TerraformOperationStatus(Azure.ResourceManager.Terraform.Models.TerraformExportResult properties = null, Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState status = default(Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState), string id = null, string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), double? percentComplete = default(double?), Azure.ResponseError error = null) { throw null; }
     }
     public abstract partial class CommonExportProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>
     {
-        protected CommonExportProperties() { }
+        internal CommonExportProperties() { }
         public System.Collections.Generic.IList<string> AzureResourcesToExclude { get { throw null; } }
+        public bool? IncludeManagedResource { get { throw null; } set { } }
+        public bool? IncludeRoleAssignment { get { throw null; } set { } }
         public bool? IsMaskSensitiveEnabled { get { throw null; } set { } }
         public bool? IsOutputFullPropertiesEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? TargetProvider { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TerraformResourcesToExclude { get { throw null; } }
+        protected virtual Azure.ResourceManager.Terraform.Models.CommonExportProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Terraform.Models.CommonExportProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Terraform.Models.CommonExportProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Terraform.Models.CommonExportProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -49,11 +56,15 @@ namespace Azure.ResourceManager.Terraform.Models
     {
         public ExportQueryTerraform(string query) { }
         public Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter? AuthorizationScopeFilter { get { throw null; } set { } }
+        public bool? IncludeResourceGroup { get { throw null; } set { } }
         public bool? IsRecursive { get { throw null; } set { } }
         public string NamePattern { get { throw null; } set { } }
         public string Query { get { throw null; } }
         public string Table { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Terraform.Models.CommonExportProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Terraform.Models.CommonExportProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Terraform.Models.ExportQueryTerraform System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportQueryTerraform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportQueryTerraform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Terraform.Models.ExportQueryTerraform System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportQueryTerraform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -65,7 +76,10 @@ namespace Azure.ResourceManager.Terraform.Models
         public ExportResourceGroupTerraform(string resourceGroupName) { }
         public string NamePattern { get { throw null; } set { } }
         public string ResourceGroupName { get { throw null; } }
+        protected override Azure.ResourceManager.Terraform.Models.CommonExportProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Terraform.Models.CommonExportProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -75,11 +89,16 @@ namespace Azure.ResourceManager.Terraform.Models
     public partial class ExportResourceTerraform : Azure.ResourceManager.Terraform.Models.CommonExportProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>
     {
         public ExportResourceTerraform(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds) { }
+        public bool? IncludeResourceGroup { get { throw null; } set { } }
         public string NamePattern { get { throw null; } set { } }
+        public bool? Recursive { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourceIds { get { throw null; } }
         public string ResourceName { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Terraform.Models.CommonExportProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Terraform.Models.CommonExportProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Terraform.Models.ExportResourceTerraform System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Terraform.Models.ExportResourceTerraform System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -95,12 +114,11 @@ namespace Azure.ResourceManager.Terraform.Models
         public static Azure.ResourceManager.Terraform.Models.TargetTerraformProvider AzApi { get { throw null; } }
         public static Azure.ResourceManager.Terraform.Models.TargetTerraformProvider AzureRM { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider left, Azure.ResourceManager.Terraform.Models.TargetTerraformProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.Terraform.Models.TargetTerraformProvider (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Terraform.Models.TargetTerraformProvider? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Terraform.Models.TargetTerraformProvider left, Azure.ResourceManager.Terraform.Models.TargetTerraformProvider right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -115,12 +133,11 @@ namespace Azure.ResourceManager.Terraform.Models
         public static Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter AtScopeAndBelow { get { throw null; } }
         public static Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter AtScopeExact { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter left, Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter right) { throw null; }
         public static implicit operator Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter left, Azure.ResourceManager.Terraform.Models.TerraformAuthorizationScopeFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -128,10 +145,13 @@ namespace Azure.ResourceManager.Terraform.Models
     {
         internal TerraformExportResult() { }
         public string Configuration { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public string Import { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SkippedResourceIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SkippedResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Terraform.Models.TerraformExportResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Terraform.Models.TerraformExportResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Terraform.Models.TerraformExportResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.TerraformExportResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.TerraformExportResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Terraform.Models.TerraformExportResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.TerraformExportResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -143,12 +163,16 @@ namespace Azure.ResourceManager.Terraform.Models
         internal TerraformOperationStatus() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public double? PercentComplete { get { throw null; } }
         public Azure.ResourceManager.Terraform.Models.TerraformExportResult Properties { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Terraform.Models.TerraformOperationStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Terraform.Models.TerraformOperationStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Terraform.Models.TerraformOperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Terraform.Models.TerraformOperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -165,12 +189,11 @@ namespace Azure.ResourceManager.Terraform.Models
         public static Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState left, Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState left, Azure.ResourceManager.Terraform.Models.TerraformResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }

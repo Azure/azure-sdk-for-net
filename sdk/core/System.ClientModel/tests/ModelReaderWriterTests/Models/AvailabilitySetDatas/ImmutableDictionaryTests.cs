@@ -11,6 +11,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
 
+        protected override bool HasReflectionBuilderSupport => false;
+
         protected override string CollectionTypeName => "ImmutableDictionary<String, AvailabilitySetData>";
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)

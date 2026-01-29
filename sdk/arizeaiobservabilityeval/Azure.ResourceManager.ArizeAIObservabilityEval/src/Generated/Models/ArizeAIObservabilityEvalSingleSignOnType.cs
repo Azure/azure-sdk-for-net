@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ArizeAIObservabilityEval;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     public readonly partial struct ArizeAIObservabilityEvalSingleSignOnType : IEquatable<ArizeAIObservabilityEvalSingleSignOnType>
     {
         private readonly string _value;
+        /// <summary> Security Assertion Markup Language (SAML) based Single Sign-On. </summary>
+        private const string SamlValue = "Saml";
+        /// <summary> OpenID Connect based Single Sign-On. </summary>
+        private const string OpenIdValue = "OpenId";
 
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalSingleSignOnType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArizeAIObservabilityEvalSingleSignOnType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SamlValue = "Saml";
-        private const string OpenIdValue = "OpenId";
+            _value = value;
+        }
 
         /// <summary> Security Assertion Markup Language (SAML) based Single Sign-On. </summary>
         public static ArizeAIObservabilityEvalSingleSignOnType Saml { get; } = new ArizeAIObservabilityEvalSingleSignOnType(SamlValue);
+
         /// <summary> OpenID Connect based Single Sign-On. </summary>
         public static ArizeAIObservabilityEvalSingleSignOnType OpenId { get; } = new ArizeAIObservabilityEvalSingleSignOnType(OpenIdValue);
+
         /// <summary> Determines if two <see cref="ArizeAIObservabilityEvalSingleSignOnType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArizeAIObservabilityEvalSingleSignOnType left, ArizeAIObservabilityEvalSingleSignOnType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArizeAIObservabilityEvalSingleSignOnType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArizeAIObservabilityEvalSingleSignOnType left, ArizeAIObservabilityEvalSingleSignOnType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArizeAIObservabilityEvalSingleSignOnType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArizeAIObservabilityEvalSingleSignOnType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArizeAIObservabilityEvalSingleSignOnType(string value) => new ArizeAIObservabilityEvalSingleSignOnType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArizeAIObservabilityEvalSingleSignOnType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArizeAIObservabilityEvalSingleSignOnType?(string value) => value == null ? null : new ArizeAIObservabilityEvalSingleSignOnType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArizeAIObservabilityEvalSingleSignOnType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArizeAIObservabilityEvalSingleSignOnType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

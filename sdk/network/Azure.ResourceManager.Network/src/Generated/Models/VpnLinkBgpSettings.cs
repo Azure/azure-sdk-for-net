@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The BGP speaker's ASN. </summary>
+        [WirePath("asn")]
         public long? Asn { get; set; }
         /// <summary> The BGP peering address and BGP identifier of this BGP speaker. </summary>
+        [WirePath("bgpPeeringAddress")]
         public string BgpPeeringAddress { get; set; }
     }
 }

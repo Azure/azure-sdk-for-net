@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Scale Unit. </summary>
+        [WirePath("scaleUnit")]
         public string ScaleUnit { get; }
         /// <summary> Instance Count. </summary>
+        [WirePath("instanceCount")]
         public int? InstanceCount { get; }
     }
 }

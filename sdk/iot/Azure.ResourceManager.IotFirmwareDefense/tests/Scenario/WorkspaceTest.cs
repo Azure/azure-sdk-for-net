@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
     public class WorkspaceTest : IotFirmwareDefenseManagementTestBase
     {
-        private static readonly string rgName = "testRg";
         private static ResourceGroupResource rg;
 
         public WorkspaceTest(bool isAsync)

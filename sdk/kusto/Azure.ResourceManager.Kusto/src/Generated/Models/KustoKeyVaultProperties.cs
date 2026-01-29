@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The name of the key vault key. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
         /// <summary> The version of the key vault key. </summary>
+        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
         /// <summary> The Uri of the key vault. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
         /// <summary> The user assigned identity (ARM resource id) that has access to the key. </summary>
+        [WirePath("userIdentity")]
         public string UserIdentity { get; set; }
     }
 }

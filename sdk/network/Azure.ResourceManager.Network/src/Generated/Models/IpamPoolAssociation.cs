@@ -89,22 +89,31 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource id of the associated Azure resource. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> IpamPool id for which the resource is associated to. </summary>
+        [WirePath("poolId")]
         public ResourceIdentifier PoolId { get; }
         /// <summary> Gets the description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> List of assigned IP address prefixes in the IpamPool of the associated resource. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> List of reserved IP address prefixes in the IpamPool of the associated resource. </summary>
+        [WirePath("reservedPrefixes")]
         public IReadOnlyList<string> ReservedPrefixes { get; }
         /// <summary> Total number of assigned IP addresses of the association. </summary>
+        [WirePath("totalNumberOfIPAddresses")]
         public string TotalNumberOfIPAddresses { get; }
         /// <summary> Total number of reserved IP addresses of the association. </summary>
+        [WirePath("numberOfReservedIPAddresses")]
         public string NumberOfReservedIPAddresses { get; }
         /// <summary> Creation time of the association. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Expire time for IP addresses reserved. </summary>
+        [WirePath("reservationExpiresAt")]
         public DateTimeOffset? ReservationExpiresOn { get; }
     }
 }

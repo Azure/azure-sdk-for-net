@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Flag to control allow category. </summary>
+        [WirePath("allow")]
         public bool? Allow { get; set; }
         /// <summary> Flag to control optimize category. </summary>
+        [WirePath("optimize")]
         public bool? Optimize { get; set; }
         /// <summary> Flag to control default category. </summary>
+        [WirePath("default")]
         public bool? Default { get; set; }
     }
 }

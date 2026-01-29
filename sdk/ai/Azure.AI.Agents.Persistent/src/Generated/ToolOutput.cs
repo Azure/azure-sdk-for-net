@@ -10,60 +10,26 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The data provided during a tool outputs submission to resolve pending tool calls and allow the model to continue. </summary>
-    public partial class ToolOutput
+    /// <summary> The output from a function tool to be submitted. </summary>
+    public partial class ToolOutput : StructuredToolOutput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ToolOutput"/>. </summary>
         public ToolOutput()
         {
+            Type = "function_call_output";
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolOutput"/>. </summary>
+        /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
-        /// <param name="output"> The output from the tool to be submitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolOutput(string toolCallId, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="output"> The output from the function tool to be submitted. </param>
+        internal ToolOutput(string type, string toolCallId, IDictionary<string, BinaryData> serializedAdditionalRawData, string output) : base(type, toolCallId, serializedAdditionalRawData)
         {
-            ToolCallId = toolCallId;
             Output = output;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </summary>
-        public string ToolCallId { get; set; }
-        /// <summary> The output from the tool to be submitted. </summary>
+        /// <summary> The output from the function tool to be submitted. </summary>
         public string Output { get; set; }
     }
 }

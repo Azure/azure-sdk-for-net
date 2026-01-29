@@ -2,16 +2,28 @@
 # and some ref (branch, tag, etc.) or commit hash. Only runs on PRs.
 # ContinueOnError   - true: Pipeline warns on spelling error
 #                     false: Pipeline fails on spelling error
-# TargetBranch      - Target ref (e.g. main) to compare to create file change
-#                     list.
 # CspellConfigPath  - Path to cspell.json config location
+#
+# ScriptToValidateUpgrade - Optional script to validate cspell upgrade. This
+#                           is invoked only if package-lock.json for cspell is 
+#                           changed. This script should exit with a nonzero exit
+#                           code if the upgrade is invalid. Upgrade check should
+#                           check for errors which would prevent release (i.e. 
+#                           public API surface).
 #
 # This check recognizes the setting of variable "Skip.SpellCheck"
 # if set to 'true', spellchecking will not be invoked.
 
 parameters:
-  ContinueOnError: true
-  CspellConfigPath: ./.vscode/cspell.json
+  - name: ContinueOnError
+    type: boolean
+    default: true
+  - name: CspellConfigPath
+    type: string
+    default: ./.vscode/cspell.json
+  - name: ScriptToValidateUpgrade
+    type: string
+    default: ''
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
@@ -26,3 +38,16 @@ steps:
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
           -ExitWithError:(!$${{ parameters.ContinueOnError }})
         pwsh: true
+    - ${{ if ne('', parameters.ScriptToValidateUpgrade) }}:
+      - pwsh: |
+          $changedFiles = ./eng/common/scripts/get-changedfiles.ps1
+
+          if ($changedFiles -notcontains 'eng/common/spelling/package-lock.json') {
+            Write-Host "No changes to cspell package-lock.json detected."
+            exit 0
+          }
+
+          Write-Host "Detected change to cspell package-lock.json. Running upgrade verification."
+          & '${{ parameters.ScriptToValidateUpgrade }}'
+        displayName: Verify cspell upgrade
+        condition: and(succeeded(), ne('true', variables['Skip.SpellCheck']))

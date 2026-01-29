@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview)]
         public void AnalyzeConversation_ConversationPii_WithEntityMaskPolicy()
         {
             // Arrange: Initialize client and input
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview)]
         public async Task AnalyzeConversationAsync_ConversationPii_WithEntityMaskPolicy()
         {
             // Arrange: Initialize client and input

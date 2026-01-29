@@ -53,8 +53,9 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
     private BicepValue<RedisEnterpriseClientProtocol>? _clientProtocol;
 
     /// <summary>
-    /// Clustering policy - default is OSSCluster. This property must be chosen
-    /// at create time, and cannot be changed without deleting the database.
+    /// Clustering policy - default is OSSCluster. This property can be updated
+    /// only if the current value is NoCluster. If the value is OSSCluster or
+    /// EnterpriseCluster, it cannot be updated without deleting the database.
     /// </summary>
     public BicepValue<RedisEnterpriseClusteringPolicy> ClusteringPolicy 
     {
@@ -193,7 +194,7 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the RedisEnterpriseDatabase.</param>
     public RedisEnterpriseDatabase(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Cache/redisEnterprise/databases", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.Cache/redisEnterprise/databases", resourceVersion ?? "2025-07-01")
     {
     }
 
@@ -226,6 +227,11 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

@@ -31,11 +31,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         /// <param name="ignoreNullValues"> The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="alternateKeyName"> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </param>
-        internal DynamicsSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, object ignoreNullValues, object alternateKeyName) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="bypassBusinessLogicExecution"> Controls the bypass of Dataverse custom business logic. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </param>
+        /// <param name="bypassPowerAutomateFlows"> Controls the bypass of Power Automate flows. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        internal DynamicsSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, object ignoreNullValues, object alternateKeyName, object bypassBusinessLogicExecution, object bypassPowerAutomateFlows) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             IgnoreNullValues = ignoreNullValues;
             AlternateKeyName = alternateKeyName;
+            BypassBusinessLogicExecution = bypassBusinessLogicExecution;
+            BypassPowerAutomateFlows = bypassPowerAutomateFlows;
             Type = type ?? "DynamicsSink";
         }
 
@@ -45,5 +49,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object IgnoreNullValues { get; set; }
         /// <summary> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </summary>
         public object AlternateKeyName { get; set; }
+        /// <summary> Controls the bypass of Dataverse custom business logic. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
+        public object BypassBusinessLogicExecution { get; set; }
+        /// <summary> Controls the bypass of Power Automate flows. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public object BypassPowerAutomateFlows { get; set; }
     }
 }

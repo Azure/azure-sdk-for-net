@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests
                 }
             };
 
-            var authRecord = VisualStudioCodeCredential.GetAuthenticationRecord(testFileSystem);
+            var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
             Assert.IsNull(authRecord, "Authentication record should be null when JSON is invalid");
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
                 }
             };
 
-            var authRecord = VisualStudioCodeCredential.GetAuthenticationRecord(testFileSystem);
+            var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
             Assert.IsNull(authRecord, "Authentication record should be null when JSON is empty");
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
                 }
             };
 
-            var authRecord = VisualStudioCodeCredential.GetAuthenticationRecord(testFileSystem);
+            var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
             Assert.IsNull(authRecord, "Authentication record should be null when required fields are missing");
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Identity.Tests
                 }
             };
 
-            var authRecord = VisualStudioCodeCredential.GetAuthenticationRecord(testFileSystem);
+            var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
             Assert.IsNotNull(authRecord, "Authentication record should not be null with valid JSON");
             Assert.AreEqual("test-tenant-id", authRecord.TenantId);
             Assert.AreEqual("test-home-account-id.test-tenant-id", authRecord.HomeAccountId);
@@ -139,7 +139,7 @@ namespace Azure.Identity.Tests
                 }
             };
 
-            var authRecord = VisualStudioCodeCredential.GetAuthenticationRecord(testFileSystem);
+            var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
 
             Assert.IsTrue(lowerCaseChecked, "Lower case path should be checked first");
             Assert.IsTrue(upperCaseChecked, "Upper case path should be checked when lower case doesn't exist");
@@ -155,7 +155,7 @@ namespace Azure.Identity.Tests
                 GetFileStreamHandler = _ => throw new IOException("File access denied")
             };
 
-            var authRecord = VisualStudioCodeCredential.GetAuthenticationRecord(testFileSystem);
+            var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
             Assert.IsNull(authRecord, "Authentication record should be null when IOException occurs");
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Identity.Tests
                 FileExistsHandler = path => false
             };
 
-            var authRecord = VisualStudioCodeCredential.GetAuthenticationRecord(testFileSystem);
+            var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
             Assert.IsNull(authRecord, "Authentication record should be null when file doesn't exist");
         }
 

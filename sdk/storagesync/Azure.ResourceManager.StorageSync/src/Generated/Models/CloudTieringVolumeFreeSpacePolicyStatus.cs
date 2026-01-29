@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Status of the volume free space policy. </summary>
     public partial class CloudTieringVolumeFreeSpacePolicyStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudTieringVolumeFreeSpacePolicyStatus"/>. </summary>
         internal CloudTieringVolumeFreeSpacePolicyStatus()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="effectiveVolumeFreeSpacePolicy"> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </param>
         /// <param name="currentVolumeFreeSpacePercent"> Current volume free space percentage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudTieringVolumeFreeSpacePolicyStatus(DateTimeOffset? lastUpdatedOn, int? effectiveVolumeFreeSpacePolicy, int? currentVolumeFreeSpacePercent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringVolumeFreeSpacePolicyStatus(DateTimeOffset? lastUpdatedOn, int? effectiveVolumeFreeSpacePolicy, int? currentVolumeFreeSpacePercent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastUpdatedOn = lastUpdatedOn;
             EffectiveVolumeFreeSpacePolicy = effectiveVolumeFreeSpacePolicy;
             CurrentVolumeFreeSpacePercent = currentVolumeFreeSpacePercent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Last updated timestamp. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
+
         /// <summary> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </summary>
         public int? EffectiveVolumeFreeSpacePolicy { get; }
+
         /// <summary> Current volume free space percentage. </summary>
         public int? CurrentVolumeFreeSpacePercent { get; }
     }

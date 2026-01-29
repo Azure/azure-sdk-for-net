@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -124,6 +126,59 @@ namespace Azure.ResourceManager.Network.Models
             return new IdpsSignatureListResult(matchingRecordsCount, signatures ?? new ChangeTrackingList<IdpsSignatureResult>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchingRecordsCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  matchingRecordsCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MatchingRecordsCount))
+                {
+                    builder.Append("  matchingRecordsCount: ");
+                    builder.AppendLine($"'{MatchingRecordsCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Signatures), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Signatures))
+                {
+                    if (Signatures.Any())
+                    {
+                        builder.Append("  signatures: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Signatures)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  signatures: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IdpsSignatureListResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureListResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -132,6 +187,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support writing '{options.Format}' format.");
             }

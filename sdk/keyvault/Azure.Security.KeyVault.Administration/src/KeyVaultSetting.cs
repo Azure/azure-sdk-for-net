@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Security.KeyVault.Administration.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -37,10 +38,10 @@ namespace Azure.Security.KeyVault.Administration
         /// Creates a new instance of the <see cref="KeyVaultSetting"/> class.
         /// </summary>
         /// <param name="name">The name of the account setting.</param>
-        /// <param name="settingType">The type specifier of the value.</param>
         /// <param name="content">The string content of the account setting.</param>
+        /// <param name="settingType">The type specifier of the value.</param>
         /// <param name="additionalBinaryDataProperties">Additional properties.</param>
-        internal KeyVaultSetting(string name, KeyVaultSettingType? settingType, string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSetting(string name, string content, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));

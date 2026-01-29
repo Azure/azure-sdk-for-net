@@ -7,5 +7,6 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DevTestLabs.</Description>
     <PackageTags>azure;management;arm;resource manager;devtestlabs</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

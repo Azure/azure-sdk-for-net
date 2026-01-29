@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(SecondaryConsentEnabled))
+            if (Optional.IsCollectionDefined(SecondaryConsentEnabledInfo))
             {
                 writer.WritePropertyName("secondaryConsentEnabled"u8);
                 writer.WriteStartArray();
-                foreach (var item in SecondaryConsentEnabled)
+                foreach (var item in SecondaryConsentEnabledInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Support
             ResourceType type = default;
             SystemData systemData = default;
             string displayName = default;
-            IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
+            IList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

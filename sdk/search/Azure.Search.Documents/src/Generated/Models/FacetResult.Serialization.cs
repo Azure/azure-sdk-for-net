@@ -39,10 +39,30 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(Avg))
+            {
+                writer.WritePropertyName("avg"u8);
+                writer.WriteNumberValue(Avg.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Min))
+            {
+                writer.WritePropertyName("min"u8);
+                writer.WriteNumberValue(Min.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Max))
+            {
+                writer.WritePropertyName("max"u8);
+                writer.WriteNumberValue(Max.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(Sum))
             {
                 writer.WritePropertyName("sum"u8);
                 writer.WriteNumberValue(Sum.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Cardinality))
+            {
+                writer.WritePropertyName("cardinality"u8);
+                writer.WriteNumberValue(Cardinality.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Facets))
             {
@@ -93,7 +113,11 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             long? count = default;
+            double? avg = default;
+            double? min = default;
+            double? max = default;
             double? sum = default;
+            long? cardinality = default;
             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -108,6 +132,33 @@ namespace Azure.Search.Documents.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("avg"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    avg = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("min"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    min = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("max"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    max = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("sum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +166,15 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     sum = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("cardinality"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cardinality = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("@search.facets"u8))
@@ -146,7 +206,15 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FacetResult(count, sum, searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(), additionalProperties);
+            return new FacetResult(
+                count,
+                avg,
+                min,
+                max,
+                sum,
+                cardinality,
+                searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<FacetResult>.Write(ModelReaderWriterOptions options)

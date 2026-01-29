@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task CreateOrUpdate()
         {
             var str = await this.CreateOrUpdateStorageTarget(this.DefaultStorageCache, verifyResult: true);
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Get()
         {
             string targetName = "gettarget";
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Exists()
         {
             string name = Recording.GenerateAssetName("storagetarget");
@@ -60,6 +63,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task GetAll()
         {
             await AzureResourceTestHelper.TestGetAll<StorageTargetResource>(

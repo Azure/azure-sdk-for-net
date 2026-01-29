@@ -40,12 +40,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="scripts"> Array of script blocks. Type: array. </param>
         /// <param name="logSettings"> Log settings of script activity. </param>
         /// <param name="returnMultistatementResult"> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </param>
-        internal DataFactoryScriptActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypeLogSettings logSettings, DataFactoryElement<bool> returnMultistatementResult) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="treatDecimalAsString"> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </param>
+        internal DataFactoryScriptActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypeLogSettings logSettings, DataFactoryElement<bool> returnMultistatementResult, DataFactoryElement<bool> treatDecimalAsString) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptBlockExecutionTimeout = scriptBlockExecutionTimeout;
             Scripts = scripts;
             LogSettings = logSettings;
             ReturnMultistatementResult = returnMultistatementResult;
+            TreatDecimalAsString = treatDecimalAsString;
             ActivityType = activityType ?? "Script";
         }
 
@@ -62,5 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ScriptActivityTypeLogSettings LogSettings { get; set; }
         /// <summary> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> ReturnMultistatementResult { get; set; }
+        /// <summary> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> TreatDecimalAsString { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -14,44 +15,71 @@ namespace Azure.ResourceManager.StorageMover.Models
     internal readonly partial struct EndpointType : IEquatable<EndpointType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EndpointType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EndpointType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AzureStorageBlobContainerValue = "AzureStorageBlobContainer";
         private const string NfsMountValue = "NfsMount";
         private const string AzureStorageSmbFileShareValue = "AzureStorageSmbFileShare";
         private const string SmbMountValue = "SmbMount";
+        private const string AzureMultiCloudConnectorValue = "AzureMultiCloudConnector";
+        private const string AzureStorageNfsFileShareValue = "AzureStorageNfsFileShare";
 
-        /// <summary> AzureStorageBlobContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EndpointType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AzureStorageBlobContainer. </summary>
         public static EndpointType AzureStorageBlobContainer { get; } = new EndpointType(AzureStorageBlobContainerValue);
-        /// <summary> NfsMount. </summary>
+
+        /// <summary> Gets the NfsMount. </summary>
         public static EndpointType NfsMount { get; } = new EndpointType(NfsMountValue);
-        /// <summary> AzureStorageSmbFileShare. </summary>
+
+        /// <summary> Gets the AzureStorageSmbFileShare. </summary>
         public static EndpointType AzureStorageSmbFileShare { get; } = new EndpointType(AzureStorageSmbFileShareValue);
-        /// <summary> SmbMount. </summary>
+
+        /// <summary> Gets the SmbMount. </summary>
         public static EndpointType SmbMount { get; } = new EndpointType(SmbMountValue);
+
+        /// <summary> Gets the AzureMultiCloudConnector. </summary>
+        public static EndpointType AzureMultiCloudConnector { get; } = new EndpointType(AzureMultiCloudConnectorValue);
+
+        /// <summary> Gets the AzureStorageNfsFileShare. </summary>
+        public static EndpointType AzureStorageNfsFileShare { get; } = new EndpointType(AzureStorageNfsFileShareValue);
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EndpointType left, EndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EndpointType(string value) => new EndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EndpointType?(string value) => value == null ? null : new EndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

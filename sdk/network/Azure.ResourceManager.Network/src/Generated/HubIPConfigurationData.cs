@@ -45,16 +45,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The private IP address of the IP configuration. </summary>
+        [WirePath("properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
         public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
+        [WirePath("properties.subnet")]
         public SubnetData Subnet { get; set; }
         /// <summary> The reference to the public IP resource. </summary>
+        [WirePath("properties.publicIPAddress")]
         public PublicIPAddressData PublicIPAddress { get; set; }
         /// <summary> The provisioning state of the IP configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

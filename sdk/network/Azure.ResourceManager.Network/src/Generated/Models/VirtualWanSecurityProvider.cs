@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the security provider. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Url of the security provider. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
         /// <summary> Name of the security provider. </summary>
+        [WirePath("type")]
         public VirtualWanSecurityProviderType? ProviderType { get; }
     }
 }

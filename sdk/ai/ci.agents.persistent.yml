@@ -11,18 +11,6 @@ trigger:
     - sdk/ai/ci.agents.persistent.yml
     - sdk/ai/Azure.AI.Agents.Persistent
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/ai/ci.agents.persistent.yml
-    - sdk/ai/Azure.AI.Agents.Persistent
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

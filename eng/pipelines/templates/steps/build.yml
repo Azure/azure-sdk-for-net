@@ -11,12 +11,6 @@ parameters:
   - name: SDKType
     type: string
     default: all
-  - name: CheckAOTCompat
-    type: boolean
-    default: false
-  - name: AOTTestInputs
-    type: object
-    default: []
   - name: BuildSnippets
     type: boolean
     default: true
@@ -94,25 +88,27 @@ steps:
   # surprised by new errors that pop up only in internal when public CI was clean.
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     # only use the project list override file if the service directory is not auto
-    - pwsh: |
-        dotnet pack eng/service.proj -warnaserror `
-          /p:ValidateRunApiCompat=true `
-          /p:SDKType=${{ parameters.SDKType }} `
-          /p:IncludeTests=false `
-          /p:PublicSign=false $(VersioningProperties) `
-          /p:Configuration=Release `
-          /p:CommitSHA=$(Build.SourceVersion) `
-          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
-          /p:ServiceDirectory=* `
-          /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
-          /p:IncludePerf=false `
-          /p:IncludeStress=false `
-          /p:IncludeIntegrationTests=false `
-          /p:EnableOverrideExclusions=true `
-          $(DiagnosticArguments)
+    - pwsh: >
+        ./eng/scripts/runwithdevopslogging.ps1
+        dotnet pack eng/service.proj -warnaserror
+        /p:ValidateRunApiCompat=true
+        /p:SDKType=${{ parameters.SDKType }}
+        /p:IncludeTests=false
+        /p:PublicSign=false $(VersioningProperties)
+        /p:Configuration=Release
+        /p:CommitSHA=$(Build.SourceVersion)
+        /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+        /p:ServiceDirectory=*
+        /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+        /p:IncludePerf=false
+        /p:IncludeStress=false
+        /p:IncludeIntegrationTests=false
+        /p:EnableOverrideExclusions=true
+        $(DiagnosticArguments)
       displayName: "Build and Package for PR"
   - ${{ else }}:
-    - script: >-
+    - pwsh: >
+        ./eng/scripts/runwithdevopslogging.ps1
         dotnet pack eng/service.proj -warnaserror
         /p:ValidateRunApiCompat=true
         /p:SDKType=${{ parameters.SDKType }}
@@ -151,12 +147,11 @@ steps:
       LibType: 'client'
       PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
-  - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
-    - template: /eng/pipelines/templates/steps/aot-compatibility.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        AOTTestInputs: ${{ parameters.AOTTestInputs }}
-        PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+  - template: /eng/pipelines/templates/steps/aot-compatibility.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      Artifacts: ${{ parameters.Artifacts }}
+      PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: "Component Detection"

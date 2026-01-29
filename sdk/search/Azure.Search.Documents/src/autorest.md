@@ -15,9 +15,9 @@ use-model-reader-writer: true
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchservice.json
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/knowledgeagent.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1d3ac611f503e05650fb85520582b06140d2599e/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1d3ac611f503e05650fb85520582b06140d2599e/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1d3ac611f503e05650fb85520582b06140d2599e/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/knowledgebase.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -73,16 +73,25 @@ directive:
     delete $["x-nullable"]
 ```
 
-### Move KnowledgeAgent models to Azure.Search.Documents.Agents.Models
-
-Models in knowledgeagent.json should be moved to Azure.Search.Documents.Agents.Models.
+### Make `KnowledgeSourceKind` internal
 
 ```yaml
 directive:
-  from: knowledgeagent.json
+- from: searchservice.json
+  where: $.definitions.KnowledgeSourceKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Move KnowledgeBase models to Azure.Search.Documents.KnowledgeBases.Models
+
+Models in knowledgebase.json should be moved to Azure.Search.Documents.KnowledgeBases.Models.
+
+```yaml
+directive:
+  from: knowledgebase.json
   where: $.definitions.*
   transform: >
-    $["x-namespace"] = "Azure.Search.Documents.Agents.Models"
+    $["x-namespace"] = "Azure.Search.Documents.KnowledgeBases.Models"
 ```
 
 ### Remove models that have newer versions
@@ -96,6 +105,26 @@ directive:
   - remove-model: KeywordTokenizer
   - remove-model: LuceneStandardTokenizer
   - remove-model: NGramTokenFilter
+```
+
+### Retain `rerankWithOriginalVectors` and `defaultOversampling` in `VectorSearchCompressionConfiguration`
+
+```yaml
+directive:
+- from: "searchservice.json"
+  where: $.definitions.VectorSearchCompressionConfiguration
+  transform: >
+    $.properties.rerankWithOriginalVectors = {
+      "type": "boolean",
+      "description": "If set to true, once the ordered set of results calculated using compressed vectors are obtained, they will be reranked again by recalculating the full-precision similarity scores. This will improve recall at the expense of latency.\nFor use with only service version 2024-07-01. If using 2025-09-01 or later, use RescoringOptions.rescoringEnabled.",
+      "x-nullable": true
+    };
+    $.properties.defaultOversampling = {
+      "type": "number",
+      "format": "double",
+      "description": "Default oversampling factor. Oversampling will internally request more documents (specified by this multiplier) in the initial search. This increases the set of results that will be reranked using recomputed similarity scores from full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when rerankWithOriginalVectors is true. Higher values improve recall at the expense of latency.\nFor use with only service version 2024-07-01. If using 2025-09-01 or later, use RescoringOptions.defaultOversampling.",
+      "x-nullable": true
+    };
 ```
 
 ## Renaming models after the AI Studio rebrand to AI Foundry

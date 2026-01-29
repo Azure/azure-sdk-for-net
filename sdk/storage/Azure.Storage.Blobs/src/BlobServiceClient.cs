@@ -154,7 +154,12 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(_authenticationPolicy),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientOptions: options);
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _serviceRestClient = BuildServiceRestClient(_uri);
@@ -278,7 +283,12 @@ namespace Azure.Storage.Blobs
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       sharedKeyCredential: default,
-                      clientOptions: options),
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
@@ -312,7 +322,12 @@ namespace Azure.Storage.Blobs
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       sharedKeyCredential: storageSharedKeyCredential,
-                      clientOptions: options),
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
@@ -347,7 +362,12 @@ namespace Azure.Storage.Blobs
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       tokenCredential: tokenCredential,
-                      clientOptions: options),
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
@@ -381,7 +401,12 @@ namespace Azure.Storage.Blobs
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       sasCredential: sasCredential,
-                      clientOptions: options),
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
@@ -475,8 +500,7 @@ namespace Azure.Storage.Blobs
                     customerProvidedKey: null,
                     transferValidation: options.TransferValidation,
                     encryptionScope: null,
-                    trimBlobNameSlashes: options.TrimBlobNameSlashes,
-                    clientOptions: options),
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 authentication,
                 clientSideEncryption: null);
         }
@@ -518,7 +542,12 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientOptions: options),
+                    clientDiagnostics: new ClientDiagnostics(options),
+                    version: options.Version,
+                    customerProvidedKey: null,
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 authentication,
                 clientSideEncryption: null);
         }
@@ -1447,21 +1476,12 @@ namespace Azure.Storage.Blobs
 
         #region GetUserDelegationKey
         /// <summary>
-        /// The <see cref="GetUserDelegationKey"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKey(BlobGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
-        /// <param name="startsOn">
-        /// Start time for the key's validity, with null indicating an
-        /// immediate start.  The time should be specified in UTC.
-        ///
-        /// Note: If you set the start time to the current time, failures
-        /// might occur intermittently for the first few minutes. This is due to different
-        /// machines having slightly different current times (known as clock skew).
-        /// </param>
-        /// <param name="expiresOn">
-        /// Expiration of the key's validity.  The time should be specified
-        /// in UTC.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1479,18 +1499,60 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
-            DateTimeOffset? startsOn,
-            DateTimeOffset expiresOn,
-            CancellationToken cancellationToken = default) =>
-            GetUserDelegationKeyInternal(
-                startsOn,
-                expiresOn,
+            BlobGetUserDelegationKeyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetUserDelegationKeyInternal(
+                options.StartsOn,
+                options.ExpiresOn,
+                options.DelegatedUserTenantId,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+        }
 
         /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
+        /// the service replication statistics.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+            BlobGetUserDelegationKeyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return await GetUserDelegationKeyInternal(
+                options.StartsOn,
+                options.ExpiresOn,
+                options.DelegatedUserTenantId,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKey(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
@@ -1521,13 +1583,64 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
+            GetUserDelegationKeyInternal(
+                startsOn,
+                expiresOn,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
+        /// </summary>
+        /// <param name="startsOn">
+        /// Start time for the key's validity, with null indicating an
+        /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
+        /// </param>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
+        /// the service replication statistics.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
+            CancellationToken cancellationToken) =>
             await GetUserDelegationKeyInternal(
                 startsOn,
                 expiresOn,
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1549,6 +1662,9 @@ namespace Azure.Storage.Blobs
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
+        /// <param name="delegatedUserTenantId">
+        /// The delegated user tenant id in Azure AD.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1567,6 +1683,7 @@ namespace Azure.Storage.Blobs
         private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
+            string delegatedUserTenantId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1582,17 +1699,18 @@ namespace Azure.Storage.Blobs
 
                     if (startsOn.HasValue && startsOn.Value.Offset != TimeSpan.Zero)
                     {
-                        throw BlobErrors.InvalidDateTimeUtc(nameof(startsOn));
+                        throw Errors.InvalidDateTimeUtc(nameof(startsOn));
                     }
 
                     if (expiresOn.Offset != TimeSpan.Zero)
                     {
-                        throw BlobErrors.InvalidDateTimeUtc(nameof(expiresOn));
+                        throw Errors.InvalidDateTimeUtc(nameof(expiresOn));
                     }
 
                     KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
                     {
-                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture)
+                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
+                        DelegatedUserTid = delegatedUserTenantId
                     };
 
                     ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;

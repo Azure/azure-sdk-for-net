@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> IOPS usage metrics. </summary>
     public partial class PureStorageIopsUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PureStorageIopsUsage"/>. </summary>
         /// <param name="current"> Current number of IOPS (maximum value over the last 10 minutes). </param>
@@ -60,24 +31,21 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="current"> Current number of IOPS (maximum value over the last 10 minutes). </param>
         /// <param name="provisioned"> IOPS value currently provisioned for the storage pool. </param>
         /// <param name="max"> Maximum IOPS value that can be provisioned for the storage pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageIopsUsage(long current, long provisioned, long max, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PureStorageIopsUsage(long current, long provisioned, long max, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Current = current;
             Provisioned = provisioned;
             Max = max;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PureStorageIopsUsage"/> for deserialization. </summary>
-        internal PureStorageIopsUsage()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Current number of IOPS (maximum value over the last 10 minutes). </summary>
         public long Current { get; }
+
         /// <summary> IOPS value currently provisioned for the storage pool. </summary>
         public long Provisioned { get; }
+
         /// <summary> Maximum IOPS value that can be provisioned for the storage pool. </summary>
         public long Max { get; }
     }

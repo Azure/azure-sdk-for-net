@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HealthDataAIServices
 {
+    /// <summary></summary>
     public partial class DeidServiceResource : IJsonModel<DeidServiceData>
     {
-        private static DeidServiceData s_dataDeserializationInstance;
-        private static DeidServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeidServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeidServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeidServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeidServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeidServiceData>)Data).Write(writer, options);
 
-        DeidServiceData IJsonModel<DeidServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeidServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeidServiceData IJsonModel<DeidServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeidServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeidServiceData>(Data, options, AzureResourceManagerHealthDataAIServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeidServiceData IPersistableModel<DeidServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeidServiceData>(data, options, AzureResourceManagerHealthDataAIServicesContext.Default);
 
-        string IPersistableModel<DeidServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeidServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeidServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

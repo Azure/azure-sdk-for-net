@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct ScriptCmdletAudience : IEquatable<ScriptCmdletAudience>
     {
         private readonly string _value;
+        /// <summary> is automation. </summary>
+        private const string AutomationValue = "Automation";
+        /// <summary> is any. </summary>
+        private const string AnyValue = "Any";
 
         /// <summary> Initializes a new instance of <see cref="ScriptCmdletAudience"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScriptCmdletAudience(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomationValue = "Automation";
-        private const string AnyValue = "Any";
+            _value = value;
+        }
 
         /// <summary> is automation. </summary>
         public static ScriptCmdletAudience Automation { get; } = new ScriptCmdletAudience(AutomationValue);
+
         /// <summary> is any. </summary>
         public static ScriptCmdletAudience Any { get; } = new ScriptCmdletAudience(AnyValue);
+
         /// <summary> Determines if two <see cref="ScriptCmdletAudience"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScriptCmdletAudience left, ScriptCmdletAudience right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScriptCmdletAudience"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScriptCmdletAudience left, ScriptCmdletAudience right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptCmdletAudience"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScriptCmdletAudience"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScriptCmdletAudience(string value) => new ScriptCmdletAudience(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScriptCmdletAudience"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScriptCmdletAudience?(string value) => value == null ? null : new ScriptCmdletAudience(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScriptCmdletAudience other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScriptCmdletAudience other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

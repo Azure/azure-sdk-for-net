@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The credential result response. </summary>
+    /// <summary>
+    /// The credential result response.
+    /// Serialized Name: CredentialResult
+    /// </summary>
     public partial class ManagedClusterCredential
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterCredential"/>. </summary>
-        /// <param name="name"> The name of the credential. </param>
-        /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
+        /// <param name="name">
+        /// The name of the credential.
+        /// Serialized Name: CredentialResult.name
+        /// </param>
+        /// <param name="value">
+        /// Base64-encoded Kubernetes configuration file.
+        /// Serialized Name: CredentialResult.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterCredential(string name, byte[] value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the credential. </summary>
+        /// <summary>
+        /// The name of the credential.
+        /// Serialized Name: CredentialResult.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        /// <summary>
+        /// Base64-encoded Kubernetes configuration file.
+        /// Serialized Name: CredentialResult.value
+        /// </summary>
         [WirePath("value")]
         public byte[] Value { get; }
     }

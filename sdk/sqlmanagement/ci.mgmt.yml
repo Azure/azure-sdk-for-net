@@ -2,18 +2,6 @@
 # This file is generated automatically and any changes will be lost.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/sqlmanagement/ci.mgmt.yml
-    - sdk/sqlmanagement/Azure.ResourceManager.Sql/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -23,7 +11,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Sql
       safeName: AzureResourceManagerSql
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Sql
-      ExpectedWarningsFilepath: None

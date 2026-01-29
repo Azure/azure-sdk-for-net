@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Start Packet capture parameters. </summary>
+        [WirePath("filterData")]
         public string FilterData { get; set; }
     }
 }

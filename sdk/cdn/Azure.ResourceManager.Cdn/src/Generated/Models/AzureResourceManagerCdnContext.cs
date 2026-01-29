@@ -169,6 +169,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(MigrationEndpointMapping))]
     [ModelReaderWriterBuildable(typeof(MigrationErrorType))]
     [ModelReaderWriterBuildable(typeof(MigrationWebApplicationFirewallMapping))]
+    [ModelReaderWriterBuildable(typeof(OriginAuthenticationProperties))]
     [ModelReaderWriterBuildable(typeof(OriginGroupListResult))]
     [ModelReaderWriterBuildable(typeof(OriginGroupOverride))]
     [ModelReaderWriterBuildable(typeof(OriginGroupOverrideAction))]

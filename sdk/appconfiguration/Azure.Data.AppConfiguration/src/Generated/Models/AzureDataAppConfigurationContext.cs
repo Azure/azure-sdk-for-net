@@ -15,11 +15,11 @@ namespace Azure.Data.AppConfiguration
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ConfigurationSetting))]
-    [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSettingsFilter))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(SettingLabel))]
+    [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext
     {
     }

@@ -278,7 +278,7 @@ Task Options_UploadFailed(LogsUploadFailedEventArgs e)
 
 ### Verify logs
 
-You can verify that your data has been uploaded correctly by using the [Azure Monitor Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs.
+You can verify that your data has been uploaded correctly by using the [Azure Monitor Query Logs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query.Logs/README.md#install-the-package) library. Run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs.
 
 ```C# Snippet:VerifyLogsAsync
 var workspaceId = "<log_analytics_workspace_id>";
@@ -292,7 +292,7 @@ string query = tableName + " | Count;";
 string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     query,
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
 Response<LogsBatchQueryResultCollection> queryResponse =
     await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);

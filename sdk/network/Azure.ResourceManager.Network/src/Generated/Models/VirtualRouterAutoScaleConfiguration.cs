@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The minimum number of scale units for VirtualHub Router. </summary>
+        [WirePath("minCapacity")]
         public int? MinCapacity { get; set; }
     }
 }

@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(ExpeditedRollout))
+            {
+                writer.WritePropertyName("expeditedRollout"u8);
+                writer.WriteObjectValue(ExpeditedRollout, options);
+            }
             if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
@@ -79,6 +84,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AutoProvisionConfig))
+            {
+                writer.WritePropertyName("autoProvisionConfig"u8);
+                writer.WriteObjectValue(AutoProvisionConfig, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -116,6 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
+            DefaultRolloutSpecificationExpeditedRollout expeditedRollout = default;
             CanaryTrafficRegionRolloutConfiguration canary = default;
             TrafficRegionRolloutConfiguration lowTraffic = default;
             TrafficRegionRolloutConfiguration mediumTraffic = default;
@@ -124,10 +135,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo = default;
             ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
+            DefaultRolloutAutoProvisionConfig autoProvisionConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("expeditedRollout"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("canary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -205,6 +226,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceTypeRegistrations = array;
                     continue;
                 }
+                if (property.NameEquals("autoProvisionConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoProvisionConfig = DefaultRolloutAutoProvisionConfig.DeserializeDefaultRolloutAutoProvisionConfig(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -212,6 +242,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DefaultRolloutSpecification(
+                expeditedRollout,
                 canary,
                 lowTraffic,
                 mediumTraffic,
@@ -220,6 +251,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 restOfTheWorldGroupTwo,
                 providerRegistration,
                 resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
+                autoProvisionConfig,
                 serializedAdditionalRawData);
         }
 

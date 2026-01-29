@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// List the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// List the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the NewRelic monitor resource
+        /// Delete subscriptions being monitored by the New Relic monitor resource, removing their observability and monitoring capabilities
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the NewRelic monitor resource
+        /// Delete subscriptions being monitored by the New Relic monitor resource, removing their observability and monitoring capabilities
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the NewRelic monitor resource
+        /// Update subscriptions to be monitored by the New Relic monitor resource, ensuring optimal observability and performance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the NewRelic monitor resource
+        /// Update subscriptions to be monitored by the New Relic monitor resource, ensuring optimal observability and performance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

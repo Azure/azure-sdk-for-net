@@ -6,7 +6,6 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -24,19 +23,24 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
+        var mcpServerUrl2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL2");
         var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
+        var mcpServerLabel2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL2");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
+        var mcpServerUrl2 = "https://learn.microsoft.com/api/mcp";
         var mcpServerLabel = "github";
+        var mcpServerLabel2 = "microsoft_learn";
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
 
         #region Snippet:AgentsMCPStreamingAsync_CreateMCPTool
-        // Create MCP tool definition
+        // Create MCP tool definitions
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
+        MCPToolDefinition mcpTool2 = new(mcpServerLabel2, mcpServerUrl2);
 
         // Configure allowed tools (optional)
         string searchApiCode = "search_azure_rest_api_code";
@@ -49,7 +53,7 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
            model: modelDeploymentName,
            name: "my-mcp-agent",
            instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-           tools: [mcpTool]
+           tools: [mcpTool, mcpTool2]
            );
         #endregion
 
@@ -61,11 +65,12 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         PersistentThreadMessage message = await agentClient.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "Please summarize the Azure REST API specifications Readme");
+            "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
         MCPToolResource mcpToolResource = new(mcpServerLabel);
         mcpToolResource.UpdateHeader("SuperSecret", "123456");
         ToolResources toolResources = mcpToolResource.ToToolResources();
+        toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
         CreateRunStreamingOptions options = new()
         {
             ToolResources = toolResources
@@ -96,6 +101,10 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
                 else if (streamingUpdate is MessageContentUpdate contentUpdate)
                 {
                     Console.Write(contentUpdate.Text);
+                }
+                else if (streamingUpdate is RunStepUpdate runStepUpdate)
+                {
+                    PrintActivityStep(runStepUpdate.Value);
                 }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
@@ -129,17 +138,22 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
+        var mcpServerUrl2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL2");
         var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
+        var mcpServerLabel2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL2");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
+        var mcpServerUrl2 = "https://learn.microsoft.com/api/mcp";
         var mcpServerLabel = "github";
+        var mcpServerLabel2 = "microsoft_learn";
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 
-        // Create MCP tool definition
+        // Create MCP tool definitions
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
+        MCPToolDefinition mcpTool2 = new(mcpServerLabel2, mcpServerUrl2);
 
         // Configure allowed tools (optional)
         string searchApiCode = "search_azure_rest_api_code";
@@ -150,7 +164,7 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
            model: modelDeploymentName,
            name: "my-mcp-agent",
            instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-           tools: [mcpTool]);
+           tools: [mcpTool, mcpTool2]);
         #endregion
         #region Snippet:AgentsMCPStreaming_CreateThreadMessage
         // Create thread for communication
@@ -160,11 +174,12 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         PersistentThreadMessage message = agentClient.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
-            "Please summarize the Azure REST API specifications Readme");
+            "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
         MCPToolResource mcpToolResource = new(mcpServerLabel);
         mcpToolResource.UpdateHeader("SuperSecret", "123456");
         ToolResources toolResources = mcpToolResource.ToToolResources();
+        toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
         CreateRunStreamingOptions options = new()
         {
             ToolResources = toolResources
@@ -196,6 +211,10 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
                 {
                     Console.Write(contentUpdate.Text);
                 }
+                else if (streamingUpdate is RunStepUpdate runStepUpdate)
+                {
+                    PrintActivityStep(runStepUpdate.Value);
+                }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
                     Console.WriteLine();
@@ -219,4 +238,35 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         agentClient.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
+
+    #region Snippet:AgentsMCPStreaming_PrintActivityStep
+    private static void PrintActivityStep(RunStep step)
+    {
+        if (step.StepDetails is RunStepActivityDetails activityDetails)
+        {
+            foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+            {
+                foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+                {
+                    Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                    if (activityFunction.Value.Parameters.Properties.Count > 0)
+                    {
+                        Console.WriteLine("Function parameters:");
+                        foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                        {
+                            Console.WriteLine($"\t{arg.Key}");
+                            Console.WriteLine($"\t\tType: {arg.Value.Type}");
+                            if (!string.IsNullOrEmpty(arg.Value.Description))
+                                Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("This function has no parameters");
+                    }
+                }
+            }
+        }
+    }
+    #endregion
 }

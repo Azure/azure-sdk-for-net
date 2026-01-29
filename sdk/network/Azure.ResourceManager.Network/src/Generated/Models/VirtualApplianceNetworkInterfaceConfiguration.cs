@@ -62,10 +62,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> NIC type. This should be either PublicNic or PrivateNic. </summary>
+        [WirePath("type")]
         public NicTypeInRequest? NicType { get; set; }
         /// <summary> Represents a single NIC configuration properties. </summary>
         internal VirtualApplianceNetworkInterfaceConfigurationProperties Properties { get; set; }
         /// <summary> Gets the virtual appliance network interface ip configurations. </summary>
+        [WirePath("properties.ipConfigurations")]
         public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIPConfigurations
         {
             get

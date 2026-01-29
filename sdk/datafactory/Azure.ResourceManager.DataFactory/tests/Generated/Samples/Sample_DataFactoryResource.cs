@@ -8,7 +8,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 using Azure.Identity;
 using Azure.ResourceManager.DataFactory.Models;
 using NUnit.Framework;
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FactoriesGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Factories_Get.json
             // this example is just showing the usage of "Factories_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_FactoriesDelete()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_Delete.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Factories_Delete.json
             // this example is just showing the usage of "Factories_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_FactoriesUpdate()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_Update.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Factories_Update.json
             // this example is just showing the usage of "Factories_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetGitHubAccessToken_FactoriesGetGitHubAccessToken()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_GetGitHubAccessToken.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Factories_GetGitHubAccessToken.json
             // this example is just showing the usage of "Factories_GetGitHubAccessToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDataPlaneAccess_FactoriesGetDataPlaneAccess()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_GetDataPlaneAccess.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Factories_GetDataPlaneAccess.json
             // this example is just showing the usage of "Factories_GetDataPlaneAccess" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExposureControlFeature_ExposureControlGetFeatureValueByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ExposureControl_GetFeatureValueByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ExposureControl_GetFeatureValueByFactory.json
             // this example is just showing the usage of "ExposureControl_GetFeatureValueByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExposureControlFeatures_ExposureControlQueryFeatureValuesByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ExposureControl_QueryFeatureValuesByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ExposureControl_QueryFeatureValuesByFactory.json
             // this example is just showing the usage of "ExposureControl_QueryFeatureValuesByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -248,7 +247,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task GetPipelineRuns_PipelineRunsQueryByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/PipelineRuns_QueryByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/PipelineRuns_QueryByFactory.json
             // this example is just showing the usage of "PipelineRuns_QueryByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -281,7 +280,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task GetPipelineRun_PipelineRunsGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/PipelineRuns_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/PipelineRuns_Get.json
             // this example is just showing the usage of "PipelineRuns_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -308,7 +307,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task CancelPipelineRun_PipelineRunsCancel()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/PipelineRuns_Cancel.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/PipelineRuns_Cancel.json
             // this example is just showing the usage of "PipelineRuns_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +334,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task GetActivityRun_ActivityRunsQueryByPipelineRun()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ActivityRuns_QueryByPipelineRun.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ActivityRuns_QueryByPipelineRun.json
             // this example is just showing the usage of "ActivityRuns_QueryByPipelineRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -366,7 +365,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task GetTriggers_TriggersQueryByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Triggers_QueryByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Triggers_QueryByFactory.json
             // this example is just showing the usage of "Triggers_QueryByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -403,7 +402,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task GetTriggerRuns_TriggerRunsQueryByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/TriggerRuns_QueryByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/TriggerRuns_QueryByFactory.json
             // this example is just showing the usage of "TriggerRuns_QueryByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -436,7 +435,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateDataFlowDebugSession_DataFlowDebugSessionCreate()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_Create.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_Create.json
             // this example is just showing the usage of "DataFlowDebugSession_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -483,7 +482,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task GetDataFlowDebugSessions_DataFlowDebugSessionQueryByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_QueryByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_QueryByFactory.json
             // this example is just showing the usage of "DataFlowDebugSession_QueryByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -512,7 +511,7 @@ FeatureType = "Feature",
         [Ignore("Only validating compilation of examples")]
         public async Task AddDataFlowToDebugSession_DataFlowDebugSessionAddDataFlow()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_AddDataFlow.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_AddDataFlow.json
             // this example is just showing the usage of "DataFlowDebugSession_AddDataFlow" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -529,76 +528,7 @@ FeatureType = "Feature",
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
             // invoke the operation
-            DataFactoryDataFlowDebugPackageContent content = new DataFactoryDataFlowDebugPackageContent
-            {
-                SessionId = Guid.Parse("f06ed247-9d07-49b2-b05e-2cb4a2fc871e"),
-                DataFlow = new DataFactoryDataFlowDebugInfo(new DataFactoryMappingDataFlowProperties
-                {
-                    Sources = {new DataFlowSource("source1")
-{
-Dataset = new DatasetReference(DatasetReferenceType.DatasetReference, "DelimitedText2"),
-}},
-                    Sinks = { },
-                    Transformations = { },
-                    Script = "\n\nsource(output(\n\t\tColumn_1 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1",
-                })
-                {
-                    Name = "dataflow1",
-                },
-                Datasets = {new DataFactoryDatasetDebugInfo(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(default, "linkedService5"))
-{
-DataLocation = new AzureBlobStorageLocation
-{
-Container = null,
-FileName = null,
-},
-ColumnDelimiter = null,
-QuoteChar = null,
-EscapeChar = null,
-FirstRowAsHeader = null,
-Schema = null,
-Annotations = {},
-})
-{
-Name = "dataset1",
-}},
-                LinkedServices = {new DataFactoryLinkedServiceDebugInfo(new AzureBlobStorageLinkedService
-{
-ConnectionString = null,
-EncryptedCredential = "<credential>",
-Annotations = {},
-})
-{
-Name = "linkedService1",
-}},
-                DebugSettings = new DataFlowDebugPackageDebugSettings
-                {
-                    SourceSettings = {new DataFlowSourceSetting
-{
-SourceName = "source1",
-RowLimit = 1000,
-}, new DataFlowSourceSetting
-{
-SourceName = "source2",
-RowLimit = 222,
-}},
-                    Parameters =
-{
-["sourcePath"] = BinaryData.FromObjectAsJson("Toy")
-},
-                    DatasetParameters = BinaryData.FromObjectAsJson(new
-                    {
-                        Movies = new
-                        {
-                            path = "abc",
-                        },
-                        Output = new
-                        {
-                            time = "def",
-                        },
-                    }),
-                },
-            };
+            DataFactoryDataFlowDebugPackageContent content = new DataFactoryDataFlowDebugPackageContent();
             DataFactoryDataFlowStartDebugSessionResult result = await dataFactory.AddDataFlowToDebugSessionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -608,7 +538,7 @@ RowLimit = 222,
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteDataFlowDebugSession_DataFlowDebugSessionDelete()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_Delete.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_Delete.json
             // this example is just showing the usage of "DataFlowDebugSession_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -638,7 +568,7 @@ RowLimit = 222,
         [Ignore("Only validating compilation of examples")]
         public async Task ExecuteDataFlowDebugSessionCommand_DataFlowDebugSessionExecuteCommand()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_ExecuteCommand.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_ExecuteCommand.json
             // this example is just showing the usage of "DataFlowDebugSession_ExecuteCommand" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -674,7 +604,7 @@ RowLimit = 222,
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_GetPrivateLinkResourcesOfASite()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/GetPrivateLinkResources.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/GetPrivateLinkResources.json
             // this example is just showing the usage of "privateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

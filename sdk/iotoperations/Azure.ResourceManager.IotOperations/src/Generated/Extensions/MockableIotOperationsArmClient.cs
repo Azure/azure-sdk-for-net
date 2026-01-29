@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableIotOperationsArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableIotOperationsArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableIotOperationsArmClient for mocking. </summary>
         protected MockableIotOperationsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableIotOperationsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableIotOperationsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableIotOperationsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableIotOperationsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsInstanceResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsInstanceResource"/> object. </returns>
         public virtual IotOperationsInstanceResource GetIotOperationsInstanceResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return new IotOperationsInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsBrokerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsBrokerResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsBrokerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsBrokerResource"/> object. </returns>
         public virtual IotOperationsBrokerResource GetIotOperationsBrokerResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return new IotOperationsBrokerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsBrokerListenerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsBrokerListenerResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerListenerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsBrokerListenerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsBrokerListenerResource"/> object. </returns>
         public virtual IotOperationsBrokerListenerResource GetIotOperationsBrokerListenerResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return new IotOperationsBrokerListenerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsBrokerAuthenticationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsBrokerAuthenticationResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerAuthenticationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsBrokerAuthenticationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsBrokerAuthenticationResource"/> object. </returns>
         public virtual IotOperationsBrokerAuthenticationResource GetIotOperationsBrokerAuthenticationResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return new IotOperationsBrokerAuthenticationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsBrokerAuthorizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsBrokerAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerAuthorizationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsBrokerAuthorizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsBrokerAuthorizationResource"/> object. </returns>
         public virtual IotOperationsBrokerAuthorizationResource GetIotOperationsBrokerAuthorizationResource(ResourceIdentifier id)
@@ -94,10 +71,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return new IotOperationsBrokerAuthorizationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsDataflowProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsDataflowProfileResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsDataflowProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsDataflowProfileResource"/> object. </returns>
         public virtual IotOperationsDataflowProfileResource GetIotOperationsDataflowProfileResource(ResourceIdentifier id)
@@ -106,10 +80,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return new IotOperationsDataflowProfileResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsDataflowResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsDataflowResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsDataflowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsDataflowResource"/> object. </returns>
         public virtual IotOperationsDataflowResource GetIotOperationsDataflowResource(ResourceIdentifier id)
@@ -118,16 +89,49 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return new IotOperationsDataflowResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IotOperationsDataflowEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotOperationsDataflowEndpointResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IotOperationsDataflowEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotOperationsDataflowEndpointResource"/> object. </returns>
         public virtual IotOperationsDataflowEndpointResource GetIotOperationsDataflowEndpointResource(ResourceIdentifier id)
         {
             IotOperationsDataflowEndpointResource.ValidateResourceId(id);
             return new IotOperationsDataflowEndpointResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IotOperationsDataflowGraphResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IotOperationsDataflowGraphResource"/> object. </returns>
+        public virtual IotOperationsDataflowGraphResource GetIotOperationsDataflowGraphResource(ResourceIdentifier id)
+        {
+            IotOperationsDataflowGraphResource.ValidateResourceId(id);
+            return new IotOperationsDataflowGraphResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IotOperationsRegistryEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IotOperationsRegistryEndpointResource"/> object. </returns>
+        public virtual IotOperationsRegistryEndpointResource GetIotOperationsRegistryEndpointResource(ResourceIdentifier id)
+        {
+            IotOperationsRegistryEndpointResource.ValidateResourceId(id);
+            return new IotOperationsRegistryEndpointResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IotOperationsAkriConnectorTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IotOperationsAkriConnectorTemplateResource"/> object. </returns>
+        public virtual IotOperationsAkriConnectorTemplateResource GetIotOperationsAkriConnectorTemplateResource(ResourceIdentifier id)
+        {
+            IotOperationsAkriConnectorTemplateResource.ValidateResourceId(id);
+            return new IotOperationsAkriConnectorTemplateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IotOperationsAkriConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IotOperationsAkriConnectorResource"/> object. </returns>
+        public virtual IotOperationsAkriConnectorResource GetIotOperationsAkriConnectorResource(ResourceIdentifier id)
+        {
+            IotOperationsAkriConnectorResource.ValidateResourceId(id);
+            return new IotOperationsAkriConnectorResource(Client, id);
         }
     }
 }

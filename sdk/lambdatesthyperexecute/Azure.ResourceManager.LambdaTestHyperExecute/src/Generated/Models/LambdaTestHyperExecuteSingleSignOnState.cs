@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.LambdaTestHyperExecute;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     public readonly partial struct LambdaTestHyperExecuteSingleSignOnState : IEquatable<LambdaTestHyperExecuteSingleSignOnState>
     {
         private readonly string _value;
+        /// <summary> Initial state of the SSO resource. </summary>
+        private const string InitialValue = "Initial";
+        /// <summary> State of the SSO resource when it is enabled. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> State of the SSO resource when it is disabled. </summary>
+        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LambdaTestHyperExecuteSingleSignOnState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InitialValue = "Initial";
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
+            _value = value;
+        }
 
         /// <summary> Initial state of the SSO resource. </summary>
         public static LambdaTestHyperExecuteSingleSignOnState Initial { get; } = new LambdaTestHyperExecuteSingleSignOnState(InitialValue);
+
         /// <summary> State of the SSO resource when it is enabled. </summary>
         public static LambdaTestHyperExecuteSingleSignOnState Enable { get; } = new LambdaTestHyperExecuteSingleSignOnState(EnableValue);
+
         /// <summary> State of the SSO resource when it is disabled. </summary>
         public static LambdaTestHyperExecuteSingleSignOnState Disable { get; } = new LambdaTestHyperExecuteSingleSignOnState(DisableValue);
+
         /// <summary> Determines if two <see cref="LambdaTestHyperExecuteSingleSignOnState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LambdaTestHyperExecuteSingleSignOnState left, LambdaTestHyperExecuteSingleSignOnState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LambdaTestHyperExecuteSingleSignOnState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LambdaTestHyperExecuteSingleSignOnState left, LambdaTestHyperExecuteSingleSignOnState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LambdaTestHyperExecuteSingleSignOnState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LambdaTestHyperExecuteSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LambdaTestHyperExecuteSingleSignOnState(string value) => new LambdaTestHyperExecuteSingleSignOnState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LambdaTestHyperExecuteSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LambdaTestHyperExecuteSingleSignOnState?(string value) => value == null ? null : new LambdaTestHyperExecuteSingleSignOnState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LambdaTestHyperExecuteSingleSignOnState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LambdaTestHyperExecuteSingleSignOnState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

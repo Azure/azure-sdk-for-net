@@ -54,7 +54,9 @@ LogGroupEnd
 $serialized = SerializePipelineMatrix $matrix
 
 Write-Host "Generated matrix:"
-Write-Host $serialized.pretty
+
+# Write-Output required to support other scripts that call this script directly
+Write-Output $serialized.pretty
 
 if ($CI) {
     Write-Output "##vso[task.setVariable variable=matrix;isOutput=true]$($serialized.compressed)"

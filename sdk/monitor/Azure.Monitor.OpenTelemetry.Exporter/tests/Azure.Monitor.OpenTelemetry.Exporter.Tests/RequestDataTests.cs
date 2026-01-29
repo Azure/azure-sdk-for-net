@@ -240,5 +240,174 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             return link;
         }
+
+        [Theory]
+        [InlineData(SemanticConventions.AttributeMicrosoftRequestName, "CustomName")]
+        [InlineData(SemanticConventions.AttributeMicrosoftRequestUrl, "https://custom.url/path")]
+        [InlineData(SemanticConventions.AttributeMicrosoftRequestSource, "CustomSource")]
+        [InlineData(SemanticConventions.AttributeMicrosoftRequestResultCode, "CustomResult")]
+        public void MicrosoftOverrideAttributeTakesPrecedenceOverSemanticConventions(string overrideAttribute, string expectedValue)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(ActivityName, ActivityKind.Server);
+            Assert.NotNull(activity);
+
+            // Set semantic convention attributes (HTTP request)
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://example.com/api");
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "200");
+
+            // Set Microsoft override attribute
+            activity.SetTag(overrideAttribute, expectedValue);
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            // Verify override took precedence
+            switch (overrideAttribute)
+            {
+                case SemanticConventions.AttributeMicrosoftRequestName:
+                    Assert.Equal(expectedValue, requestData.Name);
+                    break;
+                case SemanticConventions.AttributeMicrosoftRequestUrl:
+                    Assert.Equal(expectedValue, requestData.Url);
+                    break;
+                case SemanticConventions.AttributeMicrosoftRequestSource:
+                    Assert.Equal(expectedValue, requestData.Source);
+                    break;
+                case SemanticConventions.AttributeMicrosoftRequestResultCode:
+                    Assert.Equal(expectedValue, requestData.ResponseCode);
+                    break;
+            }
+        }
+
+        [Theory]
+        [InlineData(ActivityKind.Server, SemanticConventions.AttributeHttpMethod, "GET", SemanticConventions.AttributeHttpUrl, "https://api.example.com")]
+        [InlineData(ActivityKind.Consumer, SemanticConventions.AttributeMessagingSystem, "servicebus", SemanticConventions.AttributeMessagingDestinationName, "myqueue")]
+        public void MicrosoftOverrideAttributesWorkWithAllRequestTypes(ActivityKind activityKind, string conventionKey1, string conventionValue1, string conventionKey2, string conventionValue2)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(ActivityName, activityKind);
+            Assert.NotNull(activity);
+
+            // Set semantic convention attributes for specific request type
+            activity.SetTag(conventionKey1, conventionValue1);
+            activity.SetTag(conventionKey2, conventionValue2);
+
+            // Without override - verify semantic conventions are used
+            var activityTagsProcessor1 = TraceHelper.EnumerateActivityTags(activity);
+            var requestData1 = new RequestData(2, activity, ref activityTagsProcessor1);
+
+            if (activityKind == ActivityKind.Server)
+            {
+                // HTTP request
+                Assert.NotNull(requestData1.Url);
+            }
+
+            // Add override attributes
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestUrl, "https://overridden.url");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestSource, "OverriddenSource");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestResultCode, "999");
+
+            // With override - verify overrides take precedence
+            var activityTagsProcessor2 = TraceHelper.EnumerateActivityTags(activity);
+            var requestData2 = new RequestData(2, activity, ref activityTagsProcessor2);
+            Assert.Equal("https://overridden.url", requestData2.Url);
+            Assert.Equal("OverriddenSource", requestData2.Source);
+            Assert.Equal("999", requestData2.ResponseCode);
+        }
+
+        [Fact]
+        public void HasOverrideAttributesFlagIsSetWhenRequestOverrideAttributesPresent()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(ActivityName, ActivityKind.Server);
+            Assert.NotNull(activity);
+
+            // Without override attributes
+            var activityTagsProcessor1 = TraceHelper.EnumerateActivityTags(activity);
+            Assert.False(activityTagsProcessor1.HasOverrideAttributes);
+
+            // With override attribute
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestName, "CustomName");
+            var activityTagsProcessor2 = TraceHelper.EnumerateActivityTags(activity);
+            Assert.True(activityTagsProcessor2.HasOverrideAttributes);
+        }
+
+        [Fact]
+        public void MultipleRequestOverrideAttributesAllApplied()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(ActivityName, ActivityKind.Server);
+            Assert.NotNull(activity);
+
+            // Set semantic convention attributes (HTTP)
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://example.com/api");
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "200");
+
+            // Set all request override attributes
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestName, "CustomName");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestUrl, "https://custom.url");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestSource, "CustomSource");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestResultCode, "CustomResult");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            // Verify all overrides applied
+            Assert.Equal("CustomName", requestData.Name);
+            Assert.Equal("https://custom.url", requestData.Url);
+            Assert.Equal("CustomSource", requestData.Source);
+            Assert.Equal("CustomResult", requestData.ResponseCode);
+        }
+
+        [Fact]
+        public void PartialRequestOverridesOnlyAffectSpecifiedFields()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(ActivityName, ActivityKind.Server);
+            Assert.NotNull(activity);
+
+            var httpUrl = "https://example.com/api";
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "200");
+
+            // Only override Name and Source, leave others from semantic conventions
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestName, "CustomName");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestSource, "CustomSource");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            // Name and Source are overridden
+            Assert.Equal("CustomName", requestData.Name);
+            Assert.Equal("CustomSource", requestData.Source);
+            // Url comes from semantic conventions
+            Assert.Equal(httpUrl, requestData.Url);
+            // ResponseCode comes from semantic conventions
+            Assert.Equal("200", requestData.ResponseCode);
+        }
+
+        [Fact]
+        public void RequestOverrideAttributesWorkWithMicrosoftOperationName()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(ActivityName, ActivityKind.Server);
+            Assert.NotNull(activity);
+
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftOperationName, "CustomOperationName");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftRequestName, "CustomRequestName");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            // Verify HasOverrideAttributes is set for microsoft.operation_name
+            Assert.True(activityTagsProcessor.HasOverrideAttributes);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+            Assert.Equal("CustomRequestName", requestData.Name);
+        }
     }
 }

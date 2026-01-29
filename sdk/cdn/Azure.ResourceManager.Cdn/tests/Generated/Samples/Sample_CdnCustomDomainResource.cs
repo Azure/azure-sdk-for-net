@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CustomDomainsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CustomDomains_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CustomDomains_Get.json
             // this example is just showing the usage of "CdnCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnCustomDomainResource created on azure
             // for more information of creating CdnCustomDomainResource, please refer to the document of CdnCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_CustomDomainsDelete()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CustomDomains_Delete.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CustomDomains_Delete.json
             // this example is just showing the usage of "CdnCustomDomains_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnCustomDomainResource created on azure
             // for more information of creating CdnCustomDomainResource, please refer to the document of CdnCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CustomDomainsCreate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CustomDomains_Create.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CustomDomains_Create.json
             // this example is just showing the usage of "CdnCustomDomains_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnCustomDomainResource created on azure
             // for more information of creating CdnCustomDomainResource, please refer to the document of CdnCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DisableCustomHttps_CustomDomainsDisableCustomHttps()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CustomDomains_DisableCustomHttps.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CustomDomains_DisableCustomHttps.json
             // this example is just showing the usage of "CdnCustomDomains_DisableCustomHttps" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnCustomDomainResource created on azure
             // for more information of creating CdnCustomDomainResource, please refer to the document of CdnCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task EnableCustomHttps_CustomDomainsEnableCustomHttpsUsingCDNManagedCertificate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CustomDomains_EnableCustomHttpsUsingCDNManagedCertificate.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CustomDomains_EnableCustomHttpsUsingCDNManagedCertificate.json
             // this example is just showing the usage of "CdnCustomDomains_EnableCustomHttps" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnCustomDomainResource created on azure
             // for more information of creating CdnCustomDomainResource, please refer to the document of CdnCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task EnableCustomHttps_CustomDomainsEnableCustomHttpsUsingYourOwnCertificate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CustomDomains_EnableCustomHttpsUsingBYOC.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/CustomDomains_EnableCustomHttpsUsingBYOC.json
             // this example is just showing the usage of "CdnCustomDomains_EnableCustomHttps" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnCustomDomainResource created on azure
             // for more information of creating CdnCustomDomainResource, please refer to the document of CdnCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";

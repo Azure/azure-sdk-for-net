@@ -11,8 +11,8 @@ using Azure.Core;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry"/>
-    /// or <see cref="CodeTransparencyClient.CreateEntryAsync"/> until completion.
+    /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>
+    /// or <see cref="CodeTransparencyClient.CreateEntryAsync(WaitUntil, BinaryData, CancellationToken)"/> until completion.
     /// </summary>
     internal class CreateEntryOperation : Operation<BinaryData>, IOperation
     {
@@ -26,7 +26,7 @@ namespace Azure.Security.CodeTransparency
         { }
 
         /// <summary>
-        /// Initializes a previously run operation with the given <paramref name="operationId"/> <see cref="CodeTransparencyClient.CreateEntry"/>.
+        /// Initializes a previously run operation with the given <paramref name="operationId"/> <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>.
         /// </summary>
         /// <param name="client"> The <see cref="CodeTransparencyClient"/>. </param>
         /// <param name="operationId"> The operation id from a previous call to create the entry. </param>
@@ -87,22 +87,7 @@ namespace Azure.Security.CodeTransparency
                 return OperationState.Pending(response);
             }
 
-            string status = string.Empty;
-
-            // Read GetOperation Cbor response
-            CborReader cborReader = new(response.Content);
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
-            {
-                string key = cborReader.ReadTextString();
-                if (string.Equals(key , "Status", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    status = cborReader.ReadTextString();
-                    break;
-                }
-                else
-                    cborReader.SkipValue();
-            }
+            string status = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "Status");
 
             if (!Enum.TryParse(status, true, out CodeTransparencyOperationStatus parsedStatus))
             {
@@ -123,7 +108,7 @@ namespace Azure.Security.CodeTransparency
                         RequestFailedException ex = new(response);
                         return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. Unknown Status: '{status}' OperationId '{Id}'", ex));
                 }
-             }
+            }
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.

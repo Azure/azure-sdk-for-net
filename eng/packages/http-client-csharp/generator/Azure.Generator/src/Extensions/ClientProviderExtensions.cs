@@ -8,7 +8,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Providers;
 
-namespace Azure.Generator
+namespace Azure.Generator.Extensions
 {
     internal static class ClientProviderExtensions
     {

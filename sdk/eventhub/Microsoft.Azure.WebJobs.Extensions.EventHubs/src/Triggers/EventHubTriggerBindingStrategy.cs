@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
             catch
             {
-                // some message propery getters can throw, based on the
+                // some message property getters can throw, based on the
                 // state of the message
             }
         }

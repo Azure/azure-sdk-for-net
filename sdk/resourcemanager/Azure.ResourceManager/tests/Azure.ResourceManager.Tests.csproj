@@ -8,13 +8,9 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
 
-    <!-- TEMP: Override until central version is bumped to mitigate project reference CI error -->
-    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.9.0" />
-
-    <!-- TEMP: Overrides until central packages bumped, needed for new extensions -->
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" VersionOverride="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
 
   <ItemGroup>

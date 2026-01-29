@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,62 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2025-09-01)
+
+### Features Added
+
+Added Models:
+- Added `BatchJobDefaultOrder`
+- Added `BatchPoolIdentityReference`
+- Added `DiskCustomerManagedKey`
+- Added `DiskEncryptionSetParameters`
+- Added `HostEndpointSettings`
+- Added `HostEndpointSettingsModeTypes`
+- Added `IPFamily`
+- Added `IpTag`
+- Added `ProxyAgentSettings`
+
+Added Properties:
+- Added `ipv6Address` to `BatchNode`
+- Added `Ipv6RemoteLoginIpAddress` and `Ipv6RemoteLoginPort` to `BatchNodeRemoteLoginSettings`
+- Added `IpFamilies` and `IpTags` to `BatchPublicAddressConfiguration`
+- Added `JobDefaultOder` to `BatchTaskSchedulingPolicy`
+- Added `ManagedDisk` to `DataDisk`
+- Added `CustomerManagedKey` to `DiskEncryptionConfiguration`
+- Added `DiskEncryptionSet` to `ManagedDisk`
+- Added `DiskWithVMGuestStateValue` to `SecurityEncryptionTypes`
+- Added `ProxyAgentSetting` to `SecurityProfile`
+
+
+### Breaking Changes
+
+Removed Certificate API's:
+- Removed `BatchClient.CreateCertificate`
+- Removed `BatchClient.CancelCertificateDeletion`
+- Removed `BatchClient.DeleteCertificate`
+- Removed `BatchClient.GetCertificate`
+- Removed `BatchClient.GetCertificates`
+
+Removed Modes:
+- Removed `BatchCertificate`
+- Removed `BatchCertificateDeleteError`
+- Removed `BatchCertificateFormat`
+- Removed `BatchCertificateReference`
+- Removed `BatchCertificateState`
+- Removed `BatchCertificateStoreLocation`
+- Removed `BatchCertificateVisibility`
+- Removed `BatchNodeCommunicationMode`
+
+Removed Properties:
+- Removed `CertificateReferences` from `BatchNode`
+- Removed `ResourceTags` and `CertificateReferences` from `BatchPool`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolCreateOptions`
+- Removed `CertificateReferences` and `TargetNodeCommunicationMode` from `BatchPoolReplaceOptions`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolSpecifications`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolUpdateOptions`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `ComputeBatchModelFactory`
+
 
 ## 1.0.0-beta.3 (2025-06-19)
  

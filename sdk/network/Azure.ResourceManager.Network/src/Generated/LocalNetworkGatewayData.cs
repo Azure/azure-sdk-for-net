@@ -49,18 +49,25 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Local network site address space. </summary>
+        [WirePath("properties.localNetworkAddressSpace")]
         public VirtualNetworkAddressSpace LocalNetworkAddressSpace { get; set; }
         /// <summary> IP address of local network gateway. </summary>
+        [WirePath("properties.gatewayIpAddress")]
         public string GatewayIPAddress { get; set; }
         /// <summary> FQDN of local network gateway. </summary>
+        [WirePath("properties.fqdn")]
         public string Fqdn { get; set; }
         /// <summary> Local network gateway's BGP speaker settings. </summary>
+        [WirePath("properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The resource GUID property of the local network gateway resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the local network gateway resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

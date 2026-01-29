@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     public readonly partial struct TrustedSigningSkuName : IEquatable<TrustedSigningSkuName>
     {
         private readonly string _value;
+        /// <summary> Basic sku. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Premium sku. </summary>
+        private const string PremiumValue = "Premium";
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TrustedSigningSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string PremiumValue = "Premium";
+            _value = value;
+        }
 
         /// <summary> Basic sku. </summary>
         public static TrustedSigningSkuName Basic { get; } = new TrustedSigningSkuName(BasicValue);
+
         /// <summary> Premium sku. </summary>
         public static TrustedSigningSkuName Premium { get; } = new TrustedSigningSkuName(PremiumValue);
+
         /// <summary> Determines if two <see cref="TrustedSigningSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrustedSigningSkuName left, TrustedSigningSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrustedSigningSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrustedSigningSkuName left, TrustedSigningSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrustedSigningSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrustedSigningSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrustedSigningSkuName(string value) => new TrustedSigningSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrustedSigningSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrustedSigningSkuName?(string value) => value == null ? null : new TrustedSigningSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrustedSigningSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrustedSigningSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

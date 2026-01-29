@@ -56,13 +56,13 @@ namespace _Type.Property.ValueTypes
 
         public static UnknownArrayProperty UnknownArrayProperty(BinaryData @property = default) => throw null;
 
-        public static StringLiteralProperty StringLiteralProperty(string @property = default) => throw null;
+        public static StringLiteralProperty StringLiteralProperty() => throw null;
 
-        public static IntLiteralProperty IntLiteralProperty(int @property = default) => throw null;
+        public static IntLiteralProperty IntLiteralProperty() => throw null;
 
-        public static FloatLiteralProperty FloatLiteralProperty(float @property = default) => throw null;
+        public static FloatLiteralProperty FloatLiteralProperty() => throw null;
 
-        public static BooleanLiteralProperty BooleanLiteralProperty(bool @property = default) => throw null;
+        public static BooleanLiteralProperty BooleanLiteralProperty() => throw null;
 
         public static UnionStringLiteralProperty UnionStringLiteralProperty(UnionStringLiteralPropertyProperty @property = default) => throw null;
 
@@ -70,6 +70,6 @@ namespace _Type.Property.ValueTypes
 
         public static UnionFloatLiteralProperty UnionFloatLiteralProperty(UnionFloatLiteralPropertyProperty @property = default) => throw null;
 
-        public static UnionEnumValueProperty UnionEnumValueProperty(ExtendedEnum @property = default) => throw null;
+        public static UnionEnumValueProperty UnionEnumValueProperty() => throw null;
     }
 }

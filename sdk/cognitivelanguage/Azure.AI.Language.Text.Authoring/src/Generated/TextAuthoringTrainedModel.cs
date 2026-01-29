@@ -87,7 +87,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -106,7 +105,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/:evaluate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -127,7 +125,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/:load-snapshot", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

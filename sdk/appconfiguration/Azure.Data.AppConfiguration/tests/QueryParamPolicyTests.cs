@@ -1,0 +1,158 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+using System.Threading.Tasks;
+
+namespace Azure.Data.AppConfiguration.Tests
+{
+    public class QueryParamPolicyTests : SyncAsyncPolicyTestBase
+    {
+        public QueryParamPolicyTests(bool isAsync) : base(isAsync) { }
+
+        [Test]
+        public async Task NormalizesQueryParameters()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?api-version=1.0&$Select=key&label=%00&key=*";
+            string expectedUrl = "https://example.azconfig.io/kv?$select=key&api-version=1.0&key=*&label=%00";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response1 = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task LowercasesParameterNames()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?API-VERSION=1.0&LABEL=test&KEY=mykey";
+            string expectedUrl = "https://example.azconfig.io/kv?api-version=1.0&key=mykey&label=test";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task SortsByLowercaseName()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?zebra=1&alpha=2&beta=3";
+            string expectedUrl = "https://example.azconfig.io/kv?alpha=2&beta=3&zebra=1";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task PreservesRelativeOrderOfDuplicates()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?tags=tag3%3Dvalue3&other=value&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
+            string expectedUrl = "https://example.azconfig.io/kv?other=value&tags=tag3%3Dvalue3&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task KeepsOriginalEncodedParameterValue()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?key=%25%20%2B";
+            string expectedUrl = "https://example.azconfig.io/kv?key=%25%20%2B";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task KeepsEmptyParameterValue()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?key=&api-version=2023-11-01&key1&=";
+            string expectedUrl = "https://example.azconfig.io/kv?=&api-version=2023-11-01&key=&key1=";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task RemovesRedundantAnd()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?b=2&&a=1";
+            string expectedUrl = "https://example.azconfig.io/kv?a=1&b=2";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task SkipsWhenNoQueryParametersArePresent()
+        {
+            string originalUrl = "https://example.azconfig.io/kv?";
+            string expectedUrl = "https://example.azconfig.io/kv?";
+
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            QueryParamPolicy policy = new QueryParamPolicy();
+
+            Response response = await SendRequestAsync(transport, message =>
+            {
+                message.Request.Uri.Reset(new System.Uri(originalUrl));
+            }, policy);
+
+            MockRequest request = transport.SingleRequest;
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+        }
+    }
+}

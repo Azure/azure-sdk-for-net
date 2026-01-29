@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Unknown version of ManagedServicePartitionScheme. </summary>
     internal partial class UnknownPartition : ManagedServicePartitionScheme
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPartition"/>. </summary>
         /// <param name="partitionScheme"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownPartition(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(partitionScheme, serializedAdditionalRawData)
-        {
-            PartitionScheme = partitionScheme;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownPartition"/> for deserialization. </summary>
-        internal UnknownPartition()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPartition(PartitionScheme partitionScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(partitionScheme != default ? partitionScheme : "unknown", additionalBinaryDataProperties)
         {
         }
     }

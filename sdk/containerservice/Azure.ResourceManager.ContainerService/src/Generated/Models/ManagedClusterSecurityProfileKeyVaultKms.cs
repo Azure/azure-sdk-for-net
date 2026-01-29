@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Azure Key Vault key management service settings for the security profile. </summary>
+    /// <summary>
+    /// Azure Key Vault key management service settings for the security profile.
+    /// Serialized Name: AzureKeyVaultKms
+    /// </summary>
     public partial class ManagedClusterSecurityProfileKeyVaultKms
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileKeyVaultKms"/>. </summary>
-        /// <param name="isEnabled"> Whether to enable Azure Key Vault key management service. The default is false. </param>
-        /// <param name="keyId"> Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty. </param>
-        /// <param name="keyVaultNetworkAccess"> Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </param>
-        /// <param name="keyVaultResourceId"> Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this field is required and must be a valid resource ID. When keyVaultNetworkAccess is `Public`, leave the field empty. </param>
+        /// <param name="isEnabled">
+        /// Whether to enable Azure Key Vault key management service. The default is false.
+        /// Serialized Name: AzureKeyVaultKms.enabled
+        /// </param>
+        /// <param name="keyId">
+        /// Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty.
+        /// Serialized Name: AzureKeyVaultKms.keyId
+        /// </param>
+        /// <param name="keyVaultNetworkAccess">
+        /// Network access of the key vault. Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`.
+        /// Serialized Name: AzureKeyVaultKms.keyVaultNetworkAccess
+        /// </param>
+        /// <param name="keyVaultResourceId">
+        /// Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this field is required and must be a valid resource ID. When keyVaultNetworkAccess is `Public`, leave the field empty.
+        /// Serialized Name: AzureKeyVaultKms.keyVaultResourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterSecurityProfileKeyVaultKms(bool? isEnabled, string keyId, ManagedClusterKeyVaultNetworkAccessType? keyVaultNetworkAccess, ResourceIdentifier keyVaultResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether to enable Azure Key Vault key management service. The default is false. </summary>
+        /// <summary>
+        /// Whether to enable Azure Key Vault key management service. The default is false.
+        /// Serialized Name: AzureKeyVaultKms.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary> Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty. </summary>
+        /// <summary>
+        /// Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty.
+        /// Serialized Name: AzureKeyVaultKms.keyId
+        /// </summary>
         [WirePath("keyId")]
         public string KeyId { get; set; }
-        /// <summary> Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </summary>
+        /// <summary>
+        /// Network access of the key vault. Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`.
+        /// Serialized Name: AzureKeyVaultKms.keyVaultNetworkAccess
+        /// </summary>
         [WirePath("keyVaultNetworkAccess")]
         public ManagedClusterKeyVaultNetworkAccessType? KeyVaultNetworkAccess { get; set; }
-        /// <summary> Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this field is required and must be a valid resource ID. When keyVaultNetworkAccess is `Public`, leave the field empty. </summary>
+        /// <summary>
+        /// Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this field is required and must be a valid resource ID. When keyVaultNetworkAccess is `Public`, leave the field empty.
+        /// Serialized Name: AzureKeyVaultKms.keyVaultResourceId
+        /// </summary>
         [WirePath("keyVaultResourceId")]
         public ResourceIdentifier KeyVaultResourceId { get; set; }
     }

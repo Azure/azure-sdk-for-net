@@ -59,24 +59,34 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of source IP addresses for this rule. </summary>
+        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses or Service Tags. </summary>
+        [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
         /// <summary> Array of Application Protocols. </summary>
+        [WirePath("protocols")]
         public IList<FirewallPolicyRuleApplicationProtocol> Protocols { get; }
         /// <summary> List of FQDNs for this rule. </summary>
+        [WirePath("targetFqdns")]
         public IList<string> TargetFqdns { get; }
         /// <summary> List of Urls for this rule condition. </summary>
+        [WirePath("targetUrls")]
         public IList<string> TargetUrls { get; }
         /// <summary> List of FQDN Tags for this rule. </summary>
+        [WirePath("fqdnTags")]
         public IList<string> FqdnTags { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
+        [WirePath("sourceIpGroups")]
         public IList<string> SourceIPGroups { get; }
         /// <summary> Terminate TLS connections for this rule. </summary>
+        [WirePath("terminateTLS")]
         public bool? TerminateTLS { get; set; }
         /// <summary> List of destination azure web categories. </summary>
+        [WirePath("webCategories")]
         public IList<string> WebCategories { get; }
         /// <summary> List of HTTP/S headers to insert. </summary>
+        [WirePath("httpHeadersToInsert")]
         public IList<FirewallPolicyHttpHeaderToInsert> HttpHeadersToInsert { get; }
     }
 }

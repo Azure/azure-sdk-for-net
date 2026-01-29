@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
+    /// <summary></summary>
     public partial class ArizeAIObservabilityEvalOrganizationResource : IJsonModel<ArizeAIObservabilityEvalOrganizationData>
     {
-        private static ArizeAIObservabilityEvalOrganizationData s_dataDeserializationInstance;
-        private static ArizeAIObservabilityEvalOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ArizeAIObservabilityEvalOrganizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ArizeAIObservabilityEvalOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ArizeAIObservabilityEvalOrganizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArizeAIObservabilityEvalOrganizationData>)Data).Write(writer, options);
 
-        ArizeAIObservabilityEvalOrganizationData IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArizeAIObservabilityEvalOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArizeAIObservabilityEvalOrganizationData IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArizeAIObservabilityEvalOrganizationData>(Data, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ArizeAIObservabilityEvalOrganizationData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(data, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
 
-        string IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

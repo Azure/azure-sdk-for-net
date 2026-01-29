@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AgriculturePlatform
 {
-    internal class AgricultureServiceOperationSource : IOperationSource<AgricultureServiceResource>
+    /// <summary></summary>
+    internal partial class AgricultureServiceOperationSource : IOperationSource<AgricultureServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AgricultureServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AgricultureServiceResource IOperationSource<AgricultureServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAgriculturePlatformContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AgricultureServiceData data = AgricultureServiceData.DeserializeAgricultureServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AgricultureServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AgricultureServiceResource> IOperationSource<AgricultureServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAgriculturePlatformContext.Default);
-            return await Task.FromResult(new AgricultureServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AgricultureServiceData data = AgricultureServiceData.DeserializeAgricultureServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AgricultureServiceResource(_client, data);
         }
     }
 }

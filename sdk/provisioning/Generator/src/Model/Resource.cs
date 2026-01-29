@@ -190,6 +190,10 @@ public class Resource(Specification spec, Type armType)
                             }
                             writer.Write($"<{property.BicepPropertyTypeReference}>(\"{property.Name}\", ");
                             writer.Write($"[{string.Join(", ", (property.Path ?? [property.Name]).Select(s => $"\"{s}\""))}]");
+                            if (property.PropertyType is Resource r)
+                            {
+                                writer.Write($", new {r.Name}(\"{r.Name.ToCamelCase()}\")");
+                            }
                             if (property.IsRequired) { writer.Write($", isRequired: true"); }
                             if (property.IsReadOnly) { writer.Write($", isOutput: true"); }
                             if (property.IsSecure) { writer.Write($", isSecure: true"); }
@@ -197,10 +201,20 @@ public class Resource(Specification spec, Type armType)
                             if (property.Format is not null) { writer.Write($", format: \"{property.Format}\""); }
                             writer.WriteLine($");");
                         }
+                        if (GeneratePartialPropertyDefinition)
+                        {
+                            writer.WriteLine("DefineAdditionalProperties();");
+                        }
                         if (ParentResource is not null)
                         {
                             writer.WriteLine($"_parent = DefineResource<{ParentResource.Name}>(\"Parent\", [\"parent\"], isRequired: true);");
                         }
+                    }
+
+                    if (GeneratePartialPropertyDefinition)
+                    {
+                        writer.WriteLine();
+                        writer.WriteLine("private partial void DefineAdditionalProperties();");
                     }
 
                     // Add the well known versions

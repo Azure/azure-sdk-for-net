@@ -90,24 +90,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A description of the connectivity configuration. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Connectivity topology type. </summary>
+        [WirePath("properties.connectivityTopology")]
         public ConnectivityTopology? ConnectivityTopology { get; set; }
         /// <summary> List of hubItems. </summary>
+        [WirePath("properties.hubs")]
         public IList<ConnectivityHub> Hubs { get; }
         /// <summary> Flag if global mesh is supported. </summary>
+        [WirePath("properties.isGlobal")]
         public GlobalMeshSupportFlag? IsGlobal { get; set; }
         /// <summary> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </summary>
+        [WirePath("properties.connectivityCapabilities")]
         public ConnectivityConfigurationPropertiesConnectivityCapabilities ConnectivityCapabilities { get; set; }
         /// <summary> Groups for configuration. </summary>
+        [WirePath("properties.appliesToGroups")]
         public IList<ConnectivityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the connectivity configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Flag if need to remove current existing peerings. </summary>
+        [WirePath("properties.deleteExistingPeering")]
         public DeleteExistingPeering? DeleteExistingPeering { get; set; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

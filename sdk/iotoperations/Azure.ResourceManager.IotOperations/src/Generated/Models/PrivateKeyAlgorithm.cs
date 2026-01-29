@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct PrivateKeyAlgorithm : IEquatable<PrivateKeyAlgorithm>
     {
         private readonly string _value;
+        /// <summary> Algorithm - ec256. </summary>
+        private const string Ec256Value = "Ec256";
+        /// <summary> Algorithm - ec384. </summary>
+        private const string Ec384Value = "Ec384";
+        /// <summary> Algorithm - ec521. </summary>
+        private const string Ec521Value = "Ec521";
+        /// <summary> Algorithm - ed25519. </summary>
+        private const string Ed25519Value = "Ed25519";
+        /// <summary> Algorithm - rsa2048. </summary>
+        private const string Rsa2048Value = "Rsa2048";
+        /// <summary> Algorithm - rsa4096. </summary>
+        private const string Rsa4096Value = "Rsa4096";
+        /// <summary> Algorithm - rsa8192. </summary>
+        private const string Rsa8192Value = "Rsa8192";
 
         /// <summary> Initializes a new instance of <see cref="PrivateKeyAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrivateKeyAlgorithm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Ec256Value = "Ec256";
-        private const string Ec384Value = "Ec384";
-        private const string Ec521Value = "Ec521";
-        private const string Ed25519Value = "Ed25519";
-        private const string Rsa2048Value = "Rsa2048";
-        private const string Rsa4096Value = "Rsa4096";
-        private const string Rsa8192Value = "Rsa8192";
+            _value = value;
+        }
 
         /// <summary> Algorithm - ec256. </summary>
         public static PrivateKeyAlgorithm Ec256 { get; } = new PrivateKeyAlgorithm(Ec256Value);
+
         /// <summary> Algorithm - ec384. </summary>
         public static PrivateKeyAlgorithm Ec384 { get; } = new PrivateKeyAlgorithm(Ec384Value);
+
         /// <summary> Algorithm - ec521. </summary>
         public static PrivateKeyAlgorithm Ec521 { get; } = new PrivateKeyAlgorithm(Ec521Value);
+
         /// <summary> Algorithm - ed25519. </summary>
         public static PrivateKeyAlgorithm Ed25519 { get; } = new PrivateKeyAlgorithm(Ed25519Value);
+
         /// <summary> Algorithm - rsa2048. </summary>
         public static PrivateKeyAlgorithm Rsa2048 { get; } = new PrivateKeyAlgorithm(Rsa2048Value);
+
         /// <summary> Algorithm - rsa4096. </summary>
         public static PrivateKeyAlgorithm Rsa4096 { get; } = new PrivateKeyAlgorithm(Rsa4096Value);
+
         /// <summary> Algorithm - rsa8192. </summary>
         public static PrivateKeyAlgorithm Rsa8192 { get; } = new PrivateKeyAlgorithm(Rsa8192Value);
+
         /// <summary> Determines if two <see cref="PrivateKeyAlgorithm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateKeyAlgorithm left, PrivateKeyAlgorithm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrivateKeyAlgorithm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateKeyAlgorithm left, PrivateKeyAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateKeyAlgorithm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrivateKeyAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrivateKeyAlgorithm(string value) => new PrivateKeyAlgorithm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrivateKeyAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateKeyAlgorithm?(string value) => value == null ? null : new PrivateKeyAlgorithm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateKeyAlgorithm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrivateKeyAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

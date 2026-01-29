@@ -55,7 +55,7 @@ ProvisioningParameter adminPass =
 infra.Add(adminPass);
 
 SqlServer sql =
-    new(nameof(sql))
+    new(nameof(sql), SqlServer.ResourceVersions.V2021_11_01)
     {
         AdministratorLogin = adminLogin,
         AdministratorLoginPassword = adminPass
@@ -63,7 +63,7 @@ SqlServer sql =
 infra.Add(sql);
 
 SqlDatabase db =
-    new(nameof(db))
+    new(nameof(db), SqlDatabase.ResourceVersions.V2021_11_01)
     {
         Parent = sql,
         Name = dbName,

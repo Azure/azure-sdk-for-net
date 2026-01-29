@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Signature id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The signature state. </summary>
+        [WirePath("mode")]
         public FirewallPolicyIntrusionDetectionStateType? Mode { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TypedErrorInfo. </summary>
+    /// <summary> Error information. </summary>
     public partial class TypedErrorInfo
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
-        /// <param name="typedErrorInfoType"></param>
+        /// <param name="typedErrorInfoType"> The type of the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typedErrorInfoType"/> is null. </exception>
         public TypedErrorInfo(string typedErrorInfoType)
         {
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
-        /// <param name="typedErrorInfoType"></param>
-        /// <param name="info"> Any object. </param>
+        /// <param name="typedErrorInfoType"> The type of the error. </param>
+        /// <param name="info"> The error information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TypedErrorInfo(string typedErrorInfoType, BinaryData info, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the typed error info type. </summary>
+        /// <summary> The type of the error. </summary>
         public string TypedErrorInfoType { get; set; }
         /// <summary>
-        /// Any object
+        /// The error information.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

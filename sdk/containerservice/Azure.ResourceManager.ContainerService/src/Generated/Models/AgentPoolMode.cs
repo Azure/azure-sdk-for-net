@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools. </summary>
+    /// <summary>
+    /// The mode of an agent pool. A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools
+    /// Serialized Name: AgentPoolMode
+    /// </summary>
     public readonly partial struct AgentPoolMode : IEquatable<AgentPoolMode>
     {
         private readonly string _value;
@@ -24,11 +27,23 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string SystemValue = "System";
         private const string UserValue = "User";
+        private const string GatewayValue = "Gateway";
 
-        /// <summary> System agent pools are primarily for hosting critical system pods such as CoreDNS and metrics-server. System agent pools osType must be Linux. System agent pools VM SKU must have at least 2vCPUs and 4GB of memory. </summary>
+        /// <summary>
+        /// System agent pools are primarily for hosting critical system pods such as CoreDNS and metrics-server. System agent pools osType must be Linux. System agent pools VM SKU must have at least 2vCPUs and 4GB of memory.
+        /// Serialized Name: AgentPoolMode.System
+        /// </summary>
         public static AgentPoolMode System { get; } = new AgentPoolMode(SystemValue);
-        /// <summary> User agent pools are primarily for hosting your application pods. </summary>
+        /// <summary>
+        /// User agent pools are primarily for hosting your application pods.
+        /// Serialized Name: AgentPoolMode.User
+        /// </summary>
         public static AgentPoolMode User { get; } = new AgentPoolMode(UserValue);
+        /// <summary>
+        /// Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway.
+        /// Serialized Name: AgentPoolMode.Gateway
+        /// </summary>
+        public static AgentPoolMode Gateway { get; } = new AgentPoolMode(GatewayValue);
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are the same. </summary>
         public static bool operator ==(AgentPoolMode left, AgentPoolMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are not the same. </summary>

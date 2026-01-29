@@ -1,3 +1,4 @@
-directory: specification/cognitiveservices/Language.Conversations
-commit: 00e3c94cd8ccd81155b81fd8388c880293394ea3
+directory: specification/cognitiveservices/data-plane/LanguageAnalyzeConversations/
+commit: ecec2d136e6189917e34c8c94c39c79fbee2066d
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/legacy-emitter-package.json

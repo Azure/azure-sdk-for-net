@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Domain availability (True/False). </summary>
+        [WirePath("available")]
         public bool? Available { get; }
     }
 }

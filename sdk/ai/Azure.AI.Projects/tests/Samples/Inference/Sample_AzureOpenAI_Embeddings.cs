@@ -4,8 +4,9 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI.Embeddings;
@@ -25,11 +26,11 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.CONNECTIONNAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {
@@ -38,8 +39,19 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+        var credential = new DefaultAzureCredential();
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+        ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+        {
+            throw new InvalidOperationException("Invalid URI.");
+        }
+        uri = new Uri($"https://{uri.Host}");
+
+        AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
+        EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Generate an embedding");
         OpenAIEmbedding result = embeddingsClient.GenerateEmbedding("List all the rainbow colors");
@@ -58,11 +70,11 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.CONNECTIONNAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {
@@ -71,8 +83,19 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+        var credential = new DefaultAzureCredential();
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+        ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+        {
+            throw new InvalidOperationException("Invalid URI.");
+        }
+        uri = new Uri($"https://{uri.Host}");
+
+        AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
+        EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Generate an embedding");
         OpenAIEmbedding result = await embeddingsClient.GenerateEmbeddingAsync("List all the rainbow colors");

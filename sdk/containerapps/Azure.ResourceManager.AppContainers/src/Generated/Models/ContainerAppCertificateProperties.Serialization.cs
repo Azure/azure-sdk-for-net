@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
             if (Optional.IsDefined(CertificateKeyVaultProperties))
             {
                 writer.WritePropertyName("certificateKeyVaultProperties"u8);
@@ -139,6 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             ContainerAppCertificateProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
             ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default;
             string password = default;
             string subjectName = default;
@@ -161,6 +167,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     provisioningState = new ContainerAppCertificateProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deploymentErrors"u8))
+                {
+                    deploymentErrors = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("certificateKeyVaultProperties"u8))
@@ -255,6 +266,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppCertificateProperties(
                 provisioningState,
+                deploymentErrors,
                 certificateKeyVaultProperties,
                 password,
                 subjectName,
@@ -292,6 +304,29 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     builder.Append("  provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentErrors))
+                {
+                    builder.Append("  deploymentErrors: ");
+                    if (DeploymentErrors.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentErrors}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentErrors}'");
+                    }
                 }
             }
 

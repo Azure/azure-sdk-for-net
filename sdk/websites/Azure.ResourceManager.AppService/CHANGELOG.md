@@ -8,9 +8,17 @@
 
 ### Bugs Fixed
 
-- Fix deserialization method for `AppServiceApiDefinitionInfo` class to allow empty url string.
-
 ### Other Changes
+
+## 1.4.1 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.AppService` AOT-compatible
+
+### Bugs Fixed
+
+- Fix deserialization method for `AppServiceApiDefinitionInfo` class to allow empty url string.
 
 ## 1.4.0 (2025-05-23)
 

@@ -1,3 +1,4 @@
+#Requires -Version 7.0
 # cSpell:ignore Apireview
 # cSpell:ignore Onboarded
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)

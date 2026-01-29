@@ -20,6 +20,8 @@ namespace Azure.AI.Agents.Persistent
 
         public string Name => _mcpToolCall.Name;
 
+        public string ServerLabel => _mcpToolCall.ServerLabel;
+
         internal static IEnumerable<SubmitToolApprovalUpdate> DeserializeSubmitToolApprovalUpdates(JsonElement element)
         {
             ThreadRun run = ThreadRun.DeserializeThreadRun(element);

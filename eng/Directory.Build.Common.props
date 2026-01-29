@@ -12,10 +12,12 @@
 
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
+    <IsGeneratorLibraryGenerationTest Condition="'$(IsGeneratorLibraryGenerationTest)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator')) and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsGeneratorLibraryGenerationTest>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
-    <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'false' and '$(IsClientLibrary)' == 'true'">true</IncludeAutorestDependency>
+    <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'true' or '$(IsClientLibrary)' != 'true'">false</IncludeAutorestDependency>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
     <IsSourceGenerator Condition="'$(IsSourceGenerator)' == '' and $(MSBuildProjectName.EndsWith('.SourceGeneration'))">true</IsSourceGenerator>
+    <IsAnalzyer Condition="'$(IsAnalzyer)' == '' and $(MSBuildProjectName.EndsWith('Analyzers'))">true</IsAnalzyer>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="'$(IsSamplesProject)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
@@ -23,15 +25,14 @@
     <IsStressProject Condition="'$(IsStressProject)' == '' and $(MSBuildProjectName.EndsWith('.Stress'))">true</IsStressProject>
     <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
-    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true'">true</IsShippingClientLibrary>
+    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true' and '$(IsAnalzyer)' != 'true'">true</IsShippingClientLibrary>
     <TestFrameworkSupportFiles>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Shared/*.cs</TestFrameworkSupportFiles>
 
-    <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
+    <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and ('$(IsMgmtLibrary)' == 'true' or '$(IsGeneratorLibraryGenerationTest)' == 'true') and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Setup default project properties -->
   <PropertyGroup>
-    <LtsTargetFramework>net8.0</LtsTargetFramework>
     <LangVersion>latest</LangVersion>
     <!--
       Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
@@ -81,9 +82,24 @@
       AZPROVISION001; <!-- Provisioning -->
     </NoWarn>
 
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <!--
-      .NET 8 now produces security warnings for nuget packages in dotnet restore. We want to keep all but critical (NU1904) as warnings and not turn them to errors.
+        Disable .NET 10 prune warning for test/sample/stress/support projects as they may
+        reference packages that are packaged with built-in libraries and cannot be pruned.
+    -->
+    <NoWarn Condition="'$(IsTestProject)' == 'true' OR '$(IsTestSupportProject)' == 'true' OR '$(IsPerfProject)' == 'true' OR '$(IsStressProject)' == 'true' OR '$(IsSamplesProject)' == 'true'">
+       $(NoWarn);NU1510
+    </NoWarn>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!--
+      For assets not identified as a client library, don't treat the prune warning as an error.  This is intended
+      to provide information to legacy libraries without breaking their builds.
+    -->
+    <WarningsNotAsErrors Condition="'$(IsClientLibrary)' != 'true'">$(WarningsNotAsErrors);NU1510</WarningsNotAsErrors>
+
+    <!--
+      Security warnings are now produced for nuget packages in dotnet restore. We want to keep all but critical (NU1904) as warnings and not turn them to errors.
       For T1 we want to keep them all as warnings as we cannot easily fix them all currently and plan to remove the libraries in the future.
       See: https://learn.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1901-nu1904
     -->
@@ -94,6 +110,12 @@
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
     <!-- Avoid implicitly added preview feeds -->
     <AddDotnetfeedProjectSource>false</AddDotnetfeedProjectSource>
+  </PropertyGroup>
+
+  <!-- AOT defaults -->
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true'">
+    <AotCompatOptOut>false</AotCompatOptOut> <!-- Set to true to opt out of all AOT checks -->
+    <AotAnalyzersOptOut>false</AotAnalyzersOptOut> <!-- Set to true to disable AOT analyzers but still run AOT CI checks -->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -109,7 +131,10 @@
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
     <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == '$(LtsTargetFramework)'">netstandard2.0</ApiCompatBaselineTargetFramework>
+
+    <!-- All current generation client libraries must support .NET Standard 2.0 unless the architects approve a specific exception. -->
+    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
+    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -142,45 +167,103 @@
     <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
-  <!-- TargetFramework default properties -->
-  <!-- Update pipelines/templates/steps/install-dotnet.yml as needed, without re-installing SDKs already found on all supported agents -->
-  <PropertyGroup>
-    <!-- Client libraries are moving forward to NS 2.0 and Net 4.6.1 as the min supported versions -->
-    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
-    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
+  <!--
+  TARGET FRAMEWORK DEFINITIONS
 
-    <RequiredTargetFrameworks>net452;net461;netstandard2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true' and '$(IsSourceGenerator)' != 'true'">$(LtsTargetFramework);netstandard2.0</RequiredTargetFrameworks>
+    Define the target frameworks that client libraries must support by default. These will change
+    as new .NET versions are released and older versions reach end-of-life. See:
+    https://azure.github.io/azure-sdk/dotnet_introduction.html#target-frameworks
+
+    IMPORTANT NOTES:
+
+      - When multiple frameworks are present, list from newest to oldest so that the most recent version
+        is used by default for test runs.
+
+      - When updating, change pipelines/templates/steps/install-dotnet.yml as needed, without
+        re-installing SDKs already found on all supported agents.
+   -->
+  <PropertyGroup>
+    <!-- Targets used by the current generation of the Azure SDK libraries. -->
+    <LtsTargetFramework>net10.0</LtsTargetFramework>
+    <RequiredRunnableTargetFrameworks>$(LtsTargetFramework);net8.0</RequiredRunnableTargetFrameworks>
+
+    <!-- The set of all runnable modern target frameworks that have not yet reached end-of-life. -->
+    <AllActiveCurrentTargetFrameworks>$(RequiredRunnableTargetFrameworks);net9.0</AllActiveCurrentTargetFrameworks>
+
+    <!--
+      The set of frameworks for API Compat checks when the current LTS is being built.  These ensure that
+      CI doesn't fail when a new target framework is added because a library has not released a version with
+      the new target framework yet.
+
+      Because guidelines say that the API must be the same across all supported target frameworks, we can use
+      a fallback safely.
+    -->
+    <ApiCompatStandardTargetFramework>netstandard2.0</ApiCompatStandardTargetFramework>
+    <ApiCompatRunnableTargetFramework>net8.0</ApiCompatRunnableTargetFramework>
+
+    <!-- The earliest version of the legacy .NET Framework that us still supported. -->
+    <!-- `net462` reaches end-of-life in Jan, 2027. -->
+    <NetFxTargetFramework>net462</NetFxTargetFramework>
+
+    <!-- Targets only for legacy libraries, not the current Azure SDK generation. -->
+    <DefaultLegacyTargetFrameworks>net452;net461;netstandard2.0</DefaultLegacyTargetFrameworks>
+
+    <!--
+    DEFINE THE REQUIRED TARGETS FOR A GIVEN LIBRARY TYPE
+
+      Define the target frameworks that a given library type must support by default.
+      These can be overridden on a per-project basis by setting the RequiredTargetFrameworks
+      property in the project file.
+    -->
+
+    <!-- By default, assume a legacy library. -->
+    <RequiredTargetFrameworks>$(DefaultLegacyTargetFrameworks)</RequiredTargetFrameworks>
+
+    <!-- The current generation of Azure SDK will be marked as supporting support netstandard2.0 -->
+    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">$(RequiredRunnableTargetFrameworks);netstandard2.0</RequiredTargetFrameworks>
+
+    <!-- Source generators, such as System.ClientModel.SourceGeneration, must only target netstandard2.0 -->
+    <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true' or '$(IsAnalzyer)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
+
+    <!-- Libraries that are part of our code generator only support the current LTS framework -->
     <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">$(LtsTargetFramework)</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
+  <!--
+  TARGET FRAMEWORK OVERRIDES FOR TESTS, SAMPLES, AND SUPPORT PROJECTS
+
+    Test, sample, and support projects require a runnable target framework to execute, so they
+    cannot include a netstandard target, even if the project explicitly marks itself as supporting it.
+  -->
   <PropertyGroup Condition="'$(IsGeneratorLibrary)' != 'true' and ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true')">
     <IsPackable>false</IsPackable>
-    <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
-    <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
-    <!-- Also test net462 on Windows. net461 is out of support as of 4/2022 and is not supported in version 4.4.x and beyond of NUnit3TestAdapter. -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net462</RequiredTargetFrameworks>
-    <!-- But only build snippets for the latest. -->
-    <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">net9.0</RequiredTargetFrameworks>
+
+    <!-- Test runs should be performed on all runnable target frameworks that have not yet reached end-of-life. -->
+    <RequiredTargetFrameworks>$(AllActiveCurrentTargetFrameworks)</RequiredTargetFrameworks>
+
+    <!-- Include the earliest supported legacy .NET framework target on Windows only. -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);$(NetFxTargetFramework)</RequiredTargetFrameworks>
+
+    <!-- If test snippets are being built, do so only for the current LTS. -->
+    <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">$(LtsTargetFramework)</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
-    <PackageReference Include="Azure.ResourceManager" />
-  </ItemGroup>
-
+  <!-- Assign target frameworks and set associated project constants -->
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <IsTargetingNetFx Condition="$(TargetFramework.StartsWith('net4'))">true</IsTargetingNetFx>
     <IsTargetingNetStandard Condition="$(TargetFramework.StartsWith('netstandard'))">true</IsTargetingNetStandard>
-    <IsTargetingNetCoreApp Condition="$(TargetFramework.StartsWith('netcoreapp'))">true</IsTargetingNetCoreApp>
-
     <DefineConstants Condition="'$(IsTargetingNetFx)' == 'true'">$(DefineConstants);FullNetFx</DefineConstants>
+
   </PropertyGroup>
+  <!-- Inject implicit dependencies for management sub-libraries and generator library generation tests -->
+  <ItemGroup Condition="('$(IsMgmtSubLibrary)' == 'true' or '$(IsGeneratorLibraryGenerationTest)' == 'true') and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
+    <PackageReference Include="Azure.ResourceManager" />
+  </ItemGroup>
 
   <!-- SourceGeneration common settings -->
-  <PropertyGroup Condition="'$(IsSourceGenerator)' == 'true'">
+  <PropertyGroup Condition="'$(IsSourceGenerator)' == 'true' or '$(IsAnalzyer)' == 'true'">
     <OutputItemType>Analyzer</OutputItemType>
     <AnalyzerLanguage>cs</AnalyzerLanguage>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
@@ -263,7 +346,6 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
-    <ImportDefaultReferences>false</ImportDefaultReferences>
 
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>

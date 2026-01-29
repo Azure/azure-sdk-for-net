@@ -217,9 +217,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType CodeTransparency { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType ConfidentialLedger { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType (string value) { throw null; }
@@ -270,9 +268,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform AmdSevSnp { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform IntelSgx { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform (string value) { throw null; }
@@ -288,9 +284,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime CPP { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime JS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime (string value) { throw null; }
@@ -344,9 +338,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason (string value) { throw null; }
@@ -395,9 +387,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState (string value) { throw null; }
@@ -438,9 +428,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName Contributor { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName Reader { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName (string value) { throw null; }
@@ -459,9 +447,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState Resuming { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState (string value) { throw null; }
@@ -478,9 +464,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku Standard { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku (string value) { throw null; }
@@ -497,9 +481,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType Public { get { throw null; } }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType (string value) { throw null; }

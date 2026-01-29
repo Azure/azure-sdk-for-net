@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("isClientAffine"u8);
                 writer.WriteBooleanValue(IsClientAffine.Value);
             }
+            if (Optional.IsDefined(UserMetadata))
+            {
+                writer.WritePropertyName("userMetadata"u8);
+                writer.WriteStringValue(UserMetadata);
+            }
             if (Optional.IsDefined(ClientAffineProperties))
             {
                 writer.WritePropertyName("clientAffineProperties"u8);
@@ -186,6 +191,7 @@ namespace Azure.ResourceManager.ServiceBus
             string forwardTo = default;
             string forwardDeadLetteredMessagesTo = default;
             bool? isClientAffine = default;
+            string userMetadata = default;
             ServiceBusClientAffineProperties clientAffineProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -387,6 +393,11 @@ namespace Azure.ResourceManager.ServiceBus
                             isClientAffine = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("userMetadata"u8))
+                        {
+                            userMetadata = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("clientAffineProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -410,6 +421,7 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 messageCount,
                 createdAt,
                 accessedAt,
@@ -428,8 +440,8 @@ namespace Azure.ResourceManager.ServiceBus
                 forwardTo,
                 forwardDeadLetteredMessagesTo,
                 isClientAffine,
+                userMetadata,
                 clientAffineProperties,
-                location,
                 serializedAdditionalRawData);
         }
 
@@ -809,6 +821,29 @@ namespace Azure.ResourceManager.ServiceBus
                     builder.Append("    isClientAffine: ");
                     var boolValue = IsClientAffine.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserMetadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userMetadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserMetadata))
+                {
+                    builder.Append("    userMetadata: ");
+                    if (UserMetadata.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserMetadata}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserMetadata}'");
+                    }
                 }
             }
 

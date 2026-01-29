@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SiteManager.Mocking
@@ -34,16 +37,116 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of ServiceGroupEdgeSiteResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of ServiceGroupEdgeSiteResources and their operations over a ServiceGroupEdgeSiteResource. </returns>
+        public virtual ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites(ResourceIdentifier scope)
+        {
+            if (!scope.ResourceType.Equals("Microsoft.Management/serviceGroups"))
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0}, expected Microsoft.Management/serviceGroups", scope.ResourceType));
+            }
+            return new ServiceGroupEdgeSiteCollection(Client, scope);
+        }
+
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSiteResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Get Site at SG scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Site_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceGroupEdgeSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceGroupEdgeSiteResource>> GetServiceGroupEdgeSiteAsync(ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceGroupEdgeSites(scope).GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Site at SG scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Site_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceGroupEdgeSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceGroupEdgeSiteResource> GetServiceGroupEdgeSite(ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceGroupEdgeSites(scope).Get(siteName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupEdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSiteResource"/> object. </returns>
-        public virtual EdgeSiteResource GetEdgeSiteResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupEdgeSiteResource"/> object. </returns>
+        public virtual ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(ResourceIdentifier id)
         {
-            EdgeSiteResource.ValidateResourceId(id);
-            return new EdgeSiteResource(Client, id);
+            ResourceGroupEdgeSiteResource.ValidateResourceId(id);
+            return new ResourceGroupEdgeSiteResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionEdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionEdgeSiteResource"/> object. </returns>
+        public virtual SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(ResourceIdentifier id)
+        {
+            SubscriptionEdgeSiteResource.ValidateResourceId(id);
+            return new SubscriptionEdgeSiteResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceGroupEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceGroupEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="ServiceGroupEdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceGroupEdgeSiteResource"/> object. </returns>
+        public virtual ServiceGroupEdgeSiteResource GetServiceGroupEdgeSiteResource(ResourceIdentifier id)
+        {
+            ServiceGroupEdgeSiteResource.ValidateResourceId(id);
+            return new ServiceGroupEdgeSiteResource(Client, id);
         }
     }
 }

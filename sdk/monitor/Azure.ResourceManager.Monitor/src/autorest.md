@@ -25,6 +25,9 @@ modelerfour:
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 format-by-name-rules:
   "tenantId": "uuid"
   "ETag": "etag"
@@ -69,17 +72,17 @@ irregular-plural-words:
 
 prepend-rp-prefix:
 - Action
+- Criteria
+- Dimension
+- Enabled
+- Incident
+- Metric
+- Odatatype
+- OperationType
 - Recurrence
 - Response
-- Odatatype
-- Metric
-- Incident
-- Enabled
-- Dimension
 - Schedule
-- Criteria
 - Source
-- OperationType
 
 override-operation-name:
   ActionGroups_GetTestNotifications: GetNotificationStatus
@@ -96,253 +99,254 @@ override-operation-name:
   MetricNamespaces_List: GetMonitorMetricNamespaces
 
 rename-mapping:
-  AutoscaleSetting: AutoscaleSettingProperties
-  AutoscaleSettingResource: AutoscaleSetting
-  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId|arm-id
-  AutoscaleSettingResource.properties.enabled: IsEnabled
-  AutoscaleSettingResource.properties.name: AutoscaleSettingName
-  AutoscaleSettingResource.properties.targetResourceLocation: -|azure-location
-  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId|arm-id
-  AutoscaleSettingResourcePatch.properties.enabled: IsEnabled
-  AutoscaleSettingResourcePatch.properties.name: AutoscaleSettingName
-  AutoscaleSettingResourcePatch.properties.targetResourceLocation: -|azure-location
-  AzureMonitorPrivateLinkScope: MonitorPrivateLinkScope
+  AccessMode: MonitorPrivateLinkAccessMode
   AccessModeSettings: MonitorPrivateLinkAccessModeSettings
   AccessModeSettingsExclusion: MonitorPrivateLinkAccessModeSettingsExclusion
-  AccessMode: MonitorPrivateLinkAccessMode
-  ScopedResource: MonitorPrivateLinkScopedResource
-  ScopedResource.properties.linkedResourceId: -|arm-id
-  ActivityLogAlertActionGroup.actionGroupId: -|arm-id
-  DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
-  DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
-  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionRuleId: -|arm-id
-  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionEndpointId: -|arm-id
-  LogProfileResource.properties.storageAccountId: -|arm-id
-  LogProfileResource.properties.serviceBusRuleId: -|arm-id
-  LogProfileResourcePatch.properties.storageAccountId: -|arm-id
-  LogProfileResourcePatch.properties.serviceBusRuleId: -|arm-id
+  ActionDetail: NotificationActionDetail
   ActionGroup: ActionGroupProperties
+  ActionGroupPatchBody.properties.enabled: IsEnabled
   ActionGroupResource: ActionGroup
   ActionGroupResource.properties.enabled: IsEnabled
-  ActionGroupPatchBody.properties.enabled: IsEnabled
-  MetricAlertResource: MetricAlert
-  MetricAlertResource.properties.targetResourceType: -|resource-type
-  MetricAlertResource.properties.targetResourceRegion: -|azure-location
-  MetricAlertResourcePatch.properties.targetResourceType: -|resource-type
-  MetricAlertResourcePatch.properties.targetResourceRegion: -|azure-location
-  DiagnosticSettings: DiagnosticSettingsProperties
-  DiagnosticSettingsResource: DiagnosticSettings
-  DiagnosticSettingsResource.properties.workspaceId: -|arm-id
-  DiagnosticSettingsResource.properties.storageAccountId: -|arm-id
-  DiagnosticSettingsResource.properties.serviceBusRuleId: -|arm-id
-  DiagnosticSettingsResource.properties.eventHubAuthorizationRuleId: -|arm-id
-  DiagnosticSettingsResource.properties.marketplacePartnerId: -|arm-id
+  Actions: ScheduledQueryRuleActions
+  ActionType: MonitorWorkspaceActionType
   ActivityLogAlert: ActivityLogAlertProperties
+  ActivityLogAlertActionGroup.actionGroupId: -|arm-id
   ActivityLogAlertResource: ActivityLogAlert
   ActivityLogAlertResource.properties.enabled: IsEnabled
   ActivityLogAlertResourcePatch.properties.enabled: IsEnabled
-  AlertRulePatchObject.properties.enabled: IsEnabled
+  AggregationType: MonitorAggregationType
+  AggregationTypeEnum: MetricCriteriaTimeAggregationType
   AlertRule: AlertRuleProperties
+  AlertRuleAnyOfOrLeafCondition: ActivityLogAlertAnyOfOrLeafCondition
+  AlertRulePatchObject.properties.enabled: IsEnabled
   AlertRuleResource: AlertRule
   AlertRuleResource.properties.name: AlertRuleName
-  DataCollectionEndpoint: DataCollectionEndpointProperties
-  DataCollectionEndpointResource: DataCollectionEndpoint
-  DataCollectionRule: DataCollectionRuleProperties
-  DataCollectionRuleResource.properties.dataCollectionEndpointId: -|arm-id
-  DataCollectionRuleResource: DataCollectionRule
-  DiagnosticSettingsCategory: DiagnosticSettingsCategoryProperties
-  DiagnosticSettingsCategoryResource: DiagnosticSettingsCategory
-  LogProfileResource: LogProfile
-  LogSearchRule: LogSearchRuleProperties
-  LogSearchRuleResource: LogSearchRule
-  LogAnalyticsDestination.workspaceResourceId: -|arm-id
-  RuleDataSource.resourceUri: resourceId|arm-id
-  MetricAlertResource.properties.autoMitigate: IsAutoMitigateEnabled
-  MetricAlertResource.properties.enabled: IsEnabled
-  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigateEnabled
-  MetricAlertResourcePatch.properties.enabled: IsEnabled
-  MetricSettings.enabled: IsEnabled
-  EventData: EventDataInfo
-  EventData.resourceId: -|arm-id
-  PredictiveResponse: AutoscaleSettingPredicativeResult
-  PredictiveResponse.targetResourceId: -|arm-id
-  LogSettings.enabled: IsEnabled
-  RetentionPolicy.enabled: IsEnabled
-  TimeWindow.start: StartOn
-  TimeWindow.end: EndOn
-  AlertRuleAnyOfOrLeafCondition: ActivityLogAlertAnyOfOrLeafCondition
-  RuleAction: AlertRuleAction
-  RuleCondition: AlertRuleCondition
-  KnownPublicNetworkAccessOptions: MonitorPublicNetworkAccess
-  KnownDataCollectionEndpointProvisioningState: DataCollectionEndpointProvisioningState
-  KnownDataCollectionRuleAssociationProvisioningState: DataCollectionRuleAssociationProvisioningState
-  KnownDataCollectionRuleProvisioningState: DataCollectionRuleProvisioningState
-  KnownDataFlowStreams: DataFlowStreams
-  KnownExtensionDataSourceStreams: ExtensionDataSourceStreams
-  KnownPerfCounterDataSourceStreams: PerfCounterDataSourceStreams
-  KnownSyslogDataSourceFacilityNames: SyslogDataSourceFacilityNames
-  KnownSyslogDataSourceLogLevels: SyslogDataSourceLogLevels
-  KnownSyslogDataSourceStreams: SyslogDataSourceStreams
-  KnownWindowsEventLogDataSourceStreams: WindowsEventLogDataSourceStreams
-  KnownDataCollectionEndpointResourceKind: DataCollectionEndpointResourceKind
-  KnownDataCollectionRuleResourceKind: DataCollectionRuleResourceKind
-  ProvisioningState: MonitorProvisioningState
-  LocalizableString: MonitorLocalizableString
-  MetricTrigger.metricResourceUri: metricResourceId|arm-id
-  MetricTrigger.metricResourceLocation: -|azure-location
-  MetricTrigger.dividePerInstance: IsDividedPerInstance
-  NotificationRequestBody: NotificationContent
-  Context: NotificationContext
-  TestNotificationDetailsResponse: NotificationStatus
-  ActionDetail: NotificationActionDetail
-  TimeWindow: MonitorTimeWindow
   ArmRoleReceiver: MonitorArmRoleReceiver
   AutomationRunbookReceiver: MonitorAutomationRunbookReceiver
   AutomationRunbookReceiver.automationAccountId: -|arm-id
   AutomationRunbookReceiver.webhookResourceId: -|arm-id
+  AutoscaleSetting: AutoscaleSettingProperties
+  AutoscaleSettingResource: AutoscaleSetting
+  AutoscaleSettingResource.properties.enabled: IsEnabled
+  AutoscaleSettingResource.properties.name: AutoscaleSettingName
+  AutoscaleSettingResource.properties.targetResourceLocation: -|azure-location
+  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId|arm-id
+  AutoscaleSettingResourcePatch.properties.enabled: IsEnabled
+  AutoscaleSettingResourcePatch.properties.name: AutoscaleSettingName
+  AutoscaleSettingResourcePatch.properties.targetResourceLocation: -|azure-location
+  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId|arm-id
   AzureAppPushReceiver: MonitorAzureAppPushReceiver
   AzureFunctionReceiver: MonitorAzureFunctionReceiver
   AzureFunctionReceiver.functionAppResourceId: -|arm-id
-  Source.dataSourceId: -|arm-id
-  EmailReceiver: MonitorEmailReceiver
-  EventHubReceiver: MonitorEventHubReceiver
-  ItsmReceiver: MonitorItsmReceiver
-  ItsmReceiver.region: -|azure-location
-  LogicAppReceiver: MonitorLogicAppReceiver
-  LogicAppReceiver.resourceId: -|arm-id
-  SmsReceiver: MonitorSmsReceiver
-  VoiceReceiver: MonitorVoiceReceiver
-  WebhookReceiver: MonitorWebhookReceiver
-  WorkspaceInfo: DataContainerWorkspace
-  WorkspaceInfo.id: -|arm-id
+  AzureMonitorPrivateLinkScope: MonitorPrivateLinkScope
+  AzureMonitorWorkspace: MonitorWorkspaceResource
+  AzureMonitorWorkspaceCollection: MonitorWorkspaceResourceCollection
+  AzureMonitorWorkspaceData: MonitorWorkspaceResourceData
+  AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
+  AzureMonitorWorkspaceListResult: MonitorWorkspaceResourceListResult
+  AzureMonitorWorkspaceLogsApiConfig: MonitorWorkspaceLogsApiConfig
+  AzureMonitorWorkspaceLogsExporter: MonitorWorkspaceLogsExporter
+  AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
+  AzureMonitorWorkspacePatch: MonitorWorkspaceResourcePatch
+  AzureResourceManagerCommonTypesExtendedLocation: Azure.ResourceManager.CommonTypes.ExtendedLocation
+  BaselineMetadata: MonitorBaselineMetadata
+  BaselineSensitivity: MonitorBaselineSensitivity
+  CacheConfiguration: MonitorWorkspaceLogsExporterCacheConfiguration
   CategoryType: MonitorCategoryType
-  EventLevel: MonitorEventLevel
-  ScaleAction: MonitorScaleAction
-  ScaleDirection: MonitorScaleDirection
-  ScaleType: MonitorScaleType
-  ScaleCapacity.minimum: -|integer
-  ScaleCapacity.maximum: -|integer
-  ScaleCapacity.default: -|integer
-  ScaleCapacity: MonitorScaleCapacity
-  ReceiverStatus: MonitorReceiverStatus
-  EnableRequest: ActionGroupEnableContent
-  OperationStatus: MonitorPrivateLinkScopeOperationStatus
-  QueryType: MonitorSourceQueryType
-  RuleDataSource.legacyResourceId: -|arm-id
-  LogSearchRuleResource.properties.autoMitigate: IsAutoMitigateEnabled
-  ScaleRule: AutoscaleRule
-  ScaleRuleMetricDimension: AutoscaleRuleMetricDimension
-  TestNotificationDetailsResponse.completedTime: -|date-time
-  TestNotificationDetailsResponse.createdTime: -|date-time
-  HttpRequestInfo: EventDataHttpRequestInfo
-  HttpRequestInfo.clientIpAddress: -|ip-address
-  MetricAlertAction.actionGroupId: -|arm-id
-  WebtestLocationAvailabilityCriteria.webTestId: -|arm-id
-  WebtestLocationAvailabilityCriteria.componentId: -|arm-id
   ColumnDefinition: DataColumnDefinition
-  StreamDeclaration: DataStreamDeclaration
-  KnownColumnDefinitionType: DataColumnDefinitionType
-  KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
-  KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
-  VMInsightsOnboardingStatus.properties.resourceId: -|arm-id
-  LogSearchRuleResourcePatch.properties.enabled: IsEnabled
-  ScheduledQueryRuleResource: ScheduledQueryRule
-  Actions: ScheduledQueryRuleActions
-  DimensionOperator: MonitorDimensionOperator
-  Condition: ScheduledQueryRuleCondition
-  ScheduledQueryRuleResource.properties.enabled: IsEnabled
-  ScheduledQueryRuleResourcePatch.properties.enabled: IsEnabled
-  Kind: ScheduledQueryRuleKind
-  AggregationTypeEnum: MetricCriteriaTimeAggregationType
-  TimeAggregationOperator: ThresholdRuleConditionTimeAggregationType
-  TimeAggregationType: MetricTriggerTimeAggregationType
-  TimeAggregation: ScheduledQueryRuleTimeAggregationType
-  Operator: MetricCriteriaOperator
   ComparisonOperationType: MetricTriggerComparisonOperation
+  ConcurrencyConfiguration: MonitorWorkspaceLogsExporterConcurrencyConfiguration
+  Condition: ScheduledQueryRuleCondition
   ConditionOperator: MonitorConditionOperator
-  RuleResolveConfiguration: ScheduledQueryRuleResolveConfiguration
-  RuleResolveConfiguration.autoResolved: IsAutoResolved
-  PublicNetworkAccess: MonitorWorkspacePublicNetworkAccess
-  MetadataValue: MonitorMetadataValue
-  MetricValue: MonitorMetricValue
-  MetricResultType: MonitorMetricResultType
-  MetricUnit: MonitorMetricUnit
-  SubscriptionScopeMetricsRequestBodyParameters: SubscriptionResourceGetMonitorMetricsWithPostContent
-  SubscriptionScopeMetric: SubscriptionMonitorMetric
-  TimeSeriesElement: MonitorTimeSeriesElement
-  StorageBlobDestination.storageAccountResourceId: -|arm-id
-  StorageTableDestination.storageAccountResourceId: -|arm-id
-  PrivateLinkScopedResource.resourceId: -|arm-id
-  PrivateLinkScopedResource: DataCollectionRulePrivateLinkScopedResourceInfo
+  Context: NotificationContext
+  DataCollectionEndpoint: DataCollectionEndpointProperties
+  DataCollectionEndpointResource: DataCollectionEndpoint
+  DataCollectionRule: DataCollectionRuleProperties
+  DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
+  DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionEndpointId: -|arm-id
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionRuleId: -|arm-id
+  DataCollectionRuleResource: DataCollectionRule
+  DataCollectionRuleResource.properties.dataCollectionEndpointId: -|arm-id
+  DiagnosticSettings: DiagnosticSettingsProperties
+  DiagnosticSettingsCategory: DiagnosticSettingsCategoryProperties
+  DiagnosticSettingsCategoryResource: DiagnosticSettingsCategory
+  DiagnosticSettingsResource: DiagnosticSettings
+  DiagnosticSettingsResource.properties.eventHubAuthorizationRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.marketplacePartnerId: -|arm-id
+  DiagnosticSettingsResource.properties.serviceBusRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.storageAccountId: -|arm-id
+  DiagnosticSettingsResource.properties.workspaceId: -|arm-id
+  DimensionOperator: MonitorDimensionOperator
+  EmailReceiver: MonitorEmailReceiver
+  EnableRequest: ActionGroupEnableContent
+  EventData: EventDataInfo
+  EventData.resourceId: -|arm-id
   EventHubDataSource: DataCollectionRuleEventHubDataSource
   EventHubDestination: DataCollectionRuleEventHubDestination
   EventHubDestination.eventHubResourceId: -|arm-id
   EventHubDirectDestination: DataCollectionRuleEventHubDirectDestination
   EventHubDirectDestination.eventHubResourceId: -|arm-id
+  EventHubReceiver: MonitorEventHubReceiver
+  EventLevel: MonitorEventLevel
+  Exporter: PipelineGroupExporter
+  ExporterType: PipelineGroupExporterType
+  ExternalNetworkingMode: PipelineGroupExternalNetworkingMode
   FailoverConfigurationSpec: DataCollectionRuleBcdrFailoverConfigurationSpec
   FailoverConfigurationSpec.ActiveLocation: -|azure-location
-  KnownLocationSpecProvisioningStatus: DataCollectionRuleBcdrLocationSpecProvisioningStatus
-  KnownPrometheusForwarderDataSourceStreams: DataCollectionRuleKnownPrometheusForwarderDataSourceStream
-  LocationSpec: DataCollectionRuleBcdrLocationSpec
-  Metadata: DataCollectionRuleRelatedResourceMetadata
-  Metadata.ProvisionedByResourceId: -|arm-id
-  MonitoringAccountDestination.accountResourceId: -|arm-id
-  StorageBlobDestination: DataCollectionRuleStorageBlobDestination
-  StorageTableDestination: DataCollectionRuleStorageTableDestination
-  ActionType: MonitorWorkspaceActionType
-  Metrics: MonitorWorkspaceMetricProperties
-  AzureMonitorWorkspace: MonitorWorkspaceResource
-  AzureMonitorWorkspaceCollection: MonitorWorkspaceResourceCollection
-  AzureMonitorWorkspaceData: MonitorWorkspaceResourceData
+  HttpRequestInfo: EventDataHttpRequestInfo
+  HttpRequestInfo.clientIpAddress: -|ip-address
   IngestionSettings: MonitorWorkspaceIngestionSettings
   IngestionSettings.dataCollectionEndpointResourceId: -|arm-id
   IngestionSettings.dataCollectionRuleResourceId: -|arm-id
-  AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
-  AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
-  AzureMonitorWorkspacePatch: MonitorWorkspaceResourcePatch
-  AzureMonitorWorkspaceListResult: MonitorWorkspaceResourceListResult
-  MetricDefinition: MonitorMetricDefinition
-  AggregationType: MonitorAggregationType
-  BaselineMetadata: MonitorBaselineMetadata
-  BaselineSensitivity: MonitorBaselineSensitivity
-  MetricAvailability: MonitorMetricAvailability
-  MetricClass: MonitorMetricClass
-  MetricNamespace: MonitorMetricNamespace
-  MetricSingleDimension: MonitorMetricSingleDimension
-  NamespaceClassification: MonitorNamespaceClassification
-  ResultType: MonitorResultType
-  SingleBaseline: MonitorSingleBaseline
-  SingleMetricBaseline: MonitorSingleMetricBaseline
-  TimeSeriesBaseline: MonitorTimeSeriesBaseline
-  Unit: MonitorMetricUnit
-  CacheConfiguration: MonitorWorkspaceLogsExporterCacheConfiguration
-  ConcurrencyConfiguration: MonitorWorkspaceLogsExporterConcurrencyConfiguration
-  SchemaMap: MonitorWorkspaceLogsSchemaMap
-  RecordMap: MonitorWorkspaceLogsRecordMap
-  ResourceMap: MonitorWorkspaceLogsResourceMap
-  ScopeMap: MonitorWorkspaceLogsScopeMap
-  Receiver: PipelineGroupReceiver
-  ReceiverType: PipelineGroupReceiverType
-  Processor: PipelineGroupProcessor
-  ProcessorType: PipelineGroupProcessorType
-  Exporter: PipelineGroupExporter
-  ExporterType: PipelineGroupExporterType
-  Service: PipelineGroupService
-  Pipeline: PipelineGroupServicePipeline
-  PipelineType: PipelineGroupServicePipelineType
-  PersistenceConfigurations: PipelineGroupServicePersistenceConfigurations
-  PersistenceConfigurationsUpdate: PipelineGroupServicePersistenceConfigurationsUpdate
-  NetworkingConfiguration: PipelineGroupNetworkingConfiguration
-  NetworkingRoute: PipelineGroupNetworkingRoute
-  ExternalNetworkingMode: PipelineGroupExternalNetworkingMode
+  ItsmReceiver: MonitorItsmReceiver
+  ItsmReceiver.region: -|azure-location
   JsonArrayMapper: PipelineGroupJsonArrayMapper
   JsonMapperDestinationField: PipelineGroupJsonMapperDestinationField
   JsonMapperElement: PipelineGroupJsonMapperElement
   JsonMapperSourceField: PipelineGroupJsonMapperSourceField
+  Kind: ScheduledQueryRuleKind
+  KnownColumnDefinitionType: DataColumnDefinitionType
+  KnownDataCollectionEndpointProvisioningState: DataCollectionEndpointProvisioningState
+  KnownDataCollectionEndpointResourceKind: DataCollectionEndpointResourceKind
+  KnownDataCollectionRuleAssociationProvisioningState: DataCollectionRuleAssociationProvisioningState
+  KnownDataCollectionRuleProvisioningState: DataCollectionRuleProvisioningState
+  KnownDataCollectionRuleResourceKind: DataCollectionRuleResourceKind
+  KnownDataFlowStreams: DataFlowStreams
+  KnownExtensionDataSourceStreams: ExtensionDataSourceStreams
+  KnownLocationSpecProvisioningStatus: DataCollectionRuleBcdrLocationSpecProvisioningStatus
+  KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
+  KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
+  KnownPerfCounterDataSourceStreams: PerfCounterDataSourceStreams
+  KnownPrometheusForwarderDataSourceStreams: DataCollectionRuleKnownPrometheusForwarderDataSourceStream
+  KnownPublicNetworkAccessOptions: MonitorPublicNetworkAccess
+  KnownSyslogDataSourceFacilityNames: SyslogDataSourceFacilityNames
+  KnownSyslogDataSourceLogLevels: SyslogDataSourceLogLevels
+  KnownSyslogDataSourceStreams: SyslogDataSourceStreams
+  KnownWindowsEventLogDataSourceStreams: WindowsEventLogDataSourceStreams
+  LocalizableString: MonitorLocalizableString
+  LocationSpec: DataCollectionRuleBcdrLocationSpec
+  LogAnalyticsDestination.workspaceResourceId: -|arm-id
+  LogicAppReceiver: MonitorLogicAppReceiver
+  LogicAppReceiver.resourceId: -|arm-id
+  LogProfileResource: LogProfile
+  LogProfileResource.properties.serviceBusRuleId: -|arm-id
+  LogProfileResource.properties.storageAccountId: -|arm-id
+  LogProfileResourcePatch.properties.serviceBusRuleId: -|arm-id
+  LogProfileResourcePatch.properties.storageAccountId: -|arm-id
+  LogSearchRule: LogSearchRuleProperties
+  LogSearchRuleResource: LogSearchRule
+  LogSearchRuleResource.properties.autoMitigate: IsAutoMitigateEnabled
+  LogSearchRuleResourcePatch.properties.enabled: IsEnabled
+  LogSettings.enabled: IsEnabled
+  Metadata: DataCollectionRuleRelatedResourceMetadata
+  Metadata.ProvisionedByResourceId: -|arm-id
+  MetadataValue: MonitorMetadataValue
+  MetricAlertAction.actionGroupId: -|arm-id
+  MetricAlertResource: MetricAlert
+  MetricAlertResource.properties.autoMitigate: IsAutoMitigateEnabled
+  MetricAlertResource.properties.enabled: IsEnabled
+  MetricAlertResource.properties.targetResourceRegion: -|azure-location
+  MetricAlertResource.properties.targetResourceType: -|resource-type
+  MetricAlertResource.properties.windowSize: MonitorWindowSize
+  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigateEnabled
+  MetricAlertResourcePatch.properties.enabled: IsEnabled
+  MetricAlertResourcePatch.properties.targetResourceRegion: -|azure-location
+  MetricAlertResourcePatch.properties.targetResourceType: -|resource-type
+  MetricAvailability: MonitorMetricAvailability
+  MetricClass: MonitorMetricClass
+  MetricDefinition: MonitorMetricDefinition
+  MetricNamespace: MonitorMetricNamespace
+  MetricResultType: MonitorMetricResultType
+  Metrics: MonitorWorkspaceMetricProperties
+  MetricSettings.enabled: IsEnabled
+  MetricSingleDimension: MonitorMetricSingleDimension
+  MetricTrigger.dividePerInstance: IsDividedPerInstance
+  MetricTrigger.metricResourceLocation: -|azure-location
+  MetricTrigger.metricResourceUri: metricResourceId|arm-id
+  MetricUnit: MonitorMetricUnit
+  MetricValue: MonitorMetricValue
+  MonitoringAccountDestination.accountResourceId: -|arm-id
+  NamespaceClassification: MonitorNamespaceClassification
+  NetworkingConfiguration: PipelineGroupNetworkingConfiguration
+  NetworkingRoute: PipelineGroupNetworkingRoute
+  NotificationRequestBody: NotificationContent
+  OperationStatus: MonitorPrivateLinkScopeOperationStatus
+  Operator: MetricCriteriaOperator
+  PersistenceConfigurations: PipelineGroupServicePersistenceConfigurations
+  PersistenceConfigurationsUpdate: PipelineGroupServicePersistenceConfigurationsUpdate
+  Pipeline: PipelineGroupServicePipeline
+  PipelineType: PipelineGroupServicePipelineType
+  PredictiveResponse: AutoscaleSettingPredicativeResult
+  PredictiveResponse.targetResourceId: -|arm-id
+  PrivateLinkScopedResource: DataCollectionRulePrivateLinkScopedResourceInfo
+  PrivateLinkScopedResource.resourceId: -|arm-id
+  Processor: PipelineGroupProcessor
+  ProcessorType: PipelineGroupProcessorType
+  ProvisioningState: MonitorProvisioningState
+  PublicNetworkAccess: MonitorWorkspacePublicNetworkAccess
+  QueryType: MonitorSourceQueryType
+  Receiver: PipelineGroupReceiver
+  ReceiverStatus: MonitorReceiverStatus
+  ReceiverType: PipelineGroupReceiverType
+  RecordMap: MonitorWorkspaceLogsRecordMap
+  ResourceMap: MonitorWorkspaceLogsResourceMap
+  ResultType: MonitorResultType
+  RetentionPolicy.enabled: IsEnabled
+  RuleAction: AlertRuleAction
+  RuleCondition: AlertRuleCondition
+  RuleDataSource.legacyResourceId: -|arm-id
+  RuleDataSource.resourceUri: resourceId|arm-id
+  RuleResolveConfiguration: ScheduledQueryRuleResolveConfiguration
+  RuleResolveConfiguration.autoResolved: IsAutoResolved
+  ScaleAction: MonitorScaleAction
+  ScaleCapacity: MonitorScaleCapacity
+  ScaleCapacity.default: -|integer
+  ScaleCapacity.maximum: -|integer
+  ScaleCapacity.minimum: -|integer
+  ScaleDirection: MonitorScaleDirection
+  ScaleRule: AutoscaleRule
+  ScaleRuleMetricDimension: AutoscaleRuleMetricDimension
+  ScaleType: MonitorScaleType
+  ScheduledQueryRuleResource: ScheduledQueryRule
+  ScheduledQueryRuleResource.properties.enabled: IsEnabled
+  ScheduledQueryRuleResourcePatch.properties.enabled: IsEnabled
+  SchemaMap: MonitorWorkspaceLogsSchemaMap
+  ScopeMap: MonitorWorkspaceLogsScopeMap
+  ScopedResource: MonitorPrivateLinkScopedResource
+  ScopedResource.properties.linkedResourceId: -|arm-id
+  Service: PipelineGroupService
   ServiceUpdate: PipelineGroupServiceUpdate
-  AzureResourceManagerCommonTypesExtendedLocation: Azure.ResourceManager.CommonTypes.ExtendedLocation
-  AzureMonitorWorkspaceLogsApiConfig: MonitorWorkspaceLogsApiConfig
-  AzureMonitorWorkspaceLogsExporter: MonitorWorkspaceLogsExporter
+  SingleBaseline: MonitorSingleBaseline
+  SingleMetricBaseline: MonitorSingleMetricBaseline
+  SmsReceiver: MonitorSmsReceiver
+  Source.dataSourceId: -|arm-id
+  StorageBlobDestination: DataCollectionRuleStorageBlobDestination
+  StorageBlobDestination.storageAccountResourceId: -|arm-id
+  StorageTableDestination: DataCollectionRuleStorageTableDestination
+  StorageTableDestination.storageAccountResourceId: -|arm-id
+  StreamDeclaration: DataStreamDeclaration
+  SubscriptionScopeMetric: SubscriptionMonitorMetric
+  SubscriptionScopeMetricsRequestBodyParameters: SubscriptionResourceGetMonitorMetricsWithPostContent
+  TestNotificationDetailsResponse: NotificationStatus
+  TestNotificationDetailsResponse.completedTime: -|date-time
+  TestNotificationDetailsResponse.createdTime: -|date-time
+  TimeAggregation: ScheduledQueryRuleTimeAggregationType
+  TimeAggregationOperator: ThresholdRuleConditionTimeAggregationType
+  TimeAggregationType: MetricTriggerTimeAggregationType
+  TimeSeriesBaseline: MonitorTimeSeriesBaseline
+  TimeSeriesElement: MonitorTimeSeriesElement
+  TimeWindow: MonitorTimeWindow
+  TimeWindow.end: EndOn
+  TimeWindow.start: StartOn
+  Unit: MonitorMetricUnit
+  VMInsightsOnboardingStatus.properties.resourceId: -|arm-id
+  VoiceReceiver: MonitorVoiceReceiver
+  WebhookReceiver: MonitorWebhookReceiver
+  WebtestLocationAvailabilityCriteria.componentId: -|arm-id
+  WebtestLocationAvailabilityCriteria.webTestId: -|arm-id
+  WorkspaceInfo: DataContainerWorkspace
+  WorkspaceInfo.id: -|arm-id
 
 suppress-abstract-base-class:
 - MetricAlertCriteria
@@ -551,7 +555,7 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-05-01/metrics_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2019-03-01/metricBaselines_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/metricAlert_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/19b9fa28a4ac7e156245fad3ee9700e253ee4d2b/specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/metricAlert_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/scheduledQueryRule_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/preview/2018-11-27-preview/vmInsightsOnboarding_API.json

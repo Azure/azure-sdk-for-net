@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> List of rule sets. </summary>
+        [WirePath("managedRuleSets")]
         public IList<ManagedRuleSet> ManagedRuleSets { get; }
     }
 }

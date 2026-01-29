@@ -17,7 +17,7 @@ namespace Azure.Generator.Management.Providers.Abstraction
         {
         }
 
-        public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
+        public override ValueExpression InvokeCreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
             => Original.Invoke(nameof(HttpPipeline.CreateMessage));
 
         /// <inheritdoc/>

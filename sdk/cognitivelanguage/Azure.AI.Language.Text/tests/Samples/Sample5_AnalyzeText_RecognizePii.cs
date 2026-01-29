@@ -122,7 +122,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     ModelVersion = "latest",
                     // Avaliable RedactionPolicies: EntityMaskPolicyType, CharacterMaskPolicyType, and NoMaskPolicyType
-                    RedactionPolicy = new EntityMaskPolicyType()
+                    RedactionPolicies = { new EntityMaskPolicyType { PolicyName = "defaultPolicy", IsDefault = true } }
                 }
             };
 
@@ -156,6 +156,100 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine($"  Message: {analyzeTextDocumentError.Error.Message}");
                 Console.WriteLine();
                 continue;
+            }
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void RecognizePii_RedactionPolicies_SyntheticMask()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisClient client = new(endpoint, credential);
+
+            #region Snippet:Sample5_AnalyzeText_RecognizePii_RedactionPolicies
+            string documentText = "My name is John Doe. My ssn is 123-45-6789. My email is john@example.com..";
+
+            AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs =
+            {
+                new MultiLanguageInput("A", documentText) { Language = "en" },
+                new MultiLanguageInput("B", documentText) { Language = "en" },
+            }
+                },
+                ActionContent = new PiiActionContent
+                {
+                    PiiCategories = { PiiCategory.All },
+
+                    RedactionPolicies =
+            {
+                new EntityMaskPolicyType
+                {
+                    // defaultPolicy: use entity mask for everything unless overridden
+                    PolicyName = "defaultPolicy",
+                    IsDefault = true,
+                },
+                new CharacterMaskPolicyType
+                {
+                    // customMaskForSSN: keep the last 4 digits of SSN, mask the rest
+                    PolicyName = "customMaskForSSN",
+                    UnmaskLength = 4,
+                    UnmaskFromEnd = false,
+                    EntityTypes =
+                    {
+                        PiiCategoriesExclude.UsSocialSecurityNumber
+                    },
+                },
+                new SyntheticReplacementPolicyType
+                {
+                    // syntheticMaskForPerson: generate synthetic values for Person and Email
+                    PolicyName = "syntheticMaskForPerson",
+                    EntityTypes =
+                    {
+                        PiiCategoriesExclude.Person,
+                        PiiCategoriesExclude.Email
+                    },
+                }
+            }
+                }
+            };
+
+            Response<AnalyzeTextResult> response = client.AnalyzeText(body);
+            AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
+
+            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+            {
+                Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
+                Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\"");
+                Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
+
+                foreach (PiiEntity entity in piiResult.Entities)
+                {
+                    Console.WriteLine($"    Text: {entity.Text}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    if (!string.IsNullOrEmpty(entity.Subcategory))
+                    {
+                        Console.WriteLine($"    SubCategory: {entity.Subcategory}");
+                    }
+                    Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine();
+            }
+
+            foreach (DocumentError analyzeTextDocumentError in piiTaskResult.Results.Errors)
+            {
+                Console.WriteLine($"  Error on document {analyzeTextDocumentError.Id}!");
+                Console.WriteLine($"  Document error code: {analyzeTextDocumentError.Error.Code}");
+                Console.WriteLine($"  Message: {analyzeTextDocumentError.Error.Message}");
+                Console.WriteLine();
             }
             #endregion
         }
@@ -326,7 +420,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 },
                 ActionContent = new PiiActionContent()
                 {
-                    ModelVersion = "2025-05-15-preview"
+                    ModelVersion = "latest"
                 }
             };
 
@@ -362,6 +456,73 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine($"Error in document {error.Id}!");
                 Console.WriteLine($"  Error code: {error.Error.Code}");
                 Console.WriteLine($"  Message: {error.Error.Message}");
+                Console.WriteLine();
+            }
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void RecognizePii_ConfidenceScoreThreshold()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisClient client = new(endpoint, credential);
+
+            #region Snippet:Sample5_AnalyzeText_RecognizePii_ConfidenceScoreThreshold
+            string text =
+                "My name is John Doe. My ssn is 222-45-6789. My email is john@example.com. John Doe is my name.";
+
+            // Input documents
+            MultiLanguageTextInput textInput = new MultiLanguageTextInput
+            {
+                MultiLanguageInputs =
+        {
+            new MultiLanguageInput("1", text) { Language = "en" }
+        }
+            };
+
+            // Confidence score overrides:
+            //   default = 0.3
+            //   SSN & Email overridden to 0.9 (so they get filtered out as entities)
+            ConfidenceScoreThreshold confidenceThreshold = new ConfidenceScoreThreshold(0.3f);
+            confidenceThreshold.Overrides.Add(
+                new ConfidenceScoreThresholdOverride(
+                    value: 0.9f,
+                    entity: PiiCategory.UsSocialSecurityNumber.ToString()
+                ));
+            confidenceThreshold.Overrides.Add(
+                new ConfidenceScoreThresholdOverride(
+                    value: 0.9f,
+                    entity: PiiCategory.Email.ToString()
+                ));
+
+            PiiActionContent actionContent = new PiiActionContent
+            {
+                PiiCategories = { PiiCategory.All },
+                DisableEntityValidation = true,
+                ConfidenceScoreThreshold = confidenceThreshold
+            };
+
+            AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = textInput,
+                ActionContent = actionContent
+            };
+
+            Response<AnalyzeTextResult> response = client.AnalyzeText(body);
+            AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
+
+            PiiActionResult doc = piiResult.Results.Documents[0];
+
+            Console.WriteLine($"Redacted text: \"{doc.RedactedText}\"");
+            Console.WriteLine("Recognized entities (after confidence score filtering):");
+
+            foreach (PiiEntity entity in doc.Entities)
+            {
+                Console.WriteLine($"  Text: {entity.Text}");
+                Console.WriteLine($"  Category: {entity.Category}");
+                Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
                 Console.WriteLine();
             }
             #endregion

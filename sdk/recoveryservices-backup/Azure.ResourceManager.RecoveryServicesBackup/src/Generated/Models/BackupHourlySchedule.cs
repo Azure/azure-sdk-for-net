@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="BackupHourlySchedule"/>. </summary>
         /// <param name="interval">
         /// Interval at which backup needs to be triggered. For hourly the value
-        ///  can be 4/6/8/12
+        /// can be 4/6/8/12
         /// </param>
         /// <param name="scheduleWindowStartOn"> To specify start time of the backup window. </param>
         /// <param name="scheduleWindowDuration"> To specify duration of the backup window. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Interval at which backup needs to be triggered. For hourly the value
-        ///  can be 4/6/8/12
+        /// can be 4/6/8/12
         /// </summary>
         public int? Interval { get; set; }
         /// <summary> To specify start time of the backup window. </summary>

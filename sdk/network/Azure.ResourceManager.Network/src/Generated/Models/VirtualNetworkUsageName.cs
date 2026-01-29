@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Localized subnet size and usage string. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
         /// <summary> Subnet size and usage string. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

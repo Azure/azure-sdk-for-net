@@ -38,6 +38,32 @@ function Get-PurgeableGroupResources {
     $purgeableResources += $deletedKeyVaults
   }
 
+  Write-Verbose "Retrieving AI resources from resource group $ResourceGroupName"
+
+  # Get AI resources that will go into soft-deleted state when the resource group is deleted
+  $subscriptionId = (Get-AzContext).Subscription.Id
+  $aiResources = @()
+
+  # Get active Cognitive Services accounts from the resource group
+  $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/resourceGroups/$ResourceGroupName/providers/Microsoft.CognitiveServices/accounts?api-version=2024-10-01" -ErrorAction Ignore
+  if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300 -and $response.Content) {
+    $content = $response.Content | ConvertFrom-Json
+    
+    foreach ($r in $content.value) {
+      $aiResources += [pscustomobject] @{
+        AzsdkResourceType = "Cognitive Services ($($r.kind))"
+        AzsdkName         = $r.name
+        Name              = $r.name
+        Id                = $r.id
+      }
+    }
+  }
+
+  if ($aiResources) {
+    Write-Verbose "Found $($aiResources.Count) AI resources to potentially purge after resource group deletion."
+    $purgeableResources += $aiResources
+  }
+
   return $purgeableResources
 }
 
@@ -94,6 +120,29 @@ function Get-PurgeableResources {
   }
   catch { }
 
+  Write-Verbose "Retrieving deleted Cognitive Services accounts from subscription $subscriptionId"
+
+  # Get deleted Cognitive Services accounts for the current subscription.
+  $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/providers/Microsoft.CognitiveServices/deletedAccounts?api-version=2024-10-01" -ErrorAction Ignore
+  if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300 -and $response.Content) {
+    $content = $response.Content | ConvertFrom-Json
+
+    $deletedCognitiveServices = @()
+    foreach ($r in $content.value) {
+      $deletedCognitiveServices += [pscustomobject] @{
+        AzsdkResourceType = "Cognitive Services ($($r.kind))"
+        AzsdkName         = $r.name
+        Name              = $r.name
+        Id                = $r.id
+      }
+    }
+
+    if ($deletedCognitiveServices) {
+      Write-Verbose "Found $($deletedCognitiveServices.Count) deleted Cognitive Services accounts to potentially purge."
+      $purgeableResources += $deletedCognitiveServices
+    }
+  }
+
   return $purgeableResources
 }
 
@@ -117,15 +166,17 @@ filter Remove-PurgeableResources {
   }
 
   $subscriptionId = (Get-AzContext).Subscription.Id
+  $verboseFlag = $VerbosePreference -eq 'Continue'
 
   foreach ($r in $Resource) {
-    Log "Attempting to purge $($r.AzsdkResourceType) '$($r.AzsdkName)'"
     switch ($r.AzsdkResourceType) {
       'Key Vault' {
         if ($r.EnablePurgeProtection) {
-          Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
+          Write-Verbose "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)" -Verbose:$verboseFlag
           continue
         }
+
+        Log "Attempting to purge $($r.AzsdkResourceType) '$($r.AzsdkName)'"
 
         # Use `-AsJob` to start a lightweight, cancellable job and pass to `Wait-PurgeableResoruceJob` for consistent behavior.
         Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue -AsJob `
@@ -134,16 +185,18 @@ filter Remove-PurgeableResources {
 
       'Managed HSM' {
         if ($r.EnablePurgeProtection) {
-          Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
+          Write-Verbose "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)" -Verbose:$verboseFlag
           continue
         }
+
+        Log "Attempting to purge $($r.AzsdkResourceType) '$($r.AzsdkName)'"
 
         # Use `GetNewClosure()` on the `-Action` ScriptBlock to make sure variables are captured.
         Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2023-02-01" -ErrorAction Ignore -AsJob `
         | Wait-PurgeableResourceJob -Resource $r -Timeout $Timeout -PassThru:$PassThru -Action {
           param ( $response )
           if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {
-            Write-Warning "Successfully requested that Managed HSM '$($r.Name)' be purged, but may take a few minutes before it is actually purged."
+            Write-Verbose "Successfully requested that Managed HSM '$($r.Name)' be purged, but may take a few minutes before it is actually purged." -Verbose:$verboseFlag
           }
           elseif ($response.Content) {
             $content = $response.Content | ConvertFrom-Json
@@ -151,6 +204,22 @@ filter Remove-PurgeableResources {
               $err = $content.error
               Write-Warning "Failed to deleted Managed HSM '$($r.Name)': ($($err.code)) $($err.message)"
             }
+          }
+        }.GetNewClosure()
+      }
+
+      { $_.StartsWith('Cognitive Services') }
+      {
+        Log "Attempting to purge $($r.AzsdkResourceType) '$($r.AzsdkName)'"
+        # Use `GetNewClosure()` on the `-Action` ScriptBlock to make sure variables are captured.
+        Invoke-AzRestMethod -Method DELETE -Path "$($r.id)?api-version=2024-10-01" -ErrorAction Ignore -AsJob `
+        | Wait-PurgeableResourceJob -Resource $r -Timeout $Timeout -PassThru:$PassThru -Action {
+          param ( $response )
+
+          if ($response.StatusCode -eq 200 -or $response.StatusCode -eq 202 -or $response.StatusCode -eq 204) {
+            Write-Verbose "Successfully purged $($r.AzsdkResourceType) '$($r.Name)'." -Verbose:$verboseFlag
+          } else {
+            Write-Warning "Failed purging $($r.AzsdkResourceType) '$($r.Name)' with status code $($response.StatusCode)."
           }
         }.GetNewClosure()
       }

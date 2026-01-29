@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlVmGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlVmGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,9 +81,41 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
+        {
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlVmDeleteDatabaseMigration.json
+            // this example is just showing the usage of "DatabaseMigrationsSqlVm_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DatabaseMigrationSqlVmResource created on azure
+            // for more information of creating DatabaseMigrationSqlVmResource, please refer to the document of DatabaseMigrationSqlVmResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            string sqlVirtualMachineName = "testvm";
+            string targetDBName = "db1";
+            ResourceIdentifier databaseMigrationSqlVmResourceId = DatabaseMigrationSqlVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlVirtualMachineName, targetDBName);
+            DatabaseMigrationSqlVmResource databaseMigrationSqlVm = client.GetDatabaseMigrationSqlVmResource(databaseMigrationSqlVmResourceId);
+
+            // invoke the operation
+            ArmOperation<DatabaseMigrationSqlVmResource> lro = await databaseMigrationSqlVm.DeleteAsync(WaitUntil.Completed);
+            DatabaseMigrationSqlVmResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DatabaseMigrationSqlVmData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +187,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +254,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Cancel_StopOngoingMigrationForTheDatabase()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmCancelDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlVmCancelDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -253,7 +285,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Cutover_CutoverOnlineMigrationOperationForTheDatabase()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmCutoverDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlVmCutoverDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Cutover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

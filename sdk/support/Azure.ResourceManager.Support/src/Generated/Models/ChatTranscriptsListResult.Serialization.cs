@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Support.Models
                 throw new FormatException($"The model {nameof(ChatTranscriptsListResult)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -43,11 +48,6 @@ namespace Azure.ResourceManager.Support.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,12 +86,17 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            IReadOnlyList<ChatTranscriptDetailData> value = default;
             string nextLink = default;
+            IReadOnlyList<ChatTranscriptDetailData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,18 +111,13 @@ namespace Azure.ResourceManager.Support.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChatTranscriptsListResult(value ?? new ChangeTrackingList<ChatTranscriptDetailData>(), nextLink, serializedAdditionalRawData);
+            return new ChatTranscriptsListResult(nextLink, value ?? new ChangeTrackingList<ChatTranscriptDetailData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptsListResult>.Write(ModelReaderWriterOptions options)

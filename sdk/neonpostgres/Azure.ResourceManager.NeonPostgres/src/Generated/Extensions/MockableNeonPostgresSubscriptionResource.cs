@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NeonPostgres;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NeonPostgres.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableNeonPostgresSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _neonOrganizationOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _neonOrganizationOrganizationsRestClient;
+        private ClientDiagnostics _organizationsClientDiagnostics;
+        private Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNeonPostgresSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNeonPostgresSubscriptionResource for mocking. </summary>
         protected MockableNeonPostgresSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNeonPostgresSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNeonPostgresSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNeonPostgresSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics NeonOrganizationOrganizationsClientDiagnostics => _neonOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations NeonOrganizationOrganizationsRestClient => _neonOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NeonOrganizationResource.ResourceType));
+        private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Neon.Postgres/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Neon.Postgres/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NeonOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NeonOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NeonOrganizationResource> GetNeonOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NeonOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NeonOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NeonOrganizationResource(Client, NeonOrganizationData.DeserializeNeonOrganizationData(e)), NeonOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableNeonPostgresSubscriptionResource.GetNeonOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NeonOrganizationData, NeonOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new NeonOrganizationResource(Client, data));
         }
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Neon.Postgres/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Neon.Postgres/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// <returns> A collection of <see cref="NeonOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NeonOrganizationResource> GetNeonOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NeonOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NeonOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NeonOrganizationResource(Client, NeonOrganizationData.DeserializeNeonOrganizationData(e)), NeonOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableNeonPostgresSubscriptionResource.GetNeonOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NeonOrganizationData, NeonOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new NeonOrganizationResource(Client, data));
         }
     }
 }

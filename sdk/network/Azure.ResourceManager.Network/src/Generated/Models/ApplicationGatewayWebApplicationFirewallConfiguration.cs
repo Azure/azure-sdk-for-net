@@ -97,24 +97,34 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Whether the web application firewall is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool Enabled { get; set; }
         /// <summary> Web application firewall mode. </summary>
+        [WirePath("firewallMode")]
         public ApplicationGatewayFirewallMode FirewallMode { get; set; }
         /// <summary> The type of the web application firewall rule set. Possible values are: 'OWASP'. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
         /// <summary> The version of the rule set type. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
         /// <summary> The disabled rule groups. </summary>
+        [WirePath("disabledRuleGroups")]
         public IList<ApplicationGatewayFirewallDisabledRuleGroup> DisabledRuleGroups { get; }
         /// <summary> Whether allow WAF to check request Body. </summary>
+        [WirePath("requestBodyCheck")]
         public bool? RequestBodyCheck { get; set; }
         /// <summary> Maximum request body size for WAF. </summary>
+        [WirePath("maxRequestBodySize")]
         public int? MaxRequestBodySize { get; set; }
         /// <summary> Maximum request body size in Kb for WAF. </summary>
+        [WirePath("maxRequestBodySizeInKb")]
         public int? MaxRequestBodySizeInKb { get; set; }
         /// <summary> Maximum file upload size in Mb for WAF. </summary>
+        [WirePath("fileUploadLimitInMb")]
         public int? FileUploadLimitInMb { get; set; }
         /// <summary> The exclusion list. </summary>
+        [WirePath("exclusions")]
         public IList<ApplicationGatewayFirewallExclusion> Exclusions { get; }
     }
 }

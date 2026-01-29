@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Dynatrace
 {
+    /// <summary></summary>
     public partial class DynatraceMonitorResource : IJsonModel<DynatraceMonitorData>
     {
-        private static DynatraceMonitorData s_dataDeserializationInstance;
-        private static DynatraceMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DynatraceMonitorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DynatraceMonitorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DynatraceMonitorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DynatraceMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceMonitorData>)Data).Write(writer, options);
 
-        DynatraceMonitorData IJsonModel<DynatraceMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceMonitorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynatraceMonitorData IJsonModel<DynatraceMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceMonitorData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DynatraceMonitorData IPersistableModel<DynatraceMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceMonitorData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
-        string IPersistableModel<DynatraceMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DynatraceMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

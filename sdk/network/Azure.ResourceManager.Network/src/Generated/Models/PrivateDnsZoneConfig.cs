@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The resource id of the private dns zone. </summary>
+        [WirePath("properties.privateDnsZoneId")]
         public string PrivateDnsZoneId { get; set; }
         /// <summary> A collection of information regarding a recordSet, holding information to identify private resources. </summary>
+        [WirePath("properties.recordSets")]
         public IReadOnlyList<RecordSet> RecordSets { get; }
     }
 }

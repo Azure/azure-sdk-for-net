@@ -43,6 +43,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("tableName"u8);
                 JsonSerializer.Serialize(writer, TableName);
             }
+            if (Optional.IsDefined(SchemaTypePropertiesSchema))
+            {
+                writer.WritePropertyName("schema"u8);
+                JsonSerializer.Serialize(writer, SchemaTypePropertiesSchema);
+            }
+            if (Optional.IsDefined(Table))
+            {
+                writer.WritePropertyName("table"u8);
+                JsonSerializer.Serialize(writer, Table);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -87,6 +97,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
             DataFactoryElement<string> tableName = default;
+            DataFactoryElement<string> schema0 = default;
+            DataFactoryElement<string> table = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,6 +198,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                             tableName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("schema"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            schema0 = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("table"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            table = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -202,7 +232,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 folder,
                 additionalProperties,
-                tableName);
+                tableName,
+                schema0,
+                table);
         }
 
         BinaryData IPersistableModel<JiraObjectDataset>.Write(ModelReaderWriterOptions options)

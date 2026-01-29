@@ -125,7 +125,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedOne",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -162,7 +163,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedThree",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -199,7 +201,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedFive",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -212,8 +215,9 @@
       "parameters": [
         {
           "$id": "15",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
             "$id": "16",
@@ -221,35 +225,35 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
-          "serverUrlTemplate": "{endpoint}/client/structure/{client}"
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.endpoint"
         },
         {
           "$id": "17",
+          "kind": "endpoint",
           "name": "client",
-          "nameInRequest": "client",
+          "serializedName": "client",
           "doc": "Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.",
           "type": {
             "$ref": "1"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": false,
+          "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
-          "serverUrlTemplate": "{endpoint}/client/structure/{client}"
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.RenamedOperation",
       "apiVersions": [],
@@ -288,7 +292,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedTwo",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -325,7 +330,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedFour",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -362,7 +368,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedSix",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -375,8 +382,9 @@
           "parameters": [
             {
               "$id": "25",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Need to be set as 'http://localhost:3000' in client.",
               "type": {
                 "$id": "26",
@@ -384,43 +392,45 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
+              "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
-              "serverUrlTemplate": "{endpoint}/client/structure/{client}"
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.endpoint"
             },
             {
               "$id": "27",
+              "kind": "endpoint",
               "name": "client",
-              "nameInRequest": "client",
+              "serializedName": "client",
               "doc": "Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.",
               "type": {
                 "$ref": "1"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": false,
+              "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
-              "serverUrlTemplate": "{endpoint}/client/structure/{client}"
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
+            if (Optional.IsDefined(ScheduleProfile))
+            {
+                writer.WritePropertyName("scheduleProfile"u8);
+                writer.WriteObjectValue(ScheduleProfile, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -116,6 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             string provisioningState = default;
             CapacityReservationInstanceView instanceView = default;
             DateTimeOffset? timeCreated = default;
+            ScheduleProfile scheduleProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,6 +218,15 @@ namespace Azure.ResourceManager.Compute.Models
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("scheduleProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduleProfile = ScheduleProfile.DeserializeScheduleProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -231,7 +246,8 @@ namespace Azure.ResourceManager.Compute.Models
                 provisioningTime,
                 provisioningState,
                 instanceView,
-                timeCreated);
+                timeCreated,
+                scheduleProfile);
         }
 
         BinaryData IPersistableModel<CapacityReservationPatch>.Write(ModelReaderWriterOptions options)

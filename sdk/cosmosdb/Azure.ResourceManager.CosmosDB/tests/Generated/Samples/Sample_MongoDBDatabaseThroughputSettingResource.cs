@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBMongoDBDatabaseThroughputGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseThroughputGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBMongoDBDatabaseThroughputGet.json
             // this example is just showing the usage of "MongoDBResources_GetMongoDBDatabaseThroughput" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CosmosDBMongoDBDatabaseThroughputUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseThroughputUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBMongoDBDatabaseThroughputUpdate.json
             // this example is just showing the usage of "MongoDBResources_UpdateMongoDBDatabaseThroughput" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task MigrateMongoDBDatabaseToAutoscale_CosmosDBMongoDBDatabaseMigrateToAutoscale()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseMigrateToAutoscale.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBMongoDBDatabaseMigrateToAutoscale.json
             // this example is just showing the usage of "MongoDBResources_MigrateMongoDBDatabaseToAutoscale" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task MigrateMongoDBDatabaseToManualThroughput_CosmosDBMongoDBDatabaseMigrateToManualThroughput()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseMigrateToManualThroughput.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBMongoDBDatabaseMigrateToManualThroughput.json
             // this example is just showing the usage of "MongoDBResources_MigrateMongoDBDatabaseToManualThroughput" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,91 +148,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ThroughputSettingData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task MongoDBDatabaseRetrieveThroughputDistribution_CosmosDBMongoDBDatabaseRetrieveThroughputDistribution()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseRetrieveThroughputDistribution.json
-            // this example is just showing the usage of "MongoDBResources_MongoDBDatabaseRetrieveThroughputDistribution" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MongoDBDatabaseThroughputSettingResource created on azure
-            // for more information of creating MongoDBDatabaseThroughputSettingResource, please refer to the document of MongoDBDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            ResourceIdentifier mongoDBDatabaseThroughputSettingResourceId = MongoDBDatabaseThroughputSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName);
-            MongoDBDatabaseThroughputSettingResource mongoDBDatabaseThroughputSetting = client.GetMongoDBDatabaseThroughputSettingResource(mongoDBDatabaseThroughputSettingResourceId);
-
-            // invoke the operation
-            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(default, new RetrieveThroughputPropertiesResource(new WritableSubResource[]
-            {
-new WritableSubResource
-{
-Id = new ResourceIdentifier("0"),
-},
-new WritableSubResource
-{
-Id = new ResourceIdentifier("1"),
-}
-            }));
-            ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await mongoDBDatabaseThroughputSetting.MongoDBDatabaseRetrieveThroughputDistributionAsync(WaitUntil.Completed, retrieveThroughputParameters);
-            PhysicalPartitionThroughputInfoResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task MongoDBDatabaseRedistributeThroughput_CosmosDBMongoDBDatabaseRedistributeThroughput()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseRedistributeThroughput.json
-            // this example is just showing the usage of "MongoDBResources_MongoDBDatabaseRedistributeThroughput" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MongoDBDatabaseThroughputSettingResource created on azure
-            // for more information of creating MongoDBDatabaseThroughputSettingResource, please refer to the document of MongoDBDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            ResourceIdentifier mongoDBDatabaseThroughputSettingResourceId = MongoDBDatabaseThroughputSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName);
-            MongoDBDatabaseThroughputSettingResource mongoDBDatabaseThroughputSetting = client.GetMongoDBDatabaseThroughputSettingResource(mongoDBDatabaseThroughputSettingResourceId);
-
-            // invoke the operation
-            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(default, new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
-            {
-new PhysicalPartitionThroughputInfoResource("0")
-{
-Throughput = 5000,
-},
-new PhysicalPartitionThroughputInfoResource("1")
-{
-Throughput = 5000,
-}
-            }, new PhysicalPartitionThroughputInfoResource[]
-            {
-new PhysicalPartitionThroughputInfoResource("2")
-{
-Throughput = 5000,
-},
-new PhysicalPartitionThroughputInfoResource("3")
-            }));
-            ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await mongoDBDatabaseThroughputSetting.MongoDBDatabaseRedistributeThroughputAsync(WaitUntil.Completed, redistributeThroughputParameters);
-            PhysicalPartitionThroughputInfoResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

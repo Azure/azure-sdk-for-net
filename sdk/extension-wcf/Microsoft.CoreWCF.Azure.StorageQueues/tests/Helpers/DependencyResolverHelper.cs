@@ -4,21 +4,22 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers
 {
     internal class DependencyResolverHelper
     {
-        private readonly IWebHost _webHost;
+        private readonly IHost _host;
 
-        public DependencyResolverHelper(IWebHost webHost)
+        public DependencyResolverHelper(IHost host)
         {
-            _webHost = webHost;
+            _host = host;
         }
 
         public T GetService<T>()
         {
-            using IServiceScope serviceScope = _webHost.Services.CreateScope();
+            using IServiceScope serviceScope = _host.Services.CreateScope();
             IServiceProvider services = serviceScope.ServiceProvider;
             T scopedService = services.GetRequiredService<T>();
             return scopedService;

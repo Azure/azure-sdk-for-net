@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -910,8 +911,33 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region UserDelegationKey
         /// <summary>
-        /// Creates a new <see cref="UserDelegationKey"/> instance for mocking.
+        /// Creates a new <see cref="UserDelegationKey(string, string, DateTimeOffset, DateTimeOffset, string, string, string, string)"/> instance for mocking.
         /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId = default,
+            string signedTenantId = default,
+            DateTimeOffset signedStart = default,
+            DateTimeOffset signedExpiry = default,
+            string signedService = default,
+            string signedVersion = default,
+            string signedDelegatedUserTenantId = default,
+            string value = default)
+            => new UserDelegationKey()
+            {
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
+                SignedStartsOn = signedStart,
+                SignedExpiresOn = signedExpiry,
+                SignedService = signedService,
+                SignedVersion = signedVersion,
+                Value = value,
+                SignedDelegatedUserTenantId = signedDelegatedUserTenantId
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="UserDelegationKey(string, string, DateTimeOffset, DateTimeOffset, string, string, string)"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserDelegationKey UserDelegationKey(
             string signedObjectId,
             string signedTenantId,
@@ -949,5 +975,18 @@ namespace Azure.Storage.Files.DataLake.Models
                 Position = position
             };
         #endregion DataLakeQueryError
+
+        #region GetPathTagResult
+        /// <summary>
+        /// Creates a new GetPathTagResult for mocking.
+        /// </summary>
+        // https://github.com/Azure/azure-sdk-for-net/issues/52168
+        internal static GetPathTagResult GetPathTagResult(
+            Tags tags)
+            => new GetPathTagResult()
+            {
+                Tags = tags
+            };
+        #endregion GetPathTagResult
     }
 }

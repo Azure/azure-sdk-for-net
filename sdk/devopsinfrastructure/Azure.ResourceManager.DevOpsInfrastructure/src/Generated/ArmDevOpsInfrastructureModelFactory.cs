@@ -8,87 +8,276 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DevOpsInfrastructure;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDevOpsInfrastructureModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DevOpsInfrastructure.DevOpsPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DevOpsInfrastructure.DevOpsPoolData"/> instance for mocking. </returns>
-        public static DevOpsPoolData DevOpsPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DevOpsPoolProperties properties = null, ManagedServiceIdentity identity = null)
+        public static DevOpsPoolData DevOpsPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevOpsPoolProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevOpsPoolData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> GitHub organization profile. </summary>
+        /// <param name="organizations"> The list of GitHub organizations/repositories the pool should be present in. </param>
+        /// <returns> A new <see cref="Models.DevOpsGitHubOrganizationProfile"/> instance for mocking. </returns>
+        public static DevOpsGitHubOrganizationProfile DevOpsGitHubOrganizationProfile(IEnumerable<DevOpsGitHubOrganization> organizations = default)
+        {
+            organizations ??= new ChangeTrackingList<DevOpsGitHubOrganization>();
+
+            return new DevOpsGitHubOrganizationProfile("GitHub", additionalBinaryDataProperties: null, organizations.ToList());
+        }
+
+        /// <summary> Defines a GitHub organization. </summary>
+        /// <param name="uri"> The GitHub organization URL in which the pool should be created. </param>
+        /// <param name="repositories"> Optional list of repositories in which the pool should be created. </param>
+        /// <returns> A new <see cref="Models.DevOpsGitHubOrganization"/> instance for mocking. </returns>
+        public static DevOpsGitHubOrganization DevOpsGitHubOrganization(Uri uri = default, IEnumerable<string> repositories = default)
+        {
+            repositories ??= new ChangeTrackingList<string>();
+
+            return new DevOpsGitHubOrganization(uri, repositories.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure DevOps organization profile. </summary>
+        /// <param name="organizations"> The list of Azure DevOps organizations the pool should be present in. </param>
+        /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
+        /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
+        /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
+        {
+            organizations ??= new ChangeTrackingList<DevOpsOrganization>();
+
+            return new DevOpsAzureOrganizationProfile("AzureDevOps", additionalBinaryDataProperties: null, organizations.ToList(), permissionProfile, @alias);
+        }
+
+        /// <summary> Defines an Azure DevOps organization. </summary>
+        /// <param name="uri"> The Azure DevOps organization URL in which the pool should be created. </param>
+        /// <param name="projects"> Optional list of projects in which the pool should be created. </param>
+        /// <param name="parallelism"> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </param>
+        /// <param name="openAccess"> Determines if the pool should have open access to all projects in this organization. </param>
+        /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
+        /// <returns> A new <see cref="Models.DevOpsOrganization"/> instance for mocking. </returns>
+        public static DevOpsOrganization DevOpsOrganization(Uri uri = default, IEnumerable<string> projects = default, int? parallelism = default, bool? openAccess = default, string @alias = default)
+        {
+            projects ??= new ChangeTrackingList<string>();
+
+            return new DevOpsOrganization(
+                uri,
+                projects.ToList(),
+                parallelism,
+                openAccess,
+                @alias,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the type of Azure DevOps pool permission. </summary>
+        /// <param name="kind"> Determines who has admin permissions to the Azure DevOps pool. </param>
+        /// <param name="users"> User email addresses. </param>
+        /// <param name="groups"> Group email addresses. </param>
+        /// <returns> A new <see cref="Models.DevOpsAzurePermissionProfile"/> instance for mocking. </returns>
+        public static DevOpsAzurePermissionProfile DevOpsAzurePermissionProfile(DevOpsAzurePermissionType kind = default, IEnumerable<string> users = default, IEnumerable<string> groups = default)
+        {
+            users ??= new ChangeTrackingList<string>();
+            groups ??= new ChangeTrackingList<string>();
+
+            return new DevOpsAzurePermissionProfile(kind, users.ToList(), groups.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="images"> The VM images of the machines in the pool. </param>
+        /// <param name="osProfile"> The OS profile of the machines in the pool. </param>
+        /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
+        /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
+        /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
+        {
+            images ??= new ChangeTrackingList<DevOpsPoolVmImage>();
+
+            return new DevOpsVmssFabricProfile(
+                "Vmss",
+                additionalBinaryDataProperties: null,
+                skuName is null ? default : new DevOpsAzureSku(skuName, null),
+                images.ToList(),
+                osProfile,
+                storageProfile,
+                networkProfile);
+        }
+
+        /// <summary> The VM image of the machines in the pool. </summary>
+        /// <param name="resourceId"> The resource id of the image. </param>
+        /// <param name="wellKnownImageName"> The image to use from a well-known set of images made available to customers. </param>
+        /// <param name="aliases"> List of aliases to reference the image by. </param>
+        /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
+        /// <param name="ephemeralType"> The ephemeral type of the image. </param>
+        /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
+        /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default)
+        {
+            aliases ??= new ChangeTrackingList<string>();
+
+            return new DevOpsPoolVmImage(
+                resourceId,
+                wellKnownImageName,
+                aliases.ToList(),
+                buffer,
+                ephemeralType,
+                isEphemeral,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The secret management settings of the machines in the pool. </summary>
+        /// <param name="certificateStoreLocation"> Where to store certificates on the machine. </param>
+        /// <param name="certificateStoreName"> Name of the certificate store to use on the machine, currently 'My' and 'Root' are supported. </param>
+        /// <param name="observedCertificates"> The list of certificates to install on all machines in the pool. </param>
+        /// <param name="keyExportable"> Defines if the key of the certificates should be exportable. </param>
+        /// <returns> A new <see cref="Models.SecretsManagementSettings"/> instance for mocking. </returns>
+        public static SecretsManagementSettings SecretsManagementSettings(string certificateStoreLocation = default, CertificateStoreNameOption? certificateStoreName = default, IEnumerable<Uri> observedCertificates = default, bool keyExportable = default)
+        {
+            observedCertificates ??= new ChangeTrackingList<Uri>();
+
+            return new SecretsManagementSettings(certificateStoreLocation, certificateStoreName, observedCertificates.ToList(), keyExportable, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The storage profile of the VMSS. </summary>
+        /// <param name="osDiskStorageAccountType"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="dataDisks"> A list of empty data disks to attach. </param>
+        /// <returns> A new <see cref="Models.DevOpsStorageProfile"/> instance for mocking. </returns>
+        public static DevOpsStorageProfile DevOpsStorageProfile(OSDiskStorageAccountType? osDiskStorageAccountType = default, IEnumerable<DevOpsDataDisk> dataDisks = default)
+        {
+            dataDisks ??= new ChangeTrackingList<DevOpsDataDisk>();
+
+            return new DevOpsStorageProfile(osDiskStorageAccountType, dataDisks.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The network profile of the machines in the pool. </summary>
+        /// <param name="subnetId"> The subnet id on which to put all machines created in the pool. </param>
+        /// <param name="staticIPAddressCount"> The number of static public IP addresses for outgoing connections assigned to the pool. </param>
+        /// <param name="ipAddresses"> Read only. The list of static public IP addresses for outgoing connections assigned to the pool. </param>
+        /// <returns> A new <see cref="Models.DevOpsNetworkProfile"/> instance for mocking. </returns>
+        public static DevOpsNetworkProfile DevOpsNetworkProfile(string subnetId = default, int? staticIPAddressCount = default, IEnumerable<string> ipAddresses = default)
+        {
+            ipAddresses ??= new ChangeTrackingList<string>();
+
+            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, ipAddresses.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the Pool. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsPoolPatch"/> instance for mocking. </returns>
+        public static DevOpsPoolPatch DevOpsPoolPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, PoolUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevOpsPoolPatch(identity, tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The parameters used to check the availability of a resource. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of resource that is used as the scope of the availability check. </param>
+        /// <returns> A new <see cref="Models.CheckNameAvailability"/> instance for mocking. </returns>
+        public static CheckNameAvailability CheckNameAvailability(string name = default, DevOpsInfrastructureResourceType @type = default)
+        {
+            return new CheckNameAvailability(name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CheckNameAvailability operation response. </summary>
+        /// <param name="available"> Availability status of the name. </param>
+        /// <param name="message"> A message explaining why the name is unavailable. Will be null if the name is available. </param>
+        /// <param name="name"> The name whose availability was checked. </param>
+        /// <param name="reason"> The reason code explaining why the name is unavailable. Will be null if the name is available. </param>
+        /// <returns> A new <see cref="Models.DevOpsCheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DevOpsCheckNameAvailabilityResult DevOpsCheckNameAvailabilityResult(DevOpsAvailabilityStatus available = default, string message = default, string name = default, CheckNameAvailabilityReason reason = default)
+        {
+            return new DevOpsCheckNameAvailabilityResult(available, message, name, reason, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for deleting many resources by their IDs. </summary>
+        /// <param name="resourceIds"> List of resource IDs to delete. </param>
+        /// <returns> A new <see cref="Models.DevOpsDeleteResourcesDetails"/> instance for mocking. </returns>
+        public static DevOpsDeleteResourcesDetails DevOpsDeleteResourcesDetails(IEnumerable<string> resourceIds = default)
+        {
+            resourceIds ??= new ChangeTrackingList<string>();
+
+            return new DevOpsDeleteResourcesDetails(resourceIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A ResourceDetailsObject. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DevOpsResourceDetails"/> instance for mocking. </returns>
-        public static DevOpsResourceDetails DevOpsResourceDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceDetailsProperties properties = null)
+        public static DevOpsResourceDetails DevOpsResourceDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevOpsResourceDetailsProperties properties = default)
         {
             return new DevOpsResourceDetails(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceDetailsProperties"/>. </summary>
+        /// <summary> Details of the ResourceDetailsObject. </summary>
         /// <param name="status"> The status of the resource. </param>
         /// <param name="image"> The image name of the resource. </param>
         /// <param name="imageVersion"> The version of the image running on the resource. </param>
         /// <returns> A new <see cref="Models.DevOpsResourceDetailsProperties"/> instance for mocking. </returns>
-        public static DevOpsResourceDetailsProperties DevOpsResourceDetailsProperties(DevOpsResourceStatus status = default, string image = null, string imageVersion = null)
+        public static DevOpsResourceDetailsProperties DevOpsResourceDetailsProperties(DevOpsResourceStatus status = default, string image = default, string imageVersion = default)
         {
-            return new DevOpsResourceDetailsProperties(status, image, imageVersion, serializedAdditionalRawData: null);
+            return new DevOpsResourceDetailsProperties(status, image, imageVersion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceSku"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A ResourceSku. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DevOpsResourceSku"/> instance for mocking. </returns>
-        public static DevOpsResourceSku DevOpsResourceSku(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceSkuProperties properties = null)
+        public static DevOpsResourceSku DevOpsResourceSku(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevOpsResourceSkuProperties properties = default)
         {
             return new DevOpsResourceSku(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceSkuProperties"/>. </summary>
+        /// <summary> Properties of a ResourceSku. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="tier"> The tier of virtual machines in a scale set. </param>
         /// <param name="size"> The size of the SKU. </param>
@@ -98,92 +287,92 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="capabilities"> Name value pairs to describe the capability. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
         /// <returns> A new <see cref="Models.DevOpsResourceSkuProperties"/> instance for mocking. </returns>
-        public static DevOpsResourceSkuProperties DevOpsResourceSkuProperties(string resourceType = null, string tier = null, string size = null, string family = null, IEnumerable<AzureLocation> locations = null, IEnumerable<ResourceSkuLocationInfo> locationInfo = null, IEnumerable<ResourceSkuCapabilities> capabilities = null, IEnumerable<ResourceSkuRestrictions> restrictions = null)
+        public static DevOpsResourceSkuProperties DevOpsResourceSkuProperties(string resourceType = default, string tier = default, string size = default, string family = default, IEnumerable<AzureLocation> locations = default, IEnumerable<ResourceSkuLocationInfo> locationInfo = default, IEnumerable<ResourceSkuCapabilities> capabilities = default, IEnumerable<ResourceSkuRestrictions> restrictions = default)
         {
-            locations ??= new List<AzureLocation>();
-            locationInfo ??= new List<ResourceSkuLocationInfo>();
-            capabilities ??= new List<ResourceSkuCapabilities>();
-            restrictions ??= new List<ResourceSkuRestrictions>();
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            locationInfo ??= new ChangeTrackingList<ResourceSkuLocationInfo>();
+            capabilities ??= new ChangeTrackingList<ResourceSkuCapabilities>();
+            restrictions ??= new ChangeTrackingList<ResourceSkuRestrictions>();
 
             return new DevOpsResourceSkuProperties(
                 resourceType,
                 tier,
                 size,
                 family,
-                locations?.ToList(),
-                locationInfo?.ToList(),
-                capabilities?.ToList(),
-                restrictions?.ToList(),
-                serializedAdditionalRawData: null);
+                locations.ToList(),
+                locationInfo.ToList(),
+                capabilities.ToList(),
+                restrictions.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuLocationInfo"/>. </summary>
+        /// <summary> Describes an available Compute SKU Location Information. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
         /// <returns> A new <see cref="Models.ResourceSkuLocationInfo"/> instance for mocking. </returns>
-        public static ResourceSkuLocationInfo ResourceSkuLocationInfo(AzureLocation location = default, IEnumerable<string> zones = null, IEnumerable<ResourceSkuZoneDetails> zoneDetails = null)
+        public static ResourceSkuLocationInfo ResourceSkuLocationInfo(AzureLocation location = default, IEnumerable<string> zones = default, IEnumerable<ResourceSkuZoneDetails> zoneDetails = default)
         {
-            zones ??= new List<string>();
-            zoneDetails ??= new List<ResourceSkuZoneDetails>();
+            zones ??= new ChangeTrackingList<string>();
+            zoneDetails ??= new ChangeTrackingList<ResourceSkuZoneDetails>();
 
-            return new ResourceSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceSkuLocationInfo(location, zones.ToList(), zoneDetails.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuZoneDetails"/>. </summary>
+        /// <summary> Describes The zonal capabilities of a SKU. </summary>
         /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         /// <returns> A new <see cref="Models.ResourceSkuZoneDetails"/> instance for mocking. </returns>
-        public static ResourceSkuZoneDetails ResourceSkuZoneDetails(IEnumerable<string> name = null, IEnumerable<ResourceSkuCapabilities> capabilities = null)
+        public static ResourceSkuZoneDetails ResourceSkuZoneDetails(IEnumerable<string> name = default, IEnumerable<ResourceSkuCapabilities> capabilities = default)
         {
-            name ??= new List<string>();
-            capabilities ??= new List<ResourceSkuCapabilities>();
+            name ??= new ChangeTrackingList<string>();
+            capabilities ??= new ChangeTrackingList<ResourceSkuCapabilities>();
 
-            return new ResourceSkuZoneDetails(name?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceSkuZoneDetails(name.ToList(), capabilities.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCapabilities"/>. </summary>
+        /// <summary> Describes The SKU capabilities object. </summary>
         /// <param name="name"> The name of the SKU capability. </param>
         /// <param name="value"> The value of the SKU capability. </param>
         /// <returns> A new <see cref="Models.ResourceSkuCapabilities"/> instance for mocking. </returns>
-        public static ResourceSkuCapabilities ResourceSkuCapabilities(string name = null, string value = null)
+        public static ResourceSkuCapabilities ResourceSkuCapabilities(string name = default, string value = default)
         {
-            return new ResourceSkuCapabilities(name, value, serializedAdditionalRawData: null);
+            return new ResourceSkuCapabilities(name, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuRestrictions"/>. </summary>
+        /// <summary> The restrictions of the SKU. </summary>
         /// <param name="restrictionsType"> the type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> the reason for restriction. </param>
         /// <returns> A new <see cref="Models.ResourceSkuRestrictions"/> instance for mocking. </returns>
-        public static ResourceSkuRestrictions ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, ResourceSkuRestrictionInfo restrictionInfo = null, ResourceSkuRestrictionsReasonCode? reasonCode = null)
+        public static ResourceSkuRestrictions ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType = default, IEnumerable<string> values = default, ResourceSkuRestrictionInfo restrictionInfo = default, ResourceSkuRestrictionsReasonCode? reasonCode = default)
         {
-            values ??= new List<string>();
+            values ??= new ChangeTrackingList<string>();
 
-            return new ResourceSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
+            return new ResourceSkuRestrictions(restrictionsType, values.ToList(), restrictionInfo, reasonCode, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuRestrictionInfo"/>. </summary>
+        /// <summary> Describes an available Compute SKU Restriction Information. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <returns> A new <see cref="Models.ResourceSkuRestrictionInfo"/> instance for mocking. </returns>
-        public static ResourceSkuRestrictionInfo ResourceSkuRestrictionInfo(IEnumerable<AzureLocation> locations = null, IEnumerable<string> zones = null)
+        public static ResourceSkuRestrictionInfo ResourceSkuRestrictionInfo(IEnumerable<AzureLocation> locations = default, IEnumerable<string> zones = default)
         {
-            locations ??= new List<AzureLocation>();
-            zones ??= new List<string>();
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            zones ??= new ChangeTrackingList<string>();
 
-            return new ResourceSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceSkuRestrictionInfo(locations.ToList(), zones.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuota"/>. </summary>
+        /// <summary> Describes Resource Quota. </summary>
         /// <param name="name"> The name of the quota. </param>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="unit"> The unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <returns> A new <see cref="Models.DevOpsResourceQuota"/> instance for mocking. </returns>
-        public static DevOpsResourceQuota DevOpsResourceQuota(DevOpsResourceQuotaName name = null, ResourceIdentifier id = null, string unit = null, long currentValue = default, long limit = default)
+        public static DevOpsResourceQuota DevOpsResourceQuota(DevOpsResourceQuotaName name = default, ResourceIdentifier id = default, string unit = default, long currentValue = default, long limit = default)
         {
             return new DevOpsResourceQuota(
                 name,
@@ -191,34 +380,33 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 unit,
                 currentValue,
                 limit,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuotaName"/>. </summary>
+        /// <summary> The Quota Names. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <returns> A new <see cref="Models.DevOpsResourceQuotaName"/> instance for mocking. </returns>
-        public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = null, string localizedValue = null)
+        public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = default, string localizedValue = default)
         {
-            return new DevOpsResourceQuotaName(value, localizedValue, serializedAdditionalRawData: null);
+            return new DevOpsResourceQuotaName(value, localizedValue, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsImageVersion"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="imageVersion"> The resource-specific properties for this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="imageVersion"> Version of the image. </param>
         /// <returns> A new <see cref="Models.DevOpsImageVersion"/> instance for mocking. </returns>
-        public static DevOpsImageVersion DevOpsImageVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string imageVersion = null)
+        public static DevOpsImageVersion DevOpsImageVersion(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string imageVersion = default)
         {
             return new DevOpsImageVersion(
                 id,
                 name,
                 resourceType,
                 systemData,
-                imageVersion != null ? new ImageVersionProperties(imageVersion, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                imageVersion is null ? default : new ImageVersionProperties(imageVersion, null));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallNetworkType : IEquatable<FirewallNetworkType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FirewallNetworkType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FirewallNetworkType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string VnetValue = "VNET";
         private const string VwanValue = "VWAN";
 
-        /// <summary> VNET. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FirewallNetworkType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Vnet. </summary>
         public static FirewallNetworkType Vnet { get; } = new FirewallNetworkType(VnetValue);
-        /// <summary> VWAN. </summary>
+
+        /// <summary> Gets the Vwan. </summary>
         public static FirewallNetworkType Vwan { get; } = new FirewallNetworkType(VwanValue);
+
         /// <summary> Determines if two <see cref="FirewallNetworkType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallNetworkType left, FirewallNetworkType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallNetworkType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallNetworkType left, FirewallNetworkType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallNetworkType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallNetworkType(string value) => new FirewallNetworkType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallNetworkType?(string value) => value == null ? null : new FirewallNetworkType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallNetworkType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallNetworkType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertAction"/>. </summary>
-        /// <param name="actionGroupId"> the id of the action group to use. </param>
+        /// <param name="actionGroupId"> The id of the action group to use. </param>
         /// <param name="webHookProperties"> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricAlertAction(ResourceIdentifier actionGroupId, IDictionary<string, string> webHookProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> the id of the action group to use. </summary>
+        /// <summary> The id of the action group to use. </summary>
         public ResourceIdentifier ActionGroupId { get; set; }
         /// <summary> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </summary>
         public IDictionary<string, string> WebHookProperties { get; }

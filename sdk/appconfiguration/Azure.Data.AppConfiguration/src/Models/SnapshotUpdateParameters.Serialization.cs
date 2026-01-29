@@ -6,15 +6,8 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class SnapshotUpdateParameters : IUtf8JsonSerializable
+    internal partial class SnapshotUpdateParameters
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, ModelSerializationExtensions.WireOptions);
-            writer.WriteEndObject();
-        }
-
         // Mapping model to raw request
         internal static RequestContent ToRequestContent(SnapshotUpdateParameters snapshotUpdateParameters)
         {

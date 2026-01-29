@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -24,11 +25,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             this.TelemetryItems = telemetryItems;
         }
 
-        public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+        public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
-            foreach (var telemetryItem in telemetryItems)
+            lock (this.TelemetryItems)
             {
-                this.TelemetryItems.Add(telemetryItem);
+                foreach (var telemetryItem in telemetryItems)
+                {
+                    this.TelemetryItems.Add(telemetryItem);
+                }
             }
 
             return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));

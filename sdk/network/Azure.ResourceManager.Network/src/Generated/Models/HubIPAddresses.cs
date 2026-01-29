@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Public IP addresses associated with azure firewall. </summary>
+        [WirePath("publicIPs")]
         public HubPublicIPAddresses PublicIPs { get; set; }
         /// <summary> Private IP Address associated with azure firewall. </summary>
+        [WirePath("privateIPAddress")]
         public string PrivateIPAddress { get; set; }
     }
 }

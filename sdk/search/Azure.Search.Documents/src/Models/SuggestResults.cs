@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace Azure.Search.Documents.Models
     /// The .NET type that maps to the index schema. Instances of this type can
     /// be retrieved as documents from the index.
     /// </typeparam>
+    [SuppressMessage("Usage", "AZC0035:Output model type 'SuggestResults' should have a corresponding method in a model factory class.", Justification = "Model factory method exists in SearchModelFactory but analyzer isn’t recognizing it")]
     public partial class SuggestResults<T>
     {
         /// <summary>

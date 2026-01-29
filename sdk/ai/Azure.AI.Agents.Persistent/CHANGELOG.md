@@ -1,18 +1,87 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.9 (Unreleased)
 
 ### Features Added
-
-- Implemented streaming scenario for MCP tool.
+- Added support for `CodeInterpreterToolCallContent` from `Microsoft.Extensions.AI` abstractions when executing `HostedCodeInterpreterTool` tool.
 
 ### Breaking Changes
 
 ### Bugs Fixed
-
-- Fixed the deserialization issue, when agent service returns the customized lists of trusted and requiring authentication MCP tools.
+- Fixed a performance issue in `PersistentAgentsChatClient.GetStreamingResponseAsync` [issue](https://github.com/Azure/azure-sdk-for-net/issues/54326).
 
 ### Other Changes
+
+## 1.2.0-beta.8 (2025-12-01)
+
+### Features Added
+- Added support for Computer usage.
+- Improved handling of errors by `PersistentAgentsChatClient` in the streaming scenarios.
+
+### Bugs Fixed
+- Fix the issue with `PersistentAgentsChatClient` when the run in incomplete state is encountered [issue](https://github.com/microsoft/agent-framework/issues/2298).
+
+### Sample updates
+- Added sample for Computer usage.
+
+## 1.2.0-beta.7 (2025-10-28)
+
+### Breaking Changes
+- The `trust` parameter for `MCPApproval` constructor was renamed to `requireApproval`.
+
+### Bugs Fixed
+- Relax the validation of previous conversation in the `PersistentAgentsChatClient`.
+
+### Other Changes
+- Expand AIFunction support to also include any AIFunctionDeclaration.
+- Add an extension AsAITool method that makes it easy to add any persistent ToolDefinition to ChatOptions.Tools.
+- Add HostedMcpServerTool support for `PersistentAgentsChatClient`.
+
+## 1.2.0-beta.6 (2025-10-10)
+
+### Bugs Fixed
+- Fix the issue on calculating hash of `FunctionToolDefinition`. See [issue](https://github.com/Azure/azure-sdk-for-net/issues/53043).
+- Expose the `ServerLabel` on `SubmitToolApprovalUpdate` See [issue](https://github.com/Azure/azure-sdk-for-net/issues/53001).
+- Fix naming of MCPApproval see [issue](https://github.com/Azure/azure-sdk-for-net/issues/53000)
+- Fix issue with image block serialization in async scenarios [issue](https://github.com/Azure/azure-sdk-for-net/issues/52671)
+
+## 1.2.0-beta.5 (2025-09-18)
+
+### Bugs Fixed
+- Fix issue with image block serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/52571)
+
+## 1.2.0-beta.4 (2025-09-05)
+
+### Features Added
+- Updated `Microsoft.Extensions.AI.Abstractions` dependency to version 9.8.0.
+- Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`.
+- Make `Azure.AI.Agents.Persistent` compatible with [ahead-of-time compilation process (AOT)](https://learn.microsoft.com/aspnet/core/fundamentals/native-aot).
+- Improved the way `RequireApproval` is being set. See the [issue](https://github.com/Azure/azure-sdk-for-net/issues/52213).
+
+### Bugs Fixed
+- Fix issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
+- Fix handling of streaming update of unexpected type [issue](https://github.com/Azure/azure-sdk-for-net/issues/52407).
+
+## 1.2.0-beta.3 (2025-08-22)
+
+### Features Added
+- Added delete operation for `ThreadMessages`.
+- Add `RunStepDeltaCustomBingGroundingToolCall`, describing `BingCustomSearchTool` updates in streaming scenario.
+- Add `RunStepDeltaMicrosoftFabricToolCall`, describing `FabricTool` updates in streaming scenario.
+- Add `RunStepDeltaSharepointToolCall`, describing `SharepointTool` updates in streaming scenario.
+
+## 1.2.0-beta.2 (2025-08-13)
+
+### Features Added
+
+- Implemented streaming scenario for MCP tool.
+- Added `RunStepDetailsActivity`, describing MCP function parameters.
+
+### Bugs Fixed
+
+- Fixed the deserialization issue, when agent service returns the customized lists of trusted and requiring authentication MCP tools.
+- Added classes for deserialization of `RunStepDeltaAzureAISearchToolCall`, `RunStepDeltaOpenAPIToolCall` and `RunStepDeltaDeepResearchToolCall`, required to get the real time updates when Azure AI Search, OpenAPI or Deep Research tools are being used during streaming scenarios.
+- Added `RunStepConnectedAgentToolCall` and `RunStepDeltaConnectedAgentToolCall` for deserializing Connected Agent tool updates in non-streaming and streaming scenarios.
 
 ### Sample updates
 

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
     /// <summary> Installed data manager for Agriculture solution detail. </summary>
     public partial class AgricultureSolution
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgricultureSolution"/>. </summary>
         public AgricultureSolution()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="saasSubscriptionId"> Saas subscription Id. </param>
         /// <param name="saasSubscriptionName"> Saas subscription name. </param>
         /// <param name="planId"> Plan Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgricultureSolution(string applicationName, string partnerId, string marketPlacePublisherId, string saasSubscriptionId, string saasSubscriptionName, string planId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AgricultureSolution(string applicationName, string partnerId, string marketPlacePublisherId, string saasSubscriptionId, string saasSubscriptionName, string planId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationName = applicationName;
             PartnerId = partnerId;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             SaasSubscriptionId = saasSubscriptionId;
             SaasSubscriptionName = saasSubscriptionName;
             PlanId = planId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Application name of the solution. </summary>
         public string ApplicationName { get; set; }
+
         /// <summary> Partner Id. </summary>
         public string PartnerId { get; set; }
+
         /// <summary> Marketplace publisher Id. </summary>
         public string MarketPlacePublisherId { get; set; }
+
         /// <summary> Saas subscription Id. </summary>
         public string SaasSubscriptionId { get; set; }
+
         /// <summary> Saas subscription name. </summary>
         public string SaasSubscriptionName { get; set; }
+
         /// <summary> Plan Id. </summary>
         public string PlanId { get; set; }
     }

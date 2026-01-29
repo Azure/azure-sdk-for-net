@@ -29,7 +29,7 @@ if (-not $LaunchOnly) {
         }
 
         Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-        Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
+        Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/Azure.Generator.MgmtTypeSpec.Tests.csproj"
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {

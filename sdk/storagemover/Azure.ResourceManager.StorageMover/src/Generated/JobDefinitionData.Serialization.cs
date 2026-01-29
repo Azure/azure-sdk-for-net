@@ -10,16 +10,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobDefinitionData : IUtf8JsonSerializable, IJsonModel<JobDefinitionData>
+    /// <summary> The Job Definition resource. </summary>
+    public partial class JobDefinitionData : ResourceData, IJsonModel<JobDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/> for deserialization. </summary>
+        internal JobDefinitionData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,283 +38,107 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JobDefinitionData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            writer.WritePropertyName("copyMode"u8);
-            writer.WriteStringValue(CopyMode.ToString());
-            writer.WritePropertyName("sourceName"u8);
-            writer.WriteStringValue(SourceName);
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(SourceSubpath))
-            {
-                writer.WritePropertyName("sourceSubpath"u8);
-                writer.WriteStringValue(SourceSubpath);
-            }
-            writer.WritePropertyName("targetName"u8);
-            writer.WriteStringValue(TargetName);
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
-            {
-                writer.WritePropertyName("targetResourceId"u8);
-                writer.WriteStringValue(TargetResourceId);
-            }
-            if (Optional.IsDefined(TargetSubpath))
-            {
-                writer.WritePropertyName("targetSubpath"u8);
-                writer.WriteStringValue(TargetSubpath);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LatestJobRunName))
-            {
-                writer.WritePropertyName("latestJobRunName"u8);
-                writer.WriteStringValue(LatestJobRunName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LatestJobRunResourceId))
-            {
-                writer.WritePropertyName("latestJobRunResourceId"u8);
-                writer.WriteStringValue(LatestJobRunResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LatestJobRunStatus))
-            {
-                writer.WritePropertyName("latestJobRunStatus"u8);
-                writer.WriteStringValue(LatestJobRunStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(AgentName))
-            {
-                writer.WritePropertyName("agentName"u8);
-                writer.WriteStringValue(AgentName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AgentResourceId))
-            {
-                writer.WritePropertyName("agentResourceId"u8);
-                writer.WriteStringValue(AgentResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
-        JobDefinitionData IJsonModel<JobDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobDefinitionData IJsonModel<JobDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (JobDefinitionData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JobDefinitionData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeJobDefinitionData(document.RootElement, options);
         }
 
-        internal static JobDefinitionData DeserializeJobDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static JobDefinitionData DeserializeJobDefinitionData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string description = default;
-            StorageMoverCopyMode copyMode = default;
-            string sourceName = default;
-            ResourceIdentifier sourceResourceId = default;
-            string sourceSubpath = default;
-            string targetName = default;
-            ResourceIdentifier targetResourceId = default;
-            string targetSubpath = default;
-            string latestJobRunName = default;
-            ResourceIdentifier latestJobRunResourceId = default;
-            JobRunStatus? latestJobRunStatus = default;
-            string agentName = default;
-            ResourceIdentifier agentResourceId = default;
-            StorageMoverProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            JobDefinitionProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("copyMode"u8))
-                        {
-                            copyMode = new StorageMoverCopyMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceName"u8))
-                        {
-                            sourceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceSubpath"u8))
-                        {
-                            sourceSubpath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetName"u8))
-                        {
-                            targetName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("targetSubpath"u8))
-                        {
-                            targetSubpath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestJobRunName"u8))
-                        {
-                            latestJobRunName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestJobRunResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            latestJobRunResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("latestJobRunStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            latestJobRunStatus = new JobRunStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("agentName"u8))
-                        {
-                            agentName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("agentResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            agentResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = JobDefinitionProperties.DeserializeJobDefinitionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new JobDefinitionData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                description,
-                copyMode,
-                sourceName,
-                sourceResourceId,
-                sourceSubpath,
-                targetName,
-                targetResourceId,
-                targetSubpath,
-                latestJobRunName,
-                latestJobRunResourceId,
-                latestJobRunStatus,
-                agentName,
-                agentResourceId,
-                provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<JobDefinitionData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JobDefinitionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -317,15 +148,20 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
-        JobDefinitionData IPersistableModel<JobDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobDefinitionData IPersistableModel<JobDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (JobDefinitionData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeJobDefinitionData(document.RootElement, options);
                     }
                 default:
@@ -333,6 +169,26 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="jobDefinitionData"> The <see cref="JobDefinitionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(JobDefinitionData jobDefinitionData)
+        {
+            if (jobDefinitionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(jobDefinitionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="JobDefinitionData"/> from. </param>
+        internal static JobDefinitionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeJobDefinitionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string CanceledValue = "Canceled";
         private const string DeleteFailedValue = "DeleteFailed";
         private const string PendingValue = "Pending";
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Succeeded. </summary>
         public static ContainerAppCertificateProvisioningState Succeeded { get; } = new ContainerAppCertificateProvisioningState(SucceededValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppCertificateProvisioningState DeleteFailed { get; } = new ContainerAppCertificateProvisioningState(DeleteFailedValue);
         /// <summary> Pending. </summary>
         public static ContainerAppCertificateProvisioningState Pending { get; } = new ContainerAppCertificateProvisioningState(PendingValue);
+        /// <summary> Deleting. </summary>
+        public static ContainerAppCertificateProvisioningState Deleting { get; } = new ContainerAppCertificateProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="ContainerAppCertificateProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppCertificateProvisioningState left, ContainerAppCertificateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppCertificateProvisioningState"/> values are not the same. </summary>

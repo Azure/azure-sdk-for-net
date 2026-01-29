@@ -133,8 +133,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Compu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs", "Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj", "{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement", "Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj", "{85A1E33C-4E4C-4B18-B441-FA08404983F4}"
@@ -293,10 +291,6 @@ Global
 		{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}.Release|Any CPU.ActiveCfg = Release|Any CPU

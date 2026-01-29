@@ -1,0 +1,135 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.Core;
+using System.Text.Json;
+using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
+
+namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
+{
+    public partial class QuestionAnsweringAuthoringClientSamples
+    {
+        [RecordedTest]
+        [SyncOnly]
+        public void ExportAndImport()
+        {
+            QuestionAnsweringAuthoringClient client = Client;
+            string exportedProjectName = CreateTestProjectName();
+            CreateProject(exportedProjectName);
+
+            #region Snippet:QuestionAnsweringAuthoringClient_ExportProject_Authoring
+            Operation exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
+
+            // retrieve export operation response, and extract url of exported file
+            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
+            string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+            #endregion
+
+            Assert.True(exportOperation.HasCompleted);
+            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
+
+            #region Snippet:QuestionAnsweringAuthoringClient_ImportProject_Authoring
+            // Set import project name and request content
+            string importedProjectName = "{ProjectNameToBeImported}";
+#if !SNIPPET
+            importedProjectName = CreateTestProjectName();
+#endif
+            RequestContent importRequestContent = RequestContent.Create(new
+                {
+                Metadata = new
+                {
+                    Description = "This is the description for a test project",
+                    Language = "en",
+                    DefaultAnswer = "No answer found for your question.",
+                    MultilingualResource = false,
+                    Settings = new
+                    {
+                        DefaultAnswer = "No answer found for your question."
+                    }
+                }
+            });
+
+            Operation importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+#if !SNIPPET
+            EnqueueProjectDeletion(importedProjectName);
+#endif
+            Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.True(importOperation.HasCompleted);
+            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
+
+            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails_Authoring
+            Response<QuestionAnsweringProject> projectDetails = client.GetProjectDetails(importedProjectName);
+
+            Console.WriteLine(projectDetails.GetRawResponse().Content);
+            #endregion
+
+            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        public async Task ExportAndImportAsync()
+        {
+            QuestionAnsweringAuthoringClient client = Client;
+            string exportedProjectName = CreateTestProjectName();
+            await CreateProjectAsync(exportedProjectName);
+
+            #region Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync_Authoring
+            Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
+
+            // retrieve export operation response, and extract url of exported file
+            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
+            string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+            #endregion
+
+            Assert.True(exportOperation.HasCompleted);
+            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
+
+            #region Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync_Authoring
+            // Set import project name and request content
+            string importedProjectName = "{ProjectNameToBeImported}";
+#if !SNIPPET
+            importedProjectName = CreateTestProjectName();
+#endif
+            RequestContent importRequestContent = RequestContent.Create(new
+            {
+                Metadata = new
+                {
+                    Description = "This is the description for a test project",
+                    Language = "en",
+                    DefaultAnswer = "No answer found for your question.",
+                    MultilingualResource = false,
+                    Settings = new
+                    {
+                        DefaultAnswer = "No answer found for your question."
+                    }
+                }
+            });
+
+            Operation importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+#if !SNIPPET
+            EnqueueProjectDeletion(importedProjectName);
+#endif
+            Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.True(importOperation.HasCompleted);
+            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
+
+            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync_Authoring
+            Response<QuestionAnsweringProject> projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
+
+            Console.WriteLine(projectDetails.GetRawResponse().Content);
+            #endregion
+
+            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
+        }
+    }
+}

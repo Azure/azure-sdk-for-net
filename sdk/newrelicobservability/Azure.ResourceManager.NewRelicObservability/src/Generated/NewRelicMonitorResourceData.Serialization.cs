@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.NewRelicObservability
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData, options);
             }
+            if (Optional.IsDefined(SaaSData))
+            {
+                writer.WritePropertyName("saaSData"u8);
+                writer.WriteObjectValue(SaaSData, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
@@ -148,6 +153,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             NewRelicAccountProperties newRelicAccountProperties = default;
             NewRelicObservabilityUserInfo userInfo = default;
             NewRelicPlanDetails planData = default;
+            NewRelicObservabilitySaaSContent saaSData = default;
             NewRelicLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
             NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
@@ -278,6 +284,15 @@ namespace Azure.ResourceManager.NewRelicObservability
                             planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("saaSData"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            saaSData = NewRelicObservabilitySaaSContent.DeserializeNewRelicObservabilitySaaSContent(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("liftrResourceCategory"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -348,6 +363,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 newRelicAccountProperties,
                 userInfo,
                 planData,
+                saaSData,
                 liftrResourceCategory,
                 liftrResourcePreference,
                 orgCreationSource,
@@ -597,6 +613,26 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     builder.Append("    planData: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PlanData, options, 4, false, "    planData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SaaSResourceId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    saaSData: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      saaSData: {");
+                builder.Append("        saaSResourceId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SaaSData))
+                {
+                    builder.Append("    saaSData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SaaSData, options, 4, false, "    saaSData: ");
                 }
             }
 

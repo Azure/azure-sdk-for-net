@@ -68,8 +68,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="rules"> The storage account object replication rules. </param>
         /// <param name="metrics"> Optional. The object replication policy metrics feature options. </param>
+        /// <param name="priorityReplication"> Optional. The object replication policy priority replication feature options. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
             EnabledOn = enabledOn;
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.Storage
             DestinationAccount = destinationAccount;
             Rules = rules;
             Metrics = metrics;
+            PriorityReplication = priorityReplication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,6 +109,21 @@ namespace Azure.ResourceManager.Storage
                 if (Metrics is null)
                     Metrics = new ObjectReplicationPolicyPropertiesMetrics();
                 Metrics.IsMetricsEnabled = value;
+            }
+        }
+
+        /// <summary> Optional. The object replication policy priority replication feature options. </summary>
+        internal ObjectReplicationPolicyPropertiesPriorityReplication PriorityReplication { get; set; }
+        /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
+        [WirePath("properties.priorityReplication.enabled")]
+        public bool? IsPriorityReplicationEnabled
+        {
+            get => PriorityReplication is null ? default : PriorityReplication.IsPriorityReplicationEnabled;
+            set
+            {
+                if (PriorityReplication is null)
+                    PriorityReplication = new ObjectReplicationPolicyPropertiesPriorityReplication();
+                PriorityReplication.IsPriorityReplicationEnabled = value;
             }
         }
     }

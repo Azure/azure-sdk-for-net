@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net9.0;net8.0;net462</TargetFrameworks>
-    <LangVersion>11.0</LangVersion>
+    <TargetFrameworks>net10.0;net9.0;net8.0;net462</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 

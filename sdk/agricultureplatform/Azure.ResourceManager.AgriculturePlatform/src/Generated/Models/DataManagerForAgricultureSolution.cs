@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
     /// <summary> Data Manager for Agriculture solution. </summary>
     public partial class DataManagerForAgricultureSolution
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataManagerForAgricultureSolution"/>. </summary>
         /// <param name="partnerId"> Partner Id. </param>
@@ -56,18 +27,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="accessAzureDataManagerForAgricultureApplicationId"> Entra application Id used to access azure data manager for agriculture instance. </param>
         /// <param name="accessAzureDataManagerForAgricultureApplicationName"> Entra application name used to access azure data manager for agriculture instance. </param>
         /// <param name="isValidateInput"> Whether solution inference will validate input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/>, <paramref name="solutionId"/>, <paramref name="partnerTenantId"/>, <paramref name="dataAccessScopes"/>, <paramref name="marketPlaceOfferDetails"/>, <paramref name="saasApplicationId"/>, <paramref name="accessAzureDataManagerForAgricultureApplicationId"/> or <paramref name="accessAzureDataManagerForAgricultureApplicationName"/> is null. </exception>
         internal DataManagerForAgricultureSolution(string partnerId, string solutionId, string partnerTenantId, IEnumerable<string> dataAccessScopes, MarketPlaceOfferDetails marketPlaceOfferDetails, string saasApplicationId, string accessAzureDataManagerForAgricultureApplicationId, string accessAzureDataManagerForAgricultureApplicationName, bool isValidateInput)
         {
-            Argument.AssertNotNull(partnerId, nameof(partnerId));
-            Argument.AssertNotNull(solutionId, nameof(solutionId));
-            Argument.AssertNotNull(partnerTenantId, nameof(partnerTenantId));
-            Argument.AssertNotNull(dataAccessScopes, nameof(dataAccessScopes));
-            Argument.AssertNotNull(marketPlaceOfferDetails, nameof(marketPlaceOfferDetails));
-            Argument.AssertNotNull(saasApplicationId, nameof(saasApplicationId));
-            Argument.AssertNotNull(accessAzureDataManagerForAgricultureApplicationId, nameof(accessAzureDataManagerForAgricultureApplicationId));
-            Argument.AssertNotNull(accessAzureDataManagerForAgricultureApplicationName, nameof(accessAzureDataManagerForAgricultureApplicationName));
-
             PartnerId = partnerId;
             SolutionId = solutionId;
             PartnerTenantId = partnerTenantId;
@@ -89,8 +50,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="accessAzureDataManagerForAgricultureApplicationId"> Entra application Id used to access azure data manager for agriculture instance. </param>
         /// <param name="accessAzureDataManagerForAgricultureApplicationName"> Entra application name used to access azure data manager for agriculture instance. </param>
         /// <param name="isValidateInput"> Whether solution inference will validate input. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataManagerForAgricultureSolution(string partnerId, string solutionId, string partnerTenantId, IReadOnlyList<string> dataAccessScopes, MarketPlaceOfferDetails marketPlaceOfferDetails, string saasApplicationId, string accessAzureDataManagerForAgricultureApplicationId, string accessAzureDataManagerForAgricultureApplicationName, bool isValidateInput, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataManagerForAgricultureSolution(string partnerId, string solutionId, string partnerTenantId, IList<string> dataAccessScopes, MarketPlaceOfferDetails marketPlaceOfferDetails, string saasApplicationId, string accessAzureDataManagerForAgricultureApplicationId, string accessAzureDataManagerForAgricultureApplicationName, bool isValidateInput, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerId = partnerId;
             SolutionId = solutionId;
@@ -101,30 +62,33 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             AccessAzureDataManagerForAgricultureApplicationId = accessAzureDataManagerForAgricultureApplicationId;
             AccessAzureDataManagerForAgricultureApplicationName = accessAzureDataManagerForAgricultureApplicationName;
             IsValidateInput = isValidateInput;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataManagerForAgricultureSolution"/> for deserialization. </summary>
-        internal DataManagerForAgricultureSolution()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Partner Id. </summary>
         public string PartnerId { get; }
+
         /// <summary> Solution Id. </summary>
         public string SolutionId { get; }
+
         /// <summary> Partner tenant Id. </summary>
         public string PartnerTenantId { get; }
+
         /// <summary> Data access scopes. </summary>
-        public IReadOnlyList<string> DataAccessScopes { get; }
+        public IList<string> DataAccessScopes { get; }
+
         /// <summary> Marketplace offer details. </summary>
         public MarketPlaceOfferDetails MarketPlaceOfferDetails { get; }
+
         /// <summary> Saas application Id. </summary>
         public string SaasApplicationId { get; }
+
         /// <summary> Entra application Id used to access azure data manager for agriculture instance. </summary>
         public string AccessAzureDataManagerForAgricultureApplicationId { get; }
+
         /// <summary> Entra application name used to access azure data manager for agriculture instance. </summary>
         public string AccessAzureDataManagerForAgricultureApplicationName { get; }
+
         /// <summary> Whether solution inference will validate input. </summary>
         public bool IsValidateInput { get; }
     }

@@ -28,15 +28,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public AnalyzeTextOptions(string text, LexicalTokenizerName tokenizerName) : this(text)
             => TokenizerName = tokenizerName;
 
-        /// <summary>
-        /// Initializes a new instance of AnalyzeRequest.
-        /// </summary>
-        /// <param name="text">Required text to break into tokens.</param>
-        /// <param name="normalizerName">The name of the tokenizer to use to break the given <paramref name="text"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
-        public AnalyzeTextOptions(string text, LexicalNormalizerName normalizerName) : this(text)
-            => NormalizerName = normalizerName;
-
         /// <summary> The name of the analyzer to use to break the given text. </summary>
         [CodeGenMember("Analyzer")]
         public LexicalAnalyzerName? AnalyzerName { get; }
@@ -47,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The name of the normalizer to use to normalize the given text. </summary>
         [CodeGenMember("Normalizer")]
-        public LexicalNormalizerName? NormalizerName { get; }
+        public LexicalNormalizerName? NormalizerName { get; set; }
 
         /// <summary> An optional list of token filters to use when breaking the given text. </summary>
         public IList<TokenFilterName> TokenFilters { get; }

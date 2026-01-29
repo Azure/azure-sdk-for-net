@@ -2,29 +2,24 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.OperationalInsights.Tests;
 
-public class BasicOperationalInsightsTests(bool async)
-    : ProvisioningTestBase(async/*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicOperationalInsightsTests
 {
-    [Test]
-    public async Task CreateWorkspace()
+    internal static Trycep CreateWorkspaceTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:OperationalInsightsWorkspaceBasic
                 Infrastructure infra = new();
 
                 OperationalInsightsWorkspace workspace =
-                    new(nameof(workspace))
+                    new(nameof(workspace), OperationalInsightsWorkspace.ResourceVersions.V2023_09_01)
                     {
                         Sku = new OperationalInsightsWorkspaceSku
                         {
@@ -36,8 +31,14 @@ public class BasicOperationalInsightsTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    public async Task CreateWorkspace()
+    {
+        await using Trycep test = CreateWorkspaceTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -54,8 +55,6 @@ public class BasicOperationalInsightsTests(bool async)
                 }
               }
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

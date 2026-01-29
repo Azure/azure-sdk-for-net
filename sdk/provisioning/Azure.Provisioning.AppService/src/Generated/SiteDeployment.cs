@@ -156,7 +156,7 @@ public partial class SiteDeployment : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteDeployment.</param>
     public SiteDeployment(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/deployments", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/deployments", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -165,6 +165,7 @@ public partial class SiteDeployment : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _author = DefineProperty<string>("Author", ["properties", "author"]);
         _authorEmail = DefineProperty<string>("AuthorEmail", ["properties", "author_email"]);
@@ -185,6 +186,11 @@ public partial class SiteDeployment : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

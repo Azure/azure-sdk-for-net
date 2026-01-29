@@ -33,6 +33,14 @@ namespace Azure.Security.KeyVault.Certificates
         public string Version { get; set; }
 
         /// <summary>
+        /// Gets or sets the optional certificate content type in which the certificate will be downloaded. If a supported format is specified,
+        /// the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported.
+        /// If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original
+        /// format without conversion.
+        /// </summary>
+        public CertificateContentType? OutContentType { get; set; }
+
+        /// <summary>
         /// Gets or sets a combination of the enumeration values that control where and how to import the certificate.
         /// The default is <see cref="X509KeyStorageFlags.DefaultKeySet"/>.
         /// </summary>

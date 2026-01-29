@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string Float32Value = "float32";
         private const string Uint8Value = "uint8";
         private const string Int8Value = "int8";
+        private const string Float16Value = "float16";
 
         /// <summary> float32. </summary>
         public static CosmosDBVectorDataType Float32 { get; } = new CosmosDBVectorDataType(Float32Value);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBVectorDataType Uint8 { get; } = new CosmosDBVectorDataType(Uint8Value);
         /// <summary> int8. </summary>
         public static CosmosDBVectorDataType Int8 { get; } = new CosmosDBVectorDataType(Int8Value);
+        /// <summary> float16. </summary>
+        public static CosmosDBVectorDataType Float16 { get; } = new CosmosDBVectorDataType(Float16Value);
         /// <summary> Determines if two <see cref="CosmosDBVectorDataType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBVectorDataType left, CosmosDBVectorDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBVectorDataType"/> values are not the same. </summary>

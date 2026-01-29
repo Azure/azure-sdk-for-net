@@ -21,17 +21,26 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 writer.WriteObjectValue(Multichannel, "Multichannel");
             }
+            if (Common.Optional.IsDefined(EncryptionInTransit))
+            {
+                writer.WriteObjectValue(EncryptionInTransit, "EncryptionInTransit");
+            }
             writer.WriteEndElement();
         }
 
         internal static ShareSmbSettings DeserializeShareSmbSettings(XElement element)
         {
             SmbMultichannel multichannel = default;
+            ShareSmbSettingsEncryptionInTransit encryptionInTransit = default;
             if (element.Element("Multichannel") is XElement multichannelElement)
             {
                 multichannel = SmbMultichannel.DeserializeSmbMultichannel(multichannelElement);
             }
-            return new ShareSmbSettings(multichannel);
+            if (element.Element("EncryptionInTransit") is XElement encryptionInTransitElement)
+            {
+                encryptionInTransit = ShareSmbSettingsEncryptionInTransit.DeserializeShareSmbSettingsEncryptionInTransit(encryptionInTransitElement);
+            }
+            return new ShareSmbSettings(multichannel, encryptionInTransit);
         }
     }
 }

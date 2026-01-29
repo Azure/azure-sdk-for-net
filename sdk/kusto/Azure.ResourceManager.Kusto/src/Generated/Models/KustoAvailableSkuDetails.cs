@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Resource Namespace and Type. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The SKU details. </summary>
+        [WirePath("sku")]
         public KustoSku Sku { get; }
         /// <summary> The number of instances of the cluster. </summary>
+        [WirePath("capacity")]
         public KustoCapacity Capacity { get; }
     }
 }

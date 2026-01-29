@@ -55,7 +55,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepDetails">
         /// The details for this run step.
         /// Please note <see cref="RunStepDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
+        /// The available derived classes include <see cref="RunStepActivityDetails"/>, <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
         /// </param>
         /// <param name="lastError"> If applicable, information about the last error encountered by this run step. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
@@ -100,7 +100,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepDetails">
         /// The details for this run step.
         /// Please note <see cref="RunStepDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
+        /// The available derived classes include <see cref="RunStepActivityDetails"/>, <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
         /// </param>
         /// <param name="lastError"> If applicable, information about the last error encountered by this run step. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
@@ -153,7 +153,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// The details for this run step.
         /// Please note <see cref="RunStepDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
+        /// The available derived classes include <see cref="RunStepActivityDetails"/>, <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
         /// </summary>
         public RunStepDetails StepDetails { get; }
         /// <summary> If applicable, information about the last error encountered by this run step. </summary>

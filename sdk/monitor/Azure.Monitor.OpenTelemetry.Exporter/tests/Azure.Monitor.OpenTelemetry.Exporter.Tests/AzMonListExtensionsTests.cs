@@ -564,32 +564,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, serverAddress));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerPort, serverPort));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerSocketAddress, serverSocketAddress));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbName, "DbName"));
+            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbNamespace, "DbName"));
 
-            Assert.Equal(expectedTarget, mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            Assert.Equal(expectedTarget, mappedTags.GetDbDependencyTargetAndName(true).DbTarget);
         }
 
         [Fact]
         public void DbDependencyTargetIsSetToDbNameWhenNetAttributesAreNotPresent()
         {
             var mappedTags = AzMonList.Initialize();
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbName, "DbName"));
-            Assert.Equal("DbName", mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbNamespace, "DbName"));
+            Assert.Equal("DbName", mappedTags.GetDbDependencyTargetAndName(true).DbTarget);
         }
 
         [Fact]
         public void DbDependencyTargetIsSetToDbSystemWhenNetAndDbNameAttributesAreNotPresent()
         {
             var mappedTags = AzMonList.Initialize();
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbSystem, "DbSystem"));
-            Assert.Equal("DbSystem", mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbSystemName, "DbSystem"));
+            Assert.Equal("DbSystem", mappedTags.GetDbDependencyTargetAndName(true).DbTarget);
         }
 
         [Fact]
         public void DbDependencyTargetIsSetToNullByDefault()
         {
             var mappedTags = AzMonList.Initialize();
-            Assert.Null(mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            Assert.Null(mappedTags.GetDbDependencyTargetAndName(true).DbTarget);
         }
     }
 }

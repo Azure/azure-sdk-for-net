@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the network security rule. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Value indicating whether protocol is matched. </summary>
+        [WirePath("protocolMatched")]
         public bool? ProtocolMatched { get; }
         /// <summary> Value indicating whether source is matched. </summary>
+        [WirePath("sourceMatched")]
         public bool? SourceMatched { get; }
         /// <summary> Value indicating whether source port is matched. </summary>
+        [WirePath("sourcePortMatched")]
         public bool? SourcePortMatched { get; }
         /// <summary> Value indicating whether destination is matched. </summary>
+        [WirePath("destinationMatched")]
         public bool? DestinationMatched { get; }
         /// <summary> Value indicating whether destination port is matched. </summary>
+        [WirePath("destinationPortMatched")]
         public bool? DestinationPortMatched { get; }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         public async Task CheckNameAvailabilityCodeSigningAccount_ChecksThatTheTrustedSigningAccountNameIsAvailable()
         {
             string accountName = Recording.GenerateAssetName("account-");
-            TrustedSigningAccountNameAvailabilityContent body = new TrustedSigningAccountNameAvailabilityContent(accountName, new ResourceType("Microsoft.CodeSigning/codeSigningAccounts"));
+            TrustedSigningAccountNameAvailabilityContent body = new TrustedSigningAccountNameAvailabilityContent(new ResourceType("Microsoft.CodeSigning/codeSigningAccounts"), accountName);
             TrustedSigningAccountNameAvailabilityResult result = await DefaultSubscription.CheckTrustedSigningAccountNameAvailabilityAsync(body);
 
             Assert.IsTrue(result.IsNameAvailable);

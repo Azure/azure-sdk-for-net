@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -19,6 +18,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public IotHubDefinitionDescription(string connectionString, AzureLocation location) : this(location)
         {
             ConnectionString = connectionString;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
+        /// <param name="location"> ARM region of the IoT hub. </param>
+        public IotHubDefinitionDescription(AzureLocation location)
+        {
+            Location = location;
         }
     }
 }

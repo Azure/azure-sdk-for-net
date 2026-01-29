@@ -8,7 +8,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class CommitChunkHandler : IAsyncDisposable
+    internal class CommitChunkHandler
     {
         #region Delegate Definitions
         public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
@@ -83,18 +83,18 @@ namespace Azure.Storage.DataMovement
             _isChunkHandlerRunning = true;
         }
 
-        public async ValueTask DisposeAsync()
+        public async Task CleanUpAsync()
         {
             _isChunkHandlerRunning = false;
-            await _stageChunkProcessor.DisposeAsync().ConfigureAwait(false);
+            await _stageChunkProcessor.CleanUpAsync().ConfigureAwait(false);
         }
 
-        public async ValueTask QueueChunkAsync(QueueStageChunkArgs args)
+        public async ValueTask QueueChunkAsync(QueueStageChunkArgs args, CancellationToken cancellationToken = default)
         {
-            await _stageChunkProcessor.QueueAsync(args).ConfigureAwait(false);
+            await _stageChunkProcessor.QueueAsync(args, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task ProcessCommitRange(QueueStageChunkArgs args, CancellationToken cancellationToken = default)
+        private async Task ProcessCommitRange(QueueStageChunkArgs args)
         {
             try
             {
@@ -137,7 +137,21 @@ namespace Azure.Storage.DataMovement
                 if (_isChunkHandlerRunning)
                 {
                     // This will trigger the job part to call Dispose on this object
-                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                    _ = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                        }
+                        catch
+                        {
+                            // Log and swallow any exceptions to prevent crashing the process
+                            DataMovementEventSource.Singleton
+                                .UnexpectedTransferFailed(
+                                    nameof(CommitChunkHandler),
+                                    ex.ToString());
+                        }
+                    });
                 }
             }
         }

@@ -266,5 +266,60 @@ namespace Azure.Identity.Tests
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), ScopeUtilities.InvalidScopeMessage);
             }
         }
+
+        [Test]
+        public void AuthenticateWithCliCredential_ClaimsChallenge_NoTenant_ThrowsWithGuidance()
+        {
+            // Arrange: claims challenge provided, no tenant specified
+            var claims = "test-claims-challenge";
+
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            // Act + Assert: AuthenticationFailedException with az login guidance containing claims
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain("Azure CLI authentication requires multi-factor authentication or additional claims."));
+            Assert.That(ex.Message, Does.Contain($"az login --claims-challenge {claims}"));
+            // Should not include a tenant switch when tenant is not resolved
+            Assert.That(ex.Message, Does.Not.Contain("--tenant"));
+        }
+
+        [Test]
+        public void AuthenticateWithCliCredential_ClaimsChallenge_WithTenant_ThrowsWithGuidance()
+        {
+            // Arrange: claims challenge provided with tenant
+            var claims = "test-claims-challenge";
+            var tenant = TenantId;
+
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var options = new AzureCliCredentialOptions { TenantId = tenant };
+            var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
+
+            // Act + Assert: AuthenticationFailedException with az login guidance containing tenant and claims
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain("Azure CLI authentication requires multi-factor authentication or additional claims."));
+            Assert.That(ex.Message, Does.Contain($"az login --tenant {tenant} --claims-challenge {claims}"));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("   ")]
+        public async Task AuthenticateWithCliCredential_EmptyOrWhitespaceClaims_DoesNotTriggerGuidance(string claims)
+        {
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+        }
     }
 }

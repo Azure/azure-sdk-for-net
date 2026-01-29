@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("internetEndpoints"u8);
                 writer.WriteObjectValue(InternetEndpoints, options);
             }
+            if (Optional.IsDefined(IPv6Endpoints))
+            {
+                writer.WritePropertyName("ipv6Endpoints"u8);
+                writer.WriteObjectValue(IPv6Endpoints, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -120,6 +125,7 @@ namespace Azure.ResourceManager.Storage.Models
             Uri dfs = default;
             StorageAccountMicrosoftEndpoints microsoftEndpoints = default;
             StorageAccountInternetEndpoints internetEndpoints = default;
+            StorageAccountIPv6Endpoints ipv6Endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,6 +202,15 @@ namespace Azure.ResourceManager.Storage.Models
                     internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("ipv6Endpoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipv6Endpoints = StorageAccountIPv6Endpoints.DeserializeStorageAccountIPv6Endpoints(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -211,6 +226,7 @@ namespace Azure.ResourceManager.Storage.Models
                 dfs,
                 microsoftEndpoints,
                 internetEndpoints,
+                ipv6Endpoints,
                 serializedAdditionalRawData);
         }
 
@@ -342,6 +358,21 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     builder.Append("  internetEndpoints: ");
                     BicepSerializationHelpers.AppendChildObject(builder, InternetEndpoints, options, 2, false, "  internetEndpoints: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv6Endpoints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipv6Endpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPv6Endpoints))
+                {
+                    builder.Append("  ipv6Endpoints: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IPv6Endpoints, options, 2, false, "  ipv6Endpoints: ");
                 }
             }
 

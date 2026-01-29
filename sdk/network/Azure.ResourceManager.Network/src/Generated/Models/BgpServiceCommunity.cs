@@ -36,8 +36,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the bgp community. e.g. Skype. </summary>
+        [WirePath("properties.serviceName")]
         public string ServiceName { get; set; }
         /// <summary> A list of bgp communities. </summary>
+        [WirePath("properties.bgpCommunities")]
         public IList<BgpCommunity> BgpCommunities { get; }
     }
 }

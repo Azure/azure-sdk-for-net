@@ -1,0 +1,6 @@
+directory: specification/storagemover/StorageMover.Management
+commit: 9e42299bb759f720eb4751496d5b13df26d87302
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+

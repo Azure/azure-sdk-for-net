@@ -79,7 +79,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Path.Multiple.noOperationParams",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Path.Multiple"
           },
           "parameters": [],
           "response": {},
@@ -104,8 +105,9 @@
             "parameters": [
               {
                 "$id": "9",
+                "kind": "path",
                 "name": "keyword",
-                "nameInRequest": "keyword",
+                "serializedName": "keyword",
                 "type": {
                   "$id": "10",
                   "kind": "string",
@@ -113,15 +115,16 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword"
               }
             ],
             "responses": [
@@ -140,13 +143,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Path.Multiple"
           },
           "parameters": [
             {
               "$id": "11",
+              "kind": "method",
               "name": "keyword",
-              "nameInRequest": "keyword",
+              "serializedName": "keyword",
               "type": {
                 "$id": "12",
                 "kind": "string",
@@ -156,13 +161,12 @@
               },
               "location": "Path",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -175,8 +179,9 @@
       "parameters": [
         {
           "$id": "13",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Pass in http://localhost:3000 for endpoint.",
           "type": {
             "$id": "14",
@@ -184,32 +189,28 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}",
           "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
-          "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}"
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Server.Path.Multiple.endpoint"
         },
         {
           "$id": "15",
+          "kind": "endpoint",
           "name": "apiVersion",
-          "nameInRequest": "apiVersion",
+          "serializedName": "apiVersion",
           "doc": "Pass in v1.0 for API version.",
           "type": {
             "$ref": "1"
           },
-          "location": "Uri",
           "isApiVersion": true,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": false,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "16",
@@ -219,14 +220,19 @@
             },
             "value": "v1.0"
           },
-          "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}"
+          "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Server.Path.Multiple.apiVersion"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Path.Multiple",
       "apiVersions": [
         "v1.0"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

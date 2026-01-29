@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("channelEncryption"u8);
                 writer.WriteStringValue(ChannelEncryption);
             }
+            if (Optional.IsDefined(EncryptionInTransit))
+            {
+                writer.WritePropertyName("encryptionInTransit"u8);
+                writer.WriteObjectValue(EncryptionInTransit, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -102,6 +107,7 @@ namespace Azure.ResourceManager.Storage.Models
             string authenticationMethods = default;
             string kerberosTicketEncryption = default;
             string channelEncryption = default;
+            EncryptionInTransit encryptionInTransit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,6 +141,15 @@ namespace Azure.ResourceManager.Storage.Models
                     channelEncryption = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("encryptionInTransit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryptionInTransit = EncryptionInTransit.DeserializeEncryptionInTransit(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -147,6 +162,7 @@ namespace Azure.ResourceManager.Storage.Models
                 authenticationMethods,
                 kerberosTicketEncryption,
                 channelEncryption,
+                encryptionInTransit,
                 serializedAdditionalRawData);
         }
 
@@ -268,6 +284,24 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         builder.AppendLine($"'{ChannelEncryption}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsRequired", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encryptionInTransit: ");
+                builder.AppendLine("{");
+                builder.Append("    required: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionInTransit))
+                {
+                    builder.Append("  encryptionInTransit: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EncryptionInTransit, options, 2, false, "  encryptionInTransit: ");
                 }
             }
 

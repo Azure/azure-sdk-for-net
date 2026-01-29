@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
-        /// <param name="timeAggregation"> the criteria time aggregation types. </param>
+        /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
         public MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
         {
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
-        /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
+        /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="metricNamespace"> Namespace of the metric. </param>
-        /// <param name="timeAggregation"> the criteria time aggregation types. </param>
+        /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        /// <summary> Specifies the type of threshold criteria. </summary>
+        /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
         internal CriterionType CriterionType { get; set; }
         /// <summary> Name of the criteria. </summary>
         public string Name { get; set; }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string MetricName { get; set; }
         /// <summary> Namespace of the metric. </summary>
         public string MetricNamespace { get; set; }
-        /// <summary> the criteria time aggregation types. </summary>
+        /// <summary> The criteria time aggregation types. Previously undocumented values might be returned. </summary>
         public MetricCriteriaTimeAggregationType TimeAggregation { get; set; }
         /// <summary> List of dimension conditions. </summary>
         public IList<MetricDimension> Dimensions { get; }

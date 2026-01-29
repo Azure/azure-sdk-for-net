@@ -34,7 +34,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
         _ = Assert.ThrowsAsync<PlatformNotSupportedException>(async () =>
         {
             RealtimeClient client = GetTestClient();
-            using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+            using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
         });
     }
 #else
@@ -46,7 +46,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
     public async Task CanConfigureSession(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         ConversationSessionOptions sessionOptions = new()
         {
@@ -117,8 +117,13 @@ public class RealtimeTests : RealtimeTestFixtureBase
     [TestCase(null)]
     public async Task TextOnlyWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        TestClientOptions options = GetTestClientOptions(version);
+        options.DisableClientWrapping = true;
+        options.DefaultHeaders.Add("test_header_key", "test_header_value");
+        options.DefaultQueryParameters.Add("test_query_parameter_key", "test_query_parameter_value");
+
+        RealtimeClient client = GetTestClient(options);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
         await session.AddItemAsync(
             RealtimeItem.CreateUserMessage(["Hello, world!"]),
             cancellationToken: CancellationToken);
@@ -200,7 +205,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
     public async Task ItemManipulationWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         await session.ConfigureConversationSessionAsync(
             new ConversationSessionOptions()
@@ -279,7 +284,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
     public async Task AudioWithToolsWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         ConversationFunctionTool getWeatherTool = new("get_weather_for_location")
         {
@@ -380,7 +385,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
     public async Task CanDisableVoiceActivityDetection(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         await session.ConfigureConversationSessionAsync(
             new()
@@ -434,7 +439,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
     public async Task CanUseManualVadTurnDetection(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         await session.ConfigureConversationSessionAsync(
             new()
@@ -511,7 +516,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
     public async Task BadCommandProvidesError(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         await session.SendCommandAsync(
             BinaryData.FromString("""
@@ -543,7 +548,7 @@ public class RealtimeTests : RealtimeTestFixtureBase
     public async Task TranscriptionWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartTranscriptionSessionAsync(CancellationToken);
+        using RealtimeSession session = await client.StartTranscriptionSessionAsync(new RealtimeSessionOptions(), CancellationToken);
 
         TranscriptionSessionOptions options = new()
         {

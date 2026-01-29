@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> NetworkInterfaceIPConfiguration set in load balancer backend address. </summary>
         internal WritableSubResource IPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("ipConfiguration.id")]
         public ResourceIdentifier IPConfigurationId
         {
             get => IPConfiguration is null ? default : IPConfiguration.Id;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IP address set in load balancer backend address. </summary>
+        [WirePath("ipAddress")]
         public string IPAddress { get; set; }
     }
 }

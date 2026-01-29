@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -108,6 +109,57 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectivityConfigurationPropertiesConnectivityCapabilities(connectedGroupPrivateEndpointsScale, connectedGroupAddressOverlap, peeringEnforcement, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectedGroupPrivateEndpointsScale), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectedGroupPrivateEndpointsScale: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  connectedGroupPrivateEndpointsScale: ");
+                builder.AppendLine($"'{ConnectedGroupPrivateEndpointsScale.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectedGroupAddressOverlap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectedGroupAddressOverlap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  connectedGroupAddressOverlap: ");
+                builder.AppendLine($"'{ConnectedGroupAddressOverlap.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringEnforcement), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  peeringEnforcement: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  peeringEnforcement: ");
+                builder.AppendLine($"'{PeeringEnforcement.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ConnectivityConfigurationPropertiesConnectivityCapabilities>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationPropertiesConnectivityCapabilities>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +168,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectivityConfigurationPropertiesConnectivityCapabilities)} does not support writing '{options.Format}' format.");
             }

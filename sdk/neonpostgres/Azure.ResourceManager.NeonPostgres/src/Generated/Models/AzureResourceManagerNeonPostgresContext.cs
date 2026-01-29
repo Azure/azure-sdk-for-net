@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NeonPostgres.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(Attributes))]
     [ModelReaderWriterBuildable(typeof(BranchListResult))]
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(NeonBranchResource))]
     [ModelReaderWriterBuildable(typeof(NeonCompanyDetails))]
     [ModelReaderWriterBuildable(typeof(NeonCompute))]
+    [ModelReaderWriterBuildable(typeof(NeonComputeAutoscalingSize))]
     [ModelReaderWriterBuildable(typeof(NeonComputeProperties))]
     [ModelReaderWriterBuildable(typeof(NeonDatabase))]
     [ModelReaderWriterBuildable(typeof(NeonDatabaseListResult))]
@@ -35,6 +37,8 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(NeonMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(NeonOfferDetails))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(NeonOrganizationPatch))]
+    [ModelReaderWriterBuildable(typeof(NeonOrganizationPatchProperties))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationResource))]
     [ModelReaderWriterBuildable(typeof(NeonProjectData))]
@@ -49,6 +53,8 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(PartnerOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(PgVersion))]
     [ModelReaderWriterBuildable(typeof(PgVersionsResult))]
+    [ModelReaderWriterBuildable(typeof(PreflightCheckContent))]
+    [ModelReaderWriterBuildable(typeof(PreflightCheckResult))]
     [ModelReaderWriterBuildable(typeof(ProjectListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

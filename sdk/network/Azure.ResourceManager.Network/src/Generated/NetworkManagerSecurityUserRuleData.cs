@@ -92,24 +92,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A description for this rule. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Network protocol this rule applies to. </summary>
+        [WirePath("properties.protocol")]
         public SecurityConfigurationRuleProtocol? Protocol { get; set; }
         /// <summary> The CIDR or source IP ranges. </summary>
+        [WirePath("properties.sources")]
         public IList<AddressPrefixItem> Sources { get; }
         /// <summary> The destination address prefixes. CIDR or destination IP ranges. </summary>
+        [WirePath("properties.destinations")]
         public IList<AddressPrefixItem> Destinations { get; }
         /// <summary> The source port ranges. </summary>
+        [WirePath("properties.sourcePortRanges")]
         public IList<string> SourcePortRanges { get; }
         /// <summary> The destination port ranges. </summary>
+        [WirePath("properties.destinationPortRanges")]
         public IList<string> DestinationPortRanges { get; }
         /// <summary> Indicates if the traffic matched against the rule in inbound or outbound. </summary>
+        [WirePath("properties.direction")]
         public SecurityConfigurationRuleDirection? Direction { get; set; }
         /// <summary> The provisioning state of the security configuration user rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

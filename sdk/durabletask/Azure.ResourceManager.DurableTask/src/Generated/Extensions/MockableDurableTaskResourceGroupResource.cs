@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DurableTask;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DurableTask.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDurableTaskResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDurableTaskResourceGroupResource for mocking. </summary>
         protected MockableDurableTaskResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDurableTaskResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDurableTaskResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DurableTaskSchedulerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DurableTaskSchedulerResources and their operations over a DurableTaskSchedulerResource. </returns>
+        /// <summary> Gets a collection of DurableTaskSchedulers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DurableTaskSchedulers and their operations over a DurableTaskSchedulerResource. </returns>
         public virtual DurableTaskSchedulerCollection GetDurableTaskSchedulers()
         {
             return GetCachedClient(client => new DurableTaskSchedulerCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// Get a Scheduler
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DurableTaskSchedulerResource>> GetDurableTaskSchedulerAsync(string schedulerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
+
             return await GetDurableTaskSchedulers().GetAsync(schedulerName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// Get a Scheduler
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         [ForwardsClientCalls]
         public virtual Response<DurableTaskSchedulerResource> GetDurableTaskScheduler(string schedulerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
+
             return GetDurableTaskSchedulers().Get(schedulerName, cancellationToken);
         }
     }

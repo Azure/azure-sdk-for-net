@@ -20,6 +20,18 @@
 
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
+
+    <!--
+        For API compat checks, libraries that don't release often are likely to not have newer targets,
+        but will always have a baseline.  Since the guidelines require that the API surface be the same accross
+        all supported targets, we can use the baseline for API compat checks to avoid breaking builds.
+    -->
+    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' == 'true'">$(ApiCompatStandardTargetFramework)</ApiCompatBaselineTargetFramework>
+    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
@@ -90,28 +102,11 @@
   <!-- Add Client SDK Tools -->
   <ItemGroup>
     <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
-
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
-
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
-
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers'" Include="$(RepoEngPath)\tools\Azure.SdkAnalyzers\src\Azure.SdkAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
-
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
-
-  </ItemGroup>
-
-  <!-- Remove packages built into the .NET 6+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
-    <PackageReference Remove="System.Buffers" />
-    <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Remove="System.Memory" />
-    <PackageReference Remove="System.Net.Http" />
-    <PackageReference Remove="System.Numerics.Vectors" />
-    <PackageReference Remove="System.Text.Encodings.Web" />
-    <PackageReference Remove="System.Text.Json" />
-    <PackageReference Remove="System.Threading.Channels" />
-    <PackageReference Remove="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
@@ -152,12 +147,35 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
-    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
-    <DefaultReferenceTargets Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">AzSdk.test.reference.targets</DefaultReferenceTargets>
+  <!-- Remove packages built into the .NET 6+ runtime -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+    <PackageReference Remove="System.Buffers" />
+    <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Memory" />
+    <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Numerics.Vectors" />
+    <PackageReference Remove="System.Text.Encodings.Web" />
+    <PackageReference Remove="System.Text.Json" />
+    <PackageReference Remove="System.Threading.Channels" />
+    <PackageReference Remove="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
 
-    <!-- Disable running of tests for test helper libraries -->
+  <!-- Remove packages built into the .NET 10+ runtime -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
+    <PackageReference Remove="Microsoft.CSharp" />
+    <PackageReference Remove="System.Formats.Asn1" />
+    <PackageReference Remove="System.Linq.Async" />
+    <PackageReference Remove="System.Linq.AsyncEnumerable" />
+    <PackageReference Remove="System.IO.Compression" />
+    <PackageReference Remove="System.Net.WebSockets.Client" />
+    <PackageReference Remove="System.Reflection.Emit" />
+    <PackageReference Remove="System.Runtime.InteropServices" />
+    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
+    <PackageReference Remove="System.ValueTuple" />
+  </ItemGroup>
+
+  <!-- Disable running of tests for test helper libraries -->
+  <PropertyGroup>
     <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 
@@ -167,15 +185,10 @@
     </NoWarn>
   </PropertyGroup>
 
-  <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
-
   <Import Project="ApiListing.targets" />
-
   <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
-
-  <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
-
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
+  <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>
@@ -216,7 +229,7 @@
     <ExcludeMgmtCoreShared Condition="'$(ExcludeMgmtCoreShared)' == ''">false</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(ExcludeMgmtCoreShared)' == 'false'">
+  <ItemGroup Condition="('$(IsGeneratorLibraryGenerationTest)' == 'true' or ('$(IsMgmtSubLibrary)' == 'true' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true')) and '$(ExcludeMgmtCoreShared)' == 'false'">
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  LinkBase="Shared/Management" />
   </ItemGroup>
@@ -265,7 +278,7 @@
   </ItemGroup>
 
     <!-- *********** Management Client Library Override section ************* -->
-  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
+  <ItemGroup Condition="('$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true') or '$(IsGeneratorLibraryGenerationTest)' == 'true'" >
 
     <PackageReference Include="Azure.Core" />
 
@@ -381,9 +394,9 @@
 
       <!-- Parse out the service directory based on the relative path to the sdk folder -->
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
-      
+
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' </PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">

@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> When set to true, explicit proxy mode is enabled. </summary>
+        [WirePath("enableExplicitProxy")]
         public bool? EnableExplicitProxy { get; set; }
         /// <summary> Port number for explicit proxy http protocol, cannot be greater than 64000. </summary>
+        [WirePath("httpPort")]
         public int? HttpPort { get; set; }
         /// <summary> Port number for explicit proxy https protocol, cannot be greater than 64000. </summary>
+        [WirePath("httpsPort")]
         public int? HttpsPort { get; set; }
         /// <summary> When set to true, pac file port and url needs to be provided. </summary>
+        [WirePath("enablePacFile")]
         public bool? EnablePacFile { get; set; }
         /// <summary> Port number for firewall to serve PAC file. </summary>
+        [WirePath("pacFilePort")]
         public int? PacFilePort { get; set; }
         /// <summary> SAS URL for PAC file. </summary>
+        [WirePath("pacFile")]
         public string PacFile { get; set; }
     }
 }

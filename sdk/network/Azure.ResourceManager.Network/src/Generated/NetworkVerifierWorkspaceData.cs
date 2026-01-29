@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of Verifier Workspace resource. </summary>
+        [WirePath("properties")]
         public NetworkVerifierWorkspaceProperties Properties { get; set; }
         /// <summary> String representing unique etag for the resource document. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

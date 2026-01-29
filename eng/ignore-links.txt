@@ -6,3 +6,8 @@ https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure
 https://www.nuget.org/packages/Azure.ResourceManager.DigitalTwins
 https://contoso.azureedge.net/urlsigning/test?expires=2145916800&amp;keyid:key1&amp;signature=iTsrLX9rVAIJkSahBA_j5o9Azf5-j331ohxDR1Gx2js=
 https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1
+https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query.logs-readme
+https://www.nuget.org/packages/Azure.Monitor.Query.Logs
+https://learn.microsoft.com/dotnet/api/azure.monitor.query.logs.logsqueryclient.queryworkspaceasync
+https://www.nuget.org/packages/Azure.Monitor.Query.Metrics
+https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query.metrics-readme?view=azure-dotnet

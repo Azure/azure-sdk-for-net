@@ -6,6 +6,9 @@ parameters:
   - name: CustomCondition
     type: string
     default: succeeded()
+  - name: ServiceConnection
+    type: string
+    default: ''
 
 steps:
 - pwsh: |
@@ -21,8 +24,10 @@ steps:
     $content | Out-File '${{ parameters.npmrcPath }}'
   displayName: 'Create .npmrc'
   condition: ${{ parameters.CustomCondition }}
+
 - task: npmAuthenticate@0
   displayName: Authenticate .npmrc
   condition: ${{ parameters.CustomCondition }}
   inputs:
     workingFile: ${{ parameters.npmrcPath }}
+    azureDevOpsServiceConnection: ${{ parameters.ServiceConnection }}

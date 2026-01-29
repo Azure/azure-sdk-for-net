@@ -21,7 +21,7 @@ namespace Azure.Developer.Playwright
     }
     public partial class PlaywrightServiceBrowserClientOptions : Azure.Core.ClientOptions
     {
-        public PlaywrightServiceBrowserClientOptions(Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion serviceVersion = Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview) { }
+        public PlaywrightServiceBrowserClientOptions(Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion serviceVersion = Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01) { }
         public string ExposeNetwork { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILogger? Logger { get { throw null; } set { } }
         public System.Runtime.InteropServices.OSPlatform OS { get { throw null; } set { } }
@@ -29,10 +29,9 @@ namespace Azure.Developer.Playwright
         public string RunName { get { throw null; } set { } }
         public Azure.Developer.Playwright.ServiceAuthType ServiceAuth { get { throw null; } set { } }
         public string? ServiceEndpoint { get { throw null; } set { } }
-        public bool UseCloudHostedBrowsers { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V2025_07_01_Preview = 1,
+            V2025_09_01 = 1,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -44,9 +43,7 @@ namespace Azure.Developer.Playwright
         public static Azure.Developer.Playwright.ServiceAuthType AccessToken { get { throw null; } }
         public static Azure.Developer.Playwright.ServiceAuthType EntraId { get { throw null; } }
         public bool Equals(Azure.Developer.Playwright.ServiceAuthType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.Playwright.ServiceAuthType left, Azure.Developer.Playwright.ServiceAuthType right) { throw null; }
         public static implicit operator Azure.Developer.Playwright.ServiceAuthType (string value) { throw null; }
@@ -62,9 +59,7 @@ namespace Azure.Developer.Playwright
         public static Azure.Developer.Playwright.ServiceEnvironmentVariable PlaywrightServiceAccessToken { get { throw null; } }
         public static Azure.Developer.Playwright.ServiceEnvironmentVariable PlaywrightServiceUri { get { throw null; } }
         public bool Equals(Azure.Developer.Playwright.ServiceEnvironmentVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.Playwright.ServiceEnvironmentVariable left, Azure.Developer.Playwright.ServiceEnvironmentVariable right) { throw null; }
         public static implicit operator Azure.Developer.Playwright.ServiceEnvironmentVariable (string value) { throw null; }

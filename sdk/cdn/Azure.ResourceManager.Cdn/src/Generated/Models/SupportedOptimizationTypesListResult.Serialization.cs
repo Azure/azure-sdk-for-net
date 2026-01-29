@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -109,6 +111,44 @@ namespace Azure.ResourceManager.Cdn.Models
             return new SupportedOptimizationTypesListResult(supportedOptimizationTypes ?? new ChangeTrackingList<OptimizationType>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedOptimizationTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedOptimizationTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedOptimizationTypes))
+                {
+                    if (SupportedOptimizationTypes.Any())
+                    {
+                        builder.Append("  supportedOptimizationTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedOptimizationTypes)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SupportedOptimizationTypesListResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportedOptimizationTypesListResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -117,6 +157,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support writing '{options.Format}' format.");
             }

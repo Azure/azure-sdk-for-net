@@ -14,8 +14,39 @@ namespace Azure.AI.ContentSafety
     /// <summary> Model factory for models. </summary>
     public static partial class ContentSafetyModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageOptions"/>. </summary>
+        /// <param name="image"> The image to be analyzed. </param>
+        /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
+        /// <param name="outputType"> This refers to the type of image analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
+        /// <returns> A new <see cref="ContentSafety.AnalyzeImageOptions"/> instance for mocking. </returns>
+        public static AnalyzeImageOptions AnalyzeImageOptions(ContentSafetyImageData image = null, IEnumerable<ImageCategory> categories = null, AnalyzeImageOutputType? outputType = null)
+        {
+            categories ??= new List<ImageCategory>();
+
+            return new AnalyzeImageOptions(image, categories?.ToList(), outputType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageResult"/>. </summary>
+        /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
+        /// <returns> A new <see cref="ContentSafety.AnalyzeImageResult"/> instance for mocking. </returns>
+        public static AnalyzeImageResult AnalyzeImageResult(IEnumerable<ImageCategoriesAnalysis> categoriesAnalysis = null)
+        {
+            categoriesAnalysis ??= new List<ImageCategoriesAnalysis>();
+
+            return new AnalyzeImageResult(categoriesAnalysis?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.ImageCategoriesAnalysis"/>. </summary>
+        /// <param name="category"> The image analysis category. </param>
+        /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </param>
+        /// <returns> A new <see cref="ContentSafety.ImageCategoriesAnalysis"/> instance for mocking. </returns>
+        public static ImageCategoriesAnalysis ImageCategoriesAnalysis(ImageCategory category = default, int? severity = null)
+        {
+            return new ImageCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeTextOptions"/>. </summary>
-        /// <param name="text"> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
+        /// <param name="text"> The text to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="blocklistNames"> The names of blocklists. </param>
         /// <param name="haltOnBlocklistHit"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
@@ -66,45 +97,58 @@ namespace Azure.AI.ContentSafety
             return new TextCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageOptions"/>. </summary>
-        /// <param name="image"> The image needs to be analyzed. </param>
-        /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
-        /// <param name="outputType"> This refers to the type of image analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
-        /// <returns> A new <see cref="ContentSafety.AnalyzeImageOptions"/> instance for mocking. </returns>
-        public static AnalyzeImageOptions AnalyzeImageOptions(ContentSafetyImageData image = null, IEnumerable<ImageCategory> categories = null, AnalyzeImageOutputType? outputType = null)
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.DetectTextProtectedMaterialResult"/>. </summary>
+        /// <param name="protectedMaterialAnalysis"> Analysis result for the given text. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectTextProtectedMaterialResult"/> instance for mocking. </returns>
+        public static DetectTextProtectedMaterialResult DetectTextProtectedMaterialResult(TextProtectedMaterialAnalysisResult protectedMaterialAnalysis = null)
         {
-            categories ??= new List<ImageCategory>();
-
-            return new AnalyzeImageOptions(image, categories?.ToList(), outputType, serializedAdditionalRawData: null);
+            return new DetectTextProtectedMaterialResult(protectedMaterialAnalysis, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageResult"/>. </summary>
-        /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
-        /// <returns> A new <see cref="ContentSafety.AnalyzeImageResult"/> instance for mocking. </returns>
-        public static AnalyzeImageResult AnalyzeImageResult(IEnumerable<ImageCategoriesAnalysis> categoriesAnalysis = null)
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextProtectedMaterialAnalysisResult"/>. </summary>
+        /// <param name="detected"> Whether potential protected material is detected or not. </param>
+        /// <returns> A new <see cref="ContentSafety.TextProtectedMaterialAnalysisResult"/> instance for mocking. </returns>
+        public static TextProtectedMaterialAnalysisResult TextProtectedMaterialAnalysisResult(bool detected = default)
         {
-            categoriesAnalysis ??= new List<ImageCategoriesAnalysis>();
-
-            return new AnalyzeImageResult(categoriesAnalysis?.ToList(), serializedAdditionalRawData: null);
+            return new TextProtectedMaterialAnalysisResult(detected, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.ImageCategoriesAnalysis"/>. </summary>
-        /// <param name="category"> The image analysis category. </param>
-        /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </param>
-        /// <returns> A new <see cref="ContentSafety.ImageCategoriesAnalysis"/> instance for mocking. </returns>
-        public static ImageCategoriesAnalysis ImageCategoriesAnalysis(ImageCategory category = default, int? severity = null)
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.ShieldPromptResult"/>. </summary>
+        /// <param name="userPromptAnalysis"> Direct injection attacks analysis result for the given user prompt. </param>
+        /// <param name="documentsAnalysis"> Direct and indirect injection attacks analysis result for the given documents. </param>
+        /// <returns> A new <see cref="ContentSafety.ShieldPromptResult"/> instance for mocking. </returns>
+        public static ShieldPromptResult ShieldPromptResult(UserPromptInjectionAnalysisResult userPromptAnalysis = null, IEnumerable<DocumentInjectionAnalysisResult> documentsAnalysis = null)
         {
-            return new ImageCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
+            documentsAnalysis ??= new List<DocumentInjectionAnalysisResult>();
+
+            return new ShieldPromptResult(userPromptAnalysis, documentsAnalysis?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.UserPromptInjectionAnalysisResult"/>. </summary>
+        /// <param name="attackDetected"> Whether a potential injection attack is detected or not. </param>
+        /// <returns> A new <see cref="ContentSafety.UserPromptInjectionAnalysisResult"/> instance for mocking. </returns>
+        public static UserPromptInjectionAnalysisResult UserPromptInjectionAnalysisResult(bool attackDetected = default)
+        {
+            return new UserPromptInjectionAnalysisResult(attackDetected, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.DocumentInjectionAnalysisResult"/>. </summary>
+        /// <param name="attackDetected"> Whether a potential injection attack is detected or not. </param>
+        /// <returns> A new <see cref="ContentSafety.DocumentInjectionAnalysisResult"/> instance for mocking. </returns>
+        public static DocumentInjectionAnalysisResult DocumentInjectionAnalysisResult(bool attackDetected = default)
+        {
+            return new DocumentInjectionAnalysisResult(attackDetected, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistItem"/>. </summary>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="description"> BlocklistItem description. </param>
-        /// <param name="text"> BlocklistItem content. </param>
+        /// <param name="text"> BlocklistItem content. The length is counted using Unicode code point. </param>
+        /// <param name="isRegex"> An optional properties indicating whether this item is to be matched as a regular expression. </param>
         /// <returns> A new <see cref="ContentSafety.TextBlocklistItem"/> instance for mocking. </returns>
-        public static TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null)
+        public static TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null, bool? isRegex = null)
         {
-            return new TextBlocklistItem(blocklistItemId, description, text, serializedAdditionalRawData: null);
+            return new TextBlocklistItem(blocklistItemId, description, text, isRegex, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AddOrUpdateTextBlocklistItemsResult"/>. </summary>

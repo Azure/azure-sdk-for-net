@@ -26,7 +26,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ToolOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,30 +34,11 @@ namespace Azure.AI.Agents.Persistent
                 throw new FormatException($"The model {nameof(ToolOutput)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ToolCallId))
-            {
-                writer.WritePropertyName("tool_call_id"u8);
-                writer.WriteStringValue(ToolCallId);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
@@ -81,20 +62,26 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            string toolCallId = default;
             string output = default;
+            string type = default;
+            string toolCallId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tool_call_id"u8))
-                {
-                    toolCallId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("output"u8))
                 {
                     output = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tool_call_id"u8))
+                {
+                    toolCallId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -103,7 +90,7 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ToolOutput(toolCallId, output, serializedAdditionalRawData);
+            return new ToolOutput(type, toolCallId, serializedAdditionalRawData, output);
         }
 
         BinaryData IPersistableModel<ToolOutput>.Write(ModelReaderWriterOptions options)
@@ -139,14 +126,14 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ToolOutput FromResponse(Response response)
+        internal static new ToolOutput FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeToolOutput(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);

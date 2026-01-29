@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Kind of the endpoint for the data connection. </summary>
         internal DataConnectionKind Kind { get; set; }

@@ -46,16 +46,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The provisioning state of the Security Partner Provider resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The security provider name. </summary>
+        [WirePath("properties.securityProviderName")]
         public SecurityProviderName? SecurityProviderName { get; set; }
         /// <summary> The connection status with the Security Partner Provider. </summary>
+        [WirePath("properties.connectionStatus")]
         public SecurityPartnerProviderConnectionStatus? ConnectionStatus { get; }
         /// <summary> The virtualHub to which the Security Partner Provider belongs. </summary>
         internal WritableSubResource VirtualHub { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualHub.id")]
         public ResourceIdentifier VirtualHubId
         {
             get => VirtualHub is null ? default : VirtualHub.Id;

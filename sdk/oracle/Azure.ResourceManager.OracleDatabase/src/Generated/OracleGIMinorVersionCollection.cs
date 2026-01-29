@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -21,73 +22,79 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing a collection of <see cref="OracleGIMinorVersionResource"/> and their operations.
     /// Each <see cref="OracleGIMinorVersionResource"/> in the collection will belong to the same instance of <see cref="OracleGIVersionResource"/>.
-    /// To get an <see cref="OracleGIMinorVersionCollection"/> instance call the GetOracleGIMinorVersions method from an instance of <see cref="OracleGIVersionResource"/>.
+    /// To get a <see cref="OracleGIMinorVersionCollection"/> instance call the GetOracleGIMinorVersions method from an instance of <see cref="OracleGIVersionResource"/>.
     /// </summary>
     public partial class OracleGIMinorVersionCollection : ArmCollection, IEnumerable<OracleGIMinorVersionResource>, IAsyncEnumerable<OracleGIMinorVersionResource>
     {
-        private readonly ClientDiagnostics _oracleGIMinorVersionGiMinorVersionsClientDiagnostics;
-        private readonly GiMinorVersionsRestOperations _oracleGIMinorVersionGiMinorVersionsRestClient;
+        private readonly ClientDiagnostics _giMinorVersionsClientDiagnostics;
+        private readonly GiMinorVersions _giMinorVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OracleGIMinorVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleGIMinorVersionCollection for mocking. </summary>
         protected OracleGIMinorVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleGIMinorVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleGIMinorVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleGIMinorVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oracleGIMinorVersionGiMinorVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIMinorVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleGIMinorVersionResource.ResourceType, out string oracleGIMinorVersionGiMinorVersionsApiVersion);
-            _oracleGIMinorVersionGiMinorVersionsRestClient = new GiMinorVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIMinorVersionGiMinorVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(OracleGIMinorVersionResource.ResourceType, out string oracleGIMinorVersionApiVersion);
+            _giMinorVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIMinorVersionResource.ResourceType.Namespace, Diagnostics);
+            _giMinorVersionsRestClient = new GiMinorVersions(_giMinorVersionsClientDiagnostics, Pipeline, Endpoint, oracleGIMinorVersionApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != OracleGIVersionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OracleGIVersionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OracleGIVersionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a GiMinorVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OracleGIMinorVersionResource>> GetAsync(string giMinorVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giMinorVersionName, nameof(giMinorVersionName));
 
-            using var scope = _oracleGIMinorVersionGiMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Get");
+            using DiagnosticScope scope = _giMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleGIMinorVersionGiMinorVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, giMinorVersionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giMinorVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, giMinorVersionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleGIMinorVersionData> response = Response.FromValue(OracleGIMinorVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIMinorVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +108,42 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a GiMinorVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OracleGIMinorVersionResource> Get(string giMinorVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giMinorVersionName, nameof(giMinorVersionName));
 
-            using var scope = _oracleGIMinorVersionGiMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Get");
+            using DiagnosticScope scope = _giMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleGIMinorVersionGiMinorVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, giMinorVersionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giMinorVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, giMinorVersionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleGIMinorVersionData> response = Response.FromValue(OracleGIMinorVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIMinorVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,52 +157,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List GiMinorVersion resources by GiVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_ListByParent</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_ListByParent. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
-        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleGIMinorVersionResource> GetAllAsync(GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleGIMinorVersionResource(Client, OracleGIMinorVersionData.DeserializeOracleGIMinorVersionData(e)), _oracleGIMinorVersionGiMinorVersionsClientDiagnostics, Pipeline, "OracleGIMinorVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List GiMinorVersion resources by GiVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_ListByParent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,47 +174,107 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleGIMinorVersionResource> GetAll(GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleGIMinorVersionResource> GetAllAsync(GIMinorVersionShapeFamily? shapeFamily = default, string zone = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleGIMinorVersionResource(Client, OracleGIMinorVersionData.DeserializeOracleGIMinorVersionData(e)), _oracleGIMinorVersionGiMinorVersionsClientDiagnostics, Pipeline, "OracleGIMinorVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleGIMinorVersionData, OracleGIMinorVersionResource>(new GiMinorVersionsGetByParentAsyncCollectionResultOfT(
+                _giMinorVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                shapeFamily.ToString(),
+                zone,
+                context), data => new OracleGIMinorVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List GiMinorVersion resources by GiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OracleGIMinorVersionResource> GetAll(GIMinorVersionShapeFamily? shapeFamily = default, string zone = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleGIMinorVersionData, OracleGIMinorVersionResource>(new GiMinorVersionsGetByParentCollectionResultOfT(
+                _giMinorVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                shapeFamily.ToString(),
+                zone,
+                context), data => new OracleGIMinorVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string giMinorVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giMinorVersionName, nameof(giMinorVersionName));
 
-            using var scope = _oracleGIMinorVersionGiMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Exists");
+            using DiagnosticScope scope = _giMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleGIMinorVersionGiMinorVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, giMinorVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giMinorVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, giMinorVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleGIMinorVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIMinorVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIMinorVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,36 +288,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string giMinorVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giMinorVersionName, nameof(giMinorVersionName));
 
-            using var scope = _oracleGIMinorVersionGiMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Exists");
+            using DiagnosticScope scope = _giMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleGIMinorVersionGiMinorVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, giMinorVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giMinorVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, giMinorVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleGIMinorVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIMinorVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIMinorVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,38 +345,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OracleGIMinorVersionResource>> GetIfExistsAsync(string giMinorVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giMinorVersionName, nameof(giMinorVersionName));
 
-            using var scope = _oracleGIMinorVersionGiMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _giMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleGIMinorVersionGiMinorVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, giMinorVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giMinorVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, giMinorVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleGIMinorVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIMinorVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIMinorVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleGIMinorVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIMinorVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,38 +406,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiMinorVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OracleGIMinorVersionResource> GetIfExists(string giMinorVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giMinorVersionName, nameof(giMinorVersionName));
 
-            using var scope = _oracleGIMinorVersionGiMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _giMinorVersionsClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleGIMinorVersionGiMinorVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, giMinorVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giMinorVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, giMinorVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleGIMinorVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIMinorVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIMinorVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleGIMinorVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIMinorVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,6 +473,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleGIMinorVersionResource> IAsyncEnumerable<OracleGIMinorVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

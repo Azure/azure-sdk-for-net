@@ -26,7 +26,7 @@ language: net
 root_check_enabled: True
 
 required_readme_sections:
-  - "Azure .+ client library for .NET"
+  - "Azure (.+ client library for .NET|AI Agent Server Adapter for .*.NET)"
   - "^Getting started$":
     - Install the [Pp]ackage
     - Prerequisites
@@ -118,6 +118,7 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/System.ClientModel/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/core/Microsoft.ClientModel.TestFramework/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404', 'Missing section: Azure .+ client library for .NET']
   - ['sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
@@ -127,6 +128,7 @@ known_content_issues:
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/identity/Azure.Identity.Broker/README.md','azure-sdk-tools/issues/404']
   - ['sdk/storage/Azure.Storage.Common/README.md','azure-sdk-tools/issues/404']
   - ['sdk/textanalytics/Azure.AI.TextAnalytics.Legacy.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/webpubsub/Azure.Messaging.WebPubSub/README.md', 'azure-sdk-tools/issues/404 - requires different name for auth section']
@@ -143,6 +145,10 @@ known_content_issues:
   - ['sdk/provisioning/Azure.Provisioning.KubernetesConfiguration/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.Kubernetes/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.Deployment/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+
+  - ['sdk/agentserver/Azure.AI.AgentServer.AgentFramework/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Contracts/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

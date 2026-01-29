@@ -15,6 +15,12 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AuthenticationUnionClientBuilderExtensions
     {
+        public static IAzureClientBuilder<UnionClient, UnionClientOptions> AddUnionClient<TBuilder>(this TBuilder builder, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
+        public static IAzureClientBuilder<UnionClient, UnionClientOptions> AddUnionClient<TBuilder>(this TBuilder builder)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential => throw null;
+
         public static IAzureClientBuilder<UnionClient, UnionClientOptions> AddUnionClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 

@@ -1057,9 +1057,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity Informational { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity (string value) { throw null; }
@@ -1075,9 +1073,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType AzureActiveDirectory { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType (string value) { throw null; }
@@ -1118,9 +1114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy Cloud { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy Local { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy (string value) { throw null; }
@@ -1136,9 +1130,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType GeoZoneReplication { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType ZoneReplication { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType (string value) { throw null; }
@@ -1159,9 +1151,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek (string value) { throw null; }
@@ -1233,9 +1223,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind AzureStackEdge { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind AzureStackHub { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind (string value) { throw null; }
@@ -1292,9 +1280,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus PartiallyDisconnected { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus ReadyToSetup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus (string value) { throw null; }
@@ -1309,9 +1295,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeDeviceType(string value) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType DataBoxEdgeDevice { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType (string value) { throw null; }
@@ -1364,9 +1348,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase Unknown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase Verifying { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase (string value) { throw null; }
@@ -1383,9 +1365,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm None { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm RsaesPkcs1V1_5 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm (string value) { throw null; }
@@ -1470,9 +1450,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus Scheduled { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus (string value) { throw null; }
@@ -1495,9 +1473,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType ScanForUpdates { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType TriggerSupportPackage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType (string value) { throw null; }
@@ -1591,9 +1567,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType HostPath { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType Volume { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType (string value) { throw null; }
@@ -1634,9 +1608,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus (string value) { throw null; }
@@ -1664,9 +1636,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus Capable { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus Incapable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus (string value) { throw null; }
@@ -1682,9 +1652,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus Active { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus (string value) { throw null; }
@@ -1701,9 +1669,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup NonRdma { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup Rdma { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup (string value) { throw null; }
@@ -1739,9 +1705,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus Up { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus (string value) { throw null; }
@@ -1772,9 +1736,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState ShippedBack { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Untracked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState (string value) { throw null; }
@@ -1805,9 +1767,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType Linux { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType (string value) { throw null; }
@@ -1850,9 +1810,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus ResourceMoveFailed { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus ResourceMoveInProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus (string value) { throw null; }
@@ -1873,9 +1831,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Reconfiguring { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState (string value) { throw null; }
@@ -1902,9 +1858,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus (string value) { throw null; }
@@ -1925,9 +1879,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType Kubernetes { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType Mec { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType (string value) { throw null; }
@@ -1954,9 +1906,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus (string value) { throw null; }
@@ -1973,9 +1923,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType SelfPickup { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType ShippedToCustomer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType (string value) { throw null; }
@@ -2020,9 +1968,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability Available { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability (string value) { throw null; }
@@ -2103,9 +2049,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tea4NodeUpsHeater { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tma { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName (string value) { throw null; }
@@ -2121,9 +2065,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption Available { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption (string value) { throw null; }
@@ -2138,9 +2080,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeSkuTier(string value) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier (string value) { throw null; }
@@ -2156,9 +2096,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion Preview { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion Stable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion (string value) { throw null; }
@@ -2174,9 +2112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus (string value) { throw null; }
@@ -2195,9 +2131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus (string value) { throw null; }
@@ -2213,9 +2147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType BlobStorage { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType GeneralPurposeStorage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType (string value) { throw null; }
@@ -2232,9 +2164,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat BlockBlob { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat PageBlob { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat (string value) { throw null; }
@@ -2266,9 +2196,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus (string value) { throw null; }
@@ -2287,9 +2215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState Unregistered { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState (string value) { throw null; }
@@ -2340,9 +2266,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation None { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation Scan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation (string value) { throw null; }
@@ -2361,9 +2285,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus InstallCompleted { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus InstallStarted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus (string value) { throw null; }
@@ -2380,9 +2302,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType Kubernetes { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType Software { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType (string value) { throw null; }
@@ -2399,9 +2319,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType LocalManagement { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType Share { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType (string value) { throw null; }
@@ -2460,9 +2378,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType (string value) { throw null; }
@@ -2540,9 +2456,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType FileShare { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType (string value) { throw null; }
@@ -2646,9 +2560,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus KeyVaultSyncing { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus KeyVaultSyncPending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus (string value) { throw null; }
@@ -2703,9 +2615,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType Master { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType Worker { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType (string value) { throw null; }
@@ -2805,9 +2715,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState Reconfiguring { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState (string value) { throw null; }
@@ -2845,9 +2753,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel left, Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel (string value) { throw null; }
@@ -2865,9 +2771,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType Powershell { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType Wac { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType (string value) { throw null; }
@@ -2925,9 +2829,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType KubernetesCluster { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType LinuxVm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType (string value) { throw null; }
@@ -2957,9 +2859,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact KubernetesWorkloadsDown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact left, Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact (string value) { throw null; }
@@ -2976,9 +2876,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior RequestReboot { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior RequiresReboot { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior left, Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior (string value) { throw null; }
@@ -3065,9 +2963,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus Enabled { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus left, Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus (string value) { throw null; }
@@ -3083,9 +2979,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent left, Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent (string value) { throw null; }
@@ -3101,9 +2995,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol Nfs { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol Smb { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol left, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol (string value) { throw null; }
@@ -3132,9 +3024,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType Custom { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType Read { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType left, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType (string value) { throw null; }
@@ -3153,9 +3043,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus left, Azure.ResourceManager.DataBoxEdge.Models.ShareStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareStatus (string value) { throw null; }
@@ -3240,9 +3128,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage Success { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage left, Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage (string value) { throw null; }

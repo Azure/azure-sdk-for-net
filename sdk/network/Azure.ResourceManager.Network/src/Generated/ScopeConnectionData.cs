@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Tenant ID. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Resource ID. </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Connection State. </summary>
+        [WirePath("properties.connectionState")]
         public ScopeConnectionState? ConnectionState { get; }
         /// <summary> A description of the scope connection. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

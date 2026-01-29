@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.RecoveryServices
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics;
-        private readonly VaultExtendedInfoRestOperations _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient;
+        private readonly ClientDiagnostics _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics;
+        private readonly VaultExtendedInfoResourcesRestOperations _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient;
         private readonly RecoveryServicesVaultExtendedInfoData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecoveryServicesVaultExtendedInfoResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recoveryServicesVaultExtendedInfoVaultExtendedInfoApiVersion);
-            _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient = new VaultExtendedInfoRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesVaultExtendedInfoVaultExtendedInfoApiVersion);
+            _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesApiVersion);
+            _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient = new VaultExtendedInfoResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultExtendedInfo_Get</description>
+        /// <description>VaultExtendedInfoResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RecoveryServicesVaultExtendedInfoResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Get");
+            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Get");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response.Value), response.GetRawResponse());
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultExtendedInfo_Get</description>
+        /// <description>VaultExtendedInfoResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecoveryServicesVaultExtendedInfoResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Get");
+            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Get");
             scope.Start();
             try
             {
-                var response = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response.Value), response.GetRawResponse());
@@ -176,11 +176,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultExtendedInfo_Update</description>
+        /// <description>VaultExtendedInfoResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Update");
+            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Update");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
+                var response = await _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultExtendedInfo_Update</description>
+        /// <description>VaultExtendedInfoResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Update");
+            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Update");
             scope.Start();
             try
             {
-                var response = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
+                var response = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
                 return Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultExtendedInfo_CreateOrUpdate</description>
+        /// <description>VaultExtendedInfoResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -280,12 +280,12 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.CreateOrUpdate");
+            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
-                var uri = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var response = await _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
+                var uri = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultExtendedInfoResource>(Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultExtendedInfo_CreateOrUpdate</description>
+        /// <description>VaultExtendedInfoResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.CreateOrUpdate");
+            using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
-                var uri = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var response = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
+                var uri = _recoveryServicesVaultExtendedInfoVaultExtendedInfoResourcesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultExtendedInfoResource>(Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)

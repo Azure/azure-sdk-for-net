@@ -59,42 +59,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            ServiceBusPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ServiceBusPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusDisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource"/> object. </returns>
-        public virtual ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(ResourceIdentifier id)
-        {
-            ServiceBusDisasterRecoveryResource.ValidateResourceId(id);
-            return new ServiceBusDisasterRecoveryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MigrationConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationConfigurationResource"/> object. </returns>
-        public virtual MigrationConfigurationResource GetMigrationConfigurationResource(ResourceIdentifier id)
-        {
-            MigrationConfigurationResource.ValidateResourceId(id);
-            return new MigrationConfigurationResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceBusNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -104,6 +68,18 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         {
             ServiceBusNamespaceAuthorizationRuleResource.ValidateResourceId(id);
             return new ServiceBusNamespaceAuthorizationRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
+        public virtual ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier id)
+        {
+            ServiceBusDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
+            return new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, id);
         }
 
         /// <summary>
@@ -131,15 +107,39 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusDisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
-        public virtual ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource"/> object. </returns>
+        public virtual ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(ResourceIdentifier id)
         {
-            ServiceBusDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
-            return new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, id);
+            ServiceBusDisasterRecoveryResource.ValidateResourceId(id);
+            return new ServiceBusDisasterRecoveryResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MigrationConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MigrationConfigurationResource"/> object. </returns>
+        public virtual MigrationConfigurationResource GetMigrationConfigurationResource(ResourceIdentifier id)
+        {
+            MigrationConfigurationResource.ValidateResourceId(id);
+            return new MigrationConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            ServiceBusPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ServiceBusPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>
@@ -167,18 +167,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusRuleResource"/> object. </returns>
-        public virtual ServiceBusRuleResource GetServiceBusRuleResource(ResourceIdentifier id)
-        {
-            ServiceBusRuleResource.ValidateResourceId(id);
-            return new ServiceBusRuleResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ServiceBusSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceBusSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -188,6 +176,18 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         {
             ServiceBusSubscriptionResource.ValidateResourceId(id);
             return new ServiceBusSubscriptionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceBusRuleResource"/> object. </returns>
+        public virtual ServiceBusRuleResource GetServiceBusRuleResource(ResourceIdentifier id)
+        {
+            ServiceBusRuleResource.ValidateResourceId(id);
+            return new ServiceBusRuleResource(Client, id);
         }
     }
 }

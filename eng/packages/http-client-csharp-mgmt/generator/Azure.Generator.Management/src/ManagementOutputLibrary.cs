@@ -4,9 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -32,24 +30,242 @@ namespace Azure.Generator.Management
         private PageableWrapperProvider? _asyncPageableWrapper;
         internal PageableWrapperProvider AsyncPageableWrapper => _asyncPageableWrapper ??= new PageableWrapperProvider(true);
 
-        private IReadOnlyList<ResourceClientProvider>? _resourceClients;
-        internal IReadOnlyList<ResourceClientProvider> ResourceClients => _resourceClients ??= BuildResources();
+        private ProviderConstantsProvider? _providerConstants;
+        internal ProviderConstantsProvider ProviderConstants => _providerConstants ??= new ProviderConstantsProvider();
+
+        private WirePathAttributeDefinition? _wirePathAttributeProvider;
+        internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
+
+        private CSharpType? _modelReaderWriterContextType;
+        internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
+
+        // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
+        // but currently this is the best we could do right now.
+        internal Dictionary<string, string> PageableMethodScopes { get; } = new();
+
+        private IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict;
+        private IReadOnlyList<ResourceClientProvider>? _resources;
+        private IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections;
+        private IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict;
+        private IReadOnlyList<MockableResourceProvider>? _mockableResources;
+        private ExtensionProvider? _extensionProvider;
+
+        private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
+        internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
+
+        internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
+        internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
+        internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResources);
+        internal ExtensionProvider ExtensionProvider => GetValue(ref _extensionProvider);
+
+        // our initialization process should guarantee that here we never get a KeyNotFoundException
+        internal ResourceClientProvider GetResourceById(string id) => GetValue(ref _resourcesByIdDict)[id];
+
+        // our initialization process should guarantee that here we never get a KeyNotFoundException
+        internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
+
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>>? _outputFlattenPropertyMap;
+        internal IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> BuildOutputFlattenPropertyMap()
+            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
+                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
+                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
+
+        private T GetValue<T>(ref T? field) where T : class
+        {
+            InitializeResourceClients(
+                ref _resourcesByIdDict,
+                ref _resources,
+                ref _resourceCollections,
+                ref _mockableResourcesByScopeDict,
+                ref _mockableResources,
+                ref _extensionProvider);
+
+            return field!;
+        }
+
+        /// <summary>
+        /// This method initializes the resource clients, collections, and mockable clients.
+        /// We do all of these in the same method to ensure they are initialized together
+        /// </summary>
+        /// <param name="_resourcesByIdDict">Represent a map from resource id pattern to the <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_resources">The full list of <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_resourceCollections">The full list of <see cref="ResourceCollectionClientProvider"/>. </param>
+        /// <param name="_mockableResourcesByScopeDict">Represent a dictionary from scope to the corresponding <see cref="MockableResourceProvider"/>. </param>
+        /// <param name="_mockableResources">The full list of <see cref="MockableResourceProvider"/>. </param>
+        /// <param name="_extensionProvider">The <see cref="T:ExtensionProvider"/>. </param>
+        private static void InitializeResourceClients(
+            ref IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict,
+            ref IReadOnlyList<ResourceClientProvider>? _resources,
+            ref IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections,
+            ref IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict,
+            ref IReadOnlyList<MockableResourceProvider>? _mockableResources,
+            ref ExtensionProvider? _extensionProvider)
+        {
+            if (_resourcesByIdDict is not null ||
+                _resources is not null ||
+                _resourceCollections is not null ||
+                _mockableResourcesByScopeDict is not null ||
+                _mockableResources is not null ||
+                _extensionProvider is not null)
+            {
+                return; // already initialized
+            }
+
+            var resourceMetadatas = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
+            var resourceMethodCategories = new Dictionary<ResourceMetadata, ResourceMethodCategory>(resourceMetadatas.Count);
+
+            // build resource methods per resource metadata
+            var resourceDict = new Dictionary<ResourceMetadata, ResourceClientProvider>(resourceMetadatas.Count);
+            var collections = new List<ResourceCollectionClientProvider>(resourceMetadatas.Count);
+            foreach (var resourceMetadata in resourceMetadatas)
+            {
+                // categorize the resource methods
+                var categorizedMethods = resourceMetadata.CategorizeMethods();
+                // stores it because later in extensions we need it again
+                resourceMethodCategories.Add(resourceMetadata, categorizedMethods);
+                var resource = ResourceClientProvider.Create(resourceMetadata, categorizedMethods.MethodsInResource, categorizedMethods.MethodsInCollection);
+                resourceDict.Add(resourceMetadata, resource);
+                if (resource.ResourceCollection is not null)
+                {
+                    collections.Add(resource.ResourceCollection);
+                }
+            }
+
+            // resources and collections are now initialized
+            _resourcesByIdDict = resourceDict.ToDictionary(kv => kv.Key.ResourceIdPattern, kv => kv.Value);
+            _resources = [.. resourceDict.Values];
+            _resourceCollections = collections;
+
+            // build mockable resources
+            var resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(
+                resourceDict,
+                resourceMethodCategories,
+                ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
+
+            // Extract extension non-resource methods for MockableArmClientProvider
+            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
+                ? extensionScope.NonResourceMethods
+                : [];
+
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
+            var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
+            foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
+            {
+                if (scope != ResourceScope.Extension)
+                {
+                    var mockableExtension = MockableResourceProvider.TryCreate(scope, resourcesInScope, resourceMethods, nonResourceMethods);
+                    if (mockableExtension != null)
+                    {
+                        mockableResources.Add(scope, mockableExtension);
+                    }
+                }
+            }
+
+            _mockableResourcesByScopeDict = mockableResources;
+            var allMockableResources = new List<MockableResourceProvider>();
+            if (mockableArmClientResource != null)
+            {
+                allMockableResources.Add(mockableArmClientResource);
+            }
+            allMockableResources.AddRange(mockableResources.Values);
+            _mockableResources = allMockableResources;
+            _extensionProvider = new ExtensionProvider(_mockableResources);
+
+            static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
+                IReadOnlyDictionary<ResourceMetadata, ResourceClientProvider> resourceDict,
+                IReadOnlyDictionary<ResourceMetadata, ResourceMethodCategory> resourceMethods,
+                IEnumerable<NonResourceMethod> nonResourceMethods)
+            {
+                // walk through all resources to figure out their scopes
+                var resourcesAndMethodsPerScope = new Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope>
+                {
+                    [ResourceScope.ResourceGroup] = new([], [], []),
+                    [ResourceScope.Subscription] = new([], [], []),
+                    [ResourceScope.Tenant] = new([], [], []),
+                    [ResourceScope.ManagementGroup] = new([], [], []),
+                    [ResourceScope.Extension] = new([], [], [])
+                };
+                foreach (var (metadata, resourceClient) in resourceDict)
+                {
+                    if (metadata.ParentResourceId is null)
+                    {
+                        resourcesAndMethodsPerScope[metadata.ResourceScope].ResourceClients.Add(resourceClient);
+                    }
+                }
+                foreach (var (metadata, category) in resourceMethods)
+                {
+                    // find the resource
+                    var resource = resourceDict[metadata];
+                    // the resource methods
+                    foreach (var resourceMethod in category.MethodsInExtension)
+                    {
+                        var resourcesAndMethodsInThisScope = resourcesAndMethodsPerScope[resourceMethod.OperationScope];
+                        if (!resourcesAndMethodsInThisScope.ResourceMethods.TryGetValue(resource, out var methods))
+                        {
+                            methods = new List<ResourceMethod>();
+                            resourcesAndMethodsInThisScope.ResourceMethods[resource] = methods;
+                        }
+                        // add this method into the list
+                        ((List<ResourceMethod>)methods).Add(resourceMethod);
+                    }
+                }
+                foreach (var nonResourceMethod in nonResourceMethods)
+                {
+                    resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
+                }
+                return resourcesAndMethodsPerScope;
+            }
+        }
 
         // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
         private HashSet<CSharpType>? _modelFactoryModels;
-        private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
-        internal HashSet<CSharpType> BuildModelFactoryModels()
+        private HashSet<CSharpType>? _allModelTypes;
+
+        private HashSet<CSharpType> ModelFactoryModels
         {
-            var result = new HashSet<CSharpType>();
+            get
+            {
+                BuildModelTypes();
+                return _modelFactoryModels!;
+            }
+        }
+
+        private HashSet<CSharpType> AllModelTypes
+        {
+            get
+            {
+                BuildModelTypes();
+                return _allModelTypes!;
+            }
+        }
+
+        private void BuildModelTypes()
+        {
+            if (_modelFactoryModels is not null && _allModelTypes is not null)
+            {
+                return; // already built
+            }
+
+            var allModelTypes = new HashSet<CSharpType>();
+            var modelFactoryModels = new HashSet<CSharpType>();
+
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && IsModelFactoryModel(model))
+                if (model is not null)
                 {
-                    result.Add(model.Type);
+                    var eraseNullableType = model.Type.WithNullable(false);
+                    allModelTypes.Add(eraseNullableType);
+                    if (IsModelFactoryModel(model))
+                    {
+                        modelFactoryModels.Add(eraseNullableType);
+                    }
                 }
             }
-            return result;
+
+            _allModelTypes = allModelTypes;
+            _modelFactoryModels = modelFactoryModels;
         }
 
         private static bool IsModelFactoryModel(ModelProvider model)
@@ -82,100 +298,140 @@ namespace Azure.Generator.Management
             }
         }
 
-        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
+        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type.WithNullable(false));
 
-        private IReadOnlyList<ResourceClientProvider> BuildResources()
-        {
-            var resources = new List<ResourceClientProvider>();
-            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
-            {
-                var resource = BuildResource(model);
-                if (resource is not null)
-                {
-                    resources.Add(resource);
-                }
-            }
-            return resources;
-        }
-
-        private static readonly IReadOnlyDictionary<ResourceScope, Type> _scopeToTypes = new Dictionary<ResourceScope, Type>
-        {
-            [ResourceScope.ResourceGroup] = typeof(ResourceGroupResource),
-            [ResourceScope.Subscription] = typeof(SubscriptionResource),
-            [ResourceScope.Tenant] = typeof(TenantResource),
-            [ResourceScope.ManagementGroup] = typeof(ManagementGroupResource),
-        };
-
-        private IReadOnlyList<TypeProvider> BuildExtensions(IReadOnlyList<ResourceClientProvider> resources)
-        {
-            // walk through all resources to figure out their scopes
-            var scopeCandidates = new Dictionary<ResourceScope, List<ResourceClientProvider>>
-            {
-                [ResourceScope.ResourceGroup] = [],
-                [ResourceScope.Subscription] = [],
-                [ResourceScope.Tenant] = [],
-                [ResourceScope.ManagementGroup] = [],
-            };
-            foreach (var resource in resources)
-            {
-                if (resource.ParentResourceIdPattern is null)
-                {
-                    scopeCandidates[resource.ResourceScope].Add(resource);
-                }
-            }
-
-            var mockableArmClientResource = new MockableArmClientProvider(typeof(ArmClient), resources);
-            var mockableResources = new List<MockableResourceProvider>(scopeCandidates.Count)
-            {
-                // add the arm client mockable resource
-                mockableArmClientResource
-            };
-            ManagementClientGenerator.Instance.AddTypeToKeep(mockableArmClientResource.Name);
-
-            foreach (var (scope, candidates) in scopeCandidates)
-            {
-                if (candidates.Count > 0)
-                {
-                    var mockableExtension = new MockableResourceProvider(_scopeToTypes[scope], candidates);
-                    mockableResources.Add(mockableExtension);
-                    ManagementClientGenerator.Instance.AddTypeToKeep(mockableExtension.Name);
-                }
-            }
-
-            var extensionProvider = new ExtensionProvider(mockableResources);
-            ManagementClientGenerator.Instance.AddTypeToKeep(extensionProvider.Name);
-
-            return [.. mockableResources, extensionProvider];
-        }
-
-        // TODO -- in a near future we might need to change the input, because in real typespec, there is no guarantee that one model corresponds to one resource.
-        private static ResourceClientProvider? BuildResource(InputModelType model)
-        {
-            // A resource model should contain the decorator "Azure.ResourceManager.@resourceMetadata"
-            var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(model);
-            return resourceMetadata is not null ?
-                ResourceClientProvider.Create(model, resourceMetadata) :
-                null;
-        }
+        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type.WithNullable(false));
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var resources = ResourceClients;
-            var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
-            var extensions = BuildExtensions(resources);
+            // we need to add the clients (including resources, collections, mockable resources and extension static class)
+            // to the types to keep
+            // otherwise, they will be trimmed off or internalized by the post processor
+            foreach (var resource in ResourceProviders)
+            {
+                ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
+            }
+            foreach (var collection in ResourceCollectionProviders)
+            {
+                ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
+            }
+            foreach (var mockableResource in MockableResourceProviders)
+            {
+                ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
+            }
+            ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
+
+            // Extract array response collection results from all methods
+            var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
-                .. resources,
-                .. collections,
-                .. extensions,
+                .. OperationSourceDict.Values,
+                ProviderConstants,
+                .. ResourceProviders,
+                .. ResourceCollectionProviders,
+                .. MockableResourceProviders,
+                ExtensionProvider,
                 PageableWrapper,
                 AsyncPageableWrapper,
-                .. resources.Select(r => r.Source),
-                .. resources.SelectMany(r => r.SerializationProviders)];
+                .. arrayResponseCollectionResults,
+                .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+        }
+
+        private List<ArrayResponseCollectionResultDefinition> ExtractArrayResponseCollectionResults()
+        {
+            var collectionResults = new List<ArrayResponseCollectionResultDefinition>();
+
+            // Check all resource providers
+            foreach (var resource in ResourceProviders)
+            {
+                ExtractCollectionResultsFromMethods(resource.Methods, collectionResults);
+            }
+
+            // Check all resource collection providers
+            foreach (var collection in ResourceCollectionProviders)
+            {
+                ExtractCollectionResultsFromMethods(collection.Methods, collectionResults);
+            }
+
+            // Check all mockable resource providers
+            foreach (var mockableResource in MockableResourceProviders)
+            {
+                ExtractCollectionResultsFromMethods(mockableResource.Methods, collectionResults);
+            }
+
+            return collectionResults;
+        }
+
+        private void ExtractCollectionResultsFromMethods(IReadOnlyList<MethodProvider> methods, List<ArrayResponseCollectionResultDefinition> collectionResults)
+        {
+            foreach (var method in methods)
+            {
+                // Check if this is an ScmMethodProvider with an ArrayResponseCollectionResultDefinition
+                if (method is ScmMethodProvider { CollectionDefinition: ArrayResponseCollectionResultDefinition arrayCollectionResult })
+                {
+                    collectionResults.Add(arrayCollectionResult);
+                }
+            }
+        }
+
+        private Dictionary<CSharpType, OperationSourceProvider> BuildOperationSources()
+        {
+            var operationSources = new Dictionary<CSharpType, OperationSourceProvider>();
+
+            // Process resource methods
+            foreach (var metadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
+            {
+                foreach (var resourceMethod in metadata.Methods)
+                {
+                    ProcessLroMethod(resourceMethod.InputMethod, operationSources);
+                }
+            }
+
+            // Process non-resource methods
+            foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
+            {
+                ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
+            }
+
+            return operationSources;
+        }
+
+        private void ProcessLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
+        {
+            if (inputMethod is InputLongRunningServiceMethod lroMethod)
+            {
+                var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+                if (returnType is InputModelType inputModelType)
+                {
+                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
+                    if (returnCSharpType == null)
+                    {
+                        return;
+                    }
+
+                    // Find all resource providers that use this data type
+                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType));
+
+                    if (resourceProviders.Any())
+                    {
+                        // For each resource provider, create an OperationSource keyed by the resource type
+                        foreach (var resourceProvider in resourceProviders)
+                        {
+                            operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
+                        }
+                    }
+                    else
+                    {
+                        // This is a non-resource model - use the data type as the key
+                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
+                    }
+                }
+            }
         }
 
         internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);
@@ -183,8 +439,26 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<CSharpType, ResourceClientProvider>? _resourceDataTypes;
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
-            _resourceDataTypes ??= ResourceClients.ToDictionary(r => r.ResourceData.Type, r => r);
+            if (_resourceDataTypes == null)
+            {
+                // Build dictionary, handling cases where multiple resources share the same data type
+                var dict = new Dictionary<CSharpType, ResourceClientProvider>();
+                foreach (var provider in ResourceProviders)
+                {
+                    // If the key already exists (multiple resources sharing same model), keep the first one
+                    if (!dict.ContainsKey(provider.ResourceData.Type))
+                    {
+                        dict[provider.ResourceData.Type] = provider;
+                    }
+                }
+                _resourceDataTypes = dict;
+            }
             return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
         }
+
+        private record ResourcesAndNonResourceMethodsInScope(
+            List<ResourceClientProvider> ResourceClients,
+            Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> ResourceMethods,
+            List<NonResourceMethod> NonResourceMethods);
     }
 }

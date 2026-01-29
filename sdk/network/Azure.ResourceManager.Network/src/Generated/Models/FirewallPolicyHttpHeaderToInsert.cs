@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Contains the name of the header. </summary>
+        [WirePath("headerName")]
         public string HeaderName { get; set; }
         /// <summary> Contains the value of the header. </summary>
+        [WirePath("headerValue")]
         public string HeaderValue { get; set; }
     }
 }

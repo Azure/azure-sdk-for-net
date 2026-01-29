@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct IotOperationsProvisioningState : IEquatable<IotOperationsProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Resource is getting provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Resource is Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Resource is Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Resource has been Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotOperationsProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static IotOperationsProvisioningState Succeeded { get; } = new IotOperationsProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static IotOperationsProvisioningState Failed { get; } = new IotOperationsProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static IotOperationsProvisioningState Canceled { get; } = new IotOperationsProvisioningState(CanceledValue);
+
         /// <summary> Resource is getting provisioned. </summary>
         public static IotOperationsProvisioningState Provisioning { get; } = new IotOperationsProvisioningState(ProvisioningValue);
+
         /// <summary> Resource is Updating. </summary>
         public static IotOperationsProvisioningState Updating { get; } = new IotOperationsProvisioningState(UpdatingValue);
+
         /// <summary> Resource is Deleting. </summary>
         public static IotOperationsProvisioningState Deleting { get; } = new IotOperationsProvisioningState(DeletingValue);
+
         /// <summary> Resource has been Accepted. </summary>
         public static IotOperationsProvisioningState Accepted { get; } = new IotOperationsProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="IotOperationsProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotOperationsProvisioningState left, IotOperationsProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotOperationsProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotOperationsProvisioningState left, IotOperationsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotOperationsProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotOperationsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotOperationsProvisioningState(string value) => new IotOperationsProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotOperationsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotOperationsProvisioningState?(string value) => value == null ? null : new IotOperationsProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotOperationsProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotOperationsProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,58 +13,38 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Information on how the deployment will be scaled. </summary>
     public partial class NginxDeploymentScalingProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
         public NginxDeploymentScalingProperties()
         {
-            Profiles = new ChangeTrackingList<NginxScaleProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
         /// <param name="capacity"></param>
-        /// <param name="profiles"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentScalingProperties(int? capacity, IList<NginxScaleProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="autoScaleSettings"> The settings for enabling automatic scaling of the deployment. If this field is specified, 'scale.capacity' must be empty. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentScalingProperties(int? capacity, NginxDeploymentAutoScaleSettings autoScaleSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capacity = capacity;
-            Profiles = profiles;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AutoScaleSettings = autoScaleSettings;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the capacity. </summary>
+        /// <summary> Gets or sets the Capacity. </summary>
         public int? Capacity { get; set; }
-        /// <summary> Gets the profiles. </summary>
-        public IList<NginxScaleProfile> Profiles { get; }
+
+        /// <summary> The settings for enabling automatic scaling of the deployment. If this field is specified, 'scale.capacity' must be empty. </summary>
+        internal NginxDeploymentAutoScaleSettings AutoScaleSettings { get; set; }
+
+        /// <summary> Gets the Profiles. </summary>
+        public IList<NginxScaleProfile> Profiles
+        {
+            get
+            {
+                return AutoScaleSettings is null ? default : AutoScaleSettings.Profiles;
+            }
+        }
     }
 }

@@ -59,8 +59,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="dfsUri"> Gets the dfs endpoint. </param>
         /// <param name="microsoftEndpoints"> Gets the microsoft routing storage endpoints. </param>
         /// <param name="internetEndpoints"> Gets the internet routing storage endpoints. </param>
+        /// <param name="ipv6Endpoints"> Gets the IPv6 storage endpoints. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints, StorageAccountIPv6Endpoints ipv6Endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
             QueueUri = queueUri;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
             DfsUri = dfsUri;
             MicrosoftEndpoints = microsoftEndpoints;
             InternetEndpoints = internetEndpoints;
+            IPv6Endpoints = ipv6Endpoints;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,5 +99,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets the internet routing storage endpoints. </summary>
         [WirePath("internetEndpoints")]
         public StorageAccountInternetEndpoints InternetEndpoints { get; }
+        /// <summary> Gets the IPv6 storage endpoints. </summary>
+        [WirePath("ipv6Endpoints")]
+        public StorageAccountIPv6Endpoints IPv6Endpoints { get; }
     }
 }

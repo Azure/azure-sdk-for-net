@@ -87,6 +87,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             // Note that these clients are intentionally for the storage account rather than for the dashboard account.
             // We use the storage, not dashboard, account for the blob receipt container and blob trigger queues.
+            var primaryBlobClient = _hostBlobServiceClient;
+
             // Important: We're using the storage account of the function target here, which is the account that the
             // function the listener is for is targeting. This is the account that will be used
             // to read the trigger blob.
@@ -105,8 +107,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     new SharedBlobListenerFactory(hostId, _hostBlobServiceClient, _exceptionHandler, _blobWrittenWatcherSetter, _loggerFactory.CreateLogger<BlobListener>()));
 
                 // Register the blob container we wish to monitor with the shared blob listener.
-                await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, targetBlobClient,
-                    blobTriggerQueueWriter, cancellationToken).ConfigureAwait(false);
+                await RegisterWithSharedBlobListenerAsync(
+                    hostId,
+                    sharedBlobListener,
+                    primaryBlobClient,
+                    targetBlobClient,
+                    blobTriggerQueueWriter,
+                    cancellationToken).ConfigureAwait(false);
             }
 
             // Create a "bridge" listener that will monitor the blob
@@ -163,14 +170,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private async Task RegisterWithSharedBlobListenerAsync(
             string hostId,
             SharedBlobListener sharedBlobListener,
-            BlobServiceClient blobClient,
+            BlobServiceClient primaryBlobClient,
+            BlobServiceClient targetBlobClient,
             BlobTriggerQueueWriter blobTriggerQueueWriter,
             CancellationToken cancellationToken)
         {
-            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(blobClient),
-                blobTriggerQueueWriter, _loggerFactory.CreateLogger<BlobListener>());
+            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(
+                hostId,
+                _functionDescriptor,
+                _input,
+                new BlobReceiptManager(primaryBlobClient),
+                blobTriggerQueueWriter,
+                _loggerFactory.CreateLogger<BlobListener>());
 
-            await sharedBlobListener.RegisterAsync(blobClient, _container, triggerExecutor, cancellationToken).ConfigureAwait(false);
+            await sharedBlobListener.RegisterAsync(
+                targetBlobClient,
+                _container,
+                triggerExecutor,
+                cancellationToken).ConfigureAwait(false);
         }
 
         private void RegisterWithSharedBlobQueueListenerAsync(

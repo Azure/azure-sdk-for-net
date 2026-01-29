@@ -62,6 +62,21 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomDomain))
@@ -129,6 +144,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteObjectValue(RoutingPreference, options);
             }
+            if (Optional.IsDefined(DualStackEndpointPreference))
+            {
+                writer.WritePropertyName("dualStackEndpointPreference"u8);
+                writer.WriteObjectValue(DualStackEndpointPreference, options);
+            }
             if (Optional.IsDefined(AllowBlobPublicAccess))
             {
                 writer.WritePropertyName("allowBlobPublicAccess"u8);
@@ -174,6 +194,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("dnsEndpointType"u8);
                 writer.WriteStringValue(DnsEndpointType.Value.ToString());
             }
+            if (Optional.IsDefined(GeoPriorityReplicationStatus))
+            {
+                writer.WritePropertyName("geoPriorityReplicationStatus"u8);
+                writer.WriteObjectValue(GeoPriorityReplicationStatus, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -216,6 +241,8 @@ namespace Azure.ResourceManager.Storage.Models
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             StorageKind? kind = default;
+            IList<string> zones = default;
+            Placement placement = default;
             StorageCustomDomain customDomain = default;
             StorageAccountEncryption encryption = default;
             StorageAccountSasPolicy sasPolicy = default;
@@ -229,6 +256,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountNetworkRuleSet networkAcls = default;
             LargeFileSharesState? largeFileSharesState = default;
             StorageRoutingPreference routingPreference = default;
+            DualStackEndpointPreference dualStackEndpointPreference = default;
             bool? allowBlobPublicAccess = default;
             StorageMinimumTlsVersion? minimumTlsVersion = default;
             bool? allowSharedKeyAccess = default;
@@ -238,6 +266,7 @@ namespace Azure.ResourceManager.Storage.Models
             ImmutableStorageAccount immutableStorageWithVersioning = default;
             AllowedCopyScope? allowedCopyScope = default;
             StorageDnsEndpointType? dnsEndpointType = default;
+            GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,6 +310,29 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     kind = new StorageKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = Placement.DeserializePlacement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -409,6 +461,15 @@ namespace Azure.ResourceManager.Storage.Models
                             routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("dualStackEndpointPreference"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dualStackEndpointPreference = DualStackEndpointPreference.DeserializeDualStackEndpointPreference(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("allowBlobPublicAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -490,6 +551,15 @@ namespace Azure.ResourceManager.Storage.Models
                             dnsEndpointType = new StorageDnsEndpointType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("geoPriorityReplicationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geoPriorityReplicationStatus = GeoPriorityReplicationStatus.DeserializeGeoPriorityReplicationStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -504,6 +574,8 @@ namespace Azure.ResourceManager.Storage.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 kind,
+                zones ?? new ChangeTrackingList<string>(),
+                placement,
                 customDomain,
                 encryption,
                 sasPolicy,
@@ -517,6 +589,7 @@ namespace Azure.ResourceManager.Storage.Models
                 networkAcls,
                 largeFileSharesState,
                 routingPreference,
+                dualStackEndpointPreference,
                 allowBlobPublicAccess,
                 minimumTlsVersion,
                 allowSharedKeyAccess,
@@ -526,6 +599,7 @@ namespace Azure.ResourceManager.Storage.Models
                 immutableStorageWithVersioning,
                 allowedCopyScope,
                 dnsEndpointType,
+                geoPriorityReplicationStatus,
                 serializedAdditionalRawData);
         }
 

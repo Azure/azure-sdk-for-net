@@ -76,10 +76,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Describes the managed rule group to override. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; set; }
         /// <summary> Describes the exclusions that are applied to all rules in the group. </summary>
+        [WirePath("exclusions")]
         public IList<ManagedRuleExclusion> Exclusions { get; }
         /// <summary> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </summary>
+        [WirePath("rules")]
         public IList<ManagedRuleOverride> Rules { get; }
     }
 }

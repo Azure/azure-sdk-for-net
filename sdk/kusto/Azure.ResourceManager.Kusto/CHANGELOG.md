@@ -10,11 +10,17 @@
 
 ### Other Changes
 
+## 1.6.2 (2025-09-04)
+
+### Features Added
+
+- Added `WirePath` attribute to all properties in all models for provisioning support consumption.
+
 ## 1.6.1 (2025-07-28)
 
 ### Features Added
 
-- Make `Azure.ResourceManager.Kusto` AOT-compatible. 
+- Make `Azure.ResourceManager.Kusto` AOT-compatible.
 
 ## 1.6.0 (2025-01-20)
 

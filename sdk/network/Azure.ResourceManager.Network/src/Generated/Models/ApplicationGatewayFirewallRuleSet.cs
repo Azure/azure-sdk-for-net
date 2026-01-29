@@ -43,14 +43,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the web application firewall rule set. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The type of the web application firewall rule set. </summary>
+        [WirePath("properties.ruleSetType")]
         public string RuleSetType { get; set; }
         /// <summary> The version of the web application firewall rule set type. </summary>
+        [WirePath("properties.ruleSetVersion")]
         public string RuleSetVersion { get; set; }
         /// <summary> The rule groups of the web application firewall rule set. </summary>
+        [WirePath("properties.ruleGroups")]
         public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; }
         /// <summary> Tier of an application gateway that support the rule set. </summary>
+        [WirePath("properties.tiers")]
         public IList<ApplicationGatewayTierType> Tiers { get; }
     }
 }

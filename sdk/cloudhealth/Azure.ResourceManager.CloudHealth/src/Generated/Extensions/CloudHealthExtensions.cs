@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CloudHealth.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,30 +19,32 @@ namespace Azure.ResourceManager.CloudHealth
     /// <summary> A class to add extension methods to Azure.ResourceManager.CloudHealth. </summary>
     public static partial class CloudHealthExtensions
     {
+        /// <param name="client"></param>
         private static MockableCloudHealthArmClient GetMockableCloudHealthArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableCloudHealthArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableCloudHealthArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableCloudHealthResourceGroupResource GetMockableCloudHealthResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableCloudHealthResourceGroupResource GetMockableCloudHealthResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableCloudHealthResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableCloudHealthResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableCloudHealthSubscriptionResource GetMockableCloudHealthSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableCloudHealthSubscriptionResource GetMockableCloudHealthSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableCloudHealthSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableCloudHealthSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HealthModelResource"/> object. </returns>
@@ -52,14 +56,13 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthModelSignalDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelSignalDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelSignalDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelSignalDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelSignalDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelSignalDefinitionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HealthModelSignalDefinitionResource"/> object. </returns>
@@ -71,14 +74,13 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthModelAuthenticationSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelAuthenticationSettingResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelAuthenticationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelAuthenticationSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelAuthenticationSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelAuthenticationSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HealthModelAuthenticationSettingResource"/> object. </returns>
@@ -90,14 +92,13 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthModelEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelEntityResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelEntityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelEntityResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HealthModelEntityResource"/> object. </returns>
@@ -109,14 +110,13 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthModelRelationshipResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelRelationshipResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelRelationshipResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelRelationshipResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HealthModelRelationshipResource"/> object. </returns>
@@ -128,14 +128,13 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthModelDiscoveryRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelDiscoveryRuleResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelDiscoveryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelDiscoveryRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelDiscoveryRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelDiscoveryRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HealthModelDiscoveryRuleResource"/> object. </returns>
@@ -147,15 +146,15 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Gets a collection of HealthModelResources in the ResourceGroupResource.
+        /// Gets a collection of HealthModels in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthResourceGroupResource.GetHealthModels()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthResourceGroupResource.GetHealthModels()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of HealthModelResources and their operations over a HealthModelResource. </returns>
+        /// <returns> An object representing collection of HealthModels and their operations over a HealthModelResource. </returns>
         public static HealthModelCollection GetHealthModels(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -165,34 +164,15 @@ namespace Azure.ResourceManager.CloudHealth
 
         /// <summary>
         /// Get a HealthModel
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthResourceGroupResource.GetHealthModelAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthResourceGroupResource.GetHealthModelAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="healthModelName"> Name of health model resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="healthModelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="healthModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<HealthModelResource>> GetHealthModelAsync(this ResourceGroupResource resourceGroupResource, string healthModelName, CancellationToken cancellationToken = default)
         {
@@ -203,34 +183,15 @@ namespace Azure.ResourceManager.CloudHealth
 
         /// <summary>
         /// Get a HealthModel
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthResourceGroupResource.GetHealthModel(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthResourceGroupResource.GetHealthModel(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="healthModelName"> Name of health model resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="healthModelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="healthModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<HealthModelResource> GetHealthModel(this ResourceGroupResource resourceGroupResource, string healthModelName, CancellationToken cancellationToken = default)
         {
@@ -241,33 +202,15 @@ namespace Azure.ResourceManager.CloudHealth
 
         /// <summary>
         /// List HealthModel resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CloudHealth/healthmodels</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthSubscriptionResource.GetHealthModels(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthSubscriptionResource.GetHealthModelsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthModelResource> GetHealthModelsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -277,30 +220,12 @@ namespace Azure.ResourceManager.CloudHealth
 
         /// <summary>
         /// List HealthModel resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CloudHealth/healthmodels</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthSubscriptionResource.GetHealthModels(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCloudHealthSubscriptionResource.GetHealthModels(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>

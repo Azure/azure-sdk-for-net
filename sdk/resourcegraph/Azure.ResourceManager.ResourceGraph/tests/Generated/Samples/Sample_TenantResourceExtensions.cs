@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_AccessAPropertiesField()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesPropertiesQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesPropertiesQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicManagementGroupQuery()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesMgBasicQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesMgBasicQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicQuery()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesBasicQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesBasicQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicTenantQuery()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesTenantBasicQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesTenantBasicQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_ComplexQuery()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesComplexQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesComplexQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_FilterResources()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFilterQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesFilterQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_FirstPageQuery()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFirstPageQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesFirstPageQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_NextPageQuery()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesNextPageQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesNextPageQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_QueryWithAFacetRequest()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFacetQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesFacetQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -280,7 +280,7 @@ Top = 3,
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_RandomPageQuery()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesRandomPageQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesRandomPageQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -309,7 +309,7 @@ Top = 3,
         [Ignore("Only validating compilation of examples")]
         public async Task GetResources_SummarizeResourcesByLocation()
         {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesSummarizeQuery.json
+            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/stable/2024-04-01/examples/ResourcesSummarizeQuery.json
             // this example is just showing the usage of "Resources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -325,64 +325,6 @@ Top = 3,
                 Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceHistory_ResourceHistoryManagementGroupScopeQuery()
-        {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesHistoryMgsGet.json
-            // this example is just showing the usage of "ResourcesHistory" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            ResourcesHistoryContent content = new ResourcesHistoryContent
-            {
-                Query = "where name =~ 'cpu-utilization' | project id, name, properties",
-                Options = new ResourcesHistoryRequestOptions
-                {
-                    Interval = new DateTimeInterval(DateTimeOffset.Parse("2020-11-12T01:00:00.0000000Z"), DateTimeOffset.Parse("2020-11-12T01:25:00.0000000Z")),
-                },
-                ManagementGroups = { "e927f598-c1d4-4f72-8541-95d83a6a4ac8", "ProductionMG" },
-            };
-            BinaryData result = await tenantResource.GetResourceHistoryAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceHistory_ResourceHistoryQuery()
-        {
-            // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesHistoryGet.json
-            // this example is just showing the usage of "ResourcesHistory" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            ResourcesHistoryContent content = new ResourcesHistoryContent
-            {
-                Subscriptions = { "a7f33fdb-e646-4f15-89aa-3a360210861e" },
-                Query = "where name =~ 'cpu-utilization' | project id, name, properties",
-                Options = new ResourcesHistoryRequestOptions
-                {
-                    Interval = new DateTimeInterval(DateTimeOffset.Parse("2020-11-12T01:00:00.0000000Z"), DateTimeOffset.Parse("2020-11-12T01:25:00.0000000Z")),
-                },
-            };
-            BinaryData result = await tenantResource.GetResourceHistoryAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

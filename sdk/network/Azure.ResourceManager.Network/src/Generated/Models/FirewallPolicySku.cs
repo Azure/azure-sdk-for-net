@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Tier of Firewall Policy. </summary>
+        [WirePath("tier")]
         public FirewallPolicySkuTier? Tier { get; set; }
     }
 }

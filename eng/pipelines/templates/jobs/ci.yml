@@ -17,12 +17,6 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
-  - name: CheckAOTCompat
-    type: boolean
-    default: false
-  - name: AOTTestInputs
-    type: object
-    default: []
   - name: TestSetupSteps
     type: stepList
     default: []
@@ -75,8 +69,6 @@ jobs:
           TestPipeline: ${{ parameters.TestPipeline }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
-          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-          AOTTestInputs: ${{ parameters.AOTTestInputs }}
           BuildSnippets: ${{ parameters.BuildSnippets }}
         PreGenerationSteps:
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
@@ -104,7 +96,8 @@ jobs:
             componentgovernance:
               enabled: true
             codeql:
-              binaryLanguages: csharp # Need to specify the language because we clone after the codeql initialize step
+              # Need to specify the language because we clone after the codeql initialize step
+              language: csharp, javascript
               compiled:
                 enabled: true
 
@@ -115,8 +108,6 @@ jobs:
             TestPipeline: ${{ parameters.TestPipeline }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             SDKType: ${{ parameters.SDKType }}
-            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-            AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
@@ -157,6 +148,8 @@ jobs:
         - template: /eng/common/pipelines/templates/steps/validate-filename.yml
 
         - template: /eng/common/pipelines/templates/steps/check-spelling.yml
+          parameters:
+            ScriptToValidateUpgrade: eng/scripts/spell-check-public-api.ps1
 
         - template: /eng/common/pipelines/templates/steps/verify-links.yml
           parameters:
@@ -172,11 +165,6 @@ jobs:
             SourceDirectory: $(Build.SourcesDirectory)
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
-
-        - template: /eng/common/pipelines/templates/steps/credscan.yml
-          parameters:
-            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:

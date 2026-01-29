@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of a load balancer SKU. </summary>
+        [WirePath("name")]
         public LoadBalancerSkuName? Name { get; set; }
         /// <summary> Tier of a load balancer SKU. </summary>
+        [WirePath("tier")]
         public LoadBalancerSkuTier? Tier { get; set; }
     }
 }

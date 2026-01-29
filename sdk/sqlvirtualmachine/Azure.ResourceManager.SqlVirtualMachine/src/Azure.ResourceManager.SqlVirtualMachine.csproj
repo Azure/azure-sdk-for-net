@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.SqlVirtualMachine</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.SqlVirtualMachine</Description>
     <PackageTags>azure;management;arm;resource manager;sqlvirtualmachine</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

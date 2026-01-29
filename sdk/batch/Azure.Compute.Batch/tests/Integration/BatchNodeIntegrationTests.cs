@@ -281,7 +281,11 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 batchPoolCreateOptions.NetworkConfiguration = new NetworkConfiguration()
                 {
-                    EndpointConfiguration  = batchPoolEndpointConfiguration
+                    EndpointConfiguration  = batchPoolEndpointConfiguration,
+                    PublicIpAddressConfiguration = new BatchPublicIpAddressConfiguration
+                    {
+                        IpFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
+                    }
                 };
 
                 // create a pool to verify we have something to query for
@@ -298,6 +302,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = await client.GetNodeRemoteLoginSettingsAsync(poolID, batchNodeID);
                 Assert.NotNull(batchNodeRemoteLoginSettings);
                 Assert.NotNull(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
+                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginPort);
+                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginIpAddress);
             }
             finally
             {
@@ -325,7 +331,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
                 BatchNodeDisableSchedulingOptions batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingOptions()
                 {
-                    NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.TaskCompletion,
+                    NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.Terminate,
                 };
                 Response response = await client.DisableNodeSchedulingAsync(poolID, batchNodeID, batchNodeDisableSchedulingContent);
                 Assert.AreEqual(200, response.Status);

@@ -79,10 +79,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the resource  association resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> The PaaS resource to be associated. </summary>
         internal WritableSubResource PrivateLinkResource { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.privateLinkResource.id")]
         public ResourceIdentifier PrivateLinkResourceId
         {
             get => PrivateLinkResource is null ? default : PrivateLinkResource.Id;
@@ -97,6 +99,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Profile id to which the PaaS resource is associated. </summary>
         internal WritableSubResource Profile { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.profile.id")]
         public ResourceIdentifier ProfileId
         {
             get => Profile is null ? default : Profile.Id;
@@ -109,8 +112,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Access mode on the association. </summary>
+        [WirePath("properties.accessMode")]
         public NetworkSecurityPerimeterAssociationAccessMode? AccessMode { get; set; }
         /// <summary> Specifies if there are provisioning issues. </summary>
+        [WirePath("properties.hasProvisioningIssues")]
         public string HasProvisioningIssues { get; }
     }
 }

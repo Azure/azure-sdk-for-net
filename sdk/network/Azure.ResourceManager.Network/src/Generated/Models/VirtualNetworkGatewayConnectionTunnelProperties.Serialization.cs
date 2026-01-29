@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -106,6 +107,67 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualNetworkGatewayConnectionTunnelProperties(tunnelIPAddress, bgpPeeringAddress, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TunnelIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tunnelIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TunnelIPAddress))
+                {
+                    builder.Append("  tunnelIpAddress: ");
+                    if (TunnelIPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TunnelIPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TunnelIPAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BgpPeeringAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bgpPeeringAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BgpPeeringAddress))
+                {
+                    builder.Append("  bgpPeeringAddress: ");
+                    if (BgpPeeringAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BgpPeeringAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BgpPeeringAddress}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VirtualNetworkGatewayConnectionTunnelProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionTunnelProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -114,6 +176,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionTunnelProperties)} does not support writing '{options.Format}' format.");
             }

@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userInitiatedRedeploy"> The configuration parameters used while creating userInitiatedRedeploy scheduled event setting creation. </param>
         /// <param name="userInitiatedReboot"> The configuration parameters used while creating userInitiatedReboot scheduled event setting creation. </param>
         /// <param name="scheduledEventsAdditionalPublishingTargets"> The configuration parameters used while publishing scheduledEventsAdditionalPublishingTargets. </param>
+        /// <param name="allInstancesDown"> The configuration parameters used while creating AllInstancesDown scheduled event setting creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledEventsPolicy(UserInitiatedRedeploy userInitiatedRedeploy, UserInitiatedReboot userInitiatedReboot, ScheduledEventsAdditionalPublishingTargets scheduledEventsAdditionalPublishingTargets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledEventsPolicy(UserInitiatedRedeploy userInitiatedRedeploy, UserInitiatedReboot userInitiatedReboot, ScheduledEventsAdditionalPublishingTargets scheduledEventsAdditionalPublishingTargets, AllInstancesDown allInstancesDown, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserInitiatedRedeploy = userInitiatedRedeploy;
             UserInitiatedReboot = userInitiatedReboot;
             ScheduledEventsAdditionalPublishingTargets = scheduledEventsAdditionalPublishingTargets;
+            AllInstancesDown = allInstancesDown;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,16 +83,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The configuration parameters used while publishing scheduledEventsAdditionalPublishingTargets. </summary>
         internal ScheduledEventsAdditionalPublishingTargets ScheduledEventsAdditionalPublishingTargets { get; set; }
-        /// <summary> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </summary>
-        public bool? Enable
+        /// <summary> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </summary>
+        public EventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph
         {
-            get => ScheduledEventsAdditionalPublishingTargets is null ? default : ScheduledEventsAdditionalPublishingTargets.Enable;
+            get => ScheduledEventsAdditionalPublishingTargets is null ? default : ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph;
             set
             {
                 if (ScheduledEventsAdditionalPublishingTargets is null)
                     ScheduledEventsAdditionalPublishingTargets = new ScheduledEventsAdditionalPublishingTargets();
-                ScheduledEventsAdditionalPublishingTargets.Enable = value;
+                ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph = value;
             }
         }
+
+        /// <summary> The configuration parameters used while creating AllInstancesDown scheduled event setting creation. </summary>
+        public AllInstancesDown AllInstancesDown { get; set; }
     }
 }

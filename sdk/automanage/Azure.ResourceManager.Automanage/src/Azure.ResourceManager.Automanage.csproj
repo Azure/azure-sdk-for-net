@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Automanage</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Automanage.</Description>
     <PackageTags>azure;management;arm;resource manager;automanage</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

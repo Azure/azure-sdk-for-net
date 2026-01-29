@@ -38,6 +38,11 @@ using Azure.AI.OpenAI.VectorStores;
 using Azure.AI.OpenAI.Responses;
 using OpenAI.Evals;
 using Azure.AI.OpenAI.Evals;
+using OpenAI.Conversations;
+using System.Text;
+using OpenAI.Containers;
+using OpenAI.Graders;
+using OpenAI.Videos;
 #endif
 
 #pragma warning disable AZC0007
@@ -289,10 +294,38 @@ public partial class AzureOpenAIClient : OpenAIClient
     // Not yet present in OpenAI GA dependency
 #endif
 
-    public override OpenAIResponseClient GetOpenAIResponseClient(string deploymentName)
+    public override ResponsesClient GetResponsesClient(string deploymentName)
     {
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        return new AzureOpenAIResponseClient(Pipeline, deploymentName, _endpoint, _options);
+        return new AzureResponsesClient(Pipeline, deploymentName, _endpoint, _options);
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ConversationClient GetConversationClient()
+    {
+        ThrowUnsupportedAreaException(nameof(ConversationClient));
+        return null;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ContainerClient GetContainerClient()
+    {
+        ThrowUnsupportedAreaException(nameof(ContainerClient));
+        return null;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override GraderClient GetGraderClient()
+    {
+        ThrowUnsupportedAreaException(nameof(GraderClient));
+        return null;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override VideoClient GetVideoClient()
+    {
+        ThrowUnsupportedAreaException(nameof(VideoClient));
+        return null;
     }
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
@@ -302,6 +335,8 @@ public partial class AzureOpenAIClient : OpenAIClient
             [
                 CreateAddUserAgentHeaderPolicy(options),
                 CreateAddClientRequestIdHeaderPolicy(),
+                CreateAddUserDefinedDefaultHeadersPolicy(options),
+                CreateAddUserDefinedDefaultQueryParametersPolicy(options),
             ],
             perTryPolicies:
             [
@@ -348,6 +383,47 @@ public partial class AzureOpenAIClient : OpenAIClient
                 request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
             }
         });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultHeadersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Headers is not null && options?.DefaultHeaders?.Count > 0 == true)
+            {
+                foreach (KeyValuePair<string, string> defaultHeaderPair in options.DefaultHeaders)
+                {
+                    request.Headers.Add(defaultHeaderPair.Key, defaultHeaderPair.Value);
+                }
+            }
+        });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultQueryParametersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Uri is not null && options?.DefaultQueryParameters?.Count > 0 == true)
+            {
+                ClientUriBuilder uriBuilder = new();
+                uriBuilder.Reset(request.Uri);
+                foreach (KeyValuePair<string, string> defaultQueryParameter in options.DefaultQueryParameters)
+                {
+                    uriBuilder.AppendQuery(defaultQueryParameter.Key, defaultQueryParameter.Value, escape: true);
+                }
+                request.Uri = uriBuilder.ToUri();
+            }
+        });
+    }
+
+    private static void ThrowUnsupportedAreaException(string clientName)
+    {
+        StringBuilder builder = new();
+        builder.AppendLine(clientName + " use is not supported via this library.");
+        builder.AppendLine();
+        builder.Append("Please use " + nameof(OpenAIClient) + " with appropriate direct endpoint "
+            + "configuration for access to the latest features.");
+        throw new InvalidOperationException(builder.ToString());
     }
 
     private static readonly string s_userAgentHeaderKey = "User-Agent";

@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs
             string blobContainerClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {blobBaseClient} or {blobContainerClient}");
 
-        public static ArgumentException InvalidDateTimeUtc(string dateTime) =>
-            new ArgumentException($"{dateTime} must be UTC");
+        public static RequestFailedException InvalidRangeWithNonEmptyBlob(RequestFailedException ex) =>
+            new RequestFailedException("Invalid range exception during ranged download despite non-empty blob", ex);
 
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {

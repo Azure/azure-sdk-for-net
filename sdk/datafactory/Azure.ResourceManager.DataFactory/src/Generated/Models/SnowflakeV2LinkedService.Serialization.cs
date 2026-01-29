@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(UseUtcTimestamps))
+            {
+                writer.WritePropertyName("useUtcTimestamps"u8);
+                JsonSerializer.Serialize(writer, UseUtcTimestamps);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -166,6 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> schema = default;
             string encryptedCredential = default;
+            DataFactoryElement<bool> useUtcTimestamps = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -366,6 +372,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             encryptedCredential = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("useUtcTimestamps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useUtcTimestamps = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -395,7 +410,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 role,
                 host,
                 schema,
-                encryptedCredential);
+                encryptedCredential,
+                useUtcTimestamps);
         }
 
         BinaryData IPersistableModel<SnowflakeV2LinkedService>.Write(ModelReaderWriterOptions options)

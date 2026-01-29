@@ -1,0 +1,156 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks.Dataflow;
+
+using Azure.AI.AgentServer.Core.Common.Http.Json;
+
+using Microsoft.AspNetCore.Http;
+
+namespace Azure.AI.AgentServer.Core.Common.Http.ServerSentEvent;
+
+/// <summary>
+/// Represents a Server-Sent Events (SSE) result for streaming data to HTTP clients.
+/// </summary>
+/// <param name="source">The async enumerable source of SSE frames.</param>
+/// <param name="keepAliveInterval">Optional interval for sending keep-alive frames. Defaults to 15 seconds.</param>
+public sealed class SseResult(
+    IAsyncEnumerable<SseFrame> source,
+    TimeSpan? keepAliveInterval = null)
+    : IResult, IStatusCodeHttpResult, IContentTypeHttpResult
+{
+    private static readonly SseFrame KeepAliveFrame = new()
+    {
+        Comments = ["keep-alive"]
+    };
+
+    private static readonly string KeepAliveString = SerializeFrame(KeepAliveFrame);
+
+    private readonly TimeSpan _keepAliveInterval = keepAliveInterval ?? TimeSpan.FromSeconds(15);
+
+    /// <summary>
+    /// Gets the HTTP status code for the result.
+    /// </summary>
+    public int? StatusCode => StatusCodes.Status200OK;
+
+    /// <summary>
+    /// Gets the content type for the result.
+    /// </summary>
+    public string? ContentType => "text/event-stream; charset=utf-8";
+
+    /// <summary>
+    /// Executes the SSE result by streaming frames to the HTTP response.
+    /// </summary>
+    /// <param name="ctx">The HTTP context.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public async Task ExecuteAsync(HttpContext ctx)
+    {
+        var res = ctx.Response;
+        var ct = ctx.RequestAborted;
+
+        res.StatusCode = StatusCode!.Value;
+        res.ContentType = ContentType!;
+        res.Headers.CacheControl = "no-cache";
+        res.Headers["X-Accel-Buffering"] = "no";
+        res.Headers.Connection = "keep-alive";
+
+        // generate fast and send event sequentially with backpressure
+        var sseWritingQueue = new ActionBlock<string>(async frameStr =>
+        {
+            await res.WriteAsync(frameStr, ct).ConfigureAwait(false);
+            await res.Body.FlushAsync(ct).ConfigureAwait(false);
+        }, new ExecutionDataflowBlockOptions
+        {
+            MaxDegreeOfParallelism = 1,
+            BoundedCapacity = 256,
+            CancellationToken = ct,
+        });
+
+        var json = ctx.GetJsonSerializerOptions();
+        await res.StartAsync(ct).ConfigureAwait(false);
+        await foreach (var frame in GetSourceWithKeepAlive(ct).ConfigureAwait(false))
+        {
+            var frameStr = frame == KeepAliveFrame ? KeepAliveString : SerializeFrame(frame, json);
+            if (!string.IsNullOrEmpty(frameStr))
+            {
+                await sseWritingQueue.SendAsync(frameStr, ct).ConfigureAwait(false);
+            }
+        }
+
+        sseWritingQueue.Complete();
+        await sseWritingQueue.Completion.ConfigureAwait(false);
+    }
+
+    private async IAsyncEnumerable<SseFrame> GetSourceWithKeepAlive([EnumeratorCancellation] CancellationToken ct)
+    {
+        var src = source.GetAsyncEnumerator(ct);
+        await using var _ = src.ConfigureAwait(false);
+        var fetching = src.MoveNextAsync().AsTask();
+
+        while (true)
+        {
+            var timeout = false;
+            try
+            {
+                if (!await fetching.WaitAsync(_keepAliveInterval, ct).ConfigureAwait(false))
+                {
+                    yield break;
+                }
+            }
+            catch (TimeoutException)
+            {
+                timeout = true;
+            }
+
+            if (timeout)
+            {
+                yield return KeepAliveFrame;
+                continue;
+            }
+            yield return src.Current!;
+            fetching = src.MoveNextAsync().AsTask();
+        }
+    }
+
+    private static string SerializeFrame(SseFrame frame, JsonSerializerOptions? json = null)
+    {
+        var sb = new StringBuilder();
+        if (!string.IsNullOrEmpty(frame.Id))
+        {
+            sb.Append("id: ").Append(frame.Id).Append('\n');
+        }
+
+        if (!string.IsNullOrEmpty(frame.Name))
+        {
+            sb.Append("event: ").Append(frame.Name).Append('\n');
+        }
+
+        if (json != null && frame.Data?.Count > 0)
+        {
+            foreach (var data in frame.Data)
+            {
+                var line = JsonSerializer.Serialize(data, json);
+                sb.Append("data: ").Append(line).Append('\n');
+            }
+        }
+
+        if (frame.Comments?.Count > 0)
+        {
+            foreach (var comment in frame.Comments)
+            {
+                sb.Append(": ").Append(comment).Append('\n');
+            }
+        }
+
+        if (sb.Length <= 0)
+        {
+            return string.Empty;
+        }
+
+        sb.Append('\n');
+        return sb.ToString();
+    }
+}

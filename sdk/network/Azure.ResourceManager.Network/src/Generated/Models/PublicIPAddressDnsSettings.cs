@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address. If a domain name label is specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system. </summary>
+        [WirePath("domainNameLabel")]
         public string DomainNameLabel { get; set; }
         /// <summary> The domain name label scope. If a domain name label and a domain name label scope are specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system with a hashed value includes in FQDN. </summary>
+        [WirePath("domainNameLabelScope")]
         public PublicIPAddressDnsSettingsDomainNameLabelScope? DomainNameLabelScope { get; set; }
         /// <summary> The Fully Qualified Domain Name of the A DNS record associated with the public IP. This is the concatenation of the domainNameLabel and the regionalized DNS zone. </summary>
+        [WirePath("fqdn")]
         public string Fqdn { get; set; }
         /// <summary> The reverse FQDN. A user-visible, fully qualified domain name that resolves to this public IP address. If the reverseFqdn is specified, then a PTR DNS record is created pointing from the IP address in the in-addr.arpa domain to the reverse FQDN. </summary>
+        [WirePath("reverseFqdn")]
         public string ReverseFqdn { get; set; }
     }
 }

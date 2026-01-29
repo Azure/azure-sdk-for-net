@@ -39,10 +39,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The set of backends for this pool. </summary>
+        [WirePath("properties.backends")]
         public IList<FrontDoorBackend> Backends { get; }
         /// <summary> Load balancing settings for a backend pool. </summary>
         internal WritableSubResource LoadBalancingSettings { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.loadBalancingSettings.id")]
         public ResourceIdentifier LoadBalancingSettingsId
         {
             get => LoadBalancingSettings is null ? default : LoadBalancingSettings.Id;
@@ -57,6 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> L7 health probe settings for a backend pool. </summary>
         internal WritableSubResource HealthProbeSettings { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.healthProbeSettings.id")]
         public ResourceIdentifier HealthProbeSettingsId
         {
             get => HealthProbeSettings is null ? default : HealthProbeSettings.Id;
@@ -69,6 +72,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorResourceState? ResourceState { get; }
     }
 }

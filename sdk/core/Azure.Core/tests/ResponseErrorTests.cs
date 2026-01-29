@@ -333,6 +333,87 @@ namespace Azure.Core.Tests
             Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
         }
 
+        [Test]
+        public void JsonSerializerCanSerializeSimpleResponseError()
+        {
+            // Create a simple ResponseError instance
+            var originalError = new ResponseError("BadError", "Something was not awesome");
+
+            // Serialize using JsonSerializer.Serialize
+            var jsonString = JsonSerializer.Serialize(originalError);
+            Assert.NotNull(jsonString);
+            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
+            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
+
+            // Deserialize back to verify round-trip
+            var deserializedError = JsonSerializer.Deserialize<ResponseError>(jsonString);
+            Assert.AreEqual(originalError.Code, deserializedError.Code);
+            Assert.AreEqual(originalError.Message, deserializedError.Message);
+        }
+
+        [Test]
+        public void JsonSerializerCanSerializeComplexResponseError()
+        {
+            // First create a complex error structure by deserializing known JSON
+            var complexJson = "{" +
+                "\"code\":\"BadError\"," +
+                "\"message\":\"Something was not awesome\"," +
+                "\"target\":\"Error target\"," +
+                "\"details\": [" +
+                    "{\"code\":\"Code 1\",\"message\":\"Message 1\"}," +
+                    "{\"code\":\"Code 2\",\"message\":\"Message 2\"}" +
+                "]," +
+                "\"innererror\":" +
+                "{" +
+                    "\"code\":\"MoreDetailedBadError\"," +
+                    "\"innererror\":" +
+                    "{" +
+                        "\"code\":\"InnerMoreDetailedBadError\"" +
+                    "}" +
+                "}}";
+
+            var originalError = JsonSerializer.Deserialize<ResponseError>(complexJson);
+
+            // Serialize using JsonSerializer.Serialize
+            var jsonString = JsonSerializer.Serialize(originalError);
+            Assert.NotNull(jsonString);
+
+            // Verify key elements are in the serialized JSON
+            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
+            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
+            Assert.IsTrue(jsonString.Contains("\"target\":\"Error target\""));
+            Assert.IsTrue(jsonString.Contains("\"details\":["));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 1\""));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 2\""));
+            Assert.IsTrue(jsonString.Contains("\"innererror\":"));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"MoreDetailedBadError\""));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"InnerMoreDetailedBadError\""));
+
+            // Deserialize back to verify round-trip
+            var roundTrippedError = JsonSerializer.Deserialize<ResponseError>(jsonString);
+            Assert.AreEqual(originalError.Code, roundTrippedError.Code);
+            Assert.AreEqual(originalError.Message, roundTrippedError.Message);
+            Assert.AreEqual(originalError.Target, roundTrippedError.Target);
+            Assert.AreEqual(originalError.Details.Count, roundTrippedError.Details.Count);
+            Assert.AreEqual(originalError.Details[0].Code, roundTrippedError.Details[0].Code);
+            Assert.AreEqual(originalError.Details[1].Code, roundTrippedError.Details[1].Code);
+            Assert.AreEqual(originalError.InnerError?.Code, roundTrippedError.InnerError?.Code);
+            Assert.AreEqual(originalError.InnerError?.InnerError?.Code, roundTrippedError.InnerError?.InnerError?.Code);
+        }
+
+        [Test]
+        public void JsonSerializerCanSerializeNullResponseError()
+        {
+            // Serialize null
+            ResponseError nullError = null;
+            var jsonString = JsonSerializer.Serialize(nullError);
+            Assert.AreEqual("null", jsonString);
+
+            // Deserialize back
+            var deserializedError = JsonSerializer.Deserialize<ResponseError>(jsonString);
+            Assert.Null(deserializedError);
+        }
+
         #endregion
     }
 }

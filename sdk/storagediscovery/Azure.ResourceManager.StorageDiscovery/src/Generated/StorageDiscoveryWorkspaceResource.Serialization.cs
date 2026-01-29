@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageDiscovery
 {
+    /// <summary></summary>
     public partial class StorageDiscoveryWorkspaceResource : IJsonModel<StorageDiscoveryWorkspaceData>
     {
-        private static StorageDiscoveryWorkspaceData s_dataDeserializationInstance;
-        private static StorageDiscoveryWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageDiscoveryWorkspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageDiscoveryWorkspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageDiscoveryWorkspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageDiscoveryWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageDiscoveryWorkspaceData>)Data).Write(writer, options);
 
-        StorageDiscoveryWorkspaceData IJsonModel<StorageDiscoveryWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageDiscoveryWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageDiscoveryWorkspaceData IJsonModel<StorageDiscoveryWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageDiscoveryWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageDiscoveryWorkspaceData>(Data, options, AzureResourceManagerStorageDiscoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageDiscoveryWorkspaceData IPersistableModel<StorageDiscoveryWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageDiscoveryWorkspaceData>(data, options, AzureResourceManagerStorageDiscoveryContext.Default);
 
-        string IPersistableModel<StorageDiscoveryWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageDiscoveryWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageDiscoveryWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> NSP id in the ARM id format. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Resource guid of the NSP supplied. </summary>
+        [WirePath("perimeterGuid")]
         public Guid? PerimeterGuid { get; }
         /// <summary> Location of the NSP supplied. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

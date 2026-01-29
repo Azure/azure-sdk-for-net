@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -121,6 +122,83 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayUrlConfiguration(modifiedPath, modifiedQueryString, reroute, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modifiedPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModifiedPath))
+                {
+                    builder.Append("  modifiedPath: ");
+                    if (ModifiedPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ModifiedPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ModifiedPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedQueryString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modifiedQueryString: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModifiedQueryString))
+                {
+                    builder.Append("  modifiedQueryString: ");
+                    if (ModifiedQueryString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ModifiedQueryString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ModifiedQueryString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reroute), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reroute: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reroute))
+                {
+                    builder.Append("  reroute: ");
+                    var boolValue = Reroute.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayUrlConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayUrlConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +207,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayUrlConfiguration)} does not support writing '{options.Format}' format.");
             }

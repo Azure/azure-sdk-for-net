@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource record type. </summary>
+        [WirePath("recordType")]
         public string RecordType { get; }
         /// <summary> Recordset name. </summary>
+        [WirePath("recordSetName")]
         public string RecordSetName { get; }
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>
+        [WirePath("fqdn")]
         public string Fqdn { get; }
         /// <summary> The provisioning state of the recordset. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Recordset time to live. </summary>
+        [WirePath("ttl")]
         public int? Ttl { get; }
         /// <summary> The private ip address of the private endpoint. </summary>
+        [WirePath("ipAddresses")]
         public IReadOnlyList<string> IPAddresses { get; }
     }
 }

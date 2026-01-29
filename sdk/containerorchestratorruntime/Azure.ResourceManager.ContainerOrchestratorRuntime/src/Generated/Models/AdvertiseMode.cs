@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     public readonly partial struct AdvertiseMode : IEquatable<AdvertiseMode>
     {
         private readonly string _value;
+        /// <summary> ARP advertise mode. </summary>
+        private const string ArpValue = "ARP";
+        /// <summary> BGP advertise mode. </summary>
+        private const string BgpValue = "BGP";
+        /// <summary> both ARP and BGP advertise mode. </summary>
+        private const string BothValue = "Both";
 
         /// <summary> Initializes a new instance of <see cref="AdvertiseMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdvertiseMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ArpValue = "ARP";
-        private const string BgpValue = "BGP";
-        private const string BothValue = "Both";
+            _value = value;
+        }
 
         /// <summary> ARP advertise mode. </summary>
         public static AdvertiseMode Arp { get; } = new AdvertiseMode(ArpValue);
+
         /// <summary> BGP advertise mode. </summary>
         public static AdvertiseMode Bgp { get; } = new AdvertiseMode(BgpValue);
+
         /// <summary> both ARP and BGP advertise mode. </summary>
         public static AdvertiseMode Both { get; } = new AdvertiseMode(BothValue);
+
         /// <summary> Determines if two <see cref="AdvertiseMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdvertiseMode left, AdvertiseMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AdvertiseMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdvertiseMode left, AdvertiseMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvertiseMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AdvertiseMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AdvertiseMode(string value) => new AdvertiseMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AdvertiseMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AdvertiseMode?(string value) => value == null ? null : new AdvertiseMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdvertiseMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AdvertiseMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationEndpoint"/>. </summary>
-        /// <param name="notificationDestination"></param>
-        /// <param name="locations"></param>
+        /// <param name="notificationDestination"> The notification destination. </param>
+        /// <param name="locations"> The locations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationEndpoint(ResourceIdentifier notificationDestination, IList<AzureLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the notification destination. </summary>
+        /// <summary> The notification destination. </summary>
         public ResourceIdentifier NotificationDestination { get; set; }
-        /// <summary> Gets the locations. </summary>
+        /// <summary> The locations. </summary>
         public IList<AzureLocation> Locations { get; }
     }
 }

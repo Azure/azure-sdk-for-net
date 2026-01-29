@@ -33,10 +33,47 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         public override AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
+            GetBlobsByHierarchyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            List<BlobHierarchyItem> blobHierarchyItems = [];
+            List<(string Path, bool IsPrefix)> results = _blobHierarchy[options.Prefix];
+
+            foreach ((string, bool) result in results)
+            {
+                // Prefix
+                if (result.Item2)
+                {
+                    blobHierarchyItems.Add(new BlobHierarchyItem(result.Item1, default));
+                }
+                // Blob
+                else
+                {
+                    BlobItem blobItem = BlobsModelFactory.BlobItem(
+                        name: result.Item1,
+                        properties: BlobsModelFactory.BlobItemProperties(
+                            accessTierInferred: true,
+                            contentLength: 1024,
+                            blobType: BlobType.Block,
+                            eTag: new ETag("etag")));
+                    blobHierarchyItems.Add(new BlobHierarchyItem(default, blobItem));
+                }
+            }
+
+            return AsyncPageable<BlobHierarchyItem>.FromPages(
+                [
+                    Page<BlobHierarchyItem>.FromValues(
+                        blobHierarchyItems,
+                        continuationToken: null,
+                        response: null)
+                ]);
+        }
+
+        public override AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
             BlobTraits traits = BlobTraits.None,
             BlobStates states = BlobStates.None,
-            string delimiter = default,
-            string prefix = default,
+            string delimiter = null,
+            string prefix = null,
             CancellationToken cancellationToken = default)
         {
             List<BlobHierarchyItem> blobHierarchyItems = [];

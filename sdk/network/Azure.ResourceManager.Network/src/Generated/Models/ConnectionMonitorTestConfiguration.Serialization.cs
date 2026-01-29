@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -199,6 +200,149 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TestFrequencySec), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  testFrequencySec: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TestFrequencySec))
+                {
+                    builder.Append("  testFrequencySec: ");
+                    builder.AppendLine($"{TestFrequencySec.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine($"'{Protocol.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredIPVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preferredIPVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredIPVersion))
+                {
+                    builder.Append("  preferredIPVersion: ");
+                    builder.AppendLine($"'{PreferredIPVersion.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpConfiguration))
+                {
+                    builder.Append("  httpConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HttpConfiguration, options, 2, false, "  httpConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TcpConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tcpConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TcpConfiguration))
+                {
+                    builder.Append("  tcpConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TcpConfiguration, options, 2, false, "  tcpConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DisableTraceRoute", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  icmpConfiguration: ");
+                builder.AppendLine("{");
+                builder.Append("    disableTraceRoute: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(IcmpConfiguration))
+                {
+                    builder.Append("  icmpConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IcmpConfiguration, options, 2, false, "  icmpConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessThreshold))
+                {
+                    builder.Append("  successThreshold: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SuccessThreshold, options, 2, false, "  successThreshold: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ConnectionMonitorTestConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +351,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support writing '{options.Format}' format.");
             }

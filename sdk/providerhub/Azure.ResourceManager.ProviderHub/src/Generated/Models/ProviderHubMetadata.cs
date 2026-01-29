@@ -52,30 +52,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHubMetadata"/>. </summary>
-        /// <param name="providerAuthorizations"></param>
-        /// <param name="providerAuthentication"></param>
-        /// <param name="thirdPartyProviderAuthorization"></param>
+        /// <param name="providerAuthorizations"> The provider authorizations. </param>
+        /// <param name="providerAuthentication"> The provider authentication. </param>
+        /// <param name="thirdPartyProviderAuthorization"> The third party provider authorization. </param>
+        /// <param name="directRpRoleDefinitionId"> The direct RP role definition id. </param>
+        /// <param name="regionalAsyncOperationResourceTypeName"> The regional async operation resource type name. </param>
+        /// <param name="globalAsyncOperationResourceTypeName"> The global async operation resource type name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization, string directRpRoleDefinitionId, string regionalAsyncOperationResourceTypeName, string globalAsyncOperationResourceTypeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderAuthorizations = providerAuthorizations;
             ProviderAuthentication = providerAuthentication;
             ThirdPartyProviderAuthorization = thirdPartyProviderAuthorization;
+            DirectRpRoleDefinitionId = directRpRoleDefinitionId;
+            RegionalAsyncOperationResourceTypeName = regionalAsyncOperationResourceTypeName;
+            GlobalAsyncOperationResourceTypeName = globalAsyncOperationResourceTypeName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provider authorizations. </summary>
+        /// <summary> The provider authorizations. </summary>
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
-        /// <summary> Gets or sets the provider authentication. </summary>
+        /// <summary> The provider authentication. </summary>
         internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
-        /// <summary> Gets or sets the provider authentication allowed audiences. </summary>
+        /// <summary> The allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
             set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
-        /// <summary> Gets or sets the third party provider authorization. </summary>
+        /// <summary> The third party provider authorization. </summary>
         public ThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
+        /// <summary> The direct RP role definition id. </summary>
+        public string DirectRpRoleDefinitionId { get; set; }
+        /// <summary> The regional async operation resource type name. </summary>
+        public string RegionalAsyncOperationResourceTypeName { get; set; }
+        /// <summary> The global async operation resource type name. </summary>
+        public string GlobalAsyncOperationResourceTypeName { get; set; }
     }
 }

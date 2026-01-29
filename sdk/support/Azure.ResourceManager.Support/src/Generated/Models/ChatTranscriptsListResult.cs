@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> Collection of Chat Transcripts resources. </summary>
+    /// <summary> [Placeholder] Description for page model. </summary>
     internal partial class ChatTranscriptsListResult
     {
         /// <summary>
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatTranscriptsListResult"/>. </summary>
-        /// <param name="value"> List of Chat Transcripts resources. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of Chat Transcripts resources. </param>
+        /// <param name="nextLink"> [Placeholder] Description for nextLink property. </param>
+        /// <param name="value"> [Placeholder] Description for value property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatTranscriptsListResult(IReadOnlyList<ChatTranscriptDetailData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatTranscriptsListResult(string nextLink, IReadOnlyList<ChatTranscriptDetailData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Chat Transcripts resources. </summary>
-        public IReadOnlyList<ChatTranscriptDetailData> Value { get; }
-        /// <summary> The URI to fetch the next page of Chat Transcripts resources. </summary>
+        /// <summary> [Placeholder] Description for nextLink property. </summary>
         public string NextLink { get; }
+        /// <summary> [Placeholder] Description for value property. </summary>
+        public IReadOnlyList<ChatTranscriptDetailData> Value { get; }
     }
 }

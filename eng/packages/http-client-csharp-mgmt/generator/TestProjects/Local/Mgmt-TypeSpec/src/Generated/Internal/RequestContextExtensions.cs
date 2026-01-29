@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal static partial class RequestContextExtensions
     {

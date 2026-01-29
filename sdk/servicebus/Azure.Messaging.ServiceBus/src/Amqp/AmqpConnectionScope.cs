@@ -48,6 +48,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
+        /// <summary>The required claims to execute management operations.</summary>
+        private static readonly string[] s_manageClaims = [ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send];
+
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private volatile bool _disposed;
 
@@ -562,7 +565,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Perform the initial authorization for the link.
 
-                string[] claims = { ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send };
                 var endpoint = new Uri(ServiceEndpoint, entityPath);
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
@@ -570,7 +572,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tokenProvider: TokenProvider,
                     endpoint: ServiceEndpoint,
                     audience: audience,
-                    requiredClaims: claims,
+                    requiredClaims: s_manageClaims,
                     timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                     identifier: identifier)
                     .ConfigureAwait(false);
@@ -592,7 +594,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tokenProvider: TokenProvider,
                     endpoint: ServiceEndpoint,
                     audience: audience,
-                    requiredClaims: claims,
+                    requiredClaims: s_manageClaims,
                     refreshTimeout: AuthorizationRefreshTimeout,
                     refreshTimerFactory: () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null),
                     identifier: identifier);
@@ -661,7 +663,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Perform the initial authorization for the link.
 
-                string[] authClaims = new string[] { ServiceBusClaim.Send };
+                string[] authClaims = [ServiceBusClaim.Send];
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
                     connection: connection,
@@ -831,7 +833,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 Uri destinationEndpoint = null;
 
                 destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                audience = new string[] { destinationEndpoint.AbsoluteUri };
+                audience = [destinationEndpoint.AbsoluteUri];
 
                 // Perform the initial authorization for the link.
 
@@ -965,10 +967,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     if (link is ReceivingAmqpLink)
                     {
                         // Track the send-via receiver in order to handle reconnecting in the proper order (sender first).
-                        if (_sendViaReceiverEntityPath == null)
-                        {
-                            _sendViaReceiverEntityPath = entityPath;
-                        }
+                        _sendViaReceiverEntityPath ??= entityPath;
                     }
                 }
             }

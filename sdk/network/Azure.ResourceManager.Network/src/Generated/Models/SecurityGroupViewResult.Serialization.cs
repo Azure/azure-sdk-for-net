@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -109,6 +111,44 @@ namespace Azure.ResourceManager.Network.Models
             return new SecurityGroupViewResult(networkInterfaces ?? new ChangeTrackingList<SecurityGroupNetworkInterface>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkInterfaces), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkInterfaces: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NetworkInterfaces))
+                {
+                    if (NetworkInterfaces.Any())
+                    {
+                        builder.Append("  networkInterfaces: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NetworkInterfaces)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  networkInterfaces: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityGroupViewResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityGroupViewResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -117,6 +157,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityGroupViewResult)} does not support writing '{options.Format}' format.");
             }

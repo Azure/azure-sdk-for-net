@@ -36,10 +36,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> An array of application gateway private link ip configurations. </summary>
+        [WirePath("properties.ipConfigurations")]
         public IList<ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get; }
         /// <summary> The provisioning state of the application gateway private link configuration. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

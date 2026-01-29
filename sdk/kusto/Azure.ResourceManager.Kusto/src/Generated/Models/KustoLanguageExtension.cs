@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The language extension name. </summary>
+        [WirePath("languageExtensionName")]
         public KustoLanguageExtensionName? LanguageExtensionName { get; set; }
         /// <summary> The language extension image name. </summary>
+        [WirePath("languageExtensionImageName")]
         public KustoLanguageExtensionImageName? LanguageExtensionImageName { get; set; }
         /// <summary> The language extension custom image name. </summary>
+        [WirePath("languageExtensionCustomImageName")]
         public string LanguageExtensionCustomImageName { get; set; }
     }
 }

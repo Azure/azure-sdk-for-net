@@ -5,3 +5,4 @@ extends:
   parameters:
     ServiceDirectory: ai
     SupportedClouds: 'Public'
+    Location: 'East US'

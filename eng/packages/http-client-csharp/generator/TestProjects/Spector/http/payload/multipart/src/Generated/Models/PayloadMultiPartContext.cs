@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Payload.MultiPart._FormData;
+using Payload.MultiPart._FormData.HttpParts.NonString;
 
 namespace Payload.MultiPart
 {

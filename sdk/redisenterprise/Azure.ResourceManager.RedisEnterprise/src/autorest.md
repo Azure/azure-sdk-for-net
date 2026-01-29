@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
-require: https://github.com/Azure/azure-rest-api-specs/blob/e22d3642ca152418d8658c2547ce2179d15317b6/specification/redisenterprise/resource-manager/readme.md
-tag: package-2025-04-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/4c5ec9b4e0b961799cc11f6051f240d18f093c38/specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/readme.md
+tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -68,6 +68,7 @@ rename-mapping:
   Protocol.Plaintext: PlainText
   Protocol: RedisEnterpriseClientProtocol
   ProvisioningState: RedisEnterpriseProvisioningStatus
+  PublicNetworkAccess: RedisEnterprisePublicNetworkAccess
   RdbFrequency.12h: TwelveHours
   RdbFrequency.1h: OneHour
   RdbFrequency.6h: SixHours

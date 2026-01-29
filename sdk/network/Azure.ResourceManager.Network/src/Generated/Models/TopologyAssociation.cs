@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the resource that is associated with the parent resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The ID of the resource that is associated with the parent resource. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The association type of the child resource to the parent resource. </summary>
+        [WirePath("associationType")]
         public AssociationType? AssociationType { get; }
     }
 }

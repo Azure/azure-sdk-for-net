@@ -96,7 +96,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withoutApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -122,8 +123,9 @@
             "parameters": [
               {
                 "$id": "10",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "type": {
                   "$id": "11",
                   "kind": "string",
@@ -131,13 +133,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "12",
@@ -147,8 +144,11 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryApiVersion.apiVersion",
+                "readOnly": false
               }
             ],
             "responses": [
@@ -167,7 +167,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -193,8 +194,9 @@
             "parameters": [
               {
                 "$id": "15",
+                "kind": "path",
                 "name": "apiVersion",
-                "nameInRequest": "apiVersion",
+                "serializedName": "apiVersion",
                 "type": {
                   "$id": "16",
                   "kind": "string",
@@ -202,13 +204,11 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
                 "defaultValue": {
                   "type": {
                     "$id": "17",
@@ -218,8 +218,11 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Server.Versions.Versioned.withPathApiVersion.apiVersion"
               }
             ],
             "responses": [
@@ -238,7 +241,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withPathApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -264,8 +268,9 @@
             "parameters": [
               {
                 "$id": "20",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "type": {
                   "$id": "21",
                   "kind": "string",
@@ -273,13 +278,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "22",
@@ -289,8 +289,11 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryOldApiVersion.apiVersion",
+                "readOnly": false
               }
             ],
             "responses": [
@@ -309,7 +312,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryOldApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -322,8 +326,9 @@
       "parameters": [
         {
           "$id": "23",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
             "$id": "24",
@@ -331,23 +336,54 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
-          "serverUrlTemplate": "{endpoint}"
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Server.Versions.Versioned.endpoint"
+        },
+        {
+          "$id": "25",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "type": {
+            "$id": "26",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "27",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2022-12-01-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryApiVersion.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Versions.Versioned",
       "apiVersions": [
         "2021-01-01-preview",
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

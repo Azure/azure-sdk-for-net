@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of routes table. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ExpressRouteCircuitRoutesTable> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

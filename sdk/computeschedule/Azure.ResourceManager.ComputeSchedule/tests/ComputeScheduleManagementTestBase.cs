@@ -188,6 +188,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return item;
         }
 
+        protected async Task DeleteVirtualMachineAsync(List<VirtualMachineResource> vms)
+        {
+            foreach (VirtualMachineResource vm in vms)
+            {
+                await vm.DeleteAsync(WaitUntil.Completed, forceDeletion: true);
+            }
+        }
+
         protected static SubscriptionResource GenerateSubscriptionResource(ArmClient client, string subid)
         {
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subid);
@@ -268,7 +276,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
         #region SA Operations
 
-        protected static async Task<StartResourceOperationResult> TestSubmitStartAsync(string location, SubmitStartContent submitStartRequest, string subid, ArmClient client)
+        protected static async Task<StartResourceOperationResult> TestSubmitStartAsync(AzureLocation location, SubmitStartContent submitStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitStartContent content = submitStartRequest;
@@ -291,7 +299,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<DeallocateResourceOperationResult> TestSubmitDeallocateAsync(string location, SubmitDeallocateContent submitStartRequest, string subid, ArmClient client)
+        protected static async Task<DeallocateResourceOperationResult> TestSubmitDeallocateAsync(AzureLocation location, SubmitDeallocateContent submitStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitDeallocateContent content = submitStartRequest;
@@ -314,7 +322,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<HibernateResourceOperationResult> TestSubmitHibernateAsync(string location, SubmitHibernateContent submitStartRequest, string subid, ArmClient client)
+        protected static async Task<HibernateResourceOperationResult> TestSubmitHibernateAsync(AzureLocation location, SubmitHibernateContent submitStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitHibernateContent content = submitStartRequest;
@@ -337,7 +345,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<StartResourceOperationResult> TestExecuteStartAsync(string location, ExecuteStartContent executeStartRequest, string subid, ArmClient client)
+        protected static async Task<StartResourceOperationResult> TestExecuteStartAsync(AzureLocation location, ExecuteStartContent executeStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteStartContent content = executeStartRequest;
@@ -360,7 +368,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<DeallocateResourceOperationResult> TestExecuteDeallocateAsync(string location, ExecuteDeallocateContent executeDeallocateRequest, string subid, ArmClient client)
+        protected static async Task<DeallocateResourceOperationResult> TestExecuteDeallocateAsync(AzureLocation location, ExecuteDeallocateContent executeDeallocateRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteDeallocateContent content = executeDeallocateRequest;
@@ -384,7 +392,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<HibernateResourceOperationResult> TestExecuteHibernateAsync(string location, ExecuteHibernateContent executeHibernateRequest, string subid, ArmClient client)
+        protected static async Task<HibernateResourceOperationResult> TestExecuteHibernateAsync(AzureLocation location, ExecuteHibernateContent executeHibernateRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteHibernateContent content = executeHibernateRequest;
@@ -407,7 +415,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<GetOperationStatusResult> TestGetOpsStatusAsync(string location, GetOperationStatusContent getOpsStatusRequest, string subid, ArmClient client)
+        protected static async Task<GetOperationStatusResult> TestGetOpsStatusAsync(AzureLocation location, GetOperationStatusContent getOpsStatusRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             GetOperationStatusContent content = getOpsStatusRequest;
@@ -431,7 +439,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<CancelOperationsResult> TestCancelOpsAsync(string location, CancelOperationsContent cancelOpsRequest, string subid, ArmClient client)
+        protected static async Task<CancelOperationsResult> TestCancelOpsAsync(AzureLocation location, CancelOperationsContent cancelOpsRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             CancelOperationsContent content = cancelOpsRequest;
@@ -454,7 +462,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<GetOperationErrorsResult> TestGetOperationErrorsAsync(string location, GetOperationErrorsContent getOperationErrorsRequest, string subid, ArmClient client)
+        protected static async Task<GetOperationErrorsResult> TestGetOperationErrorsAsync(AzureLocation location, GetOperationErrorsContent getOperationErrorsRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             GetOperationErrorsContent content = getOperationErrorsRequest;
@@ -477,6 +485,87 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
+        protected static async Task<DeleteResourceOperationResult> TestExecuteDeleteAsync(AzureLocation location, ExecuteDeleteContent executeDeleteRequest, string subid, ArmClient client)
+        {
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteDeleteContent content = executeDeleteRequest;
+            DeleteResourceOperationResult result;
+
+            try
+            {
+                result = await subscriptionResource.ExecuteVirtualMachineDeleteOperationAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
+        }
+
+        protected static async Task<CreateResourceOperationResult> TestExecuteCreateAsync(AzureLocation location, ExecuteCreateContent executeCreateRequest, string subid, ArmClient client)
+        {
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteCreateContent content = executeCreateRequest;
+            CreateResourceOperationResult result;
+
+            try
+            {
+                result = await subscriptionResource.ExecuteVirtualMachineCreateOperationAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
+        }
+
         #endregion
+/*
+        #region Recurring scheduledactions operations
+
+        public static async Task<Response<ScheduledActionResource>> GetScheduledActions(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+        {
+            Response<ScheduledActionResource> saResource = null;
+
+            try
+            {
+                saResource = await rgResource.GetScheduledActionAsync(scheduledActionName);
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceNotFound")
+            {
+                Console.WriteLine($" {scheduledActionName} scheduledaction deleted");
+
+                if (shouldThrow)
+                {
+                    throw;
+                }
+            }
+
+            return saResource;
+        }
+
+        public static async Task DeleteScheduledAction(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+        {
+            ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subid, rgResource.Id.Name, scheduledActionName);
+            ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
+
+            await scheduledAction.DeleteAsync(WaitUntil.Completed);
+
+            await GetScheduledActions(subid, client, scheduledActionName, rgResource, shouldThrow);
+        }
+        #endregion
+*/
     }
 }

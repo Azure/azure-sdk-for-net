@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
+            {
+                writer.WritePropertyName("keyVaultUri"u8);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            }
             if (options.Format != "W" && Optional.IsDefined(SecretName))
             {
                 writer.WritePropertyName("secretName"u8);
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
             string secretName = default;
             string secretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,6 +106,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         continue;
                     }
                     keyVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("keyVaultUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))
@@ -118,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecretArchiveReference(keyVaultId, secretName, secretVersion, serializedAdditionalRawData);
+            return new SecretArchiveReference(keyVaultId, keyVaultUri, secretName, secretVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretArchiveReference>.Write(ModelReaderWriterOptions options)

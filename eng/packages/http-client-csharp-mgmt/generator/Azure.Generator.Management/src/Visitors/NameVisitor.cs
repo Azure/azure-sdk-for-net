@@ -6,16 +6,12 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
-using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -46,9 +42,6 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateLinkResourceListResult"
         };
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
-    private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
-
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
         if (type is null)
@@ -74,47 +67,29 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (TryTransformUrlToUri(model.Name, out var newName))
         {
-            UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
             newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
-            UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
         }
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
         {
             newName = $"{enclosingResourceName}Patch";
-            UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
-
-            _resourceUpdateModelTypes.Add(type.Type);
-            foreach (var serializationProvider in type.SerializationProviders)
-            {
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
-            }
         }
         return base.PreVisitModel(model, type);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    private void UpdateSerialization(ModelProvider type, string newName, string originalName)
-    {
-        foreach (MrwSerializationTypeDefinition serializationProvider in type.SerializationProviders)
-        {
-            // Update the serialization provider name to match the model name
-            serializationProvider.Update(name: newName);
-            _deserializationRename.Add(serializationProvider, $"Deserialize{newName}");
-        }
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
+        DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
+        DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
@@ -148,64 +123,65 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
-    protected override MethodProvider? VisitMethod(MethodProvider method)
-    {
-        var parameterUpdated = false;
-        foreach (var parameter in method.Signature.Parameters)
+    // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
+    private static readonly Dictionary<string, string> _nounToVerbDicts = new()
         {
-            if (_resourceUpdateModelTypes.Contains(parameter.Type))
+            {"Creation", "Created"},
+            {"Deletion", "Deleted"},
+            {"Expiration", "Expire"},
+            {"Modification", "Modified"},
+        };
+    private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && propertyProvider.Type.Equals(typeof(DateTimeOffset)))
+        {
+            var propertyName = propertyProvider.Name;
+            // Skip properties that are not following the pattern we want to change
+            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
+                propertyName.StartsWith("To", StringComparison.Ordinal) ||
+                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
             {
-                parameter.Update(name: "patch");
-                parameterUpdated = true;
+                return;
+            }
+
+            var lengthToCut = 0;
+            if (propertyName.Length > 8 &&
+                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
+            {
+                lengthToCut = 8;
+            }
+            else if (propertyName.Length > 4 &&
+                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
+                propertyName.EndsWith("Date", StringComparison.Ordinal)))
+            {
+                lengthToCut = 4;
+            }
+            else if (propertyName.Length > 2 &&
+                propertyName.EndsWith("At", StringComparison.Ordinal))
+            {
+                lengthToCut = 2;
+            }
+            if (lengthToCut > 0)
+            {
+                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
+                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
+                propertyProvider.Update(name: newPropertyName);
             }
         }
-
-        if (parameterUpdated)
-        {
-            // This is required as a workaround to update documentation for the method signature
-            method.Update(signature: method.Signature);
-        }
-
-        // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
-        {
-            method.Signature.Update(name: newName);
-        }
-
-        return base.VisitMethod(method);
     }
 
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    protected override MethodBodyStatement? VisitExpressionStatement(ExpressionStatement statement, MethodProvider method)
-    {
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
-            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
-            && method.Signature.Name == "JsonModelCreateCore"
-            && statement.Expression is KeywordExpression keyword && keyword.Keyword == "return"
-            && keyword.Expression is InvokeMethodExpression invokeMethod)
+    // Dictionary to hold property name renaming mappings
+    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
         {
-            invokeMethod.Update(methodName: newName);
-        }
-        return base.VisitExpressionStatement(statement, method);
-    }
+            {"Etag", "ETag"}
+        };
 
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    protected override SwitchCaseStatement? VisitSwitchCaseStatement(SwitchCaseStatement statement, MethodProvider method)
+    private void DoPreVisitPropertyNameRenaming(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
-            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
-            && method.Signature.Name == "PersistableModelCreateCore")
+        if (propertyProvider != null && _propertyNameRenamingMap.TryGetValue(propertyProvider.Name, out var newPropertyName))
         {
-            if (statement.Statement.AsStatement().FirstOrDefault() is UsingScopeStatement usingScopeStatement
-                && usingScopeStatement.Body.AsStatement().FirstOrDefault() is ExpressionStatement expression
-                && expression.Expression is KeywordExpression keywordExpression
-                && keywordExpression.Keyword == "return"
-                && keywordExpression.Expression is InvokeMethodExpression invokeMethod)
-            {
-                invokeMethod.Update(methodName: newName);
-            }
+            propertyProvider.Update(name: newPropertyName);
         }
-        return base.VisitSwitchCaseStatement(statement, method);
     }
 
     private bool TryTransformUrlToUri(string name, [MaybeNullWhen(false)] out string newName)

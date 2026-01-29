@@ -12,6 +12,7 @@
     <!-- These supressions should be removed in a production library -->
     <NoWarn>$(NoWarn);CS0169;AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

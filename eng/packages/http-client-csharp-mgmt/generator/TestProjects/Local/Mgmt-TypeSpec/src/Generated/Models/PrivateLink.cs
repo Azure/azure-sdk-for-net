@@ -8,12 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    internal partial class PrivateLink : ResourceData
+    public partial class PrivateLink : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -31,7 +32,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal PrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MgmtTypeSpecPrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal PrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,9 +40,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public MgmtTypeSpecPrivateLinkResourceProperties Properties { get; }
+        [WirePath("properties")]
+        public AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
     }
 }

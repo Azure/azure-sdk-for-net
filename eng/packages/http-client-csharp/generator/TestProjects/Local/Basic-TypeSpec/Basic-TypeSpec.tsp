@@ -40,7 +40,6 @@ enum Versions {
 }
 
 @doc("float fixed enum")
-@fixed
 enum FloatFixedEnumWithIntValue {
   One: 1.0,
   Two: 2.0,
@@ -48,7 +47,6 @@ enum FloatFixedEnumWithIntValue {
 }
 
 @doc("float fixed enum")
-@fixed
 enum FloatFixedEnum {
   OneDotOne: 1.1,
   TwoDotTwo: 2.2,
@@ -56,7 +54,6 @@ enum FloatFixedEnum {
 }
 
 @doc("int fixed enum")
-@fixed
 enum IntFixedEnum {
   One: 1,
   Two: 2,
@@ -64,7 +61,6 @@ enum IntFixedEnum {
 }
 
 @doc("Simple enum")
-@fixed
 enum StringFixedEnum {
   One: "1",
   Two: "2",
@@ -412,11 +408,33 @@ op ListWithHeaderNextLink(): {
   @nextLink @header next?: string;
 };
 
+@route("/linkHeaderWithMaxPage")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithHeaderNextLinkWithMaxPage(@query @pageSize numElements: int32): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink @header next?: string;
+};
+
 @route("/continuation")
 @doc("List things with continuation token")
 @convenientAPI(true)
 @list
 op ListWithContinuationToken(@query @continuationToken token?: string): {
+  @pageItems
+  things: ThingModel[];
+
+  @continuationToken nextToken?: string;
+};
+
+@route("/continuationWithMaxPage")
+@doc("List things with continuation token")
+@convenientAPI(true)
+@list
+op ListWithContinuationTokenWithMaxPage(@query @continuationToken token?: string, @query @pageSize numElements: int32): {
   @pageItems
   things: ThingModel[];
 
@@ -455,3 +473,43 @@ op ConditionalRequest(@header("If-Match") ifMatch?: string, @header("If-None-Mat
 @convenientAPI(true)
 @get
 op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string, @header("If-Modified-Since") ifModifiedSince?: string): void;
+
+@route("multipart")
+@doc("A sample operation with multipart request")
+@convenientAPI(true)
+@post
+op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", @multipartBody body: {name: HttpPart<string>}): void;
+
+// DataFactoryElement alternate type pattern
+@alternateType({identity: "Azure.Core.Expressions.DataFactoryElement"}, "csharp")
+union Dfe<T> {
+    T,
+    DataFactoryElementModel
+}
+
+@doc("Model with DataFactoryElement properties")
+model DataFactoryElementModel {
+  @doc("String property with DFE pattern")
+  stringProperty: Dfe<string>;
+
+  @doc("Int property with DFE pattern")
+  intProperty: Dfe<int32>;
+
+  @doc("Bool property with DFE pattern")
+  boolProperty: Dfe<boolean>;
+
+  @doc("String array property with DFE pattern")
+  stringArrayProperty: Dfe<string[]>;
+}
+
+@route("datafactory")
+@doc("Create a model with DataFactoryElement properties")
+@convenientAPI(true)
+@post
+op CreateDataFactoryModel(@body body: DataFactoryElementModel): DataFactoryElementModel;
+
+@route("datafactory/{id}")
+@doc("Get a model with DataFactoryElement properties")
+@convenientAPI(true)
+@get
+op GetDataFactoryModel(@path id: string): DataFactoryElementModel;

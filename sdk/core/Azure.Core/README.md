@@ -224,7 +224,7 @@ var mockValue = SecretModelFactory.KeyVaultSecret(
 var mock = new Mock<SecretClient>();
 
 // Setup client method
-mock.Setup(c => c.GetSecret("Name", null, default))
+mock.Setup(c => c.GetSecret("Name", null, null, default))
     .Returns(Response.FromValue(mockValue, mockResponse.Object));
 
 // Use the client mock

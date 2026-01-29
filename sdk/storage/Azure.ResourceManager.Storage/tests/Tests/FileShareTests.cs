@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //Set and validated
             var data = new FileServiceData()
             {
-                ProtocolSettings = new ProtocolSettings()
+                ProtocolSettings = new FileServiceProtocolSettings()
                 {
                     SmbSetting = new SmbSetting()
                     {

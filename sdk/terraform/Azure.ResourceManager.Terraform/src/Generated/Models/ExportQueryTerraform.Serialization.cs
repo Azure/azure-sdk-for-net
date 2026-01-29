@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    public partial class ExportQueryTerraform : IUtf8JsonSerializable, IJsonModel<ExportQueryTerraform>
+    /// <summary> Uses ARG (Azure Resource Graph) query to choose resources to be exported. </summary>
+    public partial class ExportQueryTerraform : CommonExportProperties, IJsonModel<ExportQueryTerraform>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportQueryTerraform>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExportQueryTerraform"/> for deserialization. </summary>
+        internal ExportQueryTerraform()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportQueryTerraform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
@@ -47,6 +52,11 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("recursive"u8);
                 writer.WriteBooleanValue(IsRecursive.Value);
             }
+            if (Optional.IsDefined(IncludeResourceGroup))
+            {
+                writer.WritePropertyName("includeResourceGroup"u8);
+                writer.WriteBooleanValue(IncludeResourceGroup.Value);
+            }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
@@ -59,159 +69,212 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
-        ExportQueryTerraform IJsonModel<ExportQueryTerraform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportQueryTerraform IJsonModel<ExportQueryTerraform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExportQueryTerraform)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CommonExportProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExportQueryTerraform(document.RootElement, options);
         }
 
-        internal static ExportQueryTerraform DeserializeExportQueryTerraform(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExportQueryTerraform DeserializeExportQueryTerraform(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            CommonExportType @type = default;
+            TargetTerraformProvider? targetProvider = default;
+            bool? isOutputFullPropertiesEnabled = default;
+            bool? isMaskSensitiveEnabled = default;
+            bool? includeRoleAssignment = default;
+            bool? includeManagedResource = default;
+            IList<string> azureResourcesToExclude = default;
+            IList<string> terraformResourcesToExclude = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string query = default;
             string namePattern = default;
-            bool? recursive = default;
+            bool? isRecursive = default;
+            bool? includeResourceGroup = default;
             string table = default;
             TerraformAuthorizationScopeFilter? authorizationScopeFilter = default;
-            CommonExportType type = default;
-            TargetTerraformProvider? targetProvider = default;
-            bool? fullProperties = default;
-            bool? maskSensitive = default;
-            IList<string> excludeAzureResource = default;
-            IList<string> excludeTerraformResource = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("query"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    query = property.Value.GetString();
+                    @type = new CommonExportType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("namePattern"u8))
+                if (prop.NameEquals("targetProvider"u8))
                 {
-                    namePattern = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("recursive"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recursive = property.Value.GetBoolean();
+                    targetProvider = new TargetTerraformProvider(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("table"u8))
+                if (prop.NameEquals("fullProperties"u8))
                 {
-                    table = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("authorizationScopeFilter"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authorizationScopeFilter = new TerraformAuthorizationScopeFilter(property.Value.GetString());
+                    isOutputFullPropertiesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("maskSensitive"u8))
                 {
-                    type = new CommonExportType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetProvider"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetProvider = new TargetTerraformProvider(property.Value.GetString());
+                    isMaskSensitiveEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fullProperties"u8))
+                if (prop.NameEquals("includeRoleAssignment"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullProperties = property.Value.GetBoolean();
+                    includeRoleAssignment = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maskSensitive"u8))
+                if (prop.NameEquals("includeManagedResource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maskSensitive = property.Value.GetBoolean();
+                    includeManagedResource = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("excludeAzureResource"u8))
+                if (prop.NameEquals("excludeAzureResource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    excludeAzureResource = array;
+                    azureResourcesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("excludeTerraformResource"u8))
+                if (prop.NameEquals("excludeTerraformResource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    excludeTerraformResource = array;
+                    terraformResourcesToExclude = array;
+                    continue;
+                }
+                if (prop.NameEquals("query"u8))
+                {
+                    query = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("namePattern"u8))
+                {
+                    namePattern = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recursive"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isRecursive = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("includeResourceGroup"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeResourceGroup = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("table"u8))
+                {
+                    table = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("authorizationScopeFilter"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authorizationScopeFilter = new TerraformAuthorizationScopeFilter(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExportQueryTerraform(
-                type,
+                @type,
                 targetProvider,
-                fullProperties,
-                maskSensitive,
-                excludeAzureResource ?? new ChangeTrackingList<string>(),
-                excludeTerraformResource ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData,
+                isOutputFullPropertiesEnabled,
+                isMaskSensitiveEnabled,
+                includeRoleAssignment,
+                includeManagedResource,
+                azureResourcesToExclude ?? new ChangeTrackingList<string>(),
+                terraformResourcesToExclude ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties,
                 query,
                 namePattern,
-                recursive,
+                isRecursive,
+                includeResourceGroup,
                 table,
                 authorizationScopeFilter);
         }
 
-        BinaryData IPersistableModel<ExportQueryTerraform>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExportQueryTerraform>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -221,15 +284,20 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
-        ExportQueryTerraform IPersistableModel<ExportQueryTerraform>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportQueryTerraform IPersistableModel<ExportQueryTerraform>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportQueryTerraform)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CommonExportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExportQueryTerraform(document.RootElement, options);
                     }
                 default:
@@ -237,6 +305,7 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExportQueryTerraform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

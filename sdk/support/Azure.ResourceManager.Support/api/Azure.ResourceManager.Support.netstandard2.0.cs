@@ -47,9 +47,10 @@ namespace Azure.ResourceManager.Support
     }
     public partial class ProblemClassificationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ProblemClassificationData>
     {
-        internal ProblemClassificationData() { }
-        public string DisplayName { get { throw null; } }
+        public ProblemClassificationData() { }
+        public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> SecondaryConsentEnabled { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> SecondaryConsentEnabledInfo { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.ProblemClassificationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -163,8 +164,9 @@ namespace Azure.ResourceManager.Support
     }
     public partial class SupportAzureServiceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportAzureServiceData>
     {
-        internal SupportAzureServiceData() { }
-        public string DisplayName { get { throw null; } }
+        public SupportAzureServiceData() { }
+        public System.Collections.Generic.IList<string> ArmResourceTypes { get { throw null; } }
+        public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> ResourceTypes { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.SupportAzureServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -624,9 +626,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent No { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent left, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent (string value) { throw null; }
@@ -638,9 +638,9 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.ChatTranscriptDetailData ChatTranscriptDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties> messages = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties ChatTranscriptMessageProperties(Azure.ResourceManager.Support.Models.TranscriptContentType? contentType = default(Azure.ResourceManager.Support.Models.TranscriptContentType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Support.FileWorkspaceDetailData FileWorkspaceDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.ProblemClassificationData ProblemClassificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> secondaryConsentEnabled = null) { throw null; }
-        public static Azure.ResourceManager.Support.Models.SecondaryConsentEnabled SecondaryConsentEnabled(string description = null, string secondaryConsentEnabledType = null) { throw null; }
-        public static Azure.ResourceManager.Support.SupportAzureServiceData SupportAzureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.Support.ProblemClassificationData ProblemClassificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> secondaryConsentEnabledInfo = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SecondaryConsentEnabled SecondaryConsentEnabled(string description, string secondaryConsentEnabledType) { throw null; }
+        public static Azure.ResourceManager.Support.SupportAzureServiceData SupportAzureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> armResourceTypes = null) { throw null; }
         public static Azure.ResourceManager.Support.SupportFileDetailData SupportFileDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), int? chunkSize = default(int?), int? fileSize = default(int?), int? numberOfChunks = default(int?)) { throw null; }
         public static Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement SupportServiceLevelAgreement(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), int? slaInMinutes = default(int?)) { throw null; }
@@ -671,9 +671,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.IsTemporaryTicket No { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.IsTemporaryTicket Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.IsTemporaryTicket other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.IsTemporaryTicket left, Azure.ResourceManager.Support.Models.IsTemporaryTicket right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.IsTemporaryTicket (string value) { throw null; }
@@ -689,9 +687,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.PreferredContactMethod Email { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.PreferredContactMethod Phone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.PreferredContactMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.PreferredContactMethod left, Azure.ResourceManager.Support.Models.PreferredContactMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.PreferredContactMethod (string value) { throw null; }
@@ -725,9 +721,9 @@ namespace Azure.ResourceManager.Support.Models
     }
     public partial class SecondaryConsentEnabled : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>
     {
-        internal SecondaryConsentEnabled() { }
-        public string Description { get { throw null; } }
-        public string SecondaryConsentEnabledType { get { throw null; } }
+        public SecondaryConsentEnabled() { }
+        public string Description { get { throw null; } set { } }
+        public string SecondaryConsentEnabledType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SecondaryConsentEnabled System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -839,9 +835,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.SupportSeverityLevel Minimal { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.SupportSeverityLevel Moderate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.SupportSeverityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportSeverityLevel left, Azure.ResourceManager.Support.Models.SupportSeverityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportSeverityLevel (string value) { throw null; }
@@ -857,9 +851,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection left, Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection (string value) { throw null; }
@@ -875,9 +867,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.SupportTicketCommunicationType Phone { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.SupportTicketCommunicationType Web { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType left, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketCommunicationType (string value) { throw null; }
@@ -893,9 +883,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.SupportTicketStatus Closed { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.SupportTicketStatus Open { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.SupportTicketStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportTicketStatus left, Azure.ResourceManager.Support.Models.SupportTicketStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketStatus (string value) { throw null; }
@@ -909,9 +897,7 @@ namespace Azure.ResourceManager.Support.Models
         private readonly int _dummyPrimitive;
         public TranscriptContentType(string value) { throw null; }
         public bool Equals(Azure.ResourceManager.Support.Models.TranscriptContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.TranscriptContentType left, Azure.ResourceManager.Support.Models.TranscriptContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.TranscriptContentType (string value) { throw null; }
@@ -954,9 +940,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.Models.UserConsent No { get { throw null; } }
         public static Azure.ResourceManager.Support.Models.UserConsent Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Support.Models.UserConsent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.UserConsent left, Azure.ResourceManager.Support.Models.UserConsent right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.UserConsent (string value) { throw null; }

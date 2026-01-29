@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ArizeAIObservabilityEval;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     public readonly partial struct ArizeAIObservabilityEvalMarketplaceSubscriptionStatus : IEquatable<ArizeAIObservabilityEvalMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> Purchased but not yet activated. </summary>
+        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
+        /// <summary> Marketplace subscription is activated. </summary>
+        private const string SubscribedValue = "Subscribed";
+        /// <summary> This state indicates that a customer's payment for the Marketplace service was not received. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Customer has cancelled the subscription. </summary>
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
-        private const string SubscribedValue = "Subscribed";
-        private const string SuspendedValue = "Suspended";
-        private const string UnsubscribedValue = "Unsubscribed";
+            _value = value;
+        }
 
         /// <summary> Purchased but not yet activated. </summary>
         public static ArizeAIObservabilityEvalMarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
+
         /// <summary> Marketplace subscription is activated. </summary>
         public static ArizeAIObservabilityEvalMarketplaceSubscriptionStatus Subscribed { get; } = new ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(SubscribedValue);
+
         /// <summary> This state indicates that a customer's payment for the Marketplace service was not received. </summary>
         public static ArizeAIObservabilityEvalMarketplaceSubscriptionStatus Suspended { get; } = new ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary> Customer has cancelled the subscription. </summary>
         public static ArizeAIObservabilityEvalMarketplaceSubscriptionStatus Unsubscribed { get; } = new ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="ArizeAIObservabilityEvalMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArizeAIObservabilityEvalMarketplaceSubscriptionStatus left, ArizeAIObservabilityEvalMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArizeAIObservabilityEvalMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArizeAIObservabilityEvalMarketplaceSubscriptionStatus left, ArizeAIObservabilityEvalMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArizeAIObservabilityEvalMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArizeAIObservabilityEvalMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(string value) => new ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArizeAIObservabilityEvalMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArizeAIObservabilityEvalMarketplaceSubscriptionStatus?(string value) => value == null ? null : new ArizeAIObservabilityEvalMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArizeAIObservabilityEvalMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArizeAIObservabilityEvalMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

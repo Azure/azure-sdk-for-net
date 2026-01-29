@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PortalServicesCopilot.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -15,25 +16,26 @@ namespace Azure.ResourceManager.PortalServicesCopilot
     /// <summary> A class to add extension methods to Azure.ResourceManager.PortalServicesCopilot. </summary>
     public static partial class PortalServicesCopilotExtensions
     {
+        /// <param name="client"></param>
         private static MockablePortalServicesCopilotArmClient GetMockablePortalServicesCopilotArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockablePortalServicesCopilotArmClient(client0));
+            return client.GetCachedClient(client0 => new MockablePortalServicesCopilotArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockablePortalServicesCopilotTenantResource GetMockablePortalServicesCopilotTenantResource(ArmResource resource)
+        /// <param name="tenantResource"></param>
+        private static MockablePortalServicesCopilotTenantResource GetMockablePortalServicesCopilotTenantResource(TenantResource tenantResource)
         {
-            return resource.GetCachedClient(client => new MockablePortalServicesCopilotTenantResource(client, resource.Id));
+            return tenantResource.GetCachedClient(client => new MockablePortalServicesCopilotTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PortalServicesCopilotSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PortalServicesCopilotSettingResource.CreateResourceIdentifier" /> to create a <see cref="PortalServicesCopilotSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PortalServicesCopilotSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePortalServicesCopilotArmClient.GetPortalServicesCopilotSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePortalServicesCopilotArmClient.GetPortalServicesCopilotSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
@@ -45,13 +47,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary>
-        /// Gets an object representing a PortalServicesCopilotSettingResource along with the instance operations that can be performed on it in the TenantResource.
+        /// Gets an object representing a <see cref="PortalServicesCopilotSettingResource"/> along with the instance operations that can be performed on it in the <see cref="TenantResource"/>.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePortalServicesCopilotTenantResource.GetPortalServicesCopilotSetting()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePortalServicesCopilotTenantResource.GetPortalServicesCopilotSetting()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
         public static PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting(this TenantResource tenantResource)

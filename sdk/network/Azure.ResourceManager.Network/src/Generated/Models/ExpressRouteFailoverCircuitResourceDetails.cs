@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> NRP Resource URI of the circuit. </summary>
+        [WirePath("nrpResourceUri")]
         public Uri NrpResourceUri { get; }
         /// <summary> Circuit Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Connection name associated with the circuit. </summary>
+        [WirePath("connectionName")]
         public string ConnectionName { get; }
     }
 }

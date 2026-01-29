@@ -19,6 +19,8 @@ namespace Authentication.Http.Custom
 
         public CustomClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new CustomClientOptions()) => throw null;
 
+        public CustomClient(AzureKeyCredential credential, CustomClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+
         public CustomClient(Uri endpoint, AzureKeyCredential credential, CustomClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;

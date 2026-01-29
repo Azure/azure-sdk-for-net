@@ -12,12 +12,12 @@ using System;
 namespace Azure.Provisioning.CognitiveServices;
 
 /// <summary>
-/// The user owned AML workspace for Cognitive Services account.
+/// The user owned AML account for Cognitive Services account.
 /// </summary>
 public partial class UserOwnedAmlWorkspace : ProvisionableConstruct
 {
     /// <summary>
-    /// Full resource id of a AML workspace resource.
+    /// Full resource id of a AML account resource.
     /// </summary>
     public BicepValue<ResourceIdentifier> ResourceId 
     {
@@ -27,7 +27,7 @@ public partial class UserOwnedAmlWorkspace : ProvisionableConstruct
     private BicepValue<ResourceIdentifier>? _resourceId;
 
     /// <summary>
-    /// Identity Client id of a AML workspace resource.
+    /// Identity Client id of a AML account resource.
     /// </summary>
     public BicepValue<Guid> IdentityClientId 
     {

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the Network Intent Policy for storing in target subscription. </summary>
+        [WirePath("networkIntentPolicyName")]
         public string NetworkIntentPolicyName { get; set; }
         /// <summary> Source network intent policy. </summary>
+        [WirePath("sourceNetworkIntentPolicy")]
         public NetworkIntentPolicy SourceNetworkIntentPolicy { get; set; }
     }
 }

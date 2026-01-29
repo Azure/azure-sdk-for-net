@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
+    /// <summary></summary>
     public partial class InformaticaServerlessRuntimeResource : IJsonModel<InformaticaServerlessRuntimeData>
     {
-        private static InformaticaServerlessRuntimeData s_dataDeserializationInstance;
-        private static InformaticaServerlessRuntimeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<InformaticaServerlessRuntimeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<InformaticaServerlessRuntimeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new InformaticaServerlessRuntimeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaServerlessRuntimeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)Data).Write(writer, options);
 
-        InformaticaServerlessRuntimeData IJsonModel<InformaticaServerlessRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaServerlessRuntimeData IJsonModel<InformaticaServerlessRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InformaticaServerlessRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InformaticaServerlessRuntimeData>(Data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InformaticaServerlessRuntimeData IPersistableModel<InformaticaServerlessRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
-        string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaServerlessRuntimeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

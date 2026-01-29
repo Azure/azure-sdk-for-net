@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ThrottlingMetricType. </summary>
+    /// <summary> The throttling metric type. </summary>
     public readonly partial struct ThrottlingMetricType : IEquatable<ThrottlingMetricType>
     {
         private readonly string _value;

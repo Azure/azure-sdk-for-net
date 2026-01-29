@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01";
+            _apiVersion = apiVersion ?? "2024-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

@@ -43,6 +43,27 @@ namespace Azure.AI.Language.Text
             return new EntitySynonym(synonym, language, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Text.ConfidenceScoreThreshold"/>. </summary>
+        /// <param name="default"> Minimum confidence score threshold for the PII entities to be returned in the response. Entities with a confidence score below this threshold will be filtered out. Value should be between 0.0 and 1.0. </param>
+        /// <param name="overrides"> List of confidence score threshold overrides for specific PII categories. </param>
+        /// <returns> A new <see cref="Text.ConfidenceScoreThreshold"/> instance for mocking. </returns>
+        public static ConfidenceScoreThreshold ConfidenceScoreThreshold(float @default = default, IEnumerable<ConfidenceScoreThresholdOverride> overrides = null)
+        {
+            overrides ??= new List<ConfidenceScoreThresholdOverride>();
+
+            return new ConfidenceScoreThreshold(@default, overrides?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.ConfidenceScoreThresholdOverride"/>. </summary>
+        /// <param name="entity"> The PII category for which to override the confidence score threshold. </param>
+        /// <param name="value"> The confidence score threshold for the specified PII category. </param>
+        /// <param name="language"> The 2 letter ISO 639-1 language for which the override applies. If not specified, the override applies to all languages. </param>
+        /// <returns> A new <see cref="Text.ConfidenceScoreThresholdOverride"/> instance for mocking. </returns>
+        public static ConfidenceScoreThresholdOverride ConfidenceScoreThresholdOverride(PiiCategoriesExclude entity = default, float value = default, string language = null)
+        {
+            return new ConfidenceScoreThresholdOverride(entity, value, language, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextEntityLinkingResult"/>. </summary>
         /// <param name="results"> Entity linking result. </param>
         /// <returns> A new <see cref="Text.AnalyzeTextEntityLinkingResult"/> instance for mocking. </returns>
@@ -273,7 +294,7 @@ namespace Azure.AI.Language.Text
         /// <param name="metadata">
         /// The entity metadata object.
         /// Please note <see cref="BaseMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Text.AgeMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.NumericRangeMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.VolumeMetadata"/> and <see cref="Text.WeightMetadata"/>.
+        /// The available derived classes include <see cref="Text.AddressMetadata"/>, <see cref="Text.AgeMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.NumericRangeMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.VolumeMetadata"/> and <see cref="Text.WeightMetadata"/>.
         /// </param>
         /// <returns> A new <see cref="Text.NamedEntityWithMetadata"/> instance for mocking. </returns>
         public static NamedEntityWithMetadata NamedEntityWithMetadata(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, string type = null, IEnumerable<EntityTag> tags = null, BaseMetadata metadata = null)
@@ -382,6 +403,29 @@ namespace Azure.AI.Language.Text
         public static CurrencyMetadata CurrencyMetadata(double value = default, string unit = null, string iso4217 = null)
         {
             return new CurrencyMetadata(MetadataKind.CurrencyMetadata, serializedAdditionalRawData: null, value, unit, iso4217);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.AddressMetadata"/>. </summary>
+        /// <param name="formatedAddress"> The fully formatted address string following postal conventions for the address's country/region. </param>
+        /// <param name="addressLines"> The full address string as recognized from the input text. </param>
+        /// <param name="city"> The city name of the address. </param>
+        /// <param name="state"> The state or province name of the address. </param>
+        /// <param name="postalCode"> The postal or ZIP code of the address. </param>
+        /// <param name="countryOrRegion"> The country or region name of the address. </param>
+        /// <returns> A new <see cref="Text.AddressMetadata"/> instance for mocking. </returns>
+        public static AddressMetadata AddressMetadata(string formatedAddress = null, IEnumerable<string> addressLines = null, string city = null, string state = null, string postalCode = null, string countryOrRegion = null)
+        {
+            addressLines ??= new List<string>();
+
+            return new AddressMetadata(
+                MetadataKind.AddressMetadata,
+                serializedAdditionalRawData: null,
+                formatedAddress,
+                addressLines?.ToList(),
+                city,
+                state,
+                postalCode,
+                countryOrRegion);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DateMetadata"/>. </summary>
@@ -833,7 +877,7 @@ namespace Azure.AI.Language.Text
         /// <param name="items">
         /// Enumerable of Analyze text job results.
         /// Please note <see cref="Text.AnalyzeTextOperationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Text.AbstractiveSummarizationOperationResult"/>, <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/> and <see cref="Text.SentimentOperationResult"/>.
+        /// The available derived classes include <see cref="Text.AbstractiveSummarizationOperationResult"/>, <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/> and <see cref="Text.SentimentLROResult"/>.
         /// </param>
         /// <returns> A new <see cref="Text.TextActions"/> instance for mocking. </returns>
         public static TextActions TextActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextOperationResult> items = null)
@@ -1256,15 +1300,15 @@ namespace Azure.AI.Language.Text
                 results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.SentimentOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.SentimentLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> The sentiment analysis results. </param>
-        /// <returns> A new <see cref="Text.SentimentOperationResult"/> instance for mocking. </returns>
-        public static SentimentOperationResult SentimentOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, SentimentResult results = null)
+        /// <returns> A new <see cref="Text.SentimentLROResult"/> instance for mocking. </returns>
+        public static SentimentLROResult SentimentLROResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, SentimentResult results = null)
         {
-            return new SentimentOperationResult(
+            return new SentimentLROResult(
                 lastUpdateDateTime,
                 status,
                 name,

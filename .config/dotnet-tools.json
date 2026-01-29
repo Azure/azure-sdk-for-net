@@ -13,6 +13,12 @@
       "commands": [
         "reportgenerator"
       ]
+    },
+    "Azure.Sdk.Tools.TestProxy": {
+      "version": "1.0.0-dev.20251209.1",
+      "commands": [
+        "test-proxy"
+      ]
     }
   }
 }

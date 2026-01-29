@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Core;
 using Azure;
+using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Storage;
 using Azure.Storage.Queues;
@@ -48,6 +49,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="QueueServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {

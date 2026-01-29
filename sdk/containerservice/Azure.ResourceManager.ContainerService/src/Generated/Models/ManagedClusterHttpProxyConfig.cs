@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Cluster HTTP proxy configuration. </summary>
+    /// <summary>
+    /// Cluster HTTP proxy configuration.
+    /// Serialized Name: ManagedClusterHttpProxyConfig
+    /// </summary>
     public partial class ManagedClusterHttpProxyConfig
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterHttpProxyConfig"/>. </summary>
-        /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
-        /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
-        /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
-        /// <param name="trustedCA"> Alternative CA cert to use for connecting to proxy servers. </param>
+        /// <param name="httpProxy">
+        /// The HTTP proxy server endpoint to use.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.httpProxy
+        /// </param>
+        /// <param name="httpsProxy">
+        /// The HTTPS proxy server endpoint to use.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.httpsProxy
+        /// </param>
+        /// <param name="noProxy">
+        /// The endpoints that should not go through proxy.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.noProxy
+        /// </param>
+        /// <param name="trustedCA">
+        /// Alternative CA cert to use for connecting to proxy servers.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.trustedCa
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCA, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The HTTP proxy server endpoint to use. </summary>
+        /// <summary>
+        /// The HTTP proxy server endpoint to use.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.httpProxy
+        /// </summary>
         [WirePath("httpProxy")]
         public string HttpProxy { get; set; }
-        /// <summary> The HTTPS proxy server endpoint to use. </summary>
+        /// <summary>
+        /// The HTTPS proxy server endpoint to use.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.httpsProxy
+        /// </summary>
         [WirePath("httpsProxy")]
         public string HttpsProxy { get; set; }
-        /// <summary> The endpoints that should not go through proxy. </summary>
+        /// <summary>
+        /// The endpoints that should not go through proxy.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.noProxy
+        /// </summary>
         [WirePath("noProxy")]
         public IList<string> NoProxy { get; }
-        /// <summary> Alternative CA cert to use for connecting to proxy servers. </summary>
+        /// <summary>
+        /// Alternative CA cert to use for connecting to proxy servers.
+        /// Serialized Name: ManagedClusterHttpProxyConfig.trustedCa
+        /// </summary>
         [WirePath("trustedCa")]
         public string TrustedCA { get; set; }
     }

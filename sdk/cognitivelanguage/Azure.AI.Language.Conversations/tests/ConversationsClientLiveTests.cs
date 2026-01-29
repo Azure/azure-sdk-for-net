@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.AreEqual("Conversation", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Send", (string)conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("SendEmail", (string)conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
             dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
@@ -324,7 +324,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview)]
         public async Task AnalyzeConversationAsync_ConversationPii_WithCharacterMaskPolicy()
         {
             // Arrange: Initialize client and input
@@ -406,7 +406,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview)]
         public async Task AnalyzeConversationAsync_ConversationPii_WithEntityMaskPolicy()
         {
             // Arrange: Initialize client and input
@@ -487,7 +487,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview)]
         public async Task AnalyzeConversationAsync_ConversationPii_WithNoMaskPolicy()
         {
             // Arrange: Initialize client and input
@@ -576,16 +576,15 @@ namespace Azure.AI.Language.Conversations.Tests
 
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
-                    conversations: new AIConversation[] {
-                        new AIConversation(
+                    conversations: new TextConversation[] {
+                        new TextConversation(
                             id: "order",
-                            modality: InputModality.Text,
                             language: "en-GB",
-                            conversationItems: new ConversationalAIItem[]
+                            conversationItems: new TextConversationItem[]
                             {
-                                new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
-                                new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                                new ConversationalAIItem(id: "3", participantId: "user", text: "I would like to book a flight.")
+                                new TextConversationItem(id: "1", participantId: "user", text: "Hi"),
+                                new TextConversationItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
+                                new TextConversationItem(id: "3", participantId: "user", text: "I would like to book a flight.")
                             }
                         )
                     }),

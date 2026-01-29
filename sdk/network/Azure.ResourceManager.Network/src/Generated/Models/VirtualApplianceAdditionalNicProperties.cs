@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of additional nic. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Flag (true or false) for Intent for Public Ip on additional nic. </summary>
+        [WirePath("hasPublicIp")]
         public bool? HasPublicIP { get; set; }
     }
 }

@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Resource Id. </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Resource region. </summary>
+        [WirePath("properties.region")]
         public string Region { get; }
         /// <summary> The provisioning state of the scope assignment resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

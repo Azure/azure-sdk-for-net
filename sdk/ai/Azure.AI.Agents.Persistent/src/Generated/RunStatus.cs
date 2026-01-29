@@ -30,6 +30,7 @@ namespace Azure.AI.Agents.Persistent
         private const string FailedValue = "failed";
         private const string CompletedValue = "completed";
         private const string ExpiredValue = "expired";
+        private const string IncompleteValue = "incomplete";
 
         /// <summary> Represents a run that is queued to start. </summary>
         public static RunStatus Queued { get; } = new RunStatus(QueuedValue);
@@ -47,6 +48,8 @@ namespace Azure.AI.Agents.Persistent
         public static RunStatus Completed { get; } = new RunStatus(CompletedValue);
         /// <summary> Represents a run that expired before it could otherwise finish. </summary>
         public static RunStatus Expired { get; } = new RunStatus(ExpiredValue);
+        /// <summary> Represents a run that cannot be completed due to safety guardrails. </summary>
+        public static RunStatus Incomplete { get; } = new RunStatus(IncompleteValue);
         /// <summary> Determines if two <see cref="RunStatus"/> values are the same. </summary>
         public static bool operator ==(RunStatus left, RunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunStatus"/> values are not the same. </summary>

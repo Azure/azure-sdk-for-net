@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Unique identifier for the callout configuration. </summary>
+        [WirePath("calloutId")]
         public string CalloutId { get; set; }
     }
 }

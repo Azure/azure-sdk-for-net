@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Result for canMigrate operation.
-    /// Serialized Name: CanMigrateResult
-    /// </summary>
+    /// <summary> Result for canMigrate operation. </summary>
     public partial class CanMigrateResult
     {
         /// <summary>
@@ -56,23 +53,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateResult"/>. </summary>
-        /// <param name="resourceId">
-        /// Resource ID.
-        /// Serialized Name: CanMigrateResult.id
-        /// </param>
-        /// <param name="canMigrateResultType">
-        /// Resource type.
-        /// Serialized Name: CanMigrateResult.type
-        /// </param>
-        /// <param name="canMigrate">
-        /// Flag that says if the profile can be migrated
-        /// Serialized Name: CanMigrateResult.properties.canMigrate
-        /// </param>
-        /// <param name="defaultSku">
-        /// Recommended sku for the migration
-        /// Serialized Name: CanMigrateResult.properties.defaultSku
-        /// </param>
-        /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="canMigrateResultType"> Resource type. </param>
+        /// <param name="canMigrate"> Flag that says if the profile can be migrated. </param>
+        /// <param name="defaultSku"> Recommended sku for the migration. </param>
+        /// <param name="errors"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CanMigrateResult(ResourceIdentifier resourceId, string canMigrateResultType, bool? canMigrate, CanMigrateDefaultSku? defaultSku, IReadOnlyList<MigrationErrorType> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,27 +69,20 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource ID.
-        /// Serialized Name: CanMigrateResult.id
-        /// </summary>
+        /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier ResourceId { get; }
-        /// <summary>
-        /// Resource type.
-        /// Serialized Name: CanMigrateResult.type
-        /// </summary>
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public string CanMigrateResultType { get; }
-        /// <summary>
-        /// Flag that says if the profile can be migrated
-        /// Serialized Name: CanMigrateResult.properties.canMigrate
-        /// </summary>
+        /// <summary> Flag that says if the profile can be migrated. </summary>
+        [WirePath("properties.canMigrate")]
         public bool? CanMigrate { get; }
-        /// <summary>
-        /// Recommended sku for the migration
-        /// Serialized Name: CanMigrateResult.properties.defaultSku
-        /// </summary>
+        /// <summary> Recommended sku for the migration. </summary>
+        [WirePath("properties.defaultSku")]
         public CanMigrateDefaultSku? DefaultSku { get; }
-        /// <summary> Serialized Name: CanMigrateResult.properties.errors. </summary>
+        /// <summary> Gets the errors. </summary>
+        [WirePath("properties.errors")]
         public IReadOnlyList<MigrationErrorType> Errors { get; }
     }
 }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary> A class representing the ResourceGuard data model. </summary>
+    /// <summary>
+    /// A class representing the ResourceGuard data model.
+    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class ResourceGuardData : TrackedResourceData
     {
         /// <summary>

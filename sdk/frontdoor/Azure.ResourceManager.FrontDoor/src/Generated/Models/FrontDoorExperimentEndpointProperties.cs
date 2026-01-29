@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The name of the endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The endpoint URL. </summary>
+        [WirePath("endpoint")]
         public string Endpoint { get; set; }
     }
 }

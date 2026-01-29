@@ -266,7 +266,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override async Task VerifyEmptyDestinationContainerAsync(BlobContainerClient destinationContainer, string destinationPrefix, CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            IList<BlobItem> items = await destinationContainer.GetBlobsAsync(prefix: destinationPrefix, cancellationToken: cancellationToken).ToListAsync();
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Prefix = destinationPrefix
+            };
+            IList<BlobItem> items = await destinationContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).ToListAsync();
             Assert.IsEmpty(items);
         }
 
@@ -285,9 +289,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // List all files in source blob folder path
             List<string> sourceFileNames = new List<string>();
-            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(
-                prefix: !string.IsNullOrEmpty(sourcePrefix) ? sourcePrefix + '/' : sourcePrefix,
-                cancellationToken: cancellationToken).AsPages())
+
+            // Get source directory client and list the paths
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Prefix = !string.IsNullOrEmpty(sourcePrefix) ? sourcePrefix + '/' : sourcePrefix
+            };
+            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).AsPages())
             {
                 sourceFileNames.AddRange(page.Values.Select(
                     (BlobItem item) => !string.IsNullOrEmpty(sourcePrefix) ? item.Name.Substring(sourcePrefix.Length + 1) : item.Name));
@@ -295,9 +303,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // List all files in the destination blob folder path
             List<string> destinationFileNames = new List<string>();
-            await foreach (Page<BlobItem> page in destinationContainer.GetBlobsAsync(
-                prefix: !string.IsNullOrEmpty(destinationPrefix) ? destinationPrefix + '/' : destinationPrefix,
-                cancellationToken: cancellationToken).AsPages())
+            options = new GetBlobsOptions
+            {
+                Prefix = !string.IsNullOrEmpty(destinationPrefix) ? destinationPrefix + '/' : destinationPrefix
+            };
+            await foreach (Page<BlobItem> page in destinationContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).AsPages())
             {
                 destinationFileNames.AddRange(page.Values.Select(
                     (BlobItem item) => !string.IsNullOrEmpty(destinationPrefix) ? item.Name.Substring(destinationPrefix.Length + 1) : item.Name));

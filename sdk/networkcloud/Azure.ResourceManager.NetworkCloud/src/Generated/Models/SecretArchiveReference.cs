@@ -53,12 +53,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="SecretArchiveReference"/>. </summary>
         /// <param name="keyVaultId"> The resource ID of the key vault containing the secret. </param>
+        /// <param name="keyVaultUri"> The URI of the key containing the secret. </param>
         /// <param name="secretName"> The name of the secret in the key vault. </param>
         /// <param name="secretVersion"> The version of the secret in the key vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretArchiveReference(ResourceIdentifier keyVaultId, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecretArchiveReference(ResourceIdentifier keyVaultId, Uri keyVaultUri, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultId = keyVaultId;
+            KeyVaultUri = keyVaultUri;
             SecretName = secretName;
             SecretVersion = secretVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -66,6 +68,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The resource ID of the key vault containing the secret. </summary>
         public ResourceIdentifier KeyVaultId { get; }
+        /// <summary> The URI of the key containing the secret. </summary>
+        public Uri KeyVaultUri { get; }
         /// <summary> The name of the secret in the key vault. </summary>
         public string SecretName { get; }
         /// <summary> The version of the secret in the key vault. </summary>

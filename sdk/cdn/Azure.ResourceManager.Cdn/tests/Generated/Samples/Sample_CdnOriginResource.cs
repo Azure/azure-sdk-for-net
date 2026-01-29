@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_OriginsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Origins_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Origins_Get.json
             // this example is just showing the usage of "CdnOrigins_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnOriginResource created on azure
             // for more information of creating CdnOriginResource, please refer to the document of CdnOriginResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_OriginsDelete()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Origins_Delete.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Origins_Delete.json
             // this example is just showing the usage of "CdnOrigins_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnOriginResource created on azure
             // for more information of creating CdnOriginResource, please refer to the document of CdnOriginResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_OriginsUpdate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Origins_Update.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Origins_Update.json
             // this example is just showing the usage of "CdnOrigins_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnOriginResource created on azure
             // for more information of creating CdnOriginResource, please refer to the document of CdnOriginResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";

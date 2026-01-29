@@ -34,7 +34,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             HttpMessageApi? httpMessageApi = null,
             string? primaryNamespace = null)
         {
-            IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
+            IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? ["2023-01-01"];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
             IReadOnlyList<InputClient> inputNsClients = clients?.Invoke() ?? [];

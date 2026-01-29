@@ -78,13 +78,12 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
             return _context.GetTypeBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
-        [UnconditionalSuppressMessage("Trimming", "IL2067",
+        [UnconditionalSuppressMessage("Trimming", "IL2026",
             Justification = "We will only call this when we went through a constructor that is marked with RequiresUnreferencedCode.")]
         IJsonModel<object>? NonAotCompatActivate()
         {
             Debug.Assert(_context is null, "This should only be called when _context is null.");
-            var context = new ReflectionContext();
-            return context.GetTypeBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
+            return new ReflectionModelBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
         IJsonModel<object>? iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();

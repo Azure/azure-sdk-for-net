@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProtectionBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ResourceGuardResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGuardResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource"/> object. </returns>
-        public virtual DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGuardResource"/> object. </returns>
+        public virtual ResourceGuardResource GetResourceGuardResource(ResourceIdentifier id)
         {
-            DataProtectionBackupPolicyResource.ValidateResourceId(id);
-            return new DataProtectionBackupPolicyResource(Client, id);
+            ResourceGuardResource.ValidateResourceId(id);
+            return new ResourceGuardResource(Client, id);
         }
 
         /// <summary>
@@ -164,27 +164,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedDataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedDataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeletedDataProtectionBackupInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataProtectionBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataProtectionBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource"/> object. </returns>
-        public virtual DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource"/> object. </returns>
+        public virtual DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(ResourceIdentifier id)
         {
-            DeletedDataProtectionBackupInstanceResource.ValidateResourceId(id);
-            return new DeletedDataProtectionBackupInstanceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardResource"/> object. </returns>
-        public virtual ResourceGuardResource GetResourceGuardResource(ResourceIdentifier id)
-        {
-            ResourceGuardResource.ValidateResourceId(id);
-            return new ResourceGuardResource(Client, id);
+            DataProtectionBackupPolicyResource.ValidateResourceId(id);
+            return new DataProtectionBackupPolicyResource(Client, id);
         }
 
         /// <summary>
@@ -197,6 +185,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             ResourceGuardProxyBaseResource.ValidateResourceId(id);
             return new ResourceGuardProxyBaseResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedDataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedDataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeletedDataProtectionBackupInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource"/> object. </returns>
+        public virtual DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(ResourceIdentifier id)
+        {
+            DeletedDataProtectionBackupInstanceResource.ValidateResourceId(id);
+            return new DeletedDataProtectionBackupInstanceResource(Client, id);
         }
     }
 }

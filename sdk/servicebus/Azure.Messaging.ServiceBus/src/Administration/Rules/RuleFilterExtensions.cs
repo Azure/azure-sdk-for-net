@@ -37,27 +37,17 @@ namespace Azure.Messaging.ServiceBus.Administration
 
         public static XElement Serialize(this RuleFilter filter)
         {
-            switch (filter)
+            return filter switch
             {
-                case SqlRuleFilter sqlRuleFilter:
-                    switch (sqlRuleFilter)
-                    {
-                        case TrueRuleFilter _:
-                            return sqlRuleFilter.Serialize("TrueFilter");
-
-                        case FalseRuleFilter _:
-                            return sqlRuleFilter.Serialize("FalseFilter");
-
-                        default:
-                            return sqlRuleFilter.Serialize("SqlFilter");
-                    }
-
-                case CorrelationRuleFilter correlationRuleFilter:
-                    return correlationRuleFilter.Serialize("CorrelationFilter");
-
-                default:
-                    throw new NotImplementedException($"filter type {filter.GetType().Name} is not supported.");
-            }
+                SqlRuleFilter sqlRuleFilter => sqlRuleFilter switch
+                {
+                    TrueRuleFilter => sqlRuleFilter.Serialize("TrueFilter"),
+                    FalseRuleFilter => sqlRuleFilter.Serialize("FalseFilter"),
+                    _ => sqlRuleFilter.Serialize("SqlFilter")
+                },
+                CorrelationRuleFilter correlationRuleFilter => correlationRuleFilter.Serialize("CorrelationFilter"),
+                _ => throw new NotImplementedException($"filter type {filter.GetType().Name} is not supported.")
+            };
         }
     }
 }

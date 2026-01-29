@@ -1,6 +1,6 @@
 # Release History
 
-## 12.24.0-beta.2 (Unreleased)
+## 12.26.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.26.0-beta.1 (2026-01-20)
+
+### Features Added
+- Added support for service version 2026-04-06.
+- Added support for Content Validation via Structured Message
+- Added cross-tenant support for Principal-Bound User Delegation SAS.
+- Added support for Dynamic User Delegation SAS.
+
+### Other Changes
+- Changed the default concurrency transfer count from 5 to Math.Clamp(Environment.ProcessorCount * 2, 8, 32). This controls the maximum number of concurrent tasks that will be used during large downloads or uploads, and this change should result in higher throughput for these operations by default in most environments. This can be reverted by enabling "Azure.Storage.UseLegacyDefaultConcurrency" in the AppContext switch or "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY" in the environment variable.
+
+## 12.25.0 (2026-01-08)
+
+### Features Added
+- Includes all features from 12.25.0-beta.1
+
+## 12.25.0-beta.1 (2025-11-17)
+
+### Features Added
+- Added support for service version 2026-02-06.
+- Added support for Principal-Bound Identity User Delegation SAS
+- Added support for the StartFrom parameter on DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().
+
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
 
 ## 12.23.0 (2025-07-14)
 

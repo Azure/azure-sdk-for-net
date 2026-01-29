@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DurableTask.Models
     /// <summary> The properties of a retention policy. </summary>
     public partial class DurableTaskRetentionPolicyDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DurableTaskRetentionPolicyDetails"/>. </summary>
         /// <param name="retentionPeriodInDays"> The retention period in days after which the orchestration will be purged automatically. </param>
@@ -55,21 +26,17 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> Initializes a new instance of <see cref="DurableTaskRetentionPolicyDetails"/>. </summary>
         /// <param name="retentionPeriodInDays"> The retention period in days after which the orchestration will be purged automatically. </param>
         /// <param name="orchestrationState"> The orchestration state to which this policy applies. If omitted, the policy applies to all purgeable orchestration states. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DurableTaskRetentionPolicyDetails(int retentionPeriodInDays, DurableTaskPurgeableOrchestrationState? orchestrationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DurableTaskRetentionPolicyDetails(int retentionPeriodInDays, DurableTaskPurgeableOrchestrationState? orchestrationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetentionPeriodInDays = retentionPeriodInDays;
             OrchestrationState = orchestrationState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DurableTaskRetentionPolicyDetails"/> for deserialization. </summary>
-        internal DurableTaskRetentionPolicyDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The retention period in days after which the orchestration will be purged automatically. </summary>
         public int RetentionPeriodInDays { get; set; }
+
         /// <summary> The orchestration state to which this policy applies. If omitted, the policy applies to all purgeable orchestration states. </summary>
         public DurableTaskPurgeableOrchestrationState? OrchestrationState { get; set; }
     }

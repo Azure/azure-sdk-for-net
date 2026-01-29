@@ -2,22 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Provisioning.ApplicationInsights.Tests;
 
-public class BasicApplicationInsightsTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicApplicationInsightsTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep")]
-    public async Task CreateComponent()
+    internal static Trycep CreateComponentTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:ApplicationInsightsBasic
@@ -37,8 +32,15 @@ public class BasicApplicationInsightsTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep")]
+    public async Task CreateComponent()
+    {
+        await using Trycep test = CreateComponentTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -56,8 +58,6 @@ public class BasicApplicationInsightsTests(bool async)
             output appInsightsName string = appInsights.name
 
             output appInsightsKey string = appInsights.properties.InstrumentationKey
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

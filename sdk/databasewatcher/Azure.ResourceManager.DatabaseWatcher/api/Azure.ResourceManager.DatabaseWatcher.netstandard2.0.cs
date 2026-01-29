@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.DatabaseWatcher
     {
         public DatabaseWatcherAlertRuleData() { }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -75,7 +78,10 @@ namespace Azure.ResourceManager.DatabaseWatcher
         public DatabaseWatcherData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -114,7 +120,10 @@ namespace Azure.ResourceManager.DatabaseWatcher
     {
         internal DatabaseWatcherHealthValidationData() { }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -219,7 +228,10 @@ namespace Azure.ResourceManager.DatabaseWatcher
     {
         public DatabaseWatcherSharedPrivateLinkResourceData() { }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -247,7 +259,10 @@ namespace Azure.ResourceManager.DatabaseWatcher
     {
         public DatabaseWatcherTargetData() { }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherTargetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherTargetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherTargetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherTargetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherTargetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -310,12 +325,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty CreatedWithActionGroup { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty left, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty left, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -327,6 +341,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData DatabaseWatcherHealthValidationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue DatabaseWatcherHealthValidationIssue(string errorCode = null, string errorMessage = null, string additionalDetails = null, string recommendationMessage = null, System.Uri recommendationUri = null, Azure.Core.ResourceIdentifier relatedResourceId = null, Azure.Core.ResourceType? relatedResourceType = default(Azure.Core.ResourceType?)) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties DatabaseWatcherHealthValidationProperties(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset), Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus status = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue> issues = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch DatabaseWatcherPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties DatabaseWatcherProperties(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore datastore = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus? status = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus?), Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState? provisioningState = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState?), Azure.Core.ResourceIdentifier defaultAlertRuleIdentityResourceId = null) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData DatabaseWatcherSharedPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties DatabaseWatcherSharedPrivateLinkResourceProperties(Azure.Core.ResourceIdentifier privateLinkResourceId = null, string groupId = null, string requestMessage = null, string dnsZone = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus? status = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus?), Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState?)) { throw null; }
@@ -345,7 +360,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public System.DateTimeOffset CreatedOn { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty CreatedWithProperties { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -362,7 +380,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public System.Uri KustoDataIngestionUri { get { throw null; } set { } }
         public System.Uri KustoManagementUri { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType KustoOfferingType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -379,7 +400,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public System.Uri RecommendationUri { get { throw null; } }
         public Azure.Core.ResourceIdentifier RelatedResourceId { get { throw null; } }
         public Azure.Core.ResourceType? RelatedResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -394,7 +418,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -414,12 +441,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus TimedOut { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -429,7 +455,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -443,7 +472,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public Azure.Core.ResourceIdentifier DefaultAlertRuleIdentityResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -460,12 +492,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -479,12 +510,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -497,7 +527,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -515,12 +548,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -536,23 +568,25 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus Stopped { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus left, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class DatabaseWatcherTargetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties>
     {
-        protected DatabaseWatcherTargetProperties(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType targetAuthenticationType, string connectionServerName) { }
+        internal DatabaseWatcherTargetProperties() { }
         public string ConnectionServerName { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType TargetAuthenticationType { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret TargetVault { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -564,7 +598,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public DatabaseWatcherUpdateProperties() { }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore Datastore { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultAlertRuleIdentityResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -581,22 +618,24 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType Fabric { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType Free { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType left, Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType left, Azure.ResourceManager.DatabaseWatcher.Models.KustoOfferingType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SqlDBElasticPoolTargetProperties : Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties>
     {
-        public SqlDBElasticPoolTargetProperties(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType targetAuthenticationType, string connectionServerName, Azure.Core.ResourceIdentifier sqlEpResourceId, Azure.Core.ResourceIdentifier anchorDatabaseResourceId) : base (default(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType), default(string)) { }
+        public SqlDBElasticPoolTargetProperties(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType targetAuthenticationType, string connectionServerName, Azure.Core.ResourceIdentifier sqlEpResourceId, Azure.Core.ResourceIdentifier anchorDatabaseResourceId) { }
         public Azure.Core.ResourceIdentifier AnchorDatabaseResourceId { get { throw null; } set { } }
         public bool? ReadIntent { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlEpResourceId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -605,10 +644,13 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     }
     public partial class SqlDBSingleDatabaseTargetProperties : Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties>
     {
-        public SqlDBSingleDatabaseTargetProperties(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType targetAuthenticationType, string connectionServerName, Azure.Core.ResourceIdentifier sqlDbResourceId) : base (default(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType), default(string)) { }
+        public SqlDBSingleDatabaseTargetProperties(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType targetAuthenticationType, string connectionServerName, Azure.Core.ResourceIdentifier sqlDbResourceId) { }
         public bool? ReadIntent { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlDbResourceId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -617,11 +659,14 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     }
     public partial class SqlMITargetProperties : Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties>
     {
-        public SqlMITargetProperties(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType targetAuthenticationType, string connectionServerName, Azure.Core.ResourceIdentifier sqlMiResourceId) : base (default(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType), default(string)) { }
+        public SqlMITargetProperties(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType targetAuthenticationType, string connectionServerName, Azure.Core.ResourceIdentifier sqlMiResourceId) { }
         public int? ConnectionTcpPort { get { throw null; } set { } }
         public bool? ReadIntent { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlMiResourceId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -637,12 +682,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType Aad { get { throw null; } }
         public static Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType Sql { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType left, Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType left, Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -652,7 +696,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public Azure.Core.ResourceIdentifier AkvResourceId { get { throw null; } set { } }
         public string AkvTargetPassword { get { throw null; } set { } }
         public string AkvTargetUser { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

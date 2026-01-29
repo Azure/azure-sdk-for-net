@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.ApiCenter</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider ApiCenter.</Description>
     <PackageTags>azure;management;arm;resource manager;apicenter</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

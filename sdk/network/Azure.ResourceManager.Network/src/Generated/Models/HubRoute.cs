@@ -91,14 +91,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the Route that is unique within a RouteTable. This name can be used to access this route. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The type of destinations (eg: CIDR, ResourceId, Service). </summary>
+        [WirePath("destinationType")]
         public string DestinationType { get; set; }
         /// <summary> List of all destinations. </summary>
+        [WirePath("destinations")]
         public IList<string> Destinations { get; }
         /// <summary> The type of next hop (eg: ResourceId). </summary>
+        [WirePath("nextHopType")]
         public string NextHopType { get; set; }
         /// <summary> NextHop resource ID. </summary>
+        [WirePath("nextHop")]
         public string NextHop { get; set; }
     }
 }

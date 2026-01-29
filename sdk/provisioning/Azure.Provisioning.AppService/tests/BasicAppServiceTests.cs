@@ -2,26 +2,20 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.ApplicationInsights;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.AppService.Tests;
 
-public class BasicAppServiceTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicAppServiceTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep")]
-    public async Task CreateBasicFunctionApp()
+    internal static Trycep CreateBasicFunctionAppTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:AppServiceBasic
@@ -122,8 +116,15 @@ public class BasicAppServiceTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep")]
+    public async Task CreateBasicFunctionApp()
+    {
+        await using Trycep test = CreateBasicFunctionAppTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -208,8 +209,6 @@ public class BasicAppServiceTests(bool async)
               }
               kind: 'functionapp'
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

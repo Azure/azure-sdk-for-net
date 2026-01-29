@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -14,38 +15,59 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct DynatraceMonitorMarketplaceSubscriptionStatus : IEquatable<DynatraceMonitorMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        private const string ActiveValue = "Active";
+        private const string SuspendedValue = "Suspended";
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynatraceMonitorMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ActiveValue = "Active";
-        private const string SuspendedValue = "Suspended";
-
-        /// <summary> Active. </summary>
+        /// <summary> Gets the Active. </summary>
         public static DynatraceMonitorMarketplaceSubscriptionStatus Active { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(ActiveValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static DynatraceMonitorMarketplaceSubscriptionStatus Suspended { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(SuspendedValue);
+
+        /// <summary> Gets the Unsubscribed. </summary>
+        public static DynatraceMonitorMarketplaceSubscriptionStatus Unsubscribed { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynatraceMonitorMarketplaceSubscriptionStatus left, DynatraceMonitorMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynatraceMonitorMarketplaceSubscriptionStatus left, DynatraceMonitorMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynatraceMonitorMarketplaceSubscriptionStatus(string value) => new DynatraceMonitorMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynatraceMonitorMarketplaceSubscriptionStatus?(string value) => value == null ? null : new DynatraceMonitorMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynatraceMonitorMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynatraceMonitorMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
