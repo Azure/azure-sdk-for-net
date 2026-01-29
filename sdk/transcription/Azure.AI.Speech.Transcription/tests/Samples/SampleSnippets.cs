@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -11,15 +12,18 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
+    [ClientTestFixture]
     [Category("Live")]
-    public partial class SampleSnippets
+    public partial class SampleSnippets : TranscriptionSampleBase
     {
-        [Test]
+        public SampleSnippets(bool isAsync) : base(isAsync) { }
+
+        [RecordedTest]
         public void CreateClientForSpecificApiVersion()
         {
 #if !SNIPPET
-            var endpoint = TestConfiguration.Endpoint;
-            var credential = TestConfiguration.Credential;
+            var endpoint = new Uri(TestEnvironment.Endpoint);
+            var credential = new ApiKeyCredential(TestEnvironment.ApiKey);
 #endif
             #region Snippet:CreateTranscriptionClientForSpecificApiVersion
 #if SNIPPET

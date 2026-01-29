@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -14,27 +15,20 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating profanity filtering options.
     /// </summary>
+    [ClientTestFixture]
     [Category("Live")]
     public partial class Sample05_TranscribeWithProfanityFilter : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample05_TranscribeWithProfanityFilter(bool isAsync) : base(isAsync) { }
 
         /// <summary>
         /// Transcribe audio with profanity filtering enabled, demonstrating all filter modes.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeWithProfanityFilter()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -45,7 +39,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/audio-with-profanity.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleProfanityAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleProfanityAudioPath;
 #endif
 
             // Demonstrate all four profanity filter modes (default is Masked)

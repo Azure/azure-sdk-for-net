@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -14,27 +15,20 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating speaker diarization (identifying different speakers).
     /// </summary>
+    [ClientTestFixture]
     [Category("Live")]
     public partial class Sample06_TranscribeWithDiarization : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample06_TranscribeWithDiarization(bool isAsync) : base(isAsync) { }
 
         /// <summary>
         /// Transcribe audio with speaker diarization (identifying different speakers).
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeWithDiarization()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -45,7 +39,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/conversation.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 

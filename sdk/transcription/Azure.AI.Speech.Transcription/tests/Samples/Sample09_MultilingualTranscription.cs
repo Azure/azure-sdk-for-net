@@ -7,36 +7,28 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Samples demonstrating multilingual transcription (preview).
-    /// </summary>
-    [Category("Live")]
+    /// </summary>    [ClientTestFixture]    [Category("Live")]
     public partial class Sample09_MultilingualTranscription : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample09_MultilingualTranscription(bool isAsync) : base(isAsync) { }
 
         /// <summary>
         /// Transcribe audio with multilingual transcription enabled (preview).
         /// When your audio contains multilingual content that switches between languages,
         /// use the multilingual model by not specifying any locales.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeWithMultilingualModel()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -47,7 +39,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/multilingual-audio.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -14,29 +15,22 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating locale configuration for transcription.
     /// </summary>
+    [ClientTestFixture]
     [Category("Live")]
     public partial class Sample08_TranscribeWithLocales : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample08_TranscribeWithLocales(bool isAsync) : base(isAsync) { }
 
         /// <summary>
         /// Transcribe audio with a known locale specified.
         /// When you know the language of the audio, specifying a single locale
         /// improves transcription accuracy and minimizes latency.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeWithKnownLocale()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -47,7 +41,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/english-audio.mp3";
 #else
-            string audioFilePath = TestConfiguration.SampleEnglishAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleEnglishAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
@@ -70,11 +64,15 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// When you're not sure about the locale, specify multiple candidate locales
         /// and the service will identify the language (one locale per audio file).
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeWithLanguageIdentification()
         {
 #if !SNIPPET
-            var client = _client;
+            // For recorded tests, use environment variables directly to avoid TestEnvironment initialization issues
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("TRANSCRIPTION_ENDPOINT") ?? "https://eastus.api.cognitive.microsoft.com/");
+            ApiKeyCredential credential = new ApiKeyCredential(Environment.GetEnvironmentVariable("TRANSCRIPTION_API_KEY") ?? "test-key");
+            var clientOptions = InstrumentClientOptions(new TranscriptionClientOptions());
+            TranscriptionClient client = CreateProxyFromClient(new TranscriptionClient(endpoint, credential, clientOptions));
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -85,7 +83,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/english-audio.mp3";
 #else
-            string audioFilePath = TestConfiguration.SampleEnglishAudioFilePath;
+            string audioFilePath = GetAssetPath("sample-whatstheweatherlike-en.mp3");
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 

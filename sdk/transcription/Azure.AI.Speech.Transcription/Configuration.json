@@ -1,5 +1,0 @@
-{
-  "package-name": "Azure.AI.Speech.Transcription",
-  "unreferenced-types-handling": "keepAll",
-  "disable-xml-docs": true
-}

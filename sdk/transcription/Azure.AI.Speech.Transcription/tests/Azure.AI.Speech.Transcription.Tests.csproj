@@ -3,7 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
 
-    <!-- We don't care about XML doc comments on test types and members -->
+    <!-- Suppress XML documentation warnings - not required for test code -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 

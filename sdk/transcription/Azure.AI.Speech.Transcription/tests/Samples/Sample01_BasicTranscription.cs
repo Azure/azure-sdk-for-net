@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -16,18 +17,11 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating basic transcription operations using the <see cref="TranscriptionClient"/>.
     /// </summary>
+    [ClientTestFixture]
     [Category("Live")]
     public partial class Sample01_BasicTranscription : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample01_BasicTranscription(bool isAsync) : base(isAsync) { }
 
         /// <summary>
         /// Creates a new TranscriptionClient using an API key credential.
@@ -41,8 +35,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
 #else
-            Uri endpoint = TestConfiguration.Endpoint;
-            ApiKeyCredential credential = TestConfiguration.Credential;
+            Uri endpoint = new Uri(TestEnvironment.Endpoint);
+            ApiKeyCredential credential = new ApiKeyCredential(TestEnvironment.ApiKey);
 #endif
 
             // Create the TranscriptionClient
@@ -61,8 +55,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
 #else
-            Uri endpoint = TestConfiguration.Endpoint;
-            ApiKeyCredential credential = TestConfiguration.Credential;
+            Uri endpoint = new Uri(TestEnvironment.Endpoint);
+            ApiKeyCredential credential = new ApiKeyCredential(TestEnvironment.ApiKey);
 #endif
 
             // Configure client options
@@ -80,7 +74,10 @@ namespace Azure.AI.Speech.Transcription.Samples
         public void TranscribeLocalFile()
         {
 #if !SNIPPET
-            var client = _client;
+            // For non-recorded tests, use environment variables directly
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("TRANSCRIPTION_ENDPOINT") ?? "https://eastus.api.cognitive.microsoft.com/");
+            ApiKeyCredential credential = new ApiKeyCredential(Environment.GetEnvironmentVariable("TRANSCRIPTION_API_KEY") ?? "test-key");
+            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -92,7 +89,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/audio.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            string audioFilePath = GetAssetPath("sample-whatstheweatherlike-en.mp3");
 #endif
 
             // Open the audio file as a stream
@@ -122,12 +119,12 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// <summary>
         /// Transcribes a local audio file asynchronously.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeLocalFileAsync()
         {
 #if !SNIPPET
-            var client = _client;
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            var client = CreateClient();
+            string audioFilePath = TestEnvironment.SampleAudioPath;
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -163,12 +160,12 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// <summary>
         /// Demonstrates accessing individual words within transcribed phrases.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task AccessTranscribedWords()
         {
 #if !SNIPPET
-            var client = _client;
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            var client = CreateClient();
+            string audioFilePath = TestEnvironment.SampleAudioPath;
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -202,12 +199,12 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// <summary>
         /// Demonstrates accessing the combined text for a channel.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task AccessCombinedText()
         {
 #if !SNIPPET
-            var client = _client;
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            var client = CreateClient();
+            string audioFilePath = TestEnvironment.SampleAudioPath;
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -245,8 +242,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
 #else
-            Uri endpoint = TestConfiguration.Endpoint;
-            ApiKeyCredential credential = TestConfiguration.Credential;
+            Uri endpoint = new Uri(TestEnvironment.Endpoint);
+            ApiKeyCredential credential = new ApiKeyCredential(TestEnvironment.ApiKey);
 #endif
 
             // Create client options and add a custom logging policy
@@ -271,8 +268,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
 #else
-            Uri endpoint = TestConfiguration.Endpoint;
-            ApiKeyCredential credential = TestConfiguration.Credential;
+            Uri endpoint = new Uri(TestEnvironment.Endpoint);
+            ApiKeyCredential credential = new ApiKeyCredential(TestEnvironment.ApiKey);
 #endif
 
             // Configure retry policy with custom max retries
@@ -289,7 +286,7 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// Demonstrates configuring custom timeout for transcription operations.
         /// System.ClientModel uses NetworkTimeout property on ClientPipelineOptions.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public void ConfigureTimeout()
         {
             #region Snippet:ConfigureTimeout
@@ -297,8 +294,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
 #else
-            Uri endpoint = TestConfiguration.Endpoint;
-            ApiKeyCredential credential = TestConfiguration.Credential;
+            Uri endpoint = new Uri(TestEnvironment.Endpoint);
+            ApiKeyCredential credential = new ApiKeyCredential(TestEnvironment.ApiKey);
 #endif
 
             // Configure a custom network timeout (default is 100 seconds)

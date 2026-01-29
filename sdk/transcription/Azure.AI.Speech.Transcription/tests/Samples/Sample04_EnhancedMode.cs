@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
@@ -14,26 +15,19 @@ namespace Azure.AI.Speech.Transcription.Samples
     /// <summary>
     /// Samples demonstrating LLM-powered Enhanced Mode for transcription and translation.
     /// </summary>
+    [ClientTestFixture]
     [Category("Live")]
     public partial class Sample04_EnhancedMode : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample04_EnhancedMode(bool isAsync) : base(isAsync) { }
         /// <summary>
         /// Transcribe audio using Enhanced Mode for improved quality.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeWithEnhancedMode()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -44,7 +38,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/audio.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleChineseAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleChineseAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
@@ -70,11 +64,11 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// <summary>
         /// Translate speech to another language using Enhanced Mode.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranslateWithEnhancedMode()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -85,7 +79,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/chinese-audio.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleChineseAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleChineseAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
@@ -113,11 +107,11 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// <summary>
         /// Use prompts to guide output format and improve recognition.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task EnhancedModeWithPrompts()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -128,7 +122,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/audio.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleEnglishAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleEnglishAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
@@ -155,11 +149,11 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// <summary>
         /// Combine Enhanced Mode with diarization and profanity filtering.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task EnhancedModeWithDiarization()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -170,7 +164,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/meeting.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 

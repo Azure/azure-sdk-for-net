@@ -8,36 +8,28 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Samples demonstrating transcription from remote URLs.
-    /// </summary>
-    [Category("Live")]
+    /// </summary>    [ClientTestFixture]    [Category("Live")]
     public partial class Sample03_TranscribeFromUrl : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample03_TranscribeFromUrl(bool isAsync) : base(isAsync) { }
         /// <summary>
         /// Transcribes an audio file from a public URL.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeFromUrl()
         {
-            if (!TestConfiguration.HasSampleAudioUrl)
+            if (!TestEnvironment.HasSampleAudioUrl)
                 Assert.Ignore("TRANSCRIPTION_SAMPLE_AUDIO_URL not configured");
 
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -49,7 +41,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             Uri audioUrl = new Uri("https://example.com/audio/sample.wav");
 #else
-            Uri audioUrl = new Uri(TestConfiguration.SampleAudioUrl);
+            Uri audioUrl = new Uri(TestEnvironment.SampleAudioUrl);
 #endif
 
             // Configure transcription to use the remote URL

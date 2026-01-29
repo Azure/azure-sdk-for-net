@@ -1,7 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "TRANSCRIPTION_API_KEY": "api-key",
-    "TRANSCRIPTION_ENDPOINT": "https://eastus.api.cognitive.microsoft.com"
-  }
-}

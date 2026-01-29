@@ -283,12 +283,6 @@
 # ServiceLabel: %Cognitive - Speech
 # ServiceOwners:                                                   @cahann @kayousef
 
-# PRLabel: %Speech Transcription
-/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon
-
-# ServiceLabel: %Speech Transcription
-# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon
-
 # PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                                                @quentinRobinson
 
@@ -840,6 +834,12 @@
 
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @vicancy @JialinXin @Y-Sindo
+
+# PRLabel: %Speech Transcription
+/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon
+
+# ServiceLabel: %Speech Transcription
+# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft

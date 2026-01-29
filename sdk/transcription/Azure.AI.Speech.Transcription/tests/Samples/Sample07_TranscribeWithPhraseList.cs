@@ -7,34 +7,26 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Speech.Transcription.Tests;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Samples
 {
     /// <summary>
     /// Samples demonstrating custom phrase list for improved recognition accuracy.
-    /// </summary>
-    [Category("Live")]
+    /// </summary>    [ClientTestFixture]    [Category("Live")]
     public partial class Sample07_TranscribeWithPhraseList : TranscriptionSampleBase
     {
-#if !SNIPPET
-        private TranscriptionClient _client;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _client = TestConfiguration.CreateClient();
-        }
-#endif
+        public Sample07_TranscribeWithPhraseList(bool isAsync) : base(isAsync) { }
 
         /// <summary>
         /// Transcribe audio with a custom phrase list to improve recognition accuracy.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task TranscribeWithPhraseList()
         {
 #if !SNIPPET
-            var client = _client;
+            var client = CreateClient();
 #else
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
@@ -45,7 +37,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #if SNIPPET
             string audioFilePath = "path/to/audio.wav";
 #else
-            string audioFilePath = TestConfiguration.SampleAudioFilePath;
+            string audioFilePath = TestEnvironment.SampleAudioPath;
 #endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 

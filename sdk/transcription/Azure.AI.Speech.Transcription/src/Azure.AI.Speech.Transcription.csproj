@@ -1,19 +1,39 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.AI.Speech.Transcription client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation Azure.AI.Speech.Transcription</AssemblyTitle>
+    <Description>Microsoft Azure client library for Azure AI Speech Transcription service.</Description>
+    <AssemblyTitle>Azure AI Speech Transcription Client Library</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.AI.Speech.Transcription</PackageTags>
-    <TargetFrameworks>netstandard2.0;net8.0;net9.0;net10.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Disable AutoRest dependency since this SDK uses @typespec/http-client-csharp -->
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
-    <!-- Suppress warnings for generated code -->
-    <NoWarn>$(NoWarn);CS1591;AZC0007;AZC0012;AZC0015;AZC0034;AZC0102;SCM0005</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Temporary suppression of XML doc requirement for generated code -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Ignore Azure-Core-specific constructor rule -->
+    <NoWarn>$(NoWarn);AZC0007</NoWarn>
+    <!-- Ignore Azure-Core-specific single word type name rule -->
+    <NoWarn>$(NoWarn);AZC0012</NoWarn>
+    <!-- Ignore Azure-Core-specific pageable rule -->
+    <NoWarn>$(NoWarn);AZC0015</NoWarn>
+    <!-- Ignore Azure-Core-specific cancellation token parameter rule -->
+    <NoWarn>$(NoWarn);AZC0034</NoWarn>
+    <!-- Ignore Azure-Core-specific client method naming rule -->
+    <NoWarn>$(NoWarn);AZC0102</NoWarn>
+    <!-- Ignore System.ClientModel-specific rule -->
+    <NoWarn>$(NoWarn);SCM0005</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.ClientModel" />
+  </ItemGroup>
+
+  <!-- Import Azure.Core shared source for attributes -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 </Project>

@@ -6,15 +6,17 @@ using NUnit.Framework;
 using System;
 using System.ClientModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Speech.Transcription.Tests
 {
     /// <summary>
-    /// Unit and validation tests for the <see cref="TranscriptionClient"/> class (sync methods).
+    /// Unit and validation tests for the <see cref="TranscriptionClient"/> class.
     /// Tests client construction, validation, and error handling.
+    /// The test framework automatically runs both sync and async variants of each test.
     /// </summary>
-    [TestFixture(false)]  // Run sync tests only
+    [ClientTestFixture]
     [Category("Transcription")]
     public class TranscriptionClientTests : TranscriptionRecordedTestBase
     {
@@ -272,6 +274,7 @@ namespace Azure.AI.Speech.Transcription.Tests
 
             Assert.That(transcription.CombinedPhrases, Is.Not.Null);
             Assert.That(transcription.CombinedPhrases.Count, Is.GreaterThan(0));
+            Assert.That(transcription.CombinedPhrases.First().Text, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -289,6 +292,14 @@ namespace Azure.AI.Speech.Transcription.Tests
 
             var phrasesByChannel = transcription.PhrasesByChannel;
             Assert.That(phrasesByChannel, Is.Not.Null);
+            Assert.That(phrasesByChannel.Count(), Is.GreaterThan(0));
+
+            foreach (var channelPhrases in phrasesByChannel)
+            {
+                Assert.That(channelPhrases, Is.Not.Null);
+                Assert.That(channelPhrases.Phrases, Is.Not.Null);
+                Assert.That(channelPhrases.Text, Is.Not.Empty);
+            }
         }
 
         #endregion
