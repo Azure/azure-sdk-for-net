@@ -26,7 +26,7 @@
     <OpenTelemetryVersion>1.14.0</OpenTelemetryVersion>
 
     <!-- Internal tooling from the Azure Development Feed -->
-    <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
     <UnbrandedGeneratorVersion>1.0.0-alpha.20260127.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20260127.1</AzureGeneratorVersion>
 
