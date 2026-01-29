@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class FilterFileTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FilterFileType value) => value switch
         {
             FilterFileType.AzureBlob => "AzureBlob",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilterFileType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FilterFileType ToFilterFileType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBlob")) return FilterFileType.AzureBlob;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFile")) return FilterFileType.AzureFile;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBlob"))
+            {
+                return FilterFileType.AzureBlob;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFile"))
+            {
+                return FilterFileType.AzureFile;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilterFileType value.");
         }
     }

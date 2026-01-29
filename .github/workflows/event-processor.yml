@@ -51,6 +51,15 @@ jobs:
           echo "::add-mask::$LABEL_SERVICE_API_KEY"
           echo "LABEL_SERVICE_API_KEY=$LABEL_SERVICE_API_KEY" >> $GITHUB_ENV
 
+          APP_CONFIG_ENDPOINT=$(az keyvault secret show \
+            --vault-name issue-labeler \
+            -n app-config-endpoint \
+            -o tsv \
+            --query value)
+
+          echo "::add-mask::$APP_CONFIG_ENDPOINT"
+          echo "APP_CONFIG_ENDPOINT=$APP_CONFIG_ENDPOINT" >> $GITHUB_ENV
+
       # To run github-event-processor built from source, for testing purposes, uncomment everything
       # in between the Start/End-Build From Source comments and comment everything in between the
       # Start/End-Install comments
@@ -95,6 +104,7 @@ jobs:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABEL_SERVICE_API_KEY: ${{ env.LABEL_SERVICE_API_KEY }}
+          APP_CONFIG_ENDPOINT: ${{ env.APP_CONFIG_ENDPOINT }}
 
       - name: Archive github event data
         uses: actions/upload-artifact@v6

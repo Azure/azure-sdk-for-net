@@ -6,24 +6,71 @@
 #nullable disable
 
 using System;
-using System.Globalization;
-using System.Linq;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A Class representing a ChaosCapability along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosCapabilityResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetChaosCapabilityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ChaosTargetResource"/> using the GetChaosCapability method.
+    /// A class representing a ChaosCapability along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosCapabilityResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ChaosTargetResource"/> using the GetChaosCapabilities method.
     /// </summary>
     public partial class ChaosCapabilityResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ChaosCapabilityResource"/> instance. </summary>
+        private readonly ClientDiagnostics _capabilitiesClientDiagnostics;
+        private readonly Capabilities _capabilitiesRestClient;
+        private readonly ChaosCapabilityData _data;
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Chaos/targets/capabilities";
+
+        /// <summary> Initializes a new instance of ChaosCapabilityResource for mocking. </summary>
+        protected ChaosCapabilityResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ChaosCapabilityResource(ArmClient client, ChaosCapabilityData data) : this(client, data.Id)
+        {
+            HasData = true;
+            _data = data;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal ChaosCapabilityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            TryGetApiVersion(ResourceType, out string chaosCapabilityApiVersion);
+            _capabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
+            _capabilitiesRestClient = new Capabilities(_capabilitiesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityApiVersion ?? "2025-01-01");
+            ValidateResourceId(id);
+        }
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        public virtual ChaosCapabilityData Data
+        {
+            get
+            {
+                if (!HasData)
+                {
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
+                return _data;
+            }
+        }
+
+        /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="parentProviderNamespace"> The parentProviderNamespace. </param>
@@ -33,96 +80,59 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="capabilityName"> The capabilityName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _chaosCapabilityCapabilitiesClientDiagnostics;
-        private readonly CapabilitiesRestOperations _chaosCapabilityCapabilitiesRestClient;
-        private readonly ChaosCapabilityData _data;
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Chaos/targets/capabilities";
-
-        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityResource"/> class for mocking. </summary>
-        protected ChaosCapabilityResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="data"> The resource that is the target of operations. </param>
-        internal ChaosCapabilityResource(ArmClient client, ChaosCapabilityData data) : this(client, data.Id)
-        {
-            HasData = true;
-            _data = data;
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ChaosCapabilityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _chaosCapabilityCapabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string chaosCapabilityCapabilitiesApiVersion);
-            _chaosCapabilityCapabilitiesRestClient = new CapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosCapabilityCapabilitiesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ChaosCapabilityData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Capability resource that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capabilities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ChaosCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ChaosCapabilityResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Get");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Get");
             scope.Start();
             try
             {
-                var response = await _chaosCapabilityCapabilitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,33 +146,41 @@ namespace Azure.ResourceManager.Chaos
         /// Get a Capability resource that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capabilities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ChaosCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ChaosCapabilityResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Get");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Get");
             scope.Start();
             try
             {
-                var response = _chaosCapabilityCapabilitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -176,20 +194,20 @@ namespace Azure.ResourceManager.Chaos
         /// Delete a Capability that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capabilities_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ChaosCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,16 +215,23 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Delete");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Delete");
             scope.Start();
             try
             {
-                var response = await _chaosCapabilityCapabilitiesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _chaosCapabilityCapabilitiesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ChaosArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ChaosArmOperation operation = new ChaosArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -220,20 +245,20 @@ namespace Azure.ResourceManager.Chaos
         /// Delete a Capability that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capabilities_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ChaosCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,16 +266,23 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Delete");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Delete");
             scope.Start();
             try
             {
-                var response = _chaosCapabilityCapabilitiesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _chaosCapabilityCapabilitiesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ChaosArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ChaosArmOperation operation = new ChaosArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -261,23 +293,23 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Create or update a Capability resource that extends a Target resource.
+        /// Update a ChaosCapability.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capabilities_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ChaosCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,16 +321,24 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Update");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Update");
             scope.Start();
             try
             {
-                var response = await _chaosCapabilityCapabilitiesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _chaosCapabilityCapabilitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, ChaosCapabilityData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ChaosArmOperation<ChaosCapabilityResource> operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -309,23 +349,23 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Create or update a Capability resource that extends a Target resource.
+        /// Update a ChaosCapability.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capability_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capabilities_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ChaosCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,16 +377,24 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Update");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Update");
             scope.Start();
             try
             {
-                var response = _chaosCapabilityCapabilitiesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _chaosCapabilityCapabilitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, ChaosCapabilityData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ChaosArmOperation<ChaosCapabilityResource> operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

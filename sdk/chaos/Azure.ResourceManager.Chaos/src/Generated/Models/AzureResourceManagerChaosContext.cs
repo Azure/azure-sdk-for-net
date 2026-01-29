@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,10 +14,12 @@ namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CapabilityListResult))]
+    [ModelReaderWriterBuildable(typeof(CapabilityProperties))]
     [ModelReaderWriterBuildable(typeof(CapabilityTypeListResult))]
+    [ModelReaderWriterBuildable(typeof(CapabilityTypeProperties))]
     [ModelReaderWriterBuildable(typeof(ChaosCapabilityData))]
     [ModelReaderWriterBuildable(typeof(ChaosCapabilityMetadataData))]
     [ModelReaderWriterBuildable(typeof(ChaosCapabilityMetadataResource))]
@@ -51,14 +54,18 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsError))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionDetails))]
+    [ModelReaderWriterBuildable(typeof(ExperimentExecutionDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionDetailsPropertiesRunInformation))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionListResult))]
+    [ModelReaderWriterBuildable(typeof(ExperimentExecutionProperties))]
     [ModelReaderWriterBuildable(typeof(ExperimentListResult))]
+    [ModelReaderWriterBuildable(typeof(ExperimentProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TargetTypeListResult))]
+    [ModelReaderWriterBuildable(typeof(TargetTypeProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownChaosExperimentAction))]
     [ModelReaderWriterBuildable(typeof(UnknownChaosTargetFilter))]
     [ModelReaderWriterBuildable(typeof(UnknownChaosTargetSelector))]

@@ -13,11 +13,8 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary>
     /// A list of private link resources for versions before v6.
-    /// 
     /// This model represents the standard `PrivateLinkResourceListResult` envelope for versions v3, v4, and v5. It has been deprecated for v6 and beyond.
-    /// 
     /// Note: This is only intended for use with versions before v6. Do not use this if you are already on CommonTypes.Version.v6 or beyond.
-    /// 
     /// If you are migrating to v6 or above, use `PrivateLinkResourceListResult` directly.
     /// </summary>
     internal partial class StorageSyncPrivateLinkResourceListResult

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `NullReferenceException` when calling `GetHashCode()` on `default(AzureLocation)`.
+
 ### Other Changes
 
 ## 1.50.0 (2025-11-05)
