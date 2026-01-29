@@ -5,7 +5,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore"/>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing"/>
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
   </ItemGroup>
 

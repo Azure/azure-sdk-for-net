@@ -11,9 +11,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
     {
         public ICollection<ITriggerExecutor<BlobTriggerExecutorContext>> Registrations { get; set; }
 
-        public DateTime LastSweepCycleLatestModified { get; set; }
+        public DateTimeOffset PollingStartTime { get; set; }
 
-        public DateTime CurrentSweepCycleLatestModified { get; set; }
+        public DateTimeOffset LastSweepCycleLatestModified { get; set; }
+
+        public DateTimeOffset CurrentSweepCycleLatestModified { get; set; }
 
         public string ContinuationToken { get; set; }
     }

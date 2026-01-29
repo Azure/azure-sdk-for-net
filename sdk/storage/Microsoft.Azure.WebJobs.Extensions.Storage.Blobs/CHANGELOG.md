@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a bug where polling for new blobs could permanently miss blobs that were created or modified while a multi-request blob listing scan was in progress (#51030).
 - Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
 
 ### Other Changes
