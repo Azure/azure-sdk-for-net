@@ -64,12 +64,16 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionAttachment(id, attachedResourceId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Edge action attachment response. </summary>
-        /// <param name="edgeActionId"> Non changing guid to identity edge action. </param>
-        /// <returns> A new <see cref="Models.EdgeActionAttachmentResult"/> instance for mocking. </returns>
-        public static EdgeActionAttachmentResult EdgeActionAttachmentResult(string edgeActionId = default)
+        /// <summary> The type used for update operations of the EdgeAction. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="sku"> The sku type of the edge action. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.EdgeActionPatch"/> instance for mocking. </returns>
+        public static EdgeActionPatch EdgeActionPatch(EdgeActionPropertiesUpdate properties = default, SkuTypeUpdate sku = default, IDictionary<string, string> tags = default)
         {
-            return new EdgeActionAttachmentResult(edgeActionId, additionalBinaryDataProperties: null);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EdgeActionPatch(properties, sku, tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -103,7 +107,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="isDefaultVersion"> The active state. </param>
         /// <param name="lastPackageUpdatedOn"> The last update time in UTC for package update. </param>
         /// <returns> A new <see cref="Models.EdgeActionVersionProperties"/> instance for mocking. </returns>
-        public static EdgeActionVersionProperties EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType = default, EdgeActionVersionValidationStatus validationStatus = default, EdgeActionProvisioningState? provisioningState = default, EdgeActionIsDefaultVersion isDefaultVersion = default, DateTimeOffset lastPackageUpdatedOn = default)
+        public static EdgeActionVersionProperties EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType = default, EdgeActionVersionValidationStatus? validationStatus = default, EdgeActionProvisioningState? provisioningState = default, EdgeActionIsDefaultVersion isDefaultVersion = default, DateTimeOffset? lastPackageUpdatedOn = default)
         {
             return new EdgeActionVersionProperties(
                 deploymentType,
@@ -112,6 +116,17 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 isDefaultVersion,
                 lastPackageUpdatedOn,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the EdgeActionVersion. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.EdgeActionVersionPatch"/> instance for mocking. </returns>
+        public static EdgeActionVersionPatch EdgeActionVersionPatch(IDictionary<string, string> tags = default, EdgeActionVersionUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EdgeActionVersionPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -145,7 +160,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="executionFilterIdentifierHeaderValue"> Custom Header Value associated with the execution filter. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.EdgeActionExecutionFilterProperties"/> instance for mocking. </returns>
-        public static EdgeActionExecutionFilterProperties EdgeActionExecutionFilterProperties(ResourceIdentifier versionId = default, DateTimeOffset lastUpdatedOn = default, string executionFilterIdentifierHeaderName = default, string executionFilterIdentifierHeaderValue = default, EdgeActionProvisioningState? provisioningState = default)
+        public static EdgeActionExecutionFilterProperties EdgeActionExecutionFilterProperties(ResourceIdentifier versionId = default, DateTimeOffset? lastUpdatedOn = default, string executionFilterIdentifierHeaderName = default, string executionFilterIdentifierHeaderValue = default, EdgeActionProvisioningState? provisioningState = default)
         {
             return new EdgeActionExecutionFilterProperties(
                 versionId,
@@ -154,6 +169,17 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 executionFilterIdentifierHeaderValue,
                 provisioningState,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the EdgeActionExecutionFilter. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.EdgeActionExecutionFilterPatch"/> instance for mocking. </returns>
+        public static EdgeActionExecutionFilterPatch EdgeActionExecutionFilterPatch(IDictionary<string, string> tags = default, EdgeActionExecutionFilterUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EdgeActionExecutionFilterPatch(tags, properties, additionalBinaryDataProperties: null);
         }
     }
 }

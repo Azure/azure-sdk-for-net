@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeActions
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(ResourceType, out string edgeActionExecutionFilterApiVersion);
             _edgeActionExecutionFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", ResourceType.Namespace, Diagnostics);
-            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Endpoint, edgeActionExecutionFilterApiVersion ?? "2025-09-01-preview");
+            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Endpoint, edgeActionExecutionFilterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -211,12 +212,12 @@ namespace Azure.ResourceManager.EdgeActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeActionExecutionFilterResource>> UpdateAsync(WaitUntil waitUntil, EdgeActionExecutionFilterData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<EdgeActionExecutionFilterResource>> UpdateAsync(WaitUntil waitUntil, EdgeActionExecutionFilterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _edgeActionExecutionFiltersClientDiagnostics.CreateScope("EdgeActionExecutionFilterResource.Update");
             scope.Start();
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionExecutionFilterData.ToRequestContent(data), context);
+                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionExecutionFilterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
                     new EdgeActionExecutionFilterOperationSource(Client),
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -270,12 +271,12 @@ namespace Azure.ResourceManager.EdgeActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EdgeActionExecutionFilterResource> Update(WaitUntil waitUntil, EdgeActionExecutionFilterData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<EdgeActionExecutionFilterResource> Update(WaitUntil waitUntil, EdgeActionExecutionFilterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _edgeActionExecutionFiltersClientDiagnostics.CreateScope("EdgeActionExecutionFilterResource.Update");
             scope.Start();
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionExecutionFilterData.ToRequestContent(data), context);
+                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionExecutionFilterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
                     new EdgeActionExecutionFilterOperationSource(Client),
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +370,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -436,7 +437,7 @@ namespace Azure.ResourceManager.EdgeActions
                 else
                 {
                     EdgeActionExecutionFilterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EdgeActionExecutionFilterData patch = new EdgeActionExecutionFilterData();
+                    EdgeActionExecutionFilterPatch patch = new EdgeActionExecutionFilterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -484,7 +485,7 @@ namespace Azure.ResourceManager.EdgeActions
                 else
                 {
                     EdgeActionExecutionFilterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EdgeActionExecutionFilterData patch = new EdgeActionExecutionFilterData();
+                    EdgeActionExecutionFilterPatch patch = new EdgeActionExecutionFilterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -531,7 +532,7 @@ namespace Azure.ResourceManager.EdgeActions
                 else
                 {
                     EdgeActionExecutionFilterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EdgeActionExecutionFilterData patch = new EdgeActionExecutionFilterData();
+                    EdgeActionExecutionFilterPatch patch = new EdgeActionExecutionFilterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<EdgeActionExecutionFilterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -574,7 +575,7 @@ namespace Azure.ResourceManager.EdgeActions
                 else
                 {
                     EdgeActionExecutionFilterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EdgeActionExecutionFilterData patch = new EdgeActionExecutionFilterData();
+                    EdgeActionExecutionFilterPatch patch = new EdgeActionExecutionFilterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<EdgeActionExecutionFilterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -616,7 +617,7 @@ namespace Azure.ResourceManager.EdgeActions
                 else
                 {
                     EdgeActionExecutionFilterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EdgeActionExecutionFilterData patch = new EdgeActionExecutionFilterData();
+                    EdgeActionExecutionFilterPatch patch = new EdgeActionExecutionFilterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -662,7 +663,7 @@ namespace Azure.ResourceManager.EdgeActions
                 else
                 {
                     EdgeActionExecutionFilterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EdgeActionExecutionFilterData patch = new EdgeActionExecutionFilterData();
+                    EdgeActionExecutionFilterPatch patch = new EdgeActionExecutionFilterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
