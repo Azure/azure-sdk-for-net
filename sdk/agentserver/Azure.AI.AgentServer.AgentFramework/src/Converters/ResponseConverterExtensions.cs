@@ -72,6 +72,12 @@ public static class ResponseConverterExtensions
                         idGenerator.GenerateFunctionOutputId(),
                         createdBy);
                     break;
+                case FunctionApprovalRequestContent functionApprovalRequestContent:
+                    // human-in-the-loop approval request
+                    yield return functionApprovalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
+                        idGenerator.GenerateMessageId(),
+                        createdBy);
+                    break;
                 default:
                     // message.Role == ChatRole.Assistant
                     var itemContent = ToItemContent(content);

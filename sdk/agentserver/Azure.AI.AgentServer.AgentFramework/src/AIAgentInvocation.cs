@@ -5,10 +5,12 @@ using System.Diagnostics;
 using Azure.AI.AgentServer.AgentFramework.Converters;
 using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
+using Azure.AI.AgentServer.Contracts.Generated.Responses;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Azure.AI.AgentServer.Responses.Invocation.Stream;
 using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework;
 
@@ -34,12 +36,14 @@ public class AIAgentInvocation(
         Activity.Current?.SetServiceNamespace("agentframework");
 
         var request = context.Request;
-        var messages = request.GetInputMessages();
         AgentThread? thread = null;
         if (threadRepository != null)
         {
             thread = await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
         }
+
+        var messages = await GetInput(request, thread).ConfigureAwait(false);
+
         var response = await agent.RunAsync(
             messages, thread: thread,
             cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -71,7 +75,7 @@ public class AIAgentInvocation(
         }
 
         var request = context.Request;
-        var messages = request.GetInputMessages();
+        var messages = await GetInput(request, thread).ConfigureAwait(false);
         var updates = agent.RunStreamingAsync(messages, thread: thread, cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
@@ -107,5 +111,20 @@ public class AIAgentInvocation(
             }
         });
         return (generator, func);
+    }
+
+    private async Task<IReadOnlyCollection<ChatMessage>> GetInput(CreateResponseRequest request, AgentThread? thread)
+    {
+        Dictionary<string, UserInputRequestContent> pendingApprovalRequests = new();
+        if (thread != null)
+        {
+            pendingApprovalRequests = await thread.GetPendingUserInputRequestContents().ConfigureAwait(false);
+            var res = request.ValidateAndConvertResponse(pendingApprovalRequests);
+            if (res != null && res.Count > 0)
+            {
+                return res;
+            }
+        }
+        return request.GetInputMessages();
     }
 }

@@ -88,6 +88,7 @@ public class ItemResourceGenerator
         {
             FunctionCallContent => GenerateFunctionCallEvents(p.Source, onItemResource),
             FunctionResultContent => GenerateFunctionCallOutputEvents(p.Source, onItemResource),
+            FunctionApprovalRequestContent => GenerateHumanInTheLoopEvents(p.Source, onItemResource),
             TextContent => GenerateAssistantMessageEvents(p.Source, onItemResource),
             _ => null!
         };
@@ -114,7 +115,7 @@ public class ItemResourceGenerator
                             NotifyOnUsageUpdate(usageContent.Details.ToResponseUsage()!);
                         }
                         continue;
-                    case FunctionCallContent or FunctionResultContent or TextContent:
+                    case FunctionCallContent or FunctionResultContent or TextContent or FunctionApprovalRequestContent:
                         yield return (update, content);
                         break;
                 }
@@ -152,13 +153,59 @@ public class ItemResourceGenerator
             yield return new ResponseFunctionCallArgumentsDeltaEvent(
                 sequenceNumber: Seq.Next(),
                 itemId: item.Id,
-                outputIndex: GroupSeq.Current(),
+                outputIndex: groupSeq,
                 delta: item.Arguments);
 
             yield return new ResponseFunctionCallArgumentsDoneEvent(
                 sequenceNumber: Seq.Next(),
                 itemId: item.Id,
-                outputIndex: GroupSeq.Current(),
+                outputIndex: groupSeq,
+                arguments: item.Arguments);
+
+            yield return new ResponseOutputItemDoneEvent(
+                sequenceNumber: Seq.Next(),
+                outputIndex: groupSeq,
+                item: item);
+        }
+    }
+
+    private async IAsyncEnumerable<ResponseStreamEvent> GenerateHumanInTheLoopEvents(
+    IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
+    Action<ItemResource> onItemResource)
+    {
+        string? authorName = null;
+        await foreach (var (update, content) in source.WithCancellation(CancellationToken).ConfigureAwait(false))
+        {
+            if (content is not FunctionApprovalRequestContent functionCallContent)
+            {
+                continue;
+            }
+
+            // Capture the author name from the first update
+            authorName ??= update.AuthorName;
+
+            var groupSeq = GroupSeq.Next();
+            var createdBy = CreateCreatedBy(authorName);
+            var item = functionCallContent.ToHumanInTheLoopFunctionCallItemResource(
+                Context.IdGenerator.GenerateFunctionCallId(),
+                createdBy);
+            onItemResource(item);
+
+            yield return new ResponseOutputItemAddedEvent(
+                sequenceNumber: Seq.Next(),
+                outputIndex: groupSeq,
+                item: item);
+
+            yield return new ResponseFunctionCallArgumentsDeltaEvent(
+                sequenceNumber: Seq.Next(),
+                itemId: item.Id,
+                outputIndex: groupSeq,
+                delta: item.Arguments);
+
+            yield return new ResponseFunctionCallArgumentsDoneEvent(
+                sequenceNumber: Seq.Next(),
+                itemId: item.Id,
+                outputIndex: groupSeq,
                 arguments: item.Arguments);
 
             yield return new ResponseOutputItemDoneEvent(
