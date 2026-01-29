@@ -13,7 +13,7 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Client options for clients in this library. </summary>
     public partial class LoadTestingClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_03_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01_Preview;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -28,6 +28,7 @@ namespace Azure.Developer.LoadTesting
                 ServiceVersion.V2024_07_01_Preview => "2024-07-01-preview",
                 ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
                 ServiceVersion.V2025_03_01_Preview => "2025-03-01-preview",
+                ServiceVersion.V2025_11_01_Preview => "2025-11-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
@@ -51,7 +52,9 @@ namespace Azure.Developer.LoadTesting
             /// <summary> The 2024-12-01-preview version of the Azure Load Testing API. </summary>
             V2024_12_01_Preview = 6,
             /// <summary> The 2025-03-01-preview version of the Azure Load Testing API. </summary>
-            V2025_03_01_Preview = 7
+            V2025_03_01_Preview = 7,
+            /// <summary> The 2025-11-01-preview version of the Azure Load Testing API. </summary>
+            V2025_11_01_Preview = 8
         }
     }
 }

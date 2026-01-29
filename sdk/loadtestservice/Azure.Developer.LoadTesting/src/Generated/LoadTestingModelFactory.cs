@@ -44,12 +44,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="engineBuiltInIdentityType"> Type of the managed identity built in load test engines. </param>
         /// <param name="engineBuiltInIdentityIds"> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </param>
         /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test. </param>
+        /// <param name="preferences"> Preferences for the test. </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTest"/> instance for mocking. </returns>
-        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIpDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIpDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, TestPreferences preferences = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
             secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
@@ -77,6 +78,7 @@ namespace Azure.Developer.LoadTesting
                 engineBuiltInIdentityType,
                 engineBuiltInIdentityIds.ToList(),
                 estimatedVirtualUserHours,
+                preferences,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
@@ -285,6 +287,14 @@ namespace Azure.Developer.LoadTesting
                 validationStatus,
                 validationFailureDetails,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Preferences for the test. </summary>
+        /// <param name="enableAIErrorInsights"> Enable or disable AI based insights on Test Run Errors. </param>
+        /// <returns> A new <see cref="LoadTesting.TestPreferences"/> instance for mocking. </returns>
+        public static TestPreferences TestPreferences(bool? enableAIErrorInsights = default)
+        {
+            return new TestPreferences(enableAIErrorInsights, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Test app components. </summary>
@@ -797,12 +807,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
         /// <param name="createdByUri"> The URI pointing to the entity that created the test run. </param>
         /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test run. </param>
+        /// <param name="executionStartDateTime"> The test run execution start DateTime(RFC 3339 literal format). </param>
+        /// <param name="executionEndDateTime"> The test run execution end DateTime(RFC 3339 literal format). </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestRun"/> instance for mocking. </returns>
-        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, DateTimeOffset? executedDateTime = default, Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIpDisabled = default, CreatedByType? createdByType = default, Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, DateTimeOffset? executedDateTime = default, Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIpDisabled = default, CreatedByType? createdByType = default, Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? executionStartDateTime = default, DateTimeOffset? executionEndDateTime = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
             secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
@@ -842,6 +854,8 @@ namespace Azure.Developer.LoadTesting
                 createdByType,
                 createdByUri,
                 estimatedVirtualUserHours,
+                executionStartDateTime,
+                executionEndDateTime,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
@@ -1246,12 +1260,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="version"> The version of the insights. </param>
         /// <param name="status"> The status of the insights. </param>
         /// <returns> A new <see cref="LoadTesting.TestRunInsights"/> instance for mocking. </returns>
-        public static TestRunInsights TestRunInsights(IEnumerable<TestRunInsightColumn> columns = default, IEnumerable<IDictionary<string, string>> rows = default, long? version = default, OperationState? status = default)
+        public static TestRunInsights TestRunInsights(IEnumerable<TestRunInsightColumn> columns = default, IDictionary<string, IDictionary<string, string>> rows = default, long? version = default, OperationState? status = default)
         {
             columns ??= new ChangeTrackingList<TestRunInsightColumn>();
-            rows ??= new ChangeTrackingList<IDictionary<string, string>>();
+            rows ??= new ChangeTrackingDictionary<string, IDictionary<string, string>>();
 
-            return new TestRunInsights(columns.ToList(), rows.ToList(), version, status, additionalBinaryDataProperties: null);
+            return new TestRunInsights(columns.ToList(), rows, version, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a column of the test run insight. </summary>

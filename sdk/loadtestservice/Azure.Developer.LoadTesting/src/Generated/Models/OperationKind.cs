@@ -18,6 +18,8 @@ namespace Azure.Developer.LoadTesting
         private const string CloneTestValue = "CloneTest";
         /// <summary> Operation represents a test run insights generation operation. </summary>
         private const string GenerateTestRunInsightsValue = "GenerateTestRunInsights";
+        /// <summary> Operation represents a test plan recommendations generation operation. </summary>
+        private const string TestPlanRecommendationsValue = "TestPlanRecommendations";
 
         /// <summary> Initializes a new instance of <see cref="OperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,6 +36,9 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Operation represents a test run insights generation operation. </summary>
         public static OperationKind GenerateTestRunInsights { get; } = new OperationKind(GenerateTestRunInsightsValue);
+
+        /// <summary> Operation represents a test plan recommendations generation operation. </summary>
+        public static OperationKind TestPlanRecommendations { get; } = new OperationKind(TestPlanRecommendationsValue);
 
         /// <summary> Determines if two <see cref="OperationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

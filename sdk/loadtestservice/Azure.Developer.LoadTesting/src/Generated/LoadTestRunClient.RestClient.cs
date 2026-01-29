@@ -503,6 +503,24 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal HttpMessage CreatePatchLatestTestRunInsightsRequest(string testRunId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/test-runs/", false);
+            uri.AppendPath(testRunId, true);
+            uri.AppendPath("/insights/latest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Patch;
+            request.Headers.SetValue("Content-Type", "application/merge-patch+json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateGenerateTestRunInsightsRequest(string testRunId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
