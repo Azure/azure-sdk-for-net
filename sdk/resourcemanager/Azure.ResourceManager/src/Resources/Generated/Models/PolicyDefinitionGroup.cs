@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The policy definition group. </summary>
+    /// <summary>
+    /// The policy definition group.
+    /// Serialized Name: PolicyDefinitionGroup
+    /// </summary>
     public partial class PolicyDefinitionGroup
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/>. </summary>
-        /// <param name="name"> The name of the group. </param>
+        /// <param name="name">
+        /// The name of the group.
+        /// Serialized Name: PolicyDefinitionGroup.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PolicyDefinitionGroup(string name)
         {
@@ -56,11 +62,26 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/>. </summary>
-        /// <param name="name"> The name of the group. </param>
-        /// <param name="displayName"> The group's display name. </param>
-        /// <param name="category"> The group's category. </param>
-        /// <param name="description"> The group's description. </param>
-        /// <param name="additionalMetadataId"> A resource ID of a resource that contains additional metadata about the group. </param>
+        /// <param name="name">
+        /// The name of the group.
+        /// Serialized Name: PolicyDefinitionGroup.name
+        /// </param>
+        /// <param name="displayName">
+        /// The group's display name.
+        /// Serialized Name: PolicyDefinitionGroup.displayName
+        /// </param>
+        /// <param name="category">
+        /// The group's category.
+        /// Serialized Name: PolicyDefinitionGroup.category
+        /// </param>
+        /// <param name="description">
+        /// The group's description.
+        /// Serialized Name: PolicyDefinitionGroup.description
+        /// </param>
+        /// <param name="additionalMetadataId">
+        /// A resource ID of a resource that contains additional metadata about the group.
+        /// Serialized Name: PolicyDefinitionGroup.additionalMetadataId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyDefinitionGroup(string name, string displayName, string category, string description, string additionalMetadataId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,19 +98,34 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> The name of the group. </summary>
+        /// <summary>
+        /// The name of the group.
+        /// Serialized Name: PolicyDefinitionGroup.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The group's display name. </summary>
+        /// <summary>
+        /// The group's display name.
+        /// Serialized Name: PolicyDefinitionGroup.displayName
+        /// </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
-        /// <summary> The group's category. </summary>
+        /// <summary>
+        /// The group's category.
+        /// Serialized Name: PolicyDefinitionGroup.category
+        /// </summary>
         [WirePath("category")]
         public string Category { get; set; }
-        /// <summary> The group's description. </summary>
+        /// <summary>
+        /// The group's description.
+        /// Serialized Name: PolicyDefinitionGroup.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> A resource ID of a resource that contains additional metadata about the group. </summary>
+        /// <summary>
+        /// A resource ID of a resource that contains additional metadata about the group.
+        /// Serialized Name: PolicyDefinitionGroup.additionalMetadataId
+        /// </summary>
         [WirePath("additionalMetadataId")]
         public string AdditionalMetadataId { get; set; }
     }

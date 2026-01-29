@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Specified resource. </summary>
+    /// <summary>
+    /// Specified resource.
+    /// Serialized Name: TrackedResourceExtendedData
+    /// </summary>
     public partial class TrackedResourceExtendedData : TrackedResourceData
     {
         /// <summary>
@@ -60,7 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> Resource extended location. </param>
+        /// <param name="extendedLocation">
+        /// Resource extended location.
+        /// Serialized Name: TrackedResourceExtendedData.extendedLocation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TrackedResourceExtendedData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -73,7 +79,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> Resource extended location. </summary>
+        /// <summary>
+        /// Resource extended location.
+        /// Serialized Name: TrackedResourceExtendedData.extendedLocation
+        /// </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
     }

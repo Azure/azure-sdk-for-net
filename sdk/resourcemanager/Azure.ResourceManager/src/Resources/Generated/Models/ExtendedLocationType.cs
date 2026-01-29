@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The extended location type. </summary>
+    /// <summary>
+    /// The extended location type.
+    /// Serialized Name: ExtendedLocationType
+    /// </summary>
     public readonly partial struct ExtendedLocationType : IEquatable<ExtendedLocationType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         private const string EdgeZoneValue = "EdgeZone";
 
-        /// <summary> EdgeZone. </summary>
+        /// <summary>
+        /// EdgeZone
+        /// Serialized Name: ExtendedLocationType.EdgeZone
+        /// </summary>
         public static ExtendedLocationType EdgeZone { get; } = new ExtendedLocationType(EdgeZoneValue);
         /// <summary> Determines if two <see cref="ExtendedLocationType"/> values are the same. </summary>
         public static bool operator ==(ExtendedLocationType left, ExtendedLocationType right) => left.Equals(right);

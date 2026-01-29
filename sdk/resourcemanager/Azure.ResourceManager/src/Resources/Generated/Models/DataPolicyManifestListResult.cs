@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> List of data policy manifests. </summary>
+    /// <summary>
+    /// List of data policy manifests.
+    /// Serialized Name: DataPolicyManifestListResult
+    /// </summary>
     internal partial class DataPolicyManifestListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataPolicyManifestListResult"/>. </summary>
-        /// <param name="value"> An array of data policy manifests. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// An array of data policy manifests.
+        /// Serialized Name: DataPolicyManifestListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: DataPolicyManifestListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataPolicyManifestListResult(IReadOnlyList<DataPolicyManifestData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of data policy manifests. </summary>
+        /// <summary>
+        /// An array of data policy manifests.
+        /// Serialized Name: DataPolicyManifestListResult.value
+        /// </summary>
         public IReadOnlyList<DataPolicyManifestData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: DataPolicyManifestListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

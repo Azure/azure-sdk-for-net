@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Location metadata information. </summary>
+    /// <summary>
+    /// Location metadata information
+    /// Serialized Name: LocationMetadata
+    /// </summary>
     public partial class LocationMetadata
     {
         /// <summary>
@@ -52,15 +55,42 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LocationMetadata"/>. </summary>
-        /// <param name="regionType"> The type of the region. </param>
-        /// <param name="regionCategory"> The category of the region. </param>
-        /// <param name="geography"> The geography of the location. </param>
-        /// <param name="geographyGroup"> The geography group of the location. </param>
-        /// <param name="longitude"> The longitude of the location. </param>
-        /// <param name="latitude"> The latitude of the location. </param>
-        /// <param name="physicalLocation"> The physical location of the Azure location. </param>
-        /// <param name="pairedRegions"> The regions paired to this region. </param>
-        /// <param name="homeLocation"> The home location of an edge zone. </param>
+        /// <param name="regionType">
+        /// The type of the region.
+        /// Serialized Name: LocationMetadata.regionType
+        /// </param>
+        /// <param name="regionCategory">
+        /// The category of the region.
+        /// Serialized Name: LocationMetadata.regionCategory
+        /// </param>
+        /// <param name="geography">
+        /// The geography of the location.
+        /// Serialized Name: LocationMetadata.geography
+        /// </param>
+        /// <param name="geographyGroup">
+        /// The geography group of the location.
+        /// Serialized Name: LocationMetadata.geographyGroup
+        /// </param>
+        /// <param name="longitude">
+        /// The longitude of the location.
+        /// Serialized Name: LocationMetadata.longitude
+        /// </param>
+        /// <param name="latitude">
+        /// The latitude of the location.
+        /// Serialized Name: LocationMetadata.latitude
+        /// </param>
+        /// <param name="physicalLocation">
+        /// The physical location of the Azure location.
+        /// Serialized Name: LocationMetadata.physicalLocation
+        /// </param>
+        /// <param name="pairedRegions">
+        /// The regions paired to this region.
+        /// Serialized Name: LocationMetadata.pairedRegion
+        /// </param>
+        /// <param name="homeLocation">
+        /// The home location of an edge zone.
+        /// Serialized Name: LocationMetadata.homeLocation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geography, string geographyGroup, double? longitude, double? latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegions, string homeLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,25 +106,46 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of the region. </summary>
+        /// <summary>
+        /// The type of the region.
+        /// Serialized Name: LocationMetadata.regionType
+        /// </summary>
         [WirePath("regionType")]
         public RegionType? RegionType { get; }
-        /// <summary> The category of the region. </summary>
+        /// <summary>
+        /// The category of the region.
+        /// Serialized Name: LocationMetadata.regionCategory
+        /// </summary>
         [WirePath("regionCategory")]
         public RegionCategory? RegionCategory { get; }
-        /// <summary> The geography of the location. </summary>
+        /// <summary>
+        /// The geography of the location.
+        /// Serialized Name: LocationMetadata.geography
+        /// </summary>
         [WirePath("geography")]
         public string Geography { get; }
-        /// <summary> The geography group of the location. </summary>
+        /// <summary>
+        /// The geography group of the location.
+        /// Serialized Name: LocationMetadata.geographyGroup
+        /// </summary>
         [WirePath("geographyGroup")]
         public string GeographyGroup { get; }
-        /// <summary> The physical location of the Azure location. </summary>
+        /// <summary>
+        /// The physical location of the Azure location.
+        /// Serialized Name: LocationMetadata.physicalLocation
+        /// </summary>
         [WirePath("physicalLocation")]
         public string PhysicalLocation { get; }
-        /// <summary> The regions paired to this region. </summary>
+        /// <summary>
+        /// The regions paired to this region.
+        /// Serialized Name: LocationMetadata.pairedRegion
+        /// </summary>
         [WirePath("pairedRegion")]
         public IReadOnlyList<PairedRegion> PairedRegions { get; }
-        /// <summary> The home location of an edge zone. </summary>
+        /// <summary>
+        /// The home location of an edge zone.
+        /// Serialized Name: LocationMetadata.homeLocation
+        /// </summary>
         [WirePath("homeLocation")]
         public string HomeLocation { get; }
     }

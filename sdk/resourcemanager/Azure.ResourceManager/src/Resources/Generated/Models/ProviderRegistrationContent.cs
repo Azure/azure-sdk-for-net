@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The provider registration definition. </summary>
+    /// <summary>
+    /// The provider registration definition.
+    /// Serialized Name: ProviderRegistrationRequest
+    /// </summary>
     public partial class ProviderRegistrationContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
-        /// <param name="thirdPartyProviderConsent"> The provider consent. </param>
+        /// <param name="thirdPartyProviderConsent">
+        /// The provider consent.
+        /// Serialized Name: ProviderRegistrationRequest.thirdPartyProviderConsent
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProviderRegistrationContent(ProviderConsentDefinition thirdPartyProviderConsent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,9 +65,15 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provider consent. </summary>
+        /// <summary>
+        /// The provider consent.
+        /// Serialized Name: ProviderRegistrationRequest.thirdPartyProviderConsent
+        /// </summary>
         internal ProviderConsentDefinition ThirdPartyProviderConsent { get; set; }
-        /// <summary> A value indicating whether authorization is consented or not. </summary>
+        /// <summary>
+        /// A value indicating whether authorization is consented or not.
+        /// Serialized Name: ProviderConsentDefinition.consentToAuthorization
+        /// </summary>
         [WirePath("thirdPartyProviderConsent.consentToAuthorization")]
         public bool? ConsentToAuthorization
         {

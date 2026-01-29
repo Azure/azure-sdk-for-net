@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> Management group name availability check parameters. </summary>
+    /// <summary>
+    /// Management group name availability check parameters.
+    /// Serialized Name: ManagementGroupNameAvailabilityContent
+    /// </summary>
     public partial class ManagementGroupNameAvailabilityContent
     {
         /// <summary>
@@ -47,8 +50,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> the name to check for availability. </param>
-        /// <param name="resourceType"> fully qualified resource type which includes provider namespace. </param>
+        /// <param name="name">
+        /// the name to check for availability
+        /// Serialized Name: ManagementGroupNameAvailabilityContent.name
+        /// </param>
+        /// <param name="resourceType">
+        /// fully qualified resource type which includes provider namespace
+        /// Serialized Name: ManagementGroupNameAvailabilityContent.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -57,10 +66,16 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> the name to check for availability. </summary>
+        /// <summary>
+        /// the name to check for availability
+        /// Serialized Name: ManagementGroupNameAvailabilityContent.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> fully qualified resource type which includes provider namespace. </summary>
+        /// <summary>
+        /// fully qualified resource type which includes provider namespace
+        /// Serialized Name: ManagementGroupNameAvailabilityContent.type
+        /// </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }

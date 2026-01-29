@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>
+    /// <summary>
+    /// Indicates whether or not the encryption is enabled for container registry.
+    /// Serialized Name: EncryptionStatus
+    /// </summary>
     public readonly partial struct EncryptionStatus : IEquatable<EncryptionStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Models
         private const string EnabledValue = "enabled";
         private const string DisabledValue = "disabled";
 
-        /// <summary> enabled. </summary>
+        /// <summary>
+        /// enabled
+        /// Serialized Name: EncryptionStatus.enabled
+        /// </summary>
         public static EncryptionStatus Enabled { get; } = new EncryptionStatus(EnabledValue);
-        /// <summary> disabled. </summary>
+        /// <summary>
+        /// disabled
+        /// Serialized Name: EncryptionStatus.disabled
+        /// </summary>
         public static EncryptionStatus Disabled { get; } = new EncryptionStatus(DisabledValue);
         /// <summary> Determines if two <see cref="EncryptionStatus"/> values are the same. </summary>
         public static bool operator ==(EncryptionStatus left, EncryptionStatus right) => left.Equals(right);

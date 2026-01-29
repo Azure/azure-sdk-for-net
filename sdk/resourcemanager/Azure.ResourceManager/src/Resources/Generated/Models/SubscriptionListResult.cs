@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Subscription list operation response. </summary>
+    /// <summary>
+    /// Subscription list operation response.
+    /// Serialized Name: SubscriptionListResult
+    /// </summary>
     internal partial class SubscriptionListResult
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: SubscriptionListResult.nextLink
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         internal SubscriptionListResult(string nextLink)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
-        /// <param name="value"> An array of subscriptions. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// An array of subscriptions.
+        /// Serialized Name: SubscriptionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: SubscriptionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionListResult(IReadOnlyList<SubscriptionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> An array of subscriptions. </summary>
+        /// <summary>
+        /// An array of subscriptions.
+        /// Serialized Name: SubscriptionListResult.value
+        /// </summary>
         public IReadOnlyList<SubscriptionData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: SubscriptionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

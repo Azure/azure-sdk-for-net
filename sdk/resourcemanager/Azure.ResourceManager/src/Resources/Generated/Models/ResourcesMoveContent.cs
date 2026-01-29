@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Parameters of move resources. </summary>
+    /// <summary>
+    /// Parameters of move resources.
+    /// Serialized Name: ResourcesMoveContent
+    /// </summary>
     public partial class ResourcesMoveContent
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcesMoveContent"/>. </summary>
-        /// <param name="resources"> The IDs of the resources. </param>
-        /// <param name="targetResourceGroupId"> The target resource group. </param>
+        /// <param name="resources">
+        /// The IDs of the resources.
+        /// Serialized Name: ResourcesMoveContent.resources
+        /// </param>
+        /// <param name="targetResourceGroupId">
+        /// The target resource group.
+        /// Serialized Name: ResourcesMoveContent.targetResourceGroup
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourcesMoveContent(IList<string> resources, ResourceIdentifier targetResourceGroupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The IDs of the resources. </summary>
+        /// <summary>
+        /// The IDs of the resources.
+        /// Serialized Name: ResourcesMoveContent.resources
+        /// </summary>
         [WirePath("resources")]
         public IList<string> Resources { get; }
-        /// <summary> The target resource group. </summary>
+        /// <summary>
+        /// The target resource group.
+        /// Serialized Name: ResourcesMoveContent.targetResourceGroup
+        /// </summary>
         [WirePath("targetResourceGroup")]
         public ResourceIdentifier TargetResourceGroupId { get; set; }
     }

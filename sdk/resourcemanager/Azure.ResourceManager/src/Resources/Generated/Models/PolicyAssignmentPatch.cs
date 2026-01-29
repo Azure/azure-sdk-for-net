@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The policy assignment for Patch request. </summary>
+    /// <summary>
+    /// The policy assignment for Patch request.
+    /// Serialized Name: PolicyAssignmentUpdate
+    /// </summary>
     public partial class PolicyAssignmentPatch
     {
         /// <summary>
@@ -55,10 +58,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentPatch"/>. </summary>
-        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="identity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
-        /// <param name="overrides"> The policy property value override. </param>
+        /// <param name="location">
+        /// The location of the policy assignment. Only required when utilizing managed identity.
+        /// Serialized Name: PolicyAssignmentUpdate.location
+        /// </param>
+        /// <param name="identity">
+        /// The managed identity associated with the policy assignment.
+        /// Serialized Name: PolicyAssignmentUpdate.identity. Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
+        /// <param name="resourceSelectors">
+        /// The resource selector list to filter policies by resource properties.
+        /// Serialized Name: PolicyAssignmentUpdate.properties.resourceSelectors
+        /// </param>
+        /// <param name="overrides">
+        /// The policy property value override.
+        /// Serialized Name: PolicyAssignmentUpdate.properties.overrides
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyAssignmentPatch(AzureLocation? location, ManagedServiceIdentity identity, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,16 +84,28 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
+        /// <summary>
+        /// The location of the policy assignment. Only required when utilizing managed identity.
+        /// Serialized Name: PolicyAssignmentUpdate.location
+        /// </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// The managed identity associated with the policy assignment.
+        /// Serialized Name: PolicyAssignmentUpdate.identity. Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The resource selector list to filter policies by resource properties. </summary>
+        /// <summary>
+        /// The resource selector list to filter policies by resource properties.
+        /// Serialized Name: PolicyAssignmentUpdate.properties.resourceSelectors
+        /// </summary>
         [WirePath("properties.resourceSelectors")]
         public IList<ResourceSelector> ResourceSelectors { get; }
-        /// <summary> The policy property value override. </summary>
+        /// <summary>
+        /// The policy property value override.
+        /// Serialized Name: PolicyAssignmentUpdate.properties.overrides
+        /// </summary>
         [WirePath("properties.overrides")]
         public IList<PolicyOverride> Overrides { get; }
     }

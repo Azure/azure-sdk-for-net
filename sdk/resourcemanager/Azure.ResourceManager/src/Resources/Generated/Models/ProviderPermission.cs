@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The provider permission. </summary>
+    /// <summary>
+    /// The provider permission
+    /// Serialized Name: ProviderPermission
+    /// </summary>
     public partial class ProviderPermission
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderPermission"/>. </summary>
-        /// <param name="applicationId"> The application id. </param>
-        /// <param name="roleDefinition"> Role definition properties. </param>
-        /// <param name="managedByRoleDefinition"> Role definition properties. </param>
-        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
+        /// <param name="applicationId">
+        /// The application id.
+        /// Serialized Name: ProviderPermission.applicationId
+        /// </param>
+        /// <param name="roleDefinition">
+        /// Role definition properties.
+        /// Serialized Name: ProviderPermission.roleDefinition
+        /// </param>
+        /// <param name="managedByRoleDefinition">
+        /// Role definition properties.
+        /// Serialized Name: ProviderPermission.managedByRoleDefinition
+        /// </param>
+        /// <param name="providerAuthorizationConsentState">
+        /// The provider authorization consent state.
+        /// Serialized Name: ProviderPermission.providerAuthorizationConsentState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProviderPermission(string applicationId, AzureRoleDefinition roleDefinition, AzureRoleDefinition managedByRoleDefinition, ProviderAuthorizationConsentState? providerAuthorizationConsentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The application id. </summary>
+        /// <summary>
+        /// The application id.
+        /// Serialized Name: ProviderPermission.applicationId
+        /// </summary>
         [WirePath("applicationId")]
         public string ApplicationId { get; }
-        /// <summary> Role definition properties. </summary>
+        /// <summary>
+        /// Role definition properties.
+        /// Serialized Name: ProviderPermission.roleDefinition
+        /// </summary>
         [WirePath("roleDefinition")]
         public AzureRoleDefinition RoleDefinition { get; }
-        /// <summary> Role definition properties. </summary>
+        /// <summary>
+        /// Role definition properties.
+        /// Serialized Name: ProviderPermission.managedByRoleDefinition
+        /// </summary>
         [WirePath("managedByRoleDefinition")]
         public AzureRoleDefinition ManagedByRoleDefinition { get; }
-        /// <summary> The provider authorization consent state. </summary>
+        /// <summary>
+        /// The provider authorization consent state.
+        /// Serialized Name: ProviderPermission.providerAuthorizationConsentState
+        /// </summary>
         [WirePath("providerAuthorizationConsentState")]
         public ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get; }
     }

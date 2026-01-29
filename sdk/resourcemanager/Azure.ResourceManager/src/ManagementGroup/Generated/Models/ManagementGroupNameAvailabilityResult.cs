@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> Describes the result of the request to check management group name availability. </summary>
+    /// <summary>
+    /// Describes the result of the request to check management group name availability.
+    /// Serialized Name: ManagementGroupNameAvailabilityResult
+    /// </summary>
     public partial class ManagementGroupNameAvailabilityResult
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </param>
-        /// <param name="reason"> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
-        /// <param name="message"> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </param>
+        /// <param name="nameAvailable">
+        /// Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both.
+        /// Serialized Name: ManagementGroupNameAvailabilityResult.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable.
+        /// Serialized Name: ManagementGroupNameAvailabilityResult.reason
+        /// </param>
+        /// <param name="message">
+        /// Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name.
+        /// Serialized Name: ManagementGroupNameAvailabilityResult.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupNameAvailabilityResult(bool? nameAvailable, ManagementGroupNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </summary>
+        /// <summary>
+        /// Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both.
+        /// Serialized Name: ManagementGroupNameAvailabilityResult.nameAvailable
+        /// </summary>
         [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
-        /// <summary> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
+        /// <summary>
+        /// Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable.
+        /// Serialized Name: ManagementGroupNameAvailabilityResult.reason
+        /// </summary>
         [WirePath("reason")]
         public ManagementGroupNameUnavailableReason? Reason { get; }
-        /// <summary> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </summary>
+        /// <summary>
+        /// Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name.
+        /// Serialized Name: ManagementGroupNameAvailabilityResult.message
+        /// </summary>
         [WirePath("message")]
         public string Message { get; }
     }

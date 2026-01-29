@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The type of the paths for alias. </summary>
+    /// <summary>
+    /// The type of the paths for alias.
+    /// Serialized Name: ResourceTypeAliasPath
+    /// </summary>
     public partial class ResourceTypeAliasPath
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPath"/>. </summary>
-        /// <param name="path"> The path of an alias. </param>
-        /// <param name="apiVersions"> The API versions. </param>
-        /// <param name="pattern"> The pattern for an alias path. </param>
-        /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
+        /// <param name="path">
+        /// The path of an alias.
+        /// Serialized Name: ResourceTypeAliasPath.path
+        /// </param>
+        /// <param name="apiVersions">
+        /// The API versions.
+        /// Serialized Name: ResourceTypeAliasPath.apiVersions
+        /// </param>
+        /// <param name="pattern">
+        /// The pattern for an alias path.
+        /// Serialized Name: ResourceTypeAliasPath.pattern
+        /// </param>
+        /// <param name="metadata">
+        /// The metadata of the alias path. If missing, fall back to the default metadata of the alias.
+        /// Serialized Name: ResourceTypeAliasPath.metadata
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeAliasPath(string path, IReadOnlyList<string> apiVersions, ResourceTypeAliasPattern pattern, ResourceTypeAliasPathMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The path of an alias. </summary>
+        /// <summary>
+        /// The path of an alias.
+        /// Serialized Name: ResourceTypeAliasPath.path
+        /// </summary>
         [WirePath("path")]
         public string Path { get; }
-        /// <summary> The API versions. </summary>
+        /// <summary>
+        /// The API versions.
+        /// Serialized Name: ResourceTypeAliasPath.apiVersions
+        /// </summary>
         [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
-        /// <summary> The pattern for an alias path. </summary>
+        /// <summary>
+        /// The pattern for an alias path.
+        /// Serialized Name: ResourceTypeAliasPath.pattern
+        /// </summary>
         [WirePath("pattern")]
         public ResourceTypeAliasPattern Pattern { get; }
-        /// <summary> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </summary>
+        /// <summary>
+        /// The metadata of the alias path. If missing, fall back to the default metadata of the alias.
+        /// Serialized Name: ResourceTypeAliasPath.metadata
+        /// </summary>
         [WirePath("metadata")]
         public ResourceTypeAliasPathMetadata Metadata { get; }
     }

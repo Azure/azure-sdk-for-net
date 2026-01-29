@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The alias type. </summary>
+    /// <summary>
+    /// The alias type.
+    /// Serialized Name: ResourceTypeAlias
+    /// </summary>
     public partial class ResourceTypeAlias
     {
         /// <summary>
@@ -52,12 +55,30 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAlias"/>. </summary>
-        /// <param name="name"> The alias name. </param>
-        /// <param name="paths"> The paths for an alias. </param>
-        /// <param name="aliasType"> The type of the alias. </param>
-        /// <param name="defaultPath"> The default path for an alias. </param>
-        /// <param name="defaultPattern"> The default pattern for an alias. </param>
-        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
+        /// <param name="name">
+        /// The alias name.
+        /// Serialized Name: ResourceTypeAlias.name
+        /// </param>
+        /// <param name="paths">
+        /// The paths for an alias.
+        /// Serialized Name: ResourceTypeAlias.paths
+        /// </param>
+        /// <param name="aliasType">
+        /// The type of the alias.
+        /// Serialized Name: ResourceTypeAlias.type
+        /// </param>
+        /// <param name="defaultPath">
+        /// The default path for an alias.
+        /// Serialized Name: ResourceTypeAlias.defaultPath
+        /// </param>
+        /// <param name="defaultPattern">
+        /// The default pattern for an alias.
+        /// Serialized Name: ResourceTypeAlias.defaultPattern
+        /// </param>
+        /// <param name="defaultMetadata">
+        /// The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata
+        /// Serialized Name: ResourceTypeAlias.defaultMetadata
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeAlias(string name, IReadOnlyList<ResourceTypeAliasPath> paths, ResourceTypeAliasType? aliasType, string defaultPath, ResourceTypeAliasPattern defaultPattern, ResourceTypeAliasPathMetadata defaultMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,22 +91,40 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The alias name. </summary>
+        /// <summary>
+        /// The alias name.
+        /// Serialized Name: ResourceTypeAlias.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The paths for an alias. </summary>
+        /// <summary>
+        /// The paths for an alias.
+        /// Serialized Name: ResourceTypeAlias.paths
+        /// </summary>
         [WirePath("paths")]
         public IReadOnlyList<ResourceTypeAliasPath> Paths { get; }
-        /// <summary> The type of the alias. </summary>
+        /// <summary>
+        /// The type of the alias.
+        /// Serialized Name: ResourceTypeAlias.type
+        /// </summary>
         [WirePath("type")]
         public ResourceTypeAliasType? AliasType { get; }
-        /// <summary> The default path for an alias. </summary>
+        /// <summary>
+        /// The default path for an alias.
+        /// Serialized Name: ResourceTypeAlias.defaultPath
+        /// </summary>
         [WirePath("defaultPath")]
         public string DefaultPath { get; }
-        /// <summary> The default pattern for an alias. </summary>
+        /// <summary>
+        /// The default pattern for an alias.
+        /// Serialized Name: ResourceTypeAlias.defaultPattern
+        /// </summary>
         [WirePath("defaultPattern")]
         public ResourceTypeAliasPattern DefaultPattern { get; }
-        /// <summary> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </summary>
+        /// <summary>
+        /// The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata
+        /// Serialized Name: ResourceTypeAlias.defaultMetadata
+        /// </summary>
         [WirePath("defaultMetadata")]
         public ResourceTypeAliasPathMetadata DefaultMetadata { get; }
     }

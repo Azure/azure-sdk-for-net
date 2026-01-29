@@ -10,12 +10,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
+    /// <summary>
+    /// The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
+    /// Serialized Name: TrackedResourceData
+    /// </summary>
     [ReferenceType(new string[] { "SystemData" })]
     public abstract partial class TrackedResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="TrackedResourceData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location">
+        /// The geo-location where the resource lives
+        /// Serialized Name: TrackedResourceData.location
+        /// </param>
         [InitializationConstructor]
         protected TrackedResourceData(AzureLocation location)
         {
@@ -28,8 +34,14 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: TrackedResourceData.tags
+        /// </param>
+        /// <param name="location">
+        /// The geo-location where the resource lives
+        /// Serialized Name: TrackedResourceData.location
+        /// </param>
         [SerializationConstructor]
         protected TrackedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location) : base(id, name, resourceType, systemData)
         {
@@ -42,9 +54,15 @@ namespace Azure.ResourceManager.Models
         {
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: TrackedResourceData.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
+        /// <summary>
+        /// The geo-location where the resource lives
+        /// Serialized Name: TrackedResourceData.location
+        /// </summary>
         public AzureLocation Location { get; set; }
     }
 }

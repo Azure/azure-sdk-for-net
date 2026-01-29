@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> A dictionary of name and value pairs. </summary>
+    /// <summary>
+    /// A dictionary of name and value pairs.
+    /// Serialized Name: Tag
+    /// </summary>
     public partial class Tag
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Tag"/>. </summary>
-        /// <param name="tagValues"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="tagValues">
+        /// Dictionary of &lt;string&gt;
+        /// Serialized Name: Tag.tags
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Tag(IDictionary<string, string> tagValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

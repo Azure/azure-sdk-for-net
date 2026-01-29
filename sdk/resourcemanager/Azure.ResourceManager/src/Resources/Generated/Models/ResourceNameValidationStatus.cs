@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Is the resource name Allowed or Reserved. </summary>
+    /// <summary>
+    /// Is the resource name Allowed or Reserved
+    /// Serialized Name: ResourceNameStatus
+    /// </summary>
     public readonly partial struct ResourceNameValidationStatus : IEquatable<ResourceNameValidationStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Resources.Models
         private const string AllowedValue = "Allowed";
         private const string ReservedValue = "Reserved";
 
-        /// <summary> Allowed. </summary>
+        /// <summary>
+        /// Allowed
+        /// Serialized Name: ResourceNameStatus.Allowed
+        /// </summary>
         public static ResourceNameValidationStatus Allowed { get; } = new ResourceNameValidationStatus(AllowedValue);
-        /// <summary> Reserved. </summary>
+        /// <summary>
+        /// Reserved
+        /// Serialized Name: ResourceNameStatus.Reserved
+        /// </summary>
         public static ResourceNameValidationStatus Reserved { get; } = new ResourceNameValidationStatus(ReservedValue);
         /// <summary> Determines if two <see cref="ResourceNameValidationStatus"/> values are the same. </summary>
         public static bool operator ==(ResourceNameValidationStatus left, ResourceNameValidationStatus right) => left.Equals(right);

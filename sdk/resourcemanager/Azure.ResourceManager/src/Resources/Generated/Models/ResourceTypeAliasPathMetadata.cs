@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The ResourceTypeAliasPathMetadata. </summary>
+    /// <summary>
+    /// The ResourceTypeAliasPathMetadata.
+    /// Serialized Name: ResourceTypeAliasPathMetadata
+    /// </summary>
     public partial class ResourceTypeAliasPathMetadata
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPathMetadata"/>. </summary>
-        /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
-        /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
+        /// <param name="tokenType">
+        /// The type of the token that the alias path is referring to.
+        /// Serialized Name: ResourceTypeAliasPathMetadata.type
+        /// </param>
+        /// <param name="attributes">
+        /// The attributes of the token that the alias path is referring to.
+        /// Serialized Name: ResourceTypeAliasPathMetadata.attributes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? tokenType, ResourceTypeAliasPathAttributes? attributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of the token that the alias path is referring to. </summary>
+        /// <summary>
+        /// The type of the token that the alias path is referring to.
+        /// Serialized Name: ResourceTypeAliasPathMetadata.type
+        /// </summary>
         [WirePath("type")]
         public ResourceTypeAliasPathTokenType? TokenType { get; }
-        /// <summary> The attributes of the token that the alias path is referring to. </summary>
+        /// <summary>
+        /// The attributes of the token that the alias path is referring to.
+        /// Serialized Name: ResourceTypeAliasPathMetadata.attributes
+        /// </summary>
         [WirePath("attributes")]
         public ResourceTypeAliasPathAttributes? Attributes { get; }
     }

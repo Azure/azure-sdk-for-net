@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Wrapper resource for tags patch API request only. </summary>
+    /// <summary>
+    /// Wrapper resource for tags patch API request only.
+    /// Serialized Name: TagPatchResource
+    /// </summary>
     public partial class TagResourcePatch
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
-        /// <param name="patchMode"> The operation type for the patch API. </param>
-        /// <param name="properties"> The set of tags. </param>
+        /// <param name="patchMode">
+        /// The operation type for the patch API.
+        /// Serialized Name: TagPatchResource.operation
+        /// </param>
+        /// <param name="properties">
+        /// The set of tags.
+        /// Serialized Name: TagPatchResource.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TagResourcePatch(TagPatchMode? patchMode, Tag properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,12 +70,21 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The operation type for the patch API. </summary>
+        /// <summary>
+        /// The operation type for the patch API.
+        /// Serialized Name: TagPatchResource.operation
+        /// </summary>
         [WirePath("operation")]
         public TagPatchMode? PatchMode { get; set; }
-        /// <summary> The set of tags. </summary>
+        /// <summary>
+        /// The set of tags.
+        /// Serialized Name: TagPatchResource.properties
+        /// </summary>
         internal Tag Properties { get; set; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary>
+        /// Dictionary of &lt;string&gt;
+        /// Serialized Name: Tag.tags
+        /// </summary>
         [WirePath("properties.tags")]
         public IDictionary<string, string> TagValues
         {
