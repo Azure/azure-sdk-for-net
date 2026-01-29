@@ -13,17 +13,16 @@ namespace Azure.SdkAnalyzers
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Descriptors.AZC0012);
         public override SymbolKind[] SymbolKinds { get; } = [SymbolKind.NamedType];
 
-        public override void Analyze(ISymbolAnalysisContext context)
+        public override void Analyze(SymbolAnalysisContext context)
         {
             var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
 
             // Only analyze SDK code
-            if (AnalyzerUtils.IsNotSdkCode(context.Symbol))
+            if (!AnalyzerUtils.IsSdkCode(context.Symbol))
             {
                 return;
             }
 
-            // Count words in the type name
             if (namedTypeSymbol.DeclaredAccessibility == Accessibility.Public &&
                 namedTypeSymbol.ContainingType == null &&
                 (namedTypeSymbol.TypeKind == TypeKind.Class || namedTypeSymbol.TypeKind == TypeKind.Interface || namedTypeSymbol.TypeKind == TypeKind.Struct) &&
@@ -33,8 +32,7 @@ namespace Azure.SdkAnalyzers
 
                 foreach (var location in namedTypeSymbol.Locations)
                 {
-                    context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0012, location,
-                        typeName), context.Symbol);
+                    context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0012, location, typeName));
                 }
             }
         }

@@ -4,11 +4,8 @@
     <!-- This library is fixed to netstandard2.0. For context, please see:
     https://github.com/Azure/azure-sdk-tools/pull/5048
     -->
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <BuildOutputTargetFolder>analyzers/dotnet/cs/</BuildOutputTargetFolder>
-    <VersionPrefix>1.0.0-beta.1</VersionPrefix>
+    <Version>1.0.0-beta.1</Version>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <!-- Prevent Azure.ClientSdk.Analyzers from running on this analyzer project -->
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
@@ -18,11 +15,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="All" />
     <PackageReference Update="NETStandard.Library" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
-    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
   </ItemGroup>
 
 </Project>

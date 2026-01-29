@@ -1,32 +1,15 @@
 # Azure SDK Analyzers
 
-This project contains Roslyn analyzers for Azure SDK for .NET libraries.
+Roslyn analyzers that enforce [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) for .NET library authors.
 
-## Analyzers
+This package is automatically included in all Azure SDK libraries in this repository to ensure consistent code quality and adherence to Azure SDK conventions.
 
-### AZC0012: Avoid single word type names
+## Implemented Rules
 
-Single word type names are too generic and have a high chance of collision with BCL types or types from other libraries. This analyzer detects public types with single-word names and suggests more descriptive multi-word alternatives.
+- [**AZC0012**](https://github.com/Azure/azure-sdk-for-net/blob/move-azure-analyzers/eng/tools/Azure.SdkAnalyzers/docs/list-of-diagnostics.md#azc0012): Avoid single word type names
 
-**Example:**
-```csharp
-// Bad - single word type name
-public class Client { }
+## For Library Authors
 
-// Good - descriptive multi-word name
-public class BlobClient { }
-public class ServiceClient { }
-```
+These analyzers run automatically during build and will produce warnings when your code doesn't follow Azure SDK conventions. Review the [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) for detailed guidance on all rules.
 
-## Building
-
-To build the analyzer project:
-
-```bash
-cd eng/tools/Azure.SdkAnalyzers
-dotnet build
-```
-
-## History
-
-This analyzer was originally part of the [Azure SDK Tools](https://github.com/Azure/azure-sdk-tools/tree/main/src/dotnet/Azure.ClientSdk.Analyzers) repository and has been copied here to be included directly in the Azure SDK for .NET repository.
+For detailed information about each diagnostic rule, see the [list of diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/move-azure-analyzers/eng/tools/Azure.SdkAnalyzers/docs/list-of-diagnostics.md).

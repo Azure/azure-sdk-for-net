@@ -1,99 +1,45 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Buffers;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 
 namespace Azure.SdkAnalyzers
 {
-    internal class AnalyzerUtils
+    public class AnalyzerUtils
     {
-        internal static bool IsNotSdkCode(ISymbol symbol) => !IsSdkCode(symbol);
-
-        internal static bool IsSdkCode(ISymbol symbol)
+        public static bool IsSdkCode(ISymbol symbol)
         {
-            using var namespaces = symbol.ContainingNamespace.GetAllNamespaces();
-            return IsSdkNamespace(namespaces);
+            return symbol != null && IsSdkNamespace(symbol.ContainingNamespace);
         }
 
-        internal static bool IsNotSdkCode(SyntaxNode node, SemanticModel model) => !IsSdkCode(node, model);
-
-        internal static bool IsSdkCode(SyntaxNode node, SemanticModel model)
+        private static bool IsSdkNamespace(INamespaceSymbol namespaceSymbol)
         {
-            var symbol = model.GetDeclaredSymbol(node);
-            if (symbol != null)
+            if (namespaceSymbol is null || namespaceSymbol.IsGlobalNamespace)
             {
-                return IsSdkCode(symbol);
+                return false;
             }
 
-            using var namespaces = GetNamespace(node);
-            return IsSdkNamespace(namespaces);
-        }
+            // Walk up to find the root
+            INamespaceSymbol current = namespaceSymbol;
+            INamespaceSymbol secondLevel = null;
+            INamespaceSymbol topLevel = null;
 
-        private static bool IsSdkNamespace(Namespaces namespaces) => namespaces.Count >= 2 && namespaces[0] == "Azure" && namespaces[1] != "Core";
-
-        private static Namespaces GetNamespace(SyntaxNode node)
-        {
-            var namespaces = new Namespaces();
-
-            var parent = node.Parent;
-
-            while (parent != null &&
-                    parent is not NamespaceDeclarationSyntax
-                    && parent is not FileScopedNamespaceDeclarationSyntax)
+            while (current != null && !current.IsGlobalNamespace)
             {
-                parent = parent.Parent;
+                secondLevel = topLevel;
+                topLevel = current;
+                current = current.ContainingNamespace;
             }
 
-            if (parent is BaseNamespaceDeclarationSyntax namespaceParent)
+            // Check if top level is "Azure"
+            if (topLevel?.Name.Equals("Azure", StringComparison.Ordinal) == false)
             {
-                namespaces.Add(namespaceParent.Name.ToString());
-
-                while (true)
-                {
-                    if (namespaceParent.Parent is not NamespaceDeclarationSyntax parentNamespace)
-                    {
-                        break;
-                    }
-
-                    namespaces.Add(parentNamespace.Name.ToString());
-                    namespaceParent = parentNamespace;
-                }
+                return false;
             }
 
-            namespaces.Reverse();
-
-            return namespaces;
-        }
-
-        internal class Namespaces : IDisposable
-        {
-            private int count;
-            private readonly string[] namespaces = ArrayPool<string>.Shared.Rent(10);
-
-            public int Count => this.count;
-
-            public void Add(string name)
-            {
-                this.namespaces[this.count++] = name;
-            }
-
-            public string this[int i]
-            {
-                get => this.namespaces[i];
-            }
-
-            public void Reverse()
-            {
-                Array.Reverse(this.namespaces, 0, this.count);
-            }
-
-            public void Dispose()
-            {
-                ArrayPool<string>.Shared.Return(this.namespaces);
-            }
+            // Check if second level is "Core"
+            return secondLevel?.Name.Equals("Core", StringComparison.Ordinal) != true;
         }
     }
 }
