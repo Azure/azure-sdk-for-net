@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
     [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesSku))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
