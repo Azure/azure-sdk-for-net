@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Role definition permissions. </summary>
+    /// <summary>
+    /// Role definition permissions.
+    /// Serialized Name: Permission
+    /// </summary>
     public partial class Permission
     {
         /// <summary>
@@ -55,10 +58,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Permission"/>. </summary>
-        /// <param name="allowedActions"> Allowed actions. </param>
-        /// <param name="deniedActions"> Denied actions. </param>
-        /// <param name="allowedDataActions"> Allowed Data actions. </param>
-        /// <param name="deniedDataActions"> Denied Data actions. </param>
+        /// <param name="allowedActions">
+        /// Allowed actions.
+        /// Serialized Name: Permission.actions
+        /// </param>
+        /// <param name="deniedActions">
+        /// Denied actions.
+        /// Serialized Name: Permission.notActions
+        /// </param>
+        /// <param name="allowedDataActions">
+        /// Allowed Data actions.
+        /// Serialized Name: Permission.dataActions
+        /// </param>
+        /// <param name="deniedDataActions">
+        /// Denied Data actions.
+        /// Serialized Name: Permission.notDataActions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Permission(IReadOnlyList<string> allowedActions, IReadOnlyList<string> deniedActions, IReadOnlyList<string> allowedDataActions, IReadOnlyList<string> deniedDataActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,16 +84,28 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Allowed actions. </summary>
+        /// <summary>
+        /// Allowed actions.
+        /// Serialized Name: Permission.actions
+        /// </summary>
         [WirePath("actions")]
         public IReadOnlyList<string> AllowedActions { get; }
-        /// <summary> Denied actions. </summary>
+        /// <summary>
+        /// Denied actions.
+        /// Serialized Name: Permission.notActions
+        /// </summary>
         [WirePath("notActions")]
         public IReadOnlyList<string> DeniedActions { get; }
-        /// <summary> Allowed Data actions. </summary>
+        /// <summary>
+        /// Allowed Data actions.
+        /// Serialized Name: Permission.dataActions
+        /// </summary>
         [WirePath("dataActions")]
         public IReadOnlyList<string> AllowedDataActions { get; }
-        /// <summary> Denied Data actions. </summary>
+        /// <summary>
+        /// Denied Data actions.
+        /// Serialized Name: Permission.notDataActions
+        /// </summary>
         [WirePath("notDataActions")]
         public IReadOnlyList<string> DeniedDataActions { get; }
     }

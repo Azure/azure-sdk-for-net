@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The resource selector to filter policies by resource properties. </summary>
+    /// <summary>
+    /// The resource selector to filter policies by resource properties.
+    /// Serialized Name: ResourceSelector
+    /// </summary>
     public partial class ResourceSelector
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceSelector"/>. </summary>
-        /// <param name="name"> The name of the resource selector. </param>
-        /// <param name="selectors"> The list of the selector expressions. </param>
+        /// <param name="name">
+        /// The name of the resource selector.
+        /// Serialized Name: ResourceSelector.name
+        /// </param>
+        /// <param name="selectors">
+        /// The list of the selector expressions.
+        /// Serialized Name: ResourceSelector.selectors
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceSelector(string name, IList<ResourceSelectorExpression> selectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the resource selector. </summary>
+        /// <summary>
+        /// The name of the resource selector.
+        /// Serialized Name: ResourceSelector.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The list of the selector expressions. </summary>
+        /// <summary>
+        /// The list of the selector expressions.
+        /// Serialized Name: ResourceSelector.selectors
+        /// </summary>
         [WirePath("selectors")]
         public IList<ResourceSelectorExpression> Selectors { get; }
     }

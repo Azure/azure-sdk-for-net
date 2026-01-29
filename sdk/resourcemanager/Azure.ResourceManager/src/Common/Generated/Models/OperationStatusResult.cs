@@ -11,12 +11,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary> The current status of an async operation. </summary>
+    /// <summary>
+    /// The current status of an async operation.
+    /// Serialized Name: OperationStatusResult
+    /// </summary>
     [TypeReferenceType]
     public partial class OperationStatusResult
     {
         /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
-        /// <param name="status"> Operation status. </param>
+        /// <param name="status">
+        /// Operation status.
+        /// Serialized Name: OperationStatusResult.status
+        /// </param>
         [InitializationConstructor]
         public OperationStatusResult(string status)
         {
@@ -25,14 +31,38 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="id">
+        /// Fully qualified ID for the async operation.
+        /// Serialized Name: OperationStatusResult.id
+        /// </param>
+        /// <param name="name">
+        /// Name of the async operation.
+        /// Serialized Name: OperationStatusResult.name
+        /// </param>
+        /// <param name="status">
+        /// Operation status.
+        /// Serialized Name: OperationStatusResult.status
+        /// </param>
+        /// <param name="percentComplete">
+        /// Percent of the operation that is complete.
+        /// Serialized Name: OperationStatusResult.percentComplete
+        /// </param>
+        /// <param name="startOn">
+        /// The start time of the operation.
+        /// Serialized Name: OperationStatusResult.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The end time of the operation.
+        /// Serialized Name: OperationStatusResult.endTime
+        /// </param>
+        /// <param name="operations">
+        /// The operations list.
+        /// Serialized Name: OperationStatusResult.operations
+        /// </param>
+        /// <param name="error">
+        /// If present, details of the operation error.
+        /// Serialized Name: OperationStatusResult.error
+        /// </param>
         [SerializationConstructor]
         protected OperationStatusResult(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error)
         {
@@ -46,28 +76,52 @@ namespace Azure.ResourceManager.Models
             Error = error;
         }
 
-        /// <summary> Fully qualified ID for the async operation. </summary>
+        /// <summary>
+        /// Fully qualified ID for the async operation.
+        /// Serialized Name: OperationStatusResult.id
+        /// </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
-        /// <summary> Name of the async operation. </summary>
+        /// <summary>
+        /// Name of the async operation.
+        /// Serialized Name: OperationStatusResult.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Operation status. </summary>
+        /// <summary>
+        /// Operation status.
+        /// Serialized Name: OperationStatusResult.status
+        /// </summary>
         [WirePath("status")]
         public string Status { get; }
-        /// <summary> Percent of the operation that is complete. </summary>
+        /// <summary>
+        /// Percent of the operation that is complete.
+        /// Serialized Name: OperationStatusResult.percentComplete
+        /// </summary>
         [WirePath("percentComplete")]
         public float? PercentComplete { get; }
-        /// <summary> The start time of the operation. </summary>
+        /// <summary>
+        /// The start time of the operation.
+        /// Serialized Name: OperationStatusResult.startTime
+        /// </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary> The end time of the operation. </summary>
+        /// <summary>
+        /// The end time of the operation.
+        /// Serialized Name: OperationStatusResult.endTime
+        /// </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary> The operations list. </summary>
+        /// <summary>
+        /// The operations list.
+        /// Serialized Name: OperationStatusResult.operations
+        /// </summary>
         [WirePath("operations")]
         public IReadOnlyList<OperationStatusResult> Operations { get; }
-        /// <summary> If present, details of the operation error. </summary>
+        /// <summary>
+        /// If present, details of the operation error.
+        /// Serialized Name: OperationStatusResult.error
+        /// </summary>
         [WirePath("error")]
         public ResponseError Error { get; }
     }

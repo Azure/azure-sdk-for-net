@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Resource group export result. </summary>
+    /// <summary>
+    /// Resource group export result.
+    /// Serialized Name: ResourceGroupExportResult
+    /// </summary>
     public partial class ResourceGroupExportResult
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceGroupExportResult"/>. </summary>
-        /// <param name="template"> The template content. </param>
-        /// <param name="error"> The template export error. </param>
+        /// <param name="template">
+        /// The template content.
+        /// Serialized Name: ResourceGroupExportResult.template
+        /// </param>
+        /// <param name="error">
+        /// The template export error.
+        /// Serialized Name: ResourceGroupExportResult.error
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceGroupExportResult(BinaryData template, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,6 +72,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary>
         /// The template content.
+        /// Serialized Name: ResourceGroupExportResult.template
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -93,7 +103,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         [WirePath("template")]
         public BinaryData Template { get; }
-        /// <summary> The template export error. </summary>
+        /// <summary>
+        /// The template export error.
+        /// Serialized Name: ResourceGroupExportResult.error
+        /// </summary>
         [WirePath("error")]
         public ResponseError Error { get; }
     }

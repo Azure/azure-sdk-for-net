@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Sub-resource. </summary>
+    /// <summary>
+    /// Sub-resource.
+    /// Serialized Name: SubResource
+    /// </summary>
     public partial class SubResource
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id">
+        /// Resource ID
+        /// Serialized Name: SubResource.id
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubResource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

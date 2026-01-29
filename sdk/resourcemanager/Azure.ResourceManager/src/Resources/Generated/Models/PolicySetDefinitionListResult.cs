@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> List of policy set definitions. </summary>
+    /// <summary>
+    /// List of policy set definitions.
+    /// Serialized Name: PolicySetDefinitionListResult
+    /// </summary>
     internal partial class PolicySetDefinitionListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionListResult"/>. </summary>
-        /// <param name="value"> An array of policy set definitions. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// An array of policy set definitions.
+        /// Serialized Name: PolicySetDefinitionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: PolicySetDefinitionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicySetDefinitionListResult(IReadOnlyList<PolicySetDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of policy set definitions. </summary>
+        /// <summary>
+        /// An array of policy set definitions.
+        /// Serialized Name: PolicySetDefinitionListResult.value
+        /// </summary>
         public IReadOnlyList<PolicySetDefinitionData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: PolicySetDefinitionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

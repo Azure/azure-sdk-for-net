@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The custom resource function definition. </summary>
+    /// <summary>
+    /// The custom resource function definition.
+    /// Serialized Name: DataManifestCustomResourceFunctionDefinition
+    /// </summary>
     public partial class DataManifestCustomResourceFunctionDefinition
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataManifestCustomResourceFunctionDefinition"/>. </summary>
-        /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
-        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
-        /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
-        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
+        /// <param name="name">
+        /// The function name as it will appear in the policy rule. eg - 'vault'.
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.name
+        /// </param>
+        /// <param name="fullyQualifiedResourceType">
+        /// The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'.
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.fullyQualifiedResourceType
+        /// </param>
+        /// <param name="defaultProperties">
+        /// The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.defaultProperties
+        /// </param>
+        /// <param name="allowCustomProperties">
+        /// A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01').
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.allowCustomProperties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataManifestCustomResourceFunctionDefinition(string name, ResourceType? fullyQualifiedResourceType, IReadOnlyList<string> defaultProperties, bool? allowCustomProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,16 +82,28 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The function name as it will appear in the policy rule. eg - 'vault'. </summary>
+        /// <summary>
+        /// The function name as it will appear in the policy rule. eg - 'vault'.
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </summary>
+        /// <summary>
+        /// The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'.
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.fullyQualifiedResourceType
+        /// </summary>
         [WirePath("fullyQualifiedResourceType")]
         public ResourceType? FullyQualifiedResourceType { get; }
-        /// <summary> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </summary>
+        /// <summary>
+        /// The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.defaultProperties
+        /// </summary>
         [WirePath("defaultProperties")]
         public IReadOnlyList<string> DefaultProperties { get; }
-        /// <summary> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </summary>
+        /// <summary>
+        /// A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01').
+        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.allowCustomProperties
+        /// </summary>
         [WirePath("allowCustomProperties")]
         public bool? AllowCustomProperties { get; }
     }

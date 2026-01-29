@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>
+    /// <summary>
+    /// The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static.
+    /// Serialized Name: PolicyType
+    /// </summary>
     public readonly partial struct PolicyType : IEquatable<PolicyType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Resources.Models
         private const string CustomValue = "Custom";
         private const string StaticValue = "Static";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: PolicyType.NotSpecified
+        /// </summary>
         public static PolicyType NotSpecified { get; } = new PolicyType(NotSpecifiedValue);
-        /// <summary> BuiltIn. </summary>
+        /// <summary>
+        /// BuiltIn
+        /// Serialized Name: PolicyType.BuiltIn
+        /// </summary>
         public static PolicyType BuiltIn { get; } = new PolicyType(BuiltInValue);
-        /// <summary> Custom. </summary>
+        /// <summary>
+        /// Custom
+        /// Serialized Name: PolicyType.Custom
+        /// </summary>
         public static PolicyType Custom { get; } = new PolicyType(CustomValue);
-        /// <summary> Static. </summary>
+        /// <summary>
+        /// Static
+        /// Serialized Name: PolicyType.Static
+        /// </summary>
         public static PolicyType Static { get; } = new PolicyType(StaticValue);
         /// <summary> Determines if two <see cref="PolicyType"/> values are the same. </summary>
         public static bool operator ==(PolicyType left, PolicyType right) => left.Equals(right);

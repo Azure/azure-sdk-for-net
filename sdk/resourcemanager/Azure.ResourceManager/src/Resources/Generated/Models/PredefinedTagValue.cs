@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Tag information. </summary>
+    /// <summary>
+    /// Tag information.
+    /// Serialized Name: PredefinedTagValue
+    /// </summary>
     public partial class PredefinedTagValue
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PredefinedTagValue"/>. </summary>
-        /// <param name="id"> The tag value ID. </param>
-        /// <param name="tagValue"> The tag value. </param>
-        /// <param name="count"> The tag value count. </param>
+        /// <param name="id">
+        /// The tag value ID.
+        /// Serialized Name: PredefinedTagValue.id
+        /// </param>
+        /// <param name="tagValue">
+        /// The tag value.
+        /// Serialized Name: PredefinedTagValue.tagValue
+        /// </param>
+        /// <param name="count">
+        /// The tag value count.
+        /// Serialized Name: PredefinedTagValue.count
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PredefinedTagValue(string id, string tagValue, PredefinedTagCount count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The tag value ID. </summary>
+        /// <summary>
+        /// The tag value ID.
+        /// Serialized Name: PredefinedTagValue.id
+        /// </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary> The tag value. </summary>
+        /// <summary>
+        /// The tag value.
+        /// Serialized Name: PredefinedTagValue.tagValue
+        /// </summary>
         [WirePath("tagValue")]
         public string TagValue { get; }
-        /// <summary> The tag value count. </summary>
+        /// <summary>
+        /// The tag value count.
+        /// Serialized Name: PredefinedTagValue.count
+        /// </summary>
         [WirePath("count")]
         public PredefinedTagCount Count { get; }
     }

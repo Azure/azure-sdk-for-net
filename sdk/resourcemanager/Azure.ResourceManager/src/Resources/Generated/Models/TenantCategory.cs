@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Category of the tenant. </summary>
+    /// <summary>
+    /// Category of the tenant.
+    /// Serialized Name: TenantCategory
+    /// </summary>
     public enum TenantCategory
     {
-        /// <summary> Home. </summary>
+        /// <summary>
+        /// Home
+        /// Serialized Name: TenantCategory.Home
+        /// </summary>
         Home,
-        /// <summary> ProjectedBy. </summary>
+        /// <summary>
+        /// ProjectedBy
+        /// Serialized Name: TenantCategory.ProjectedBy
+        /// </summary>
         ProjectedBy,
-        /// <summary> ManagedBy. </summary>
+        /// <summary>
+        /// ManagedBy
+        /// Serialized Name: TenantCategory.ManagedBy
+        /// </summary>
         ManagedBy
     }
 }

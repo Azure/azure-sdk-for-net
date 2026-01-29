@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> The entity. </summary>
+    /// <summary>
+    /// The entity.
+    /// Serialized Name: EntityInfo
+    /// </summary>
     public partial class EntityData : ResourceData
     {
         /// <summary>
@@ -60,16 +63,46 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId"> The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="displayName"> The friendly name of the management group. </param>
-        /// <param name="parent"> (Optional) The ID of the parent management group. </param>
-        /// <param name="permissions"> The users specific permissions to this item. </param>
-        /// <param name="inheritedPermissions"> The users specific permissions to this item. </param>
-        /// <param name="numberOfDescendants"> Number of Descendants. </param>
-        /// <param name="numberOfChildren"> Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group. </param>
-        /// <param name="numberOfChildGroups"> Number of children is the number of Groups that are exactly one level underneath the current Group. </param>
-        /// <param name="parentDisplayNameChain"> The parent display name chain from the root group to the immediate parent. </param>
-        /// <param name="parentNameChain"> The parent name chain from the root group to the immediate parent. </param>
+        /// <param name="tenantId">
+        /// The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000
+        /// Serialized Name: EntityInfo.properties.tenantId
+        /// </param>
+        /// <param name="displayName">
+        /// The friendly name of the management group.
+        /// Serialized Name: EntityInfo.properties.displayName
+        /// </param>
+        /// <param name="parent">
+        /// (Optional) The ID of the parent management group.
+        /// Serialized Name: EntityInfo.properties.parent
+        /// </param>
+        /// <param name="permissions">
+        /// The users specific permissions to this item.
+        /// Serialized Name: EntityInfo.properties.permissions
+        /// </param>
+        /// <param name="inheritedPermissions">
+        /// The users specific permissions to this item.
+        /// Serialized Name: EntityInfo.properties.inheritedPermissions
+        /// </param>
+        /// <param name="numberOfDescendants">
+        /// Number of Descendants
+        /// Serialized Name: EntityInfo.properties.numberOfDescendants
+        /// </param>
+        /// <param name="numberOfChildren">
+        /// Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group.
+        /// Serialized Name: EntityInfo.properties.numberOfChildren
+        /// </param>
+        /// <param name="numberOfChildGroups">
+        /// Number of children is the number of Groups that are exactly one level underneath the current Group.
+        /// Serialized Name: EntityInfo.properties.numberOfChildGroups
+        /// </param>
+        /// <param name="parentDisplayNameChain">
+        /// The parent display name chain from the root group to the immediate parent
+        /// Serialized Name: EntityInfo.properties.parentDisplayNameChain
+        /// </param>
+        /// <param name="parentNameChain">
+        /// The parent name chain from the root group to the immediate parent
+        /// Serialized Name: EntityInfo.properties.parentNameChain
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, SubResource parent, EntityPermission? permissions, EntityPermission? inheritedPermissions, int? numberOfDescendants, int? numberOfChildren, int? numberOfChildGroups, IReadOnlyList<string> parentDisplayNameChain, IReadOnlyList<string> parentNameChain, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -86,13 +119,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        /// <summary>
+        /// The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000
+        /// Serialized Name: EntityInfo.properties.tenantId
+        /// </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
-        /// <summary> The friendly name of the management group. </summary>
+        /// <summary>
+        /// The friendly name of the management group.
+        /// Serialized Name: EntityInfo.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary> (Optional) The ID of the parent management group. </summary>
+        /// <summary>
+        /// (Optional) The ID of the parent management group.
+        /// Serialized Name: EntityInfo.properties.parent
+        /// </summary>
         internal SubResource Parent { get; }
         /// <summary> Gets Id. </summary>
         [WirePath("properties.parent.id")]
@@ -101,25 +143,46 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             get => Parent?.Id;
         }
 
-        /// <summary> The users specific permissions to this item. </summary>
+        /// <summary>
+        /// The users specific permissions to this item.
+        /// Serialized Name: EntityInfo.properties.permissions
+        /// </summary>
         [WirePath("properties.permissions")]
         public EntityPermission? Permissions { get; }
-        /// <summary> The users specific permissions to this item. </summary>
+        /// <summary>
+        /// The users specific permissions to this item.
+        /// Serialized Name: EntityInfo.properties.inheritedPermissions
+        /// </summary>
         [WirePath("properties.inheritedPermissions")]
         public EntityPermission? InheritedPermissions { get; }
-        /// <summary> Number of Descendants. </summary>
+        /// <summary>
+        /// Number of Descendants
+        /// Serialized Name: EntityInfo.properties.numberOfDescendants
+        /// </summary>
         [WirePath("properties.numberOfDescendants")]
         public int? NumberOfDescendants { get; }
-        /// <summary> Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group. </summary>
+        /// <summary>
+        /// Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group.
+        /// Serialized Name: EntityInfo.properties.numberOfChildren
+        /// </summary>
         [WirePath("properties.numberOfChildren")]
         public int? NumberOfChildren { get; }
-        /// <summary> Number of children is the number of Groups that are exactly one level underneath the current Group. </summary>
+        /// <summary>
+        /// Number of children is the number of Groups that are exactly one level underneath the current Group.
+        /// Serialized Name: EntityInfo.properties.numberOfChildGroups
+        /// </summary>
         [WirePath("properties.numberOfChildGroups")]
         public int? NumberOfChildGroups { get; }
-        /// <summary> The parent display name chain from the root group to the immediate parent. </summary>
+        /// <summary>
+        /// The parent display name chain from the root group to the immediate parent
+        /// Serialized Name: EntityInfo.properties.parentDisplayNameChain
+        /// </summary>
         [WirePath("properties.parentDisplayNameChain")]
         public IReadOnlyList<string> ParentDisplayNameChain { get; }
-        /// <summary> The parent name chain from the root group to the immediate parent. </summary>
+        /// <summary>
+        /// The parent name chain from the root group to the immediate parent
+        /// Serialized Name: EntityInfo.properties.parentNameChain
+        /// </summary>
         [WirePath("properties.parentNameChain")]
         public IReadOnlyList<string> ParentNameChain { get; }
     }

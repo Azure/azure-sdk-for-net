@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> Describes the result of the request to list management groups. </summary>
+    /// <summary>
+    /// Describes the result of the request to list management groups.
+    /// Serialized Name: ManagementGroupListResult
+    /// </summary>
     internal partial class ManagementGroupListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupListResult"/>. </summary>
-        /// <param name="value"> The list of management groups. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// The list of management groups.
+        /// Serialized Name: ManagementGroupListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ManagementGroupListResult.@nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupListResult(IReadOnlyList<ManagementGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of management groups. </summary>
+        /// <summary>
+        /// The list of management groups.
+        /// Serialized Name: ManagementGroupListResult.value
+        /// </summary>
         public IReadOnlyList<ManagementGroupData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ManagementGroupListResult.@nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

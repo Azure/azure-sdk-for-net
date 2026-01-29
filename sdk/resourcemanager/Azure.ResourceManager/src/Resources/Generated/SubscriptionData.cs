@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the Subscription data model.
     /// Subscription information.
+    /// Serialized Name: Subscription
     /// </summary>
     public partial class SubscriptionData
     {
@@ -58,15 +59,42 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionData"/>. </summary>
-        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="displayName"> The subscription display name. </param>
-        /// <param name="tenantId"> The subscription tenant ID. </param>
-        /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
-        /// <param name="subscriptionPolicies"> The subscription policies. </param>
-        /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </param>
-        /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
-        /// <param name="tags"> The tags attached to the subscription. </param>
+        /// <param name="id">
+        /// The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74
+        /// Serialized Name: Subscription.id
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The subscription ID.
+        /// Serialized Name: Subscription.subscriptionId
+        /// </param>
+        /// <param name="displayName">
+        /// The subscription display name.
+        /// Serialized Name: Subscription.displayName
+        /// </param>
+        /// <param name="tenantId">
+        /// The subscription tenant ID.
+        /// Serialized Name: Subscription.tenantId
+        /// </param>
+        /// <param name="state">
+        /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
+        /// Serialized Name: Subscription.state
+        /// </param>
+        /// <param name="subscriptionPolicies">
+        /// The subscription policies.
+        /// Serialized Name: Subscription.subscriptionPolicies
+        /// </param>
+        /// <param name="authorizationSource">
+        /// The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'.
+        /// Serialized Name: Subscription.authorizationSource
+        /// </param>
+        /// <param name="managedByTenants">
+        /// An array containing the tenants managing the subscription.
+        /// Serialized Name: Subscription.managedByTenants
+        /// </param>
+        /// <param name="tags">
+        /// The tags attached to the subscription.
+        /// Serialized Name: Subscription.tags
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionData(ResourceIdentifier id, string subscriptionId, string displayName, Guid? tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,28 +109,52 @@ namespace Azure.ResourceManager.Resources
             Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary> The subscription ID. </summary>
+        /// <summary>
+        /// The subscription ID.
+        /// Serialized Name: Subscription.subscriptionId
+        /// </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
-        /// <summary> The subscription display name. </summary>
+        /// <summary>
+        /// The subscription display name.
+        /// Serialized Name: Subscription.displayName
+        /// </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary> The subscription tenant ID. </summary>
+        /// <summary>
+        /// The subscription tenant ID.
+        /// Serialized Name: Subscription.tenantId
+        /// </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; }
-        /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
+        /// <summary>
+        /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
+        /// Serialized Name: Subscription.state
+        /// </summary>
         [WirePath("state")]
         public SubscriptionState? State { get; }
-        /// <summary> The subscription policies. </summary>
+        /// <summary>
+        /// The subscription policies.
+        /// Serialized Name: Subscription.subscriptionPolicies
+        /// </summary>
         [WirePath("subscriptionPolicies")]
         public SubscriptionPolicies SubscriptionPolicies { get; }
-        /// <summary> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </summary>
+        /// <summary>
+        /// The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'.
+        /// Serialized Name: Subscription.authorizationSource
+        /// </summary>
         [WirePath("authorizationSource")]
         public string AuthorizationSource { get; }
-        /// <summary> An array containing the tenants managing the subscription. </summary>
+        /// <summary>
+        /// An array containing the tenants managing the subscription.
+        /// Serialized Name: Subscription.managedByTenants
+        /// </summary>
         [WirePath("managedByTenants")]
         public IReadOnlyList<ManagedByTenant> ManagedByTenants { get; }
-        /// <summary> The tags attached to the subscription. </summary>
+        /// <summary>
+        /// The tags attached to the subscription.
+        /// Serialized Name: Subscription.tags
+        /// </summary>
         [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
     }

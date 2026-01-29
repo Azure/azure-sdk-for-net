@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The override kind. </summary>
+    /// <summary>
+    /// The override kind.
+    /// Serialized Name: OverrideKind
+    /// </summary>
     public readonly partial struct PolicyOverrideKind : IEquatable<PolicyOverrideKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         private const string PolicyEffectValue = "policyEffect";
 
-        /// <summary> It will override the policy effect type. </summary>
+        /// <summary>
+        /// It will override the policy effect type.
+        /// Serialized Name: OverrideKind.policyEffect
+        /// </summary>
         public static PolicyOverrideKind PolicyEffect { get; } = new PolicyOverrideKind(PolicyEffectValue);
         /// <summary> Determines if two <see cref="PolicyOverrideKind"/> values are the same. </summary>
         public static bool operator ==(PolicyOverrideKind left, PolicyOverrideKind right) => left.Equals(right);

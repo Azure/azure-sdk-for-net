@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The ApiProfile. </summary>
+    /// <summary>
+    /// The ApiProfile.
+    /// Serialized Name: ApiProfile
+    /// </summary>
     public partial class ApiProfile
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiProfile"/>. </summary>
-        /// <param name="profileVersion"> The profile version. </param>
-        /// <param name="apiVersion"> The API version. </param>
+        /// <param name="profileVersion">
+        /// The profile version.
+        /// Serialized Name: ApiProfile.profileVersion
+        /// </param>
+        /// <param name="apiVersion">
+        /// The API version.
+        /// Serialized Name: ApiProfile.apiVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiProfile(string profileVersion, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The profile version. </summary>
+        /// <summary>
+        /// The profile version.
+        /// Serialized Name: ApiProfile.profileVersion
+        /// </summary>
         [WirePath("profileVersion")]
         public string ProfileVersion { get; }
-        /// <summary> The API version. </summary>
+        /// <summary>
+        /// The API version.
+        /// Serialized Name: ApiProfile.apiVersion
+        /// </summary>
         [WirePath("apiVersion")]
         public string ApiVersion { get; }
     }

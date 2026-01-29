@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> List of resource providers. </summary>
+    /// <summary>
+    /// List of resource providers.
+    /// Serialized Name: ResourceProviderListResult
+    /// </summary>
     internal partial class ResourceProviderListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderListResult"/>. </summary>
-        /// <param name="value"> An array of resource providers. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// An array of resource providers.
+        /// Serialized Name: ResourceProviderListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ResourceProviderListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceProviderListResult(IReadOnlyList<ResourceProviderData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of resource providers. </summary>
+        /// <summary>
+        /// An array of resource providers.
+        /// Serialized Name: ResourceProviderListResult.value
+        /// </summary>
         public IReadOnlyList<ResourceProviderData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ResourceProviderListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubscriptionFromManagementGroup()
         {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetSubscriptionFromManagementGroup.json
+            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetSubscriptionFromManagementGroup.json
             // this example is just showing the usage of "ManagementGroupSubscriptions_GetSubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSubscriptionFromManagementGroup()
         {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/RemoveManagementGroupSubscription.json
+            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/RemoveManagementGroupSubscription.json
             // this example is just showing the usage of "ManagementGroupSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AddSubscriptionToManagementGroup()
         {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/AddManagementGroupSubscription.json
+            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/AddManagementGroupSubscription.json
             // this example is just showing the usage of "ManagementGroupSubscriptions_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

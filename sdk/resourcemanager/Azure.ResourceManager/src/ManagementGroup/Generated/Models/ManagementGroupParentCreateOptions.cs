@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> (Optional) The ID of the parent management group used during creation. </summary>
+    /// <summary>
+    /// (Optional) The ID of the parent management group used during creation.
+    /// Serialized Name: ManagementGroupParentCreateOptions
+    /// </summary>
     public partial class ManagementGroupParentCreateOptions
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupParentCreateOptions"/>. </summary>
-        /// <param name="id"> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
-        /// <param name="name"> The name of the parent management group. </param>
-        /// <param name="displayName"> The friendly name of the parent management group. </param>
+        /// <param name="id">
+        /// The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// Serialized Name: ManagementGroupParentCreateOptions.id
+        /// </param>
+        /// <param name="name">
+        /// The name of the parent management group
+        /// Serialized Name: ManagementGroupParentCreateOptions.name
+        /// </param>
+        /// <param name="displayName">
+        /// The friendly name of the parent management group.
+        /// Serialized Name: ManagementGroupParentCreateOptions.displayName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupParentCreateOptions(string id, string name, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        /// <summary>
+        /// The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// Serialized Name: ManagementGroupParentCreateOptions.id
+        /// </summary>
         [WirePath("id")]
         public string Id { get; set; }
-        /// <summary> The name of the parent management group. </summary>
+        /// <summary>
+        /// The name of the parent management group
+        /// Serialized Name: ManagementGroupParentCreateOptions.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The friendly name of the parent management group. </summary>
+        /// <summary>
+        /// The friendly name of the parent management group.
+        /// Serialized Name: ManagementGroupParentCreateOptions.displayName
+        /// </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
     }

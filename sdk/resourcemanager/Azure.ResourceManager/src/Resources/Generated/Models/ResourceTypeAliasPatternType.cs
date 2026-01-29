@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The type of alias pattern. </summary>
+    /// <summary>
+    /// The type of alias pattern
+    /// Serialized Name: ResourceTypeAliasPatternType
+    /// </summary>
     public enum ResourceTypeAliasPatternType
     {
-        /// <summary> NotSpecified is not allowed. </summary>
+        /// <summary>
+        /// NotSpecified is not allowed.
+        /// Serialized Name: ResourceTypeAliasPatternType.NotSpecified
+        /// </summary>
         NotSpecified,
-        /// <summary> Extract is the only allowed value. </summary>
+        /// <summary>
+        /// Extract is the only allowed value.
+        /// Serialized Name: ResourceTypeAliasPatternType.Extract
+        /// </summary>
         Extract
     }
 }

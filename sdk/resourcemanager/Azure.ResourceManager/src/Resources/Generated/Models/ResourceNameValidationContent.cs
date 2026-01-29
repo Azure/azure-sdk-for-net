@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Name and Type of the Resource. </summary>
+    /// <summary>
+    /// Name and Type of the Resource
+    /// Serialized Name: ResourceName
+    /// </summary>
     public partial class ResourceNameValidationContent
     {
         /// <summary>
@@ -47,8 +50,14 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNameValidationContent"/>. </summary>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="name">
+        /// Name of the resource
+        /// Serialized Name: ResourceName.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The type of the resource
+        /// Serialized Name: ResourceName.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceNameValidationContent(string name, ResourceType resourceType)
         {
@@ -59,8 +68,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNameValidationContent"/>. </summary>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="name">
+        /// Name of the resource
+        /// Serialized Name: ResourceName.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The type of the resource
+        /// Serialized Name: ResourceName.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceNameValidationContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,10 +89,16 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> Name of the resource. </summary>
+        /// <summary>
+        /// Name of the resource
+        /// Serialized Name: ResourceName.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The type of the resource. </summary>
+        /// <summary>
+        /// The type of the resource
+        /// Serialized Name: ResourceName.type
+        /// </summary>
         [WirePath("type")]
         public ResourceType ResourceType { get; }
     }

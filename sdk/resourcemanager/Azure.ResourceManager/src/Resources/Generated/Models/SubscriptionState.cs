@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
+    /// <summary>
+    /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
+    /// Serialized Name: SubscriptionState
+    /// </summary>
     public enum SubscriptionState
     {
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SubscriptionState.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Warned. </summary>
+        /// <summary>
+        /// Warned
+        /// Serialized Name: SubscriptionState.Warned
+        /// </summary>
         Warned,
-        /// <summary> PastDue. </summary>
+        /// <summary>
+        /// PastDue
+        /// Serialized Name: SubscriptionState.PastDue
+        /// </summary>
         PastDue,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SubscriptionState.Disabled
+        /// </summary>
         Disabled,
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: SubscriptionState.Deleted
+        /// </summary>
         Deleted
     }
 }

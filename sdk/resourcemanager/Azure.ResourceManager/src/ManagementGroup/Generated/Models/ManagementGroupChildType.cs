@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> The type of child resource. </summary>
+    /// <summary>
+    /// The type of child resource.
+    /// Serialized Name: ManagementGroupChildType
+    /// </summary>
     public readonly partial struct ManagementGroupChildType : IEquatable<ManagementGroupChildType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private const string MicrosoftManagementManagementGroupsValue = "Microsoft.Management/managementGroups";
         private const string SubscriptionsValue = "/subscriptions";
 
-        /// <summary> Microsoft.Management/managementGroups. </summary>
+        /// <summary>
+        /// Microsoft.Management/managementGroups
+        /// Serialized Name: ManagementGroupChildType.Microsoft.Management/managementGroups
+        /// </summary>
         public static ManagementGroupChildType MicrosoftManagementManagementGroups { get; } = new ManagementGroupChildType(MicrosoftManagementManagementGroupsValue);
-        /// <summary> /subscriptions. </summary>
+        /// <summary>
+        /// /subscriptions
+        /// Serialized Name: ManagementGroupChildType./subscriptions
+        /// </summary>
         public static ManagementGroupChildType Subscriptions { get; } = new ManagementGroupChildType(SubscriptionsValue);
         /// <summary> Determines if two <see cref="ManagementGroupChildType"/> values are the same. </summary>
         public static bool operator ==(ManagementGroupChildType left, ManagementGroupChildType right) => left.Equals(right);

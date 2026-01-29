@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+    /// <summary>
+    /// Metadata pertaining to creation and last modification of the resource.
+    /// Serialized Name: SystemData
+    /// </summary>
     [PropertyReferenceType]
     public partial class SystemData
     {
@@ -21,12 +24,30 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
+        /// <param name="createdBy">
+        /// The identity that created the resource.
+        /// Serialized Name: SystemData.createdBy
+        /// </param>
+        /// <param name="createdByType">
+        /// The type of identity that created the resource.
+        /// Serialized Name: SystemData.createdByType
+        /// </param>
+        /// <param name="createdOn">
+        /// The timestamp of resource creation (UTC).
+        /// Serialized Name: SystemData.createdAt
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// The identity that last modified the resource.
+        /// Serialized Name: SystemData.lastModifiedBy
+        /// </param>
+        /// <param name="lastModifiedByType">
+        /// The type of identity that last modified the resource.
+        /// Serialized Name: SystemData.lastModifiedByType
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The timestamp of resource last modification (UTC)
+        /// Serialized Name: SystemData.lastModifiedAt
+        /// </param>
         [SerializationConstructor]
         internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn)
         {
@@ -38,22 +59,40 @@ namespace Azure.ResourceManager.Models
             LastModifiedOn = lastModifiedOn;
         }
 
-        /// <summary> The identity that created the resource. </summary>
+        /// <summary>
+        /// The identity that created the resource.
+        /// Serialized Name: SystemData.createdBy
+        /// </summary>
         [WirePath("createdBy")]
         public string CreatedBy { get; }
-        /// <summary> The type of identity that created the resource. </summary>
+        /// <summary>
+        /// The type of identity that created the resource.
+        /// Serialized Name: SystemData.createdByType
+        /// </summary>
         [WirePath("createdByType")]
         public CreatedByType? CreatedByType { get; }
-        /// <summary> The timestamp of resource creation (UTC). </summary>
+        /// <summary>
+        /// The timestamp of resource creation (UTC).
+        /// Serialized Name: SystemData.createdAt
+        /// </summary>
         [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The identity that last modified the resource. </summary>
+        /// <summary>
+        /// The identity that last modified the resource.
+        /// Serialized Name: SystemData.lastModifiedBy
+        /// </summary>
         [WirePath("lastModifiedBy")]
         public string LastModifiedBy { get; }
-        /// <summary> The type of identity that last modified the resource. </summary>
+        /// <summary>
+        /// The type of identity that last modified the resource.
+        /// Serialized Name: SystemData.lastModifiedByType
+        /// </summary>
         [WirePath("lastModifiedByType")]
         public CreatedByType? LastModifiedByType { get; }
-        /// <summary> The timestamp of resource last modification (UTC). </summary>
+        /// <summary>
+        /// The timestamp of resource last modification (UTC)
+        /// Serialized Name: SystemData.lastModifiedAt
+        /// </summary>
         [WirePath("lastModifiedAt")]
         public DateTimeOffset? LastModifiedOn { get; }
     }

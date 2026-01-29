@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> The ID of the parent management group. </summary>
+    /// <summary>
+    /// The ID of the parent management group.
+    /// Serialized Name: DescendantParentGroupInfo
+    /// </summary>
     internal partial class DescendantParentGroupInfo
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DescendantParentGroupInfo"/>. </summary>
-        /// <param name="id"> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id">
+        /// The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// Serialized Name: DescendantParentGroupInfo.id
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DescendantParentGroupInfo(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        /// <summary>
+        /// The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// Serialized Name: DescendantParentGroupInfo.id
+        /// </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> The child information of a management group used during creation. </summary>
+    /// <summary>
+    /// The child information of a management group used during creation.
+    /// Serialized Name: ManagementGroupChildOptions
+    /// </summary>
     public partial class ManagementGroupChildOptions
     {
         /// <summary>
@@ -52,11 +55,26 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupChildOptions"/>. </summary>
-        /// <param name="childType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
-        /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
-        /// <param name="name"> The name of the child entity. </param>
-        /// <param name="displayName"> The friendly name of the child resource. </param>
-        /// <param name="children"> The list of children. </param>
+        /// <param name="childType">
+        /// The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups)
+        /// Serialized Name: ManagementGroupChildOptions.type
+        /// </param>
+        /// <param name="id">
+        /// The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// Serialized Name: ManagementGroupChildOptions.id
+        /// </param>
+        /// <param name="name">
+        /// The name of the child entity.
+        /// Serialized Name: ManagementGroupChildOptions.name
+        /// </param>
+        /// <param name="displayName">
+        /// The friendly name of the child resource.
+        /// Serialized Name: ManagementGroupChildOptions.displayName
+        /// </param>
+        /// <param name="children">
+        /// The list of children.
+        /// Serialized Name: ManagementGroupChildOptions.children
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupChildOptions(ManagementGroupChildType? childType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildOptions> children, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,19 +86,34 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>
+        /// <summary>
+        /// The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups)
+        /// Serialized Name: ManagementGroupChildOptions.type
+        /// </summary>
         [WirePath("type")]
         public ManagementGroupChildType? ChildType { get; }
-        /// <summary> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        /// <summary>
+        /// The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// Serialized Name: ManagementGroupChildOptions.id
+        /// </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary> The name of the child entity. </summary>
+        /// <summary>
+        /// The name of the child entity.
+        /// Serialized Name: ManagementGroupChildOptions.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The friendly name of the child resource. </summary>
+        /// <summary>
+        /// The friendly name of the child resource.
+        /// Serialized Name: ManagementGroupChildOptions.displayName
+        /// </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary> The list of children. </summary>
+        /// <summary>
+        /// The list of children.
+        /// Serialized Name: ManagementGroupChildOptions.children
+        /// </summary>
         [WirePath("children")]
         public IReadOnlyList<ManagementGroupChildOptions> Children { get; }
     }

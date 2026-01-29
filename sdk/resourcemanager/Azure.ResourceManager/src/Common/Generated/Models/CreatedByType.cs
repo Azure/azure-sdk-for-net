@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary> The type of identity that created the resource. </summary>
+    /// <summary>
+    /// The type of identity that created the resource.
+    /// Serialized Name: CreatedByType
+    /// </summary>
     public readonly partial struct CreatedByType : IEquatable<CreatedByType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Models
         private const string ManagedIdentityValue = "ManagedIdentity";
         private const string KeyValue = "Key";
 
-        /// <summary> User. </summary>
+        /// <summary>
+        /// User
+        /// Serialized Name: CreatedByType.User
+        /// </summary>
         public static CreatedByType User { get; } = new CreatedByType(UserValue);
-        /// <summary> Application. </summary>
+        /// <summary>
+        /// Application
+        /// Serialized Name: CreatedByType.Application
+        /// </summary>
         public static CreatedByType Application { get; } = new CreatedByType(ApplicationValue);
-        /// <summary> ManagedIdentity. </summary>
+        /// <summary>
+        /// ManagedIdentity
+        /// Serialized Name: CreatedByType.ManagedIdentity
+        /// </summary>
         public static CreatedByType ManagedIdentity { get; } = new CreatedByType(ManagedIdentityValue);
-        /// <summary> Key. </summary>
+        /// <summary>
+        /// Key
+        /// Serialized Name: CreatedByType.Key
+        /// </summary>
         public static CreatedByType Key { get; } = new CreatedByType(KeyValue);
         /// <summary> Determines if two <see cref="CreatedByType"/> values are the same. </summary>
         public static bool operator ==(CreatedByType left, CreatedByType right) => left.Equals(right);

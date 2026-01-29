@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> The details of a management group used during creation. </summary>
+    /// <summary>
+    /// The details of a management group used during creation.
+    /// Serialized Name: CreateManagementGroupDetails
+    /// </summary>
     public partial class CreateManagementGroupDetails
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateManagementGroupDetails"/>. </summary>
-        /// <param name="version"> The version number of the object. </param>
-        /// <param name="updatedOn"> The date and time when this object was last updated. </param>
-        /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
-        /// <param name="parent"> (Optional) The ID of the parent management group used during creation. </param>
+        /// <param name="version">
+        /// The version number of the object.
+        /// Serialized Name: CreateManagementGroupDetails.version
+        /// </param>
+        /// <param name="updatedOn">
+        /// The date and time when this object was last updated.
+        /// Serialized Name: CreateManagementGroupDetails.updatedTime
+        /// </param>
+        /// <param name="updatedBy">
+        /// The identity of the principal or process that updated the object.
+        /// Serialized Name: CreateManagementGroupDetails.updatedBy
+        /// </param>
+        /// <param name="parent">
+        /// (Optional) The ID of the parent management group used during creation.
+        /// Serialized Name: CreateManagementGroupDetails.parent
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CreateManagementGroupDetails(int? version, DateTimeOffset? updatedOn, string updatedBy, ManagementGroupParentCreateOptions parent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The version number of the object. </summary>
+        /// <summary>
+        /// The version number of the object.
+        /// Serialized Name: CreateManagementGroupDetails.version
+        /// </summary>
         [WirePath("version")]
         public int? Version { get; }
-        /// <summary> The date and time when this object was last updated. </summary>
+        /// <summary>
+        /// The date and time when this object was last updated.
+        /// Serialized Name: CreateManagementGroupDetails.updatedTime
+        /// </summary>
         [WirePath("updatedTime")]
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> The identity of the principal or process that updated the object. </summary>
+        /// <summary>
+        /// The identity of the principal or process that updated the object.
+        /// Serialized Name: CreateManagementGroupDetails.updatedBy
+        /// </summary>
         [WirePath("updatedBy")]
         public string UpdatedBy { get; }
-        /// <summary> (Optional) The ID of the parent management group used during creation. </summary>
+        /// <summary>
+        /// (Optional) The ID of the parent management group used during creation.
+        /// Serialized Name: CreateManagementGroupDetails.parent
+        /// </summary>
         [WirePath("parent")]
         public ManagementGroupParentCreateOptions Parent { get; set; }
     }
