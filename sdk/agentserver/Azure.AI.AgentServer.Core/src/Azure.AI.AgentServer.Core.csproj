@@ -9,10 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- ProjectReference for local build -->
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Contracts\src\Azure.AI.AgentServer.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Explicit PackageReference for exact version constraint (controlled by Packages.Data.props) -->
+    <PackageReference Include="Azure.AI.AgentServer.Contracts" />
     <PackageReference Include="Azure.AI.Projects" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" />
     <PackageReference Include="ModelContextProtocol" />
