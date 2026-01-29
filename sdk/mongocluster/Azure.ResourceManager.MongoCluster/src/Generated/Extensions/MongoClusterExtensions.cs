@@ -57,57 +57,57 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MongoClusterFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="FirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetMongoClusterFirewallRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetFirewallRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MongoClusterFirewallRuleResource"/> object. </returns>
-        public static MongoClusterFirewallRuleResource GetMongoClusterFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FirewallRuleResource"/> object. </returns>
+        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMongoClusterArmClient(client).GetMongoClusterFirewallRuleResource(id);
+            return GetMockableMongoClusterArmClient(client).GetFirewallRuleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MongoClusterPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetMongoClusterPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MongoClusterPrivateEndpointConnectionResource"/> object. </returns>
-        public static MongoClusterPrivateEndpointConnectionResource GetMongoClusterPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMongoClusterArmClient(client).GetMongoClusterPrivateEndpointConnectionResource(id);
+            return GetMockableMongoClusterArmClient(client).GetPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MongoClusterUserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="UserResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetMongoClusterUserResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetUserResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MongoClusterUserResource"/> object. </returns>
-        public static MongoClusterUserResource GetMongoClusterUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="UserResource"/> object. </returns>
+        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMongoClusterArmClient(client).GetMongoClusterUserResource(id);
+            return GetMockableMongoClusterArmClient(client).GetUserResource(id);
         }
 
         /// <summary>

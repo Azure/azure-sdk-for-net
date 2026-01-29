@@ -1017,11 +1017,11 @@ namespace Azure.ResourceManager.MongoCluster
             }
         }
 
-        /// <summary> Gets a collection of MongoClusterFirewallRules in the <see cref="MongoClusterResource"/>. </summary>
-        /// <returns> An object representing collection of MongoClusterFirewallRules and their operations over a MongoClusterFirewallRuleResource. </returns>
-        public virtual MongoClusterFirewallRuleCollection GetMongoClusterFirewallRules()
+        /// <summary> Gets a collection of FirewallRules in the <see cref="MongoClusterResource"/>. </summary>
+        /// <returns> An object representing collection of FirewallRules and their operations over a FirewallRuleResource. </returns>
+        public virtual FirewallRuleCollection GetFirewallRules()
         {
-            return GetCachedClient(client => new MongoClusterFirewallRuleCollection(client, Id));
+            return GetCachedClient(client => new FirewallRuleCollection(client, Id));
         }
 
         /// <summary> Gets information about a mongo cluster firewall rule. </summary>
@@ -1030,11 +1030,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MongoClusterFirewallRuleResource>> GetMongoClusterFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirewallRuleResource>> GetFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            return await GetMongoClusterFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets information about a mongo cluster firewall rule. </summary>
@@ -1043,31 +1043,18 @@ namespace Azure.ResourceManager.MongoCluster
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MongoClusterFirewallRuleResource> GetMongoClusterFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<FirewallRuleResource> GetFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            return GetMongoClusterFirewallRules().Get(firewallRuleName, cancellationToken);
+            return GetFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MongoClusterPrivateEndpointConnectionResources in the <see cref="MongoClusterResource"/>. </summary>
-        /// <returns> An object representing collection of MongoClusterPrivateEndpointConnectionResources and their operations over a MongoClusterPrivateEndpointConnectionResource. </returns>
-        public virtual MongoClusterPrivateEndpointConnectionResourceCollection GetMongoClusterPrivateEndpointConnectionResources()
+        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the <see cref="MongoClusterResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
+        public virtual PrivateEndpointConnectionResourceCollection GetPrivateEndpointConnectionResources()
         {
-            return GetCachedClient(client => new MongoClusterPrivateEndpointConnectionResourceCollection(client, Id));
-        }
-
-        /// <summary> Get a specific private connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MongoClusterPrivateEndpointConnectionResource>> GetMongoClusterPrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetMongoClusterPrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new PrivateEndpointConnectionResourceCollection(client, Id));
         }
 
         /// <summary> Get a specific private connection. </summary>
@@ -1076,18 +1063,31 @@ namespace Azure.ResourceManager.MongoCluster
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MongoClusterPrivateEndpointConnectionResource> GetMongoClusterPrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetMongoClusterPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
+            return await GetPrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of MongoClusterUsers in the <see cref="MongoClusterResource"/>. </summary>
-        /// <returns> An object representing collection of MongoClusterUsers and their operations over a MongoClusterUserResource. </returns>
-        public virtual MongoClusterUserCollection GetMongoClusterUsers()
+        /// <summary> Get a specific private connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new MongoClusterUserCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Users in the <see cref="MongoClusterResource"/>. </summary>
+        /// <returns> An object representing collection of Users and their operations over a UserResource. </returns>
+        public virtual UserCollection GetUsers()
+        {
+            return GetCachedClient(client => new UserCollection(client, Id));
         }
 
         /// <summary> Gets the defintion of a Mongo cluster user. </summary>
@@ -1096,11 +1096,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MongoClusterUserResource>> GetMongoClusterUserAsync(string userName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserResource>> GetUserAsync(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            return await GetMongoClusterUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
+            return await GetUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the defintion of a Mongo cluster user. </summary>
@@ -1109,11 +1109,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MongoClusterUserResource> GetMongoClusterUser(string userName, CancellationToken cancellationToken = default)
+        public virtual Response<UserResource> GetUser(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            return GetMongoClusterUsers().Get(userName, cancellationToken);
+            return GetUsers().Get(userName, cancellationToken);
         }
     }
 }

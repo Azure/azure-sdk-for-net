@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MongoCluster
 {
     /// <summary></summary>
-    public partial class MongoClusterPrivateEndpointConnectionResource : IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>
+    public partial class PrivateEndpointConnectionResource : IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>
     {
         private static IJsonModel<MongoClusterPrivateEndpointConnectionResourceData> s_dataDeserializationInstance;
 

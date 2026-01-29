@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MongoCluster
 {
     /// <summary></summary>
-    internal partial class MongoClusterUserOperationSource : IOperationSource<MongoClusterUserResource>
+    internal partial class FirewallRuleOperationSource : IOperationSource<FirewallRuleResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal MongoClusterUserOperationSource(ArmClient client)
+        internal FirewallRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MongoClusterUserResource IOperationSource<MongoClusterUserResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FirewallRuleResource IOperationSource<FirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MongoClusterUserData data = MongoClusterUserData.DeserializeMongoClusterUserData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MongoClusterUserResource(_client, data);
+            MongoClusterFirewallRuleData data = MongoClusterFirewallRuleData.DeserializeMongoClusterFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new FirewallRuleResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MongoClusterUserResource> IOperationSource<MongoClusterUserResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FirewallRuleResource> IOperationSource<FirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MongoClusterUserData data = MongoClusterUserData.DeserializeMongoClusterUserData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MongoClusterUserResource(_client, data);
+            MongoClusterFirewallRuleData data = MongoClusterFirewallRuleData.DeserializeMongoClusterFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new FirewallRuleResource(_client, data);
         }
     }
 }
