@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    public partial class MaintenanceConfigurationResource : IJsonModel<MaintenanceConfigurationData>
+    /// <summary></summary>
+    public partial class MaintenanceConfigurationResource : IJsonModel<MaintenancePublicConfigurationData>
     {
-        private static MaintenanceConfigurationData s_dataDeserializationInstance;
-        private static MaintenanceConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MaintenancePublicConfigurationData> s_dataDeserializationInstance;
 
-        void IJsonModel<MaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceConfigurationData>)Data).Write(writer, options);
+        private static IJsonModel<MaintenancePublicConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenancePublicConfigurationData();
 
-        MaintenanceConfigurationData IJsonModel<MaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<MaintenancePublicConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenancePublicConfigurationData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceConfigurationData>(Data, options, AzureResourceManagerMaintenanceContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenancePublicConfigurationData IJsonModel<MaintenancePublicConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        MaintenanceConfigurationData IPersistableModel<MaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceConfigurationData>(data, options, AzureResourceManagerMaintenanceContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MaintenancePublicConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenancePublicConfigurationData>(Data, options, AzureResourceManagerMaintenanceContext.Default);
 
-        string IPersistableModel<MaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenancePublicConfigurationData IPersistableModel<MaintenancePublicConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenancePublicConfigurationData>(data, options, AzureResourceManagerMaintenanceContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MaintenancePublicConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,117 +7,188 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMaintenanceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="namespace"> Gets or sets namespace of the resource. </param>
         /// <param name="extensionProperties"> Gets or sets extensionProperties of the maintenanceConfiguration. </param>
         /// <param name="maintenanceScope"> Gets or sets maintenanceScope of the configuration. </param>
         /// <param name="visibility"> Gets or sets the visibility of the configuration. The default value is 'Custom'. </param>
+        /// <param name="installPatches"> The input parameters to be passed to the patch run operation. </param>
         /// <param name="startOn"> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </param>
         /// <param name="expireOn"> Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59. </param>
         /// <param name="duration"> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </param>
         /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </param>
-        /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday]. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday. </param>
-        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string @namespace = null, IDictionary<string, string> extensionProperties = null, MaintenanceScope? maintenanceScope = null, MaintenanceConfigurationVisibility? visibility = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, TimeSpan? duration = null, string timeZone = null, string recurEvery = null)
+        /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
+        /// <param name="location"> Gets or sets location of the resource. </param>
+        /// <param name="tags"> Gets or sets tags of the resource. </param>
+        /// <returns> A new <see cref="Maintenance.MaintenancePublicConfigurationData"/> instance for mocking. </returns>
+        public static MaintenancePublicConfigurationData MaintenancePublicConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string duration = default, string timeZone = default, string recurEvery = default, string location = default, IDictionary<string, string> tags = default)
         {
-            tags ??= new Dictionary<string, string>();
-            extensionProperties ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MaintenanceConfigurationData(
+            return new MaintenancePublicConfigurationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                additionalBinaryDataProperties: null,
+                @namespace is null && extensionProperties is null && maintenanceScope is null && visibility is null && installPatches is null && startOn is null && expireOn is null && duration is null && timeZone is null && recurEvery is null ? default : new MaintenanceConfigurationProperties(
+                    @namespace,
+                    extensionProperties,
+                    maintenanceScope,
+                    new MaintenanceWindow(
+                        startOn,
+                        expireOn,
+                        duration,
+                        timeZone,
+                        recurEvery,
+                        null),
+                    visibility,
+                    installPatches,
+                    null),
                 location,
-                @namespace,
-                extensionProperties,
-                maintenanceScope,
-                visibility,
-                startOn,
-                expireOn,
-                duration,
-                timeZone,
-                recurEvery,
-                serializedAdditionalRawData: null);
+                tags);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceApplyUpdateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Input properties for patching a Windows machine. </summary>
+        /// <param name="kbNumbersToExclude"> Windows KBID to be excluded for patching. </param>
+        /// <param name="kbNumbersToInclude"> Windows KBID to be included for patching. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', and 'Updates'. </param>
+        /// <param name="isExcludeKbsRebootRequired"> Exclude patches which need reboot. </param>
+        /// <returns> A new <see cref="Models.MaintenanceWindowsPatchSettings"/> instance for mocking. </returns>
+        public static MaintenanceWindowsPatchSettings MaintenanceWindowsPatchSettings(IEnumerable<string> kbNumbersToExclude = default, IEnumerable<string> kbNumbersToInclude = default, IEnumerable<string> classificationsToInclude = default, bool? isExcludeKbsRebootRequired = default)
+        {
+            kbNumbersToExclude ??= new ChangeTrackingList<string>();
+            kbNumbersToInclude ??= new ChangeTrackingList<string>();
+            classificationsToInclude ??= new ChangeTrackingList<string>();
+
+            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude.ToList(), kbNumbersToInclude.ToList(), classificationsToInclude.ToList(), isExcludeKbsRebootRequired, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input properties for patching a Linux machine. </summary>
+        /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
+        /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </param>
+        /// <returns> A new <see cref="Models.MaintenanceLinuxPatchSettings"/> instance for mocking. </returns>
+        public static MaintenanceLinuxPatchSettings MaintenanceLinuxPatchSettings(IEnumerable<string> packageNameMasksToExclude = default, IEnumerable<string> packageNameMasksToInclude = default, IEnumerable<string> classificationsToInclude = default)
+        {
+            packageNameMasksToExclude ??= new ChangeTrackingList<string>();
+            packageNameMasksToInclude ??= new ChangeTrackingList<string>();
+            classificationsToInclude ??= new ChangeTrackingList<string>();
+
+            return new MaintenanceLinuxPatchSettings(packageNameMasksToExclude.ToList(), packageNameMasksToInclude.ToList(), classificationsToInclude.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> The status. </param>
         /// <param name="resourceId"> The resourceId. </param>
         /// <param name="lastUpdatedOn"> Last Update time. </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceApplyUpdateData"/> instance for mocking. </returns>
-        public static MaintenanceApplyUpdateData MaintenanceApplyUpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MaintenanceUpdateStatus? status = null, ResourceIdentifier resourceId = null, DateTimeOffset? lastUpdatedOn = null)
+        public static MaintenanceApplyUpdateData MaintenanceApplyUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UpdateStatus? status = default, ResourceIdentifier resourceId = default, DateTimeOffset? lastUpdatedOn = default)
         {
             return new MaintenanceApplyUpdateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                status,
-                resourceId,
-                lastUpdatedOn,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                status is null && resourceId is null && lastUpdatedOn is null ? default : new ApplyUpdateProperties(status, resourceId, lastUpdatedOn, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceConfigurationAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
         /// <param name="resourceId"> The unique resourceId. </param>
-        /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier maintenanceConfigurationId = null, ResourceIdentifier resourceId = null)
+        /// <param name="filter"> Properties of the configuration assignment. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
+        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier maintenanceConfigurationId = default, ResourceIdentifier resourceId = default, MaintenanceConfigurationAssignmentFilter filter = default, string location = default)
         {
             return new MaintenanceConfigurationAssignmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                location,
-                maintenanceConfigurationId,
-                resourceId,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                maintenanceConfigurationId is null && resourceId is null && filter is null ? default : new ConfigurationAssignmentProperties(maintenanceConfigurationId, resourceId, filter, null),
+                location);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceUpdate"/>. </summary>
+        /// <summary> Azure query for the update configuration. </summary>
+        /// <param name="resourceTypes"> List of allowed resources. </param>
+        /// <param name="resourceGroups"> List of allowed resource groups. </param>
+        /// <param name="osTypes"> List of allowed operating systems. </param>
+        /// <param name="locations"> List of locations to scope the query to. </param>
+        /// <param name="tagSettings"> Tag settings for the VM. </param>
+        /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentFilter"/> instance for mocking. </returns>
+        public static MaintenanceConfigurationAssignmentFilter MaintenanceConfigurationAssignmentFilter(ResourceType? resourceTypes = default, IEnumerable<string> resourceGroups = default, IEnumerable<string> osTypes = default, AzureLocation? locations = default, VmTagSettings tagSettings = default)
+        {
+            resourceGroups ??= new ChangeTrackingList<string>();
+            osTypes ??= new ChangeTrackingList<string>();
+
+            return new MaintenanceConfigurationAssignmentFilter(
+                resourceTypes,
+                resourceGroups.ToList(),
+                osTypes.ToList(),
+                locations,
+                tagSettings,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tag filter information for the VM. </summary>
+        /// <param name="tags"> Dictionary of tags with its list of values. </param>
+        /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
+        /// <returns> A new <see cref="Models.VmTagSettings"/> instance for mocking. </returns>
+        public static VmTagSettings VmTagSettings(IDictionary<string, IList<string>> tags = default, VmTagOperator? filterOperator = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, IList<string>>();
+
+            return new VmTagSettings(tags, filterOperator, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response of scheduled event acknowledge. </summary>
+        /// <param name="value"> Successfully Approved. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventApproveResult"/> instance for mocking. </returns>
+        public static ScheduledEventApproveResult ScheduledEventApproveResult(string value = default)
+        {
+            return new ScheduledEventApproveResult(value, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
         /// <param name="impactDurationInSec"> Duration of impact in seconds. </param>
         /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
         /// <param name="resourceId"> The resourceId. </param>
-        /// <returns> A new <see cref="Models.MaintenanceUpdate"/> instance for mocking. </returns>
-        public static MaintenanceUpdate MaintenanceUpdate(MaintenanceScope? maintenanceScope = null, MaintenanceImpactType? impactType = null, MaintenanceUpdateStatus? status = null, int? impactDurationInSec = null, DateTimeOffset? notBefore = null, ResourceIdentifier resourceId = null)
+        /// <returns> A new <see cref="Models.Update"/> instance for mocking. </returns>
+        public static Update Update(MaintenanceScope? maintenanceScope = default, ImpactType? impactType = default, UpdateStatus? status = default, int? impactDurationInSec = default, DateTimeOffset? notBefore = default, ResourceIdentifier resourceId = default)
         {
-            return new MaintenanceUpdate(
+            return new Update(
                 maintenanceScope,
                 impactType,
                 status,
                 impactDurationInSec,
                 notBefore,
-                resourceId,
-                serializedAdditionalRawData: null);
+                resourceId is null ? default : new UpdateProperties(resourceId, null),
+                additionalBinaryDataProperties: null);
         }
     }
 }
