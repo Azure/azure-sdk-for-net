@@ -29,8 +29,12 @@
   <!-- ============================================================== -->
   <!--         DEPENDENCIES FOR LEGACY/TRACK 1 AZURE LIBRARIES        -->
   <!-- ============================================================== -->
-  <ItemGroup Condition="'$(IsTestOrSupportProject)' != 'true' 
-    and $(MSBuildProjectName.StartsWith('Microsoft.Azure'))">
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'
+      and $(MSBuildProjectName.StartsWith('Microsoft.Azure'))">
     <PackageVersion Include="System.Net.Http" Version="4.3.4" />
     <PackageVersion Include="System.Text.Encodings.Web" Version="4.5.1" />
     <PackageVersion Include="System.Text.Json" Version="4.7.2" />

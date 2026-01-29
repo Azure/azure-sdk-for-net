@@ -4,15 +4,6 @@
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <IsTestOrSupportProject>false</IsTestOrSupportProject>
-    <IsTestOrSupportProject Condition="'$(IsTestProject)' == 'true'
-      or '$(IsTestSupportProject)' == 'true'
-      or '$(IsPerfProject)' == 'true'
-      or '$(IsStressProject)' == 'true'
-      or '$(IsSamplesProject)' == 'true'">true</IsTestOrSupportProject>
-  </PropertyGroup>
-
   <!-- ============================================================== -->
   <!--                    SHARED VERSION STAMPS                       -->
   <!--                                                                -->
@@ -72,7 +63,11 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'
       or '$(IsGeneratorLibrary)' == 'true'
-      or '$(IsTestOrSupportProject)' == 'true'">
+      or '$(IsTestProject)' == 'true'
+      or '$(IsTestSupportProject)' == 'true'
+      or '$(IsPerfProject)' == 'true'
+      or '$(IsStressProject)' == 'true'
+      or '$(IsSamplesProject)' == 'true'">
 
     <!-- BCL packages -->
     <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.2" />
@@ -220,8 +215,15 @@
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
     <PackageVersion Include="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.2" />
-    <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
+  </ItemGroup>
+  <ItemGroup Condition = "$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)"/>
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.Projects'))">
@@ -242,33 +244,45 @@
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageVersion Include="Microsoft.Azure.WebJobs" Version="3.0.44" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
-    <PackageVersion Include="Apache.Avro" Version="1.12.1" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="CloudNative.CloudEvents" Version="2.8.0" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Google.Protobuf" Version="3.33.2" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Grpc.Tools" Version="2.76.0" PrivateAssets="all" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="MessagePack" Version="2.5.192" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Azure.SignalR" Version="1.32.0" Condition="'$(IsTestOrSupportProject)' != 'true'" />
     <PackageVersion Include="Microsoft.Azure.SignalR.Management" Version="1.32.0" />
-    <PackageVersion Include="Microsoft.Azure.SignalR.Protocols" Version="1.32.0" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Azure.WebJobs.Sources" Version="3.0.44" PrivateAssets="All" Condition="'$(IsTestOrSupportProject)' != 'true'"/>
-    <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.44" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
+  </ItemGroup>
+  <ItemGroup Condition ="$(MSBuildProjectName.StartsWith('Microsoft.'))
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="Apache.Avro" Version="1.12.1" />
+    <PackageVersion Include="CloudNative.CloudEvents" Version="2.8.0" />
+    <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
+    <PackageVersion Include="Google.Protobuf" Version="3.33.2" />
+    <PackageVersion Include="Grpc.Tools" Version="2.76.0" PrivateAssets="all" />
+    <PackageVersion Include="MessagePack" Version="2.5.192" />
+    <PackageVersion Include="Microsoft.Azure.SignalR" Version="1.32.0" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Protocols" Version="1.32.0" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Sources" Version="3.0.44" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.44" />
+    <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
+    <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
-  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
-    <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="10.0.1" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.3.0" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
+  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" />
+    <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.3.0" />
+    <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
   </ItemGroup>
 
   <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
@@ -282,9 +296,16 @@
     <PackageVersion Include="System.ServiceModel.Primitives" Version="6.2.0" />
     <PackageVersion Update="Azure.Storage.Files.Shares" Version="12.21.0" />
     <PackageVersion Update="Azure.Storage.Queues" Version="12.21.0" />
-    <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="System.IO.Pipelines" Version="10.0.1" Condition="'$(IsTestOrSupportProject)' != 'true'" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
+    <PackageVersion Include="System.IO.Pipelines" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="('$(IsWcfLibrary)' == 'true') AND ($(TargetFramework.StartsWith('net4')))">
@@ -328,7 +349,11 @@
   <!-- architects and Azure SDK team.                                 -->
   <!-- ============================================================== -->
 
-  <ItemGroup Condition="'$(IsTestOrSupportProject)' == 'true'">
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'
+      or '$(IsTestSupportProject)' == 'true'
+      or '$(IsPerfProject)' == 'true'
+      or '$(IsStressProject)' == 'true'
+      or '$(IsSamplesProject)' == 'true'">
 
     <!-- General testing infrastructure  -->
     <PackageVersion Include="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
@@ -478,11 +503,15 @@
   </ItemGroup>
 
   <!-- The unbranded test framework is the first to use NUnit 4; the repository will migrate fully in the near future -->
-  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
-    <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Include="NUnit" Version="4.4.0" Condition="'$(IsTestOrSupportProject)' != 'true'" />
-    <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" Condition="'$(IsTestOrSupportProject)' == 'true'" />
-    <PackageVersion Update="Microsoft.NET.Test.Sdk" Version="17.13.0" Condition="'$(IsTestOrSupportProject)' == 'true'" />
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))
+      and '$(IsTestProject)' != 'true'">
+    <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
+    <PackageVersion Include="NUnit" Version="4.4.0" />
+  </ItemGroup>
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework')) 
+      and '$(IsTestProject)' == 'true'">
+    <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageVersion Update="Microsoft.NET.Test.Sdk" Version="17.13.0" />
   </ItemGroup>
 
   <!-- Azure.Test.Perf needs older Azure.Core for maximum compatibility with test projects -->
