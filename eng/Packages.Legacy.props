@@ -2,19 +2,22 @@
   <!-- THIS FILE CONTAINS CENTRAL VERSIONS FOR ALL TRACK 1 AND LEGACY PACKAGES.
        CURRENT GENERATION CAN BE FOUND IN DIRECTORY.PACKAGES.PROPS -->
 
-  <!--
-    Shared version stamps; these packages are intentionally scoped but
-    should generally sync to the same version.
-  -->
+  <!-- ============================================================== -->
+  <!--       LEGACY PACKAGE USE ONLY SHARED VERSION STAMPS            -->
+  <!--                                                                -->
+  <!-- these packages are intentionally scoped but should generally   -->
+  <!-- sync to the same version.                                      -->
+  <!-- ============================================================== -->
   <PropertyGroup>
-    <!-- Legacy package use only -->
     <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
     <MicrosoftRestClientRuntimeAzureVersion>[3.3.19, 4.0.0)</MicrosoftRestClientRuntimeAzureVersion>
     <MicrosoftRestClientRuntimeAzureAuthenticationVersion>[2.4.1]</MicrosoftRestClientRuntimeAzureAuthenticationVersion>
     <MicrosoftRestClientRuntimeAzureTestFrameworkVersion>[1.7.7, 2.0.0)</MicrosoftRestClientRuntimeAzureTestFrameworkVersion>
   </PropertyGroup>
 
-  <!-- Dependencies for packages prior to Track 1 -->
+  <!-- ============================================================== -->
+  <!--         DEPENDENCIES FOR PACKAGES PRIOR TO TRACK 1             -->
+  <!-- ============================================================== -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
     <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="1.1.2" />
   </ItemGroup>
@@ -23,9 +26,9 @@
     <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
   </ItemGroup>
 
-  <!--
-    Dependencies for legacy (Track 1) libraries.
-  -->
+  <!-- ============================================================== -->
+  <!--         DEPENDENCIES FOR LEGACY/TRACK 1 AZURE LIBRARIES        -->
+  <!-- ============================================================== -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true' 
     and '$(IsTestSupportProject)' != 'true'
     and '$(IsPerfProject)' != 'true'
@@ -78,9 +81,19 @@
     <PackageVersion Update="Azure.Storage.Blobs" Version="12.26.0" />
   </ItemGroup>
 
-    <!--
-    xunit is only approved for legacy use. Azure SDK test projects should use NUnit.
-  -->
+  <!-- ============================================================== -->
+  <!--    DEPENDENCIES FOR LEGACY/TRACK 1 TEST AND SUPPORT PROJECTS   -->
+  <!--                                                                -->
+  <!-- Specific dependency versions for legacy Azure testing, sample  -->
+  <!-- and support projects. Only packages that are specific to those -->
+  <!-- areas and are otherwise NOT approved for use in published      -->
+  <!-- packages should go here.                                       -->
+  <!--                                                                -->
+  <!-- These dependencies are not intended for use in current         -->
+  <!-- generation test projects.                                      -->
+  <!--                                                                -->
+  <!-- Azure SDK test projects should use NUnit                       -->
+  <!-- ============================================================== -->
   <ItemGroup Condition="
       ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
       and (
@@ -97,18 +110,6 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.2" />
   </ItemGroup>
 
-  <!--
-    Specific dependency versions for legacy Azure testing, sample, and support
-    projects. Only packages that are specific to those areas and are otherwise
-    NOT approved for use in published packages should go here.
-
-    These dependencies are not intended for use in current generation test projects.
-  -->
-
-  <!--
-    FluentAssertions is approved only for legacy use. Azure SDK test projects should
-    use NUnit assertions.
-  -->
   <ItemGroup Condition="
       ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsPerfProject)' == 'true')
       and (
@@ -123,9 +124,6 @@
     <PackageVersion Include="FluentAssertions" Version="5.10.3" />
   </ItemGroup>
 
-  <!--
-    BouncyCastle is approved only for legacy use.
-  -->
   <ItemGroup Condition="
       ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
       and (
