@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Configure backups for databases in your SQL virtual machine. </summary>
     public partial class SqlVmAutoBackupSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlVmAutoBackupSettings"/>. </summary>
         public SqlVmAutoBackupSettings()
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="fullBackupStartHour"> Start time of a given day during which full backups can take place. 0-23 hours. </param>
         /// <param name="fullBackupWindowHours"> Duration of the time window of a given day during which full backups can take place. 1-23 hours. </param>
         /// <param name="logBackupFrequency"> Frequency of log backups. 5-60 minutes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlVmAutoBackupSettings(bool? isEnabled, bool? isEncryptionEnabled, int? retentionPeriodInDays, Uri storageAccountUri, string storageContainerName, string storageAccessKey, string password, bool? areSystemDbsIncludedInBackup, SqVmBackupScheduleType? backupScheduleType, SqlVmFullBackupFrequency? fullBackupFrequency, IList<SqlVmAutoBackupDayOfWeek> daysOfWeek, int? fullBackupStartHour, int? fullBackupWindowHours, int? logBackupFrequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmAutoBackupSettings(bool? isEnabled, bool? isEncryptionEnabled, int? retentionPeriodInDays, Uri storageAccountUri, string storageContainerName, string storageAccessKey, string password, bool? areSystemDbsIncludedInBackup, SqVmBackupScheduleType? backupScheduleType, SqlVmFullBackupFrequency? fullBackupFrequency, IList<SqlVmAutoBackupDayOfWeek> daysOfWeek, int? fullBackupStartHour, int? fullBackupWindowHours, int? logBackupFrequency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             IsEncryptionEnabled = isEncryptionEnabled;
@@ -83,35 +55,48 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             FullBackupStartHour = fullBackupStartHour;
             FullBackupWindowHours = fullBackupWindowHours;
             LogBackupFrequency = logBackupFrequency;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable or disable autobackup on SQL virtual machine. </summary>
         public bool? IsEnabled { get; set; }
+
         /// <summary> Enable or disable encryption for backup on SQL virtual machine. </summary>
         public bool? IsEncryptionEnabled { get; set; }
+
         /// <summary> Retention period of backup: 1-90 days. </summary>
         public int? RetentionPeriodInDays { get; set; }
+
         /// <summary> Storage account url where backup will be taken to. </summary>
         public Uri StorageAccountUri { get; set; }
+
         /// <summary> Storage container name where backup will be taken to. </summary>
         public string StorageContainerName { get; set; }
+
         /// <summary> Storage account key where backup will be taken to. </summary>
         public string StorageAccessKey { get; set; }
+
         /// <summary> Password for encryption on backup. </summary>
         public string Password { get; set; }
+
         /// <summary> Include or exclude system databases from auto backup. </summary>
         public bool? AreSystemDbsIncludedInBackup { get; set; }
+
         /// <summary> Backup schedule type. </summary>
         public SqVmBackupScheduleType? BackupScheduleType { get; set; }
+
         /// <summary> Frequency of full backups. In both cases, full backups begin during the next scheduled time window. </summary>
         public SqlVmFullBackupFrequency? FullBackupFrequency { get; set; }
+
         /// <summary> Days of the week for the backups when FullBackupFrequency is set to Weekly. </summary>
         public IList<SqlVmAutoBackupDayOfWeek> DaysOfWeek { get; }
+
         /// <summary> Start time of a given day during which full backups can take place. 0-23 hours. </summary>
         public int? FullBackupStartHour { get; set; }
+
         /// <summary> Duration of the time window of a given day during which full backups can take place. 1-23 hours. </summary>
         public int? FullBackupWindowHours { get; set; }
+
         /// <summary> Frequency of log backups. 5-60 minutes. </summary>
         public int? LogBackupFrequency { get; set; }
     }

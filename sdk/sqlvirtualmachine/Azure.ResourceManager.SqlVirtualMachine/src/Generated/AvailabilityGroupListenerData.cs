@@ -13,98 +13,129 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary>
-    /// A class representing the AvailabilityGroupListener data model.
-    /// A SQL Server availability group listener.
-    /// </summary>
+    /// <summary> A SQL Server availability group listener. </summary>
     public partial class AvailabilityGroupListenerData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerData"/>. </summary>
         public AvailabilityGroupListenerData()
         {
-            LoadBalancerConfigurations = new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>();
-            MultiSubnetIPConfigurations = new ChangeTrackingList<MultiSubnetIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
-        /// <param name="availabilityGroupName"> Name of the availability group. </param>
-        /// <param name="loadBalancerConfigurations"> List of load balancer configurations for an availability group listener. </param>
-        /// <param name="multiSubnetIPConfigurations"> List of multi subnet IP configurations for an AG listener. </param>
-        /// <param name="createDefaultAvailabilityGroupIfNotExist"> Create a default availability group if it does not exist. </param>
-        /// <param name="port"> Listener port. </param>
-        /// <param name="availabilityGroupConfiguration"> Availability Group configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityGroupListenerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string availabilityGroupName, IList<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations, IList<MultiSubnetIPConfiguration> multiSubnetIPConfigurations, bool? createDefaultAvailabilityGroupIfNotExist, int? port, AvailabilityGroupConfiguration availabilityGroupConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal AvailabilityGroupListenerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AvailabilityGroupListenerProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            AvailabilityGroupName = availabilityGroupName;
-            LoadBalancerConfigurations = loadBalancerConfigurations;
-            MultiSubnetIPConfigurations = multiSubnetIPConfigurations;
-            CreateDefaultAvailabilityGroupIfNotExist = createDefaultAvailabilityGroupIfNotExist;
-            Port = port;
-            AvailabilityGroupConfiguration = availabilityGroupConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Resource properties. </summary>
+        internal AvailabilityGroupListenerProperties Properties { get; set; }
+
         /// <summary> Provisioning state to track the async operation status. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Name of the availability group. </summary>
-        public string AvailabilityGroupName { get; set; }
+        public string AvailabilityGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilityGroupListenerProperties();
+                }
+                Properties.AvailabilityGroupName = value;
+            }
+        }
+
         /// <summary> List of load balancer configurations for an availability group listener. </summary>
-        public IList<AvailabilityGroupListenerLoadBalancerConfiguration> LoadBalancerConfigurations { get; }
+        public IList<AvailabilityGroupListenerLoadBalancerConfiguration> LoadBalancerConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilityGroupListenerProperties();
+                }
+                return Properties.LoadBalancerConfigurations;
+            }
+        }
+
         /// <summary> List of multi subnet IP configurations for an AG listener. </summary>
-        public IList<MultiSubnetIPConfiguration> MultiSubnetIPConfigurations { get; }
+        public IList<MultiSubnetIPConfiguration> MultiSubnetIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilityGroupListenerProperties();
+                }
+                return Properties.MultiSubnetIPConfigurations;
+            }
+        }
+
         /// <summary> Create a default availability group if it does not exist. </summary>
-        public bool? CreateDefaultAvailabilityGroupIfNotExist { get; set; }
+        public bool? CreateDefaultAvailabilityGroupIfNotExist
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateDefaultAvailabilityGroupIfNotExist;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilityGroupListenerProperties();
+                }
+                Properties.CreateDefaultAvailabilityGroupIfNotExist = value.Value;
+            }
+        }
+
         /// <summary> Listener port. </summary>
-        public int? Port { get; set; }
-        /// <summary> Availability Group configuration. </summary>
-        internal AvailabilityGroupConfiguration AvailabilityGroupConfiguration { get; set; }
+        public int? Port
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilityGroupListenerProperties();
+                }
+                Properties.Port = value.Value;
+            }
+        }
+
         /// <summary> Replica configurations. </summary>
         public IList<AvailabilityGroupReplica> AvailabilityGroupReplicas
         {
             get
             {
-                if (AvailabilityGroupConfiguration is null)
-                    AvailabilityGroupConfiguration = new AvailabilityGroupConfiguration();
-                return AvailabilityGroupConfiguration.Replicas;
+                if (Properties is null)
+                {
+                    Properties = new AvailabilityGroupListenerProperties();
+                }
+                return Properties.AvailabilityGroupReplicas;
             }
         }
     }

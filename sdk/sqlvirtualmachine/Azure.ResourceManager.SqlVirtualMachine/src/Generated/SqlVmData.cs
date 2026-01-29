@@ -14,131 +14,369 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary>
-    /// A class representing the SqlVm data model.
-    /// A SQL virtual machine.
-    /// </summary>
+    /// <summary> A SQL virtual machine. </summary>
     public partial class SqlVmData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlVmData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SqlVmData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlVmData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Azure Active Directory identity of the server. Current supported identity types: None, SystemAssigned. </param>
-        /// <param name="virtualMachineResourceId"> ARM Resource id of underlying virtual machine created from SQL marketplace image. </param>
-        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
-        /// <param name="sqlImageOffer"> SQL image offer. Examples include SQL2016-WS2016, SQL2017-WS2016. </param>
-        /// <param name="sqlServerLicenseType"> SQL Server license type. </param>
-        /// <param name="sqlManagement"> SQL Server Management type. </param>
-        /// <param name="sqlImageSku"> SQL Server edition type. </param>
-        /// <param name="sqlVmGroupResourceId"> ARM resource id of the SQL virtual machine group this SQL virtual machine is or will be part of. </param>
-        /// <param name="windowsServerFailoverClusterDomainCredentials"> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </param>
-        /// <param name="windowsServerFailoverClusterStaticIP"> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </param>
-        /// <param name="autoPatchingSettings"> Auto patching settings for applying critical security updates to SQL virtual machine. </param>
-        /// <param name="autoBackupSettings"> Auto backup settings for SQL Server. </param>
-        /// <param name="keyVaultCredentialSettings"> Key vault credential settings. </param>
-        /// <param name="serverConfigurationsManagementSettings"> SQL Server configuration management settings. </param>
-        /// <param name="storageConfigurationSettings"> Storage Configuration Settings. </param>
-        /// <param name="assessmentSettings"> Assessment Settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVmGroupResourceId, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials, IPAddress windowsServerFailoverClusterStaticIP, SqlVmAutoPatchingSettings autoPatchingSettings, SqlVmAutoBackupSettings autoBackupSettings, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings, SqlVmStorageConfigurationSettings storageConfigurationSettings, SqlVmAssessmentSettings assessmentSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
+        /// <param name="identity"> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </param>
+        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, string sqlVmName, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            SqlVmName = sqlVmName;
             Identity = identity;
-            VirtualMachineResourceId = virtualMachineResourceId;
-            ProvisioningState = provisioningState;
-            SqlImageOffer = sqlImageOffer;
-            SqlServerLicenseType = sqlServerLicenseType;
-            SqlManagement = sqlManagement;
-            SqlImageSku = sqlImageSku;
-            SqlVmGroupResourceId = sqlVmGroupResourceId;
-            WindowsServerFailoverClusterDomainCredentials = windowsServerFailoverClusterDomainCredentials;
-            WindowsServerFailoverClusterStaticIP = windowsServerFailoverClusterStaticIP;
-            AutoPatchingSettings = autoPatchingSettings;
-            AutoBackupSettings = autoBackupSettings;
-            KeyVaultCredentialSettings = keyVaultCredentialSettings;
-            ServerConfigurationsManagementSettings = serverConfigurationsManagementSettings;
-            StorageConfigurationSettings = storageConfigurationSettings;
-            AssessmentSettings = assessmentSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlVmData"/> for deserialization. </summary>
-        internal SqlVmData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        internal SqlVirtualMachineProperties Properties { get; set; }
 
-        /// <summary> Azure Active Directory identity of the server. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary> Name of the SQL virtual machine. </summary>
+        public string SqlVmName { get; }
+
+        /// <summary> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> ARM Resource id of underlying virtual machine created from SQL marketplace image. </summary>
-        public ResourceIdentifier VirtualMachineResourceId { get; set; }
+        public ResourceIdentifier VirtualMachineResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachineResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.VirtualMachineResourceId = value;
+            }
+        }
+
         /// <summary> Provisioning state to track the async operation status. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> SQL image offer. Examples include SQL2016-WS2016, SQL2017-WS2016. </summary>
-        public string SqlImageOffer { get; set; }
+        public string SqlImageOffer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlImageOffer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.SqlImageOffer = value;
+            }
+        }
+
         /// <summary> SQL Server license type. </summary>
-        public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary> SQL Server Management type. </summary>
-        public SqlManagementMode? SqlManagement { get; set; }
+        public SqlServerLicenseType? SqlServerLicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlServerLicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.SqlServerLicenseType = value.Value;
+            }
+        }
+
+        /// <summary> SQL Server Management type. NOTE: This parameter is not used anymore. API will automatically detect the Sql Management, refrain from using it. </summary>
+        public SqlManagementMode? SqlManagement
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlManagement;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.SqlManagement = value.Value;
+            }
+        }
+
+        /// <summary> SQL IaaS Agent least privilege mode. </summary>
+        public LeastPrivilegeMode? LeastPrivilegeMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LeastPrivilegeMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.LeastPrivilegeMode = value.Value;
+            }
+        }
+
         /// <summary> SQL Server edition type. </summary>
-        public SqlImageSku? SqlImageSku { get; set; }
+        public SqlImageSku? SqlImageSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlImageSku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.SqlImageSku = value.Value;
+            }
+        }
+
         /// <summary> ARM resource id of the SQL virtual machine group this SQL virtual machine is or will be part of. </summary>
-        public ResourceIdentifier SqlVmGroupResourceId { get; set; }
+        public ResourceIdentifier SqlVmGroupResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlVmGroupResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.SqlVmGroupResourceId = value;
+            }
+        }
+
         /// <summary> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </summary>
-        public WindowsServerFailoverClusterDomainCredentials WindowsServerFailoverClusterDomainCredentials { get; set; }
+        public WindowsServerFailoverClusterDomainCredentials WindowsServerFailoverClusterDomainCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WindowsServerFailoverClusterDomainCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.WindowsServerFailoverClusterDomainCredentials = value;
+            }
+        }
+
         /// <summary> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </summary>
-        public IPAddress WindowsServerFailoverClusterStaticIP { get; set; }
+        public IPAddress WindowsServerFailoverClusterStaticIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WindowsServerFailoverClusterStaticIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.WindowsServerFailoverClusterStaticIP = value;
+            }
+        }
+
         /// <summary> Auto patching settings for applying critical security updates to SQL virtual machine. </summary>
-        public SqlVmAutoPatchingSettings AutoPatchingSettings { get; set; }
+        public SqlVmAutoPatchingSettings AutoPatchingSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoPatchingSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.AutoPatchingSettings = value;
+            }
+        }
+
         /// <summary> Auto backup settings for SQL Server. </summary>
-        public SqlVmAutoBackupSettings AutoBackupSettings { get; set; }
+        public SqlVmAutoBackupSettings AutoBackupSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoBackupSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.AutoBackupSettings = value;
+            }
+        }
+
         /// <summary> Key vault credential settings. </summary>
-        public SqlVmKeyVaultCredentialSettings KeyVaultCredentialSettings { get; set; }
+        public SqlVmKeyVaultCredentialSettings KeyVaultCredentialSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultCredentialSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.KeyVaultCredentialSettings = value;
+            }
+        }
+
         /// <summary> SQL Server configuration management settings. </summary>
-        public SqlServerConfigurationsManagementSettings ServerConfigurationsManagementSettings { get; set; }
+        public SqlServerConfigurationsManagementSettings ServerConfigurationsManagementSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerConfigurationsManagementSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.ServerConfigurationsManagementSettings = value;
+            }
+        }
+
         /// <summary> Storage Configuration Settings. </summary>
-        public SqlVmStorageConfigurationSettings StorageConfigurationSettings { get; set; }
-        /// <summary> Assessment Settings. </summary>
-        public SqlVmAssessmentSettings AssessmentSettings { get; set; }
+        public SqlVmStorageConfigurationSettings StorageConfigurationSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageConfigurationSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.StorageConfigurationSettings = value;
+            }
+        }
+
+        /// <summary> Troubleshooting status. </summary>
+        public SqlVmTroubleshootingStatus TroubleshootingStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TroubleshootingStatus;
+            }
+        }
+
+        /// <summary> SQL best practices Assessment Settings. </summary>
+        public SqlVmAssessmentSettings AssessmentSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssessmentSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.AssessmentSettings = value;
+            }
+        }
+
+        /// <summary> Enable automatic upgrade of Sql IaaS extension Agent. </summary>
+        public bool? EnableAutomaticUpgrade
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAutomaticUpgrade;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.EnableAutomaticUpgrade = value.Value;
+            }
+        }
+
+        /// <summary> Additional VM Patching solution enabled on the Virtual Machine. </summary>
+        public SqlVmAdditionalOsPatch? AdditionalVmPatch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalVmPatch;
+            }
+        }
+
+        /// <summary> Virtual Machine Identity details used for Sql IaaS extension configurations. </summary>
+        public SqlVmIdentity VirtualMachineIdentitySettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachineIdentitySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineProperties();
+                }
+                Properties.VirtualMachineIdentitySettings = value;
+            }
+        }
+
+        /// <summary> Operating System of the current SQL Virtual Machine. </summary>
+        public SqlVmOsType? OsType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OsType;
+            }
+        }
     }
 }
