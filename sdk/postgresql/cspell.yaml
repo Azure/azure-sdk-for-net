@@ -5,3 +5,6 @@ overrides:
     words:
       - awsec
       - postgre
+      - Apsara
+      - DBRDS
+      - SSDLRS

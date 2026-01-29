@@ -27,7 +27,7 @@
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260127.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260128.5</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20260127.1</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
@@ -350,7 +350,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260127.1" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260129.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
     <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
 
@@ -360,6 +360,8 @@
 
     <!-- Note: 4.3.0 is required to keep our shipped source generators compatible with most project targets like netstandard2.0-->
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="4.3.0" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.NUnit" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />

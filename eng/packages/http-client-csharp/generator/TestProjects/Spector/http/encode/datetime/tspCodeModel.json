@@ -173,6 +173,11 @@
       "crossLanguageDefinitionId": "Encode.Datetime.DefaultDatetimeProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DefaultDatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "22",
@@ -217,6 +222,11 @@
       "crossLanguageDefinitionId": "Encode.Datetime.Rfc3339DatetimeProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Rfc3339DatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "26",
@@ -261,6 +271,11 @@
       "crossLanguageDefinitionId": "Encode.Datetime.Rfc7231DatetimeProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Rfc7231DatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "30",
@@ -305,6 +320,11 @@
       "crossLanguageDefinitionId": "Encode.Datetime.UnixTimestampDatetimeProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnixTimestampDatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "34",
@@ -349,6 +369,11 @@
       "crossLanguageDefinitionId": "Encode.Datetime.UnixTimestampArrayDatetimeProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnixTimestampArrayDatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "38",
