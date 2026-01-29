@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             _dpsCertificateCollection = dps.GetDeviceProvisioningServicesCertificates();
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Re-record needs to give a correct _certContent value")]
         public async Task DpsCertificateOperations()
         {
