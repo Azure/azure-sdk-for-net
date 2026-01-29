@@ -53,11 +53,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="AccessControlListAction"/>. </summary>
         /// <param name="aclActionType"> Type of actions that can be performed. </param>
         /// <param name="counterName"> Name of the counter block to get match count information. </param>
+        /// <param name="remarkComment"> Remark comment. </param>
+        /// <param name="policeRateConfiguration"> Police rate configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlListAction(AclActionType? aclActionType, string counterName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessControlListAction(AclActionType? aclActionType, string counterName, string remarkComment, PoliceRateConfigurationProperties policeRateConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AclActionType = aclActionType;
             CounterName = counterName;
+            RemarkComment = remarkComment;
+            PoliceRateConfiguration = policeRateConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +69,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public AclActionType? AclActionType { get; set; }
         /// <summary> Name of the counter block to get match count information. </summary>
         public string CounterName { get; set; }
+        /// <summary> Remark comment. </summary>
+        public string RemarkComment { get; set; }
+        /// <summary> Police rate configuration. </summary>
+        public PoliceRateConfigurationProperties PoliceRateConfiguration { get; set; }
     }
 }

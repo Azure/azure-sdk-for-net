@@ -71,6 +71,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(AdditionalDescription))
+            {
+                writer.WritePropertyName("additionalDescription"u8);
+                writer.WriteStringValue(AdditionalDescription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -114,6 +129,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkDeviceInterfaceType? interfaceType = default;
             IPAddress ipv4Address = default;
             string ipv6Address = default;
+            string description = default;
+            string additionalDescription = default;
+            LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -191,6 +209,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             ipv6Address = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalDescription"u8))
+                        {
+                            additionalDescription = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -229,6 +266,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 interfaceType,
                 ipv4Address,
                 ipv6Address,
+                description,
+                additionalDescription,
+                lastOperation,
                 provisioningState,
                 administrativeState,
                 serializedAdditionalRawData);

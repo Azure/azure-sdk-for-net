@@ -85,6 +85,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("lastSyncedTime"u8);
                 writer.WriteStringValue(LastSyncedOn.Value, "O");
             }
+            if (Optional.IsDefined(AclType))
+            {
+                writer.WritePropertyName("aclType"u8);
+                writer.WriteStringValue(AclType.Value.ToString());
+            }
+            if (Optional.IsDefined(DeviceRole))
+            {
+                writer.WritePropertyName("deviceRole"u8);
+                writer.WriteStringValue(DeviceRole.Value.ToString());
+            }
+            if (Optional.IsDefined(GlobalAccessControlListActions))
+            {
+                writer.WritePropertyName("globalAccessControlListActions"u8);
+                writer.WriteObjectValue(GlobalAccessControlListActions, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
@@ -136,6 +156,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             DateTimeOffset? lastSyncedTime = default;
+            AclType? aclType = default;
+            DeviceRole? deviceRole = default;
+            GlobalAccessControlListActionProperties globalAccessControlListActions = default;
+            LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -264,6 +288,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             lastSyncedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("aclType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            aclType = new AclType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("deviceRole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deviceRole = new DeviceRole(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("globalAccessControlListActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            globalAccessControlListActions = GlobalAccessControlListActionProperties.DeserializeGlobalAccessControlListActionProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -314,6 +374,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
                 lastSyncedTime,
+                aclType,
+                deviceRole,
+                globalAccessControlListActions,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,

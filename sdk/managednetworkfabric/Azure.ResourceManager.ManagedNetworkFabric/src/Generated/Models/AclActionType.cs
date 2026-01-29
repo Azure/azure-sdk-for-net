@@ -25,13 +25,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string DropValue = "Drop";
         private const string CountValue = "Count";
         private const string LogValue = "Log";
+        private const string RemarkValue = "Remark";
+        private const string PoliceRateValue = "PoliceRate";
 
-        /// <summary> Drop. </summary>
+        /// <summary> AclActionType Drop. </summary>
         public static AclActionType Drop { get; } = new AclActionType(DropValue);
-        /// <summary> Count. </summary>
+        /// <summary> AclActionType Count. </summary>
         public static AclActionType Count { get; } = new AclActionType(CountValue);
-        /// <summary> Log. </summary>
+        /// <summary> AclActionType Log. </summary>
         public static AclActionType Log { get; } = new AclActionType(LogValue);
+        /// <summary> AclActionType Remark. </summary>
+        public static AclActionType Remark { get; } = new AclActionType(RemarkValue);
+        /// <summary> AclActionType PoliceRate. </summary>
+        public static AclActionType PoliceRate { get; } = new AclActionType(PoliceRateValue);
         /// <summary> Determines if two <see cref="AclActionType"/> values are the same. </summary>
         public static bool operator ==(AclActionType left, AclActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AclActionType"/> values are not the same. </summary>
