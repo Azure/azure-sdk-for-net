@@ -34,6 +34,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string Endpoint => GetRecordedVariable("CONTENTUNDERSTANDING_ENDPOINT");
 
         /// <summary>
+        /// Gets the endpoint URL directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedVariable cannot be called.
+        /// </summary>
+        public string? EndpointRaw => System.Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_ENDPOINT");
+
+        /// <summary>
         /// Gets the API key for authenticating with the Content Understanding service.
         /// </summary>
         /// <remarks>
@@ -47,14 +53,32 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string? Gpt41Deployment => GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT");
 
         /// <summary>
+        /// Gets the gpt-4.1 deployment name directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedOptionalVariable cannot be called.
+        /// </summary>
+        public string? Gpt41DeploymentRaw => System.Environment.GetEnvironmentVariable("GPT_4_1_DEPLOYMENT");
+
+        /// <summary>
         /// Gets the gpt-4.1-mini deployment name (optional).
         /// </summary>
         public string? Gpt41MiniDeployment => GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT");
 
         /// <summary>
+        /// Gets the gpt-4.1-mini deployment name directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedOptionalVariable cannot be called.
+        /// </summary>
+        public string? Gpt41MiniDeploymentRaw => System.Environment.GetEnvironmentVariable("GPT_4_1_MINI_DEPLOYMENT");
+
+        /// <summary>
         /// Gets the text-embedding-3-large deployment name (optional).
         /// </summary>
         public string? TextEmbedding3LargeDeployment => GetRecordedOptionalVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
+
+        /// <summary>
+        /// Gets the text-embedding-3-large deployment name directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedOptionalVariable cannot be called.
+        /// </summary>
+        public string? TextEmbedding3LargeDeploymentRaw => System.Environment.GetEnvironmentVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
 
         /// <summary>
         /// Gets the source resource ID for cross-resource copying (optional).
