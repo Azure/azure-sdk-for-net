@@ -5,6 +5,10 @@
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
+  </ItemGroup>
+
   <!--
     Shared version stamps; these packages are intentionally scoped but
     should generally sync to the same version.
