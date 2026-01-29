@@ -116,6 +116,11 @@
       "crossLanguageDefinitionId": "Versioning.Added.ModelV1",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV1"
+        }
+      },
       "properties": [
         {
           "$id": "12",

@@ -189,6 +189,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.link.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "24",
@@ -207,6 +212,11 @@
               "crossLanguageDefinitionId": "Payload.Pageable.Pet",
               "usage": "Output,Json",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "Pet"
+                }
+              },
               "properties": [
                 {
                   "$id": "27",
@@ -314,6 +324,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.linkString.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "34",
@@ -371,6 +386,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "38",
@@ -385,6 +405,11 @@
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.Response.nestedItems.anonymous",
             "usage": "Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": ""
+              }
+            },
             "properties": [
               {
                 "$id": "40",
@@ -435,6 +460,11 @@
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.Response.nestedNext.anonymous",
             "usage": "Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": ""
+              }
+            },
             "properties": [
               {
                 "$id": "43",
@@ -492,6 +522,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithoutContinuation.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "46",
@@ -524,6 +559,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithPageSize.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "48",
@@ -556,6 +596,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "50",
@@ -613,6 +658,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "54",
@@ -670,6 +720,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "58",
@@ -702,6 +757,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "60",
@@ -734,6 +794,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "62",
@@ -748,6 +813,11 @@
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.Response.nestedItems.anonymous",
             "usage": "Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": ""
+              }
+            },
             "properties": [
               {
                 "$id": "64",
@@ -798,6 +868,11 @@
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.Response.nestedNext.anonymous",
             "usage": "Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": ""
+              }
+            },
             "properties": [
               {
                 "$id": "67",
@@ -855,6 +930,11 @@
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "70",
@@ -869,6 +949,11 @@
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.Response.nestedItems.anonymous",
             "usage": "Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": ""
+              }
+            },
             "properties": [
               {
                 "$id": "72",
@@ -919,6 +1004,11 @@
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.Response.nestedNext.anonymous",
             "usage": "Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": ""
+              }
+            },
             "properties": [
               {
                 "$id": "75",

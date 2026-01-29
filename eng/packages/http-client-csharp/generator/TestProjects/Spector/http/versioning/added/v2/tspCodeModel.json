@@ -241,6 +241,11 @@
       "crossLanguageDefinitionId": "Versioning.Added.ModelV1",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV1"
+        }
+      },
       "properties": [
         {
           "$id": "25",
@@ -346,6 +351,11 @@
       "crossLanguageDefinitionId": "Versioning.Added.ModelV2",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV2"
+        }
+      },
       "properties": [
         {
           "$id": "34",
