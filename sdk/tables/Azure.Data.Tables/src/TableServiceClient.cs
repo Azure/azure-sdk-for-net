@@ -593,7 +593,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<TableItem> Query(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-                return Query(TableClient.Bind(filter), maxPerPage, cancellationToken);
+            return Query(TableClient.Bind(filter), maxPerPage, cancellationToken);
         }
 
         /// <summary>
