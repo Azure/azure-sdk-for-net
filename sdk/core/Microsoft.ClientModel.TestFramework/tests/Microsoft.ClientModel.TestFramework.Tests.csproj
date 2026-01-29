@@ -9,10 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0" />
-    <PackageReference Include="NUnit" VersionOverride="4.4.0" />
+    <!-- NUnit 4.x versions are scoped in eng/Packages.Data.props -->
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" VersionOverride="17.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
 
   <ItemGroup>
