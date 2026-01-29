@@ -1,6 +1,8 @@
 param(    
     [Parameter(Mandatory = $true)]
-    [string]$PackageInfoFilePath
+    [string]$PackageInfoFilePath,
+    [Parameter(Mandatory = $true)]
+    [string]$AzsdkExePath
 )
 
 <#
@@ -12,12 +14,20 @@ param(
 
 .PARAMETER PackageInfoFilePath
     The path to the package information file (required) or path to the directory containing package information files.
+
+.PARAMETER AzsdkExePath
+    The path to the azsdk executable used to mark the release completion.
 #>
 
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
-. (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
+#Validate azsdk executable path
+if (-Not (Test-Path $AzsdkExePath))
+{
+    Write-Error "The azsdk executable was not found at path '$AzsdkExePath'. Please ensure the executable exists and the path is correct."
+    exit 1
+}
 
 #Get package properties
 if (-Not (Test-Path $PackageInfoFilePath))
@@ -30,35 +40,21 @@ function Process-Package([string]$packageInfoPath)
 {
     # Get package info from json file created before updating version to daily dev
     $pkgInfo = Get-Content $packageInfoPath | ConvertFrom-Json
-    $PackageVersion = $pkgInfo.Version
     $PackageName = $pkgInfo.Name
-    if (!$PackageName -or !$PackageVersion)
+    if (!$PackageName)
     {
-        Write-Host "Package name or version is not available in the package information file. Skipping the release plan status update for the package."
+        Write-Host "Package name is not available in the package information file. Skipping the release plan status update for the package."
         return
-    }
+    } 
 
-    # Check Azure DevOps Release Plan work items
-    Write-Host "Checking active release plan work items for package: $PackageName"
-    $workItems = Get-ReleasePlanForPackage $PackageName
-    if(!$workItems)
+    Write-Host "Marking release completion for package, name: $PackageName"
+    $releaseInfo = & $AzsdkExePath release-plan update-release-status --package-name $PackageName --language $LanguageDisplayName --status "Released"
+    if ($LASTEXITCODE -ne 0)
     {
-        Write-Host "No active release plans found for package name: $PackageName."
-        return
+        ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
+        Write-Host "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE"
     }
-
-    $activeReleasePlan = $workItems
-    if($workItems.Count -gt 1 -and ($workItems -is [System.Array]))
-    {    
-        $concatenatedIds = ($workItems | Select-Object -ExpandProperty id) -join ','
-        Write-Host "Multiple release plans found for package name: $PackageName with work item IDs: $concatenatedIds. Using the first release plan to update release status."
-        $activeReleasePlan = $workItems[0]
-    }
-    # Update release status
-    Write-Host "Release plan work item ID: $($activeReleasePlan["id"])"
-    Write-Host "Marking release completion for package, name: $PackageName version: $PackageVersion"
-    Update-ReleaseStatusInReleasePlan $activeReleasePlan.id "Released" $PackageVersion
-    Write-Host "Successfully marked release completion for package, name: $PackageName version: $PackageVersion."
+    Write-Host "Details: $releaseInfo"
 }
 
 Write-Host "Finding all package info files in the path: $PackageInfoFilePath"
