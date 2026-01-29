@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class AppComplianceDownloadResult : IUtf8JsonSerializable, IJsonModel<AppComplianceDownloadResult>
+    /// <summary> Object that includes all the possible response for the download operation. </summary>
+    public partial class AppComplianceDownloadResult : IJsonModel<AppComplianceDownloadResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppComplianceDownloadResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceDownloadResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +30,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceDownloadResult)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceList)
+                foreach (ReportResourceItem item in ResourceList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("complianceReport"u8);
                 writer.WriteStartArray();
-                foreach (var item in ComplianceReport)
+                foreach (AppComplianceReportItem item in ComplianceReport)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -64,15 +65,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
                 writer.WriteObjectValue(ComplianceDetailedPdfReport, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +82,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceDownloadResult IJsonModel<AppComplianceDownloadResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceDownloadResult IJsonModel<AppComplianceDownloadResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceDownloadResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceDownloadResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppComplianceDownloadResult(document.RootElement, options);
         }
 
-        internal static AppComplianceDownloadResult DeserializeAppComplianceDownloadResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AppComplianceDownloadResult DeserializeAppComplianceDownloadResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,69 +111,70 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             IReadOnlyList<AppComplianceReportItem> complianceReport = default;
             AppCompliancePdfReport compliancePdfReport = default;
             AppComplianceDetailedPdfReport complianceDetailedPdfReport = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceList"u8))
+                if (prop.NameEquals("resourceList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ReportResourceItem> array = new List<ReportResourceItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ReportResourceItem.DeserializeReportResourceItem(item, options));
                     }
                     resourceList = array;
                     continue;
                 }
-                if (property.NameEquals("complianceReport"u8))
+                if (prop.NameEquals("complianceReport"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AppComplianceReportItem> array = new List<AppComplianceReportItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AppComplianceReportItem.DeserializeAppComplianceReportItem(item, options));
                     }
                     complianceReport = array;
                     continue;
                 }
-                if (property.NameEquals("compliancePdfReport"u8))
+                if (prop.NameEquals("compliancePdfReport"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    compliancePdfReport = AppCompliancePdfReport.DeserializeAppCompliancePdfReport(property.Value, options);
+                    compliancePdfReport = AppCompliancePdfReport.DeserializeAppCompliancePdfReport(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("complianceDetailedPdfReport"u8))
+                if (prop.NameEquals("complianceDetailedPdfReport"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    complianceDetailedPdfReport = AppComplianceDetailedPdfReport.DeserializeAppComplianceDetailedPdfReport(property.Value, options);
+                    complianceDetailedPdfReport = AppComplianceDetailedPdfReport.DeserializeAppComplianceDetailedPdfReport(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AppComplianceDownloadResult(resourceList ?? new ChangeTrackingList<ReportResourceItem>(), complianceReport ?? new ChangeTrackingList<AppComplianceReportItem>(), compliancePdfReport, complianceDetailedPdfReport, serializedAdditionalRawData);
+            return new AppComplianceDownloadResult(resourceList ?? new ChangeTrackingList<ReportResourceItem>(), complianceReport ?? new ChangeTrackingList<AppComplianceReportItem>(), compliancePdfReport, complianceDetailedPdfReport, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AppComplianceDownloadResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppComplianceDownloadResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -177,15 +184,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceDownloadResult IPersistableModel<AppComplianceDownloadResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceDownloadResult IPersistableModel<AppComplianceDownloadResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceDownloadResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppComplianceDownloadResult(document.RootElement, options);
                     }
                 default:
@@ -193,6 +205,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppComplianceDownloadResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppComplianceDownloadResult"/> from. </param>
+        internal static AppComplianceDownloadResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAppComplianceDownloadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }
