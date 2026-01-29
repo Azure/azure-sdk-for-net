@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using Azure.AI.AgentServer.AgentFramework.Converters;
+using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation;
@@ -15,7 +16,10 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// Provides an implementation of agent invocation using the Microsoft Agents AI framework.
 /// </summary>
 /// <param name="agent">The AI agent to invoke.</param>
-public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
+/// <param name="threadRepository">Optional repository for managing agent threads.</param>
+public class AIAgentInvocation(
+    AIAgent agent,
+    IAgentThreadRepository? threadRepository = null) : AgentInvocationBase
 {
     /// <summary>
     /// Invokes the agent asynchronously and returns a complete response.
@@ -31,7 +35,18 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
 
         var request = context.Request;
         var messages = request.GetInputMessages();
-        var response = await agent.RunAsync(messages, cancellationToken: cancellationToken).ConfigureAwait(false);
+        AgentThread? thread = null;
+        if (threadRepository != null)
+        {
+            thread = await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
+        }
+        var response = await agent.RunAsync(
+            messages, thread: thread,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
+        if (threadRepository != null && thread != null)
+        {
+            await threadRepository.Set(context.ConversationId, thread).ConfigureAwait(false);
+        }
         return response.ToResponse(request, context);
     }
 
@@ -41,20 +56,28 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
     /// <param name="context">The agent run context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A stream event generator for the response.</returns>
-    protected override INestedStreamEventGenerator<Contracts.Generated.Responses.Response> DoInvokeStreamAsync(
+    protected override async Task<
+        (INestedStreamEventGenerator<Contracts.Generated.Responses.Response> Generator, Func<CancellationToken, Task> PostInvoke)
+        > DoInvokeStreamAsync(
         AgentRunContext context,
         CancellationToken cancellationToken)
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
+        AgentThread? thread = null;
+        if (threadRepository != null)
+        {
+            thread = await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
+        }
+
         var request = context.Request;
         var messages = request.GetInputMessages();
-        var updates = agent.RunStreamingAsync(messages, cancellationToken: cancellationToken);
+        var updates = agent.RunStreamingAsync(messages, thread: thread, cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
         var seq = ISequenceNumber.Default;
-        return new NestedResponseGenerator()
+        var generator = new NestedResponseGenerator()
         {
             Context = context,
             Seq = seq,
@@ -75,5 +98,14 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
                 CancellationToken = cancellationToken,
             }
         };
+
+        var func = (async (CancellationToken ct) =>
+        {
+            if (threadRepository != null && thread != null)
+            {
+                await threadRepository.Set(context.ConversationId, thread).ConfigureAwait(false);
+            }
+        });
+        return (generator, func);
     }
 }
