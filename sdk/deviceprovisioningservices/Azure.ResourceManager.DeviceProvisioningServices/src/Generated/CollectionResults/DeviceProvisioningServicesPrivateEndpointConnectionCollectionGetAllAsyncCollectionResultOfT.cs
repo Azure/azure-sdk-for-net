@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = _client.CreateGetPrivateEndpointConnectionsRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try

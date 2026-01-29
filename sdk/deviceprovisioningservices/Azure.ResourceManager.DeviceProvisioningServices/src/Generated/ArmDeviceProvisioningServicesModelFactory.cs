@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="etag"> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="etag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
         /// <param name="properties"> Service specific properties for a provisioning service. </param>

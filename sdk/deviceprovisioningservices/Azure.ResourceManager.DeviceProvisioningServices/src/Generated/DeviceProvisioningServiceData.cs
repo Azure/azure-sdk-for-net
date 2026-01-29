@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="eTag"> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="eTag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
         /// <param name="properties"> Service specific properties for a provisioning service. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Identity = identity;
         }
 
-        /// <summary> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </summary>
+        /// <summary> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </summary>
         public ETag? ETag { get; set; }
 
         /// <summary> The resource group of the resource. </summary>
