@@ -22,9 +22,9 @@ $ErrorActionPreference = 'Stop'
 
 <#
 .SYNOPSIS
-    This function will update the UnbrandedGeneratorVersion in the Packages.Data.props file.
+    This function will update the UnbrandedGeneratorVersion in the Directory.Packages.props file.
 .PARAMETER PropsFilePath
-    The path to the Packages.Data.props file.
+    The path to the Directory.Packages.props file.
 .PARAMETER NewVersion
     The new version to set for UnbrandedGeneratorVersion.
 #>
@@ -70,7 +70,7 @@ function Update-UnbrandedGeneratorVersion([string] $PropsFilePath, [string] $New
 }
 
 # Use cross-platform path resolution
-$PropsFilePath = Join-Path (Resolve-Path "$PSScriptRoot/../../../..") "Packages.Data.props"
+$PropsFilePath = Join-Path (Resolve-Path "$PSScriptRoot/../../../..") "Directory.Packages.props"
 
 Write-Host "Querying DevOps for the latest build for PR '$PRNumber'..."
 $BuildJson = (az pipelines build list --organization "https://dev.azure.com/azure-sdk" --project "internal" --branch "refs/pull/$PRNumber/merge" --top 1 --query "[0]" --output json | ConvertFrom-Json)

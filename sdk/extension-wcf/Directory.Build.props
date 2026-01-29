@@ -13,7 +13,7 @@
 		<Copy SourceFiles="@(SystemServiceModelIconFile)"
 						DestinationFolder="$(OutputPath)\.." />
 	</Target>
-  <!-- Need to set IsClientLibrary for CentralPackageManagement versions file in $(root)\eng\Packages.Data.props -->
+  <!-- Need to set IsClientLibrary for CentralPackageManagement versions file in $(root)\eng\Directory.Packages.props -->
   <PropertyGroup>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.'))">true</IsClientLibrary>
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>

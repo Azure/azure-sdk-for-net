@@ -32,7 +32,7 @@ steps:
       version: "8.0.x"
   - task: Cache@2
     inputs:
-      key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
+      key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Directory.Packages.props | ${{parameters.NuGetCacheKey}}'
       path: $(NUGET_PACKAGES)
     condition: and(succeeded(), ${{parameters.EnableNuGetCache}})
     continueOnError: true

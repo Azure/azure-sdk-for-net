@@ -174,7 +174,7 @@ function Update-AzureGeneratorVersion {
         [string]$NewVersion
     )
     
-    Write-Host "Updating AzureGeneratorVersion to $NewVersion in Packages.Data.props" -ForegroundColor Gray
+    Write-Host "Updating AzureGeneratorVersion to $NewVersion in Directory.Packages.props" -ForegroundColor Gray
     
     $content = Get-Content $PackagesDataPropsPath -Raw
 

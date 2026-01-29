@@ -35,7 +35,8 @@
     ".vscode/cspell.json",
     "cspell.yaml",
     "assets.json",
-    "eng/Packages.Data.props",
+    "eng/Directory.Packages.props",
+    "eng/Packages.Legacy.props",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.

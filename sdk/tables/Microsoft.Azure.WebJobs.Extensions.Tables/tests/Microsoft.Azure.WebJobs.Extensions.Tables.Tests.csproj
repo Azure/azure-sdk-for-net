@@ -12,7 +12,8 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" VersionOverride="4.0.5" Aliases="T1" />
+    <!-- Legacy T1 version scoped in eng/Directory.Packages.props -->
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Aliases="T1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
 

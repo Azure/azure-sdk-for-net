@@ -18,7 +18,7 @@
     
     <!--
       Microsoft.NET.Test.Sdk has a transitive dependency to Newtonsoft.Json. In order to pick up the
-      right version from Packages.data.props, we need to add an explicit reference to it here.
+      right version from Directory.Packages.props, we need to add an explicit reference to it here.
       We can remove it once we update Microsoft.NET.Test.Sdk or support central package version
       management for transitive dependencies.
       -->
