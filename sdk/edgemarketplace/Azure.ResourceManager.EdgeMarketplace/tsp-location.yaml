@@ -1,0 +1,6 @@
+directory: specification/edgemarketplace/Microsoft.EdgeMarketPlace.Management
+commit: d32251ce08b605093623d53e460d57a91d876bc4
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
