@@ -10,6 +10,8 @@ using System.ComponentModel.Composition;
 using System.IO;
 using Azure.Core.Expressions.DataFactory;
 using Azure.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Input;
+using System.Collections.Generic;
 
 namespace Azure.Generator;
 
@@ -38,6 +40,9 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     private bool? _hasDataFactoryElement;
     internal const string DataFactoryElementIdentity = "Azure.Core.Expressions.DataFactoryElement";
 
+    private IReadOnlyList<InputExternalTypeMetadata>? _externalTypes;
+    internal IReadOnlyList<InputExternalTypeMetadata> ExternalTypes => _externalTypes ??= BuildExternalTypes();
+
     private bool BuildHasDataFactoryElement()
     {
         foreach (var model in InputLibrary.InputNamespace.Models)
@@ -51,6 +56,31 @@ public class AzureClientGenerator : ScmCodeModelGenerator
             }
         }
         return false;
+    }
+
+    private IReadOnlyList<InputExternalTypeMetadata> BuildExternalTypes()
+    {
+        var externalTypes = new List<InputExternalTypeMetadata>();
+        var addedPackages = new HashSet<string>(); // Track packages to avoid duplicates
+
+        foreach (var model in InputLibrary.InputNamespace.Models)
+        {
+            if (model.External != null && !string.IsNullOrEmpty(model.External.Package) &&
+                addedPackages.Add(model.External.Package))
+            {
+                externalTypes.Add(model.External);
+            }
+
+            foreach (var property in model.Properties)
+            {
+                if (property.Type.External != null && !string.IsNullOrEmpty(property.Type.External.Package) &&
+                    addedPackages.Add(property.Type.External.Package))
+                {
+                    externalTypes.Add(property.Type.External);
+                }
+            }
+        }
+        return externalTypes;
     }
 
     /// <summary>

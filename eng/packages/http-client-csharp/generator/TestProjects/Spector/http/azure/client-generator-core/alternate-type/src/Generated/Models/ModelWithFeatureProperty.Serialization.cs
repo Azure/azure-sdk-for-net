@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType
 {
     public partial class ModelWithFeatureProperty : IJsonModel<ModelWithFeatureProperty>
     {
@@ -38,6 +38,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
         /// <param name="modelWithFeatureProperty"> The <see cref="ModelWithFeatureProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithFeatureProperty modelWithFeatureProperty) => throw null;
 
-        public static explicit operator ModelWithFeatureProperty(Response result) => throw null;
+        public static explicit operator ModelWithFeatureProperty(Response response) => throw null;
     }
 }

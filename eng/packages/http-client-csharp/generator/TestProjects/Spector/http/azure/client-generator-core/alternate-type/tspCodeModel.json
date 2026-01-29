@@ -8,7 +8,7 @@
       "kind": "constant",
       "name": "FeatureType",
       "namespace": "_Specs_.Azure.ClientGenerator.Core.AlternateType.ExternalType",
-      "usage": "Input,Output,Json",
+      "usage": "Input,Output,Json,External",
       "valueType": {
         "$id": "2",
         "kind": "string",
@@ -91,8 +91,13 @@
       "name": "Feature",
       "namespace": "_Specs_.Azure.ClientGenerator.Core.AlternateType.ExternalType",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.AlternateType.ExternalType.Feature",
-      "usage": "Input,Output,Json",
+      "usage": "Input,Output,Json,External",
       "decorators": [],
+      "external": {
+        "identity": "NetTopologySuite.IO.GeoJSON.Feature",
+        "package": "NetTopologySuite.IO.GeoJSON",
+        "minVersion": "4.0.0"
+      },
       "properties": [
         {
           "$id": "12",
@@ -129,7 +134,7 @@
               "name": "Geometry",
               "namespace": "_Specs_.Azure.ClientGenerator.Core.AlternateType.ExternalType",
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.AlternateType.ExternalType.Geometry",
-              "usage": "Input,Output,Json",
+              "usage": "Input,Output,Json,External",
               "decorators": [],
               "properties": [
                 {
@@ -387,6 +392,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.AlternateType.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.AlternateType",
       "apiVersions": [],
@@ -818,17 +824,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.AlternateType.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.AlternateType.ExternalType.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.AlternateType.ExternalType",
           "apiVersions": [],
           "parent": {
             "$ref": "33"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

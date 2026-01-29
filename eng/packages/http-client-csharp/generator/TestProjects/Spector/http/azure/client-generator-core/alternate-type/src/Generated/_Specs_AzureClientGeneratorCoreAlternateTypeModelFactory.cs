@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType;
+using Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType
 {
     public static partial class _Specs_AzureClientGeneratorCoreAlternateTypeModelFactory
     {
@@ -17,6 +17,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.AlternateType
 
         public static Geometry Geometry(string @type = default, IEnumerable<double> coordinates = default) => throw null;
 
-        public static ModelWithFeatureProperty ModelWithFeatureProperty(Feature feature = default, string additionalProperty = default) => throw null;
+        public static ModelWithFeatureProperty ModelWithFeatureProperty(global::NetTopologySuite.IO.GeoJSON.Feature feature = default, string additionalProperty = default) => throw null;
     }
 }

@@ -6,14 +6,14 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType;
+using Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType
 {
     [ModelReaderWriterBuildable(typeof(Feature))]
     [ModelReaderWriterBuildable(typeof(Geometry))]
     [ModelReaderWriterBuildable(typeof(ModelWithFeatureProperty))]
-    public partial class _Specs_AzureClientGeneratorCoreAlternateTypeContext : ModelReaderWriterContext
+    public partial class SpecsAzureClientGeneratorCoreAlternateTypeContext : ModelReaderWriterContext
     {
     }
 }
