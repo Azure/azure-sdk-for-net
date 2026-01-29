@@ -1,18 +1,15 @@
-<!-- ALL TRACK 1 AND LEGACY PACKAGE VERSIONS ARE IN PACKAGES.LEGACY.PROPS-->
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
-  </ItemGroup>
-
-  <!--
-    Shared version stamps; these packages are intentionally scoped but
-    should generally sync to the same version.
-  -->
+  <!-- ============================================================== -->
+  <!--                    SHARED VERSION STAMPS                       -->
+  <!--                                                                -->
+  <!-- these packages are intentionally scoped but should generally   -->
+  <!-- sync to the same version.                                      -->
+  <!-- ============================================================== -->
   <PropertyGroup>
     <!-- Library, sample, and test packages -->
     <CastleCoreVersion>5.1.0</CastleCoreVersion>
@@ -38,20 +35,23 @@
     <AzureGeneratorVersion>1.0.0-alpha.20260127.1</AzureGeneratorVersion>
   </PropertyGroup>
 
-  <!--
-    Dependency versions for current generation Azure libraries and support
-    projects. Only packages that are approved dependencies for public releases
-    should go here.
-
-    New dependencies must be specifically approved by the .NET architects and
-    Azure SDK team.
-  -->
+  <!-- ============================================================== -->
+  <!--  APPROVED DEPENDENCIES FOR CURRENT GENERATION AZURE LIBRARIES  -->
+  <!--                                                                -->
+  <!-- Dependency versions for current generation Azure libraries and -->
+  <!-- support projects. Only packages that are approved dependencies -->
+  <!-- for public releases should go here.                            -->
+  <!--                                                                -->
+  <!-- New dependencies must be specifically approved by the .NET     -->
+  <!-- architects and Azure SDK team.                                 -->
+  <!-- ============================================================== -->
 
   <!--
     Prior to making any updates to this section, potential version
     conflicts with Functions need to be investigated.
 
-    For Functions, this file can be referenced: https://github.com/Azure/azure-functions-host/blob/dev/src/WebJobs.Script/runtimeassemblies.json
+    For Functions, this file can be referenced:
+    https://github.com/Azure/azure-functions-host/blob/dev/src/WebJobs.Script/runtimeassemblies.json
       - If the assembly is not there or there is a resolutionPolicy of private,
         there is no issue from the Functions perspective of upgrading the version.
       - If the assembly is there and there is a resolutionPolicy of minorMatchOrLower
@@ -180,7 +180,11 @@
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
   </ItemGroup>
 
-  <!-- Conditionally approved packages; these are approved only for the scoped projects -->
+  <!-- ============================================================== -->
+  <!--              CONDITIONALLY APPROVED DEPENDENCIES               -->
+  <!--                                                                -->
+  <!--      these are approved only for the scoped projects           -->
+  <!-- ============================================================== -->
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
     <PackageVersion Include="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0"/>
@@ -314,10 +318,12 @@
     <PackageVersion Update="Microsoft.Extensions.Logging.Configuration" Version="3.1.32" />
   </ItemGroup>
 
-  <!--
-    Build time packages
-    All should have PrivateAssets="All" set so they don't become package dependencies
-  -->
+  <!-- ============================================================== -->
+  <!--                        BUILD TIME PACKAGES                     -->
+  <!--                                                                -->
+  <!-- All should have PrivateAssets="All" set so they don't become   -->
+  <!--                  package dependencies                          -->
+  <!-- ============================================================== -->
   <ItemGroup>
     <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260127.1" PrivateAssets="All" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
@@ -332,19 +338,24 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageVersion Include="SauceControl.InheritDoc" Version="2.0.2" PrivateAssets="All" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
   </ItemGroup>
 
-  <!--
-    Dependency versions for current generation Azure testing, sample, and support
-    projects. Only packages that are specific to those areas and are otherwise
-    NOT approved for use in published packages should go here.
+  <!-- ============================================================== -->
+  <!--        ALLOWED DEPENDENCIES FOR CURRENT GENERATION AZURE       -->
+  <!--             TESTING, SAMPLE, AND SUPPORT PROJECTS              -->
+  <!--                                                                -->
+  <!-- Only packages that are specific to those areas and are         -->
+  <!-- otherwise NOT approved for use in published packages should go -->
+  <!-- here.                                                          -->
+  <!--                                                                -->
+  <!--New dependencies must be specifically approved by the .NET      -->
+  <!-- architects and Azure SDK team.                                 -->
+  <!-- ============================================================== -->
 
-    New dependencies must be specifically approved by the .NET architects and
-    Azure SDK team.
-  -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true'
       or '$(IsTestSupportProject)' == 'true'
       or '$(IsPerfProject)' == 'true'
@@ -461,6 +472,11 @@
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
   </ItemGroup>
 
+  <!-- ============================================================== -->
+  <!--            CONDITIONALLY ALLOWED DEPENDENCIES FOR              -->
+  <!--             TESTING, SAMPLE, AND SUPPORT PROJECTS              -->
+  <!-- ============================================================== -->
+
   <!--
     Some modern Azure.* test/sample projects depend on legacy Track 1 packages
     for integration scenarios. These are scoped to specific projects.
@@ -524,6 +540,10 @@
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.ResourceManager.SecurityCenter'))">
     <PackageVersion Update="Azure.ResourceManager.IotHub" Version="1.2.0-beta.1" />
     <PackageVersion Update="Azure.ResourceManager.Logic" Version="1.2.0-beta.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>
 
 
