@@ -205,6 +205,11 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
+    <!-- AgentServer internal packages use exact version constraints -->
+    <PackageReference Update="Azure.AI.AgentServer.AgentFramework" Version="[1.0.0-beta.6]" />
+    <PackageReference Update="Azure.AI.AgentServer.Core" Version="[1.0.0-beta.6]" />
+    <PackageReference Update="Azure.AI.AgentServer.Contracts" Version="[1.0.0-beta.6]" />
+
     <PackageReference Update="Azure.AI.Projects" Version="1.1.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0"/>
     <PackageReference Update="ModelContextProtocol" Version="0.4.0-preview.3" />

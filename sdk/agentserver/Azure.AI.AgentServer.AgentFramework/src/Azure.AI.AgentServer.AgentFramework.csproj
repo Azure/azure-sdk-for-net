@@ -10,9 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Agents.AI" />
+    <!-- Explicit PackageReference for exact version constraint (controlled by Packages.Data.props) -->
+    <PackageReference Include="Azure.AI.AgentServer.Core" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- ProjectReference for local build -->
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
   </ItemGroup>
 </Project>
