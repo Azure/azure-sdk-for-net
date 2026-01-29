@@ -47,18 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedAcrAccount");
                 }
             }
-            if (Optional.IsDefined(UserCreatedAcrAccount))
-            {
-                if (UserCreatedAcrAccount != null)
-                {
-                    writer.WritePropertyName("userCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(UserCreatedAcrAccount, options);
-                }
-                else
-                {
-                    writer.WriteNull("userCreatedAcrAccount");
-                }
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,7 +85,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             SystemCreatedAcrAccount systemCreatedAcrAccount = default;
-            UserCreatedAcrAccount userCreatedAcrAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,23 +99,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userCreatedAcrAccount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        userCreatedAcrAccount = null;
-                        continue;
-                    }
-                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RegistryAcrDetails(systemCreatedAcrAccount, userCreatedAcrAccount, serializedAdditionalRawData);
+            return new RegistryAcrDetails(systemCreatedAcrAccount, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -154,26 +131,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     builder.Append("  systemCreatedAcrAccount: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SystemCreatedAcrAccount, options, 2, false, "  systemCreatedAcrAccount: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ArmResourceId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userCreatedAcrAccount: ");
-                builder.AppendLine("{");
-                builder.AppendLine("    armResourceId: {");
-                builder.Append("      resourceId: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("    }");
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(UserCreatedAcrAccount))
-                {
-                    builder.Append("  userCreatedAcrAccount: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, UserCreatedAcrAccount, options, 2, false, "  userCreatedAcrAccount: ");
                 }
             }
 
