@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="ScopeMapResource"/> and their operations.
-    /// Each <see cref="ScopeMapResource"/> in the collection will belong to the same instance of <see cref="ContainerRegistryResource"/>.
-    /// To get a <see cref="ScopeMapCollection"/> instance call the GetScopeMaps method from an instance of <see cref="ContainerRegistryResource"/>.
+    /// Each <see cref="ScopeMapResource"/> in the collection will belong to the same instance of <see cref="RegistryResource"/>.
+    /// To get a <see cref="ScopeMapCollection"/> instance call the GetScopeMaps method from an instance of <see cref="RegistryResource"/>.
     /// </summary>
     public partial class ScopeMapCollection : ArmCollection, IEnumerable<ScopeMapResource>, IAsyncEnumerable<ScopeMapResource>
     {
-        private readonly ClientDiagnostics _scopeMapClientDiagnostics;
-        private readonly ScopeMapsRestOperations _scopeMapRestClient;
+        private readonly ClientDiagnostics _scopeMapsClientDiagnostics;
+        private readonly ScopeMaps _scopeMapsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ScopeMapCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ScopeMapCollection for mocking. </summary>
         protected ScopeMapCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScopeMapCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeMapCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScopeMapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scopeMapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ScopeMapResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ScopeMapResource.ResourceType, out string scopeMapApiVersion);
-            _scopeMapRestClient = new ScopeMapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scopeMapApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _scopeMapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ScopeMapResource.ResourceType.Namespace, Diagnostics);
+            _scopeMapsRestClient = new ScopeMaps(_scopeMapsClientDiagnostics, Pipeline, Endpoint, scopeMapApiVersion ?? "2025-11-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ContainerRegistryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
+            if (id.ResourceType != RegistryResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RegistryResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a scope map for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="data"> The parameters for creating a scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ScopeMapResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeMapName, ScopeMapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _scopeMapRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, ScopeMapData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerRegistryArmOperation<ScopeMapResource> operation = new ContainerRegistryArmOperation<ScopeMapResource>(
+                    new ScopeMapOperationSource(Client),
+                    _scopeMapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Creates a scope map for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="data"> The parameters for creating a scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ScopeMapResource> CreateOrUpdate(WaitUntil waitUntil, string scopeMapName, ScopeMapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _scopeMapRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, ScopeMapData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerRegistryArmOperation<ScopeMapResource> operation = new ContainerRegistryArmOperation<ScopeMapResource>(
+                    new ScopeMapOperationSource(Client),
+                    _scopeMapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the specified scope map.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ScopeMapResource>> GetAsync(string scopeMapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Get");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.Get");
             scope.Start();
             try
             {
-                var response = await _scopeMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScopeMapData> response = Response.FromValue(ScopeMapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the specified scope map.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ScopeMapResource> Get(string scopeMapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Get");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.Get");
             scope.Start();
             try
             {
-                var response = _scopeMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScopeMapData> response = Response.FromValue(ScopeMapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Lists all the scope maps for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScopeMapResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScopeMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopeMapResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllAsyncCollectionResultOfT(_scopeMapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScopeMapResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the scope maps for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ScopeMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopeMapResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllCollectionResultOfT(_scopeMapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScopeMapResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeMapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Exists");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _scopeMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ScopeMapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeMapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeMapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string scopeMapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Exists");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.Exists");
             scope.Start();
             try
             {
-                var response = _scopeMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ScopeMapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeMapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeMapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ScopeMapResource>> GetIfExistsAsync(string scopeMapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.GetIfExists");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _scopeMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ScopeMapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeMapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeMapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ScopeMapResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeMaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeMapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeMapName"> The name of the scope map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ScopeMapResource> GetIfExists(string scopeMapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
 
-            using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.GetIfExists");
+            using DiagnosticScope scope = _scopeMapsClientDiagnostics.CreateScope("ScopeMapCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _scopeMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeMapName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ScopeMapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeMapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeMapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ScopeMapResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ScopeMapResource> IAsyncEnumerable<ScopeMapResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

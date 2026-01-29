@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    /// <summary></summary>
     public partial class ScopeMapResource : IJsonModel<ScopeMapData>
     {
-        private static ScopeMapData s_dataDeserializationInstance;
-        private static ScopeMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScopeMapData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ScopeMapData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScopeMapData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScopeMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScopeMapData>)Data).Write(writer, options);
 
-        ScopeMapData IJsonModel<ScopeMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScopeMapData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScopeMapData IJsonModel<ScopeMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ScopeMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScopeMapData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ScopeMapData IPersistableModel<ScopeMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeMapData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        string IPersistableModel<ScopeMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScopeMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScopeMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
