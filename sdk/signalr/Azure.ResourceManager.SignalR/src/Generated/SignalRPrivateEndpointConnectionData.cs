@@ -9,97 +9,91 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary>
-    /// A class representing the SignalRPrivateEndpointConnection data model.
-    /// A private endpoint connection to an azure resource
-    /// </summary>
+    /// <summary> A private endpoint connection to an azure resource. </summary>
     public partial class SignalRPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointConnectionData"/>. </summary>
         public SignalRPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="privateEndpoint"> Private endpoint. </param>
-        /// <param name="groupIds"> Group IDs. </param>
-        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SignalRPrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Private endpoint connection properties. </param>
+        internal SignalRPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            PrivateEndpoint = privateEndpoint;
-            GroupIds = groupIds;
-            ConnectionState = connectionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Private endpoint connection properties. </summary>
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public SignalRProvisioningState? ProvisioningState { get; }
-        /// <summary> Private endpoint. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
+        public SignalRProvisioningState? ProvisioningState
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            set
+            get
             {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> Group IDs. </summary>
-        [WirePath("properties.groupIds")]
-        public IReadOnlyList<string> GroupIds { get; }
+        public IReadOnlyList<string> GroupIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
+            }
+        }
+
         /// <summary> Connection state of the private endpoint connection. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public SignalRPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public SignalRPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> Full qualified Id of the private endpoint. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateEndpointId = value;
+            }
+        }
     }
 }

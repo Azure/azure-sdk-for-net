@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SignalR.Models
     public readonly partial struct SignalRKeyType : IEquatable<SignalRKeyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SignalRKeyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRKeyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
         private const string SaltValue = "Salt";
 
-        /// <summary> Primary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SignalRKeyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Primary. </summary>
         public static SignalRKeyType Primary { get; } = new SignalRKeyType(PrimaryValue);
-        /// <summary> Secondary. </summary>
+
+        /// <summary> Gets the Secondary. </summary>
         public static SignalRKeyType Secondary { get; } = new SignalRKeyType(SecondaryValue);
-        /// <summary> Salt. </summary>
+
+        /// <summary> Gets the Salt. </summary>
         public static SignalRKeyType Salt { get; } = new SignalRKeyType(SaltValue);
+
         /// <summary> Determines if two <see cref="SignalRKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignalRKeyType left, SignalRKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SignalRKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignalRKeyType left, SignalRKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SignalRKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SignalRKeyType(string value) => new SignalRKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SignalRKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SignalRKeyType?(string value) => value == null ? null : new SignalRKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignalRKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SignalRKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

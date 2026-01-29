@@ -8,16 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRUpstreamTemplate : IUtf8JsonSerializable, IJsonModel<SignalRUpstreamTemplate>
+    /// <summary>
+    /// Upstream template item settings. It defines the Upstream URL of the incoming requests.
+    /// The template defines the pattern of the event, the hub or the category of the incoming request that matches current URL template.
+    /// </summary>
+    public partial class SignalRUpstreamTemplate : IJsonModel<SignalRUpstreamTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRUpstreamTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamTemplate"/> for deserialization. </summary>
+        internal SignalRUpstreamTemplate()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRUpstreamTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +37,11 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(HubPattern))
             {
                 writer.WritePropertyName("hubPattern"u8);
@@ -57,15 +64,15 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -74,22 +81,27 @@ namespace Azure.ResourceManager.SignalR.Models
             }
         }
 
-        SignalRUpstreamTemplate IJsonModel<SignalRUpstreamTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SignalRUpstreamTemplate IJsonModel<SignalRUpstreamTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SignalRUpstreamTemplate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSignalRUpstreamTemplate(document.RootElement, options);
         }
 
-        internal static SignalRUpstreamTemplate DeserializeSignalRUpstreamTemplate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SignalRUpstreamTemplate DeserializeSignalRUpstreamTemplate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,200 +111,82 @@ namespace Azure.ResourceManager.SignalR.Models
             string categoryPattern = default;
             string urlTemplate = default;
             SignalRUpstreamAuthSettings auth = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("hubPattern"u8))
+                if (prop.NameEquals("hubPattern"u8))
                 {
-                    hubPattern = property.Value.GetString();
+                    hubPattern = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventPattern"u8))
+                if (prop.NameEquals("eventPattern"u8))
                 {
-                    eventPattern = property.Value.GetString();
+                    eventPattern = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categoryPattern"u8))
+                if (prop.NameEquals("categoryPattern"u8))
                 {
-                    categoryPattern = property.Value.GetString();
+                    categoryPattern = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("urlTemplate"u8))
+                if (prop.NameEquals("urlTemplate"u8))
                 {
-                    urlTemplate = property.Value.GetString();
+                    urlTemplate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("auth"u8))
+                if (prop.NameEquals("auth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    auth = SignalRUpstreamAuthSettings.DeserializeSignalRUpstreamAuthSettings(property.Value, options);
+                    auth = SignalRUpstreamAuthSettings.DeserializeSignalRUpstreamAuthSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SignalRUpstreamTemplate(
                 hubPattern,
                 eventPattern,
                 categoryPattern,
                 urlTemplate,
                 auth,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SignalRUpstreamTemplate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HubPattern), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hubPattern: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HubPattern))
-                {
-                    builder.Append("  hubPattern: ");
-                    if (HubPattern.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HubPattern}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HubPattern}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventPattern), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eventPattern: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EventPattern))
-                {
-                    builder.Append("  eventPattern: ");
-                    if (EventPattern.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EventPattern}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EventPattern}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CategoryPattern), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  categoryPattern: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CategoryPattern))
-                {
-                    builder.Append("  categoryPattern: ");
-                    if (CategoryPattern.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CategoryPattern}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CategoryPattern}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  urlTemplate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UrlTemplate))
-                {
-                    builder.Append("  urlTemplate: ");
-                    if (UrlTemplate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UrlTemplate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UrlTemplate}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  auth: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Auth))
-                {
-                    builder.Append("  auth: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SignalRUpstreamTemplate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SignalRUpstreamTemplate IPersistableModel<SignalRUpstreamTemplate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SignalRUpstreamTemplate IPersistableModel<SignalRUpstreamTemplate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SignalRUpstreamTemplate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSignalRUpstreamTemplate(document.RootElement, options);
                     }
                 default:
@@ -300,6 +194,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SignalRUpstreamTemplate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

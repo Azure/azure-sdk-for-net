@@ -8,178 +8,92 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SignalR;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSignalRSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _signalRClientDiagnostics;
-        private SignalRRestOperations _signalRRestClient;
-        private ClientDiagnostics _usagesClientDiagnostics;
-        private UsagesRestOperations _usagesRestClient;
+        private ClientDiagnostics _signalRResourcesClientDiagnostics;
+        private SignalRResources _signalRResourcesRestClient;
+        private ClientDiagnostics _signalROperationGroupClientDiagnostics;
+        private SignalROperationGroup _signalROperationGroupRestClient;
+        private ClientDiagnostics _usagesOperationGroupClientDiagnostics;
+        private UsagesOperationGroup _usagesOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSignalRSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSignalRSubscriptionResource for mocking. </summary>
         protected MockableSignalRSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSignalRSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSignalRSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSignalRSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SignalRClientDiagnostics => _signalRClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRResource.ResourceType.Namespace, Diagnostics);
-        private SignalRRestOperations SignalRRestClient => _signalRRestClient ??= new SignalRRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SignalRResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SignalRResourcesClientDiagnostics => _signalRResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SignalRResources SignalRResourcesRestClient => _signalRResourcesRestClient ??= new SignalRResources(SignalRResourcesClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
 
-        /// <summary>
-        /// Checks that the resource name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalR_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SignalRResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> the region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
+        private ClientDiagnostics SignalROperationGroupClientDiagnostics => _signalROperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-            using var scope = SignalRClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await SignalRRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private SignalROperationGroup SignalROperationGroupRestClient => _signalROperationGroupRestClient ??= new SignalROperationGroup(SignalROperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
 
-        /// <summary>
-        /// Checks that the resource name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalR_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SignalRResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> the region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
+        private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-            using var scope = SignalRClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = SignalRRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalR_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalRResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SignalRResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRResource> GetSignalRsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SignalRRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SignalRRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), SignalRClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetSignalRs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionAsyncCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalR_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalRResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SignalRResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,63 +101,167 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <returns> A collection of <see cref="SignalRResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRResource> GetSignalRs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SignalRRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SignalRRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), SignalRClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetSignalRs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
-        /// List resource usage quotas by location.
+        /// Checks that the resource name is valid and is not already in use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalROperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="signalRNameAvailabilityContent"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SignalRUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="signalRNameAvailabilityContent"/> is null. </exception>
+        public virtual async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(AzureLocation location, SignalRNameAvailabilityContent signalRNameAvailabilityContent, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SignalRUsage.DeserializeSignalRUsage(e), UsagesClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNull(signalRNameAvailabilityContent, nameof(signalRNameAvailabilityContent));
+
+            using DiagnosticScope scope = SignalROperationGroupClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SignalROperationGroupRestClient.CreateCheckSignalRNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, SignalRNameAvailabilityContent.ToRequestContent(signalRNameAvailabilityContent), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SignalRNameAvailabilityResult> response = Response.FromValue(SignalRNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignalROperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="signalRNameAvailabilityContent"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="signalRNameAvailabilityContent"/> is null. </exception>
+        public virtual Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(AzureLocation location, SignalRNameAvailabilityContent signalRNameAvailabilityContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(signalRNameAvailabilityContent, nameof(signalRNameAvailabilityContent));
+
+            using DiagnosticScope scope = SignalROperationGroupClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SignalROperationGroupRestClient.CreateCheckSignalRNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, SignalRNameAvailabilityContent.ToRequestContent(signalRNameAvailabilityContent), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SignalRNameAvailabilityResult> response = Response.FromValue(SignalRNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// List resource usage quotas by location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SignalRUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SignalRUsage> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SignalRUsage.DeserializeSignalRUsage(e), UsagesClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesOperationGroupGetAllAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+        }
+
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SignalRUsage> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesOperationGroupGetAllCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
     }
 }

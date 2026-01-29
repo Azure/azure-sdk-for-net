@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Feature of a resource, which controls the runtime behavior. </summary>
     public partial class SignalRFeature
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SignalRFeature"/>. </summary>
         /// <param name="flag">
@@ -74,18 +46,13 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </param>
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <param name="properties"> Optional properties related to this feature. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRFeature(SignalRFeatureFlag flag, string value, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRFeature(SignalRFeatureFlag flag, string value, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Flag = flag;
             Value = value;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SignalRFeature"/> for deserialization. </summary>
-        internal SignalRFeature()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -95,13 +62,12 @@ namespace Azure.ResourceManager.SignalR.Models
         /// - EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.
         /// - EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.
         /// </summary>
-        [WirePath("flag")]
         public SignalRFeatureFlag Flag { get; set; }
+
         /// <summary> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
+
         /// <summary> Optional properties related to this feature. </summary>
-        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; }
     }
 }

@@ -13,263 +13,404 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary>
-    /// A class representing the SignalR data model.
-    /// A class represent a resource.
-    /// </summary>
+    /// <summary> A class representing a resource. </summary>
     public partial class SignalRData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SignalRData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SignalRData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>();
-            Features = new ChangeTrackingList<SignalRFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> A class that describes the properties of the resource. </param>
         /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="kind"> The kind of the service, it can be SignalR or RawWebSockets. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
-        /// <param name="hostName"> FQDN of the service instance. </param>
-        /// <param name="publicPort"> The publicly accessible port of the resource which is designed for browser/client side usage. </param>
-        /// <param name="serverPort"> The publicly accessible port of the resource which is designed for customer server side usage. </param>
-        /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="tls"> TLS settings for the resource. </param>
-        /// <param name="hostNamePrefix"> Deprecated. </param>
-        /// <param name="features">
-        /// List of the featureFlags.
-        ///
-        /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set.
-        /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
-        /// </param>
-        /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="resourceLogConfiguration"> Resource log configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="cors"> Cross-Origin Resource Sharing (CORS) settings. </param>
-        /// <param name="upstream"> The settings for the Upstream when the service is in server-less mode. </param>
-        /// <param name="networkACLs"> Network ACLs for the resource. </param>
-        /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to "Enabled".
-        /// When it's Enabled, network ACLs still apply.
-        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
-        /// </param>
-        /// <param name="disableLocalAuth">
-        /// DisableLocalAuth
-        /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won't work.
-        /// </param>
-        /// <param name="disableAadAuth">
-        /// DisableLocalAuth
-        /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won't work.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogCategoryListResult resourceLogConfiguration, SignalRCorsSettings cors, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="kind"> The kind of the service. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. </param>
+        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SignalRProperties properties, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Kind = kind;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            ExternalIP = externalIP;
-            HostName = hostName;
-            PublicPort = publicPort;
-            ServerPort = serverPort;
-            Version = version;
-            PrivateEndpointConnections = privateEndpointConnections;
-            SharedPrivateLinkResources = sharedPrivateLinkResources;
-            Tls = tls;
-            HostNamePrefix = hostNamePrefix;
-            Features = features;
-            LiveTraceConfiguration = liveTraceConfiguration;
-            ResourceLogConfiguration = resourceLogConfiguration;
-            Cors = cors;
-            Upstream = upstream;
-            NetworkACLs = networkACLs;
-            PublicNetworkAccess = publicNetworkAccess;
-            DisableLocalAuth = disableLocalAuth;
-            DisableAadAuth = disableAadAuth;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalRData"/> for deserialization. </summary>
-        internal SignalRData()
-        {
-        }
+        /// <summary> A class that describes the properties of the resource. </summary>
+        internal SignalRProperties Properties { get; set; }
 
         /// <summary> The billing information of the resource. </summary>
-        [WirePath("sku")]
         public SignalRResourceSku Sku { get; set; }
-        /// <summary> The kind of the service, it can be SignalR or RawWebSockets. </summary>
-        [WirePath("kind")]
+
+        /// <summary> The kind of the service. </summary>
         public SignalRServiceKind? Kind { get; set; }
-        /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        [WirePath("identity")]
+
+        /// <summary> A class represent managed identities used for request and response. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public SignalRProvisioningState? ProvisioningState { get; }
-        /// <summary> The publicly accessible IP of the resource. </summary>
-        [WirePath("properties.externalIP")]
-        public string ExternalIP { get; }
-        /// <summary> FQDN of the service instance. </summary>
-        [WirePath("properties.hostName")]
-        public string HostName { get; }
-        /// <summary> The publicly accessible port of the resource which is designed for browser/client side usage. </summary>
-        [WirePath("properties.publicPort")]
-        public int? PublicPort { get; }
-        /// <summary> The publicly accessible port of the resource which is designed for customer server side usage. </summary>
-        [WirePath("properties.serverPort")]
-        public int? ServerPort { get; }
-        /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
-        [WirePath("properties.version")]
-        public string Version { get; }
-        /// <summary> Private endpoint connections to the resource. </summary>
-        [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<SignalRPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> The list of shared private link resources. </summary>
-        [WirePath("properties.sharedPrivateLinkResources")]
-        public IReadOnlyList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get; }
-        /// <summary> TLS settings for the resource. </summary>
-        internal SignalRTlsSettings Tls { get; set; }
-        /// <summary> Request client certificate during TLS handshake if enabled. </summary>
-        [WirePath("properties.tls.clientCertEnabled")]
-        public bool? IsClientCertEnabled
+        public SignalRProvisioningState? ProvisioningState
         {
-            get => Tls is null ? default : Tls.IsClientCertEnabled;
-            set
+            get
             {
-                if (Tls is null)
-                    Tls = new SignalRTlsSettings();
-                Tls.IsClientCertEnabled = value;
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The publicly accessible IP of the resource. </summary>
+        public string ExternalIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalIP;
+            }
+        }
+
+        /// <summary> FQDN of the service instance. </summary>
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+        }
+
+        /// <summary> The publicly accessible port of the resource which is designed for browser/client side usage. </summary>
+        public int? PublicPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicPort;
+            }
+        }
+
+        /// <summary> The publicly accessible port of the resource which is designed for customer server side usage. </summary>
+        public int? ServerPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerPort;
+            }
+        }
+
+        /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
+        /// <summary> Private endpoint connections to the resource. </summary>
+        public IReadOnlyList<SignalRPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> The list of shared private link resources. </summary>
+        public IReadOnlyList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                return Properties.SharedPrivateLinkResources;
             }
         }
 
         /// <summary> Deprecated. </summary>
-        [WirePath("properties.hostNamePrefix")]
-        public string HostNamePrefix { get; }
+        public string HostNamePrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostNamePrefix;
+            }
+        }
+
         /// <summary>
         /// List of the featureFlags.
-        ///
+        /// 
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
         /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
         /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </summary>
-        [WirePath("properties.features")]
-        public IList<SignalRFeature> Features { get; }
+        public IList<SignalRFeature> Features
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                return Properties.Features;
+            }
+        }
+
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
-        [WirePath("properties.liveTraceConfiguration")]
-        public SignalRLiveTraceConfiguration LiveTraceConfiguration { get; set; }
-        /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
-        internal SignalRResourceLogCategoryListResult ResourceLogConfiguration { get; set; }
-        /// <summary> Gets or sets the list of category configurations. </summary>
-        [WirePath("properties.resourceLogConfiguration.categories")]
-        public IList<SignalRResourceLogCategory> ResourceLogCategories
+        public SignalRLiveTraceConfiguration LiveTraceConfiguration
         {
             get
             {
-                if (ResourceLogConfiguration is null)
-                    ResourceLogConfiguration = new SignalRResourceLogCategoryListResult();
-                return ResourceLogConfiguration.Categories;
+                return Properties is null ? default : Properties.LiveTraceConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.LiveTraceConfiguration = value;
             }
         }
 
-        /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
-        internal SignalRCorsSettings Cors { get; set; }
-        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
-        [WirePath("properties.cors.allowedOrigins")]
-        public IList<string> CorsAllowedOrigins
+        /// <summary> Serverless settings. </summary>
+        public SignalRServerlessSettings Serverless
         {
             get
             {
-                if (Cors is null)
-                    Cors = new SignalRCorsSettings();
-                return Cors.AllowedOrigins;
+                return Properties is null ? default : Properties.Serverless;
             }
-        }
-
-        /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
-        internal ServerlessUpstreamSettings Upstream { get; set; }
-        /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
-        [WirePath("properties.upstream.templates")]
-        public IList<SignalRUpstreamTemplate> UpstreamTemplates
-        {
-            get
+            set
             {
-                if (Upstream is null)
-                    Upstream = new ServerlessUpstreamSettings();
-                return Upstream.Templates;
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.Serverless = value;
             }
         }
 
         /// <summary> Network ACLs for the resource. </summary>
-        [WirePath("properties.networkACLs")]
-        public SignalRNetworkAcls NetworkACLs { get; set; }
+        public SignalRNetworkAcls NetworkACLs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkACLs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.NetworkACLs = value;
+            }
+        }
+
+        /// <summary> Application firewall settings for the resource. </summary>
+        public SignalRClientTrafficControlRule ApplicationFirewall
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationFirewall;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.ApplicationFirewall = value;
+            }
+        }
+
         /// <summary>
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
         /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; set; }
+        public string PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
         /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
-        [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
+
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
-        [WirePath("properties.disableAadAuth")]
-        public bool? DisableAadAuth { get; set; }
+        public bool? DisableAadAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableAadAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.DisableAadAuth = value.Value;
+            }
+        }
+
+        /// <summary>
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
+        /// </summary>
+        public string RegionEndpointEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RegionEndpointEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.RegionEndpointEnabled = value;
+            }
+        }
+
+        /// <summary>
+        /// Stop or start the resource.  Default to "False".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </summary>
+        public string ResourceStopped
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceStopped;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.ResourceStopped = value;
+            }
+        }
+
+        /// <summary> Route settings for the resource. </summary>
+        public SignalRRouteSettings RouteSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.RouteSettings = value;
+            }
+        }
+
+        /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
+        public bool? IsClientCertEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsClientCertEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                Properties.IsClientCertEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the list of category configurations. </summary>
+        public IList<SignalRResourceLogCategory> ResourceLogCategories
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                return Properties.ResourceLogCategories;
+            }
+        }
+
+        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
+        public IList<string> CorsAllowedOrigins
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                return Properties.CorsAllowedOrigins;
+            }
+        }
+
+        /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
+        public IList<SignalRUpstreamTemplate> UpstreamTemplates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SignalRProperties();
+                }
+                return Properties.UpstreamTemplates;
+            }
+        }
     }
 }

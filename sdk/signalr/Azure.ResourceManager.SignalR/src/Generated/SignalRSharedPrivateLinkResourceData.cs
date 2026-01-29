@@ -13,43 +13,11 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary>
-    /// A class representing the SignalRSharedPrivateLinkResource data model.
-    /// Describes a Shared Private Link Resource
-    /// </summary>
+    /// <summary> Describes a Shared Private Link Resource. </summary>
     public partial class SignalRSharedPrivateLinkResourceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceData"/>. </summary>
         public SignalRSharedPrivateLinkResourceData()
@@ -57,40 +25,97 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
-        /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="status"> Status of the shared private link resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRSharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, SignalRProvisioningState? provisioningState, string requestMessage, SignalRSharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes the properties of an existing Shared Private Link Resource. </param>
+        internal SignalRSharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
-            GroupId = groupId;
-            PrivateLinkResourceId = privateLinkResourceId;
-            ProvisioningState = provisioningState;
-            RequestMessage = requestMessage;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Describes the properties of an existing Shared Private Link Resource. </summary>
+        internal SharedPrivateLinkResourceProperties Properties { get; set; }
+
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
-        [WirePath("properties.groupId")]
-        public string GroupId { get; set; }
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedPrivateLinkResourceProperties();
+                }
+                Properties.GroupId = value;
+            }
+        }
+
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
-        [WirePath("properties.privateLinkResourceId")]
-        public ResourceIdentifier PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedPrivateLinkResourceProperties();
+                }
+                Properties.PrivateLinkResourceId = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public SignalRProvisioningState? ProvisioningState { get; }
+        public SignalRProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
-        [WirePath("properties.requestMessage")]
-        public string RequestMessage { get; set; }
+        public string RequestMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedPrivateLinkResourceProperties();
+                }
+                Properties.RequestMessage = value;
+            }
+        }
+
+        /// <summary> A list of FQDNs for third party private link service. </summary>
+        public IList<string> Fqdns
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Fqdns;
+            }
+        }
+
         /// <summary> Status of the shared private link resource. </summary>
-        [WirePath("properties.status")]
-        public SignalRSharedPrivateLinkResourceStatus? Status { get; }
+        public SignalRSharedPrivateLinkResourceStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
     }
 }
