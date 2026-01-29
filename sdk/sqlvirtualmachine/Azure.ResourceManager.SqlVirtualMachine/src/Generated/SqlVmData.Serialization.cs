@@ -8,19 +8,25 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    public partial class SqlVmData : IUtf8JsonSerializable, IJsonModel<SqlVmData>
+    /// <summary> A SQL virtual machine. </summary>
+    public partial class SqlVmData : TrackedResourceData, IJsonModel<SqlVmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SqlVmData"/> for deserialization. </summary>
+        internal SqlVmData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,371 +38,160 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlVmData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachineResourceId))
-            {
-                writer.WritePropertyName("virtualMachineResourceId"u8);
-                writer.WriteStringValue(VirtualMachineResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (Optional.IsDefined(SqlImageOffer))
-            {
-                writer.WritePropertyName("sqlImageOffer"u8);
-                writer.WriteStringValue(SqlImageOffer);
-            }
-            if (Optional.IsDefined(SqlServerLicenseType))
-            {
-                writer.WritePropertyName("sqlServerLicenseType"u8);
-                writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
-            }
-            if (Optional.IsDefined(SqlManagement))
-            {
-                writer.WritePropertyName("sqlManagement"u8);
-                writer.WriteStringValue(SqlManagement.Value.ToString());
-            }
-            if (Optional.IsDefined(SqlImageSku))
-            {
-                writer.WritePropertyName("sqlImageSku"u8);
-                writer.WriteStringValue(SqlImageSku.Value.ToString());
-            }
-            if (Optional.IsDefined(SqlVmGroupResourceId))
-            {
-                writer.WritePropertyName("sqlVirtualMachineGroupResourceId"u8);
-                writer.WriteStringValue(SqlVmGroupResourceId);
-            }
-            if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
-            {
-                writer.WritePropertyName("wsfcDomainCredentials"u8);
-                writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials, options);
-            }
-            if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
-            {
-                writer.WritePropertyName("wsfcStaticIp"u8);
-                writer.WriteStringValue(WindowsServerFailoverClusterStaticIP.ToString());
-            }
-            if (Optional.IsDefined(AutoPatchingSettings))
-            {
-                writer.WritePropertyName("autoPatchingSettings"u8);
-                writer.WriteObjectValue(AutoPatchingSettings, options);
-            }
-            if (Optional.IsDefined(AutoBackupSettings))
-            {
-                writer.WritePropertyName("autoBackupSettings"u8);
-                writer.WriteObjectValue(AutoBackupSettings, options);
-            }
-            if (Optional.IsDefined(KeyVaultCredentialSettings))
-            {
-                writer.WritePropertyName("keyVaultCredentialSettings"u8);
-                writer.WriteObjectValue(KeyVaultCredentialSettings, options);
-            }
-            if (Optional.IsDefined(ServerConfigurationsManagementSettings))
-            {
-                writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
-                writer.WriteObjectValue(ServerConfigurationsManagementSettings, options);
-            }
-            if (Optional.IsDefined(StorageConfigurationSettings))
-            {
-                writer.WritePropertyName("storageConfigurationSettings"u8);
-                writer.WriteObjectValue(StorageConfigurationSettings, options);
-            }
-            if (Optional.IsDefined(AssessmentSettings))
-            {
-                writer.WritePropertyName("assessmentSettings"u8);
-                writer.WriteObjectValue(AssessmentSettings, options);
-            }
-            writer.WriteEndObject();
         }
 
-        SqlVmData IJsonModel<SqlVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlVmData IJsonModel<SqlVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SqlVmData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlVmData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlVmData(document.RootElement, options);
         }
 
-        internal static SqlVmData DeserializeSqlVmData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlVmData DeserializeSqlVmData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ResourceIdentifier virtualMachineResourceId = default;
-            string provisioningState = default;
-            string sqlImageOffer = default;
-            SqlServerLicenseType? sqlServerLicenseType = default;
-            SqlManagementMode? sqlManagement = default;
-            SqlImageSku? sqlImageSku = default;
-            ResourceIdentifier sqlVmGroupResourceId = default;
-            WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials = default;
-            IPAddress windowsServerFailoverClusterStaticIP = default;
-            SqlVmAutoPatchingSettings autoPatchingSettings = default;
-            SqlVmAutoBackupSettings autoBackupSettings = default;
-            SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings = default;
-            SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings = default;
-            SqlVmStorageConfigurationSettings storageConfigurationSettings = default;
-            SqlVmAssessmentSettings assessmentSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            SqlVirtualMachineProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerSqlVirtualMachineContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlVirtualMachineContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlVirtualMachineContext.Default);
+                    properties = SqlVirtualMachineProperties.DeserializeSqlVirtualMachineProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("virtualMachineResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualMachineResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sqlImageOffer"u8))
-                        {
-                            sqlImageOffer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sqlServerLicenseType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sqlServerLicenseType = new SqlServerLicenseType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sqlManagement"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sqlManagement = new SqlManagementMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sqlImageSku"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sqlImageSku = new SqlImageSku(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sqlVirtualMachineGroupResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sqlVmGroupResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("wsfcDomainCredentials"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            windowsServerFailoverClusterDomainCredentials = WindowsServerFailoverClusterDomainCredentials.DeserializeWindowsServerFailoverClusterDomainCredentials(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("wsfcStaticIp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            windowsServerFailoverClusterStaticIP = IPAddress.Parse(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("autoPatchingSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoPatchingSettings = SqlVmAutoPatchingSettings.DeserializeSqlVmAutoPatchingSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("autoBackupSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoBackupSettings = SqlVmAutoBackupSettings.DeserializeSqlVmAutoBackupSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVaultCredentialSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyVaultCredentialSettings = SqlVmKeyVaultCredentialSettings.DeserializeSqlVmKeyVaultCredentialSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("serverConfigurationsManagementSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serverConfigurationsManagementSettings = SqlServerConfigurationsManagementSettings.DeserializeSqlServerConfigurationsManagementSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("storageConfigurationSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageConfigurationSettings = SqlVmStorageConfigurationSettings.DeserializeSqlVmStorageConfigurationSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("assessmentSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            assessmentSettings = SqlVmAssessmentSettings.DeserializeSqlVmAssessmentSettings(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlVirtualMachineContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SqlVmData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
-                virtualMachineResourceId,
-                provisioningState,
-                sqlImageOffer,
-                sqlServerLicenseType,
-                sqlManagement,
-                sqlImageSku,
-                sqlVmGroupResourceId,
-                windowsServerFailoverClusterDomainCredentials,
-                windowsServerFailoverClusterStaticIP,
-                autoPatchingSettings,
-                autoBackupSettings,
-                keyVaultCredentialSettings,
-                serverConfigurationsManagementSettings,
-                storageConfigurationSettings,
-                assessmentSettings,
-                serializedAdditionalRawData);
+                properties,
+                identity);
         }
 
-        BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -406,15 +201,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        SqlVmData IPersistableModel<SqlVmData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlVmData IPersistableModel<SqlVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlVmData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlVmData(document.RootElement, options);
                     }
                 default:
@@ -422,6 +222,26 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sqlVmData"> The <see cref="SqlVmData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlVmData sqlVmData)
+        {
+            if (sqlVmData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sqlVmData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmData"/> from. </param>
+        internal static SqlVmData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSqlVmData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

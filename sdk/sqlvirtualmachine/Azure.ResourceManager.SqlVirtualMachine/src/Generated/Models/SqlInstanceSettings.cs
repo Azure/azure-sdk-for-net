@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set the server/instance-level settings for SQL Server. </summary>
     public partial class SqlInstanceSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlInstanceSettings"/>. </summary>
         public SqlInstanceSettings()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="maxServerMemoryInMB"> SQL Server maximum memory. </param>
         /// <param name="isLpimEnabled"> SQL Server LPIM. </param>
         /// <param name="isIfiEnabled"> SQL Server IFI. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlInstanceSettings(string collation, int? maxDop, bool? isOptimizeForAdHocWorkloadsEnabled, int? minServerMemoryInMB, int? maxServerMemoryInMB, bool? isLpimEnabled, bool? isIfiEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlInstanceSettings(string collation, int? maxDop, bool? isOptimizeForAdHocWorkloadsEnabled, int? minServerMemoryInMB, int? maxServerMemoryInMB, bool? isLpimEnabled, bool? isIfiEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collation = collation;
             MaxDop = maxDop;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             MaxServerMemoryInMB = maxServerMemoryInMB;
             IsLpimEnabled = isLpimEnabled;
             IsIfiEnabled = isIfiEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SQL Server Collation. </summary>
         public string Collation { get; set; }
+
         /// <summary> SQL Server MAXDOP. </summary>
         public int? MaxDop { get; set; }
+
         /// <summary> SQL Server Optimize for Adhoc workloads. </summary>
         public bool? IsOptimizeForAdHocWorkloadsEnabled { get; set; }
+
         /// <summary> SQL Server minimum memory. </summary>
         public int? MinServerMemoryInMB { get; set; }
+
         /// <summary> SQL Server maximum memory. </summary>
         public int? MaxServerMemoryInMB { get; set; }
+
         /// <summary> SQL Server LPIM. </summary>
         public bool? IsLpimEnabled { get; set; }
+
         /// <summary> SQL Server IFI. </summary>
         public bool? IsIfiEnabled { get; set; }
     }

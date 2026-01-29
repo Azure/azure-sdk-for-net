@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable, IJsonModel<SqlServerConfigurationsManagementSettings>
+    /// <summary> Set the connectivity, storage and workload settings. </summary>
+    public partial class SqlServerConfigurationsManagementSettings : IJsonModel<SqlServerConfigurationsManagementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerConfigurationsManagementSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerConfigurationsManagementSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
@@ -59,15 +59,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("sqlInstanceSettings"u8);
                 writer.WriteObjectValue(SqlInstanceSettings, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(AzureAdAuthenticationSettings))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("azureAdAuthenticationSettings"u8);
+                writer.WriteObjectValue(AzureAdAuthenticationSettings, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +81,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
         }
 
-        SqlServerConfigurationsManagementSettings IJsonModel<SqlServerConfigurationsManagementSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerConfigurationsManagementSettings IJsonModel<SqlServerConfigurationsManagementSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlServerConfigurationsManagementSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlServerConfigurationsManagementSettings(document.RootElement, options);
         }
 
-        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,74 +111,86 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             SqlStorageUpdateSettings sqlStorageUpdateSettings = default;
             AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations = default;
             SqlInstanceSettings sqlInstanceSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            AADAuthenticationSettings azureAdAuthenticationSettings = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlConnectivityUpdateSettings"u8))
+                if (prop.NameEquals("sqlConnectivityUpdateSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlConnectivityUpdateSettings = SqlConnectivityUpdateSettings.DeserializeSqlConnectivityUpdateSettings(property.Value, options);
+                    sqlConnectivityUpdateSettings = SqlConnectivityUpdateSettings.DeserializeSqlConnectivityUpdateSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sqlWorkloadTypeUpdateSettings"u8))
+                if (prop.NameEquals("sqlWorkloadTypeUpdateSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlWorkloadTypeUpdateSettings = SqlWorkloadTypeUpdateSettings.DeserializeSqlWorkloadTypeUpdateSettings(property.Value, options);
+                    sqlWorkloadTypeUpdateSettings = SqlWorkloadTypeUpdateSettings.DeserializeSqlWorkloadTypeUpdateSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sqlStorageUpdateSettings"u8))
+                if (prop.NameEquals("sqlStorageUpdateSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlStorageUpdateSettings = SqlStorageUpdateSettings.DeserializeSqlStorageUpdateSettings(property.Value, options);
+                    sqlStorageUpdateSettings = SqlStorageUpdateSettings.DeserializeSqlStorageUpdateSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("additionalFeaturesServerConfigurations"u8))
+                if (prop.NameEquals("additionalFeaturesServerConfigurations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    additionalFeaturesServerConfigurations = AdditionalFeaturesServerConfigurations.DeserializeAdditionalFeaturesServerConfigurations(property.Value, options);
+                    additionalFeaturesServerConfigurations = AdditionalFeaturesServerConfigurations.DeserializeAdditionalFeaturesServerConfigurations(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sqlInstanceSettings"u8))
+                if (prop.NameEquals("sqlInstanceSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value, options);
+                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("azureAdAuthenticationSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureAdAuthenticationSettings = AADAuthenticationSettings.DeserializeAADAuthenticationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SqlServerConfigurationsManagementSettings(
                 sqlConnectivityUpdateSettings,
                 sqlWorkloadTypeUpdateSettings,
                 sqlStorageUpdateSettings,
                 additionalFeaturesServerConfigurations,
                 sqlInstanceSettings,
-                serializedAdditionalRawData);
+                azureAdAuthenticationSettings,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SqlServerConfigurationsManagementSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlServerConfigurationsManagementSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -178,15 +200,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
         }
 
-        SqlServerConfigurationsManagementSettings IPersistableModel<SqlServerConfigurationsManagementSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerConfigurationsManagementSettings IPersistableModel<SqlServerConfigurationsManagementSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlServerConfigurationsManagementSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlServerConfigurationsManagementSettings(document.RootElement, options);
                     }
                 default:
@@ -194,6 +221,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlServerConfigurationsManagementSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

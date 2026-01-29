@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct SqlVmStorageWorkloadType : IEquatable<SqlVmStorageWorkloadType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SqlVmStorageWorkloadType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SqlVmStorageWorkloadType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string GeneralValue = "GENERAL";
         private const string OltpValue = "OLTP";
         private const string DWValue = "DW";
 
-        /// <summary> GENERAL. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmStorageWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SqlVmStorageWorkloadType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the General. </summary>
         public static SqlVmStorageWorkloadType General { get; } = new SqlVmStorageWorkloadType(GeneralValue);
-        /// <summary> OLTP. </summary>
+
+        /// <summary> Gets the Oltp. </summary>
         public static SqlVmStorageWorkloadType Oltp { get; } = new SqlVmStorageWorkloadType(OltpValue);
-        /// <summary> DW. </summary>
+
+        /// <summary> Gets the DW. </summary>
         public static SqlVmStorageWorkloadType DW { get; } = new SqlVmStorageWorkloadType(DWValue);
+
         /// <summary> Determines if two <see cref="SqlVmStorageWorkloadType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlVmStorageWorkloadType left, SqlVmStorageWorkloadType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlVmStorageWorkloadType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlVmStorageWorkloadType left, SqlVmStorageWorkloadType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmStorageWorkloadType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlVmStorageWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlVmStorageWorkloadType(string value) => new SqlVmStorageWorkloadType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlVmStorageWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlVmStorageWorkloadType?(string value) => value == null ? null : new SqlVmStorageWorkloadType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlVmStorageWorkloadType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlVmStorageWorkloadType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

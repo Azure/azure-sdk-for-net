@@ -7,57 +7,277 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmSqlVirtualMachineModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="SqlVirtualMachine.AvailabilityGroupListenerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+
+        /// <summary> Result of the request to list SQL operations. </summary>
+        /// <param name="name"> The name of the operation being performed on this particular object.". </param>
+        /// <param name="display"> he localized display information for this particular operation / action. </param>
+        /// <param name="origin"> The intended executor of the operation.". </param>
+        /// <param name="properties"> Additional descriptions for the operation. </param>
+        /// <returns> A new <see cref="Models.Info"/> instance for mocking. </returns>
+        public static Info Info(string name = default, OperationDisplay display = default, OperationOrigin? origin = default, IReadOnlyDictionary<string, OperationProperty> properties = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, OperationProperty>();
+
+            return new Info(name, display, origin, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Display metadata associated with the operation. </summary>
+        /// <param name="provider"> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </param>
+        /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </param>
+        /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </param>
+        /// <param name="description"> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </param>
+        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
+        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
+        {
+            return new OperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
         /// <param name="availabilityGroupName"> Name of the availability group. </param>
         /// <param name="loadBalancerConfigurations"> List of load balancer configurations for an availability group listener. </param>
         /// <param name="multiSubnetIPConfigurations"> List of multi subnet IP configurations for an AG listener. </param>
         /// <param name="createDefaultAvailabilityGroupIfNotExist"> Create a default availability group if it does not exist. </param>
         /// <param name="port"> Listener port. </param>
-        /// <param name="availabilityGroupReplicas"> Availability Group configuration. </param>
+        /// <param name="availabilityGroupReplicas"> Replica configurations. </param>
         /// <returns> A new <see cref="SqlVirtualMachine.AvailabilityGroupListenerData"/> instance for mocking. </returns>
-        public static AvailabilityGroupListenerData AvailabilityGroupListenerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, string availabilityGroupName = null, IEnumerable<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations = null, IEnumerable<MultiSubnetIPConfiguration> multiSubnetIPConfigurations = null, bool? createDefaultAvailabilityGroupIfNotExist = null, int? port = null, IEnumerable<AvailabilityGroupReplica> availabilityGroupReplicas = null)
+        public static AvailabilityGroupListenerData AvailabilityGroupListenerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string availabilityGroupName = default, IEnumerable<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations = default, IEnumerable<MultiSubnetIPConfiguration> multiSubnetIPConfigurations = default, bool? createDefaultAvailabilityGroupIfNotExist = default, int? port = default, IEnumerable<AvailabilityGroupReplica> availabilityGroupReplicas = default)
         {
-            loadBalancerConfigurations ??= new List<AvailabilityGroupListenerLoadBalancerConfiguration>();
-            multiSubnetIPConfigurations ??= new List<MultiSubnetIPConfiguration>();
-            availabilityGroupReplicas ??= new List<AvailabilityGroupReplica>();
-
             return new AvailabilityGroupListenerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState,
-                availabilityGroupName,
-                loadBalancerConfigurations?.ToList(),
-                multiSubnetIPConfigurations?.ToList(),
-                createDefaultAvailabilityGroupIfNotExist,
-                port,
-                availabilityGroupReplicas != null ? new AvailabilityGroupConfiguration(availabilityGroupReplicas?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                provisioningState is null && availabilityGroupName is null && loadBalancerConfigurations is null && multiSubnetIPConfigurations is null && createDefaultAvailabilityGroupIfNotExist is null && port is null && availabilityGroupReplicas is null ? default : new AvailabilityGroupListenerProperties(
+                    provisioningState,
+                    availabilityGroupName,
+                    (loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>()).ToList(),
+                    (multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>()).ToList(),
+                    createDefaultAvailabilityGroupIfNotExist,
+                    port,
+                    new AvailabilityGroupConfiguration((availabilityGroupReplicas ?? new ChangeTrackingList<AvailabilityGroupReplica>()).ToList(), null),
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlVirtualMachine.SqlVmGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A load balancer configuration for an availability group listener. </summary>
+        /// <param name="privateIPAddress"> Private IP address. </param>
+        /// <param name="publicIPAddressResourceId"> Resource id of the public IP. </param>
+        /// <param name="loadBalancerResourceId"> Resource id of the load balancer. </param>
+        /// <param name="probePort"> Probe port. </param>
+        /// <param name="sqlVmInstances"> List of the SQL virtual machine instance resource id's that are enrolled into the availability group listener. </param>
+        /// <returns> A new <see cref="Models.AvailabilityGroupListenerLoadBalancerConfiguration"/> instance for mocking. </returns>
+        public static AvailabilityGroupListenerLoadBalancerConfiguration AvailabilityGroupListenerLoadBalancerConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default, ResourceIdentifier publicIPAddressResourceId = default, ResourceIdentifier loadBalancerResourceId = default, int? probePort = default, IEnumerable<ResourceIdentifier> sqlVmInstances = default)
+        {
+            sqlVmInstances ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(
+                privateIPAddress,
+                publicIPAddressResourceId,
+                loadBalancerResourceId,
+                probePort,
+                sqlVmInstances.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="virtualMachineResourceId"> ARM Resource id of underlying virtual machine created from SQL marketplace image. </param>
+        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
+        /// <param name="sqlImageOffer"> SQL image offer. Examples include SQL2016-WS2016, SQL2017-WS2016. </param>
+        /// <param name="sqlServerLicenseType"> SQL Server license type. </param>
+        /// <param name="sqlManagement"> SQL Server Management type. NOTE: This parameter is not used anymore. API will automatically detect the Sql Management, refrain from using it. </param>
+        /// <param name="leastPrivilegeMode"> SQL IaaS Agent least privilege mode. </param>
+        /// <param name="sqlImageSku"> SQL Server edition type. </param>
+        /// <param name="sqlVmGroupResourceId"> ARM resource id of the SQL virtual machine group this SQL virtual machine is or will be part of. </param>
+        /// <param name="windowsServerFailoverClusterDomainCredentials"> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </param>
+        /// <param name="windowsServerFailoverClusterStaticIP"> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </param>
+        /// <param name="autoPatchingSettings"> Auto patching settings for applying critical security updates to SQL virtual machine. </param>
+        /// <param name="autoBackupSettings"> Auto backup settings for SQL Server. </param>
+        /// <param name="keyVaultCredentialSettings"> Key vault credential settings. </param>
+        /// <param name="serverConfigurationsManagementSettings"> SQL Server configuration management settings. </param>
+        /// <param name="storageConfigurationSettings"> Storage Configuration Settings. </param>
+        /// <param name="troubleshootingStatus"> Troubleshooting status. </param>
+        /// <param name="assessmentSettings"> SQL best practices Assessment Settings. </param>
+        /// <param name="enableAutomaticUpgrade"> Enable automatic upgrade of Sql IaaS extension Agent. </param>
+        /// <param name="additionalVmPatch"> Additional VM Patching solution enabled on the Virtual Machine. </param>
+        /// <param name="virtualMachineIdentitySettings"> Virtual Machine Identity details used for Sql IaaS extension configurations. </param>
+        /// <param name="osType"> Operating System of the current SQL Virtual Machine. </param>
+        /// <param name="identity"> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </param>
+        /// <returns> A new <see cref="SqlVirtualMachine.SqlVmData"/> instance for mocking. </returns>
+        public static SqlVmData SqlVmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier virtualMachineResourceId = default, string provisioningState = default, string sqlImageOffer = default, SqlServerLicenseType? sqlServerLicenseType = default, SqlManagementMode? sqlManagement = default, LeastPrivilegeMode? leastPrivilegeMode = default, SqlImageSku? sqlImageSku = default, ResourceIdentifier sqlVmGroupResourceId = default, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials = default, IPAddress windowsServerFailoverClusterStaticIP = default, SqlVmAutoPatchingSettings autoPatchingSettings = default, SqlVmAutoBackupSettings autoBackupSettings = default, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings = default, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings = default, SqlVmStorageConfigurationSettings storageConfigurationSettings = default, TroubleshootingStatus troubleshootingStatus = default, SqlVmAssessmentSettings assessmentSettings = default, bool? enableAutomaticUpgrade = default, AdditionalOsPatch? additionalVmPatch = default, VirtualMachineIdentity virtualMachineIdentitySettings = default, OsType? osType = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                virtualMachineResourceId is null && provisioningState is null && sqlImageOffer is null && sqlServerLicenseType is null && sqlManagement is null && leastPrivilegeMode is null && sqlImageSku is null && sqlVmGroupResourceId is null && windowsServerFailoverClusterDomainCredentials is null && windowsServerFailoverClusterStaticIP is null && autoPatchingSettings is null && autoBackupSettings is null && keyVaultCredentialSettings is null && serverConfigurationsManagementSettings is null && storageConfigurationSettings is null && troubleshootingStatus is null && assessmentSettings is null && enableAutomaticUpgrade is null && additionalVmPatch is null && virtualMachineIdentitySettings is null && osType is null ? default : new SqlVirtualMachineProperties(
+                    virtualMachineResourceId,
+                    provisioningState,
+                    sqlImageOffer,
+                    sqlServerLicenseType,
+                    sqlManagement,
+                    leastPrivilegeMode,
+                    sqlImageSku,
+                    sqlVmGroupResourceId,
+                    windowsServerFailoverClusterDomainCredentials,
+                    windowsServerFailoverClusterStaticIP,
+                    autoPatchingSettings,
+                    autoBackupSettings,
+                    keyVaultCredentialSettings,
+                    serverConfigurationsManagementSettings,
+                    storageConfigurationSettings,
+                    troubleshootingStatus,
+                    assessmentSettings,
+                    enableAutomaticUpgrade,
+                    additionalVmPatch,
+                    virtualMachineIdentitySettings,
+                    osType,
+                    null),
+                identity);
+        }
+
+        /// <summary> Configure backups for databases in your SQL virtual machine. </summary>
+        /// <param name="isEnabled"> Enable or disable autobackup on SQL virtual machine. </param>
+        /// <param name="isEncryptionEnabled"> Enable or disable encryption for backup on SQL virtual machine. </param>
+        /// <param name="retentionPeriodInDays"> Retention period of backup: 1-90 days. </param>
+        /// <param name="storageAccountUri"> Storage account url where backup will be taken to. </param>
+        /// <param name="storageContainerName"> Storage container name where backup will be taken to. </param>
+        /// <param name="storageAccessKey"> Storage account key where backup will be taken to. </param>
+        /// <param name="password"> Password for encryption on backup. </param>
+        /// <param name="areSystemDbsIncludedInBackup"> Include or exclude system databases from auto backup. </param>
+        /// <param name="backupScheduleType"> Backup schedule type. </param>
+        /// <param name="fullBackupFrequency"> Frequency of full backups. In both cases, full backups begin during the next scheduled time window. </param>
+        /// <param name="daysOfWeek"> Days of the week for the backups when FullBackupFrequency is set to Weekly. </param>
+        /// <param name="fullBackupStartHour"> Start time of a given day during which full backups can take place. 0-23 hours. </param>
+        /// <param name="fullBackupWindowHours"> Duration of the time window of a given day during which full backups can take place. 1-23 hours. </param>
+        /// <param name="logBackupFrequency"> Frequency of log backups. 5-60 minutes. </param>
+        /// <returns> A new <see cref="Models.SqlVmAutoBackupSettings"/> instance for mocking. </returns>
+        public static SqlVmAutoBackupSettings SqlVmAutoBackupSettings(bool? isEnabled = default, bool? isEncryptionEnabled = default, int? retentionPeriodInDays = default, Uri storageAccountUri = default, string storageContainerName = default, string storageAccessKey = default, string password = default, bool? areSystemDbsIncludedInBackup = default, SqVmBackupScheduleType? backupScheduleType = default, SqlVmFullBackupFrequency? fullBackupFrequency = default, IEnumerable<SqlVmAutoBackupDayOfWeek> daysOfWeek = default, int? fullBackupStartHour = default, int? fullBackupWindowHours = default, int? logBackupFrequency = default)
+        {
+            daysOfWeek ??= new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>();
+
+            return new SqlVmAutoBackupSettings(
+                isEnabled,
+                isEncryptionEnabled,
+                retentionPeriodInDays,
+                storageAccountUri,
+                storageContainerName,
+                storageAccessKey,
+                password,
+                areSystemDbsIncludedInBackup,
+                backupScheduleType,
+                fullBackupFrequency,
+                daysOfWeek.ToList(),
+                fullBackupStartHour,
+                fullBackupWindowHours,
+                logBackupFrequency,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Set disk storage settings for SQL Server. </summary>
+        /// <param name="luns"> Logical Unit Numbers for the disks. </param>
+        /// <param name="defaultFilePath"> SQL Server default file path. </param>
+        /// <param name="useStoragePool"> Use storage pool to build a drive if true or not provided. </param>
+        /// <returns> A new <see cref="Models.SqlStorageSettings"/> instance for mocking. </returns>
+        public static SqlStorageSettings SqlStorageSettings(IEnumerable<int> luns = default, string defaultFilePath = default, bool? useStoragePool = default)
+        {
+            luns ??= new ChangeTrackingList<int>();
+
+            return new SqlStorageSettings(luns.ToList(), defaultFilePath, useStoragePool, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Set tempDb storage settings for SQL Server. </summary>
+        /// <param name="dataFileSize"> SQL Server tempdb data file size. </param>
+        /// <param name="dataGrowth"> SQL Server tempdb data file autoGrowth size. </param>
+        /// <param name="logFileSize"> SQL Server tempdb log file size. </param>
+        /// <param name="logGrowth"> SQL Server tempdb log file autoGrowth size. </param>
+        /// <param name="dataFileCount"> SQL Server tempdb data file count. </param>
+        /// <param name="persistFolder"> SQL Server tempdb persist folder choice. </param>
+        /// <param name="persistFolderPath"> SQL Server tempdb persist folder location. </param>
+        /// <param name="logicalUnitNumbers"> Logical Unit Numbers for the disks. </param>
+        /// <param name="defaultFilePath"> SQL Server default file path. </param>
+        /// <param name="useStoragePool"> Use storage pool to build a drive if true or not provided. </param>
+        /// <returns> A new <see cref="Models.SqlTempDBSettings"/> instance for mocking. </returns>
+        public static SqlTempDBSettings SqlTempDBSettings(int? dataFileSize = default, int? dataGrowth = default, int? logFileSize = default, int? logGrowth = default, int? dataFileCount = default, bool? persistFolder = default, string persistFolderPath = default, IEnumerable<int> logicalUnitNumbers = default, string defaultFilePath = default, bool? useStoragePool = default)
+        {
+            logicalUnitNumbers ??= new ChangeTrackingList<int>();
+
+            return new SqlTempDBSettings(
+                dataFileSize,
+                dataGrowth,
+                logFileSize,
+                logGrowth,
+                dataFileCount,
+                persistFolder,
+                persistFolderPath,
+                logicalUnitNumbers.ToList(),
+                defaultFilePath,
+                useStoragePool,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="rootCause"> Root cause of the issue. </param>
+        /// <param name="lastTriggerTimeUtc"> Last troubleshooting trigger time in UTC timezone. </param>
+        /// <param name="startTimeUtc"> Start time in UTC timezone. </param>
+        /// <param name="endTimeUtc"> End time in UTC timezone. </param>
+        /// <param name="troubleshootingScenario"> SQL VM troubleshooting scenario. </param>
+        /// <param name="troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName"> The name of the availability group. </param>
+        /// <returns> A new <see cref="Models.TroubleshootingStatus"/> instance for mocking. </returns>
+        public static TroubleshootingStatus TroubleshootingStatus(string rootCause = default, DateTimeOffset? lastTriggerTimeUtc = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, TroubleshootingScenario? troubleshootingScenario = default, string troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName = default)
+        {
+            return new TroubleshootingStatus(
+                rootCause,
+                lastTriggerTimeUtc,
+                startTimeUtc,
+                endTimeUtc,
+                troubleshootingScenario,
+                troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new TroubleshootingAdditionalProperties(new UnhealthyReplicaInfo(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName, null), null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An update to a SQL virtual machine. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.SqlVmPatch"/> instance for mocking. </returns>
+        public static SqlVmPatch SqlVmPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlVmPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
         /// <param name="sqlImageOffer"> SQL image offer. Examples may include SQL2016-WS2016, SQL2017-WS2016. </param>
         /// <param name="sqlImageSku"> SQL image sku. </param>
@@ -66,25 +286,54 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="clusterConfiguration"> Cluster type. </param>
         /// <param name="windowsServerFailoverClusterDomainProfile"> Cluster Active Directory domain profile. </param>
         /// <returns> A new <see cref="SqlVirtualMachine.SqlVmGroupData"/> instance for mocking. </returns>
-        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string provisioningState = null, string sqlImageOffer = null, SqlVmGroupImageSku? sqlImageSku = null, SqlVmGroupScaleType? scaleType = null, SqlVmClusterManagerType? clusterManagerType = null, SqlVmClusterConfiguration? clusterConfiguration = null, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = null)
+        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string sqlImageOffer = default, SqlVmGroupImageSku? sqlImageSku = default, SqlVmGroupScaleType? scaleType = default, SqlVmClusterManagerType? clusterManagerType = default, SqlVmClusterConfiguration? clusterConfiguration = default, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SqlVmGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState,
-                sqlImageOffer,
-                sqlImageSku,
-                scaleType,
-                clusterManagerType,
-                clusterConfiguration,
-                windowsServerFailoverClusterDomainProfile,
-                serializedAdditionalRawData: null);
+                provisioningState is null && sqlImageOffer is null && sqlImageSku is null && scaleType is null && clusterManagerType is null && clusterConfiguration is null && windowsServerFailoverClusterDomainProfile is null ? default : new SqlVirtualMachineGroupProperties(
+                    provisioningState,
+                    sqlImageOffer,
+                    sqlImageSku,
+                    scaleType,
+                    clusterManagerType,
+                    clusterConfiguration,
+                    windowsServerFailoverClusterDomainProfile,
+                    null));
+        }
+
+        /// <summary> An update to a SQL virtual machine group. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.SqlVmGroupPatch"/> instance for mocking. </returns>
+        public static SqlVmGroupPatch SqlVmGroupPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlVmGroupPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="startTimeUtc"> Start time in UTC timezone. </param>
+        /// <param name="endTimeUtc"> End time in UTC timezone. </param>
+        /// <param name="troubleshootingScenario"> SQL VM troubleshooting scenario. </param>
+        /// <param name="troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName"> The name of the availability group. </param>
+        /// <param name="virtualMachineResourceId"> Virtual machine resource id for response. </param>
+        /// <returns> A new <see cref="Models.SqlVmTroubleshooting"/> instance for mocking. </returns>
+        public static SqlVmTroubleshooting SqlVmTroubleshooting(DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, TroubleshootingScenario? troubleshootingScenario = default, string troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName = default, string virtualMachineResourceId = default)
+        {
+            return new SqlVmTroubleshooting(
+                startTimeUtc,
+                endTimeUtc,
+                troubleshootingScenario,
+                troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new TroubleshootingAdditionalProperties(new UnhealthyReplicaInfo(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName, null), null),
+                virtualMachineResourceId,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlVirtualMachine.SqlVmData"/>. </summary>
@@ -111,34 +360,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="storageConfigurationSettings"> Storage Configuration Settings. </param>
         /// <param name="assessmentSettings"> Assessment Settings. </param>
         /// <returns> A new <see cref="SqlVirtualMachine.SqlVmData"/> instance for mocking. </returns>
-        public static SqlVmData SqlVmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ResourceIdentifier virtualMachineResourceId = null, string provisioningState = null, string sqlImageOffer = null, SqlServerLicenseType? sqlServerLicenseType = null, SqlManagementMode? sqlManagement = null, SqlImageSku? sqlImageSku = null, ResourceIdentifier sqlVmGroupResourceId = null, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials = null, IPAddress windowsServerFailoverClusterStaticIP = null, SqlVmAutoPatchingSettings autoPatchingSettings = null, SqlVmAutoBackupSettings autoBackupSettings = null, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings = null, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings = null, SqlVmStorageConfigurationSettings storageConfigurationSettings = null, SqlVmAssessmentSettings assessmentSettings = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SqlVmData SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVmGroupResourceId, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials, IPAddress windowsServerFailoverClusterStaticIP, SqlVmAutoPatchingSettings autoPatchingSettings, SqlVmAutoBackupSettings autoBackupSettings, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings, SqlVmStorageConfigurationSettings storageConfigurationSettings, SqlVmAssessmentSettings assessmentSettings)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new SqlVmData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
-                virtualMachineResourceId,
-                provisioningState,
-                sqlImageOffer,
-                sqlServerLicenseType,
-                sqlManagement,
-                sqlImageSku,
-                sqlVmGroupResourceId,
-                windowsServerFailoverClusterDomainCredentials,
-                windowsServerFailoverClusterStaticIP,
-                autoPatchingSettings,
-                autoBackupSettings,
-                keyVaultCredentialSettings,
-                serverConfigurationsManagementSettings,
-                storageConfigurationSettings,
-                assessmentSettings,
-                serializedAdditionalRawData: null);
+            return SqlVmData(id, name, resourceType, systemData, tags, location, virtualMachineResourceId, provisioningState, sqlImageOffer, sqlServerLicenseType, sqlManagement, leastPrivilegeMode: default, sqlImageSku, sqlVmGroupResourceId, windowsServerFailoverClusterDomainCredentials, windowsServerFailoverClusterStaticIP, autoPatchingSettings, autoBackupSettings, keyVaultCredentialSettings, serverConfigurationsManagementSettings, storageConfigurationSettings, troubleshootingStatus: default, assessmentSettings, enableAutomaticUpgrade: default, additionalVmPatch: default, virtualMachineIdentitySettings: default, osType: default, identity);
         }
     }
 }
