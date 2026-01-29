@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Diagnostics;
@@ -11,21 +11,20 @@ using Azure.AI.AgentServer.Responses.Invocation;
 using Azure.AI.AgentServer.Responses.Invocation.Stream;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
-using Microsoft.Identity.Client;
 
 namespace Azure.AI.AgentServer.AgentFramework;
 
 /// <summary>
-/// Provides an implementation of agent invocation using the Microsoft Agents AI framework.
+/// Provides an implementation of agent invocation using a workflow as the agent.
 /// </summary>
-/// <param name="agent">The AI agent to invoke.</param>
+/// <param name="workflowAgentFactory">A factory to create the workflow agent.</param>
 /// <param name="threadRepository">Optional repository for managing agent threads.</param>
-public class AIAgentInvocation(
-    AIAgent agent,
-    IAgentThreadRepository? threadRepository = null) : AgentInvocationBase
+public class WorkflowAgentInvocation(
+        IWorkflowAgentFactory workflowAgentFactory,
+        IAgentThreadRepository? threadRepository = null) : AgentInvocationBase
 {
     /// <summary>
-    /// Invokes the agent asynchronously and returns a complete response.
+    /// Invokes the workflow agent asynchronously and returns a complete response.
     /// </summary>
     /// <param name="context">The agent run context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -36,20 +35,23 @@ public class AIAgentInvocation(
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
-        var request = context.Request;
-        AgentThread? thread = await GetThread(context).ConfigureAwait(false);
+        var workflowAgent = workflowAgentFactory.BuildWorkflow();
 
+        var request = context.Request;
+        AgentThread? thread = await GetThread(context, workflowAgent).ConfigureAwait(false);
         var messages = await GetInput(request, thread).ConfigureAwait(false);
 
-        var response = await agent.RunAsync(
+        var response = await workflowAgent.RunAsync(
             messages, thread: thread,
             cancellationToken: cancellationToken).ConfigureAwait(false);
+
         await SaveThread(context, thread).ConfigureAwait(false);
+
         return response.ToResponse(request, context);
     }
 
     /// <summary>
-    /// Executes the agent invocation with streaming support.
+    /// Executes the workflow agent invocation with streaming support.
     /// </summary>
     /// <param name="context">The agent run context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -62,16 +64,18 @@ public class AIAgentInvocation(
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
-        AgentThread? thread = await GetThread(context).ConfigureAwait(false);
+        var workflowAgent = workflowAgentFactory.BuildWorkflow();
+
+        AgentThread? thread = await GetThread(context, workflowAgent).ConfigureAwait(false);
 
         var request = context.Request;
         var messages = await GetInput(request, thread).ConfigureAwait(false);
-        var updates = agent.RunStreamingAsync(messages, thread: thread, cancellationToken: cancellationToken);
+        var updates = workflowAgent.RunStreamingAsync(messages, thread: thread, cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
         var seq = ISequenceNumber.Default;
-        var generator = new NestedResponseGenerator()
+        INestedStreamEventGenerator<Contracts.Generated.Responses.Response> generator = new NestedResponseGenerator()
         {
             Context = context,
             Seq = seq,
@@ -100,11 +104,11 @@ public class AIAgentInvocation(
         return (generator, func);
     }
 
-    private async Task<AgentThread?> GetThread(AgentRunContext context)
+    private async Task<AgentThread?> GetThread(AgentRunContext context, AIAgent workflowAgent)
     {
         if (threadRepository != null)
         {
-            return await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
+            return await threadRepository.Get(context.ConversationId, workflowAgent).ConfigureAwait(false);
         }
         return null;
     }
