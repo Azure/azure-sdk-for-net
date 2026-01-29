@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
         /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService. </param>
         /// <param name="keyVaultReference"> A reference to the Azure key vault associated with the Batch account. </param>
-        /// <param name="publicNetworkAccess"> If not specified, the default value is 'enabled'. </param>
+        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
         /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
         /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccountPoolAllocationMode? PoolAllocationMode { get; set; }
         /// <summary> A reference to the Azure key vault associated with the Batch account. </summary>
         public BatchKeyVaultReference KeyVaultReference { get; set; }
-        /// <summary> If not specified, the default value is 'enabled'. </summary>
+        /// <summary> The network access type for operating on the resources in the Batch account. </summary>
         public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
         public BatchNetworkProfile NetworkProfile { get; set; }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Values returned by the List operation. </summary>
-    internal partial class ListCertificatesResult
+    /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
+    public partial class IPTag
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,25 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListCertificatesResult"/>. </summary>
-        internal ListCertificatesResult()
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        public IPTag()
         {
-            Value = new ChangeTrackingList<BatchAccountCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListCertificatesResult"/>. </summary>
-        /// <param name="value"> The collection of returned certificates. </param>
-        /// <param name="nextLink"> The continuation token. </param>
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <param name="ipTagType"> Example: FirstPartyUsage. </param>
+        /// <param name="tag"> Example: SQL. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListCertificatesResult(IReadOnlyList<BatchAccountCertificateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            IPTagType = ipTagType;
+            Tag = tag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The collection of returned certificates. </summary>
-        public IReadOnlyList<BatchAccountCertificateData> Value { get; }
-        /// <summary> The continuation token. </summary>
-        public string NextLink { get; }
+        /// <summary> Example: FirstPartyUsage. </summary>
+        public string IPTagType { get; set; }
+        /// <summary> Example: SQL. </summary>
+        public string Tag { get; set; }
     }
 }

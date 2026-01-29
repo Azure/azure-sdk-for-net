@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Action when client IP address is matched. </summary>
+    /// <summary> The action when client IP address is matched. </summary>
     public readonly partial struct BatchIPRuleAction : IEquatable<BatchIPRuleAction>
     {
         private readonly string _value;
