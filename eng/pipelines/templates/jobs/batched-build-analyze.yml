@@ -29,7 +29,7 @@ parameters:
     type: string
 
 jobs:
-  - job:
+  - job: Build
     displayName: "Build"
     dependsOn: ${{ parameters.DependsOn }}
     condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
@@ -61,7 +61,7 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
 
-  - job:
+  - job: Analyze
     displayName: "Analyze"
     dependsOn: ${{ parameters.DependsOn }}
     condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
