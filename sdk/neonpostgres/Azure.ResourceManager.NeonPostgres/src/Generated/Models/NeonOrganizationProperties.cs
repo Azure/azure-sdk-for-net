@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> Properties specific to Neon Organization resource. </summary>
     public partial class NeonOrganizationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeonOrganizationProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details of the resource. </param>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerOrganizationProperties"> Neon Organization properties. </param>
         /// <param name="projectProperties"> Neon Project Properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
@@ -77,24 +49,24 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             ProvisioningState = provisioningState;
             PartnerOrganizationProperties = partnerOrganizationProperties;
             ProjectProperties = projectProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NeonOrganizationProperties"/> for deserialization. </summary>
-        internal NeonOrganizationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace details of the resource. </summary>
         public NeonMarketplaceDetails MarketplaceDetails { get; set; }
+
         /// <summary> Details of the user. </summary>
         public NeonUserDetails UserDetails { get; set; }
+
         /// <summary> Details of the company. </summary>
         public NeonCompanyDetails CompanyDetails { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public NeonResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> Neon Organization properties. </summary>
         public PartnerOrganizationProperties PartnerOrganizationProperties { get; set; }
+
         /// <summary> Neon Project Properties. </summary>
         public NeonProjectProperties ProjectProperties { get; set; }
     }

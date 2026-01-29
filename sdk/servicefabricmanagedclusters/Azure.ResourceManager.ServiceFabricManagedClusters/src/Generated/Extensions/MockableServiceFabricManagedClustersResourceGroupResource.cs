@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableServiceFabricManagedClustersResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableServiceFabricManagedClustersResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableServiceFabricManagedClustersResourceGroupResource for mocking. </summary>
         protected MockableServiceFabricManagedClustersResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableServiceFabricManagedClustersResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableServiceFabricManagedClustersResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableServiceFabricManagedClustersResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ServiceFabricManagedClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedClusterResources and their operations over a ServiceFabricManagedClusterResource. </returns>
+        /// <summary> Gets a collection of ServiceFabricManagedClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedClusters and their operations over a ServiceFabricManagedClusterResource. </returns>
         public virtual ServiceFabricManagedClusterCollection GetServiceFabricManagedClusters()
         {
             return GetCachedClient(client => new ServiceFabricManagedClusterCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceFabricManagedClusterResource>> GetServiceFabricManagedClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetServiceFabricManagedClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         [ForwardsClientCalls]
         public virtual Response<ServiceFabricManagedClusterResource> GetServiceFabricManagedCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetServiceFabricManagedClusters().Get(clusterName, cancellationToken);
         }
     }

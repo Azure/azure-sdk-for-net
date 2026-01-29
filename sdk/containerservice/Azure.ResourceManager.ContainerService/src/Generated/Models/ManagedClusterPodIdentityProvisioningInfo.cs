@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The ManagedClusterPodIdentityProvisioningInfo. </summary>
+    /// <summary>
+    /// The ManagedClusterPodIdentityProvisioningInfo.
+    /// Serialized Name: ManagedClusterPodIdentityProvisioningInfo
+    /// </summary>
     internal partial class ManagedClusterPodIdentityProvisioningInfo
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningInfo"/>. </summary>
-        /// <param name="error"> Pod identity assignment error (if any). </param>
+        /// <param name="error">
+        /// Pod identity assignment error (if any).
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningInfo.error
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterPodIdentityProvisioningInfo(ManagedClusterPodIdentityProvisioningError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,9 +65,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Pod identity assignment error (if any). </summary>
+        /// <summary>
+        /// Pod identity assignment error (if any).
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningInfo.error
+        /// </summary>
         internal ManagedClusterPodIdentityProvisioningError Error { get; }
-        /// <summary> Details about the error. </summary>
+        /// <summary>
+        /// Details about the error.
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningError.error
+        /// </summary>
         [WirePath("error.error")]
         public ResponseError ErrorDetail
         {

@@ -8,17 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ServiceFabricManagedClusterIPConfiguration : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClusterIPConfiguration>
+    /// <summary> Specifies an IP configuration of the network interface. </summary>
+    public partial class ServiceFabricManagedClusterIPConfiguration : IJsonModel<ServiceFabricManagedClusterIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClusterIPConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPConfiguration"/> for deserialization. </summary>
+        internal ServiceFabricManagedClusterIPConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricManagedClusterIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,19 +35,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPConfiguration)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApplicationGatewayBackendAddressPools)
+                foreach (WritableSubResource item in ApplicationGatewayBackendAddressPools)
                 {
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in LoadBalancerBackendAddressPools)
+                foreach (WritableSubResource item in LoadBalancerBackendAddressPools)
                 {
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 writer.WritePropertyName("loadBalancerInboundNatPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in LoadBalancerInboundNatPools)
+                foreach (WritableSubResource item in LoadBalancerInboundNatPools)
                 {
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsDefined(PrivateIPAddressVersion))
             {
@@ -83,15 +87,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,22 +104,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        ServiceFabricManagedClusterIPConfiguration IJsonModel<ServiceFabricManagedClusterIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedClusterIPConfiguration IJsonModel<ServiceFabricManagedClusterIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceFabricManagedClusterIPConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceFabricManagedClusterIPConfiguration(document.RootElement, options);
         }
 
-        internal static ServiceFabricManagedClusterIPConfiguration DeserializeServiceFabricManagedClusterIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceFabricManagedClusterIPConfiguration DeserializeServiceFabricManagedClusterIPConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -124,93 +133,64 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
             IList<WritableSubResource> loadBalancerBackendAddressPools = default;
             IList<WritableSubResource> loadBalancerInboundNatPools = default;
-            WritableSubResource subnet = default;
+            SubResource subnet = default;
             ServiceFabricManagedClusterPrivateIPAddressVersion? privateIPAddressVersion = default;
             ServiceFabricManagedClusterPublicIPAddressConfiguration publicIPAddressConfiguration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationGatewayBackendAddressPools"u8))
+                if (prop.NameEquals("applicationGatewayBackendAddressPools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    DeserializeApplicationGatewayBackendAddressPools(prop, ref applicationGatewayBackendAddressPools);
+                    continue;
+                }
+                if (prop.NameEquals("loadBalancerBackendAddressPools"u8))
+                {
+                    DeserializeLoadBalancerBackendAddressPools(prop, ref loadBalancerBackendAddressPools);
+                    continue;
+                }
+                if (prop.NameEquals("loadBalancerInboundNatPools"u8))
+                {
+                    DeserializeLoadBalancerInboundNatPools(prop, ref loadBalancerInboundNatPools);
+                    continue;
+                }
+                if (prop.NameEquals("subnet"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerServiceFabricManagedClustersContext.Default));
-                    }
-                    applicationGatewayBackendAddressPools = array;
+                    subnet = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("loadBalancerBackendAddressPools"u8))
+                if (prop.NameEquals("privateIPAddressVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerServiceFabricManagedClustersContext.Default));
-                    }
-                    loadBalancerBackendAddressPools = array;
+                    privateIPAddressVersion = new ServiceFabricManagedClusterPrivateIPAddressVersion(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerInboundNatPools"u8))
+                if (prop.NameEquals("publicIPAddressConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerServiceFabricManagedClustersContext.Default));
-                    }
-                    loadBalancerInboundNatPools = array;
-                    continue;
-                }
-                if (property.NameEquals("subnet"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("privateIPAddressVersion"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddressVersion = new ServiceFabricManagedClusterPrivateIPAddressVersion(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("publicIPAddressConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publicIPAddressConfiguration = ServiceFabricManagedClusterPublicIPAddressConfiguration.DeserializeServiceFabricManagedClusterPublicIPAddressConfiguration(property.Value, options);
+                    publicIPAddressConfiguration = ServiceFabricManagedClusterPublicIPAddressConfiguration.DeserializeServiceFabricManagedClusterPublicIPAddressConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricManagedClusterIPConfiguration(
                 name,
                 applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
@@ -219,13 +199,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 subnet,
                 privateIPAddressVersion,
                 publicIPAddressConfiguration,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ServiceFabricManagedClusterIPConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceFabricManagedClusterIPConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -235,15 +218,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        ServiceFabricManagedClusterIPConfiguration IPersistableModel<ServiceFabricManagedClusterIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedClusterIPConfiguration IPersistableModel<ServiceFabricManagedClusterIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceFabricManagedClusterIPConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceFabricManagedClusterIPConfiguration(document.RootElement, options);
                     }
                 default:
@@ -251,6 +239,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceFabricManagedClusterIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

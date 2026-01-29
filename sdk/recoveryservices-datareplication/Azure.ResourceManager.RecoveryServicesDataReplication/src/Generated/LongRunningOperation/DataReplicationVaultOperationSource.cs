@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
-    internal class DataReplicationVaultOperationSource : IOperationSource<DataReplicationVaultResource>
+    /// <summary></summary>
+    internal partial class DataReplicationVaultOperationSource : IOperationSource<DataReplicationVaultResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DataReplicationVaultOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DataReplicationVaultResource IOperationSource<DataReplicationVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DataReplicationVaultData data = DataReplicationVaultData.DeserializeDataReplicationVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataReplicationVaultResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DataReplicationVaultResource> IOperationSource<DataReplicationVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-            return await Task.FromResult(new DataReplicationVaultResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DataReplicationVaultData data = DataReplicationVaultData.DeserializeDataReplicationVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataReplicationVaultResource(_client, data);
         }
     }
 }

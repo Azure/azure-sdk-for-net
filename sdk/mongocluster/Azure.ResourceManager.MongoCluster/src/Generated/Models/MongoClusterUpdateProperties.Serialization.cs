@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class MongoClusterUpdateProperties : IUtf8JsonSerializable, IJsonModel<MongoClusterUpdateProperties>
+    /// <summary> The updatable properties of the MongoCluster. </summary>
+    public partial class MongoClusterUpdateProperties : IJsonModel<MongoClusterUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoClusterUpdateProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Administrator))
             {
                 writer.WritePropertyName("administrator"u8);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 writer.WritePropertyName("previewFeatures"u8);
                 writer.WriteStartArray();
-                foreach (var item in PreviewFeatures)
+                foreach (MongoClusterPreviewFeature item in PreviewFeatures)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,22 +116,27 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
         }
 
-        MongoClusterUpdateProperties IJsonModel<MongoClusterUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoClusterUpdateProperties IJsonModel<MongoClusterUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MongoClusterUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoClusterUpdateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMongoClusterUpdateProperties(document.RootElement, options);
         }
 
-        internal static MongoClusterUpdateProperties DeserializeMongoClusterUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MongoClusterUpdateProperties DeserializeMongoClusterUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -148,125 +153,123 @@ namespace Azure.ResourceManager.MongoCluster.Models
             IList<MongoClusterPreviewFeature> previewFeatures = default;
             AuthConfigProperties authConfig = default;
             EncryptionProperties encryption = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("administrator"u8))
+                if (prop.NameEquals("administrator"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    administrator = MongoClusterAdministratorProperties.DeserializeMongoClusterAdministratorProperties(property.Value, options);
+                    administrator = MongoClusterAdministratorProperties.DeserializeMongoClusterAdministratorProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serverVersion"u8))
+                if (prop.NameEquals("serverVersion"u8))
                 {
-                    serverVersion = property.Value.GetString();
+                    serverVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"u8))
+                if (prop.NameEquals("publicNetworkAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new MongoClusterPublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new MongoClusterPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("highAvailability"u8))
+                if (prop.NameEquals("highAvailability"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highAvailability = HighAvailabilityProperties.DeserializeHighAvailabilityProperties(property.Value, options);
+                    highAvailability = HighAvailabilityProperties.DeserializeHighAvailabilityProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storage"u8))
+                if (prop.NameEquals("storage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storage = MongoClusterStorageProperties.DeserializeMongoClusterStorageProperties(property.Value, options);
+                    storage = MongoClusterStorageProperties.DeserializeMongoClusterStorageProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sharding"u8))
+                if (prop.NameEquals("sharding"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sharding = ShardingProperties.DeserializeShardingProperties(property.Value, options);
+                    sharding = ShardingProperties.DeserializeShardingProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("compute"u8))
+                if (prop.NameEquals("compute"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    compute = ComputeProperties.DeserializeComputeProperties(property.Value, options);
+                    compute = ComputeProperties.DeserializeComputeProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backup"u8))
+                if (prop.NameEquals("backup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backup = BackupProperties.DeserializeBackupProperties(property.Value, options);
+                    backup = BackupProperties.DeserializeBackupProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataApi"u8))
+                if (prop.NameEquals("dataApi"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataApi = DataApiProperties.DeserializeDataApiProperties(property.Value, options);
+                    dataApi = DataApiProperties.DeserializeDataApiProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("previewFeatures"u8))
+                if (prop.NameEquals("previewFeatures"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MongoClusterPreviewFeature> array = new List<MongoClusterPreviewFeature>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new MongoClusterPreviewFeature(item.GetString()));
                     }
                     previewFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("authConfig"u8))
+                if (prop.NameEquals("authConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authConfig = AuthConfigProperties.DeserializeAuthConfigProperties(property.Value, options);
+                    authConfig = AuthConfigProperties.DeserializeAuthConfigProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("encryption"u8))
+                if (prop.NameEquals("encryption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryption = EncryptionProperties.DeserializeEncryptionProperties(property.Value, options);
+                    encryption = EncryptionProperties.DeserializeEncryptionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MongoClusterUpdateProperties(
                 administrator,
                 serverVersion,
@@ -280,13 +283,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>(),
                 authConfig,
                 encryption,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MongoClusterUpdateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MongoClusterUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -296,15 +302,20 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
         }
 
-        MongoClusterUpdateProperties IPersistableModel<MongoClusterUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoClusterUpdateProperties IPersistableModel<MongoClusterUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MongoClusterUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMongoClusterUpdateProperties(document.RootElement, options);
                     }
                 default:
@@ -312,6 +323,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoClusterUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

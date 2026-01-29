@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary>
+    /// A list of private link resources
+    /// Serialized Name: PrivateLinkResourcesListResult
+    /// </summary>
     internal partial class ContainerServicePrivateLinkResourcesListResult
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourcesListResult"/>. </summary>
-        /// <param name="value"> The collection value. </param>
+        /// <param name="value">
+        /// The collection value.
+        /// Serialized Name: PrivateLinkResourcesListResult.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServicePrivateLinkResourcesListResult(IReadOnlyList<ContainerServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The collection value. </summary>
+        /// <summary>
+        /// The collection value.
+        /// Serialized Name: PrivateLinkResourcesListResult.value
+        /// </summary>
         [WirePath("value")]
         public IReadOnlyList<ContainerServicePrivateLinkResourceData> Value { get; }
     }

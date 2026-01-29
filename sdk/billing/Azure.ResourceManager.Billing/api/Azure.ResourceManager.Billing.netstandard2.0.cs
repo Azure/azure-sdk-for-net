@@ -726,12 +726,9 @@ namespace Azure.ResourceManager.Billing
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.Models.BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string subscriptionId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource> GetBillingAccount(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource>> GetBillingAccountAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName) { throw null; }
         public static Azure.ResourceManager.Billing.BillingAccountPolicyResource GetBillingAccountPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Billing.BillingAccountResource GetBillingAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -755,12 +752,9 @@ namespace Azure.ResourceManager.Billing
         public static Azure.ResourceManager.Billing.BillingInvoiceSectionRoleDefinitionResource GetBillingInvoiceSectionRoleDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource> GetBillingPaymentMethod(this Azure.ResourceManager.Resources.TenantResource tenantResource, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource>> GetBillingPaymentMethodAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string billingProfileName) { throw null; }
         public static Azure.ResourceManager.Billing.BillingPaymentMethodResource GetBillingPaymentMethodResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Billing.BillingPaymentMethodCollection GetBillingPaymentMethods(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
@@ -783,19 +777,13 @@ namespace Azure.ResourceManager.Billing
         public static Azure.ResourceManager.Billing.BillingRoleAssignmentResource GetBillingRoleAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Billing.BillingRoleDefinitionResource GetBillingRoleDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Billing.BillingSavingsPlanModelResource GetBillingSavingsPlanModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetBillingSubscription(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName) { throw null; }
         public static Azure.ResourceManager.Billing.BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetBillingSubscriptionAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Billing.BillingSubscriptionResource GetBillingSubscriptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingSubscriptionCollection GetBillingSubscriptions(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName) { throw null; }
         public static Azure.ResourceManager.Billing.BillingTransferDetailResource GetBillingTransferDetailResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Billing.DefaultBillingInvoiceResource> GetDefaultBillingInvoice(this Azure.ResourceManager.Resources.TenantResource tenantResource, string invoiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1092,9 +1080,7 @@ namespace Azure.ResourceManager.Billing
         public virtual Azure.ResourceManager.Billing.BillingPaymentMethodLinkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string paymentMethodName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1899,10 +1885,8 @@ namespace Azure.ResourceManager.Billing
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> Get(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetAll(Azure.ResourceManager.Billing.Models.BillingSubscriptionAliasCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetAllAsync(Azure.ResourceManager.Billing.Models.BillingSubscriptionAliasCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource>> GetAsync(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetIfExists(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1916,7 +1900,6 @@ namespace Azure.ResourceManager.Billing
         public BillingSubscriptionAliasData() { }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? AutoRenew { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingBeneficiary Beneficiary { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasBeneficiaryTenantId` moving forward.")]
         public string BeneficiaryTenantId { get { throw null; } set { } }
         public string BillingFrequency { get { throw null; } set { } }
@@ -1924,12 +1907,10 @@ namespace Azure.ResourceManager.Billing
         public string BillingProfileDisplayName { get { throw null; } }
         public Azure.Core.ResourceIdentifier BillingProfileId { get { throw null; } set { } }
         public string BillingProfileName { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasSubscriptionId` moving forward.")]
         public Azure.Core.ResourceIdentifier BillingSubscriptionId { get { throw null; } }
         public string ConsumptionCostCenter { get { throw null; } set { } }
         public string CustomerDisplayName { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasCustomerId` moving forward.")]
         public string CustomerId { get { throw null; } set { } }
         public string CustomerName { get { throw null; } }
@@ -2004,28 +1985,20 @@ namespace Azure.ResourceManager.Billing
     {
         protected BillingSubscriptionCollection() { }
         public virtual Azure.Response<bool> Exists(string billingSubscriptionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<bool> Exists(string billingSubscriptionName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string billingSubscriptionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string billingSubscriptionName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource> Get(string billingSubscriptionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource> Get(string billingSubscriptionName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetAll(Azure.ResourceManager.Billing.Models.BillingSubscriptionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetAllAsync(Azure.ResourceManager.Billing.Models.BillingSubscriptionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetIfExists(string billingSubscriptionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.NullableResponse<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetIfExists(string billingSubscriptionName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Billing.BillingSubscriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.BillingSubscriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Billing.BillingSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.BillingSubscriptionResource>.GetEnumerator() { throw null; }
@@ -2036,7 +2009,6 @@ namespace Azure.ResourceManager.Billing
         public BillingSubscriptionData() { }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? AutoRenew { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingBeneficiary Beneficiary { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionBeneficiaryTenantId` moving forward.")]
         public string BeneficiaryTenantId { get { throw null; } set { } }
         public string BillingFrequency { get { throw null; } set { } }
@@ -2046,7 +2018,6 @@ namespace Azure.ResourceManager.Billing
         public string BillingProfileName { get { throw null; } }
         public string ConsumptionCostCenter { get { throw null; } set { } }
         public string CustomerDisplayName { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionCustomerId` moving forward.")]
         public string CustomerId { get { throw null; } set { } }
         public string CustomerName { get { throw null; } }
@@ -2107,10 +2078,8 @@ namespace Azure.ResourceManager.Billing
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource> Get(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingSubscriptionResource> Merge(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Models.BillingSubscriptionMergeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingSubscriptionResource>> MergeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Models.BillingSubscriptionMergeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2127,10 +2096,8 @@ namespace Azure.ResourceManager.Billing
         Azure.ResourceManager.Billing.BillingSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.BillingSubscriptionData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.BillingSubscriptionData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.Models.BillingSubscriptionValidateMoveEligibilityResult> ValidateMoveEligibility(Azure.ResourceManager.Billing.Models.BillingSubscriptionMoveContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2513,36 +2480,24 @@ namespace Azure.ResourceManager.Billing.Mocking
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.Models.BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(Azure.WaitUntil waitUntil, string subscriptionId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource> GetBillingAccount(string billingAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource>> GetBillingAccountAsync(string billingAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.Billing.BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(string billingAccountName) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingAccountCollection GetBillingAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource> GetBillingPaymentMethod(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource>> GetBillingPaymentMethodAsync(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(string billingAccountName, string billingProfileName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(string billingAccountName, string billingProfileName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.Billing.BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(string billingAccountName, string billingProfileName) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingPaymentMethodCollection GetBillingPaymentMethods() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingRequestResource> GetBillingRequest(string billingRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingRequestResource>> GetBillingRequestAsync(string billingRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingRequestCollection GetBillingRequests() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetBillingSubscription(string billingAccountName, string billingSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(string billingAccountName, string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(string billingAccountName, string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.Billing.BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(string billingAccountName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetBillingSubscriptionAsync(string billingAccountName, string billingSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.Billing.BillingSubscriptionCollection GetBillingSubscriptions(string billingAccountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.DefaultBillingInvoiceResource> GetDefaultBillingInvoice(string invoiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.DefaultBillingInvoiceResource>> GetDefaultBillingInvoiceAsync(string invoiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2584,9 +2539,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.AgreementAcceptanceMode Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.AgreementAcceptanceMode PhysicalSign { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.AgreementAcceptanceMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.AgreementAcceptanceMode left, Azure.ResourceManager.Billing.Models.AgreementAcceptanceMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.AgreementAcceptanceMode (string value) { throw null; }
@@ -2627,9 +2580,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.BillingInvoiceSectionData BillingInvoiceSectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.BillingInvoiceSectionProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingInvoiceSectionProperties BillingInvoiceSectionProperties(Azure.ResourceManager.Billing.Models.BillingProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningState?), string displayName = null, Azure.ResourceManager.Billing.Models.InvoiceSectionState? state = default(Azure.ResourceManager.Billing.Models.InvoiceSectionState?), Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode? reasonCode = default(Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode?), string systemId = null, string targetCloud = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.BillingPaymentMethodData BillingPaymentMethodData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier paymentMethodId = null, string accountHolderName = null, string displayName = null, string expiration = null, Azure.ResourceManager.Billing.Models.PaymentMethodFamily? family = default(Azure.ResourceManager.Billing.Models.PaymentMethodFamily?), string lastFourDigits = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> logos = null, string paymentMethodType = null, Azure.ResourceManager.Billing.Models.PaymentMethodStatus? status = default(Azure.ResourceManager.Billing.Models.PaymentMethodStatus?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingPaymentMethodData BillingPaymentMethodData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Billing.Models.PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> logos, Azure.ResourceManager.Billing.Models.PaymentMethodStatus? status) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingPaymentMethodLinkData BillingPaymentMethodLinkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Billing.Models.PaymentMethodProjectionProperties paymentMethod) { throw null; }
         public static Azure.ResourceManager.Billing.BillingPaymentMethodLinkData BillingPaymentMethodLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string accountHolderName = null, string displayName = null, string expiration = null, Azure.ResourceManager.Billing.Models.PaymentMethodFamily? family = default(Azure.ResourceManager.Billing.Models.PaymentMethodFamily?), string lastFourDigits = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> logos = null, Azure.ResourceManager.Billing.Models.PaymentMethodProjectionProperties paymentMethod = null, Azure.Core.ResourceIdentifier paymentMethodId = null, string paymentMethodType = null, Azure.ResourceManager.Billing.Models.PaymentMethodStatus? status = default(Azure.ResourceManager.Billing.Models.PaymentMethodStatus?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingPaymentOnAccount BillingPaymentOnAccount(Azure.ResourceManager.Billing.Models.CreatedSubscriptionReseller amount = null, Azure.Core.ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, Azure.Core.ResourceIdentifier invoiceId = null, string invoiceName = null, System.DateTimeOffset? on = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.PaymentMethodFamily? paymentMethodType = default(Azure.ResourceManager.Billing.Models.PaymentMethodFamily?)) { throw null; }
@@ -2658,10 +2609,8 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingRoleDefinitionProperties BillingRoleDefinitionProperties(string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingPermission> permissions = null, string roleName = null) { throw null; }
         public static Azure.ResourceManager.Billing.BillingSavingsPlanModelData BillingSavingsPlanModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string skuName = null, string displayName = null, Azure.ResourceManager.Billing.Models.BillingProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningState?), string displayProvisioningState = null, string userFriendlyAppliedScopeType = null, string billingScopeId = null, Azure.Core.ResourceIdentifier billingProfileId = null, Azure.Core.ResourceIdentifier customerId = null, Azure.Core.ResourceIdentifier billingAccountId = null, Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm? term = default(Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm?), bool? isRenewed = default(bool?), string renewSource = null, string renewDestination = null, Azure.ResourceManager.Billing.Models.BillingPurchaseProperties renewPurchaseProperties = null, Azure.ResourceManager.Billing.Models.BillingPlan? billingPlan = default(Azure.ResourceManager.Billing.Models.BillingPlan?), Azure.ResourceManager.Billing.Models.BillingAppliedScopeType? appliedScopeType = default(Azure.ResourceManager.Billing.Models.BillingAppliedScopeType?), Azure.ResourceManager.Billing.Models.BillingAppliedScopeProperties appliedScopeProperties = null, Azure.ResourceManager.Billing.Models.BillingBenefitCommitment commitment = null, System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), System.DateTimeOffset? benefitStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), System.DateTimeOffset? purchaseOn = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.SavingsPlanUtilization utilization = null, Azure.ResourceManager.Billing.Models.ExtendedStatusInfo extendedStatusInfo = null, string productCode = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.BillingSubscriptionAliasData BillingSubscriptionAliasData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? autoRenew = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState?), System.Guid? subscriptionAliasBeneficiaryTenantId = default(System.Guid?), Azure.ResourceManager.Billing.Models.BillingBeneficiary beneficiary = null, string billingFrequency = null, Azure.Core.ResourceIdentifier billingProfileId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string subscriptionAliasCustomerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, Azure.Core.ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, Azure.ResourceManager.Billing.Models.BillingAmount lastMonthCharges = null, Azure.ResourceManager.Billing.Models.BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, System.DateTimeOffset? purchaseOn = default(System.DateTimeOffset?), long? quantity = default(long?), Azure.ResourceManager.Billing.Models.CreatedSubscriptionReseller reseller = null, Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, Azure.ResourceManager.Billing.Models.BillingSystemOverrides systemOverrides = null, System.Uri resourceUri = null, System.TimeSpan? termDuration = default(System.TimeSpan?), System.DateTimeOffset? termStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? termEndOn = default(System.DateTimeOffset?), System.Guid? provisioningTenantId = default(System.Guid?), Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus? status = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus?), Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus? operationStatus = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus?), Azure.ResourceManager.Billing.Models.BillingProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningState?), string subscriptionId = null, System.Collections.Generic.IEnumerable<string> suspensionReasons = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingSubscriptionStatusDetails> suspensionReasonDetails = null, System.DateTimeOffset? enrollmentAccountStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default(Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus?), string subscriptionAliasSubscriptionId = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingSubscriptionAliasData BillingSubscriptionAliasData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, Azure.Core.ResourceIdentifier billingProfileId, System.Collections.Generic.IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, Azure.Core.ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, Azure.ResourceManager.Billing.Models.BillingAmount lastMonthCharges, Azure.ResourceManager.Billing.Models.BillingAmount monthToDateCharges, string nextBillingCycleBillingFrequency, string offerId, string productCategory, string productType, string productTypeId, System.DateTimeOffset? purchaseOn, long? quantity, Azure.ResourceManager.Billing.Models.CreatedSubscriptionReseller reseller, Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus? status, string subscriptionId, System.Collections.Generic.IEnumerable<string> suspensionReasons, System.TimeSpan? termDuration, System.DateTimeOffset? termStartOn, System.DateTimeOffset? termEndOn, Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, System.DateTimeOffset? enrollmentAccountStartOn, Azure.Core.ResourceIdentifier billingSubscriptionId) { throw null; }
         public static Azure.ResourceManager.Billing.BillingSubscriptionData BillingSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? autoRenew = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState?), System.Guid? subscriptionBeneficiaryTenantId = default(System.Guid?), Azure.ResourceManager.Billing.Models.BillingBeneficiary beneficiary = null, string billingFrequency = null, Azure.Core.ResourceIdentifier billingProfileId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string subscriptionCustomerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, Azure.Core.ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, Azure.ResourceManager.Billing.Models.BillingAmount lastMonthCharges = null, Azure.ResourceManager.Billing.Models.BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, System.DateTimeOffset? purchaseOn = default(System.DateTimeOffset?), long? quantity = default(long?), Azure.ResourceManager.Billing.Models.CreatedSubscriptionReseller reseller = null, Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, Azure.ResourceManager.Billing.Models.BillingSystemOverrides systemOverrides = null, System.Uri resourceUri = null, System.TimeSpan? termDuration = default(System.TimeSpan?), System.DateTimeOffset? termStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? termEndOn = default(System.DateTimeOffset?), System.Guid? provisioningTenantId = default(System.Guid?), Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus? status = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus?), Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus? operationStatus = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus?), Azure.ResourceManager.Billing.Models.BillingProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningState?), string subscriptionId = null, System.Collections.Generic.IEnumerable<string> suspensionReasons = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingSubscriptionStatusDetails> suspensionReasonDetails = null, System.DateTimeOffset? enrollmentAccountStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default(Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.BillingSubscriptionData BillingSubscriptionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, Azure.Core.ResourceIdentifier billingProfileId, System.Collections.Generic.IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, Azure.Core.ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, Azure.ResourceManager.Billing.Models.BillingAmount lastMonthCharges, Azure.ResourceManager.Billing.Models.BillingAmount monthToDateCharges, string nextBillingCycleBillingFrequency, string offerId, string productCategory, string productType, string productTypeId, System.DateTimeOffset? purchaseOn, long? quantity, Azure.ResourceManager.Billing.Models.CreatedSubscriptionReseller reseller, Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus? status, string subscriptionId, System.Collections.Generic.IEnumerable<string> suspensionReasons, System.TimeSpan? termDuration, System.DateTimeOffset? termStartOn, System.DateTimeOffset? termEndOn, Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, System.DateTimeOffset? enrollmentAccountStartOn) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch BillingSubscriptionPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? autoRenew = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState?), System.Guid? beneficiaryTenantId = default(System.Guid?), Azure.ResourceManager.Billing.Models.BillingBeneficiary beneficiary = null, string billingFrequency = null, Azure.Core.ResourceIdentifier billingProfileId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string customerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, Azure.Core.ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, Azure.ResourceManager.Billing.Models.BillingAmount lastMonthCharges = null, Azure.ResourceManager.Billing.Models.BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, System.DateTimeOffset? purchaseOn = default(System.DateTimeOffset?), long? quantity = default(long?), Azure.ResourceManager.Billing.Models.CreatedSubscriptionReseller reseller = null, Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, Azure.ResourceManager.Billing.Models.BillingSystemOverrides systemOverrides = null, System.Uri resourceUri = null, System.TimeSpan? termDuration = default(System.TimeSpan?), System.DateTimeOffset? termStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? termEndOn = default(System.DateTimeOffset?), System.Guid? provisioningTenantId = default(System.Guid?), Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus? status = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus?), Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus? operationStatus = default(Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus?), Azure.ResourceManager.Billing.Models.BillingProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningState?), string subscriptionId = null, System.Collections.Generic.IEnumerable<string> suspensionReasons = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingSubscriptionStatusDetails> suspensionReasonDetails = null, System.DateTimeOffset? enrollmentAccountStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default(Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionStatusDetails BillingSubscriptionStatusDetails(System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.SubscriptionStatusReason? reason = default(Azure.ResourceManager.Billing.Models.SubscriptionStatusReason?)) { throw null; }
@@ -2690,7 +2639,6 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.MoveProductErrorDetails MoveProductErrorDetails(Azure.ResourceManager.Billing.Models.MoveValidationErrorCode? code = default(Azure.ResourceManager.Billing.Models.MoveValidationErrorCode?), string message = null, string details = null) { throw null; }
         public static Azure.ResourceManager.Billing.PartnerTransferDetailData PartnerTransferDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.PartnerTransferStatus? transferStatus = default(Azure.ResourceManager.Billing.Models.PartnerTransferStatus?), string recipientEmailId = null, Azure.ResourceManager.Billing.Models.InitiatorCustomerType? initiatorCustomerType = default(Azure.ResourceManager.Billing.Models.InitiatorCustomerType?), string initiatorEmailId = null, string resellerId = null, string resellerName = null, string canceledBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.DetailedTransferStatus> detailedTransferStatus = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.PaymentMethodLogo PaymentMethodLogo(string mimeType = null, System.Uri uri = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.Models.PaymentMethodProjectionProperties PaymentMethodProjectionProperties(Azure.Core.ResourceIdentifier paymentMethodId, Azure.ResourceManager.Billing.Models.PaymentMethodFamily? family, string paymentMethodProjectionPropertiesType, string accountHolderName, string expiration, string lastFourDigits, string displayName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> logos, Azure.ResourceManager.Billing.Models.PaymentMethodStatus? status) { throw null; }
         public static Azure.ResourceManager.Billing.Models.PaymentMethodProjectionProperties PaymentMethodProjectionProperties(Azure.Core.ResourceIdentifier paymentMethodId = null, string accountHolderName = null, string displayName = null, string expiration = null, Azure.ResourceManager.Billing.Models.PaymentMethodFamily? family = default(Azure.ResourceManager.Billing.Models.PaymentMethodFamily?), string lastFourDigits = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> logos = null, string paymentMethodType = null, Azure.ResourceManager.Billing.Models.PaymentMethodStatus? status = default(Azure.ResourceManager.Billing.Models.PaymentMethodStatus?)) { throw null; }
         public static Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityDetail PaymentTermsEligibilityDetail(Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode? code = default(Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode?), string message = null) { throw null; }
@@ -2709,7 +2657,6 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SpendingLimitDetails SpendingLimitDetails(float? amount = default(float?), string currency = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Billing.Models.SpendingLimitType? limitType = default(Azure.ResourceManager.Billing.Models.SpendingLimitType?), Azure.ResourceManager.Billing.Models.SpendingLimitStatus? status = default(Azure.ResourceManager.Billing.Models.SpendingLimitStatus?)) { throw null; }
         public static Azure.ResourceManager.Billing.SubscriptionPolicyData SubscriptionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.SubscriptionPolicyProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.SubscriptionPolicyProperties SubscriptionPolicyProperties(Azure.ResourceManager.Billing.Models.BillingProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingPolicySummary> policies = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency, string productTypeId, long? quantity, string skuId, System.TimeSpan? termDuration) { throw null; }
         public static Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency = null, string productId = null, string productTypeId = null, string skuId = null, System.TimeSpan? termDuration = default(System.TimeSpan?), long? quantity = default(long?), System.DateTimeOffset? termEndOn = default(System.DateTimeOffset?)) { throw null; }
     }
@@ -2857,9 +2804,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAccountStatus Transferred { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAccountStatus UnderReview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAccountStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAccountStatus left, Azure.ResourceManager.Billing.Models.BillingAccountStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAccountStatus (string value) { throw null; }
@@ -2879,9 +2824,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAccountStatusReasonCode Transferred { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAccountStatusReasonCode UnusualActivity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAccountStatusReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAccountStatusReasonCode left, Azure.ResourceManager.Billing.Models.BillingAccountStatusReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAccountStatusReasonCode (string value) { throw null; }
@@ -2900,9 +2843,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAccountSubType Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAccountSubType Professional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAccountSubType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAccountSubType left, Azure.ResourceManager.Billing.Models.BillingAccountSubType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAccountSubType (string value) { throw null; }
@@ -2925,9 +2866,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAccountType Reseller { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAccountType Tenant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAccountType left, Azure.ResourceManager.Billing.Models.BillingAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAccountType (string value) { throw null; }
@@ -2982,9 +2921,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAddressValidationStatus Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAddressValidationStatus Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAddressValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAddressValidationStatus left, Azure.ResourceManager.Billing.Models.BillingAddressValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAddressValidationStatus (string value) { throw null; }
@@ -3004,9 +2941,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAgreementCategory Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAgreementCategory UKCloudComputeFramework { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAgreementCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAgreementCategory left, Azure.ResourceManager.Billing.Models.BillingAgreementCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAgreementCategory (string value) { throw null; }
@@ -3058,9 +2993,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAgreementType MicrosoftPartnerAgreement { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAgreementType Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAgreementType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAgreementType left, Azure.ResourceManager.Billing.Models.BillingAgreementType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAgreementType (string value) { throw null; }
@@ -3104,9 +3037,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAppliedScopeType Shared { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingAppliedScopeType Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingAppliedScopeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingAppliedScopeType left, Azure.ResourceManager.Billing.Models.BillingAppliedScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingAppliedScopeType (string value) { throw null; }
@@ -3209,9 +3140,7 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingBenefitCommitmentGrain(string value) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingBenefitCommitmentGrain Hourly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingBenefitCommitmentGrain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingBenefitCommitmentGrain left, Azure.ResourceManager.Billing.Models.BillingBenefitCommitmentGrain right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingBenefitCommitmentGrain (string value) { throw null; }
@@ -3319,9 +3248,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingCustomerStatus UnderReview { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingCustomerStatus Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingCustomerStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingCustomerStatus left, Azure.ResourceManager.Billing.Models.BillingCustomerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingCustomerStatus (string value) { throw null; }
@@ -3386,9 +3313,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingDocumentSource Enf { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingDocumentSource Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingDocumentSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingDocumentSource left, Azure.ResourceManager.Billing.Models.BillingDocumentSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingDocumentSource (string value) { throw null; }
@@ -3446,9 +3371,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingEnrollmentSupportLevel ProDirect { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingEnrollmentSupportLevel Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingEnrollmentSupportLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingEnrollmentSupportLevel left, Azure.ResourceManager.Billing.Models.BillingEnrollmentSupportLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingEnrollmentSupportLevel (string value) { throw null; }
@@ -3490,9 +3413,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingInvoiceFailedPaymentReason IncorrectCardDetails { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingInvoiceFailedPaymentReason Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingInvoiceFailedPaymentReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingInvoiceFailedPaymentReason left, Azure.ResourceManager.Billing.Models.BillingInvoiceFailedPaymentReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingInvoiceFailedPaymentReason (string value) { throw null; }
@@ -3650,9 +3571,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingInvoiceStatus Paid { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingInvoiceStatus Void { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingInvoiceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingInvoiceStatus left, Azure.ResourceManager.Billing.Models.BillingInvoiceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingInvoiceStatus (string value) { throw null; }
@@ -3670,9 +3589,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingInvoiceType AzureSupport { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingInvoiceType Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingInvoiceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingInvoiceType left, Azure.ResourceManager.Billing.Models.BillingInvoiceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingInvoiceType (string value) { throw null; }
@@ -3690,9 +3607,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingManagementTenantState Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingManagementTenantState Revoked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingManagementTenantState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingManagementTenantState left, Azure.ResourceManager.Billing.Models.BillingManagementTenantState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingManagementTenantState (string value) { throw null; }
@@ -3729,9 +3644,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingPaymentStatus Scheduled { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingPaymentStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingPaymentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingPaymentStatus left, Azure.ResourceManager.Billing.Models.BillingPaymentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingPaymentStatus (string value) { throw null; }
@@ -3772,9 +3685,7 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingPlan(string value) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingPlan P1M { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingPlan other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingPlan left, Azure.ResourceManager.Billing.Models.BillingPlan right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingPlan (string value) { throw null; }
@@ -3835,9 +3746,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingPolicyType SystemControlled { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingPolicyType UserControlled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingPolicyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingPolicyType left, Azure.ResourceManager.Billing.Models.BillingPolicyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingPolicyType (string value) { throw null; }
@@ -3883,9 +3792,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingPrincipalType Unknown { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingPrincipalType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingPrincipalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingPrincipalType left, Azure.ResourceManager.Billing.Models.BillingPrincipalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingPrincipalType (string value) { throw null; }
@@ -3975,9 +3882,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProductStatus PastDue { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProductStatus Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProductStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProductStatus left, Azure.ResourceManager.Billing.Models.BillingProductStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProductStatus (string value) { throw null; }
@@ -3995,9 +3900,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProductTransferStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProductTransferStatus NotStarted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProductTransferStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProductTransferStatus left, Azure.ResourceManager.Billing.Models.BillingProductTransferStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProductTransferStatus (string value) { throw null; }
@@ -4016,9 +3919,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProductType Saas { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProductType SavingsPlan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProductType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProductType left, Azure.ResourceManager.Billing.Models.BillingProductType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProductType (string value) { throw null; }
@@ -4035,9 +3936,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision left, Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision (string value) { throw null; }
@@ -4235,9 +4134,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProfileStatus UnderReview { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProfileStatus Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProfileStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProfileStatus left, Azure.ResourceManager.Billing.Models.BillingProfileStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProfileStatus (string value) { throw null; }
@@ -4256,9 +4153,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProfileStatusReasonCode SpendingLimitReached { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProfileStatusReasonCode UnusualActivity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProfileStatusReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProfileStatusReasonCode left, Azure.ResourceManager.Billing.Models.BillingProfileStatusReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProfileStatusReasonCode (string value) { throw null; }
@@ -4344,9 +4239,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProvisioningState left, Azure.ResourceManager.Billing.Models.BillingProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProvisioningState (string value) { throw null; }
@@ -4367,9 +4260,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState Pending { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState Revoked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState left, Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState (string value) { throw null; }
@@ -4421,9 +4312,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingRelationshipType IndirectPartner { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingRelationshipType Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingRelationshipType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingRelationshipType left, Azure.ResourceManager.Billing.Models.BillingRelationshipType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingRelationshipType (string value) { throw null; }
@@ -4496,9 +4385,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingRequestStatus Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingRequestStatus Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingRequestStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingRequestStatus left, Azure.ResourceManager.Billing.Models.BillingRequestStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingRequestStatus (string value) { throw null; }
@@ -4517,9 +4404,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingRequestType RoleAssignment { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingRequestType UpdateBillingPolicy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingRequestType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingRequestType left, Azure.ResourceManager.Billing.Models.BillingRequestType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingRequestType (string value) { throw null; }
@@ -4633,9 +4518,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm P3Y { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm P5Y { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm left, Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingSavingsPlanTerm (string value) { throw null; }
@@ -4662,9 +4545,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingSpendingLimit Off { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingSpendingLimit On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingSpendingLimit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingSpendingLimit left, Azure.ResourceManager.Billing.Models.BillingSpendingLimit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingSpendingLimit (string value) { throw null; }
@@ -4691,9 +4572,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState Off { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState left, Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState (string value) { throw null; }
@@ -4748,9 +4627,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus None { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus left, Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingSubscriptionOperationStatus (string value) { throw null; }
@@ -4847,9 +4724,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus left, Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus (string value) { throw null; }
@@ -4904,9 +4779,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingSupportedAccountType None { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingSupportedAccountType Partner { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingSupportedAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingSupportedAccountType left, Azure.ResourceManager.Billing.Models.BillingSupportedAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingSupportedAccountType (string value) { throw null; }
@@ -4950,9 +4823,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingTaxIdentifierStatus Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingTaxIdentifierStatus Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingTaxIdentifierStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingTaxIdentifierStatus left, Azure.ResourceManager.Billing.Models.BillingTaxIdentifierStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingTaxIdentifierStatus (string value) { throw null; }
@@ -4986,9 +4857,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingTaxIdentifierType USExempt { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingTaxIdentifierType VatId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingTaxIdentifierType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingTaxIdentifierType left, Azure.ResourceManager.Billing.Models.BillingTaxIdentifierType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingTaxIdentifierType (string value) { throw null; }
@@ -5007,9 +4876,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingTransactionCreditType Refund { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingTransactionCreditType ServiceInterruption { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingTransactionCreditType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingTransactionCreditType left, Azure.ResourceManager.Billing.Models.BillingTransactionCreditType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingTransactionCreditType (string value) { throw null; }
@@ -5038,9 +4905,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingTransactionKind Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.BillingTransactionKind Reservation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.BillingTransactionKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.BillingTransactionKind left, Azure.ResourceManager.Billing.Models.BillingTransactionKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.BillingTransactionKind (string value) { throw null; }
@@ -5207,9 +5072,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.CustomerSubscriptionCancellationReason Dispute { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.CustomerSubscriptionCancellationReason Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.CustomerSubscriptionCancellationReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.CustomerSubscriptionCancellationReason left, Azure.ResourceManager.Billing.Models.CustomerSubscriptionCancellationReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.CustomerSubscriptionCancellationReason (string value) { throw null; }
@@ -5232,9 +5095,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityCode PendingCharges { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityCode ReservedInstances { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityCode left, Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityCode (string value) { throw null; }
@@ -5274,9 +5135,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityStatus Allowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityStatus NotAllowed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityStatus left, Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.DeleteBillingProfileEligibilityStatus (string value) { throw null; }
@@ -5295,9 +5154,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityCode Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityCode ReservedInstances { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityCode left, Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityCode (string value) { throw null; }
@@ -5337,9 +5194,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityStatus Allowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityStatus NotAllowed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityStatus left, Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.DeleteInvoiceSectionEligibilityStatus (string value) { throw null; }
@@ -5372,9 +5227,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.EligibleProductType DevTestAzureSubscription { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.EligibleProductType StandardAzureSubscription { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.EligibleProductType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.EligibleProductType left, Azure.ResourceManager.Billing.Models.EligibleProductType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.EligibleProductType (string value) { throw null; }
@@ -5392,9 +5245,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.EnrollmentAccountOwnerViewCharge NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.EnrollmentAccountOwnerViewCharge Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.EnrollmentAccountOwnerViewCharge other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.EnrollmentAccountOwnerViewCharge left, Azure.ResourceManager.Billing.Models.EnrollmentAccountOwnerViewCharge right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.EnrollmentAccountOwnerViewCharge (string value) { throw null; }
@@ -5413,9 +5264,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.EnrollmentAuthLevelState OrganizationalAccountOnly { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.EnrollmentAuthLevelState Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.EnrollmentAuthLevelState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.EnrollmentAuthLevelState left, Azure.ResourceManager.Billing.Models.EnrollmentAuthLevelState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.EnrollmentAuthLevelState (string value) { throw null; }
@@ -5433,9 +5282,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.EnrollmentDepartmentAdminViewCharge NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.EnrollmentDepartmentAdminViewCharge Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.EnrollmentDepartmentAdminViewCharge other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.EnrollmentDepartmentAdminViewCharge left, Azure.ResourceManager.Billing.Models.EnrollmentDepartmentAdminViewCharge right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.EnrollmentDepartmentAdminViewCharge (string value) { throw null; }
@@ -5454,9 +5301,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.EnrollmentMarkupStatus Preview { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.EnrollmentMarkupStatus Published { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.EnrollmentMarkupStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.EnrollmentMarkupStatus left, Azure.ResourceManager.Billing.Models.EnrollmentMarkupStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.EnrollmentMarkupStatus (string value) { throw null; }
@@ -5499,9 +5344,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.ExtendedTermOption OptedOut { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.ExtendedTermOption Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.ExtendedTermOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.ExtendedTermOption left, Azure.ResourceManager.Billing.Models.ExtendedTermOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.ExtendedTermOption (string value) { throw null; }
@@ -5530,9 +5373,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.InitiatorCustomerType EA { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.InitiatorCustomerType Partner { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.InitiatorCustomerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.InitiatorCustomerType left, Azure.ResourceManager.Billing.Models.InitiatorCustomerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.InitiatorCustomerType (string value) { throw null; }
@@ -5548,9 +5389,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.InstanceFlexibility Off { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.InstanceFlexibility On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.InstanceFlexibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.InstanceFlexibility left, Azure.ResourceManager.Billing.Models.InstanceFlexibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.InstanceFlexibility (string value) { throw null; }
@@ -5587,9 +5426,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.InvoiceDocumentType Transactions { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.InvoiceDocumentType VoidNote { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.InvoiceDocumentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.InvoiceDocumentType left, Azure.ResourceManager.Billing.Models.InvoiceDocumentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.InvoiceDocumentType (string value) { throw null; }
@@ -5606,9 +5443,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.InvoiceSectionLabelManagementPolicy NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.InvoiceSectionLabelManagementPolicy Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.InvoiceSectionLabelManagementPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.InvoiceSectionLabelManagementPolicy left, Azure.ResourceManager.Billing.Models.InvoiceSectionLabelManagementPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.InvoiceSectionLabelManagementPolicy (string value) { throw null; }
@@ -5629,9 +5464,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.InvoiceSectionState UnderReview { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.InvoiceSectionState Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.InvoiceSectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.InvoiceSectionState left, Azure.ResourceManager.Billing.Models.InvoiceSectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.InvoiceSectionState (string value) { throw null; }
@@ -5650,9 +5483,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode SpendingLimitReached { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode UnusualActivity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode left, Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.InvoiceSectionStateReasonCode (string value) { throw null; }
@@ -5691,9 +5522,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.MarketplacePurchasesPolicy OnlyFreeAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.MarketplacePurchasesPolicy Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.MarketplacePurchasesPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.MarketplacePurchasesPolicy left, Azure.ResourceManager.Billing.Models.MarketplacePurchasesPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.MarketplacePurchasesPolicy (string value) { throw null; }
@@ -5760,9 +5589,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.MoveValidationErrorCode SourceBillingProfilePastDue { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.MoveValidationErrorCode SourceInvoiceSectionInactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.MoveValidationErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.MoveValidationErrorCode left, Azure.ResourceManager.Billing.Models.MoveValidationErrorCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.MoveValidationErrorCode (string value) { throw null; }
@@ -5796,9 +5623,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.PartnerTransferStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.PartnerTransferStatus Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.PartnerTransferStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.PartnerTransferStatus left, Azure.ResourceManager.Billing.Models.PartnerTransferStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.PartnerTransferStatus (string value) { throw null; }
@@ -5820,9 +5645,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.PaymentMethodFamily Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.PaymentMethodFamily TaskOrder { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.PaymentMethodFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.PaymentMethodFamily left, Azure.ResourceManager.Billing.Models.PaymentMethodFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.PaymentMethodFamily (string value) { throw null; }
@@ -5851,7 +5674,6 @@ namespace Azure.ResourceManager.Billing.Models
         public string LastFourDigits { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> Logos { get { throw null; } }
         public Azure.Core.ResourceIdentifier PaymentMethodId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `PaymentMethodType` moving forward.")]
         public string PaymentMethodProjectionPropertiesType { get { throw null; } }
         public string PaymentMethodType { get { throw null; } }
@@ -5872,9 +5694,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.PaymentMethodStatus Active { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.PaymentMethodStatus Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.PaymentMethodStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.PaymentMethodStatus left, Azure.ResourceManager.Billing.Models.PaymentMethodStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.PaymentMethodStatus (string value) { throw null; }
@@ -5898,9 +5718,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode OverlappingPaymentTerms { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode left, Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityCode (string value) { throw null; }
@@ -5941,9 +5759,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityStatus Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityStatus Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityStatus left, Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.PaymentTermsEligibilityStatus (string value) { throw null; }
@@ -5959,9 +5775,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.PolicyOverrideCancellation Allowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.PolicyOverrideCancellation NotAllowed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.PolicyOverrideCancellation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.PolicyOverrideCancellation left, Azure.ResourceManager.Billing.Models.PolicyOverrideCancellation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.PolicyOverrideCancellation (string value) { throw null; }
@@ -6014,9 +5828,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.RefundReasonCode UnclearDocumentation { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.RefundReasonCode UnclearPricing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.RefundReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.RefundReasonCode left, Azure.ResourceManager.Billing.Models.RefundReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.RefundReasonCode (string value) { throw null; }
@@ -6037,9 +5849,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.RefundStatus Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.RefundStatus Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.RefundStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.RefundStatus left, Azure.ResourceManager.Billing.Models.RefundStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.RefundStatus (string value) { throw null; }
@@ -6083,9 +5893,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.ReservationBillingPlan Monthly { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.ReservationBillingPlan Upfront { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.ReservationBillingPlan other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.ReservationBillingPlan left, Azure.ResourceManager.Billing.Models.ReservationBillingPlan right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.ReservationBillingPlan (string value) { throw null; }
@@ -6184,9 +5992,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.ReservationPurchasesPolicy NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.ReservationPurchasesPolicy Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.ReservationPurchasesPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.ReservationPurchasesPolicy left, Azure.ResourceManager.Billing.Models.ReservationPurchasesPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.ReservationPurchasesPolicy (string value) { throw null; }
@@ -6245,9 +6051,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.ReservationStatusCode UnknownError { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.ReservationStatusCode Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.ReservationStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.ReservationStatusCode left, Azure.ResourceManager.Billing.Models.ReservationStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.ReservationStatusCode (string value) { throw null; }
@@ -6291,9 +6095,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SavingsPlanPurchasesPolicy NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SavingsPlanPurchasesPolicy Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SavingsPlanPurchasesPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SavingsPlanPurchasesPolicy left, Azure.ResourceManager.Billing.Models.SavingsPlanPurchasesPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SavingsPlanPurchasesPolicy (string value) { throw null; }
@@ -6385,9 +6187,7 @@ namespace Azure.ResourceManager.Billing.Models
         public ServiceDefinedResourceName(string value) { throw null; }
         public static Azure.ResourceManager.Billing.Models.ServiceDefinedResourceName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.ServiceDefinedResourceName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.ServiceDefinedResourceName left, Azure.ResourceManager.Billing.Models.ServiceDefinedResourceName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.ServiceDefinedResourceName (string value) { throw null; }
@@ -6403,9 +6203,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SpecialTaxationType InvoiceLevel { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SpecialTaxationType SubtotalLevel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SpecialTaxationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SpecialTaxationType left, Azure.ResourceManager.Billing.Models.SpecialTaxationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SpecialTaxationType (string value) { throw null; }
@@ -6441,9 +6239,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SpendingLimitStatus None { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SpendingLimitStatus Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SpendingLimitStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SpendingLimitStatus left, Azure.ResourceManager.Billing.Models.SpendingLimitStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SpendingLimitStatus (string value) { throw null; }
@@ -6472,9 +6268,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SpendingLimitType StartupSponsorship { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SpendingLimitType VisualStudio { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SpendingLimitType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SpendingLimitType left, Azure.ResourceManager.Billing.Models.SpendingLimitType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SpendingLimitType (string value) { throw null; }
@@ -6505,9 +6299,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SubscriptionBillingType Paid { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SubscriptionBillingType PrePaid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SubscriptionBillingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SubscriptionBillingType left, Azure.ResourceManager.Billing.Models.SubscriptionBillingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SubscriptionBillingType (string value) { throw null; }
@@ -6528,9 +6320,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus TransferredOut { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus Transferring { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus left, Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SubscriptionEnrollmentAccountStatus (string value) { throw null; }
@@ -6597,9 +6387,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SubscriptionStatusReason SuspiciousActivity { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SubscriptionStatusReason Transferred { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SubscriptionStatusReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SubscriptionStatusReason left, Azure.ResourceManager.Billing.Models.SubscriptionStatusReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SubscriptionStatusReason (string value) { throw null; }
@@ -6641,9 +6429,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SubscriptionTransferValidationErrorCode SubscriptionNotActive { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SubscriptionTransferValidationErrorCode SubscriptionTypeNotSupported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SubscriptionTransferValidationErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SubscriptionTransferValidationErrorCode left, Azure.ResourceManager.Billing.Models.SubscriptionTransferValidationErrorCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SubscriptionTransferValidationErrorCode (string value) { throw null; }
@@ -6661,9 +6447,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.SubscriptionWorkloadType None { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.SubscriptionWorkloadType Production { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.SubscriptionWorkloadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.SubscriptionWorkloadType left, Azure.ResourceManager.Billing.Models.SubscriptionWorkloadType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.SubscriptionWorkloadType (string value) { throw null; }
@@ -6680,9 +6464,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.TransactionType Other { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.TransactionType Unbilled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.TransactionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.TransactionType left, Azure.ResourceManager.Billing.Models.TransactionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.TransactionType (string value) { throw null; }
@@ -6699,9 +6481,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.ViewChargesPolicy NotAllowed { get { throw null; } }
         public static Azure.ResourceManager.Billing.Models.ViewChargesPolicy Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Billing.Models.ViewChargesPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Billing.Models.ViewChargesPolicy left, Azure.ResourceManager.Billing.Models.ViewChargesPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Billing.Models.ViewChargesPolicy (string value) { throw null; }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class ReverseTransportPreferenceEditStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ReverseTransportPreferenceEditStatus value) => value switch
         {
             ReverseTransportPreferenceEditStatus.Enabled => "Enabled",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ReverseTransportPreferenceEditStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ReverseTransportPreferenceEditStatus ToReverseTransportPreferenceEditStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return ReverseTransportPreferenceEditStatus.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return ReverseTransportPreferenceEditStatus.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSupported")) return ReverseTransportPreferenceEditStatus.NotSupported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return ReverseTransportPreferenceEditStatus.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return ReverseTransportPreferenceEditStatus.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSupported"))
+            {
+                return ReverseTransportPreferenceEditStatus.NotSupported;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ReverseTransportPreferenceEditStatus value.");
         }
     }

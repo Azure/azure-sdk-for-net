@@ -91,7 +91,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("blobUri"u8))
                 {
-                    blobUri = new Uri(prop.Value.GetString());
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageAccountArmId"u8))
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAIProjectBlobReference(document.RootElement, options);
                     }

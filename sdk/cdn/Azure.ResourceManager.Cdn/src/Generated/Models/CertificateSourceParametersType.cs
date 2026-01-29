@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The CertificateSourceParametersType.
-    /// Serialized Name: CertificateSourceParametersType
-    /// </summary>
+    /// <summary> The CertificateSourceParametersType. </summary>
     internal readonly partial struct CertificateSourceParametersType : IEquatable<CertificateSourceParametersType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CdnCertificateSourceParametersValue = "CdnCertificateSourceParameters";
         private const string KeyVaultCertificateSourceParametersValue = "KeyVaultCertificateSourceParameters";
 
-        /// <summary>
-        /// CdnCertificateSourceParameters
-        /// Serialized Name: CertificateSourceParametersType.CdnCertificateSourceParameters
-        /// </summary>
+        /// <summary> CdnCertificateSourceParameters. </summary>
         public static CertificateSourceParametersType CdnCertificateSourceParameters { get; } = new CertificateSourceParametersType(CdnCertificateSourceParametersValue);
-        /// <summary>
-        /// KeyVaultCertificateSourceParameters
-        /// Serialized Name: CertificateSourceParametersType.KeyVaultCertificateSourceParameters
-        /// </summary>
+        /// <summary> KeyVaultCertificateSourceParameters. </summary>
         public static CertificateSourceParametersType KeyVaultCertificateSourceParameters { get; } = new CertificateSourceParametersType(KeyVaultCertificateSourceParametersValue);
         /// <summary> Determines if two <see cref="CertificateSourceParametersType"/> values are the same. </summary>
         public static bool operator ==(CertificateSourceParametersType left, CertificateSourceParametersType right) => left.Equals(right);

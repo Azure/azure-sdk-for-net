@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     /// <summary> The updatable properties of the AzureKeyVaultSecretProviderClass. </summary>
     public partial class AzureKeyVaultSecretProviderClassUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSecretProviderClassUpdateProperties"/>. </summary>
         public AzureKeyVaultSecretProviderClassUpdateProperties()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
         /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName, Guid? clientId, Guid? tenantId, string objects, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName, Guid? clientId, Guid? tenantId, string objects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyvaultName = keyvaultName;
             ClientId = clientId;
             TenantId = tenantId;
             Objects = objects;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the Azure Key Vault to sync secrets from. </summary>
         public string KeyvaultName { get; set; }
+
         /// <summary> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </summary>
         public Guid? ClientId { get; set; }
+
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </summary>
         public Guid? TenantId { get; set; }
+
         /// <summary> Objects defines the desired state of synced K8s secret objects. </summary>
         public string Objects { get; set; }
     }

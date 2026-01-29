@@ -7,6 +7,5 @@
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.KeyVault.</Description>
     <PackageTags>azure;management;keyvault</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

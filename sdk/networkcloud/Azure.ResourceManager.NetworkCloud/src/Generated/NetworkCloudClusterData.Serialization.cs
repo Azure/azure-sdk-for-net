@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyList<ActionState> actionStates = default;
+            IReadOnlyList<NetworkCloudActionState> actionStates = default;
             NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
             AnalyticsOutputSettings analyticsOutputSettings = default;
             ResourceIdentifier analyticsWorkspaceId = default;
@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            List<ActionState> array = new List<ActionState>();
+                            List<NetworkCloudActionState> array = new List<NetworkCloudActionState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ActionState.DeserializeActionState(item, options));
+                                array.Add(NetworkCloudActionState.DeserializeNetworkCloudActionState(item, options));
                             }
                             actionStates = array;
                             continue;
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 etag,
                 extendedLocation,
                 identity,
-                actionStates ?? new ChangeTrackingList<ActionState>(),
+                actionStates ?? new ChangeTrackingList<NetworkCloudActionState>(),
                 aggregatorOrSingleRackDefinition,
                 analyticsOutputSettings,
                 analyticsWorkspaceId,

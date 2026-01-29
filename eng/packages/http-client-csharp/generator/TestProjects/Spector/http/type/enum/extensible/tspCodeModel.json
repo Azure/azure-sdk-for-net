@@ -292,6 +292,7 @@
           "crossLanguageDefinitionId": "Type.Enum.Extensible.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Enum.Extensible",
       "apiVersions": [],
@@ -361,7 +362,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {
@@ -451,7 +453,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getUnknownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {
@@ -549,7 +552,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {
@@ -660,7 +664,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Extensible"
               },
               "parameters": [
                 {
@@ -734,17 +739,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Enum.Extensible.endpoint"
+              "crossLanguageDefinitionId": "Type.Enum.Extensible.String.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Enum.Extensible.String",
           "apiVersions": [],
           "parent": {
             "$ref": "26"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

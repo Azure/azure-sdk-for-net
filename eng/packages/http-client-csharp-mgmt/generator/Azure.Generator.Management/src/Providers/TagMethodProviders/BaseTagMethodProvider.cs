@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -31,7 +30,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly InputServiceMethod _getMethodProvider;
         protected readonly ClientProvider _updateRestClient;
         protected readonly ClientProvider _getRestClient;
-        protected readonly RequestPathPattern _contextualPath;
+        protected readonly OperationContext _operationContext;
         protected readonly FieldProvider _updateClientDiagnosticsField;
         protected readonly FieldProvider _getRestClientField;
         protected readonly bool _isPatch;
@@ -40,10 +39,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
+        private readonly ParameterContextRegistry _parameterMappings;
+
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
-            RequestPathPattern contextualPath,
+            OperationContext operationContext,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
             RestClientInfo updateRestClientInfo,
@@ -56,13 +57,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _resource = resource;
             _updateMethodProvider = updateMethodProvider;
             _getMethodProvider = getMethod;
-            _contextualPath = contextualPath;
+            _operationContext = operationContext;
+            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
             _enclosingType = resource;
             _updateRestClient = updateRestClientInfo.RestClientProvider;
             _getRestClient = getRestClientInfo.RestClientProvider;
             _isPatch = isPatch;
             _isAsync = isAsync;
-            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
+            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation || updateMethodProvider.IsFakeLongRunningOperation;
             _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
             _getRestClientField = getRestClientInfo.RestClientField;
 
@@ -118,9 +120,9 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             var requestMethod = _getRestClient.GetRequestMethodByOperation(_getMethodProvider.Operation);
 
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
+            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
-            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, "CreateGetRequest", arguments, out var messageVariable));
+            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
@@ -204,7 +206,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
 
             parameters.Add(dataVar);
-            parameters.Add(cancellationTokenParam);
+            parameters.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
 
             return Declare(
                 "result",

@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         {
             APPLICATIONINSIGHTS_CONNECTION_STRING,
             APPLICATIONINSIGHTS_STATSBEAT_DISABLED,
-            APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW,
+            APPLICATIONINSIGHTS_SDKSTATS_DISABLED,
             APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL,
             FUNCTIONS_WORKER_RUNTIME,
             LOCALAPPDATA,
@@ -49,12 +49,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         public const string APPLICATIONINSIGHTS_STATSBEAT_DISABLED = "APPLICATIONINSIGHTS_STATSBEAT_DISABLED";
 
         /// <summary>
-        /// Available for users to enable customer SDK stats preview feature.
+        /// Available for users to enable customer SDK stats.
         /// </summary>
         /// <remarks>
         /// Customer SDK stats provide insights into SDK success/failure/retry counts.
+        /// Set to "false" to enable this feature.
         /// </remarks>
-        public const string APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW = "APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW";
+        public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED";
 
         /// <summary>
         /// Available for users to configure customer SDK stats export interval in seconds.

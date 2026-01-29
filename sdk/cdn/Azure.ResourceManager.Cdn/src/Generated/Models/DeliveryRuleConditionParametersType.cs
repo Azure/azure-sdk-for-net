@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The DeliveryRuleConditionParametersType.
-    /// Serialized Name: DeliveryRuleConditionParametersType
-    /// </summary>
+    /// <summary> The DeliveryRuleConditionParametersType. </summary>
     internal readonly partial struct DeliveryRuleConditionParametersType : IEquatable<DeliveryRuleConditionParametersType>
     {
         private readonly string _value;
@@ -45,100 +42,43 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeliveryRuleHostNameConditionParametersValue = "DeliveryRuleHostNameConditionParameters";
         private const string DeliveryRuleSslProtocolConditionParametersValue = "DeliveryRuleSslProtocolConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleRemoteAddressConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleRemoteAddressConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRemoteAddressConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleRemoteAddressConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleRemoteAddressConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleRequestMethodConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRequestMethodConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleRequestMethodConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleRequestMethodConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleQueryStringConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleQueryStringConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleQueryStringConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleQueryStringConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleQueryStringConditionParametersValue);
-        /// <summary>
-        /// DeliveryRulePostArgsConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRulePostArgsConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRulePostArgsConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRulePostArgsConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleRequestUriConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleRequestUriConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRequestUriConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleRequestUriConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleRequestUriConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleRequestHeaderConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRequestHeaderConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleRequestHeaderConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleRequestHeaderConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleRequestBodyConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleRequestBodyConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRequestBodyConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleRequestBodyConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleRequestBodyConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleRequestSchemeConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRequestSchemeConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleRequestSchemeConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleRequestSchemeConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleUrlPathMatchConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleUrlPathMatchConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlPathMatchConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleUriPathMatchConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleUriPathMatchConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleUrlFileExtensionMatchConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleUrlFileExtensionMatchConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlFileExtensionMatchConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleUriFileExtensionMatchConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleUriFileExtensionMatchConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleUrlFilenameConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleUrlFilenameConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlFilenameConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleUriFilenameConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleUriFilenameConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleHttpVersionConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleHttpVersionConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleHttpVersionConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleHttpVersionConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleHttpVersionConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleCookiesConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleCookiesConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleCookiesConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleCookiesConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleCookiesConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleIsDeviceConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleIsDeviceConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleIsDeviceConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleIsDeviceConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleSocketAddrConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleSocketAddrConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleSocketAddrConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleSocketAddrConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleSocketAddrConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleClientPortConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleClientPortConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleClientPortConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleClientPortConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleClientPortConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleServerPortConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleServerPortConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleServerPortConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleServerPortConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleServerPortConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleHostNameConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleHostNameConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleHostNameConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleHostNameConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleHostNameConditionParametersValue);
-        /// <summary>
-        /// DeliveryRuleSslProtocolConditionParameters
-        /// Serialized Name: DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleSslProtocolConditionParameters. </summary>
         public static DeliveryRuleConditionParametersType DeliveryRuleSslProtocolConditionParameters { get; } = new DeliveryRuleConditionParametersType(DeliveryRuleSslProtocolConditionParametersValue);
         /// <summary> Determines if two <see cref="DeliveryRuleConditionParametersType"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleConditionParametersType left, DeliveryRuleConditionParametersType right) => left.Equals(right);

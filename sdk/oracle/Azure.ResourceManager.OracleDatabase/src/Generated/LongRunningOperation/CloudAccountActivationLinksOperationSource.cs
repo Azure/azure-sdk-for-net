@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal class CloudAccountActivationLinksOperationSource : IOperationSource<CloudAccountActivationLinks>
+    /// <summary></summary>
+    internal partial class CloudAccountActivationLinksOperationSource : IOperationSource<CloudAccountActivationLinks>
     {
-        CloudAccountActivationLinks IOperationSource<CloudAccountActivationLinks>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal CloudAccountActivationLinksOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        CloudAccountActivationLinks IOperationSource<CloudAccountActivationLinks>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            CloudAccountActivationLinks result = CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CloudAccountActivationLinks> IOperationSource<CloudAccountActivationLinks>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            CloudAccountActivationLinks result = CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (prop.NameEquals("targetAddress"u8))
                 {
-                    targetAddress = new Uri(prop.Value.GetString());
+                    targetAddress = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpointProfileType"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDeviceRegistryAssetEndpointProfileProperties(document.RootElement, options);
                     }

@@ -154,7 +154,7 @@ public partial class AseV3NetworkingConfiguration : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AseV3NetworkingConfiguration.</param>
     public AseV3NetworkingConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -163,6 +163,7 @@ public partial class AseV3NetworkingConfiguration : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _allowNewPrivateEndpointConnections = DefineProperty<bool>("AllowNewPrivateEndpointConnections", ["properties", "allowNewPrivateEndpointConnections"]);
         _inboundIPAddressOverride = DefineProperty<string>("InboundIPAddressOverride", ["properties", "inboundIpAddressOverride"]);
@@ -183,6 +184,11 @@ public partial class AseV3NetworkingConfiguration : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

@@ -10,16 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MySqlFlexibleServerConfigurationData : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerConfigurationData>
+    /// <summary> Represents a Configuration. </summary>
+    public partial class MySqlFlexibleServerConfigurationData : ResourceData, IJsonModel<MySqlFlexibleServerConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,248 +34,114 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(CurrentValue))
-            {
-                writer.WritePropertyName("currentValue"u8);
-                writer.WriteStringValue(CurrentValue);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DocumentationLink))
-            {
-                writer.WritePropertyName("documentationLink"u8);
-                writer.WriteStringValue(DocumentationLink);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
-            {
-                writer.WritePropertyName("defaultValue"u8);
-                writer.WriteStringValue(DefaultValue);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataType))
-            {
-                writer.WritePropertyName("dataType"u8);
-                writer.WriteStringValue(DataType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AllowedValues))
-            {
-                writer.WritePropertyName("allowedValues"u8);
-                writer.WriteStringValue(AllowedValues);
-            }
-            if (Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
-            {
-                writer.WritePropertyName("isReadOnly"u8);
-                writer.WriteStringValue(IsReadOnly.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsConfigPendingRestart))
-            {
-                writer.WritePropertyName("isConfigPendingRestart"u8);
-                writer.WriteStringValue(IsConfigPendingRestart.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsDynamicConfig))
-            {
-                writer.WritePropertyName("isDynamicConfig"u8);
-                writer.WriteStringValue(IsDynamicConfig.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        MySqlFlexibleServerConfigurationData IJsonModel<MySqlFlexibleServerConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerConfigurationData IJsonModel<MySqlFlexibleServerConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MySqlFlexibleServerConfigurationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMySqlFlexibleServerConfigurationData(document.RootElement, options);
         }
 
-        internal static MySqlFlexibleServerConfigurationData DeserializeMySqlFlexibleServerConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MySqlFlexibleServerConfigurationData DeserializeMySqlFlexibleServerConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string value = default;
-            string currentValue = default;
-            string description = default;
-            string documentationLink = default;
-            string defaultValue = default;
-            string dataType = default;
-            string allowedValues = default;
-            MySqlFlexibleServerConfigurationSource? source = default;
-            MySqlFlexibleServerConfigReadOnlyState? isReadOnly = default;
-            MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = default;
-            MySqlFlexibleServerConfigDynamicState? isDynamicConfig = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ConfigurationProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("value"u8))
-                        {
-                            value = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("currentValue"u8))
-                        {
-                            currentValue = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("documentationLink"u8))
-                        {
-                            documentationLink = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultValue"u8))
-                        {
-                            defaultValue = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataType"u8))
-                        {
-                            dataType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("allowedValues"u8))
-                        {
-                            allowedValues = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            source = new MySqlFlexibleServerConfigurationSource(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isReadOnly"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isReadOnly = new MySqlFlexibleServerConfigReadOnlyState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isConfigPendingRestart"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isConfigPendingRestart = new MySqlFlexibleServerConfigPendingRestartState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isDynamicConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isDynamicConfig = new MySqlFlexibleServerConfigDynamicState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ConfigurationProperties.DeserializeConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerConfigurationData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                value,
-                currentValue,
-                description,
-                documentationLink,
-                defaultValue,
-                dataType,
-                allowedValues,
-                source,
-                isReadOnly,
-                isConfigPendingRestart,
-                isDynamicConfig,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<MySqlFlexibleServerConfigurationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MySqlFlexibleServerConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -282,15 +151,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
-        MySqlFlexibleServerConfigurationData IPersistableModel<MySqlFlexibleServerConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerConfigurationData IPersistableModel<MySqlFlexibleServerConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServerConfigurationData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlFlexibleServerConfigurationData(document.RootElement, options);
                     }
                 default:
@@ -298,6 +172,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="mySqlFlexibleServerConfigurationData"> The <see cref="MySqlFlexibleServerConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MySqlFlexibleServerConfigurationData mySqlFlexibleServerConfigurationData)
+        {
+            if (mySqlFlexibleServerConfigurationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerConfigurationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerConfigurationData"/> from. </param>
+        internal static MySqlFlexibleServerConfigurationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMySqlFlexibleServerConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

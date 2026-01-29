@@ -3,3 +3,4 @@ additionalDirectories: []
 repo: Azure/azure-rest-api-specs
 directory: specification/cognitiveservices/ContentSafety
 
+emitterPackageJsonPath: eng/legacy-emitter-package.json

@@ -322,7 +322,12 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     byte[] rawData = Convert.FromBase64String(value);
 
-                    X509Certificate2 x509 = new(rawData, (string)null, options.KeyStorageFlags);
+                    X509Certificate2 x509;
+#if NET9_0_OR_GREATER
+                    x509 = X509CertificateLoader.LoadPkcs12(rawData, (string)null, options.KeyStorageFlags);
+#else
+                    x509 = new(rawData, (string)null, options.KeyStorageFlags);
+#endif
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
                 else if (secret.ContentType == CertificateContentType.Pem)
@@ -452,7 +457,12 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     byte[] rawData = Convert.FromBase64String(value);
 
-                    X509Certificate2 x509 = new(rawData, (string)null, options.KeyStorageFlags);
+                    X509Certificate2 x509;
+#if NET9_0_OR_GREATER
+                    x509 = X509CertificateLoader.LoadPkcs12(rawData, (string)null, options.KeyStorageFlags);
+#else
+                    x509 = new(rawData, (string)null, options.KeyStorageFlags);
+#endif
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
                 else if (secret.ContentType == CertificateContentType.Pem)

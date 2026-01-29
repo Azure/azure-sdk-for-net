@@ -13,100 +13,142 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    /// <summary>
-    /// A class representing the ManagedPrivateEndpointModel data model.
-    /// The managed private endpoint resource type.
-    /// </summary>
+    /// <summary> The managed private endpoint resource type. </summary>
     public partial class ManagedPrivateEndpointModelData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ManagedPrivateEndpointModelData(AzureLocation location) : base(location)
         {
-            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="privateLinkResourceId"> The ARM resource ID of the resource for which the managed private endpoint is pointing to. </param>
-        /// <param name="privateLinkResourceRegion"> The region of the resource to which the managed private endpoint is pointing to. </param>
-        /// <param name="groupIds"> The group Ids of the managed private endpoint. </param>
-        /// <param name="requestMessage"> User input request message of the managed private endpoint. </param>
-        /// <param name="connectionState"> The state of managed private endpoint connection. </param>
-        /// <param name="privateLinkServiceUri"> The URL of the data store behind the private link service. It would be the URL in the Grafana data source configuration page without the protocol and port. </param>
-        /// <param name="privateLinkServicePrivateIP"> The private IP of private endpoint after approval. This property is empty before connection is approved. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedPrivateEndpointModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GrafanaProvisioningState? provisioningState, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, IList<string> groupIds, string requestMessage, ManagedPrivateEndpointConnectionState connectionState, Uri privateLinkServiceUri, string privateLinkServicePrivateIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal ManagedPrivateEndpointModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ManagedPrivateEndpointModelProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            PrivateLinkResourceId = privateLinkResourceId;
-            PrivateLinkResourceRegion = privateLinkResourceRegion;
-            GroupIds = groupIds;
-            RequestMessage = requestMessage;
-            ConnectionState = connectionState;
-            PrivateLinkServiceUri = privateLinkServiceUri;
-            PrivateLinkServicePrivateIP = privateLinkServicePrivateIP;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelData"/> for deserialization. </summary>
-        internal ManagedPrivateEndpointModelData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        internal ManagedPrivateEndpointModelProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public GrafanaProvisioningState? ProvisioningState { get; }
+        public GrafanaProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The ARM resource ID of the resource for which the managed private endpoint is pointing to. </summary>
-        public ResourceIdentifier PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointModelProperties();
+                }
+                Properties.PrivateLinkResourceId = value;
+            }
+        }
+
         /// <summary> The region of the resource to which the managed private endpoint is pointing to. </summary>
-        public string PrivateLinkResourceRegion { get; set; }
+        public string PrivateLinkResourceRegion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceRegion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointModelProperties();
+                }
+                Properties.PrivateLinkResourceRegion = value;
+            }
+        }
+
         /// <summary> The group Ids of the managed private endpoint. </summary>
-        public IList<string> GroupIds { get; }
+        public IList<string> GroupIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointModelProperties();
+                }
+                return Properties.GroupIds;
+            }
+        }
+
         /// <summary> User input request message of the managed private endpoint. </summary>
-        public string RequestMessage { get; set; }
+        public string RequestMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointModelProperties();
+                }
+                Properties.RequestMessage = value;
+            }
+        }
+
         /// <summary> The state of managed private endpoint connection. </summary>
-        public ManagedPrivateEndpointConnectionState ConnectionState { get; }
+        public ManagedPrivateEndpointConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+        }
+
         /// <summary> The URL of the data store behind the private link service. It would be the URL in the Grafana data source configuration page without the protocol and port. </summary>
-        public Uri PrivateLinkServiceUri { get; set; }
+        public Uri PrivateLinkServiceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointModelProperties();
+                }
+                Properties.PrivateLinkServiceUri = value;
+            }
+        }
+
         /// <summary> The private IP of private endpoint after approval. This property is empty before connection is approved. </summary>
-        public string PrivateLinkServicePrivateIP { get; }
+        public string PrivateLinkServicePrivateIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServicePrivateIP;
+            }
+        }
     }
 }

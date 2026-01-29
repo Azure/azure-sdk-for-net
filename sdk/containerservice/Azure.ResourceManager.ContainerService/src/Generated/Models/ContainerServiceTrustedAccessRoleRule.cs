@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Rule for trusted access role. </summary>
+    /// <summary>
+    /// Rule for trusted access role
+    /// Serialized Name: TrustedAccessRoleRule
+    /// </summary>
     public partial class ContainerServiceTrustedAccessRoleRule
     {
         /// <summary>
@@ -56,11 +59,26 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleRule"/>. </summary>
-        /// <param name="verbs"> List of allowed verbs. </param>
-        /// <param name="apiGroups"> List of allowed apiGroups. </param>
-        /// <param name="resources"> List of allowed resources. </param>
-        /// <param name="resourceNames"> List of allowed names. </param>
-        /// <param name="nonResourceUrls"> List of allowed nonResourceURLs. </param>
+        /// <param name="verbs">
+        /// List of allowed verbs
+        /// Serialized Name: TrustedAccessRoleRule.verbs
+        /// </param>
+        /// <param name="apiGroups">
+        /// List of allowed apiGroups
+        /// Serialized Name: TrustedAccessRoleRule.apiGroups
+        /// </param>
+        /// <param name="resources">
+        /// List of allowed resources
+        /// Serialized Name: TrustedAccessRoleRule.resources
+        /// </param>
+        /// <param name="resourceNames">
+        /// List of allowed names
+        /// Serialized Name: TrustedAccessRoleRule.resourceNames
+        /// </param>
+        /// <param name="nonResourceUrls">
+        /// List of allowed nonResourceURLs
+        /// Serialized Name: TrustedAccessRoleRule.nonResourceURLs
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceTrustedAccessRoleRule(IReadOnlyList<string> verbs, IReadOnlyList<string> apiGroups, IReadOnlyList<string> resources, IReadOnlyList<string> resourceNames, IReadOnlyList<string> nonResourceUrls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,19 +90,34 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of allowed verbs. </summary>
+        /// <summary>
+        /// List of allowed verbs
+        /// Serialized Name: TrustedAccessRoleRule.verbs
+        /// </summary>
         [WirePath("verbs")]
         public IReadOnlyList<string> Verbs { get; }
-        /// <summary> List of allowed apiGroups. </summary>
+        /// <summary>
+        /// List of allowed apiGroups
+        /// Serialized Name: TrustedAccessRoleRule.apiGroups
+        /// </summary>
         [WirePath("apiGroups")]
         public IReadOnlyList<string> ApiGroups { get; }
-        /// <summary> List of allowed resources. </summary>
+        /// <summary>
+        /// List of allowed resources
+        /// Serialized Name: TrustedAccessRoleRule.resources
+        /// </summary>
         [WirePath("resources")]
         public IReadOnlyList<string> Resources { get; }
-        /// <summary> List of allowed names. </summary>
+        /// <summary>
+        /// List of allowed names
+        /// Serialized Name: TrustedAccessRoleRule.resourceNames
+        /// </summary>
         [WirePath("resourceNames")]
         public IReadOnlyList<string> ResourceNames { get; }
-        /// <summary> List of allowed nonResourceURLs. </summary>
+        /// <summary>
+        /// List of allowed nonResourceURLs
+        /// Serialized Name: TrustedAccessRoleRule.nonResourceURLs
+        /// </summary>
         [WirePath("nonResourceURLs")]
         public IReadOnlyList<string> NonResourceUrls { get; }
     }

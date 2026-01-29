@@ -6,12 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Parameters for Node type action. </summary>
     public partial class NodeTypeActionContent
     {
         /// <summary> Initializes a new instance of NodeTypeActionContent. </summary>

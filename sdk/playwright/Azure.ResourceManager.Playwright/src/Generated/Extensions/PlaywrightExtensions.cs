@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.Playwright
             return subscriptionResource.GetCachedClient(client => new MockablePlaywrightSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="PlaywrightWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PlaywrightWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightArmClient.GetPlaywrightWorkspaceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -50,7 +56,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightArmClient(client).GetPlaywrightWorkspaceResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightArmClient.GetPlaywrightQuotaResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -62,7 +74,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightArmClient(client).GetPlaywrightQuotaResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PlaywrightWorkspaceQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PlaywrightWorkspaceQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightArmClient.GetPlaywrightWorkspaceQuotaResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -74,7 +92,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightArmClient(client).GetPlaywrightWorkspaceQuotaResource(id);
         }
 
-        /// <summary> Gets a collection of PlaywrightWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of PlaywrightWorkspaces in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightResourceGroupResource.GetPlaywrightWorkspaces()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of PlaywrightWorkspaces and their operations over a PlaywrightWorkspaceResource. </returns>
@@ -85,7 +109,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightResourceGroupResource(resourceGroupResource).GetPlaywrightWorkspaces();
         }
 
-        /// <summary> Get a PlaywrightWorkspace. </summary>
+        /// <summary>
+        /// Get a PlaywrightWorkspace
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightResourceGroupResource.GetPlaywrightWorkspaceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.Playwright
             return await GetMockablePlaywrightResourceGroupResource(resourceGroupResource).GetPlaywrightWorkspaceAsync(playwrightWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a PlaywrightWorkspace. </summary>
+        /// <summary>
+        /// Get a PlaywrightWorkspace
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightResourceGroupResource.GetPlaywrightWorkspace(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,11 +147,17 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightResourceGroupResource(resourceGroupResource).GetPlaywrightWorkspace(playwrightWorkspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.GetAllPlaywrightQuota(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
+        /// <returns> An object representing collection of PlaywrightQuota and their operations over a PlaywrightQuotaResource. </returns>
         public static PlaywrightQuotaCollection GetAllPlaywrightQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -123,7 +165,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
         }
 
-        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
+        /// <summary>
+        /// Gets a subscription-level location-based Playwright quota resource by name.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.GetPlaywrightQuotaAsync(AzureLocation, PlaywrightQuotaName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
@@ -137,7 +185,13 @@ namespace Azure.ResourceManager.Playwright
             return await GetMockablePlaywrightSubscriptionResource(subscriptionResource).GetPlaywrightQuotaAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
+        /// <summary>
+        /// Gets a subscription-level location-based Playwright quota resource by name.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.GetPlaywrightQuota(AzureLocation, PlaywrightQuotaName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
@@ -151,7 +205,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightSubscriptionResource(subscriptionResource).GetPlaywrightQuota(location, playwrightQuotaName, cancellationToken);
         }
 
-        /// <summary> List PlaywrightWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List PlaywrightWorkspace resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspacesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -163,7 +223,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightSubscriptionResource(subscriptionResource).GetPlaywrightWorkspacesAsync(cancellationToken);
         }
 
-        /// <summary> List PlaywrightWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List PlaywrightWorkspace resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -175,7 +241,13 @@ namespace Azure.ResourceManager.Playwright
             return GetMockablePlaywrightSubscriptionResource(subscriptionResource).GetPlaywrightWorkspaces(cancellationToken);
         }
 
-        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
+        /// <summary>
+        /// Checks if a Playwright workspace name is available globally.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailabilityAsync(PlaywrightNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,7 +259,13 @@ namespace Azure.ResourceManager.Playwright
             return await GetMockablePlaywrightSubscriptionResource(subscriptionResource).CheckPlaywrightNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
+        /// <summary>
+        /// Checks if a Playwright workspace name is available globally.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailability(PlaywrightNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

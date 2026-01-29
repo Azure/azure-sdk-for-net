@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     public readonly partial struct TargetAuthenticationType : IEquatable<TargetAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> The Azure Active Directory authentication. </summary>
+        private const string AadValue = "Aad";
+        /// <summary> The SQL password authentication. </summary>
+        private const string SqlValue = "Sql";
 
         /// <summary> Initializes a new instance of <see cref="TargetAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TargetAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AadValue = "Aad";
-        private const string SqlValue = "Sql";
+            _value = value;
+        }
 
         /// <summary> The Azure Active Directory authentication. </summary>
         public static TargetAuthenticationType Aad { get; } = new TargetAuthenticationType(AadValue);
+
         /// <summary> The SQL password authentication. </summary>
         public static TargetAuthenticationType Sql { get; } = new TargetAuthenticationType(SqlValue);
+
         /// <summary> Determines if two <see cref="TargetAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TargetAuthenticationType left, TargetAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TargetAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TargetAuthenticationType left, TargetAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TargetAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TargetAuthenticationType(string value) => new TargetAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TargetAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TargetAuthenticationType?(string value) => value == null ? null : new TargetAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TargetAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TargetAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -302,9 +302,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType SapMaxDB { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType SQLServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType left, Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType (string value) { throw null; }
@@ -350,9 +348,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryOperatingSystem Unix { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryOperatingSystem WindowsServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryOperatingSystem other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryOperatingSystem left, Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryOperatingSystem right) { throw null; }
         public static implicit operator Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryOperatingSystem (string value) { throw null; }
@@ -374,9 +370,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState left, Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryProvisioningState (string value) { throw null; }
@@ -420,9 +414,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceEnvironment Test { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceEnvironment Training { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceEnvironment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceEnvironment left, Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceEnvironment right) { throw null; }
         public static implicit operator Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceEnvironment (string value) { throw null; }
@@ -452,9 +444,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceType Scs { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceType Webdisp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceType left, Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstanceType (string value) { throw null; }

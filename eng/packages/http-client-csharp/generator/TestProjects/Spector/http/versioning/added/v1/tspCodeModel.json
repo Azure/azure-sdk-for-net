@@ -266,7 +266,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Added.v1",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Added"
           },
           "parameters": [
             {
@@ -383,11 +384,13 @@
           "crossLanguageDefinitionId": "Versioning.Added.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Added",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

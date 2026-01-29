@@ -36,6 +36,7 @@ namespace Azure.Core.Diagnostics
         private const int RequestRedirectCountExceededEvent = 22;
         private const int PipelineTransportOptionsNotAppliedEvent = 23;
         private const int FailedToDecodeCaeChallengeClaimsEvent = 24;
+        private const int FailedToUpdateTransportEvent = 25;
 
         private AzureCoreEventSource() : base(EventSourceName) { }
 
@@ -332,6 +333,15 @@ namespace Azure.Core.Diagnostics
         public void FailedToDecodeCaeChallengeClaims(string? encodedClaims, string exception)
         {
             WriteEvent(FailedToDecodeCaeChallengeClaimsEvent, encodedClaims, exception);
+        }
+
+        [Event(FailedToUpdateTransportEvent, Level = EventLevel.Error, Message = "Failed to update transport: {0}")]
+        public void FailedToUpdateTransport(string reason)
+        {
+            if (IsEnabled(EventLevel.Error, EventKeywords.None))
+            {
+                WriteEvent(FailedToUpdateTransportEvent, reason);
+            }
         }
     }
 }

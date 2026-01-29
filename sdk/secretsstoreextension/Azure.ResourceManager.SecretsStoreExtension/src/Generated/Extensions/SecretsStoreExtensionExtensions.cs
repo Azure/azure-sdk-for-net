@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecretsStoreExtension.Mocking;
 
@@ -17,30 +19,32 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecretsStoreExtension. </summary>
     public static partial class SecretsStoreExtensionExtensions
     {
+        /// <param name="client"></param>
         private static MockableSecretsStoreExtensionArmClient GetMockableSecretsStoreExtensionArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableSecretsStoreExtensionArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableSecretsStoreExtensionArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableSecretsStoreExtensionResourceGroupResource GetMockableSecretsStoreExtensionResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableSecretsStoreExtensionResourceGroupResource GetMockableSecretsStoreExtensionResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableSecretsStoreExtensionResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableSecretsStoreExtensionResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableSecretsStoreExtensionSubscriptionResource GetMockableSecretsStoreExtensionSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableSecretsStoreExtensionSubscriptionResource GetMockableSecretsStoreExtensionSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableSecretsStoreExtensionSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableSecretsStoreExtensionSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KeyVaultSecretProviderClassResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyVaultSecretProviderClassResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultSecretProviderClassResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KeyVaultSecretProviderClassResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionArmClient.GetKeyVaultSecretProviderClassResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionArmClient.GetKeyVaultSecretProviderClassResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="KeyVaultSecretProviderClassResource"/> object. </returns>
@@ -52,14 +56,13 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SecretSyncResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecretSyncResource.CreateResourceIdentifier" /> to create a <see cref="SecretSyncResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecretSyncResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionArmClient.GetSecretSyncResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionArmClient.GetSecretSyncResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="SecretSyncResource"/> object. </returns>
@@ -71,15 +74,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         }
 
         /// <summary>
-        /// Gets a collection of KeyVaultSecretProviderClassResources in the ResourceGroupResource.
+        /// Gets a collection of KeyVaultSecretProviderClasses in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetKeyVaultSecretProviderClasses()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetKeyVaultSecretProviderClasses()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of KeyVaultSecretProviderClassResources and their operations over a KeyVaultSecretProviderClassResource. </returns>
+        /// <returns> An object representing collection of KeyVaultSecretProviderClasses and their operations over a KeyVaultSecretProviderClassResource. </returns>
         public static KeyVaultSecretProviderClassCollection GetKeyVaultSecretProviderClasses(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -89,34 +92,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Gets the properties of an AzureKeyVaultSecretProviderClass instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetKeyVaultSecretProviderClassAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetKeyVaultSecretProviderClassAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<KeyVaultSecretProviderClassResource>> GetKeyVaultSecretProviderClassAsync(this ResourceGroupResource resourceGroupResource, string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
@@ -127,34 +111,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Gets the properties of an AzureKeyVaultSecretProviderClass instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetKeyVaultSecretProviderClass(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetKeyVaultSecretProviderClass(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="azureKeyVaultSecretProviderClassName"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureKeyVaultSecretProviderClassName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureKeyVaultSecretProviderClassName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<KeyVaultSecretProviderClassResource> GetKeyVaultSecretProviderClass(this ResourceGroupResource resourceGroupResource, string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
@@ -164,15 +129,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         }
 
         /// <summary>
-        /// Gets a collection of SecretSyncResources in the ResourceGroupResource.
+        /// Gets a collection of SecretSyncs in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetSecretSyncs()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetSecretSyncs()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SecretSyncResources and their operations over a SecretSyncResource. </returns>
+        /// <returns> An object representing collection of SecretSyncs and their operations over a SecretSyncResource. </returns>
         public static SecretSyncCollection GetSecretSyncs(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -182,34 +147,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Gets the properties of a SecretSync instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetSecretSyncAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetSecretSyncAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="secretSyncName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecretSyncResource>> GetSecretSyncAsync(this ResourceGroupResource resourceGroupResource, string secretSyncName, CancellationToken cancellationToken = default)
         {
@@ -220,34 +166,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Gets the properties of a SecretSync instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetSecretSync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionResourceGroupResource.GetSecretSync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="secretSyncName"> The name of the SecretSync. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="secretSyncName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretSyncName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SecretSyncResource> GetSecretSync(this ResourceGroupResource resourceGroupResource, string secretSyncName, CancellationToken cancellationToken = default)
         {
@@ -258,33 +185,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Lists the AzureKeyVaultSecretProviderClass instances within an Azure subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClasses(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClassesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KeyVaultSecretProviderClassResource> GetKeyVaultSecretProviderClassesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -294,30 +203,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Lists the AzureKeyVaultSecretProviderClass instances within an Azure subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClasses(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClasses(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
@@ -330,33 +221,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Lists the SecretSync instances within an Azure subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/secretSyncs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncs(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecretSyncResource> GetSecretSyncsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -366,30 +239,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         /// <summary>
         /// Lists the SecretSync instances within an Azure subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/secretSyncs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncs(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncs(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>

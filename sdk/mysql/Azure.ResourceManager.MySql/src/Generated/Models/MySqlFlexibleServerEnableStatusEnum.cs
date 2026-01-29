@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Whether or not geo redundant backup is enabled. </summary>
+    /// <summary> Enum to indicate whether value is 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct MySqlFlexibleServerEnableStatusEnum : IEquatable<MySqlFlexibleServerEnableStatusEnum>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerEnableStatusEnum"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerEnableStatusEnum(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerEnableStatusEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerEnableStatusEnum(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static MySqlFlexibleServerEnableStatusEnum Enabled { get; } = new MySqlFlexibleServerEnableStatusEnum(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static MySqlFlexibleServerEnableStatusEnum Disabled { get; } = new MySqlFlexibleServerEnableStatusEnum(DisabledValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerEnableStatusEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerEnableStatusEnum left, MySqlFlexibleServerEnableStatusEnum right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerEnableStatusEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerEnableStatusEnum left, MySqlFlexibleServerEnableStatusEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerEnableStatusEnum"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerEnableStatusEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerEnableStatusEnum(string value) => new MySqlFlexibleServerEnableStatusEnum(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerEnableStatusEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerEnableStatusEnum?(string value) => value == null ? null : new MySqlFlexibleServerEnableStatusEnum(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerEnableStatusEnum other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerEnableStatusEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

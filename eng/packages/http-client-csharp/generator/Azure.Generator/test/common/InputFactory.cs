@@ -526,10 +526,11 @@ namespace Azure.Generator.Tests.Common
         /// <param name="itemPropertySegments"></param>
         /// <param name="nextLink"></param>
         /// <param name="continuationToken"></param>
+        /// <param name="pageSizeParameterSegments"></param>
         /// <returns></returns>
-        public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken)
+        public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken, IReadOnlyList<string>? pageSizeParameterSegments = null)
         {
-            return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken);
+            return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken, pageSizeParameterSegments);
         }
 
         /// <summary>
@@ -591,6 +592,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="requestMediaTypes"></param>
         /// <param name="path"></param>
         /// <param name="decorators"></param>
+        /// <param name="ns"></param>
         /// <returns></returns>
         public static InputOperation Operation(
             string name,
@@ -599,7 +601,8 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
             string? path = null,
-            IReadOnlyList<InputDecoratorInfo>? decorators = null)
+            IReadOnlyList<InputDecoratorInfo>? decorators = null,
+            string? ns = null)
         {
             var operation = new InputOperation(
                 name,
@@ -618,7 +621,8 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                name);
+                name,
+                ns);
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));
@@ -656,8 +660,9 @@ namespace Azure.Generator.Tests.Common
         /// <param name="parent"></param>
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
+        /// <param name="isMultiServiceClient"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null, bool isMultiServiceClient = false)
         {
             // when this client has parent, we add the constructed client into the `children` list of the parent
             var clientChildren = new List<InputClient>();
@@ -667,12 +672,12 @@ namespace Azure.Generator.Tests.Common
                 crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
                 string.Empty,
                 doc ?? $"{name} description",
+                isMultiServiceClient,
                 methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
                 clientChildren,
-                []
-                );
+                []);
             _childClientsCache[client] = clientChildren;
             // when we have a parent, we need to find the children list of this parent client and update accordingly.
             if (parent != null && _childClientsCache.TryGetValue(parent, out var children))
@@ -689,12 +694,13 @@ namespace Azure.Generator.Tests.Common
             return client;
         }
 
-        public static InputPagingServiceMetadata ContinuationTokenPagingMetadata(InputParameter parameter, string itemPropertyName, string continuationTokenName, InputResponseLocation continuationTokenLocation)
+        public static InputPagingServiceMetadata ContinuationTokenPagingMetadata(InputParameter parameter, string itemPropertyName, string continuationTokenName, InputResponseLocation continuationTokenLocation, IReadOnlyList<string>? pageSizeParameterSegments = null)
         {
             return new InputPagingServiceMetadata(
                 [itemPropertyName],
                 null,
-                continuationToken: new InputContinuationToken(parameter, [continuationTokenName], continuationTokenLocation));
+                continuationToken: new InputContinuationToken(parameter, [continuationTokenName], continuationTokenLocation),
+                pageSizeParameterSegments);
         }
 
         public static InputType Array(InputType elementType)
@@ -702,12 +708,33 @@ namespace Azure.Generator.Tests.Common
             return new InputArrayType("list", "list", elementType);
         }
 
-        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null)
+        /// <summary>
+        /// Construct input union type
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="variantTypes"></param>
+        /// <param name="externalTypeMetadata"></param>
+        /// <returns></returns>
+        public static InputUnionType Union(string name, InputType[] variantTypes, InputExternalTypeMetadata? externalTypeMetadata = null)
+        {
+            var union = new InputUnionType(name, variantTypes);
+            if (externalTypeMetadata != null)
+            {
+                var externalTypeMetadataProperty = typeof(InputUnionType).GetProperty(nameof(InputUnionType.External));
+                var setExternalTypeMetadataMethod = externalTypeMetadataProperty?.GetSetMethod(true);
+                setExternalTypeMetadataMethod!.Invoke(union, [externalTypeMetadata]);
+            }
+
+            return union;
+        }
+
+        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null, IReadOnlyList<string>? pageSizeParameterSegments = null)
         {
             return PagingMetadata(
                 [itemPropertyName],
                 new InputNextLink(null, [nextLinkName], nextLinkLocation, reinjectedParameters),
-                null);
+                null,
+                pageSizeParameterSegments);
         }
 
         public static InputEnumType StringEnum(

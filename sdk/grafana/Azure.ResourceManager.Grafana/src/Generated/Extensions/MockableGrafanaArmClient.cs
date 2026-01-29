@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableGrafanaArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableGrafanaArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableGrafanaArmClient for mocking. </summary>
         protected MockableGrafanaArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableGrafanaArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableGrafanaArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableGrafanaArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableGrafanaArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedGrafanaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedGrafanaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedGrafanaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedGrafanaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedGrafanaResource"/> object. </returns>
         public virtual ManagedGrafanaResource GetManagedGrafanaResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             return new ManagedGrafanaResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="GrafanaPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GrafanaPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="GrafanaPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource"/> object. </returns>
         public virtual GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             return new GrafanaPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="GrafanaPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GrafanaPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="GrafanaPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GrafanaPrivateLinkResource"/> object. </returns>
         public virtual GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             return new GrafanaPrivateLinkResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedPrivateEndpointModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedPrivateEndpointModelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedPrivateEndpointModelResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedPrivateEndpointModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource"/> object. </returns>
         public virtual ManagedPrivateEndpointModelResource GetManagedPrivateEndpointModelResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             return new ManagedPrivateEndpointModelResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="GrafanaIntegrationFabricResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GrafanaIntegrationFabricResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaIntegrationFabricResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="GrafanaIntegrationFabricResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GrafanaIntegrationFabricResource"/> object. </returns>
         public virtual GrafanaIntegrationFabricResource GetGrafanaIntegrationFabricResource(ResourceIdentifier id)
@@ -94,16 +71,22 @@ namespace Azure.ResourceManager.Grafana.Mocking
             return new GrafanaIntegrationFabricResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDashboardResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDashboardResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDashboardResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedDashboardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedDashboardResource"/> object. </returns>
         public virtual ManagedDashboardResource GetManagedDashboardResource(ResourceIdentifier id)
         {
             ManagedDashboardResource.ValidateResourceId(id);
             return new ManagedDashboardResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DashboardDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DashboardDefinitionResource"/> object. </returns>
+        public virtual DashboardDefinitionResource GetDashboardDefinitionResource(ResourceIdentifier id)
+        {
+            DashboardDefinitionResource.ValidateResourceId(id);
+            return new DashboardDefinitionResource(Client, id);
         }
     }
 }

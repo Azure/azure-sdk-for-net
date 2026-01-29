@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
@@ -25,62 +26,61 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ChaosTargetCollection : ArmCollection, IEnumerable<ChaosTargetResource>, IAsyncEnumerable<ChaosTargetResource>
     {
-        private readonly ClientDiagnostics _chaosTargetTargetsClientDiagnostics;
-        private readonly TargetsRestOperations _chaosTargetTargetsRestClient;
+        private readonly ClientDiagnostics _targetsClientDiagnostics;
+        private readonly Targets _targetsRestClient;
+        /// <summary> The parentProviderNamespace. </summary>
         private readonly string _parentProviderNamespace;
+        /// <summary> The parentResourceType. </summary>
         private readonly string _parentResourceType;
+        /// <summary> The parentResourceName. </summary>
         private readonly string _parentResourceName;
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosTargetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ChaosTargetCollection for mocking. </summary>
         protected ChaosTargetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosTargetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="parentProviderNamespace"> The parent resource provider namespace. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
-        /// <param name="parentResourceName"> The parent resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
+        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
+        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
         internal ChaosTargetCollection(ArmClient client, ResourceIdentifier id, string parentProviderNamespace, string parentResourceType, string parentResourceName) : base(client, id)
         {
+            TryGetApiVersion(ChaosTargetResource.ResourceType, out string chaosTargetApiVersion);
             _parentProviderNamespace = parentProviderNamespace;
             _parentResourceType = parentResourceType;
             _parentResourceName = parentResourceName;
-            _chaosTargetTargetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ChaosTargetResource.ResourceType, out string chaosTargetTargetsApiVersion);
-            _chaosTargetTargetsRestClient = new TargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosTargetTargetsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _targetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetResource.ResourceType.Namespace, Diagnostics);
+            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Endpoint, chaosTargetApiVersion ?? "2025-01-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a Target resource that extends a tracked regional resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -88,23 +88,31 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="data"> Target resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ChaosTargetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string targetName, ChaosTargetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _chaosTargetTargetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _chaosTargetTargetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ChaosArmOperation<ChaosTargetResource>(Response.FromValue(new ChaosTargetResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, ChaosTargetData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ChaosArmOperation<ChaosTargetResource> operation = new ChaosArmOperation<ChaosTargetResource>(Response.FromValue(new ChaosTargetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -118,20 +126,16 @@ namespace Azure.ResourceManager.Chaos
         /// Create or update a Target resource that extends a tracked regional resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,23 +143,31 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="data"> Target resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ChaosTargetResource> CreateOrUpdate(WaitUntil waitUntil, string targetName, ChaosTargetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _chaosTargetTargetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, data, cancellationToken);
-                var uri = _chaosTargetTargetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ChaosArmOperation<ChaosTargetResource>(Response.FromValue(new ChaosTargetResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, ChaosTargetData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ChaosArmOperation<ChaosTargetResource> operation = new ChaosArmOperation<ChaosTargetResource>(Response.FromValue(new ChaosTargetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -169,38 +181,42 @@ namespace Azure.ResourceManager.Chaos
         /// Get a Target resource that extends a tracked regional resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ChaosTargetResource>> GetAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.Get");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _chaosTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,38 +230,42 @@ namespace Azure.ResourceManager.Chaos
         /// Get a Target resource that extends a tracked regional resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ChaosTargetResource> Get(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.Get");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.Get");
             scope.Start();
             try
             {
-                var response = _chaosTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,98 +279,124 @@ namespace Azure.ResourceManager.Chaos
         /// Get a list of Target resources that extend a tracked regional resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ChaosTargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChaosTargetResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetTargetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetTargetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetResource(Client, ChaosTargetData.DeserializeChaosTargetData(e)), _chaosTargetTargetsClientDiagnostics, Pipeline, "ChaosTargetCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of Target resources that extend a tracked regional resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ChaosTargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChaosTargetResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChaosTargetResource> GetAllAsync(string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetTargetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetTargetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetResource(Client, ChaosTargetData.DeserializeChaosTargetData(e)), _chaosTargetTargetsClientDiagnostics, Pipeline, "ChaosTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ChaosTargetData, ChaosTargetResource>(new TargetsGetAllAsyncCollectionResultOfT(
+                _targetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _parentProviderNamespace,
+                _parentResourceType,
+                _parentResourceName,
+                continuationToken,
+                context), data => new ChaosTargetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of Target resources that extend a tracked regional resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosTargetResource> GetAll(string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ChaosTargetData, ChaosTargetResource>(new TargetsGetAllCollectionResultOfT(
+                _targetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _parentProviderNamespace,
+                _parentResourceType,
+                _parentResourceName,
+                continuationToken,
+                context), data => new ChaosTargetResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.Exists");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _chaosTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ChaosTargetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChaosTargetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,36 +410,50 @@ namespace Azure.ResourceManager.Chaos
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.Exists");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _chaosTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ChaosTargetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChaosTargetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -407,38 +467,54 @@ namespace Azure.ResourceManager.Chaos
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ChaosTargetResource>> GetIfExistsAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.GetIfExists");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _chaosTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ChaosTargetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChaosTargetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ChaosTargetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -452,38 +528,54 @@ namespace Azure.ResourceManager.Chaos
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ChaosTargetResource> GetIfExists(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using var scope = _chaosTargetTargetsClientDiagnostics.CreateScope("ChaosTargetCollection.GetIfExists");
+            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("ChaosTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _chaosTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ChaosTargetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ChaosTargetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ChaosTargetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -503,6 +595,7 @@ namespace Azure.ResourceManager.Chaos
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ChaosTargetResource> IAsyncEnumerable<ChaosTargetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

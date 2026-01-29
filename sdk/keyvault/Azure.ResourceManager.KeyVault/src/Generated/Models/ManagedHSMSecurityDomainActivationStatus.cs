@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.KeyVault.Models
     public readonly partial struct ManagedHSMSecurityDomainActivationStatus : IEquatable<ManagedHSMSecurityDomainActivationStatus>
     {
         private readonly string _value;
+        /// <summary> The managed HSM Pool is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The managed HSM Pool is not yet activated. </summary>
+        private const string NotActivatedValue = "NotActivated";
+        /// <summary> An unknown error occurred while activating managed hsm. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Failed to activate managed hsm. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainActivationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedHSMSecurityDomainActivationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string NotActivatedValue = "NotActivated";
-        private const string UnknownValue = "Unknown";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> The managed HSM Pool is active. </summary>
         public static ManagedHSMSecurityDomainActivationStatus Active { get; } = new ManagedHSMSecurityDomainActivationStatus(ActiveValue);
+
         /// <summary> The managed HSM Pool is not yet activated. </summary>
         public static ManagedHSMSecurityDomainActivationStatus NotActivated { get; } = new ManagedHSMSecurityDomainActivationStatus(NotActivatedValue);
+
         /// <summary> An unknown error occurred while activating managed hsm. </summary>
         public static ManagedHSMSecurityDomainActivationStatus Unknown { get; } = new ManagedHSMSecurityDomainActivationStatus(UnknownValue);
+
         /// <summary> Failed to activate managed hsm. </summary>
         public static ManagedHSMSecurityDomainActivationStatus Failed { get; } = new ManagedHSMSecurityDomainActivationStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="ManagedHSMSecurityDomainActivationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedHSMSecurityDomainActivationStatus left, ManagedHSMSecurityDomainActivationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedHSMSecurityDomainActivationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedHSMSecurityDomainActivationStatus left, ManagedHSMSecurityDomainActivationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHSMSecurityDomainActivationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedHSMSecurityDomainActivationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedHSMSecurityDomainActivationStatus(string value) => new ManagedHSMSecurityDomainActivationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedHSMSecurityDomainActivationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedHSMSecurityDomainActivationStatus?(string value) => value == null ? null : new ManagedHSMSecurityDomainActivationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedHSMSecurityDomainActivationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedHSMSecurityDomainActivationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

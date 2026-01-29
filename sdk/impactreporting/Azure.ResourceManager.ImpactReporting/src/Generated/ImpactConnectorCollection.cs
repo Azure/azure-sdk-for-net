@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ImpactReporting
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.ImpactReporting
     /// <summary>
     /// A class representing a collection of <see cref="ImpactConnectorResource"/> and their operations.
     /// Each <see cref="ImpactConnectorResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="ImpactConnectorCollection"/> instance call the GetImpactConnectors method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ImpactConnectorCollection"/> instance call the GetImpactConnectors method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ImpactConnectorCollection : ArmCollection, IEnumerable<ImpactConnectorResource>, IAsyncEnumerable<ImpactConnectorResource>
     {
-        private readonly ClientDiagnostics _impactConnectorConnectorsClientDiagnostics;
-        private readonly ConnectorsRestOperations _impactConnectorConnectorsRestClient;
+        private readonly ClientDiagnostics _connectorsClientDiagnostics;
+        private readonly Connectors _connectorsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ImpactConnectorCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ImpactConnectorCollection for mocking. </summary>
         protected ImpactConnectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImpactConnectorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactConnectorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImpactConnectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _impactConnectorConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ImpactConnectorResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ImpactConnectorResource.ResourceType, out string impactConnectorConnectorsApiVersion);
-            _impactConnectorConnectorsRestClient = new ConnectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, impactConnectorConnectorsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ImpactConnectorResource.ResourceType, out string impactConnectorApiVersion);
+            _connectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ImpactConnectorResource.ResourceType.Namespace, Diagnostics);
+            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a Connector
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ImpactConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, ImpactConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _impactConnectorConnectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, connectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ImpactReportingArmOperation<ImpactConnectorResource>(new ImpactConnectorOperationSource(Client), _impactConnectorConnectorsClientDiagnostics, Pipeline, _impactConnectorConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ImpactReportingArmOperation<ImpactConnectorResource> operation = new ImpactReportingArmOperation<ImpactConnectorResource>(
+                    new ImpactConnectorOperationSource(Client),
+                    _connectorsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Create a Connector
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ImpactConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, ImpactConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _impactConnectorConnectorsRestClient.CreateOrUpdate(Id.SubscriptionId, connectorName, data, cancellationToken);
-                var operation = new ImpactReportingArmOperation<ImpactConnectorResource>(new ImpactConnectorOperationSource(Client), _impactConnectorConnectorsClientDiagnostics, Pipeline, _impactConnectorConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ImpactReportingArmOperation<ImpactConnectorResource> operation = new ImpactReportingArmOperation<ImpactConnectorResource>(
+                    new ImpactConnectorOperationSource(Client),
+                    _connectorsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Get a Connector
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ImpactConnectorResource>> GetAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Get");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _impactConnectorConnectorsRestClient.GetAsync(Id.SubscriptionId, connectorName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ImpactConnectorData> response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Get a Connector
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ImpactConnectorResource> Get(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Get");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Get");
             scope.Start();
             try
             {
-                var response = _impactConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ImpactConnectorData> response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ImpactReporting
         /// List Connector resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ImpactConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ImpactConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ImpactConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _impactConnectorConnectorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _impactConnectorConnectorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImpactConnectorResource(Client, ImpactConnectorData.DeserializeImpactConnectorData(e)), _impactConnectorConnectorsClientDiagnostics, Pipeline, "ImpactConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionAsyncCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>
         /// List Connector resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <returns> A collection of <see cref="ImpactConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ImpactConnectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _impactConnectorConnectorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _impactConnectorConnectorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImpactConnectorResource(Client, ImpactConnectorData.DeserializeImpactConnectorData(e)), _impactConnectorConnectorsClientDiagnostics, Pipeline, "ImpactConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Exists");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _impactConnectorConnectorsRestClient.GetAsync(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ImpactConnectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactConnectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Exists");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.Exists");
             scope.Start();
             try
             {
-                var response = _impactConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ImpactConnectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactConnectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ImpactConnectorResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.GetIfExists");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _impactConnectorConnectorsRestClient.GetAsync(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ImpactConnectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactConnectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ImpactConnectorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Connectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ImpactConnectorResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using var scope = _impactConnectorConnectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.GetIfExists");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ImpactConnectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _impactConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ImpactConnectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactConnectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ImpactConnectorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ImpactReporting
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ImpactConnectorResource> IAsyncEnumerable<ImpactConnectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -188,6 +189,18 @@ namespace Azure.Storage.Sas
         /// issued to the user specified in this value.
         /// </summary>
         public string DelegatedUserObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Custom Request Headers to include in the SAS. Any usage of the SAS must
+        /// include these headers and values in the request.
+        /// </summary>
+        public Dictionary<string, string> RequestHeaders { get; set; }
+
+        /// <summary>
+        /// Optional. Custom Request Query Parameters to include in the SAS. Any usage of the SAS must
+        /// include these query parameters and values in the request.
+        /// </summary>
+        public Dictionary<string, string> RequestQueryParameters { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
@@ -428,7 +441,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -445,7 +458,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -491,7 +504,10 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
-                delegatedUserObjectId: DelegatedUserObjectId);
+                delegatedUserObjectId: DelegatedUserObjectId,
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
+                requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
+                requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
             return p;
         }
 
@@ -501,6 +517,8 @@ namespace Azure.Storage.Sas
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
             string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string canonicalizedSignedRequestHeaders = SasExtensions.FormatRequestHeadersForSasSigning(RequestHeaders);
+            string canonicalizedSignedRequestQueryParameters = SasExtensions.FormatRequestQueryParametersForSasSigning(RequestQueryParameters);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             return string.Join("\n",
@@ -517,7 +535,7 @@ namespace Azure.Storage.Sas
                     PreauthorizedAgentObjectId,
                     null, // AgentObjectId - enabled only in HNS accounts
                     CorrelationId,
-                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                    userDelegationKey.SignedDelegatedUserTenantId,
                     DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),
@@ -525,6 +543,8 @@ namespace Azure.Storage.Sas
                     Resource,
                     Snapshot ?? BlobVersionId,
                     EncryptionScope,
+                    canonicalizedSignedRequestHeaders,
+                    canonicalizedSignedRequestQueryParameters,
                     CacheControl,
                     ContentDisposition,
                     ContentEncoding,

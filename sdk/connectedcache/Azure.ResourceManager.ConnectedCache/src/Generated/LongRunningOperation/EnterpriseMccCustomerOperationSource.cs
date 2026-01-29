@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
-    internal class EnterpriseMccCustomerOperationSource : IOperationSource<EnterpriseMccCustomerResource>
+    /// <summary></summary>
+    internal partial class EnterpriseMccCustomerOperationSource : IOperationSource<EnterpriseMccCustomerResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EnterpriseMccCustomerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EnterpriseMccCustomerResource IOperationSource<EnterpriseMccCustomerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EnterpriseMccCustomerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedCacheContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EnterpriseMccCustomerData data = EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EnterpriseMccCustomerResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EnterpriseMccCustomerResource> IOperationSource<EnterpriseMccCustomerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EnterpriseMccCustomerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedCacheContext.Default);
-            return await Task.FromResult(new EnterpriseMccCustomerResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EnterpriseMccCustomerData data = EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EnterpriseMccCustomerResource(_client, data);
         }
     }
 }

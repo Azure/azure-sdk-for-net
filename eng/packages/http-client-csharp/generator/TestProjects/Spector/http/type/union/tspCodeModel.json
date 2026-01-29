@@ -1982,6 +1982,7 @@
           "crossLanguageDefinitionId": "Type.Union.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Union",
       "apiVersions": [],
@@ -2044,7 +2045,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringsOnly.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2143,7 +2145,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringsOnly.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2218,15 +2221,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringsOnly.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringsOnly",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "177",
@@ -2286,7 +2291,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringExtensible.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2385,7 +2391,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringExtensible.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2460,15 +2467,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringExtensible.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringExtensible",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "191",
@@ -2528,7 +2537,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2627,7 +2637,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2702,15 +2713,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "205",
@@ -2770,7 +2783,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.IntsOnly.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2869,7 +2883,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.IntsOnly.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -2944,15 +2959,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.IntsOnly.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.IntsOnly",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "219",
@@ -3012,7 +3029,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.FloatsOnly.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3111,7 +3129,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.FloatsOnly.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3186,15 +3205,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.FloatsOnly.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.FloatsOnly",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "233",
@@ -3254,7 +3275,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.ModelsOnly.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3353,7 +3375,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.ModelsOnly.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3428,15 +3451,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.ModelsOnly.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.ModelsOnly",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "247",
@@ -3496,7 +3521,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.EnumsOnly.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3595,7 +3621,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.EnumsOnly.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3670,15 +3697,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.EnumsOnly.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.EnumsOnly",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "261",
@@ -3738,7 +3767,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringAndArray.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3837,7 +3867,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.StringAndArray.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -3912,15 +3943,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringAndArray.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringAndArray",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "275",
@@ -3980,7 +4013,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.MixedLiterals.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -4079,7 +4113,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.MixedLiterals.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -4154,15 +4189,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.MixedLiterals.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.MixedLiterals",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "289",
@@ -4222,7 +4259,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.MixedTypes.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -4321,7 +4359,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Union.MixedTypes.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Union"
               },
               "parameters": [
                 {
@@ -4396,17 +4435,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.MixedTypes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.MixedTypes",
           "apiVersions": [],
           "parent": {
             "$ref": "159"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

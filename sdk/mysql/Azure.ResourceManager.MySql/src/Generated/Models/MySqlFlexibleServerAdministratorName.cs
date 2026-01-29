@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> The MySqlFlexibleServerAdministratorName. </summary>
+    /// <summary></summary>
     public readonly partial struct MySqlFlexibleServerAdministratorName : IEquatable<MySqlFlexibleServerAdministratorName>
     {
         private readonly string _value;
+        private const string ActiveDirectoryValue = "ActiveDirectory";
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAdministratorName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MySqlFlexibleServerAdministratorName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ActiveDirectoryValue = "ActiveDirectory";
-
-        /// <summary> ActiveDirectory. </summary>
+        /// <summary> Gets the ActiveDirectory. </summary>
         public static MySqlFlexibleServerAdministratorName ActiveDirectory { get; } = new MySqlFlexibleServerAdministratorName(ActiveDirectoryValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerAdministratorName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerAdministratorName left, MySqlFlexibleServerAdministratorName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerAdministratorName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerAdministratorName left, MySqlFlexibleServerAdministratorName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerAdministratorName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerAdministratorName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerAdministratorName(string value) => new MySqlFlexibleServerAdministratorName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerAdministratorName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerAdministratorName?(string value) => value == null ? null : new MySqlFlexibleServerAdministratorName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerAdministratorName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerAdministratorName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     {
         public FederatedIdentityCredentialData() { }
         public System.Collections.Generic.IList<string> Audiences { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Issuer { get { throw null; } set { } }
         public System.Uri IssuerUri { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
@@ -90,25 +89,19 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         protected SystemAssignedIdentityResource() { }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -160,10 +153,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedServiceIdentities.Models.IdentityAssociatedResourceData> GetAssociatedResources(string filter = null, string orderby = null, int? top = default(int?), int? skip = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedServiceIdentities.Models.IdentityAssociatedResourceData> GetAssociatedResourcesAsync(string filter = null, string orderby = null, int? top = default(int?), int? skip = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -218,10 +209,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     {
         public static Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData FederatedIdentityCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri issuerUri = null, string subject = null, System.Collections.Generic.IEnumerable<string> audiences = null) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData SystemAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), System.Uri clientSecretUri = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? isolationScope = default(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? isolationScope = default(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope?)) { throw null; }
     }
@@ -241,9 +230,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope None { get { throw null; } }
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope Regional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope left, Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope (string value) { throw null; }

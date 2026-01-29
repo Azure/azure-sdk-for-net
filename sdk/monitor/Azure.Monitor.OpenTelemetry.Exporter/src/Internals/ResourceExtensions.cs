@@ -16,6 +16,7 @@ internal static class ResourceExtensions
 {
     private const string AiSdkPrefixKey = "ai.sdk.prefix";
     private const string TelemetryDistroNameKey = "telemetry.distro.name";
+    private const string TelemetryDistroVersionKey = "telemetry.distro.version";
     private const string DefaultServiceName = "unknown_service";
     private const int Version = 2;
 
@@ -26,7 +27,7 @@ internal static class ResourceExtensions
 
     /// <remarks>
     /// This method should not be called directly in product code.
-    /// This method is primarially intended for unit testing scenarios where providing a mock platform is necessary.
+    /// This method is primarily intended for unit testing scenarios where providing a mock platform is necessary.
     /// </remarks>
     internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey, IPlatform platform)
     {
@@ -41,6 +42,8 @@ internal static class ResourceExtensions
         string? serviceNamespace = null;
         string? serviceInstance = null;
         string? serviceVersion = null;
+        SdkVersionType? distroType = null;
+        string? distroVersion = null;
         bool? hasDefaultServiceName = null;
 
         if (instrumentationKey != null && resource.Attributes.Any())
@@ -75,10 +78,19 @@ internal static class ResourceExtensions
                     serviceVersion = _serviceVersion;
                     break;
                 case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
-                    if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
+                    distroType = _aiSdkDistroValue switch
                     {
-                        SdkVersionUtils.IsDistro = true;
-                    }
+                        "Azure.Monitor.OpenTelemetry.AspNetCore" => SdkVersionType.Distro,
+                        "Microsoft.ApplicationInsights" => SdkVersionType.ShimBase,
+                        "Microsoft.ApplicationInsights.AspNetCore" => SdkVersionType.ShimAspNetCore,
+                        "Microsoft.ApplicationInsights.WorkerService" => SdkVersionType.ShimWorkerService,
+                        "Microsoft.ApplicationInsights.Web" => SdkVersionType.ShimWeb,
+                        "Microsoft.ApplicationInsights.NLogTarget" => SdkVersionType.ShimNLog,
+                        _ => null,
+                    };
+                    break;
+                case TelemetryDistroVersionKey when attribute.Value is string _aiSdkDistroVersionValue:
+                    distroVersion = _aiSdkDistroVersionValue;
                     break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
@@ -107,6 +119,18 @@ internal static class ResourceExtensions
         else
         {
             roleName = serviceName;
+        }
+
+        if (distroType != null)
+        {
+            SdkVersionUtils.VersionType = distroType.Value;
+
+            // Only set distroVersion if distroType is not null and a known distro
+            // This avoids us accidentally emitting customer distro versions
+            if (distroVersion != null)
+            {
+                SdkVersionUtils.ExtensionVersion = distroVersion;
+            }
         }
 
         try

@@ -14,20 +14,18 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class SmbMountEndpointUpdateProperties : EndpointBaseUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="SmbMountEndpointUpdateProperties"/>. </summary>
-        public SmbMountEndpointUpdateProperties()
+        public SmbMountEndpointUpdateProperties() : base(EndpointType.SmbMount)
         {
-            EndpointType = EndpointType.SmbMount;
         }
 
         /// <summary> Initializes a new instance of <see cref="SmbMountEndpointUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </param>
-        internal SmbMountEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureKeyVaultSmbCredentials credentials) : base(endpointType, description, serializedAdditionalRawData)
+        internal SmbMountEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureKeyVaultSmbCredentials credentials) : base(endpointType, description, additionalBinaryDataProperties)
         {
             Credentials = credentials;
-            EndpointType = endpointType;
         }
 
         /// <summary> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </summary>

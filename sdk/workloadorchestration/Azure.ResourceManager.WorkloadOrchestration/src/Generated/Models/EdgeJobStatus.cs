@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct EdgeJobStatus : IEquatable<EdgeJobStatus>
     {
         private readonly string _value;
+        /// <summary> The job or step is not started. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> The job or step is in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The job or step succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The job or step failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="EdgeJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeJobStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string InProgressValue = "InProgress";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> The job or step is not started. </summary>
         public static EdgeJobStatus NotStarted { get; } = new EdgeJobStatus(NotStartedValue);
+
         /// <summary> The job or step is in progress. </summary>
         public static EdgeJobStatus InProgress { get; } = new EdgeJobStatus(InProgressValue);
+
         /// <summary> The job or step succeeded. </summary>
         public static EdgeJobStatus Succeeded { get; } = new EdgeJobStatus(SucceededValue);
+
         /// <summary> The job or step failed. </summary>
         public static EdgeJobStatus Failed { get; } = new EdgeJobStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="EdgeJobStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeJobStatus left, EdgeJobStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeJobStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeJobStatus left, EdgeJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeJobStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeJobStatus(string value) => new EdgeJobStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeJobStatus?(string value) => value == null ? null : new EdgeJobStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeJobStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeJobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

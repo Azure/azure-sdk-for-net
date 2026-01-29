@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -17,66 +18,108 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetVmCategory : IEquatable<ComputeFleetVmCategory>
     {
         private readonly string _value;
+        /// <summary> General purpose VM sizes provide balanced CPU-to-memory ratio. Ideal for testing and development, small to medium databases, and low to medium traffic web servers. </summary>
+        private const string GeneralPurposeValue = "GeneralPurpose";
+        /// <summary> Compute optimized VM sizes have a high CPU-to-memory ratio. These sizes are good for medium traffic web servers, network appliances, batch processes, and application servers. </summary>
+        private const string ComputeOptimizedValue = "ComputeOptimized";
+        /// <summary> Memory optimized VM sizes offer a high memory-to-CPU ratio that is great for relational database servers, medium to large caches, and in-memory analytics. </summary>
+        private const string MemoryOptimizedValue = "MemoryOptimized";
+        /// <summary>
+        /// Storage optimized virtual machine (VM) sizes offer high disk throughput and IO, and are ideal for Big Data, SQL, NoSQL databases, data warehousing, and large transactional databases. 
+        /// Examples include Cassandra, MongoDB, Cloudera, and Redis.
+        /// </summary>
+        private const string StorageOptimizedValue = "StorageOptimized";
+        /// <summary>
+        /// GPU optimized VM sizes are specialized virtual machines available with single, multiple, or fractional GPUs. 
+        /// These sizes are designed for compute-intensive, graphics-intensive, and visualization workloads.
+        /// </summary>
+        private const string GpuAcceleratedValue = "GpuAccelerated";
+        /// <summary>
+        /// FPGA optimized VM sizes are specialized virtual machines available with single or multiple FPGA. 
+        /// These sizes are designed for compute-intensive workloads. This article provides information about the number and type of FPGA, vCPUs, data disks, and NICs. 
+        /// Storage throughput and network bandwidth are also included for each size in this grouping.
+        /// </summary>
+        private const string FpgaAcceleratedValue = "FpgaAccelerated";
+        /// <summary>
+        /// Azure High Performance Compute VMs are optimized for various HPC workloads such as computational fluid dynamics, finite element analysis, frontend and backend EDA, 
+        /// rendering, molecular dynamics, computational geo science, weather simulation, and financial risk analysis.
+        /// </summary>
+        private const string HighPerformanceComputeValue = "HighPerformanceCompute";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetVmCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GeneralPurposeValue = "GeneralPurpose";
-        private const string ComputeOptimizedValue = "ComputeOptimized";
-        private const string MemoryOptimizedValue = "MemoryOptimized";
-        private const string StorageOptimizedValue = "StorageOptimized";
-        private const string GpuAcceleratedValue = "GpuAccelerated";
-        private const string FpgaAcceleratedValue = "FpgaAccelerated";
-        private const string HighPerformanceComputeValue = "HighPerformanceCompute";
+            _value = value;
+        }
 
         /// <summary> General purpose VM sizes provide balanced CPU-to-memory ratio. Ideal for testing and development, small to medium databases, and low to medium traffic web servers. </summary>
         public static ComputeFleetVmCategory GeneralPurpose { get; } = new ComputeFleetVmCategory(GeneralPurposeValue);
+
         /// <summary> Compute optimized VM sizes have a high CPU-to-memory ratio. These sizes are good for medium traffic web servers, network appliances, batch processes, and application servers. </summary>
         public static ComputeFleetVmCategory ComputeOptimized { get; } = new ComputeFleetVmCategory(ComputeOptimizedValue);
+
         /// <summary> Memory optimized VM sizes offer a high memory-to-CPU ratio that is great for relational database servers, medium to large caches, and in-memory analytics. </summary>
         public static ComputeFleetVmCategory MemoryOptimized { get; } = new ComputeFleetVmCategory(MemoryOptimizedValue);
+
         /// <summary>
-        /// Storage optimized virtual machine (VM) sizes offer high disk throughput and IO, and are ideal for Big Data, SQL, NoSQL databases, data warehousing, and large transactional databases.
+        /// Storage optimized virtual machine (VM) sizes offer high disk throughput and IO, and are ideal for Big Data, SQL, NoSQL databases, data warehousing, and large transactional databases. 
         /// Examples include Cassandra, MongoDB, Cloudera, and Redis.
         /// </summary>
         public static ComputeFleetVmCategory StorageOptimized { get; } = new ComputeFleetVmCategory(StorageOptimizedValue);
+
         /// <summary>
-        /// GPU optimized VM sizes are specialized virtual machines available with single, multiple, or fractional GPUs.
+        /// GPU optimized VM sizes are specialized virtual machines available with single, multiple, or fractional GPUs. 
         /// These sizes are designed for compute-intensive, graphics-intensive, and visualization workloads.
         /// </summary>
         public static ComputeFleetVmCategory GpuAccelerated { get; } = new ComputeFleetVmCategory(GpuAcceleratedValue);
+
         /// <summary>
-        /// FPGA optimized VM sizes are specialized virtual machines available with single or multiple FPGA.
-        /// These sizes are designed for compute-intensive workloads. This article provides information about the number and type of FPGA, vCPUs, data disks, and NICs.
+        /// FPGA optimized VM sizes are specialized virtual machines available with single or multiple FPGA. 
+        /// These sizes are designed for compute-intensive workloads. This article provides information about the number and type of FPGA, vCPUs, data disks, and NICs. 
         /// Storage throughput and network bandwidth are also included for each size in this grouping.
         /// </summary>
         public static ComputeFleetVmCategory FpgaAccelerated { get; } = new ComputeFleetVmCategory(FpgaAcceleratedValue);
+
         /// <summary>
-        /// Azure High Performance Compute VMs are optimized for various HPC workloads such as computational fluid dynamics, finite element analysis, frontend and backend EDA,
+        /// Azure High Performance Compute VMs are optimized for various HPC workloads such as computational fluid dynamics, finite element analysis, frontend and backend EDA, 
         /// rendering, molecular dynamics, computational geo science, weather simulation, and financial risk analysis.
         /// </summary>
         public static ComputeFleetVmCategory HighPerformanceCompute { get; } = new ComputeFleetVmCategory(HighPerformanceComputeValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetVmCategory left, ComputeFleetVmCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetVmCategory left, ComputeFleetVmCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetVmCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetVmCategory(string value) => new ComputeFleetVmCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetVmCategory?(string value) => value == null ? null : new ComputeFleetVmCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetVmCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetVmCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

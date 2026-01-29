@@ -1,0 +1,14 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.ResourceManager.KeyVault.Models
+{
+    /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
+    public enum ManagedHsmCreateMode
+    {
+        /// <summary> Default. </summary>
+        Default,
+        /// <summary> Recover. </summary>
+        Recover
+    }
+}

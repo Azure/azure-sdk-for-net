@@ -5,10 +5,16 @@ description: "Guide the user to generate and build SDKs locally for a TypeSpec b
 # Goal
 
 Help the user generate and build SDKs locally from TypeSpec API specifications using the `azure-sdk-mcp` tools.
+High level steps involved:
+1. Generate SDK locally
+2. Build / Compile SDK locally
+3. Run package checks
+4. Run package tests
+5. Update change log, metadata and version
 
 ---
 
-## Part A: Generate SDK Locally
+## Generate SDK Locally
 
 ### Step 1: Outline workflow
 
@@ -20,9 +26,10 @@ Help the user generate and build SDKs locally from TypeSpec API specifications u
   2. Verify SDK repository
   3. Validate repository path
   4. Identify path to configuration file
-  5. Generate SDK using `azsdk_package_generate_code` MCP tool
-  6. Identify SDK project path
-  7. Build/Compile SDK using `azsdk_package_build_code` MCP tool
+  5. Verify setup for the selected language
+  6. Generate SDK using `azsdk_package_generate_code` MCP tool
+  7. Identify SDK project path
+  8. Build/Compile SDK using `azsdk_package_build_code` MCP tool
 - Ask the user to confirm readiness to proceed.
 
 ---
@@ -89,15 +96,20 @@ Help the user generate and build SDKs locally from TypeSpec API specifications u
 
 ---
 
-### Step 6: Generate SDK
+### Step 6: Verify setup for selected language
+**Actions**:
+- Run `azsdk_verify_setup` MCP tool to ensure the local environment is correctly configured for the selected SDK language.
+
+---
+
+### Step 7: Generate SDK
 
 **Actions**:
-
 - Run `azsdk_package_generate_code` MCP tool to generate the SDK locally.
 
 ---
 
-## Part B: Build / Compile SDK Locally
+##  Build / Compile SDK Locally
 
 ### Step 1: Identify SDK project path
 
@@ -117,3 +129,29 @@ Help the user generate and build SDKs locally from TypeSpec API specifications u
 **Actions**:
 
 - Run `azsdk_package_build_code` MCP tool to compile the SDK in the identified project directory.
+
+---
+
+### Step 3: Run package validation
+
+**Actions**:
+
+- Run `azsdk_package_run_check` MCP tool to validate the generated SDK package in the identified project directory.
+
+---
+
+### Step 4: Run package tests
+
+**Actions**:
+
+- Run `azsdk_package_run_tests` MCP tool to run tests on the generated SDK package in the identified project directory.
+
+---
+
+### Step 5: Update change log, metadata and version
+
+**Actions**:
+
+- Run `azsdk_package_update_metadata` MCP tool to update metadata in the identified project directory.
+- Run `azsdk_package_update_changelog_content` MCP tool to update change log in the identified project directory.
+- Run `azsdk_package_update_version` MCP tool to update version in the identified project directory.

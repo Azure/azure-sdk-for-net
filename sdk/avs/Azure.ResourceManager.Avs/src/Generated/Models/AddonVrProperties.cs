@@ -15,26 +15,19 @@ namespace Azure.ResourceManager.Avs.Models
     {
         /// <summary> Initializes a new instance of <see cref="AddonVrProperties"/>. </summary>
         /// <param name="vrsCount"> The vSphere Replication Server (VRS) count. </param>
-        public AddonVrProperties(int vrsCount)
+        public AddonVrProperties(int vrsCount) : base(AddonType.VR)
         {
             VrsCount = vrsCount;
-            AddonType = AddonType.VR;
         }
 
         /// <summary> Initializes a new instance of <see cref="AddonVrProperties"/>. </summary>
         /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vrsCount"> The vSphere Replication Server (VRS) count. </param>
-        internal AddonVrProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, int vrsCount) : base(addonType, provisioningState, serializedAdditionalRawData)
+        internal AddonVrProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, int vrsCount) : base(addonType, provisioningState, additionalBinaryDataProperties)
         {
             VrsCount = vrsCount;
-            AddonType = addonType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AddonVrProperties"/> for deserialization. </summary>
-        internal AddonVrProperties()
-        {
         }
 
         /// <summary> The vSphere Replication Server (VRS) count. </summary>

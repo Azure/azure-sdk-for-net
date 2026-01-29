@@ -37,9 +37,11 @@ stages:
                 -NupkgFilesDestination 'nupkgFiles'
 
           - pwsh: |
+              $files = Get-ChildItem -Path "sdk/*/*/api/*.cs" -File
+              Write-Host "Found $($files.Count) public API surface files to spell check."
               ."eng/common/spelling/Invoke-Cspell.ps1" `
                 -CSpellConfigPath "./.vscode/cspell.json" `
-                -ScanGlobs "sdk/*/*/api/*.cs"
+                -FileList $files.FullName
             displayName: Check spelling of public API surface
             # Spelling errors in public api surface are not blockers yet but will
             # become blockers when this is rolled out to all services. For now, turn

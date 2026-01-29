@@ -24,8 +24,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                    .AddEnvironmentVariables()
                    .Build();
             var mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
-            var options = new WebPubSubFunctionsOptions();
-            _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration, options);
+            var options = new WebPubSubServiceAccessOptions();
+            var accessFactory = new WebPubSubServiceAccessFactory(_configuration, TestAzureComponentFactory.Instance);
+            _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration, options, accessFactory);
         }
 
         [TestCase]

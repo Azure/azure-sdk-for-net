@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The protocol of an established TLS connection.
-    /// Serialized Name: SslProtocol
-    /// </summary>
+    /// <summary> The protocol of an established TLS connection. </summary>
     public readonly partial struct DeliveryRuleSslProtocol : IEquatable<DeliveryRuleSslProtocol>
     {
         private readonly string _value;

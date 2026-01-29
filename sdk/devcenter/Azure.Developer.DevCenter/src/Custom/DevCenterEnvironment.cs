@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -15,18 +17,29 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="environmentTypeName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
-        public DevCenterEnvironment(string environmentName, string environmentTypeName, string catalogName, string environmentDefinitionName)
+        public DevCenterEnvironment(string environmentName, string environmentTypeName, string catalogName, string environmentDefinitionName) : this(
+            parameters: new ChangeTrackingDictionary<string, BinaryData>(),
+            name: environmentName,
+            environmentTypeName: environmentTypeName,
+            userId: null,
+            provisioningState: null,
+            resourceGroupId: null,
+            catalogName: catalogName,
+            environmentDefinitionName: environmentDefinitionName,
+            error: null,
+            additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
         {
             Argument.AssertNotNull(environmentName, nameof(environmentName));
             Argument.AssertNotNull(environmentTypeName, nameof(environmentTypeName));
             Argument.AssertNotNull(catalogName, nameof(catalogName));
             Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
+        }
 
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
-            Name = environmentName;
-            EnvironmentTypeName = environmentTypeName;
-            CatalogName = catalogName;
-            EnvironmentDefinitionName = environmentDefinitionName;
+        internal RequestContent ToRequestContent()
+        {
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
         /// <summary> The identifier of the resource group containing the environment's resources. </summary>

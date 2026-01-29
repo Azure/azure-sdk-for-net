@@ -21,9 +21,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
-        private readonly WebPubSubFunctionsOptions _options;
+        private readonly WebPubSubServiceAccessOptions _options;
 
-        public WebPubSubTriggerDispatcher(ILogger logger, WebPubSubFunctionsOptions options)
+        public WebPubSubTriggerDispatcher(ILogger logger, WebPubSubServiceAccessOptions options)
         {
             _logger = logger;
             _options = options;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             if (req.IsValidationRequest(out var requestHosts))
             {
-                return RespondToServiceAbuseCheck(requestHosts, new WebPubSubValidationOptions(_options.ConnectionString));
+                return RespondToServiceAbuseCheck(requestHosts, new RequestValidator([_options.WebPubSubAccess]));
             }
 
             if (!TryParseCloudEvents(req, out var context))
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (TryResolveListener(context, out var executor))
             {
-                if (!context.IsValidSignature(executor.ValidationOptions))
+                if (!executor.Validator.IsValidSignature(context.Origin, context.Signature, context.ConnectionId))
                 {
                     return new HttpResponseMessage(HttpStatusCode.Unauthorized);
                 }
@@ -261,26 +261,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, WebPubSubValidationOptions options)
+        private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, RequestValidator validator)
         {
             var response = new HttpResponseMessage();
-            // skip validation and allow all.
-            if (options == null || !options.ContainsHost())
+            if (validator.IsValidHost(requestHosts))
             {
                 response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                 return response;
             }
-            else
-            {
-                foreach (var item in requestHosts)
-                {
-                    if (options.ContainsHost(item))
-                    {
-                        response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, item);
-                        return response;
-                    }
-                }
-            }
+
             response.StatusCode = HttpStatusCode.BadRequest;
             return response;
         }

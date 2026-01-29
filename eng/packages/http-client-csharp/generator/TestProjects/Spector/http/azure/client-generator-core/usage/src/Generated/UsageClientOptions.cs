@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage
+namespace Specs.Azure.ClientGenerator.Core.Usage
 {
     public partial class UsageClientOptions : ClientOptions
     {

@@ -40,7 +40,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Routes.fixed",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Routes"
           },
           "parameters": [],
           "response": {},
@@ -82,6 +83,7 @@
           "crossLanguageDefinitionId": "Routes.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Routes",
       "apiVersions": [],
@@ -144,7 +146,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Routes.PathParameters.templateOnly",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Routes.PathParameters"
               },
               "parameters": [
                 {
@@ -227,7 +230,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Routes.PathParameters.explicit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Routes.PathParameters"
               },
               "parameters": [
                 {
@@ -310,7 +314,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Routes.PathParameters.annotationOnly",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Routes.PathParameters"
               },
               "parameters": [
                 {
@@ -371,9 +376,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.PathParameters.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.PathParameters",
           "apiVersions": [],
@@ -439,7 +445,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.template",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Routes.PathParameters.ReservedExpansion"
                   },
                   "parameters": [
                     {
@@ -522,7 +529,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.annotation",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Routes.PathParameters.ReservedExpansion"
                   },
                   "parameters": [
                     {
@@ -583,15 +591,17 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion",
               "apiVersions": [],
               "parent": {
                 "$ref": "7"
-              }
+              },
+              "isMultiServiceClient": false
             },
             {
               "$id": "45",
@@ -628,9 +638,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion",
               "apiVersions": [],
@@ -696,7 +707,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.SimpleExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -786,7 +798,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.SimpleExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -877,7 +890,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.SimpleExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -934,15 +948,17 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "45"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "72",
@@ -1002,7 +1018,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.SimpleExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -1081,7 +1098,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.SimpleExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -1156,7 +1174,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.SimpleExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -1213,17 +1232,20 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "45"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "90",
@@ -1260,9 +1282,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion",
               "apiVersions": [],
@@ -1328,7 +1351,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.PathExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -1407,7 +1431,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.PathExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -1482,7 +1507,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.PathExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -1539,15 +1565,17 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "90"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "112",
@@ -1607,7 +1635,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.PathExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -1686,7 +1715,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.PathExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -1761,7 +1791,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.PathExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -1818,17 +1849,20 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "90"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "130",
@@ -1865,9 +1899,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion",
               "apiVersions": [],
@@ -1933,7 +1968,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.LabelExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -2012,7 +2048,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.LabelExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -2087,7 +2124,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.LabelExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -2144,15 +2182,17 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "130"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "152",
@@ -2212,7 +2252,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.LabelExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -2291,7 +2332,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.LabelExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -2366,7 +2408,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.LabelExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -2423,17 +2466,20 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "130"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "170",
@@ -2470,9 +2516,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion",
               "apiVersions": [],
@@ -2538,7 +2585,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.MatrixExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -2617,7 +2665,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.MatrixExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -2692,7 +2741,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.MatrixExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -2749,15 +2799,17 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "170"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "192",
@@ -2817,7 +2869,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.MatrixExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -2896,7 +2949,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.MatrixExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -2971,7 +3025,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.PathParameters.MatrixExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -3028,19 +3083,23 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "170"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "210",
@@ -3097,7 +3156,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Routes.QueryParameters.templateOnly",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Routes.QueryParameters"
               },
               "parameters": [
                 {
@@ -3177,7 +3237,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Routes.QueryParameters.explicit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Routes.QueryParameters"
               },
               "parameters": [
                 {
@@ -3257,7 +3318,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Routes.QueryParameters.annotationOnly",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Routes.QueryParameters"
               },
               "parameters": [
                 {
@@ -3318,9 +3380,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.QueryParameters.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.QueryParameters",
           "apiVersions": [],
@@ -3363,9 +3426,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion",
               "apiVersions": [],
@@ -3428,7 +3492,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -3504,7 +3569,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -3576,7 +3642,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryExpansion.Standard"
                       },
                       "parameters": [
                         {
@@ -3633,15 +3700,17 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "232"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "254",
@@ -3698,7 +3767,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -3774,7 +3844,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -3846,7 +3917,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryExpansion.Explode"
                       },
                       "parameters": [
                         {
@@ -3903,17 +3975,20 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "232"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             },
             {
               "$id": "272",
@@ -3950,9 +4025,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation",
               "apiVersions": [],
@@ -4015,7 +4091,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryContinuation.Standard"
                       },
                       "parameters": [
                         {
@@ -4091,7 +4168,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryContinuation.Standard"
                       },
                       "parameters": [
                         {
@@ -4163,7 +4241,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryContinuation.Standard"
                       },
                       "parameters": [
                         {
@@ -4220,15 +4299,17 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "272"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "294",
@@ -4285,7 +4366,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.primitive",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryContinuation.Explode"
                       },
                       "parameters": [
                         {
@@ -4361,7 +4443,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.array",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryContinuation.Explode"
                       },
                       "parameters": [
                         {
@@ -4433,7 +4516,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.record",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Routes.QueryParameters.QueryContinuation.Explode"
                       },
                       "parameters": [
                         {
@@ -4490,19 +4574,23 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode",
                   "apiVersions": [],
                   "parent": {
                     "$ref": "272"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "312",
@@ -4538,7 +4626,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Routes.InInterface.fixed",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Routes"
               },
               "parameters": [],
               "response": {},
@@ -4577,17 +4666,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.InInterface.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.InInterface",
           "apiVersions": [],
           "parent": {
             "$ref": "1"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The list credential result response. </summary>
+    /// <summary>
+    /// The list credential result response.
+    /// Serialized Name: CredentialResults
+    /// </summary>
     public partial class ManagedClusterCredentials
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterCredentials"/>. </summary>
-        /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
+        /// <param name="kubeconfigs">
+        /// Base64-encoded Kubernetes configuration file.
+        /// Serialized Name: CredentialResults.kubeconfigs
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterCredentials(IReadOnlyList<ManagedClusterCredential> kubeconfigs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        /// <summary>
+        /// Base64-encoded Kubernetes configuration file.
+        /// Serialized Name: CredentialResults.kubeconfigs
+        /// </summary>
         [WirePath("kubeconfigs")]
         public IReadOnlyList<ManagedClusterCredential> Kubeconfigs { get; }
     }

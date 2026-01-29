@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct TransportShipmentType : IEquatable<TransportShipmentType>
     {
         private readonly string _value;
+        /// <summary> Shipment Logistics is handled by the customer. </summary>
+        private const string CustomerManagedValue = "CustomerManaged";
+        /// <summary> Shipment Logistics is handled by Microsoft. </summary>
+        private const string MicrosoftManagedValue = "MicrosoftManaged";
 
         /// <summary> Initializes a new instance of <see cref="TransportShipmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransportShipmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CustomerManagedValue = "CustomerManaged";
-        private const string MicrosoftManagedValue = "MicrosoftManaged";
+            _value = value;
+        }
 
         /// <summary> Shipment Logistics is handled by the customer. </summary>
         public static TransportShipmentType CustomerManaged { get; } = new TransportShipmentType(CustomerManagedValue);
+
         /// <summary> Shipment Logistics is handled by Microsoft. </summary>
         public static TransportShipmentType MicrosoftManaged { get; } = new TransportShipmentType(MicrosoftManagedValue);
+
         /// <summary> Determines if two <see cref="TransportShipmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransportShipmentType left, TransportShipmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransportShipmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransportShipmentType left, TransportShipmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransportShipmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransportShipmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransportShipmentType(string value) => new TransportShipmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransportShipmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransportShipmentType?(string value) => value == null ? null : new TransportShipmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransportShipmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransportShipmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

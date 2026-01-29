@@ -39,11 +39,8 @@ namespace Azure.Security.KeyVault.Secrets
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Secrets.KeyVaultSecretIdentifier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public static bool TryCreate(System.Uri id, out Azure.Security.KeyVault.Secrets.KeyVaultSecretIdentifier identifier) { throw null; }
     }
@@ -77,10 +74,8 @@ namespace Azure.Security.KeyVault.Secrets
         public virtual Azure.Pageable<Azure.Security.KeyVault.Secrets.SecretProperties> GetPropertiesOfSecretVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Secrets.SecretProperties> GetPropertiesOfSecretVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret> GetSecret(string name, string version = null, Azure.Security.KeyVault.Secrets.SecretContentType? outContentType = default(Azure.Security.KeyVault.Secrets.SecretContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret> GetSecret(string name, string version, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret>> GetSecretAsync(string name, string version = null, Azure.Security.KeyVault.Secrets.SecretContentType? outContentType = default(Azure.Security.KeyVault.Secrets.SecretContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Secrets.KeyVaultSecret>> GetSecretAsync(string name, string version, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response PurgeDeletedSecret(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PurgeDeletedSecretAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -123,9 +118,7 @@ namespace Azure.Security.KeyVault.Secrets
         public static Azure.Security.KeyVault.Secrets.SecretContentType Pem { get { throw null; } }
         public static Azure.Security.KeyVault.Secrets.SecretContentType Pkcs12 { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Secrets.SecretContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Secrets.SecretContentType left, Azure.Security.KeyVault.Secrets.SecretContentType right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Secrets.SecretContentType (string value) { throw null; }
@@ -136,9 +129,7 @@ namespace Azure.Security.KeyVault.Secrets
     {
         public static Azure.Security.KeyVault.Secrets.DeletedSecret DeletedSecret(Azure.Security.KeyVault.Secrets.SecretProperties properties, string value = null, System.Uri recoveryId = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeDate = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Security.KeyVault.Secrets.KeyVaultSecret KeyVaultSecret(Azure.Security.KeyVault.Secrets.SecretProperties properties, string value = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id, System.Uri vaultUri, string name, string version, bool managed, System.Uri keyId, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string recoveryLevel) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id, System.Uri vaultUri, string name, string version, bool managed, System.Uri keyId, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string recoveryLevel, int? recoverableDays) { throw null; }
         public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.Uri keyId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?), string previousVersion = null) { throw null; }
     }

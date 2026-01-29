@@ -480,6 +480,80 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void MicrosoftOperationNameOverridesOperationNameForRequest()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/users");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftOperationName, "CustomOperationName");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.NotNull(telemetryItem);
+            Assert.Equal("CustomOperationName", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void MicrosoftOperationNameSetsOperationNameForDependency()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftOperationName, "CustomDependencyOperationName");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.NotNull(telemetryItem);
+            Assert.Equal("RemoteDependency", telemetryItem.Name);
+            Assert.Equal("CustomDependencyOperationName", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void DependencyDoesNotHaveOperationNameWithoutOverride()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.NotNull(telemetryItem);
+            Assert.Equal("RemoteDependency", telemetryItem.Name);
+            Assert.False(telemetryItem.Tags.ContainsKey(ContextTagKeys.AiOperationName.ToString()));
+        }
+
+        [Fact]
         public void OTelResourceMetricTelemetryHasAllResourceAttributes()
         {
             var instrumentationKey = "00000000-0000-0000-0000-000000000000";

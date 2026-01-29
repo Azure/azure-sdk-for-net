@@ -112,7 +112,7 @@ namespace Azure.Core
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +151,7 @@ namespace Azure.Core
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePagedDatasetVersion(document.RootElement, options);
                     }
@@ -166,8 +166,8 @@ namespace Azure.Core
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedDatasetVersion"/> from. </param>
         public static explicit operator PagedDatasetVersion(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePagedDatasetVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

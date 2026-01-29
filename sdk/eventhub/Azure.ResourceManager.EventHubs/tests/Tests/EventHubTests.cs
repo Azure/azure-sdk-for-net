@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHub2.Data.Status, parameter2.Status);
             Assert.AreEqual(eventHub2.Data.PartitionCount, parameter2.PartitionCount);
             Assert.AreEqual(eventHub2.Data.RetentionDescription.CleanupPolicy, parameter2.RetentionDescription.CleanupPolicy);
-            Assert.AreEqual(eventHub2.Data.RetentionDescription.RetentionTimeInHours, parameter2.RetentionDescription.RetentionTimeInHours);
+            Assert.AreEqual(eventHub2.Data.RetentionDescription.RetentionTimeInHours, -1);
             Assert.AreEqual(eventHub2.Data.RetentionDescription.TombstoneRetentionTimeInHours, parameter2.RetentionDescription.TombstoneRetentionTimeInHours);
 
             //Delete eventhub

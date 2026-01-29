@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Astro
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.Astro
     /// <summary>
     /// A class representing a collection of <see cref="AstroOrganizationResource"/> and their operations.
     /// Each <see cref="AstroOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="AstroOrganizationCollection"/> instance call the GetAstroOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="AstroOrganizationCollection"/> instance call the GetAstroOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AstroOrganizationCollection : ArmCollection, IEnumerable<AstroOrganizationResource>, IAsyncEnumerable<AstroOrganizationResource>
     {
-        private readonly ClientDiagnostics _astroOrganizationOrganizationsClientDiagnostics;
-        private readonly OrganizationsRestOperations _astroOrganizationOrganizationsRestClient;
+        private readonly ClientDiagnostics _organizationsClientDiagnostics;
+        private readonly Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AstroOrganizationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AstroOrganizationCollection for mocking. </summary>
         protected AstroOrganizationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AstroOrganizationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AstroOrganizationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AstroOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _astroOrganizationOrganizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Astro", AstroOrganizationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AstroOrganizationResource.ResourceType, out string astroOrganizationOrganizationsApiVersion);
-            _astroOrganizationOrganizationsRestClient = new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, astroOrganizationOrganizationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AstroOrganizationResource.ResourceType, out string astroOrganizationApiVersion);
+            _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Astro", AstroOrganizationResource.ResourceType.Namespace, Diagnostics);
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, astroOrganizationApiVersion ?? "2024-08-27");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Astro
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AstroOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, AstroOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _astroOrganizationOrganizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AstroArmOperation<AstroOrganizationResource>(new AstroOrganizationOperationSource(Client), _astroOrganizationOrganizationsClientDiagnostics, Pipeline, _astroOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, AstroOrganizationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AstroArmOperation<AstroOrganizationResource> operation = new AstroArmOperation<AstroOrganizationResource>(
+                    new AstroOrganizationOperationSource(Client),
+                    _organizationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Astro
         /// Create a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Astro
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AstroOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, AstroOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _astroOrganizationOrganizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
-                var operation = new AstroArmOperation<AstroOrganizationResource>(new AstroOrganizationOperationSource(Client), _astroOrganizationOrganizationsClientDiagnostics, Pipeline, _astroOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, AstroOrganizationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AstroArmOperation<AstroOrganizationResource> operation = new AstroArmOperation<AstroOrganizationResource>(
+                    new AstroOrganizationOperationSource(Client),
+                    _organizationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Astro
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AstroOrganizationResource>> GetAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _astroOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AstroOrganizationData> response = Response.FromValue(AstroOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AstroOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Astro
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AstroOrganizationResource> Get(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = _astroOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AstroOrganizationData> response = Response.FromValue(AstroOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AstroOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Astro
         /// List OrganizationResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AstroOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _astroOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _astroOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AstroOrganizationResource(Client, AstroOrganizationData.DeserializeAstroOrganizationData(e)), _astroOrganizationOrganizationsClientDiagnostics, Pipeline, "AstroOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AstroOrganizationResource(Client, data));
         }
 
         /// <summary>
         /// List OrganizationResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Astro
         /// <returns> A collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AstroOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _astroOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _astroOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AstroOrganizationResource(Client, AstroOrganizationData.DeserializeAstroOrganizationData(e)), _astroOrganizationOrganizationsClientDiagnostics, Pipeline, "AstroOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AstroOrganizationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _astroOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AstroOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AstroOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AstroOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Astro
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _astroOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AstroOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AstroOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AstroOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Astro
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AstroOrganizationResource>> GetIfExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _astroOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AstroOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AstroOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AstroOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AstroOrganizationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AstroOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Astro
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AstroOrganizationResource> GetIfExists(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _astroOrganizationOrganizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("AstroOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _astroOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AstroOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AstroOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AstroOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AstroOrganizationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AstroOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Astro
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AstroOrganizationResource> IAsyncEnumerable<AstroOrganizationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

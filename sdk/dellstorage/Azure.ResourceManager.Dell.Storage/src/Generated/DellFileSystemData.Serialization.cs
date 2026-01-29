@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Dell.Storage
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDellFileSystemData(document.RootElement, options);
                     }
@@ -237,11 +237,10 @@ namespace Azure.ResourceManager.Dell.Storage
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DellFileSystemData"/> from. </param>
-        internal static DellFileSystemData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DellFileSystemData"/> from. </param>
+        internal static DellFileSystemData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDellFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

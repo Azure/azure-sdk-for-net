@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NameSpaceGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/SBNameSpaceGet.json
             // this example is just showing the usage of "Namespaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NameSpaceDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/SBNameSpaceDelete.json
             // this example is just showing the usage of "Namespaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NameSpaceUpdate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceUpdate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/SBNameSpaceUpdate.json
             // this example is just showing the usage of "Namespaces_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 ["tag4"] = "value4"
 },
             };
-            ServiceBusNamespaceResource result = await serviceBusNamespace.UpdateAsync(patch);
+            ArmOperation<ServiceBusNamespaceResource> lro = await serviceBusNamespace.UpdateAsync(WaitUntil.Completed, patch);
+            ServiceBusNamespaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -112,9 +113,151 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Failover_NameSpaceCreate()
+        {
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/SBNamespaceFailover.json
+            // this example is just showing the usage of "Namespaces_Failover" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceBusNamespaceResource created on azure
+            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string resourceGroupName = "ResurceGroupSample";
+            string namespaceName = "NamespaceGeoDRFailoverSample";
+            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+
+            // invoke the operation
+            ServiceBusNamespaceFailOver serviceBusNamespaceFailOver = new ServiceBusNamespaceFailOver
+            {
+                PrimaryLocation = "centralus",
+                Force = true,
+            };
+            ArmOperation<ServiceBusNamespaceFailOver> lro = await serviceBusNamespace.FailoverAsync(WaitUntil.Completed, serviceBusNamespaceFailOver);
+            ServiceBusNamespaceFailOver result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckServiceBusDisasterRecoveryNameAvailability_AliasNameAvailability()
+        {
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/disasterRecoveryConfigs/SBAliasCheckNameAvailability.json
+            // this example is just showing the usage of "DisasterRecoveryConfigs_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceBusNamespaceResource created on azure
+            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string resourceGroupName = "exampleResourceGroup";
+            string namespaceName = "sdk-Namespace-9080";
+            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+
+            // invoke the operation
+            ServiceBusNameAvailabilityContent content = new ServiceBusNameAvailabilityContent("sdk-DisasterRecovery-9474");
+            ServiceBusNameAvailabilityResult result = await serviceBusNamespace.CheckServiceBusDisasterRecoveryNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkSecurityPerimeterConfigurations_NamspaceNetworkSecurityPerimeterConfigurationList()
+        {
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationList.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfiguration_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceBusNamespaceResource created on azure
+            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "SDK-ServiceBus-4794";
+            string namespaceName = "sdk-Namespace-5828";
+            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceBusNetworkSecurityPerimeterConfiguration item in serviceBusNamespace.GetNetworkSecurityPerimeterConfigurationsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkSecurityPerimeterAssociationName_NetworkSecurityPerimeterConfigurationassociationProxyName()
+        {
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationAssociationproxy.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_GetResourceAssociationName" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceBusNamespaceResource created on azure
+            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "SDK-ServiceBus-4794";
+            string namespaceName = "sdk-Namespace-5828";
+            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+
+            // invoke the operation
+            string resourceAssociationName = "resourceAssociation1";
+            ServiceBusNetworkSecurityPerimeterConfiguration result = await serviceBusNamespace.GetNetworkSecurityPerimeterAssociationNameAsync(resourceAssociationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ReconcileNetworkSecurityPerimeterConfiguration_NetworkSecurityPerimeterConfigurationList()
+        {
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationReconcile.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_Reconcile" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceBusNamespaceResource created on azure
+            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string resourceGroupName = "SDK-ServiceBus-4794";
+            string namespaceName = "sdk-Namespace-5828";
+            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+
+            // invoke the operation
+            string resourceAssociationName = "resourceAssociation1";
+            await serviceBusNamespace.ReconcileNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_NameSpacePrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/PrivateLinkResourcesGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/PrivateLinkResourcesGet.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +267,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "subID";
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2924";
             ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -137,33 +280,6 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckServiceBusDisasterRecoveryNameAvailability_AliasNameAvailability()
-        {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/disasterRecoveryConfigs/SBAliasCheckNameAvailability.json
-            // this example is just showing the usage of "DisasterRecoveryConfigs_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "exampleSubscriptionId";
-            string resourceGroupName = "exampleResourceGroup";
-            string namespaceName = "sdk-Namespace-9080";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
-
-            // invoke the operation
-            ServiceBusNameAvailabilityContent content = new ServiceBusNameAvailabilityContent("sdk-DisasterRecovery-9474");
-            ServiceBusNameAvailabilityResult result = await serviceBusNamespace.CheckServiceBusDisasterRecoveryNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

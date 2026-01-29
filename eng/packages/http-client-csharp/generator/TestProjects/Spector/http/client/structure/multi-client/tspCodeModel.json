@@ -125,7 +125,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedOne",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -162,7 +163,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedThree",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -199,7 +201,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedFive",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -229,7 +232,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.endpoint"
         },
         {
           "$id": "17",
@@ -247,12 +250,14 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "18",
@@ -288,7 +293,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedTwo",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -325,7 +331,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedFour",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -362,7 +369,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedSix",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -392,7 +400,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.endpoint"
         },
         {
           "$id": "27",
@@ -410,12 +418,14 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

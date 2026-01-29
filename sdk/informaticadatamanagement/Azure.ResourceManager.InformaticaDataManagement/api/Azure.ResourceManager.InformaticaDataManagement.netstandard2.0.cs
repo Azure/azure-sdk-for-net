@@ -272,9 +272,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public static Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaApplicationType Cdi { get { throw null; } }
         public static Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaApplicationType Cdie { get { throw null; } }
         public bool Equals(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaApplicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaApplicationType left, Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaApplicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaApplicationType (string value) { throw null; }
@@ -495,9 +493,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public InformaticaPlatformType(string value) { throw null; }
         public static Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaPlatformType Azure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaPlatformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaPlatformType left, Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaPlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaPlatformType (string value) { throw null; }
@@ -538,9 +534,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public static Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaProvisioningState left, Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaProvisioningState (string value) { throw null; }
@@ -596,9 +590,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public InformaticaRuntimeType(string value) { throw null; }
         public static Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaRuntimeType Serverless { get { throw null; } }
         public bool Equals(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaRuntimeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaRuntimeType left, Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaRuntimeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.InformaticaDataManagement.Models.InformaticaRuntimeType (string value) { throw null; }

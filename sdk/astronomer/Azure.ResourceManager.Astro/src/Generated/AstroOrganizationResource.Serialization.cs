@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Astro
 {
+    /// <summary></summary>
     public partial class AstroOrganizationResource : IJsonModel<AstroOrganizationData>
     {
-        private static AstroOrganizationData s_dataDeserializationInstance;
-        private static AstroOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AstroOrganizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AstroOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AstroOrganizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AstroOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AstroOrganizationData>)Data).Write(writer, options);
 
-        AstroOrganizationData IJsonModel<AstroOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AstroOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AstroOrganizationData IJsonModel<AstroOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AstroOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AstroOrganizationData>(Data, options, AzureResourceManagerAstroContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AstroOrganizationData IPersistableModel<AstroOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AstroOrganizationData>(data, options, AzureResourceManagerAstroContext.Default);
 
-        string IPersistableModel<AstroOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AstroOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AstroOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

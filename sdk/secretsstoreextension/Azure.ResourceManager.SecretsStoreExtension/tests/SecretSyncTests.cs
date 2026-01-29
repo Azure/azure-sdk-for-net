@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
                     serviceAccountName: props.ServiceAccountName,
                     forceSynchronization: props.ForceSynchronization,
                     objectSecretMapping: oms,
-                    serializedAdditionalRawData: null)
+                    additionalBinaryDataProperties: null)
             };
 
             await ss.UpdateAsync(WaitUntil.Completed, patch);

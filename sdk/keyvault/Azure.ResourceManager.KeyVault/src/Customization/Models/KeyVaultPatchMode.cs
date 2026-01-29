@@ -1,0 +1,14 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.ResourceManager.KeyVault.Models
+{
+    /// <summary> The vault's create mode to indicate whether the vault need to be recovered or not. </summary>
+    public enum KeyVaultPatchMode
+    {
+        /// <summary> Default. </summary>
+        Default,
+        /// <summary> Recover. </summary>
+        Recover
+    }
+}

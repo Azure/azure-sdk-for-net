@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> An error response from the pod identity provisioning. </summary>
+    /// <summary>
+    /// An error response from the pod identity provisioning.
+    /// Serialized Name: ManagedClusterPodIdentityProvisioningError
+    /// </summary>
     internal partial class ManagedClusterPodIdentityProvisioningError
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningError"/>. </summary>
-        /// <param name="errorDetail"> Details about the error. </param>
+        /// <param name="errorDetail">
+        /// Details about the error.
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningError.error
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterPodIdentityProvisioningError(ResponseError errorDetail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Details about the error. </summary>
+        /// <summary>
+        /// Details about the error.
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningError.error
+        /// </summary>
         [WirePath("error")]
         public ResponseError ErrorDetail { get; }
     }

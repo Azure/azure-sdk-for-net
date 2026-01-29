@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The WafMetric.
-    /// Serialized Name: WafMetric
-    /// </summary>
+    /// <summary> The WafMetric. </summary>
     public readonly partial struct WafMetric : IEquatable<WafMetric>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string ClientRequestCountValue = "clientRequestCount";
 
-        /// <summary>
-        /// clientRequestCount
-        /// Serialized Name: WafMetric.clientRequestCount
-        /// </summary>
+        /// <summary> clientRequestCount. </summary>
         public static WafMetric ClientRequestCount { get; } = new WafMetric(ClientRequestCountValue);
         /// <summary> Determines if two <see cref="WafMetric"/> values are the same. </summary>
         public static bool operator ==(WafMetric left, WafMetric right) => left.Equals(right);

@@ -188,6 +188,56 @@ namespace Azure.Storage.Sas
             // "yyyy-MM-ddTHH:mm:ssZ"
             (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
 
+        internal static string FormatRequestHeadersForSasSigning(Dictionary<string, string> requestHeaders)
+        {
+            if (requestHeaders == null || requestHeaders.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in requestHeaders)
+            {
+                sb
+                .Append(entry.Key)
+                .Append(':')
+                .Append(entry.Value)
+                .Append('\n');
+            }
+            return sb.ToString();
+        }
+
+        internal static string FormatRequestQueryParametersForSasSigning(Dictionary<string, string> requestQueryParameters)
+        {
+            if (requestQueryParameters == null || requestQueryParameters.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in requestQueryParameters)
+            {
+                sb
+                .Append('\n')
+                .Append(entry.Key)
+                .Append(':')
+                .Append(entry.Value);
+            }
+            return sb.ToString();
+        }
+
+        internal static List<string> ConvertRequestDictToKeyList(Dictionary<string, string> dict)
+        {
+            if (dict == null)
+            {
+                return null;
+            }
+            List<string> list = new List<string>();
+            foreach (var kvp in dict)
+            {
+                list.Add(kvp.Key);
+            }
+            return list;
+        }
+
         /// <summary>
         /// Helper method to add query param key value pairs to StringBuilder
         /// </summary>

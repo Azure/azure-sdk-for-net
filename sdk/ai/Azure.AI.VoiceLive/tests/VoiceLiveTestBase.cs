@@ -3,17 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
@@ -38,36 +35,6 @@ namespace Azure.AI.VoiceLive.Tests
             // Force Live mode - WebSocket tests cannot be recorded
         }
 
-        [SetUp]
-        public virtual void Setup()
-        {
-            var root = VoiceLiveTestEnvironment.RepositoryRoot;
-            var assetsPath = base.AssetsJsonPath;
-
-            var assetsJson = JsonDocument.Parse(File.ReadAllText(assetsPath));
-
-            var tag = assetsJson.RootElement.GetProperty("Tag");
-
-            var tagString = tag.ToString();
-
-            string crumb = string.Empty;
-
-            foreach (var breadcrumb in Directory.EnumerateFiles(Path.Combine(root, ".assets", "breadcrumb")))
-            {
-                var contents = File.ReadAllText(breadcrumb);
-                var splitContents = contents.Trim().Split(';');
-                if (3 == splitContents.Length && splitContents[2] == tagString)
-                {
-                    crumb = splitContents[1];
-                    break;
-                }
-            }
-
-            var assetsContentPath = Path.Combine(root, ".assets", crumb, "net", "sdk", "ai", "Azure.AI.VoiceLive");
-
-            AudioPath = Path.Combine(assetsContentPath, "audio");
-        }
-
         [TearDown]
         public virtual async Task Teardown()
         {
@@ -88,9 +55,14 @@ namespace Azure.AI.VoiceLive.Tests
 
         protected VoiceLiveClient GetLiveClient(VoiceLiveClientOptions? options = null)
         {
+            var optionsLocal = options ?? new VoiceLiveClientOptions();
+
+            optionsLocal.Diagnostics.IsLoggingContentEnabled = true;
+            optionsLocal.Diagnostics.IsLoggingEnabled = true;
+
             return string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true), options) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey), options);
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true), optionsLocal) :
+                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey), optionsLocal);
         }
 
         internal TestableVoiceLiveSession GetTestableSession(VoiceLiveClient client)
@@ -115,16 +87,61 @@ namespace Azure.AI.VoiceLive.Tests
             return data;
         }
 
+        protected async Task<byte[]> GenerateTestAudio(string text)
+        {
+            var of = SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm;
+            var sc = SpeechConfig.FromEndpoint(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            sc.SetSpeechSynthesisOutputFormat(of);
+
+            using (var outputStream = AudioOutputStream.CreatePullStream())
+            using (var ac = AudioConfig.FromStreamOutput(outputStream))
+            using (var speechSynthesizer = new SpeechSynthesizer(sc, ac))
+            {
+                var result = await speechSynthesizer.SpeakTextAsync(text).ConfigureAwait(false);
+                if (result.Reason != ResultReason.SynthesizingAudioCompleted)
+                {
+                    throw new Exception($"Error {result.Reason} was not synthesis completed");
+                }
+
+                return result.AudioData;
+            }
+        }
+
         /// <summary>
         /// Sends audio and returns once the audio has been sent.
         /// </summary>
-        protected async Task SendAudioAsync(
+        protected async Task<(Task SilenceTask, CancellationTokenSource Cts)> SendAudioAsync(
             VoiceLiveSession session,
-            string audioFile)
+            string textToSend,
+            CancellationToken cancellationToken = default)
         {
-            var audio = LoadTestAudio(audioFile);
-            await session.SendInputAudioAsync(audio);
-            TestContext.WriteLine($"Sent audio file: {audioFile}");
+            var audio = await GenerateTestAudio(textToSend).ConfigureAwait(false);
+            await session.SendInputAudioAsync(audio, cancellationToken).ConfigureAwait(false);
+            TestContext.WriteLine($"Sent audio for: {textToSend}");
+
+            var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            // Start a task to send silence after audio is sent
+            var sendSilenceTask = Task.Run(async () =>
+            {
+                try
+                {
+                    // Send silence to allow processing to complete
+                    var silence = new byte[3200]; // 100ms of silence at 16kHz 16bit mono
+                    while (!cts.Token.IsCancellationRequested)
+                    {
+                        await session.SendInputAudioAsync(silence, cts.Token).ConfigureAwait(false);
+                        await Task.Delay(100, cts.Token).ConfigureAwait(false);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    // Expected when the cancellation token is canceled.
+                }
+                TestContext.WriteLine("Sent silence to complete processing.");
+            }, cancellationToken);
+
+            return (sendSilenceTask, cts);
         }
 
         protected void EnsureEventIdsUnique(SessionUpdate sessionUpdate)
@@ -134,7 +151,12 @@ namespace Azure.AI.VoiceLive.Tests
             _eventIDs.Add(sessionUpdate.EventId);
         }
 
-        protected async Task<List<SessionUpdate>> CollectResponseUpdates(IAsyncEnumerator<SessionUpdate> updateEnumerator, CancellationToken cancellationToken)
+        protected Task<List<SessionUpdate>> CollectResponseUpdates(IAsyncEnumerator<SessionUpdate> updateEnumerator, CancellationToken cancellationToken)
+        {
+            return CollectUpdates<SessionUpdateResponseDone>(updateEnumerator, cancellationToken);
+        }
+
+        protected async Task<List<SessionUpdate>> CollectUpdates<T>(IAsyncEnumerator<SessionUpdate> updateEnumerator, CancellationToken cancellationToken)
         {
             List<SessionUpdate> responseUpdates = new List<SessionUpdate>();
 
@@ -144,7 +166,7 @@ namespace Azure.AI.VoiceLive.Tests
             {
                 currentUpdate = await GetNextUpdate(updateEnumerator).ConfigureAwait(false);
                 responseUpdates.Add(currentUpdate);
-            } while (currentUpdate is not SessionUpdateResponseDone && !cancellationToken.IsCancellationRequested);
+            } while (currentUpdate is not T && !cancellationToken.IsCancellationRequested);
 
             if (cancellationToken.IsCancellationRequested)
             {

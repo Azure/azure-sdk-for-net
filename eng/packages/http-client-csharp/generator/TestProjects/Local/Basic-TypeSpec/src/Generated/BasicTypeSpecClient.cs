@@ -173,7 +173,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
             Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
 
-            Response result = SayHi(headParameter, queryParameter, optionalQuery, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = SayHi(headParameter, queryParameter, optionalQuery, cancellationToken.ToRequestContext());
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -190,7 +190,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(headParameter, nameof(headParameter));
             Argument.AssertNotNullOrEmpty(queryParameter, nameof(queryParameter));
 
-            Response result = await SayHiAsync(headParameter, queryParameter, optionalQuery, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await SayHiAsync(headParameter, queryParameter, optionalQuery, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -280,7 +280,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(p1, nameof(p1));
             Argument.AssertNotNull(action, nameof(action));
 
-            Response result = HelloAgain(p2, p1, action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = HelloAgain(p2, p1, action, cancellationToken.ToRequestContext());
             return Response.FromValue((RoundTripModel)result, result);
         }
 
@@ -298,7 +298,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(p1, nameof(p1));
             Argument.AssertNotNull(action, nameof(action));
 
-            Response result = await HelloAgainAsync(p2, p1, action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await HelloAgainAsync(p2, p1, action, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RoundTripModel)result, result);
         }
 
@@ -433,7 +433,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ThingModel> HelloDemo2(CancellationToken cancellationToken = default)
         {
-            Response result = HelloDemo2(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = HelloDemo2(cancellationToken.ToRequestContext());
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -442,7 +442,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ThingModel>> HelloDemo2Async(CancellationToken cancellationToken = default)
         {
-            Response result = await HelloDemo2Async(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await HelloDemo2Async(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -517,7 +517,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateLiteral(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateLiteral(body, cancellationToken.ToRequestContext());
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -530,7 +530,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateLiteralAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateLiteralAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -593,7 +593,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ThingModel> HelloLiteral(CancellationToken cancellationToken = default)
         {
-            Response result = HelloLiteral(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = HelloLiteral(cancellationToken.ToRequestContext());
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -602,7 +602,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ThingModel>> HelloLiteralAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await HelloLiteralAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await HelloLiteralAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -668,7 +668,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ThingModel> TopAction(DateTimeOffset action, CancellationToken cancellationToken = default)
         {
-            Response result = TopAction(action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = TopAction(action, cancellationToken.ToRequestContext());
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -678,7 +678,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ThingModel>> TopActionAsync(DateTimeOffset action, CancellationToken cancellationToken = default)
         {
-            Response result = await TopActionAsync(action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await TopActionAsync(action, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -895,7 +895,7 @@ namespace BasicTypeSpec
                 optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 default);
-            Response result = AnonymousBody(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = AnonymousBody(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -934,7 +934,7 @@ namespace BasicTypeSpec
                 optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 default);
-            Response result = await AnonymousBodyAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await AnonymousBodyAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -1011,7 +1011,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             FriendModel spreadModel = new FriendModel(name, default);
-            Response result = FriendlyModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = FriendlyModel(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((FriendModel)result, result);
         }
 
@@ -1026,7 +1026,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             FriendModel spreadModel = new FriendModel(name, default);
-            Response result = await FriendlyModelAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await FriendlyModelAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((FriendModel)result, result);
         }
 
@@ -1089,7 +1089,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddTimeHeader(CancellationToken cancellationToken = default)
         {
-            return AddTimeHeader(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return AddTimeHeader(cancellationToken.ToRequestContext());
         }
 
         /// <summary> AddTimeHeader. </summary>
@@ -1097,7 +1097,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddTimeHeaderAsync(CancellationToken cancellationToken = default)
         {
-            return await AddTimeHeaderAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await AddTimeHeaderAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1173,7 +1173,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RenamedModel spreadModel = new RenamedModel(name, default);
-            Response result = ProjectedNameModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = ProjectedNameModel(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((RenamedModel)result, result);
         }
 
@@ -1188,7 +1188,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RenamedModel spreadModel = new RenamedModel(name, default);
-            Response result = await ProjectedNameModelAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ProjectedNameModelAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RenamedModel)result, result);
         }
 
@@ -1251,7 +1251,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
         {
-            Response result = ReturnsAnonymousModel(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = ReturnsAnonymousModel(cancellationToken.ToRequestContext());
             return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
         }
 
@@ -1260,7 +1260,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await ReturnsAnonymousModelAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReturnsAnonymousModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
         }
 
@@ -1338,7 +1338,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(accept, nameof(accept));
 
-            Response result = GetUnknownValue(accept, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetUnknownValue(accept, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content.ToString(), result);
         }
 
@@ -1352,7 +1352,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(accept, nameof(accept));
 
-            Response result = await GetUnknownValueAsync(accept, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetUnknownValueAsync(accept, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content.ToString(), result);
         }
 
@@ -1427,7 +1427,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = InternalProtocol(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = InternalProtocol(body, cancellationToken.ToRequestContext());
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -1440,7 +1440,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await InternalProtocolAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await InternalProtocolAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ThingModel)result, result);
         }
 
@@ -1503,7 +1503,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response StillConvenient(CancellationToken cancellationToken = default)
         {
-            return StillConvenient(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return StillConvenient(cancellationToken.ToRequestContext());
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
@@ -1511,7 +1511,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> StillConvenientAsync(CancellationToken cancellationToken = default)
         {
-            return await StillConvenientAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await StillConvenientAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1588,7 +1588,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return HeadAsBoolean(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return HeadAsBoolean(id, cancellationToken.ToRequestContext());
         }
 
         /// <summary> head as boolean. </summary>
@@ -1601,7 +1601,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return await HeadAsBooleanAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await HeadAsBooleanAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1617,17 +1617,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithNextLink(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithNextLinkCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithNextLinkCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1643,17 +1633,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithNextLinkAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1661,7 +1641,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithNextLink(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithNextLinkCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithNextLinkCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1669,7 +1649,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithNextLinkAsync(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1685,17 +1665,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithStringNextLink(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithStringNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithStringNextLinkCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithStringNextLinkCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1711,17 +1681,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithStringNextLinkAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithStringNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1729,7 +1689,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithStringNextLink(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithStringNextLinkCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithStringNextLinkCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1737,7 +1697,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithStringNextLinkAsync(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1753,17 +1713,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithHeaderNextLink(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithHeaderNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1779,17 +1729,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithHeaderNextLinkAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithHeaderNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1797,7 +1737,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithHeaderNextLink(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1805,7 +1745,59 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithHeaderNextLinkAsync(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with nextlink
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="numElements"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetWithHeaderNextLinkWithMaxPage(int numElements, RequestContext context)
+        {
+            return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult(this, numElements, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with nextlink
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="numElements"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetWithHeaderNextLinkWithMaxPageAsync(int numElements, RequestContext context)
+        {
+            return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageAsyncCollectionResult(this, numElements, context);
+        }
+
+        /// <summary> List things with nextlink. </summary>
+        /// <param name="numElements"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> GetWithHeaderNextLinkWithMaxPage(int numElements, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT(this, numElements, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> List things with nextlink. </summary>
+        /// <param name="numElements"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> GetWithHeaderNextLinkWithMaxPageAsync(int numElements, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageAsyncCollectionResultOfT(this, numElements, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1822,17 +1814,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithContinuationToken(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenCollectionResult(this, token, context);
         }
 
         /// <summary>
@@ -1849,17 +1831,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithContinuationTokenAsync(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResult(this, token, context);
         }
 
         /// <summary> List things with continuation token. </summary>
@@ -1868,7 +1840,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithContinuationToken(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithContinuationTokenCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenCollectionResultOfT(this, token, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List things with continuation token. </summary>
@@ -1877,7 +1849,63 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithContinuationTokenAsync(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT(this, token, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="numElements"></param>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetWithContinuationTokenWithMaxPage(int numElements, string token, RequestContext context)
+        {
+            return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResult(this, numElements, token, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="numElements"></param>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetWithContinuationTokenWithMaxPageAsync(int numElements, string token, RequestContext context)
+        {
+            return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResult(this, numElements, token, context);
+        }
+
+        /// <summary> List things with continuation token. </summary>
+        /// <param name="numElements"></param>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> GetWithContinuationTokenWithMaxPage(int numElements, string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT(this, numElements, token, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> List things with continuation token. </summary>
+        /// <param name="numElements"></param>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> GetWithContinuationTokenWithMaxPageAsync(int numElements, string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientGetWithContinuationTokenWithMaxPageAsyncCollectionResultOfT(this, numElements, token, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1894,17 +1922,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithContinuationTokenHeaderResponse(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
         }
 
         /// <summary>
@@ -1921,17 +1939,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithContinuationTokenHeaderResponseAsync(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
         }
 
         /// <summary> List things with continuation token header response. </summary>
@@ -1940,7 +1948,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithContinuationTokenHeaderResponse(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResultOfT(this, token, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List things with continuation token header response. </summary>
@@ -1949,7 +1957,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithContinuationTokenHeaderResponseAsync(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResultOfT(this, token, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1965,17 +1973,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithPaging(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithPagingCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithPagingCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1991,17 +1989,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithPagingAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithPagingAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithPagingAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with paging. </summary>
@@ -2009,7 +1997,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithPaging(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithPagingCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithPagingCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List things with paging. </summary>
@@ -2017,7 +2005,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithPagingAsync(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2082,7 +2070,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ConditionalRequest(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            return ConditionalRequest(matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ConditionalRequest(matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> A sample operation with conditional requests. </summary>
@@ -2091,7 +2079,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> ConditionalRequestAsync(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            return await ConditionalRequestAsync(matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await ConditionalRequestAsync(matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2108,15 +2096,15 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response ConditionalRequestDate(RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions.IfUnmodifiedSince != null)
-            {
-                throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequestDate");
             scope.Start();
             try
             {
+                if (requestConditions?.IfUnmodifiedSince != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
+                }
+
                 using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2141,15 +2129,15 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions.IfUnmodifiedSince != null)
-            {
-                throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequestDate");
             scope.Start();
             try
             {
+                if (requestConditions?.IfUnmodifiedSince != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
+                }
+
                 using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2166,7 +2154,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ConditionalRequestDate(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return ConditionalRequestDate(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ConditionalRequestDate(requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> A sample operation with conditional requests. </summary>
@@ -2175,7 +2163,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await ConditionalRequestDateAsync(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await ConditionalRequestDateAsync(requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2240,6 +2228,186 @@ namespace BasicTypeSpec
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a model with DataFactoryElement properties
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateDataFactoryModel(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateDataFactoryModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateDataFactoryModelRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a model with DataFactoryElement properties
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateDataFactoryModelAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateDataFactoryModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateDataFactoryModelRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a model with DataFactoryElement properties. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<DataFactoryElementModel> CreateDataFactoryModel(DataFactoryElementModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = CreateDataFactoryModel(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((DataFactoryElementModel)result, result);
+        }
+
+        /// <summary> Create a model with DataFactoryElement properties. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<DataFactoryElementModel>> CreateDataFactoryModelAsync(DataFactoryElementModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await CreateDataFactoryModelAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((DataFactoryElementModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a model with DataFactoryElement properties
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDataFactoryModel(string id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetDataFactoryModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+                using HttpMessage message = CreateGetDataFactoryModelRequest(id, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a model with DataFactoryElement properties
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDataFactoryModelAsync(string id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetDataFactoryModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+                using HttpMessage message = CreateGetDataFactoryModelRequest(id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a model with DataFactoryElement properties. </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<DataFactoryElementModel> GetDataFactoryModel(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            Response result = GetDataFactoryModel(id, cancellationToken.ToRequestContext());
+            return Response.FromValue((DataFactoryElementModel)result, result);
+        }
+
+        /// <summary> Get a model with DataFactoryElement properties. </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<DataFactoryElementModel>> GetDataFactoryModelAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            Response result = await GetDataFactoryModelAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((DataFactoryElementModel)result, result);
         }
     }
 }

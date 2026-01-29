@@ -14,49 +14,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     /// <summary> Describes Resource Quota. </summary>
     public partial class DevOpsResourceQuota
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsResourceQuota"/>. </summary>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="unit"> The unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="unit"/> is null. </exception>
         internal DevOpsResourceQuota(ResourceIdentifier id, string unit, long currentValue, long limit)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(unit, nameof(unit));
-
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
@@ -69,30 +36,29 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="unit"> The unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsResourceQuota(DevOpsResourceQuotaName name, ResourceIdentifier id, string unit, long currentValue, long limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsResourceQuota(DevOpsResourceQuotaName name, ResourceIdentifier id, string unit, long currentValue, long limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevOpsResourceQuota"/> for deserialization. </summary>
-        internal DevOpsResourceQuota()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the quota. </summary>
         public DevOpsResourceQuotaName Name { get; }
+
         /// <summary> Fully qualified ARM resource id. </summary>
         public ResourceIdentifier Id { get; }
+
         /// <summary> The unit of usage measurement. </summary>
         public string Unit { get; }
+
         /// <summary> The current usage of the resource. </summary>
         public long CurrentValue { get; }
+
         /// <summary> The maximum permitted usage of the resource. </summary>
         public long Limit { get; }
     }

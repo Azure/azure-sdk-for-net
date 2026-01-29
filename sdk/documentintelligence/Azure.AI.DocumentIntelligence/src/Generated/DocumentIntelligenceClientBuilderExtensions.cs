@@ -13,64 +13,79 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="DocumentIntelligenceClient"/>, <see cref="DocumentIntelligenceAdministrationClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class DocumentIntelligenceClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public static IAzureClientBuilder<DocumentIntelligenceClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<DocumentIntelligenceClient, DocumentIntelligenceClientOptions>((options) => new DocumentIntelligenceClient(endpoint, credential, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<DocumentIntelligenceClient, DocumentIntelligenceClientOptions>(options => new DocumentIntelligenceClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<DocumentIntelligenceClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<DocumentIntelligenceClient, DocumentIntelligenceClientOptions>((options, cred) => new DocumentIntelligenceClient(endpoint, cred, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<DocumentIntelligenceClient, DocumentIntelligenceClientOptions>((options, credential) => new DocumentIntelligenceClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions>((options) => new DocumentIntelligenceAdministrationClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
-        public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions>((options, cred) => new DocumentIntelligenceAdministrationClient(endpoint, cred, options));
-        }
-
-        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<DocumentIntelligenceClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<DocumentIntelligenceClient, DocumentIntelligenceClientOptions>(configuration);
         }
-        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> instance. </summary>
+
+        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions>(options => new DocumentIntelligenceAdministrationClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions>((options, credential) => new DocumentIntelligenceAdministrationClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions>(configuration);
         }

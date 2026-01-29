@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Elastic
 {
-    internal class ElasticMonitorOperationSource : IOperationSource<ElasticMonitorResource>
+    /// <summary></summary>
+    internal partial class ElasticMonitorOperationSource : IOperationSource<ElasticMonitorResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ElasticMonitorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ElasticMonitorResource IOperationSource<ElasticMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ElasticMonitorData data = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ElasticMonitorResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ElasticMonitorResource> IOperationSource<ElasticMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticContext.Default);
-            return await Task.FromResult(new ElasticMonitorResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ElasticMonitorData data = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ElasticMonitorResource(_client, data);
         }
     }
 }

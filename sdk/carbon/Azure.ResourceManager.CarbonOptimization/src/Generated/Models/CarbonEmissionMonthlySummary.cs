@@ -18,14 +18,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
         /// <param name="carbonIntensity"> Carbon intensity for the specified month, typically in units of kgCO2E per unit of normalized usage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="date"/> is null. </exception>
-        internal CarbonEmissionMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string date, double carbonIntensity) : base(latestMonthEmissions, previousMonthEmissions)
+        internal CarbonEmissionMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string date, double carbonIntensity) : base(CarbonEmissionDataType.MonthlySummaryData, latestMonthEmissions, previousMonthEmissions)
         {
-            Argument.AssertNotNull(date, nameof(date));
-
             Date = date;
             CarbonIntensity = carbonIntensity;
-            DataType = CarbonEmissionDataType.MonthlySummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionMonthlySummary"/>. </summary>
@@ -34,23 +30,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
         /// <param name="carbonIntensity"> Carbon intensity for the specified month, typically in units of kgCO2E per unit of normalized usage. </param>
-        internal CarbonEmissionMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string date, double carbonIntensity) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal CarbonEmissionMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, string date, double carbonIntensity) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, additionalBinaryDataProperties)
         {
             Date = date;
             CarbonIntensity = carbonIntensity;
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CarbonEmissionMonthlySummary"/> for deserialization. </summary>
-        internal CarbonEmissionMonthlySummary()
-        {
         }
 
         /// <summary> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </summary>
         public string Date { get; }
+
         /// <summary> Carbon intensity for the specified month, typically in units of kgCO2E per unit of normalized usage. </summary>
         public double CarbonIntensity { get; }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
+    /// <summary></summary>
     public partial class EdgeDeploymentInstanceHistoryResource : IJsonModel<EdgeDeploymentInstanceHistoryData>
     {
-        private static EdgeDeploymentInstanceHistoryData s_dataDeserializationInstance;
-        private static EdgeDeploymentInstanceHistoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EdgeDeploymentInstanceHistoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EdgeDeploymentInstanceHistoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EdgeDeploymentInstanceHistoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeDeploymentInstanceHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeDeploymentInstanceHistoryData>)Data).Write(writer, options);
 
-        EdgeDeploymentInstanceHistoryData IJsonModel<EdgeDeploymentInstanceHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeDeploymentInstanceHistoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeDeploymentInstanceHistoryData IJsonModel<EdgeDeploymentInstanceHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EdgeDeploymentInstanceHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeDeploymentInstanceHistoryData>(Data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EdgeDeploymentInstanceHistoryData IPersistableModel<EdgeDeploymentInstanceHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeDeploymentInstanceHistoryData>(data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
-        string IPersistableModel<EdgeDeploymentInstanceHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeDeploymentInstanceHistoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeDeploymentInstanceHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal class MySqlFlexibleServerFirewallRuleOperationSource : IOperationSource<MySqlFlexibleServerFirewallRuleResource>
+    /// <summary></summary>
+    internal partial class MySqlFlexibleServerFirewallRuleOperationSource : IOperationSource<MySqlFlexibleServerFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal MySqlFlexibleServerFirewallRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         MySqlFlexibleServerFirewallRuleResource IOperationSource<MySqlFlexibleServerFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            MySqlFlexibleServerFirewallRuleData data = MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MySqlFlexibleServerFirewallRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MySqlFlexibleServerFirewallRuleResource> IOperationSource<MySqlFlexibleServerFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
-            return await Task.FromResult(new MySqlFlexibleServerFirewallRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            MySqlFlexibleServerFirewallRuleData data = MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MySqlFlexibleServerFirewallRuleResource(_client, data);
         }
     }
 }

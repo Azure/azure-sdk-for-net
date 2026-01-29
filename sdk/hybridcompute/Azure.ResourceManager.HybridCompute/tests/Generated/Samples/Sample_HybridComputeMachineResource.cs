@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMachineWithLicenseProfileInstanceView()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get_LicenseProfileInstanceView.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get_LicenseProfileInstanceView.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Delete.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Delete.json
             // this example is just showing the usage of "Machines_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Update.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Update.json
             // this example is just showing the usage of "Machines_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task AssessPatches_AssessPatchStateOfAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machine_AssessPatches.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/machine/Machine_AssessPatches.json
             // this example is just showing the usage of "Machines_AssessPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task InstallPatches_InstallPatchStateOfAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machine_InstallPatches.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/machine/Machine_InstallPatches.json
             // this example is just showing the usage of "Machines_InstallPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpgradeExtensions_UpgradeMachineExtensions()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/extension/Extensions_Upgrade.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/extension/Extensions_Upgrade.json
             // this example is just showing the usage of "UpgradeExtensions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,7 +262,7 @@ TargetVersion = "1.10",
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkProfile_GETNetworkProfile()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/NetworkProfile_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/NetworkProfile_Get.json
             // this example is just showing the usage of "NetworkProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,7 +288,7 @@ TargetVersion = "1.10",
         [Ignore("Only validating compilation of examples")]
         public async Task GetValidationDetailsForMachinePrivateLinkScope_PrivateLinkScopeGet()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/privateLinkScope/PrivateLinkScopes_GetValidationForMachine.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/privateLinkScope/PrivateLinkScopes_GetValidationForMachine.json
             // this example is just showing the usage of "PrivateLinkScopes_GetValidationDetailsForMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

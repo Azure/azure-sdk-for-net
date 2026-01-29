@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.DisconnectedOperations
     {
         public DisconnectedOperationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.DisconnectedOperations
     {
         internal DisconnectedOperationsArtifactData() { }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsArtifactData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsArtifactData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsArtifactData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsArtifactData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsArtifactData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -137,7 +143,10 @@ namespace Azure.ResourceManager.DisconnectedOperations
     {
         internal DisconnectedOperationsImageData() { }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -194,6 +203,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     {
         public static Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationData DisconnectedOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest DisconnectedOperationDeploymentManifest(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, string stampId = null, string location = null, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel billingModel = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel), Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent connectionIntent = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent), string cloud = null) { throw null; }
+        public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch DisconnectedOperationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties DisconnectedOperationProperties(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState?), string stampId = null, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel billingModel = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel), Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent connectionIntent = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent), Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus? connectionStatus = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus?), Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus? registrationStatus = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus?), string deviceVersion = null) { throw null; }
         public static Azure.ResourceManager.DisconnectedOperations.DisconnectedOperationsArtifactData DisconnectedOperationsArtifactData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult DisconnectedOperationsArtifactDownloadResult(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState?), int artifactOrder = 0, string title = null, string description = null, long? size = default(long?), System.Uri downloadLink = null, System.DateTimeOffset linkExpiry = default(System.DateTimeOffset)) { throw null; }
@@ -212,7 +222,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public string StampId { get { throw null; } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationDeploymentManifest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -224,7 +237,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public DisconnectedOperationPatch() { }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -233,7 +249,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     }
     public partial class DisconnectedOperationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties>
     {
-        public DisconnectedOperationProperties(string stampId, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel billingModel, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent connectionIntent) { }
+        public DisconnectedOperationProperties(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent connectionIntent) { }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel BillingModel { get { throw null; } }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent ConnectionIntent { get { throw null; } set { } }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus? ConnectionStatus { get { throw null; } }
@@ -241,7 +257,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus? RegistrationStatus { get { throw null; } set { } }
         public string StampId { get { throw null; } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -258,7 +277,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState? ProvisioningState { get { throw null; } }
         public long? Size { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactDownloadResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -273,7 +295,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState? ProvisioningState { get { throw null; } }
         public long? Size { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsArtifactProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -288,12 +313,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public DisconnectedOperationsBillingModel(string value) { throw null; }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel Capacity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -306,12 +330,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent Connected { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent Disconnected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -324,12 +347,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus Connected { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus Disconnected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -346,7 +368,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType ReleaseType { get { throw null; } }
         public string ReleaseVersion { get { throw null; } }
         public string TransactionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageDownloadResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageDownloadResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageDownloadResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageDownloadResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageDownloadResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageDownloadResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageDownloadResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -363,7 +388,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public System.DateTimeOffset ReleaseOn { get { throw null; } }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType ReleaseType { get { throw null; } }
         public string ReleaseVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsImageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -379,12 +407,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus Registered { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus Unregistered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -397,12 +424,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType Install { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType Update { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -416,12 +442,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -431,7 +456,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent? ConnectionIntent { get { throw null; } set { } }
         public string DeviceVersion { get { throw null; } set { } }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus? RegistrationStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

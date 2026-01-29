@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Bumped api-version of `ManagementGroup` to `2023-04-01`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed `ArgumentNullException` when deserializing `ManagedServiceIdentity` with null or empty `type` property value.
 
 ### Other Changes
 

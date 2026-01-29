@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KeyVault
 {
+    /// <summary></summary>
     public partial class ManagedHsmPrivateEndpointConnectionResource : IJsonModel<ManagedHsmPrivateEndpointConnectionData>
     {
-        private static ManagedHsmPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static ManagedHsmPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedHsmPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedHsmPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedHsmPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedHsmPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        ManagedHsmPrivateEndpointConnectionData IJsonModel<ManagedHsmPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedHsmPrivateEndpointConnectionData IJsonModel<ManagedHsmPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedHsmPrivateEndpointConnectionData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedHsmPrivateEndpointConnectionData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        string IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedHsmPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

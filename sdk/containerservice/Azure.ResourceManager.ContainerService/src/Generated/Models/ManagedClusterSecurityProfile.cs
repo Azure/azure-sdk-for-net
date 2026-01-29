@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Security profile for the container service cluster. </summary>
+    /// <summary>
+    /// Security profile for the container service cluster.
+    /// Serialized Name: ManagedClusterSecurityProfile
+    /// </summary>
     public partial class ManagedClusterSecurityProfile
     {
         /// <summary>
@@ -48,32 +51,62 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
         public ManagedClusterSecurityProfile()
         {
+            CustomCATrustCertificates = new ChangeTrackingList<byte[]>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
-        /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
-        /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
-        /// <param name="workloadIdentity"> Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details. </param>
-        /// <param name="imageCleaner"> Image Cleaner settings for the security profile. </param>
+        /// <param name="defender">
+        /// Microsoft Defender settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfile.defender
+        /// </param>
+        /// <param name="azureKeyVaultKms">
+        /// Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfile.azureKeyVaultKms
+        /// </param>
+        /// <param name="workloadIdentity">
+        /// Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details.
+        /// Serialized Name: ManagedClusterSecurityProfile.workloadIdentity
+        /// </param>
+        /// <param name="imageCleaner">
+        /// Image Cleaner settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfile.imageCleaner
+        /// </param>
+        /// <param name="customCATrustCertificates">
+        /// A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority).
+        /// Serialized Name: ManagedClusterSecurityProfile.customCATrustCertificates
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, IList<byte[]> customCATrustCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Defender = defender;
             AzureKeyVaultKms = azureKeyVaultKms;
             WorkloadIdentity = workloadIdentity;
             ImageCleaner = imageCleaner;
+            CustomCATrustCertificates = customCATrustCertificates;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Microsoft Defender settings for the security profile. </summary>
+        /// <summary>
+        /// Microsoft Defender settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfile.defender
+        /// </summary>
         [WirePath("defender")]
         public ManagedClusterSecurityProfileDefender Defender { get; set; }
-        /// <summary> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </summary>
+        /// <summary>
+        /// Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfile.azureKeyVaultKms
+        /// </summary>
         [WirePath("azureKeyVaultKms")]
         public ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get; set; }
-        /// <summary> Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details. </summary>
+        /// <summary>
+        /// Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details.
+        /// Serialized Name: ManagedClusterSecurityProfile.workloadIdentity
+        /// </summary>
         internal ManagedClusterSecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
-        /// <summary> Whether to enable workload identity. </summary>
+        /// <summary>
+        /// Whether to enable workload identity.
+        /// Serialized Name: ManagedClusterSecurityProfileWorkloadIdentity.enabled
+        /// </summary>
         [WirePath("workloadIdentity.enabled")]
         public bool? IsWorkloadIdentityEnabled
         {
@@ -86,8 +119,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> Image Cleaner settings for the security profile. </summary>
+        /// <summary>
+        /// Image Cleaner settings for the security profile.
+        /// Serialized Name: ManagedClusterSecurityProfile.imageCleaner
+        /// </summary>
         [WirePath("imageCleaner")]
         public ManagedClusterSecurityProfileImageCleaner ImageCleaner { get; set; }
+        /// <summary>
+        /// A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority).
+        /// Serialized Name: ManagedClusterSecurityProfile.customCATrustCertificates
+        /// </summary>
+        [WirePath("customCATrustCertificates")]
+        public IList<byte[]> CustomCATrustCertificates { get; }
     }
 }

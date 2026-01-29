@@ -175,9 +175,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DenySettingsMode DenyWriteAndDelete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DenySettingsMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DenySettingsMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DenySettingsMode left, Azure.ResourceManager.Resources.Models.DenySettingsMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DenySettingsMode (string value) { throw null; }
@@ -197,9 +195,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DenyStatusMode NotSupported { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DenyStatusMode RemovedBySystem { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DenyStatusMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DenyStatusMode left, Azure.ResourceManager.Resources.Models.DenyStatusMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DenyStatusMode (string value) { throw null; }
@@ -237,9 +233,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState Validating { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState Waiting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState left, Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DeploymentStackProvisioningState (string value) { throw null; }
@@ -255,9 +249,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum left, Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.DeploymentStacksDeleteDetachEnum (string value) { throw null; }
@@ -390,9 +382,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ResourceStatusMode Managed { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.ResourceStatusMode RemoveDenyFailed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ResourceStatusMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourceStatusMode left, Azure.ResourceManager.Resources.Models.ResourceStatusMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.ResourceStatusMode (string value) { throw null; }
@@ -408,9 +398,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode left, Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.UnmanageActionManagementGroupMode (string value) { throw null; }
@@ -426,9 +414,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode left, Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.UnmanageActionResourceGroupMode (string value) { throw null; }
@@ -444,9 +430,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode Delete { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode left, Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Resources.Models.UnmanageActionResourceMode (string value) { throw null; }

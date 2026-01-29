@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ComputeSchedule
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CancelOperationsContent))]
     [ModelReaderWriterBuildable(typeof(CancelOperationsResult))]
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(ExecuteDeleteContent))]
     [ModelReaderWriterBuildable(typeof(ExecuteHibernateContent))]
     [ModelReaderWriterBuildable(typeof(ExecuteStartContent))]
+    [ModelReaderWriterBuildable(typeof(FallbackOperationInfo))]
     [ModelReaderWriterBuildable(typeof(GetOperationErrorsContent))]
     [ModelReaderWriterBuildable(typeof(GetOperationErrorsResult))]
     [ModelReaderWriterBuildable(typeof(GetOperationStatusContent))]

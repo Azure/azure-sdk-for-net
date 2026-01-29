@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class AvsPrivateCloudClusterVirtualMachineResource : IJsonModel<AvsPrivateCloudClusterVirtualMachineData>
     {
-        private static AvsPrivateCloudClusterVirtualMachineData s_dataDeserializationInstance;
-        private static AvsPrivateCloudClusterVirtualMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvsPrivateCloudClusterVirtualMachineData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvsPrivateCloudClusterVirtualMachineData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvsPrivateCloudClusterVirtualMachineData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineData>)Data).Write(writer, options);
 
-        AvsPrivateCloudClusterVirtualMachineData IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsPrivateCloudClusterVirtualMachineData IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsPrivateCloudClusterVirtualMachineData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AvsPrivateCloudClusterVirtualMachineData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPrivateCloudClusterVirtualMachineData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

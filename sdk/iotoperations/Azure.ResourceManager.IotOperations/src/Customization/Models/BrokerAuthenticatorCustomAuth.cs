@@ -4,12 +4,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Custom Authentication properties. </summary>
-    internal partial class BrokerAuthenticatorCustomAuth
+    public partial class BrokerAuthenticatorCustomAuth
     {
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
         /// <param name="secretRef"> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </param>
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             Argument.AssertNotNull(secretRef, nameof(secretRef));
 
-            X509 = new X509ManualCertificate(secretRef);
+            X509 = new BrokerX509ManualCertificate(secretRef);
         }
     }
 }

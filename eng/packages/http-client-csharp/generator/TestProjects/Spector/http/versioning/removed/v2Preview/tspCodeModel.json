@@ -640,7 +640,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.v1",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
@@ -819,7 +820,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.v2",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
@@ -1001,7 +1003,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.modelV3",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
@@ -1118,6 +1121,7 @@
           "crossLanguageDefinitionId": "Versioning.Removed.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Removed",
       "apiVersions": [
@@ -1225,7 +1229,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.Removed"
               },
               "parameters": [
                 {
@@ -1312,7 +1317,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint"
             },
             {
               "$id": "95",
@@ -1339,9 +1344,10 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.version"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1",
           "apiVersions": [
@@ -1350,9 +1356,11 @@
           ],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the MySqlFlexibleServerBackupV2 data model.
-    /// Server backup properties
-    /// </summary>
+    /// <summary> Server backup properties. </summary>
     public partial class MySqlFlexibleServerBackupV2Data : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupV2Data"/>. </summary>
         public MySqlFlexibleServerBackupV2Data()
@@ -57,35 +25,96 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupV2Data"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupNameV2"> Backup name. </param>
-        /// <param name="backupType"></param>
-        /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
-        /// <param name="source"> Backup source. </param>
-        /// <param name="provisioningState"> The provisioning state of backup resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerBackupV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupNameV2, MySqlFlexibleServerBackupType? backupType, DateTimeOffset? completedOn, string source, MySqlFlexibleServerBackupProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a server backup. </param>
+        internal MySqlFlexibleServerBackupV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerBackupPropertiesV2 properties) : base(id, name, resourceType, systemData)
         {
-            BackupNameV2 = backupNameV2;
-            BackupType = backupType;
-            CompletedOn = completedOn;
-            Source = source;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of a server backup. </summary>
+        internal ServerBackupPropertiesV2 Properties { get; set; }
+
         /// <summary> Backup name. </summary>
-        public string BackupNameV2 { get; set; }
-        /// <summary> Gets or sets the backup type. </summary>
-        public MySqlFlexibleServerBackupType? BackupType { get; set; }
+        public string BackupNameV2
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupNameV2;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBackupPropertiesV2();
+                }
+                Properties.BackupNameV2 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the BackupType. </summary>
+        public MySqlFlexibleServerBackupType? BackupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBackupPropertiesV2();
+                }
+                Properties.BackupType = value.Value;
+            }
+        }
+
         /// <summary> Backup completed time (ISO8601 format). </summary>
-        public DateTimeOffset? CompletedOn { get; set; }
+        public DateTimeOffset? CompletedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBackupPropertiesV2();
+                }
+                Properties.CompletedOn = value.Value;
+            }
+        }
+
         /// <summary> Backup source. </summary>
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerBackupPropertiesV2();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> The provisioning state of backup resource. </summary>
-        public MySqlFlexibleServerBackupProvisioningState? ProvisioningState { get; }
+        public MySqlFlexibleServerBackupProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class RuntimeApplicationHealthPolicy : IUtf8JsonSerializable, IJsonModel<RuntimeApplicationHealthPolicy>
+    /// <summary> Cluster level definition for a health policy used to evaluate the health of an application or one of its children entities. </summary>
+    public partial class RuntimeApplicationHealthPolicy : IJsonModel<RuntimeApplicationHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuntimeApplicationHealthPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RuntimeApplicationHealthPolicy"/> for deserialization. </summary>
+        internal RuntimeApplicationHealthPolicy()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RuntimeApplicationHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeApplicationHealthPolicy)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("considerWarningAsError"u8);
             writer.WriteBooleanValue(ConsiderWarningAsError);
             writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
@@ -54,15 +59,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +76,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        RuntimeApplicationHealthPolicy IJsonModel<RuntimeApplicationHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RuntimeApplicationHealthPolicy IJsonModel<RuntimeApplicationHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RuntimeApplicationHealthPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeApplicationHealthPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRuntimeApplicationHealthPolicy(document.RootElement, options);
         }
 
-        internal static RuntimeApplicationHealthPolicy DeserializeRuntimeApplicationHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RuntimeApplicationHealthPolicy DeserializeRuntimeApplicationHealthPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,56 +105,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int maxPercentUnhealthyDeployedApplications = default;
             RuntimeServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default;
             IDictionary<string, RuntimeServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("considerWarningAsError"u8))
+                if (prop.NameEquals("considerWarningAsError"u8))
                 {
-                    considerWarningAsError = property.Value.GetBoolean();
+                    considerWarningAsError = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxPercentUnhealthyDeployedApplications"u8))
+                if (prop.NameEquals("maxPercentUnhealthyDeployedApplications"u8))
                 {
-                    maxPercentUnhealthyDeployedApplications = property.Value.GetInt32();
+                    maxPercentUnhealthyDeployedApplications = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultServiceTypeHealthPolicy"u8))
+                if (prop.NameEquals("defaultServiceTypeHealthPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultServiceTypeHealthPolicy = RuntimeServiceTypeHealthPolicy.DeserializeRuntimeServiceTypeHealthPolicy(property.Value, options);
+                    defaultServiceTypeHealthPolicy = RuntimeServiceTypeHealthPolicy.DeserializeRuntimeServiceTypeHealthPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serviceTypeHealthPolicyMap"u8))
+                if (prop.NameEquals("serviceTypeHealthPolicyMap"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, RuntimeServiceTypeHealthPolicy> dictionary = new Dictionary<string, RuntimeServiceTypeHealthPolicy>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RuntimeServiceTypeHealthPolicy.DeserializeRuntimeServiceTypeHealthPolicy(property0.Value, options));
+                        dictionary.Add(prop0.Name, RuntimeServiceTypeHealthPolicy.DeserializeRuntimeServiceTypeHealthPolicy(prop0.Value, options));
                     }
                     serviceTypeHealthPolicyMap = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RuntimeApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, RuntimeServiceTypeHealthPolicy>(), serializedAdditionalRawData);
+            return new RuntimeApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, RuntimeServiceTypeHealthPolicy>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<RuntimeApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RuntimeApplicationHealthPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -154,15 +165,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        RuntimeApplicationHealthPolicy IPersistableModel<RuntimeApplicationHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RuntimeApplicationHealthPolicy IPersistableModel<RuntimeApplicationHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RuntimeApplicationHealthPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRuntimeApplicationHealthPolicy(document.RootElement, options);
                     }
                 default:
@@ -170,6 +186,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RuntimeApplicationHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

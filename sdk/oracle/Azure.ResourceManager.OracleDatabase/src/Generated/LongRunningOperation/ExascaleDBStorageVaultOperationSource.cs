@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal class ExascaleDBStorageVaultOperationSource : IOperationSource<ExascaleDBStorageVaultResource>
+    /// <summary></summary>
+    internal partial class ExascaleDBStorageVaultOperationSource : IOperationSource<ExascaleDBStorageVaultResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ExascaleDBStorageVaultOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ExascaleDBStorageVaultResource IOperationSource<ExascaleDBStorageVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExascaleDBStorageVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ExascaleDBStorageVaultData data = ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ExascaleDBStorageVaultResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ExascaleDBStorageVaultResource> IOperationSource<ExascaleDBStorageVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExascaleDBStorageVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
-            return await Task.FromResult(new ExascaleDBStorageVaultResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ExascaleDBStorageVaultData data = ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ExascaleDBStorageVaultResource(_client, data);
         }
     }
 }

@@ -1,21 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/resources/ci.mgmt.yml
-    - sdk/resources/Azure.ResourceManager.Resources/
-    - sdk/resources/Azure.ResourceManager.Resources.Bicep/
-    - sdk/resources/Azure.ResourceManager.Resources.Deployments/
-    - sdk/resources/Azure.ResourceManager.Resources.DeploymentStacks/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -30,7 +15,3 @@ extends:
       safeName: AzureResourceManagerResourcesDeployments
     - name: Azure.ResourceManager.Resources.DeploymentStacks
       safeName: AzureResourceManagerResourcesDeploymentStacks
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Resources
-      ExpectedWarningsFilepath: None

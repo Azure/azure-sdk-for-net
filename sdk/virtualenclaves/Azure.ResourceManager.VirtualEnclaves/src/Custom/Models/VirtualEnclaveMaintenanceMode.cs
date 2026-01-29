@@ -3,14 +3,12 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary>
-    /// Renamed to VirtualEnclaveMaintenanceMode.
+    /// VirtualEnclaveMaintenanceMode.
     /// </summary>
-    [CodeGenModel("MaintenanceModeConfigurationModelMode")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("MaintenanceModeConfigurationModelMode")]
     public readonly partial struct VirtualEnclaveMaintenanceMode
     {
     }

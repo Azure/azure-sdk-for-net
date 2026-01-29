@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-04-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -128,14 +128,10 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="skip"> Number of entities to skip over when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
@@ -171,14 +167,10 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="skip"> Number of entities to skip over when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
@@ -240,15 +232,11 @@ namespace Azure.ResourceManager.ManagementGroups
             return message;
         }
 
-        /// <summary>
-        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="skip"> Number of entities to skip over when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
@@ -287,15 +275,11 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        /// <summary>
-        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
-        ///
-        /// </summary>
+        /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="skip"> Number of entities to skip over when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>

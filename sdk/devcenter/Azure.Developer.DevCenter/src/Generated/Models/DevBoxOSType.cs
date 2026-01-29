@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.Developer.DevCenter.Models
     public readonly partial struct DevBoxOSType : IEquatable<DevBoxOSType>
     {
         private readonly string _value;
+        /// <summary> The Windows operating system. </summary>
+        private const string WindowsValue = "Windows";
 
         /// <summary> Initializes a new instance of <see cref="DevBoxOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevBoxOSType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsValue = "Windows";
+            _value = value;
+        }
 
         /// <summary> The Windows operating system. </summary>
         public static DevBoxOSType Windows { get; } = new DevBoxOSType(WindowsValue);
+
         /// <summary> Determines if two <see cref="DevBoxOSType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevBoxOSType left, DevBoxOSType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevBoxOSType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevBoxOSType left, DevBoxOSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevBoxOSType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevBoxOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevBoxOSType(string value) => new DevBoxOSType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevBoxOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevBoxOSType?(string value) => value == null ? null : new DevBoxOSType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevBoxOSType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevBoxOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

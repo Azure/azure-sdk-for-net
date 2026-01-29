@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageMover
 {
+    /// <summary></summary>
     public partial class StorageMoverAgentResource : IJsonModel<StorageMoverAgentData>
     {
-        private static StorageMoverAgentData s_dataDeserializationInstance;
-        private static StorageMoverAgentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageMoverAgentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageMoverAgentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageMoverAgentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageMoverAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverAgentData>)Data).Write(writer, options);
 
-        StorageMoverAgentData IJsonModel<StorageMoverAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverAgentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageMoverAgentData IJsonModel<StorageMoverAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageMoverAgentData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageMoverAgentData IPersistableModel<StorageMoverAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverAgentData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        string IPersistableModel<StorageMoverAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverAgentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageMoverAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

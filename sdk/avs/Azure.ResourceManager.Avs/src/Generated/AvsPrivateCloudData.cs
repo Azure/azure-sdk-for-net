@@ -13,206 +13,373 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary>
-    /// A class representing the AvsPrivateCloud data model.
-    /// A private cloud resource
-    /// </summary>
+    /// <summary> A private cloud resource. </summary>
     public partial class AvsPrivateCloudData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudData(AzureLocation location, AvsSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
-            ExtendedNetworkBlocks = new ChangeTrackingList<string>();
-            ExternalCloudLinks = new ChangeTrackingList<ResourceIdentifier>();
             Sku = sku;
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="managementCluster"> The default cluster used for management. </param>
-        /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
-        /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
-        /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
-        /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
-        /// <param name="extendedNetworkBlocks">
-        /// Array of additional networks noncontiguous with networkBlock. Networks must be
-        /// unique and non-overlapping across VNet in your subscription, on-premise, and
-        /// this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
-        /// (A.B.C.D/X).
-        /// </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="circuit"> An ExpressRoute Circuit. </param>
-        /// <param name="endpoints"> The endpoints. </param>
-        /// <param name="networkBlock">
-        /// The block of addresses should be unique across VNet in your subscription as
-        /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
-        /// A,B,C,D are between 0 and 255, and X is between 0 and 22
-        /// </param>
-        /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
-        /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
-        /// <param name="vMotionNetwork"> Used for live migration of virtual machines. </param>
-        /// <param name="vCenterPassword"> Optionally, set the vCenter admin password when the private cloud is created. </param>
-        /// <param name="nsxtPassword"> Optionally, set the NSX-T Manager password when the private cloud is created. </param>
-        /// <param name="vCenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
-        /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
-        /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
-        /// <param name="secondaryCircuit">
-        /// A secondary expressRoute circuit from a separate AZ. Only present in a
-        /// stretched private cloud
-        /// </param>
-        /// <param name="nsxPublicIPQuotaRaised">
-        /// Flag to indicate whether the private cloud has the quota for provisioned NSX
-        /// Public IP count raised from 64 to 1024
-        /// </param>
-        /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
-        /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, AvsSku sku, ManagedServiceIdentity identity, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PrivateCloudProperties properties, AvsSku sku, ManagedServiceIdentity identity, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
-            ManagementCluster = managementCluster;
-            Internet = internet;
-            IdentitySources = identitySources;
-            Availability = availability;
-            Encryption = encryption;
-            ExtendedNetworkBlocks = extendedNetworkBlocks;
-            ProvisioningState = provisioningState;
-            Circuit = circuit;
-            Endpoints = endpoints;
-            NetworkBlock = networkBlock;
-            ManagementNetwork = managementNetwork;
-            ProvisioningNetwork = provisioningNetwork;
-            VMotionNetwork = vMotionNetwork;
-            VCenterPassword = vCenterPassword;
-            NsxtPassword = nsxtPassword;
-            VCenterCertificateThumbprint = vCenterCertificateThumbprint;
-            NsxtCertificateThumbprint = nsxtCertificateThumbprint;
-            ExternalCloudLinks = externalCloudLinks;
-            SecondaryCircuit = secondaryCircuit;
-            NsxPublicIPQuotaRaised = nsxPublicIPQuotaRaised;
-            VirtualNetworkId = virtualNetworkId;
-            DnsZoneType = dnsZoneType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Identity = identity;
             Zones = zones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/> for deserialization. </summary>
-        internal AvsPrivateCloudData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal PrivateCloudProperties Properties { get; set; }
+
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public AvsSku Sku { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The availability zones. </summary>
+        public IList<string> Zones { get; }
 
         /// <summary> The default cluster used for management. </summary>
-        public AvsManagementCluster ManagementCluster { get; set; }
+        public AvsManagementCluster ManagementCluster
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementCluster;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.ManagementCluster = value;
+            }
+        }
+
         /// <summary> Connectivity to internet is enabled or disabled. </summary>
-        public InternetConnectivityState? Internet { get; set; }
+        public InternetConnectivityState? Internet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Internet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.Internet = value.Value;
+            }
+        }
+
         /// <summary> vCenter Single Sign On Identity Sources. </summary>
-        public IList<SingleSignOnIdentitySource> IdentitySources { get; }
+        public IList<SingleSignOnIdentitySource> IdentitySources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentitySources;
+            }
+        }
+
         /// <summary> Properties describing how the cloud is distributed across availability zones. </summary>
-        public PrivateCloudAvailabilityProperties Availability { get; set; }
+        public PrivateCloudAvailabilityProperties Availability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Availability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.Availability = value;
+            }
+        }
+
         /// <summary> Customer managed key encryption, can be enabled or disabled. </summary>
-        public CustomerManagedEncryption Encryption { get; set; }
+        public CustomerManagedEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary>
         /// Array of additional networks noncontiguous with networkBlock. Networks must be
         /// unique and non-overlapping across VNet in your subscription, on-premise, and
         /// this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
         /// (A.B.C.D/X).
         /// </summary>
-        public IList<string> ExtendedNetworkBlocks { get; }
+        public IList<string> ExtendedNetworkBlocks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtendedNetworkBlocks;
+            }
+        }
+
         /// <summary> The provisioning state. </summary>
-        public AvsPrivateCloudProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> An ExpressRoute Circuit. </summary>
-        public ExpressRouteCircuit Circuit { get; set; }
+        public ExpressRouteCircuit Circuit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Circuit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.Circuit = value;
+            }
+        }
+
         /// <summary> The endpoints. </summary>
-        public AvsPrivateCloudEndpoints Endpoints { get; }
+        public AvsPrivateCloudEndpoints Endpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoints;
+            }
+        }
+
         /// <summary>
         /// The block of addresses should be unique across VNet in your subscription as
         /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
         /// A,B,C,D are between 0 and 255, and X is between 0 and 22
         /// </summary>
-        public string NetworkBlock { get; set; }
+        public string NetworkBlock
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkBlock;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.NetworkBlock = value;
+            }
+        }
+
         /// <summary> Network used to access vCenter Server and NSX-T Manager. </summary>
-        public string ManagementNetwork { get; }
+        public string ManagementNetwork
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementNetwork;
+            }
+        }
+
         /// <summary> Used for virtual machine cold migration, cloning, and snapshot migration. </summary>
-        public string ProvisioningNetwork { get; }
+        public string ProvisioningNetwork
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningNetwork;
+            }
+        }
+
         /// <summary> Used for live migration of virtual machines. </summary>
-        public string VMotionNetwork { get; }
+        public string VMotionNetwork
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VMotionNetwork;
+            }
+        }
+
         /// <summary> Optionally, set the vCenter admin password when the private cloud is created. </summary>
-        public string VCenterPassword { get; set; }
+        public string VCenterPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VCenterPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.VCenterPassword = value;
+            }
+        }
+
         /// <summary> Optionally, set the NSX-T Manager password when the private cloud is created. </summary>
-        public string NsxtPassword { get; set; }
+        public string NsxtPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NsxtPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.NsxtPassword = value;
+            }
+        }
+
         /// <summary> Thumbprint of the vCenter Server SSL certificate. </summary>
-        public string VCenterCertificateThumbprint { get; }
+        public string VCenterCertificateThumbprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VCenterCertificateThumbprint;
+            }
+        }
+
         /// <summary> Thumbprint of the NSX-T Manager SSL certificate. </summary>
-        public string NsxtCertificateThumbprint { get; }
+        public string NsxtCertificateThumbprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NsxtCertificateThumbprint;
+            }
+        }
+
         /// <summary> Array of cloud link IDs from other clouds that connect to this one. </summary>
-        public IReadOnlyList<ResourceIdentifier> ExternalCloudLinks { get; }
+        public IReadOnlyList<ResourceIdentifier> ExternalCloudLinks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalCloudLinks;
+            }
+        }
+
         /// <summary>
         /// A secondary expressRoute circuit from a separate AZ. Only present in a
         /// stretched private cloud
         /// </summary>
-        public ExpressRouteCircuit SecondaryCircuit { get; set; }
+        public ExpressRouteCircuit SecondaryCircuit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryCircuit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.SecondaryCircuit = value;
+            }
+        }
+
         /// <summary>
         /// Flag to indicate whether the private cloud has the quota for provisioned NSX
         /// Public IP count raised from 64 to 1024
         /// </summary>
-        public NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised { get; }
+        public NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NsxPublicIPQuotaRaised;
+            }
+        }
+
         /// <summary> Azure resource ID of the virtual network. </summary>
-        public ResourceIdentifier VirtualNetworkId { get; set; }
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.VirtualNetworkId = value;
+            }
+        }
+
         /// <summary> The type of DNS zone to use. </summary>
-        public AvsDnsZoneType? DnsZoneType { get; set; }
-        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
-        public AvsSku Sku { get; set; }
-        /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The availability zones. </summary>
-        public IList<string> Zones { get; }
+        public AvsDnsZoneType? DnsZoneType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsZoneType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.DnsZoneType = value.Value;
+            }
+        }
+
+        /// <summary> The private cloud license. </summary>
+        public VcfLicense VcfLicense
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VcfLicense;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateCloudProperties();
+                }
+                Properties.VcfLicense = value;
+            }
+        }
     }
 }

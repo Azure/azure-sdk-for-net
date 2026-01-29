@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal class AdvancedThreatProtectionOperationSource : IOperationSource<AdvancedThreatProtectionResource>
+    /// <summary></summary>
+    internal partial class AdvancedThreatProtectionOperationSource : IOperationSource<AdvancedThreatProtectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AdvancedThreatProtectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AdvancedThreatProtectionResource IOperationSource<AdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AdvancedThreatProtectionData data = AdvancedThreatProtectionData.DeserializeAdvancedThreatProtectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AdvancedThreatProtectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AdvancedThreatProtectionResource> IOperationSource<AdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
-            return await Task.FromResult(new AdvancedThreatProtectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AdvancedThreatProtectionData data = AdvancedThreatProtectionData.DeserializeAdvancedThreatProtectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AdvancedThreatProtectionResource(_client, data);
         }
     }
 }

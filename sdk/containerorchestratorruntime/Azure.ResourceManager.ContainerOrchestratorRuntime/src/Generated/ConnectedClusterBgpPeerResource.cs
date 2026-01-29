@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
     /// <summary>
-    /// A Class representing a ConnectedClusterBgpPeer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterBgpPeerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetConnectedClusterBgpPeerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterBgpPeer method.
+    /// A class representing a ConnectedClusterBgpPeer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterBgpPeerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterBgpPeers method.
     /// </summary>
     public partial class ConnectedClusterBgpPeerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ConnectedClusterBgpPeerResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="bgpPeerName"> The bgpPeerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string bgpPeerName)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _connectedClusterBgpPeerBgpPeersClientDiagnostics;
-        private readonly BgpPeersRestOperations _connectedClusterBgpPeerBgpPeersRestClient;
+        private readonly ClientDiagnostics _bgpPeersClientDiagnostics;
+        private readonly BgpPeers _bgpPeersRestClient;
         private readonly ConnectedClusterBgpPeerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KubernetesRuntime/bgpPeers";
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterBgpPeerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ConnectedClusterBgpPeerResource for mocking. </summary>
         protected ConnectedClusterBgpPeerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterBgpPeerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterBgpPeerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectedClusterBgpPeerResource(ArmClient client, ConnectedClusterBgpPeerData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterBgpPeerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterBgpPeerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectedClusterBgpPeerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _connectedClusterBgpPeerBgpPeersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string connectedClusterBgpPeerBgpPeersApiVersion);
-            _connectedClusterBgpPeerBgpPeersRestClient = new BgpPeersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterBgpPeerBgpPeersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string connectedClusterBgpPeerApiVersion);
+            _bgpPeersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
+            _bgpPeersRestClient = new BgpPeers(_bgpPeersClientDiagnostics, Pipeline, Endpoint, connectedClusterBgpPeerApiVersion ?? "2024-03-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ConnectedClusterBgpPeerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="bgpPeerName"> The bgpPeerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string bgpPeerName)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a BgpPeer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpPeer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BgpPeers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterBgpPeerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConnectedClusterBgpPeerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterBgpPeerBgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Get");
+            using DiagnosticScope scope = _bgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Get");
             scope.Start();
             try
             {
-                var response = await _connectedClusterBgpPeerBgpPeersRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectedClusterBgpPeerData> response = Response.FromValue(ConnectedClusterBgpPeerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterBgpPeerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Get a BgpPeer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpPeer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BgpPeers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterBgpPeerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConnectedClusterBgpPeerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterBgpPeerBgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Get");
+            using DiagnosticScope scope = _bgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Get");
             scope.Start();
             try
             {
-                var response = _connectedClusterBgpPeerBgpPeersRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectedClusterBgpPeerData> response = Response.FromValue(ConnectedClusterBgpPeerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterBgpPeerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Delete a BgpPeer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpPeer_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> BgpPeers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterBgpPeerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,16 +210,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterBgpPeerBgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Delete");
+            using DiagnosticScope scope = _bgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _connectedClusterBgpPeerBgpPeersRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _connectedClusterBgpPeerBgpPeersRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bgpPeersRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Delete a BgpPeer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpPeer_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> BgpPeers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterBgpPeerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +261,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterBgpPeerBgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Delete");
+            using DiagnosticScope scope = _bgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Delete");
             scope.Start();
             try
             {
-                var response = _connectedClusterBgpPeerBgpPeersRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var uri = _connectedClusterBgpPeerBgpPeersRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bgpPeersRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +288,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a BgpPeer
+        /// Update a ConnectedClusterBgpPeer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpPeer_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BgpPeers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterBgpPeerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,14 +316,27 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterBgpPeerBgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Update");
+            using DiagnosticScope scope = _bgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Update");
             scope.Start();
             try
             {
-                var response = await _connectedClusterBgpPeerBgpPeersRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(new ConnectedClusterBgpPeerOperationSource(Client), _connectedClusterBgpPeerBgpPeersClientDiagnostics, Pipeline, _connectedClusterBgpPeerBgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
+                    new ConnectedClusterBgpPeerOperationSource(Client),
+                    _bgpPeersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -301,23 +347,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a BgpPeer
+        /// Update a ConnectedClusterBgpPeer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpPeer_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BgpPeers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterBgpPeerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,14 +375,27 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterBgpPeerBgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Update");
+            using DiagnosticScope scope = _bgpPeersClientDiagnostics.CreateScope("ConnectedClusterBgpPeerResource.Update");
             scope.Start();
             try
             {
-                var response = _connectedClusterBgpPeerBgpPeersRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(new ConnectedClusterBgpPeerOperationSource(Client), _connectedClusterBgpPeerBgpPeersClientDiagnostics, Pipeline, _connectedClusterBgpPeerBgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
+                    new ConnectedClusterBgpPeerOperationSource(Client),
+                    _bgpPeersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

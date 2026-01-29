@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     // By default, DefaultAzureCredential is used, which is likely desired for most
                     // scenarios. If you need to restrict to a specific credential instance, you could
                     // register that instance as the default credential instead.
-                    builder.UseCredential(new ManagedIdentityCredential());
+                    builder.UseCredential(new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned));
                 });
 
                 // Register other services, controllers, and other infrastructure.

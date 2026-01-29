@@ -8,8 +8,6 @@ using Azure.Security.KeyVault.Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Invocation;
-using System.CommandLine.IO;
 using System.CommandLine.Parsing;
 using System.Linq;
 using System.Text;
@@ -23,8 +21,7 @@ internal static class Program
         Uri vaultUri,
         string storageAccountName,
         int days,
-        bool readOnly,
-        IConsole console)
+        bool readOnly)
     {
         // Allow only credentials appropriate for this interactive tool sample.
         DefaultAzureCredential credential = new DefaultAzureCredential(
@@ -45,7 +42,7 @@ internal static class Program
 
         if (storageAccount is null)
         {
-            console.Error.WriteLine($"Error: '{storageAccountName}' is not currently managed by {vaultUri}");
+            Console.Error.WriteLine($"Error: '{storageAccountName}' is not currently managed by {vaultUri}");
             return 1;
         }
 
@@ -57,7 +54,7 @@ internal static class Program
         SecretClient secretClient = new SecretClient(vaultUri, credential, options);
         KeyVaultSecret sasToken = await secretClient.GetSecretAsync($"{storageAccountName}-{sasDefinitionName}", cancellationToken: s_cancellationTokenSource.Token);
 
-        console.Out.WriteLine(sasToken.Value);
+        Console.Out.WriteLine(sasToken.Value);
         return 0;
     }
 
@@ -183,51 +180,43 @@ internal static class Program
     {
         Command = new RootCommand("Generates a shareable link to a blob or file")
         {
-            new Option<Uri>(
-                alias: "--vault-name",
-                description: "Key Vault name or URI, e.g. my-vault or https://my-vault-vault.azure.net",
-                parseArgument: result =>
+            Options =
+            {
+                new Option<Uri>("vaultUri", ["--vault-name"])
                 {
-                    string value = result.Tokens.Single().Value;
-                    if (Uri.TryCreate(value, UriKind.Absolute, out Uri vaultUri) ||
-                        Uri.TryCreate($"https://{value}.vault.azure.net", UriKind.Absolute, out vaultUri))
+                    Description = "Key Vault name or URI, e.g. my-vault or https://my-vault-vault.azure.net",
+                    Required = true,
+                    CustomParser = result =>
                     {
-                        return vaultUri;
+                        string value = result.Tokens.Single().Value;
+                        if (Uri.TryCreate(value, UriKind.Absolute, out Uri vaultUri) ||
+                            Uri.TryCreate($"https://{value}.vault.azure.net", UriKind.Absolute, out vaultUri))
+                        {
+                            return vaultUri;
+                        }
+
+                        result.AddError("Must specify a vault name or URI");
+                        return null;
                     }
+                },
 
-                    result.ErrorMessage = "Must specify a vault name or URI";
-                    return null!;
+                new Option<string>("storageAccountName", ["--storage-account-name"])
+                {
+                    Description = "Storage account name managed by Key Vault",
+                    Required = true
+                },
+
+                new Option<int>("days", ["-d", "--days"])
+                {
+                    Description = "Number of days the link is valid; must be > 0",
+                }.GreaterThan(0),
+
+                new Option<bool>("readOnly", ["-r", "--read-only"])
+                {
+                    Description = "Make the shareable link read-only"
                 }
-            )
-            {
-                Name = "vaultUri",
-                IsRequired = true,
-            },
-
-            new Option<string>(
-                alias: "--storage-account-name",
-                description: "Storage account name managed by Key Vault"
-            )
-            {
-                IsRequired = true,
-            },
-
-            new Option<int>(
-                aliases: new[] { "-d", "--days" },
-                description: "Number of days the link is valid; must be > 0",
-                getDefaultValue: () => 0
-            )
-            {
-                IsRequired = true,
-            }.GreaterThan(0),
-
-            new Option<bool>(
-                aliases: new[] { "-r", "--read-only" },
-                description: "Make the shareable link read-only"
-            ),
+            }
         };
-
-        Command.Handler = CommandHandler.Create<Uri, string, int, bool, IConsole>(RunAsync);
 
         s_cancellationTokenSource = new CancellationTokenSource();
     }
@@ -242,19 +231,44 @@ internal static class Program
             args.Cancel = true;
         };
 
-        return await Command.InvokeAsync(args);
+        ParseResult parseResult = Command.Parse(args);
+
+        if (parseResult.Errors.Count > 0)
+        {
+            foreach (var error in parseResult.Errors)
+            {
+                Console.Error.WriteLine(error.Message);
+            }
+
+            return 1;
+        }
+
+        await RunAsync(
+            parseResult.GetValue<Uri>("vaultUri"),
+            parseResult.GetValue<string>("storageAccountName"),
+            parseResult.GetValue<int>("days"),
+            parseResult.GetValue<bool>("readOnly"));
+
+        return 0;
     }
     #endregion
 
     #region Extensions
     internal static Option<int> GreaterThan(this Option<int> option, int value)
     {
-        option.AddValidator(r =>
-            r.Tokens
+        option.Validators.Add(r =>
+        {
+            var result = r.Tokens
                 .Select(t => t.Value)
                 .Where(v => !int.TryParse(v, out int i) || i <= value)
-                .Select(_ => $"Option '{r.Symbol.Name}' must be greater than {value}")
-                .FirstOrDefault());
+                .Select(_ => $"Option '{r.Option.Name}' must be greater than {value}")
+                .FirstOrDefault();
+
+            if (result != null)
+            {
+                r.AddError(result);
+            }
+        });
 
         return option;
     }

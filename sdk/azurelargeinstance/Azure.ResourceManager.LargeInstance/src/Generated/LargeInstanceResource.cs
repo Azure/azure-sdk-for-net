@@ -7,47 +7,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.LargeInstance.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LargeInstance
 {
     /// <summary>
-    /// A Class representing a LargeInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LargeInstanceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLargeInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLargeInstance method.
+    /// A class representing a LargeInstance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LargeInstanceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLargeInstances method.
     /// </summary>
     public partial class LargeInstanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LargeInstanceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="azureLargeInstanceName"> The azureLargeInstanceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureLargeInstanceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _largeInstanceAzureLargeInstanceClientDiagnostics;
-        private readonly AzureLargeInstanceRestOperations _largeInstanceAzureLargeInstanceRestClient;
+        private readonly ClientDiagnostics _azureLargeInstanceClientDiagnostics;
+        private readonly AzureLargeInstance _azureLargeInstanceRestClient;
         private readonly LargeInstanceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureLargeInstance/azureLargeInstances";
 
-        /// <summary> Initializes a new instance of the <see cref="LargeInstanceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LargeInstanceResource for mocking. </summary>
         protected LargeInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LargeInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LargeInstanceResource(ArmClient client, LargeInstanceData data) : this(client, data.Id)
@@ -56,38 +47,51 @@ namespace Azure.ResourceManager.LargeInstance
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LargeInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LargeInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _largeInstanceAzureLargeInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string largeInstanceAzureLargeInstanceApiVersion);
-            _largeInstanceAzureLargeInstanceRestClient = new AzureLargeInstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, largeInstanceAzureLargeInstanceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string largeInstanceApiVersion);
+            _azureLargeInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", ResourceType.Namespace, Diagnostics);
+            _azureLargeInstanceRestClient = new AzureLargeInstance(_azureLargeInstanceClientDiagnostics, Pipeline, Endpoint, largeInstanceApiVersion ?? "2024-08-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual LargeInstanceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureLargeInstanceName"> The azureLargeInstanceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureLargeInstanceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
@@ -95,33 +99,41 @@ namespace Azure.ResourceManager.LargeInstance
         /// and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LargeInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Get");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _largeInstanceAzureLargeInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,33 +148,41 @@ namespace Azure.ResourceManager.LargeInstance
         /// and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LargeInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Get");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _largeInstanceAzureLargeInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -177,20 +197,20 @@ namespace Azure.ResourceManager.LargeInstance
         /// subscription, resource group, and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,11 +221,21 @@ namespace Azure.ResourceManager.LargeInstance
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Update");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = await _largeInstanceAzureLargeInstanceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstancePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,20 +250,20 @@ namespace Azure.ResourceManager.LargeInstance
         /// subscription, resource group, and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,11 +274,21 @@ namespace Azure.ResourceManager.LargeInstance
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Update");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = _largeInstanceAzureLargeInstanceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstancePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,39 +299,100 @@ namespace Azure.ResourceManager.LargeInstance
         }
 
         /// <summary>
-        /// The operation to restart an Azure Large Instance (only for compute instances)
+        /// Deletes an Azure Large Instance for the specified subscription, resource group,
+        /// and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceParameter"> When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing processes that may be running on the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LargeInstanceOperationStatusResult>> RestartAsync(WaitUntil waitUntil, LargeInstanceForceState forceParameter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Restart");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _largeInstanceAzureLargeInstanceRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new LargeInstanceArmOperation<LargeInstanceOperationStatusResult>(new LargeInstanceOperationStatusResultOperationSource(), _largeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, _largeInstanceAzureLargeInstanceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceParameter).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                LargeInstanceArmOperation operation = new LargeInstanceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an Azure Large Instance for the specified subscription, resource group,
+        /// and instance name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                LargeInstanceArmOperation operation = new LargeInstanceArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,36 +406,93 @@ namespace Azure.ResourceManager.LargeInstance
         /// The operation to restart an Azure Large Instance (only for compute instances)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/restart. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Restart. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="forceParameter"> When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing processes that may be running on the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LargeInstanceOperationStatusResult> Restart(WaitUntil waitUntil, LargeInstanceForceState forceParameter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, LargeInstanceForceState forceParameter = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Restart");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Restart");
             scope.Start();
             try
             {
-                var response = _largeInstanceAzureLargeInstanceRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceParameter, cancellationToken);
-                var operation = new LargeInstanceArmOperation<LargeInstanceOperationStatusResult>(new LargeInstanceOperationStatusResultOperationSource(), _largeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, _largeInstanceAzureLargeInstanceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceParameter).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstanceForceState.ToRequestContent(forceParameter), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                LargeInstanceArmOperation operation = new LargeInstanceArmOperation(_azureLargeInstanceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to restart an Azure Large Instance (only for compute instances)
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="forceParameter"> When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing processes that may be running on the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Restart(WaitUntil waitUntil, LargeInstanceForceState forceParameter = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Restart");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstanceForceState.ToRequestContent(forceParameter), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                LargeInstanceArmOperation operation = new LargeInstanceArmOperation(_azureLargeInstanceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -348,35 +506,48 @@ namespace Azure.ResourceManager.LargeInstance
         /// The operation to shutdown an Azure Large Instance (only for compute instances)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/shutdown</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/shutdown. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Shutdown</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Shutdown. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LargeInstanceOperationStatusResult>> ShutdownAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> ShutdownAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Shutdown");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Shutdown");
             scope.Start();
             try
             {
-                var response = await _largeInstanceAzureLargeInstanceRestClient.ShutdownAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LargeInstanceArmOperation<LargeInstanceOperationStatusResult>(new LargeInstanceOperationStatusResultOperationSource(), _largeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, _largeInstanceAzureLargeInstanceRestClient.CreateShutdownRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateShutdownRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _azureLargeInstanceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -390,35 +561,48 @@ namespace Azure.ResourceManager.LargeInstance
         /// The operation to shutdown an Azure Large Instance (only for compute instances)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/shutdown</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/shutdown. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Shutdown</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Shutdown. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LargeInstanceOperationStatusResult> Shutdown(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Shutdown(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Shutdown");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Shutdown");
             scope.Start();
             try
             {
-                var response = _largeInstanceAzureLargeInstanceRestClient.Shutdown(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LargeInstanceArmOperation<LargeInstanceOperationStatusResult>(new LargeInstanceOperationStatusResultOperationSource(), _largeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, _largeInstanceAzureLargeInstanceRestClient.CreateShutdownRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateShutdownRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _azureLargeInstanceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -432,35 +616,48 @@ namespace Azure.ResourceManager.LargeInstance
         /// The operation to start an Azure Large Instance (only for compute instances)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LargeInstanceOperationStatusResult>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Start");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Start");
             scope.Start();
             try
             {
-                var response = await _largeInstanceAzureLargeInstanceRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LargeInstanceArmOperation<LargeInstanceOperationStatusResult>(new LargeInstanceOperationStatusResultOperationSource(), _largeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, _largeInstanceAzureLargeInstanceRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _azureLargeInstanceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -474,35 +671,48 @@ namespace Azure.ResourceManager.LargeInstance
         /// The operation to start an Azure Large Instance (only for compute instances)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LargeInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LargeInstanceOperationStatusResult> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Start");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.Start");
             scope.Start();
             try
             {
-                var response = _largeInstanceAzureLargeInstanceRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LargeInstanceArmOperation<LargeInstanceOperationStatusResult>(new LargeInstanceOperationStatusResultOperationSource(), _largeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, _largeInstanceAzureLargeInstanceRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureLargeInstanceRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _azureLargeInstanceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -512,27 +722,7 @@ namespace Azure.ResourceManager.LargeInstance
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -542,29 +732,35 @@ namespace Azure.ResourceManager.LargeInstance
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.AddTag");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _largeInstanceAzureLargeInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LargeInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                    return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new LargeInstancePatch();
-                    foreach (var tag in current.Tags)
+                    LargeInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LargeInstancePatch patch = new LargeInstancePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<LargeInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -574,27 +770,7 @@ namespace Azure.ResourceManager.LargeInstance
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -604,29 +780,35 @@ namespace Azure.ResourceManager.LargeInstance
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.AddTag");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _largeInstanceAzureLargeInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new LargeInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                    return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new LargeInstancePatch();
-                    foreach (var tag in current.Tags)
+                    LargeInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LargeInstancePatch patch = new LargeInstancePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<LargeInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -636,54 +818,40 @@ namespace Azure.ResourceManager.LargeInstance
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<LargeInstanceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.SetTags");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _largeInstanceAzureLargeInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LargeInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                    return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new LargeInstancePatch();
+                    LargeInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LargeInstancePatch patch = new LargeInstancePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<LargeInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -693,54 +861,40 @@ namespace Azure.ResourceManager.LargeInstance
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<LargeInstanceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.SetTags");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _largeInstanceAzureLargeInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new LargeInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                    return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new LargeInstancePatch();
+                    LargeInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LargeInstancePatch patch = new LargeInstancePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<LargeInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -750,27 +904,7 @@ namespace Azure.ResourceManager.LargeInstance
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -778,29 +912,35 @@ namespace Azure.ResourceManager.LargeInstance
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.RemoveTag");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _largeInstanceAzureLargeInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LargeInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                    return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new LargeInstancePatch();
-                    foreach (var tag in current.Tags)
+                    LargeInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LargeInstancePatch patch = new LargeInstancePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<LargeInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -810,27 +950,7 @@ namespace Azure.ResourceManager.LargeInstance
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -838,29 +958,35 @@ namespace Azure.ResourceManager.LargeInstance
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.RemoveTag");
+            using DiagnosticScope scope = _azureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _largeInstanceAzureLargeInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new LargeInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
+                    return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new LargeInstancePatch();
-                    foreach (var tag in current.Tags)
+                    LargeInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LargeInstancePatch patch = new LargeInstancePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<LargeInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

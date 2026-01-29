@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -57,16 +56,15 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="location"> The location. </param>
         /// <param name="priority"> The priority of the DNS security rule. </param>
         /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
-        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="dnsResolverDomainLists"/> is null. </exception>
-        public DnsSecurityRuleData(AzureLocation location, int priority, DnsSecurityRuleAction action, IEnumerable<WritableSubResource> dnsResolverDomainLists) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
+        public DnsSecurityRuleData(AzureLocation location, int priority, DnsSecurityRuleAction action) : base(location)
         {
             Argument.AssertNotNull(action, nameof(action));
-            Argument.AssertNotNull(dnsResolverDomainLists, nameof(dnsResolverDomainLists));
 
             Priority = priority;
             Action = action;
-            DnsResolverDomainLists = dnsResolverDomainLists.ToList();
+            DnsResolverDomainLists = new ChangeTrackingList<WritableSubResource>();
+            ManagedDomainLists = new ChangeTrackingList<ManagedDomainList>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleData"/>. </summary>
@@ -76,19 +74,21 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS security rule. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="priority"> The priority of the DNS security rule. </param>
         /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
         /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
+        /// <param name="managedDomainLists"> Managed domain lists that the DNS security rule applies to. </param>
         /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, int priority, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsSecurityRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, int priority, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, IList<ManagedDomainList> managedDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Priority = priority;
             Action = action;
             DnsResolverDomainLists = dnsResolverDomainLists;
+            ManagedDomainLists = managedDomainLists;
             DnsSecurityRuleState = dnsSecurityRuleState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the DNS security rule. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
         /// <summary> The priority of the DNS security rule. </summary>
         public int Priority { get; set; }
@@ -119,6 +119,8 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
         public IList<WritableSubResource> DnsResolverDomainLists { get; }
+        /// <summary> Managed domain lists that the DNS security rule applies to. </summary>
+        public IList<ManagedDomainList> ManagedDomainLists { get; }
         /// <summary> The state of DNS security rule. </summary>
         public DnsSecurityRuleState? DnsSecurityRuleState { get; set; }
         /// <summary> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </summary>

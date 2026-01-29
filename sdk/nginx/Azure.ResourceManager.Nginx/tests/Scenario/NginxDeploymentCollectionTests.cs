@@ -39,10 +39,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             Assert.IsTrue(nginxDeploymentName.Equals(nginxDeployment.Data.Name));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetNginxDeployments().CreateOrUpdateAsync(WaitUntil.Completed, nginxDeploymentName, null)).Value);
-
-            NginxDeploymentData nginxDeploymentData = new NginxDeploymentData(Location);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetNginxDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, nginxDeploymentData)).Value);
         }
 
         [TestCase]

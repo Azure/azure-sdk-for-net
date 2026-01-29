@@ -8,80 +8,74 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary>
-    /// A class representing the ChaosTargetMetadata data model.
-    /// Model that represents a Target Type resource.
-    /// </summary>
+    /// <summary> Model that represents a Target Type resource. </summary>
     public partial class ChaosTargetMetadataData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetMetadataData"/>. </summary>
-        internal ChaosTargetMetadataData()
+        /// <param name="properties"> The properties of the target type resource. </param>
+        internal ChaosTargetMetadataData(TargetTypeProperties properties)
         {
-            ResourceTypes = new ChangeTrackingList<string>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Localized string of the display name. </param>
-        /// <param name="description"> Localized string of the description. </param>
-        /// <param name="propertiesSchema"> URL to retrieve JSON schema of the Target Type properties. </param>
-        /// <param name="resourceTypes"> List of resource types this Target Type can extend. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosTargetMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string propertiesSchema, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the target type resource. </param>
+        internal ChaosTargetMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TargetTypeProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Description = description;
-            PropertiesSchema = propertiesSchema;
-            ResourceTypes = resourceTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of the target type resource. </summary>
+        internal TargetTypeProperties Properties { get; }
 
         /// <summary> Localized string of the display name. </summary>
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties.DisplayName;
+            }
+        }
+
         /// <summary> Localized string of the description. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> URL to retrieve JSON schema of the Target Type properties. </summary>
-        public string PropertiesSchema { get; }
+        public string PropertiesSchema
+        {
+            get
+            {
+                return Properties.PropertiesSchema;
+            }
+        }
+
         /// <summary> List of resource types this Target Type can extend. </summary>
-        public IReadOnlyList<string> ResourceTypes { get; }
+        public IReadOnlyList<string> ResourceTypes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceTypes;
+            }
+        }
     }
 }

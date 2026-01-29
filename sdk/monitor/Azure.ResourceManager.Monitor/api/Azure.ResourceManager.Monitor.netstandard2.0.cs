@@ -353,7 +353,6 @@ namespace Azure.ResourceManager.Monitor
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationMetadata Metadata { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MetadataProvisionedBy { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -412,7 +411,6 @@ namespace Azure.ResourceManager.Monitor
         public string ImmutableId { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleMetadata Metadata { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MetadataProvisionedBy { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Monitor.Models.DataStreamDeclaration> StreamDeclarations { get { throw null; } }
@@ -623,15 +621,21 @@ namespace Azure.ResourceManager.Monitor
     }
     public partial class MetricAlertData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MetricAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MetricAlertData>
     {
+        public MetricAlertData(Azure.Core.AzureLocation location, int severity, bool isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan evaluationFrequency, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria) { }
         public MetricAlertData(Azure.Core.AzureLocation location, int severity, bool isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria) { }
+        public System.Collections.Generic.IDictionary<string, string> ActionProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricAlertAction> Actions { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MetricAlertCriteria Criteria { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.TimeSpan EvaluationFrequency { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAutoMitigateEnabled { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public bool? IsMigrated { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public System.TimeSpan? MonitorWindowSize { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ResolveConfiguration ResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public int Severity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? TargetResourceRegion { get { throw null; } set { } }
@@ -675,13 +679,9 @@ namespace Azure.ResourceManager.Monitor
     }
     public static partial class MonitorExtensions
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus> CreateNotifications(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus> CreateNotifications(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus>> CreateNotificationsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus>> CreateNotificationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Monitor.ActionGroupResource> GetActionGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string actionGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.ActionGroupResource>> GetActionGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string actionGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -772,13 +772,9 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.ResourceManager.Monitor.MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus> GetNotificationStatus(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus> GetNotificationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus>> GetNotificationStatusAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus>> GetNotificationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Monitor.PipelineGroupResource> GetPipelineGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string pipelineGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.PipelineGroupResource>> GetPipelineGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string pipelineGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1266,9 +1262,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
     public partial class MockableMonitorResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableMonitorResourceGroupResource() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus> CreateNotifications(Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus>> CreateNotificationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.ActionGroupResource> GetActionGroup(string actionGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.ActionGroupResource>> GetActionGroupAsync(string actionGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1297,9 +1291,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResource(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Monitor.MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus> GetNotificationStatus(string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus>> GetNotificationStatusAsync(string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.PipelineGroupResource> GetPipelineGroup(string pipelineGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.PipelineGroupResource>> GetPipelineGroupAsync(string pipelineGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1313,9 +1305,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
     public partial class MockableMonitorSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableMonitorSubscriptionResource() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus> CreateNotifications(Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.Models.NotificationStatus>> CreateNotificationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.Models.NotificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Monitor.ActionGroupResource> GetActionGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.ActionGroupResource> GetActionGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1344,9 +1334,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus> GetNotificationStatus(string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus>> GetNotificationStatusAsync(string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Monitor.PipelineGroupResource> GetPipelineGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.PipelineGroupResource> GetPipelineGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1487,9 +1475,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.AlertSeverity Two { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.AlertSeverity Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.AlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.AlertSeverity left, Azure.ResourceManager.Monitor.Models.AlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.AlertSeverity (long value) { throw null; }
@@ -1498,7 +1484,6 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public static partial class ArmMonitorModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.ActionGroupData ActionGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string groupShortName, bool? isEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEmailReceiver> emailReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver> smsReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver> webhookReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorItsmReceiver> itsmReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver> azureAppPushReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver> automationRunbookReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorVoiceReceiver> voiceReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLogicAppReceiver> logicAppReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureFunctionReceiver> azureFunctionReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver> armRoleReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEventHubReceiver> eventHubReceivers) { throw null; }
         public static Azure.ResourceManager.Monitor.ActionGroupData ActionGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string groupShortName = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEmailReceiver> emailReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver> smsReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver> webhookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorItsmReceiver> itsmReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver> azureAppPushReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorVoiceReceiver> voiceReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLogicAppReceiver> logicAppReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureFunctionReceiver> azureFunctionReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver> armRoleReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEventHubReceiver> eventHubReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.IncidentReceiver> incidentReceivers = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.Monitor.ActivityLogAlertData ActivityLogAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> scopes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.ActivityLogAlertAnyOfOrLeafCondition> conditionAllOf = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.ActivityLogAlertActionGroup> actionsActionGroups = null, bool? isEnabled = default(bool?), string description = null) { throw null; }
@@ -1526,8 +1511,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.EventDataInfo EventDataInfo(Azure.ResourceManager.Monitor.Models.SenderAuthorization authorization = null, System.Collections.Generic.IReadOnlyDictionary<string, string> claims = null, string caller = null, string description = null, string id = null, string eventDataId = null, string correlationId = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString eventName = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString category = null, Azure.ResourceManager.Monitor.Models.EventDataHttpRequestInfo httpRequest = null, Azure.ResourceManager.Monitor.Models.MonitorEventLevel? level = default(Azure.ResourceManager.Monitor.Models.MonitorEventLevel?), string resourceGroupName = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString resourceProviderName = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString resourceType = null, string operationId = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString operationName = null, System.Collections.Generic.IReadOnlyDictionary<string, string> properties = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString status = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString subStatus = null, System.DateTimeOffset? eventTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? submissionTimestamp = default(System.DateTimeOffset?), string subscriptionId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.LogAnalyticsDestination LogAnalyticsDestination(Azure.Core.ResourceIdentifier workspaceResourceId = null, string workspaceId = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Monitor.LogProfileData LogProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier storageAccountId = null, Azure.Core.ResourceIdentifier serviceBusRuleId = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> categories = null, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.MetricAlertData MetricAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, int severity = 0, bool isEnabled = false, System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan evaluationFrequency = default(System.TimeSpan), System.TimeSpan windowSize = default(System.TimeSpan), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.MetricAlertPatch MetricAlertPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, int? severity = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Monitor.MetricAlertData MetricAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, int severity = 0, bool isEnabled = false, System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan evaluationFrequency = default(System.TimeSpan), System.TimeSpan? monitorWindowSize = default(System.TimeSpan?), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), Azure.ResourceManager.Monitor.Models.ResolveConfiguration resolveConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?), System.Collections.Generic.IDictionary<string, string> customProperties = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.MetricAlertData MetricAlertData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string description, int severity, bool isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, Azure.Core.ResourceType? targetResourceType, Azure.Core.AzureLocation? targetResourceRegion, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions, System.DateTimeOffset? lastUpdatedOn, bool? isMigrated) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MetricAlertPatch MetricAlertPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string description = null, int? severity = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), Azure.ResourceManager.Monitor.Models.ResolveConfiguration resolveConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?), System.Collections.Generic.IDictionary<string, string> customProperties = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MetricAlertPatch MetricAlertPatch(System.Collections.Generic.IDictionary<string, string> tags, string description, int? severity, bool? isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan? evaluationFrequency, System.TimeSpan? windowSize, Azure.Core.ResourceType? targetResourceType, Azure.Core.AzureLocation? targetResourceRegion, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions, System.DateTimeOffset? lastUpdatedOn, bool? isMigrated) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricAlertStatus MetricAlertStatus(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Monitor.Models.MetricAlertStatusProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricAlertStatusProperties MetricAlertStatusProperties(System.Collections.Generic.IReadOnlyDictionary<string, string> dimensions = null, string status = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorBaselineMetadata MonitorBaselineMetadata(string name = null, string value = null) { throw null; }
@@ -1558,10 +1545,8 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics MonitorWorkspaceMetrics(string prometheusQueryEndpoint = null, string internalId = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection MonitorWorkspacePrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData MonitorWorkspaceResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = null, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics metrics = null, string accountId = null, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties metricsPropertiesMetrics = null, Azure.ResourceManager.Monitor.Models.MonitorProvisioningState? provisioningState = default(Azure.ResourceManager.Monitor.Models.MonitorProvisioningState?), Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings defaultIngestionSettingsPropertiesDefaultIngestionSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData MonitorWorkspaceResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, string accountId, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics metrics, Azure.ResourceManager.Monitor.Models.MonitorProvisioningState? provisioningState, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess? publicNetworkAccess) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.NotificationActionDetail NotificationActionDetail(string mechanismType = null, string name = null, string status = null, string subState = null, System.DateTimeOffset? sendOn = default(System.DateTimeOffset?), string detail = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.Models.NotificationContent NotificationContent(string alertType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEmailReceiver> emailReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver> smsReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver> webhookReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorItsmReceiver> itsmReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver> azureAppPushReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver> automationRunbookReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorVoiceReceiver> voiceReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLogicAppReceiver> logicAppReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureFunctionReceiver> azureFunctionReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver> armRoleReceivers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEventHubReceiver> eventHubReceivers) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.NotificationContent NotificationContent(string alertType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEmailReceiver> emailReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver> smsReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver> webhookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorItsmReceiver> itsmReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver> azureAppPushReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorVoiceReceiver> voiceReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLogicAppReceiver> logicAppReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureFunctionReceiver> azureFunctionReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver> armRoleReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEventHubReceiver> eventHubReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.IncidentReceiver> incidentReceivers = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.NotificationContext NotificationContext(string notificationSource = null, string contextType = null) { throw null; }
@@ -1607,7 +1592,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public AutoscaleNotification() { }
         public Azure.ResourceManager.Monitor.Models.EmailNotification Email { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.MonitorOperationType Operation { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorOperationType Operation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.WebhookNotification> Webhooks { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.AutoscaleNotification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AutoscaleNotification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1746,9 +1731,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState left, Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState (string value) { throw null; }
@@ -1764,9 +1747,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind Linux { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind left, Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind (string value) { throw null; }
@@ -1796,9 +1777,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState (string value) { throw null; }
@@ -1842,9 +1821,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus (string value) { throw null; }
@@ -1916,9 +1893,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public DataCollectionRuleKnownPrometheusForwarderDataSourceStream(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream MicrosoftPrometheusMetrics { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream (string value) { throw null; }
@@ -1960,9 +1935,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState (string value) { throw null; }
@@ -1990,9 +1963,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind Linux { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind (string value) { throw null; }
@@ -2051,9 +2022,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType Real { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType left, Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType (string value) { throw null; }
@@ -2111,9 +2080,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataFlowStream MicrosoftSyslog { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataFlowStream MicrosoftWindowsEvent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataFlowStream other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataFlowStream left, Azure.ResourceManager.Monitor.Models.DataFlowStream right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataFlowStream (string value) { throw null; }
@@ -2159,9 +2126,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataStatus NotPresent { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataStatus Present { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DataStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataStatus left, Azure.ResourceManager.Monitor.Models.DataStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataStatus (string value) { throw null; }
@@ -2211,6 +2176,19 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicMetricCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicMetricCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DynamicPromQLCriteria : Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>
+    {
+        public DynamicPromQLCriteria(string name, string query, Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator @operator, Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity alertSensitivity) : base (default(string), default(string)) { }
+        public Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity AlertSensitivity { get { throw null; } set { } }
+        public System.DateTimeOffset? IgnoreDataBefore { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator Operator { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DynamicThresholdFailingPeriods : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicThresholdFailingPeriods>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicThresholdFailingPeriods>
     {
         public DynamicThresholdFailingPeriods(float numberOfEvaluationPeriods, float minFailingPeriodsToAlert) { }
@@ -2233,9 +2211,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator GreaterThan { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator LessThan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator left, Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator (string value) { throw null; }
@@ -2252,9 +2228,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity Low { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity left, Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity (string value) { throw null; }
@@ -2349,9 +2323,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.ExtensionDataSourceStream MicrosoftSyslog { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.ExtensionDataSourceStream MicrosoftWindowsEvent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.ExtensionDataSourceStream other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.ExtensionDataSourceStream left, Azure.ResourceManager.Monitor.Models.ExtensionDataSourceStream right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.ExtensionDataSourceStream (string value) { throw null; }
@@ -2379,9 +2351,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IncidentManagementService(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.IncidentManagementService Icm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.IncidentManagementService other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.IncidentManagementService left, Azure.ResourceManager.Monitor.Models.IncidentManagementService right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.IncidentManagementService (string value) { throw null; }
@@ -2462,9 +2432,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public LogFilesDataSourceFormat(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.LogFilesDataSourceFormat Text { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.LogFilesDataSourceFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.LogFilesDataSourceFormat left, Azure.ResourceManager.Monitor.Models.LogFilesDataSourceFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.LogFilesDataSourceFormat (string value) { throw null; }
@@ -2487,9 +2455,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.LogFileTextSettingsRecordStartTimestampFormat YyyyMmDdHhMmSs { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.LogFileTextSettingsRecordStartTimestampFormat YyyyMmDdTHHMmSsK { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.LogFileTextSettingsRecordStartTimestampFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.LogFileTextSettingsRecordStartTimestampFormat left, Azure.ResourceManager.Monitor.Models.LogFileTextSettingsRecordStartTimestampFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.LogFileTextSettingsRecordStartTimestampFormat (string value) { throw null; }
@@ -2587,14 +2553,18 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class MetricAlertPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricAlertPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricAlertPatch>
     {
         public MetricAlertPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> ActionProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricAlertAction> Actions { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MetricAlertCriteria Criteria { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.TimeSpan? EvaluationFrequency { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAutoMitigateEnabled { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public bool? IsMigrated { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.ResolveConfiguration ResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public int? Severity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -2667,9 +2637,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator LessThan { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator LessThanOrEqual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator left, Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator (string value) { throw null; }
@@ -2688,9 +2656,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType Minimum { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType Total { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType left, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType (string value) { throw null; }
@@ -2862,9 +2828,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity Low { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity left, Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity (string value) { throw null; }
@@ -2880,9 +2844,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorCategoryType Logs { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorCategoryType Metrics { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorCategoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorCategoryType left, Azure.ResourceManager.Monitor.Models.MonitorCategoryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorCategoryType (string value) { throw null; }
@@ -2911,9 +2873,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorDayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorDayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorDayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorDayOfWeek left, Azure.ResourceManager.Monitor.Models.MonitorDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorDayOfWeek (string value) { throw null; }
@@ -2942,9 +2902,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorDimensionOperator Exclude { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorDimensionOperator Include { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorDimensionOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorDimensionOperator left, Azure.ResourceManager.Monitor.Models.MonitorDimensionOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorDimensionOperator (string value) { throw null; }
@@ -3114,9 +3072,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricClass Saturation { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricClass Transactions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorMetricClass other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorMetricClass left, Azure.ResourceManager.Monitor.Models.MonitorMetricClass right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorMetricClass (string value) { throw null; }
@@ -3167,9 +3123,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricResultType Data { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricResultType Metadata { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorMetricResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorMetricResultType left, Azure.ResourceManager.Monitor.Models.MonitorMetricResultType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorMetricResultType (string value) { throw null; }
@@ -3208,9 +3162,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricUnit Seconds { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorMetricUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorMetricUnit left, Azure.ResourceManager.Monitor.Models.MonitorMetricUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorMetricUnit (string value) { throw null; }
@@ -3243,9 +3195,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification Platform { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification Qos { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification left, Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification (string value) { throw null; }
@@ -3260,9 +3210,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MonitorOperationType(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorOperationType Scale { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorOperationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorOperationType left, Azure.ResourceManager.Monitor.Models.MonitorOperationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorOperationType (string value) { throw null; }
@@ -3280,9 +3228,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -3299,9 +3245,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -3317,9 +3261,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode Open { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode PrivateOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode left, Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode (string value) { throw null; }
@@ -3404,9 +3346,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorProvisioningState (string value) { throw null; }
@@ -3423,9 +3363,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess (string value) { throw null; }
@@ -3774,9 +3712,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess (string value) { throw null; }
@@ -3811,6 +3747,18 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.MultiMetricCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class MultiPromQLCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>
+    {
+        protected MultiPromQLCriteria(string name, string query) { }
+        public string Name { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NotificationActionDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NotificationActionDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationActionDetail>
     {
@@ -3888,9 +3836,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.OnboardingStatus Onboarded { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.OnboardingStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.OnboardingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.OnboardingStatus left, Azure.ResourceManager.Monitor.Models.OnboardingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.OnboardingStatus (string value) { throw null; }
@@ -3920,9 +3866,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream MicrosoftInsightsMetrics { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream MicrosoftPerf { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream left, Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream (string value) { throw null; }
@@ -3952,9 +3896,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType AzureMonitorWorkspaceLogs { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType PipelineGroup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType left, Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType (string value) { throw null; }
@@ -3969,9 +3911,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public PipelineGroupExternalNetworkingMode(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupExternalNetworkingMode LoadBalancerOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupExternalNetworkingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupExternalNetworkingMode left, Azure.ResourceManager.Monitor.Models.PipelineGroupExternalNetworkingMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupExternalNetworkingMode (string value) { throw null; }
@@ -4012,9 +3952,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupJsonMapperElement Attributes { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupJsonMapperElement Body { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupJsonMapperElement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupJsonMapperElement left, Azure.ResourceManager.Monitor.Models.PipelineGroupJsonMapperElement right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupJsonMapperElement (string value) { throw null; }
@@ -4081,9 +4019,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public PipelineGroupProcessorType(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType Batch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType left, Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType (string value) { throw null; }
@@ -4150,9 +4086,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Syslog { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType left, Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType (string value) { throw null; }
@@ -4194,9 +4128,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public PipelineGroupServicePipelineType(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType Logs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType left, Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType (string value) { throw null; }
@@ -4270,6 +4202,18 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class PromQLCriteria : Azure.ResourceManager.Monitor.Models.MetricAlertCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>
+    {
+        public PromQLCriteria() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria> AllOf { get { throw null; } }
+        public System.TimeSpan? FailingPeriodsFor { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.PromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.PromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public enum RecurrenceFrequency
     {
         None = 0,
@@ -4294,6 +4238,18 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.RecurrentSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecurrentSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecurrentSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecurrentSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResolveConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>
+    {
+        public ResolveConfiguration(bool autoResolved) { }
+        public bool AutoResolved { get { throw null; } set { } }
+        public System.TimeSpan? TimeToResolve { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ResolveConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ResolveConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceForUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResourceForUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceForUpdate>
     {
@@ -4396,9 +4352,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType EqualsValue { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType NotEquals { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType left, Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType (string value) { throw null; }
@@ -4445,9 +4399,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind LogAlert { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind LogToMetric { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind (string value) { throw null; }
@@ -4495,9 +4447,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType Minimum { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType Total { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType (string value) { throw null; }
@@ -4517,6 +4467,16 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StaticPromQLCriteria : Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>
+    {
+        public StaticPromQLCriteria(string name, string query) : base (default(string), default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamEncodingType : System.IEquatable<Azure.ResourceManager.Monitor.Models.StreamEncodingType>
     {
@@ -4530,9 +4490,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.StreamEncodingType Utf16Le { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.StreamEncodingType Utf8 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.StreamEncodingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.StreamEncodingType left, Azure.ResourceManager.Monitor.Models.StreamEncodingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.StreamEncodingType (string value) { throw null; }
@@ -4660,9 +4618,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.SyslogDataSourceFacilityName User { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.SyslogDataSourceFacilityName Uucp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.SyslogDataSourceFacilityName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.SyslogDataSourceFacilityName left, Azure.ResourceManager.Monitor.Models.SyslogDataSourceFacilityName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.SyslogDataSourceFacilityName (string value) { throw null; }
@@ -4685,9 +4641,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.SyslogDataSourceLogLevel Notice { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.SyslogDataSourceLogLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.SyslogDataSourceLogLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.SyslogDataSourceLogLevel left, Azure.ResourceManager.Monitor.Models.SyslogDataSourceLogLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.SyslogDataSourceLogLevel (string value) { throw null; }
@@ -4702,9 +4656,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public SyslogDataSourceStream(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream MicrosoftSyslog { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream left, Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream (string value) { throw null; }
@@ -4720,9 +4672,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.SyslogProtocol Rfc3164 { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.SyslogProtocol Rfc5424 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.SyslogProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.SyslogProtocol left, Azure.ResourceManager.Monitor.Models.SyslogProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.SyslogProtocol (string value) { throw null; }
@@ -4824,9 +4774,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream MicrosoftEvent { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream MicrosoftWindowsEvent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream left, Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream (string value) { throw null; }

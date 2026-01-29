@@ -312,6 +312,7 @@
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.ContentNegotiation",
       "apiVersions": [],
@@ -385,7 +386,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.SameBody"
               },
               "parameters": [
                 {
@@ -479,7 +481,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.SameBody"
               },
               "parameters": [
                 {
@@ -540,15 +543,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody",
           "apiVersions": [],
           "parent": {
             "$ref": "31"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "49",
@@ -619,7 +624,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.DifferentBody"
               },
               "parameters": [
                 {
@@ -709,7 +715,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.ContentNegotiation.DifferentBody"
               },
               "parameters": [
                 {
@@ -770,17 +777,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody",
           "apiVersions": [],
           "parent": {
             "$ref": "31"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

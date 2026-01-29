@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The GrafanaIntegrationFabricProperties. </summary>
     public partial class GrafanaIntegrationFabricProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricProperties"/>. </summary>
         public GrafanaIntegrationFabricProperties()
@@ -57,22 +29,25 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
         /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
         /// <param name="scenarios"> A list of integration scenarios covered by this integration fabric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState, ResourceIdentifier targetResourceId, ResourceIdentifier dataSourceResourceId, IList<string> scenarios, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState, ResourceIdentifier targetResourceId, ResourceIdentifier dataSourceResourceId, IList<string> scenarios, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             TargetResourceId = targetResourceId;
             DataSourceResourceId = dataSourceResourceId;
             Scenarios = scenarios;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning state of the resource. </summary>
         public GrafanaProvisioningState? ProvisioningState { get; }
+
         /// <summary> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
+
         /// <summary> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </summary>
         public ResourceIdentifier DataSourceResourceId { get; set; }
+
         /// <summary> A list of integration scenarios covered by this integration fabric. </summary>
         public IList<string> Scenarios { get; }
     }

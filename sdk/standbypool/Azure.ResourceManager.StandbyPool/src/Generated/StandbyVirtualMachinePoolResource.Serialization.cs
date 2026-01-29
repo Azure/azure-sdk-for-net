@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StandbyPool
 {
+    /// <summary></summary>
     public partial class StandbyVirtualMachinePoolResource : IJsonModel<StandbyVirtualMachinePoolData>
     {
-        private static StandbyVirtualMachinePoolData s_dataDeserializationInstance;
-        private static StandbyVirtualMachinePoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StandbyVirtualMachinePoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StandbyVirtualMachinePoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StandbyVirtualMachinePoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyVirtualMachinePoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachinePoolData>)Data).Write(writer, options);
 
-        StandbyVirtualMachinePoolData IJsonModel<StandbyVirtualMachinePoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachinePoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StandbyVirtualMachinePoolData IJsonModel<StandbyVirtualMachinePoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StandbyVirtualMachinePoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StandbyVirtualMachinePoolData>(Data, options, AzureResourceManagerStandbyPoolContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StandbyVirtualMachinePoolData IPersistableModel<StandbyVirtualMachinePoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyVirtualMachinePoolData>(data, options, AzureResourceManagerStandbyPoolContext.Default);
 
-        string IPersistableModel<StandbyVirtualMachinePoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyVirtualMachinePoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StandbyVirtualMachinePoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

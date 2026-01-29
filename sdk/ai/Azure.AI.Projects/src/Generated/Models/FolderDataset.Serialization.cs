@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("dataUri"u8))
                 {
-                    dataUri = new Uri(prop.Value.GetString());
+                    dataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -186,7 +186,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeFolderDataset(document.RootElement, options);
                     }

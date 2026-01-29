@@ -21,11 +21,8 @@ namespace Azure.Provisioning.ApplicationInsights
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole WorkbookContributor { get { throw null; } }
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole WorkbookReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole left, Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole (string value) { throw null; }
@@ -71,7 +68,6 @@ namespace Azure.Provisioning.ApplicationInsights
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsComponent FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

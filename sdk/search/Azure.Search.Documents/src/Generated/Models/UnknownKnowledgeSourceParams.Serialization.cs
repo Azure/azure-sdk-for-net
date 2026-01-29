@@ -10,8 +10,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents.Agents.Models;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -60,6 +60,10 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string knowledgeSourceName = default;
+            bool? includeReferences = default;
+            bool? includeReferenceSourceData = default;
+            bool? alwaysQuerySource = default;
+            float? rerankerThreshold = default;
             KnowledgeSourceKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -68,6 +72,42 @@ namespace Azure.Search.Documents.Models
                 if (property.NameEquals("knowledgeSourceName"u8))
                 {
                     knowledgeSourceName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("includeReferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeReferences = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("includeReferenceSourceData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeReferenceSourceData = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("alwaysQuerySource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    alwaysQuerySource = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("rerankerThreshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankerThreshold = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -81,7 +121,14 @@ namespace Azure.Search.Documents.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownKnowledgeSourceParams(knowledgeSourceName, kind, serializedAdditionalRawData);
+            return new UnknownKnowledgeSourceParams(
+                knowledgeSourceName,
+                includeReferences,
+                includeReferenceSourceData,
+                alwaysQuerySource,
+                rerankerThreshold,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KnowledgeSourceParams>.Write(ModelReaderWriterOptions options)

@@ -128,7 +128,7 @@ public partial class CustomDnsSuffixConfiguration : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CustomDnsSuffixConfiguration.</param>
     public CustomDnsSuffixConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -137,6 +137,7 @@ public partial class CustomDnsSuffixConfiguration : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _certificateUri = DefineProperty<Uri>("CertificateUri", ["properties", "certificateUrl"]);
         _dnsSuffix = DefineProperty<string>("DnsSuffix", ["properties", "dnsSuffix"]);
@@ -154,6 +155,11 @@ public partial class CustomDnsSuffixConfiguration : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

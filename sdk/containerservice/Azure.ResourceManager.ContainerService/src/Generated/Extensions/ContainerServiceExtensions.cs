@@ -34,25 +34,6 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OSOptionProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OSOptionProfileResource.CreateResourceIdentifier" /> to create an <see cref="OSOptionProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetOSOptionProfileResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OSOptionProfileResource"/> object. </returns>
-        public static OSOptionProfileResource GetOSOptionProfileResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceArmClient(client).GetOSOptionProfileResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ManagedClusterUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -145,6 +126,25 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServiceMaintenanceConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedClusterNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedClusterNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedClusterNamespaceResource"/> object. </returns>
+        public static ManagedClusterNamespaceResource GetManagedClusterNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterNamespaceResource(id);
         }
 
         /// <summary>
@@ -243,6 +243,25 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceMachineResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceMachineResource"/> object. </returns>
+        public static ContainerServiceMachineResource GetContainerServiceMachineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceMachineResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of ContainerServiceManagedClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -272,7 +291,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +329,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,7 +384,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -403,7 +422,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +478,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,7 +517,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -537,7 +556,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -569,7 +588,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -601,7 +620,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -637,7 +656,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -673,7 +692,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -709,7 +728,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -745,7 +764,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -778,7 +797,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// </list>
         /// <item>

@@ -16,9 +16,12 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="Shared\Core" />
     <Compile Remove="Shared\AzuriteFixture.cs" />
     <Compile Remove="Shared\AzuriteNUnitFixture.cs" />
     <Compile Remove="Shared\ClientSideEncryptionTestExtensions.cs" />
+    <Compile Remove="Shared\ObserveStructuredMessagePolicy.cs" />
     <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
     <Compile Remove="AesGcmTests\*.cs" />
@@ -33,6 +36,7 @@
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ChecksumExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)DisposableBucket.cs" LinkBase="Shared" />
@@ -51,6 +55,11 @@
     <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StreamExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessage.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessageDecodingRetriableStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessageDecodingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessageEncodingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessagePrecalculatedCrcWrapperStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
   </ItemGroup>
   <!-- Ensure an empty TestConfigurations.xml is always present so the build can copy it -->

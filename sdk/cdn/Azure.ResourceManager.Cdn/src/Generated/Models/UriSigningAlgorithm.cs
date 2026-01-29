@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Algorithm to use for URL signing
-    /// Serialized Name: Algorithm
-    /// </summary>
+    /// <summary> Algorithm to use for URL signing. </summary>
     public readonly partial struct UriSigningAlgorithm : IEquatable<UriSigningAlgorithm>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string Sha256Value = "SHA256";
 
-        /// <summary>
-        /// SHA256
-        /// Serialized Name: Algorithm.SHA256
-        /// </summary>
+        /// <summary> SHA256. </summary>
         public static UriSigningAlgorithm Sha256 { get; } = new UriSigningAlgorithm(Sha256Value);
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are the same. </summary>
         public static bool operator ==(UriSigningAlgorithm left, UriSigningAlgorithm right) => left.Equals(right);

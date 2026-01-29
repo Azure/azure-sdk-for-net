@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    public partial class NeonBranchProperties : IUtf8JsonSerializable, IJsonModel<NeonBranchProperties>
+    /// <summary> Properties specific to Branch. </summary>
+    public partial class NeonBranchProperties : IJsonModel<NeonBranchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeonBranchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NeonBranchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NeonBranchProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(EntityId))
             {
                 writer.WritePropertyName("entityId"u8);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
-                foreach (var item in Attributes)
+                foreach (Attributes item in Attributes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
-                foreach (var item in Roles)
+                foreach (NeonRoleProperties item in Roles)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (var item in Databases)
+                foreach (NeonDatabaseProperties item in Databases)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (var item in Endpoints)
+                foreach (NeonEndpointProperties item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,15 +149,15 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -166,22 +166,27 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        NeonBranchProperties IJsonModel<NeonBranchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeonBranchProperties IJsonModel<NeonBranchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NeonBranchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NeonBranchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNeonBranchProperties(document.RootElement, options);
         }
 
-        internal static NeonBranchProperties DeserializeNeonBranchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NeonBranchProperties DeserializeNeonBranchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -203,161 +208,159 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string dataSize = default;
             string lastActive = default;
             string computeHours = default;
-            bool? @protected = default;
+            bool? isProtected = default;
             bool? isDefault = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("entityId"u8))
+                if (prop.NameEquals("entityId"u8))
                 {
-                    entityId = property.Value.GetString();
+                    entityId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityName"u8))
+                if (prop.NameEquals("entityName"u8))
                 {
-                    entityName = property.Value.GetString();
+                    entityName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdAt"u8))
+                if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = property.Value.GetString();
+                    createdAt = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new NeonResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new NeonResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("attributes"u8))
+                if (prop.NameEquals("attributes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<Attributes> array = new List<Attributes>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.Attributes.DeserializeAttributes(item, options));
                     }
                     attributes = array;
                     continue;
                 }
-                if (property.NameEquals("projectId"u8))
+                if (prop.NameEquals("projectId"u8))
                 {
-                    projectId = property.Value.GetString();
+                    projectId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentId"u8))
+                if (prop.NameEquals("parentId"u8))
                 {
-                    parentId = property.Value.GetString();
+                    parentId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleName"u8))
+                if (prop.NameEquals("roleName"u8))
                 {
-                    roleName = property.Value.GetString();
+                    roleName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("databaseName"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roles"u8))
+                if (prop.NameEquals("roles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NeonRoleProperties> array = new List<NeonRoleProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NeonRoleProperties.DeserializeNeonRoleProperties(item, options));
                     }
                     roles = array;
                     continue;
                 }
-                if (property.NameEquals("databases"u8))
+                if (prop.NameEquals("databases"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NeonDatabaseProperties> array = new List<NeonDatabaseProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NeonDatabaseProperties.DeserializeNeonDatabaseProperties(item, options));
                     }
                     databases = array;
                     continue;
                 }
-                if (property.NameEquals("endpoints"u8))
+                if (prop.NameEquals("endpoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NeonEndpointProperties> array = new List<NeonEndpointProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NeonEndpointProperties.DeserializeNeonEndpointProperties(item, options));
                     }
                     endpoints = array;
                     continue;
                 }
-                if (property.NameEquals("branchId"u8))
+                if (prop.NameEquals("branchId"u8))
                 {
-                    branchId = property.Value.GetString();
+                    branchId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("branch"u8))
+                if (prop.NameEquals("branch"u8))
                 {
-                    branch = property.Value.GetString();
+                    branch = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSize"u8))
+                if (prop.NameEquals("dataSize"u8))
                 {
-                    dataSize = property.Value.GetString();
+                    dataSize = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastActive"u8))
+                if (prop.NameEquals("lastActive"u8))
                 {
-                    lastActive = property.Value.GetString();
+                    lastActive = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeHours"u8))
+                if (prop.NameEquals("computeHours"u8))
                 {
-                    computeHours = property.Value.GetString();
+                    computeHours = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protected"u8))
+                if (prop.NameEquals("protected"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @protected = property.Value.GetBoolean();
+                    isProtected = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDefault"u8))
+                if (prop.NameEquals("isDefault"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDefault = property.Value.GetBoolean();
+                    isDefault = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NeonBranchProperties(
                 entityId,
                 entityName,
@@ -376,15 +379,18 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 dataSize,
                 lastActive,
                 computeHours,
-                @protected,
+                isProtected,
                 isDefault,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<NeonBranchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NeonBranchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -394,15 +400,20 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        NeonBranchProperties IPersistableModel<NeonBranchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeonBranchProperties IPersistableModel<NeonBranchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NeonBranchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeonBranchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNeonBranchProperties(document.RootElement, options);
                     }
                 default:
@@ -410,6 +421,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NeonBranchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

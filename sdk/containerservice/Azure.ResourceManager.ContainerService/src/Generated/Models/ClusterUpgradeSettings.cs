@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Settings for upgrading a cluster. </summary>
+    /// <summary>
+    /// Settings for upgrading a cluster.
+    /// Serialized Name: ClusterUpgradeSettings
+    /// </summary>
     internal partial class ClusterUpgradeSettings
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpgradeSettings"/>. </summary>
-        /// <param name="overrideSettings"> Settings for overrides. </param>
+        /// <param name="overrideSettings">
+        /// Settings for overrides.
+        /// Serialized Name: ClusterUpgradeSettings.overrideSettings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClusterUpgradeSettings(UpgradeOverrideSettings overrideSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Settings for overrides. </summary>
+        /// <summary>
+        /// Settings for overrides.
+        /// Serialized Name: ClusterUpgradeSettings.overrideSettings
+        /// </summary>
         [WirePath("overrideSettings")]
         public UpgradeOverrideSettings OverrideSettings { get; set; }
     }

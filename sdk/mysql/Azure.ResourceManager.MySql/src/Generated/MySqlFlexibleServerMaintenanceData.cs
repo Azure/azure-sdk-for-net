@@ -13,103 +13,133 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the MySqlFlexibleServerMaintenance data model.
-    /// Represents a maintenance.
-    /// </summary>
+    /// <summary> Represents a maintenance. </summary>
     public partial class MySqlFlexibleServerMaintenanceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/>. </summary>
-        public MySqlFlexibleServerMaintenanceData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a maintenance. </param>
+        internal MySqlFlexibleServerMaintenanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MaintenanceProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="maintenanceType"> A string defines maintenance type. </param>
-        /// <param name="maintenanceState"> A string describes the maintenance status. </param>
-        /// <param name="maintenanceStartOn"> The start time for a maintenance. </param>
-        /// <param name="maintenanceEndOn"> The end time for a maintenance. </param>
-        /// <param name="maintenanceExecutionStartOn"> The start time for a maintenance execution. </param>
-        /// <param name="maintenanceExecutionEndOn"> The end time for a maintenance execution. </param>
-        /// <param name="maintenanceAvailableScheduleMinOn"> The min time the maintenance can be rescheduled. </param>
-        /// <param name="maintenanceAvailableScheduleMaxOn"> The max time the maintenance can be rescheduled. </param>
-        /// <param name="maintenanceTitle"> The maintenance title. </param>
-        /// <param name="maintenanceDescription"> The maintenance description. </param>
-        /// <param name="provisioningState"> Provisioning state of the Maintenance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerMaintenanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerMaintenanceType? maintenanceType, MySqlFlexibleServerMaintenanceState? maintenanceState, DateTimeOffset? maintenanceStartOn, DateTimeOffset? maintenanceEndOn, DateTimeOffset? maintenanceExecutionStartOn, DateTimeOffset? maintenanceExecutionEndOn, DateTimeOffset? maintenanceAvailableScheduleMinOn, DateTimeOffset? maintenanceAvailableScheduleMaxOn, string maintenanceTitle, string maintenanceDescription, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            MaintenanceType = maintenanceType;
-            MaintenanceState = maintenanceState;
-            MaintenanceStartOn = maintenanceStartOn;
-            MaintenanceEndOn = maintenanceEndOn;
-            MaintenanceExecutionStartOn = maintenanceExecutionStartOn;
-            MaintenanceExecutionEndOn = maintenanceExecutionEndOn;
-            MaintenanceAvailableScheduleMinOn = maintenanceAvailableScheduleMinOn;
-            MaintenanceAvailableScheduleMaxOn = maintenanceAvailableScheduleMaxOn;
-            MaintenanceTitle = maintenanceTitle;
-            MaintenanceDescription = maintenanceDescription;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> The properties of a maintenance. </summary>
+        internal MaintenanceProperties Properties { get; set; }
 
         /// <summary> A string defines maintenance type. </summary>
-        public MySqlFlexibleServerMaintenanceType? MaintenanceType { get; }
+        public MySqlFlexibleServerMaintenanceType? MaintenanceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceType;
+            }
+        }
+
         /// <summary> A string describes the maintenance status. </summary>
-        public MySqlFlexibleServerMaintenanceState? MaintenanceState { get; }
+        public MySqlFlexibleServerMaintenanceState? MaintenanceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceState;
+            }
+        }
+
         /// <summary> The start time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceStartOn { get; set; }
+        public DateTimeOffset? MaintenanceStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceProperties();
+                }
+                Properties.MaintenanceStartOn = value.Value;
+            }
+        }
+
         /// <summary> The end time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceEndOn { get; }
+        public DateTimeOffset? MaintenanceEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceEndOn;
+            }
+        }
+
         /// <summary> The start time for a maintenance execution. </summary>
-        public DateTimeOffset? MaintenanceExecutionStartOn { get; }
+        public DateTimeOffset? MaintenanceExecutionStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceExecutionStartOn;
+            }
+        }
+
         /// <summary> The end time for a maintenance execution. </summary>
-        public DateTimeOffset? MaintenanceExecutionEndOn { get; }
+        public DateTimeOffset? MaintenanceExecutionEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceExecutionEndOn;
+            }
+        }
+
         /// <summary> The min time the maintenance can be rescheduled. </summary>
-        public DateTimeOffset? MaintenanceAvailableScheduleMinOn { get; }
+        public DateTimeOffset? MaintenanceAvailableScheduleMinOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceAvailableScheduleMinOn;
+            }
+        }
+
         /// <summary> The max time the maintenance can be rescheduled. </summary>
-        public DateTimeOffset? MaintenanceAvailableScheduleMaxOn { get; }
+        public DateTimeOffset? MaintenanceAvailableScheduleMaxOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceAvailableScheduleMaxOn;
+            }
+        }
+
         /// <summary> The maintenance title. </summary>
-        public string MaintenanceTitle { get; }
+        public string MaintenanceTitle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceTitle;
+            }
+        }
+
         /// <summary> The maintenance description. </summary>
-        public string MaintenanceDescription { get; }
+        public string MaintenanceDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceDescription;
+            }
+        }
+
         /// <summary> Provisioning state of the Maintenance. </summary>
-        public MySqlFlexibleServerMaintenanceProvisioningState? ProvisioningState { get; }
+        public MySqlFlexibleServerMaintenanceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Administrative credentials for accessing vCenter and NSX-T. </summary>
     public partial class AdminCredentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AdminCredentials"/>. </summary>
         internal AdminCredentials()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="nsxtPassword"> NSX-T Manager password. </param>
         /// <param name="vCenterUsername"> vCenter admin username. </param>
         /// <param name="vCenterPassword"> vCenter admin password. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vCenterUsername, string vCenterPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vCenterUsername, string vCenterPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NsxtUsername = nsxtUsername;
             NsxtPassword = nsxtPassword;
             VCenterUsername = vCenterUsername;
             VCenterPassword = vCenterPassword;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> NSX-T Manager username. </summary>
         public string NsxtUsername { get; }
+
         /// <summary> NSX-T Manager password. </summary>
         public string NsxtPassword { get; }
+
         /// <summary> vCenter admin username. </summary>
         public string VCenterUsername { get; }
+
         /// <summary> vCenter admin password. </summary>
         public string VCenterPassword { get; }
     }

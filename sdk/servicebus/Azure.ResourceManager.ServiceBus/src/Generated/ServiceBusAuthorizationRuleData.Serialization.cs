@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
-                rights ?? new ChangeTrackingList<ServiceBusAccessRight>(),
                 location,
+                rights ?? new ChangeTrackingList<ServiceBusAccessRight>(),
                 serializedAdditionalRawData);
         }
 

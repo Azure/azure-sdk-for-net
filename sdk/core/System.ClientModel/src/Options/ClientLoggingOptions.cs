@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -54,6 +55,45 @@ public class ClientLoggingOptions
     internal const bool DefaultEnableMessageContentLogging = false;
     internal const int DefaultMessageContentSizeLimitBytes = 4 * 1024;
     internal const double RequestTooLongSeconds = 3.0; // sec
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientLoggingOptions"/>.
+    /// </summary>
+    public ClientLoggingOptions()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientLoggingOptions"/> from configuration.
+    /// </summary>
+    /// <param name="section">The configuration section to bind from.</param>
+    internal ClientLoggingOptions(IConfigurationSection section)
+    {
+        if (section is null)
+        {
+            return;
+        }
+
+        if (bool.TryParse(section["EnableLogging"], out bool enableLogging))
+        {
+            EnableLogging = enableLogging;
+        }
+
+        if (bool.TryParse(section["EnableMessageLogging"], out bool enableMessageLogging))
+        {
+            EnableMessageLogging = enableMessageLogging;
+        }
+
+        if (bool.TryParse(section["EnableMessageContentLogging"], out bool enableMessageContentLogging))
+        {
+            EnableMessageContentLogging = enableMessageContentLogging;
+        }
+
+        if (int.TryParse(section["MessageContentSizeLimit"], out int messageContentSizeLimit))
+        {
+            MessageContentSizeLimit = messageContentSizeLimit;
+        }
+    }
 
     /// <summary>
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to

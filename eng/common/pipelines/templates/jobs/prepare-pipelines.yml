@@ -82,7 +82,7 @@ jobs:
         $generateUnifiedWeekly = 'false'
 
         $testServiceConnections = '"Azure" "azure-sdk-tests" "azure-sdk-tests-preview" "azure-sdk-tests-public" "Azure SDK Test Resources - LiveTestSecrets"'
-        $internalServiceConnections = '"Azure" "Azure SDK Artifacts" "Azure SDK Engineering System" "opensource-api-connection" "AzureSDKEngKeyVault Secrets" "Azure SDK PME Managed Identity"'
+        $internalServiceConnections = '"Azure" "Azure SDK Artifacts" "Azure SDK Engineering System" "opensource-api-connection" "AzureSDKEngKeyVault Secrets" "Azure SDK PME Managed Identity" "APIView prod deployment"'
 
         # Map the language to the appropriate variable groups
         switch ($lang)

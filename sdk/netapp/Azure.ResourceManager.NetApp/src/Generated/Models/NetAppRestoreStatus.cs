@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
         /// <param name="isHealthy"> Restore health status. </param>
-        /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
-        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="volumeRestoreRelationshipStatus"> Status of the restore SnapMirror relationship. </param>
+        /// <param name="mirrorState"> The status of the restore. </param>
         /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
         /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppRestoreStatus(bool? isHealthy, VolumeRestoreRelationshipStatus? volumeRestoreRelationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHealthy = isHealthy;
-            RelationshipStatus = relationshipStatus;
+            VolumeRestoreRelationshipStatus = volumeRestoreRelationshipStatus;
             MirrorState = mirrorState;
             UnhealthyReason = unhealthyReason;
             ErrorMessage = errorMessage;
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Restore health status. </summary>
         public bool? IsHealthy { get; }
         /// <summary> Status of the restore SnapMirror relationship. </summary>
-        public NetAppRelationshipStatus? RelationshipStatus { get; }
-        /// <summary> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
+        public VolumeRestoreRelationshipStatus? VolumeRestoreRelationshipStatus { get; }
+        /// <summary> The status of the restore. </summary>
         public NetAppMirrorState? MirrorState { get; }
         /// <summary> Reason for the unhealthy restore relationship. </summary>
         public string UnhealthyReason { get; }

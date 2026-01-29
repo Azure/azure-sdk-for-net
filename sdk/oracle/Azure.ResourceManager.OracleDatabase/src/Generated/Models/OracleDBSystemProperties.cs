@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -68,31 +69,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="version"> The Oracle Database version of the DB system. </param>
         /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
         /// <param name="computeCount"> The number of compute servers for the DB system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require EnterpriseEditionExtremePerformance. </param>
         /// <param name="adminPassword"> A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. </param>
         /// <param name="dbVersion"> A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation. </param>
         /// <param name="pluggableDatabaseName"> The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name. </param>
-        internal OracleDBSystemProperties(DBSystemSourceType? source, OracleDatabaseProvisioningState? provisioningState, Uri ociUri, ResourceIdentifier resourceAnchorId, ResourceIdentifier networkAnchorId, string clusterName, string displayName, int? initialDataStorageSizeInGb, int? dataStorageSizeInGbs, OracleDBSystemOptions dbSystemOptions, DBSystemDiskRedundancyType? diskRedundancy, string domainV2, string gridImageOcid, string hostname, string ocid, OracleLicenseModel? licenseModelV2, string lifecycleDetails, DBSystemLifecycleState? lifecycleState, int? listenerPort, int? memorySizeInGbs, int? nodeCount, string scanDnsName, IReadOnlyList<string> scanIPs, string shape, IList<string> sshPublicKeys, StorageVolumePerformanceMode? storageVolumePerformanceMode, string timeZone, string version, OracleDatabaseComputeModel? computeModel, int? computeCount, IDictionary<string, BinaryData> serializedAdditionalRawData, DBSystemDatabaseEditionType databaseEdition, string adminPassword, string dbVersion, string pluggableDatabaseName) : base(source, provisioningState, ociUri, resourceAnchorId, networkAnchorId, clusterName, displayName, initialDataStorageSizeInGb, dataStorageSizeInGbs, dbSystemOptions, diskRedundancy, domainV2, gridImageOcid, hostname, ocid, licenseModelV2, lifecycleDetails, lifecycleState, listenerPort, memorySizeInGbs, nodeCount, scanDnsName, scanIPs, shape, sshPublicKeys, storageVolumePerformanceMode, timeZone, version, computeModel, computeCount, serializedAdditionalRawData)
+        internal OracleDBSystemProperties(DBSystemSourceType? source, OracleDatabaseProvisioningState? provisioningState, Uri ociUri, ResourceIdentifier resourceAnchorId, ResourceIdentifier networkAnchorId, string clusterName, string displayName, int? initialDataStorageSizeInGb, int? dataStorageSizeInGbs, OracleDBSystemOptions dbSystemOptions, DBSystemDiskRedundancyType? diskRedundancy, string domainV2, string gridImageOcid, string hostname, string ocid, OracleLicenseModel? licenseModelV2, string lifecycleDetails, DBSystemLifecycleState? lifecycleState, int? listenerPort, int? memorySizeInGbs, int? nodeCount, string scanDnsName, IReadOnlyList<string> scanIPs, string shape, IList<string> sshPublicKeys, StorageVolumePerformanceMode? storageVolumePerformanceMode, string timeZone, string version, OracleDatabaseComputeModel? computeModel, int? computeCount, IDictionary<string, BinaryData> additionalBinaryDataProperties, DBSystemDatabaseEditionType databaseEdition, string adminPassword, string dbVersion, string pluggableDatabaseName) : base(source, provisioningState, ociUri, resourceAnchorId, networkAnchorId, clusterName, displayName, initialDataStorageSizeInGb, dataStorageSizeInGbs, dbSystemOptions, diskRedundancy, domainV2, gridImageOcid, hostname, ocid, licenseModelV2, lifecycleDetails, lifecycleState, listenerPort, memorySizeInGbs, nodeCount, scanDnsName, scanIPs, shape, sshPublicKeys, storageVolumePerformanceMode, timeZone, version, computeModel, computeCount, additionalBinaryDataProperties)
         {
             DatabaseEdition = databaseEdition;
             AdminPassword = adminPassword;
             DBVersion = dbVersion;
             PluggableDatabaseName = pluggableDatabaseName;
-            Source = source;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OracleDBSystemProperties"/> for deserialization. </summary>
-        internal OracleDBSystemProperties()
-        {
         }
 
         /// <summary> The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require EnterpriseEditionExtremePerformance. </summary>
         public DBSystemDatabaseEditionType DatabaseEdition { get; set; }
+
         /// <summary> A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. </summary>
         public string AdminPassword { get; set; }
+
         /// <summary> A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation. </summary>
         public string DBVersion { get; set; }
+
         /// <summary> The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name. </summary>
         public string PluggableDatabaseName { get; set; }
     }

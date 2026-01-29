@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableNeonPostgresArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableNeonPostgresArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNeonPostgresArmClient for mocking. </summary>
         protected MockableNeonPostgresArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNeonPostgresArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNeonPostgresArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNeonPostgresArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableNeonPostgresArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="NeonOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NeonOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NeonOrganizationResource"/> object. </returns>
         public virtual NeonOrganizationResource GetNeonOrganizationResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
             return new NeonOrganizationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonProjectResource.CreateResourceIdentifier" /> to create a <see cref="NeonProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NeonProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NeonProjectResource"/> object. </returns>
         public virtual NeonProjectResource GetNeonProjectResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
             return new NeonProjectResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonBranchResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonBranchResource.CreateResourceIdentifier" /> to create a <see cref="NeonBranchResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NeonBranchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NeonBranchResource"/> object. </returns>
         public virtual NeonBranchResource GetNeonBranchResource(ResourceIdentifier id)

@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class AveragePartitionLoadScalingTrigger : IUtf8JsonSerializable, IJsonModel<AveragePartitionLoadScalingTrigger>
+    /// <summary> Represents a scaling trigger related to an average load of a metric/resource of a partition. </summary>
+    public partial class AveragePartitionLoadScalingTrigger : ManagedServiceScalingTrigger, IJsonModel<AveragePartitionLoadScalingTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AveragePartitionLoadScalingTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AveragePartitionLoadScalingTrigger"/> for deserialization. </summary>
+        internal AveragePartitionLoadScalingTrigger()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AveragePartitionLoadScalingTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AveragePartitionLoadScalingTrigger)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
@@ -45,79 +50,85 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(ScaleInterval);
         }
 
-        AveragePartitionLoadScalingTrigger IJsonModel<AveragePartitionLoadScalingTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AveragePartitionLoadScalingTrigger IJsonModel<AveragePartitionLoadScalingTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AveragePartitionLoadScalingTrigger)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServiceScalingTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AveragePartitionLoadScalingTrigger)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAveragePartitionLoadScalingTrigger(document.RootElement, options);
         }
 
-        internal static AveragePartitionLoadScalingTrigger DeserializeAveragePartitionLoadScalingTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AveragePartitionLoadScalingTrigger DeserializeAveragePartitionLoadScalingTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ServiceScalingTriggerKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string metricName = default;
             double lowerLoadThreshold = default;
             double upperLoadThreshold = default;
             string scaleInterval = default;
-            ServiceScalingTriggerKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("metricName"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    metricName = property.Value.GetString();
+                    kind = new ServiceScalingTriggerKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lowerLoadThreshold"u8))
+                if (prop.NameEquals("metricName"u8))
                 {
-                    lowerLoadThreshold = property.Value.GetDouble();
+                    metricName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("upperLoadThreshold"u8))
+                if (prop.NameEquals("lowerLoadThreshold"u8))
                 {
-                    upperLoadThreshold = property.Value.GetDouble();
+                    lowerLoadThreshold = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("scaleInterval"u8))
+                if (prop.NameEquals("upperLoadThreshold"u8))
                 {
-                    scaleInterval = property.Value.GetString();
+                    upperLoadThreshold = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("scaleInterval"u8))
                 {
-                    kind = new ServiceScalingTriggerKind(property.Value.GetString());
+                    scaleInterval = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AveragePartitionLoadScalingTrigger(
                 kind,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 metricName,
                 lowerLoadThreshold,
                 upperLoadThreshold,
                 scaleInterval);
         }
 
-        BinaryData IPersistableModel<AveragePartitionLoadScalingTrigger>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AveragePartitionLoadScalingTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -127,15 +138,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        AveragePartitionLoadScalingTrigger IPersistableModel<AveragePartitionLoadScalingTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AveragePartitionLoadScalingTrigger IPersistableModel<AveragePartitionLoadScalingTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (AveragePartitionLoadScalingTrigger)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServiceScalingTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAveragePartitionLoadScalingTrigger(document.RootElement, options);
                     }
                 default:
@@ -143,6 +159,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AveragePartitionLoadScalingTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

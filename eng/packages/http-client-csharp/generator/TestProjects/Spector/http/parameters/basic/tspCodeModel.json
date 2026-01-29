@@ -151,6 +151,7 @@
           "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Basic",
       "apiVersions": [],
@@ -229,7 +230,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Basic"
               },
               "parameters": [
                 {
@@ -304,15 +306,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody",
           "apiVersions": [],
           "parent": {
             "$ref": "11"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "25",
@@ -388,7 +392,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Basic"
               },
               "parameters": [
                 {
@@ -467,17 +472,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody",
           "apiVersions": [],
           "parent": {
             "$ref": "11"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

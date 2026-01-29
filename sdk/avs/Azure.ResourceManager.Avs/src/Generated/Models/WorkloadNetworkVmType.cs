@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct WorkloadNetworkVmType : IEquatable<WorkloadNetworkVmType>
     {
         private readonly string _value;
+        /// <summary> is regular. </summary>
+        private const string RegularValue = "REGULAR";
+        /// <summary> is edge. </summary>
+        private const string EdgeValue = "EDGE";
+        /// <summary> is service. </summary>
+        private const string ServiceValue = "SERVICE";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadNetworkVmType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegularValue = "REGULAR";
-        private const string EdgeValue = "EDGE";
-        private const string ServiceValue = "SERVICE";
+            _value = value;
+        }
 
         /// <summary> is regular. </summary>
         public static WorkloadNetworkVmType Regular { get; } = new WorkloadNetworkVmType(RegularValue);
+
         /// <summary> is edge. </summary>
         public static WorkloadNetworkVmType Edge { get; } = new WorkloadNetworkVmType(EdgeValue);
+
         /// <summary> is service. </summary>
         public static WorkloadNetworkVmType Service { get; } = new WorkloadNetworkVmType(ServiceValue);
+
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkVmType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadNetworkVmType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadNetworkVmType(string value) => new WorkloadNetworkVmType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadNetworkVmType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadNetworkVmType?(string value) => value == null ? null : new WorkloadNetworkVmType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadNetworkVmType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadNetworkVmType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

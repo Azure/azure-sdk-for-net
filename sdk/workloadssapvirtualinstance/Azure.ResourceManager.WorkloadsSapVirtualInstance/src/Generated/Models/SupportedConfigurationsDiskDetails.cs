@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> The supported disk size details for a disk type. </summary>
     public partial class SupportedConfigurationsDiskDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportedConfigurationsDiskDetails"/>. </summary>
         internal SupportedConfigurationsDiskDetails()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="iopsReadWrite"> The disk Iops. </param>
         /// <param name="mbpsReadWrite"> The disk provisioned throughput in MBps. </param>
         /// <param name="diskTier"> The disk tier, e.g. P10, E10. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedConfigurationsDiskDetails(SapDiskSku sku, long? sizeInGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedConfigurationsDiskDetails(SapDiskSku sku, long? sizeInGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             SizeInGB = sizeInGB;
@@ -68,28 +39,37 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             IopsReadWrite = iopsReadWrite;
             MbpsReadWrite = mbpsReadWrite;
             DiskTier = diskTier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>
         internal SapDiskSku Sku { get; }
-        /// <summary> Defines the disk sku name. </summary>
-        public DiskDetailsDiskSkuName? SkuName
-        {
-            get => Sku?.Name;
-        }
 
         /// <summary> The disk size in GB. </summary>
         public long? SizeInGB { get; }
+
         /// <summary> The minimum supported disk count. </summary>
         public long? MinimumSupportedDiskCount { get; }
+
         /// <summary> The maximum supported disk count. </summary>
         public long? MaximumSupportedDiskCount { get; }
+
         /// <summary> The disk Iops. </summary>
         public long? IopsReadWrite { get; }
+
         /// <summary> The disk provisioned throughput in MBps. </summary>
         public long? MbpsReadWrite { get; }
+
         /// <summary> The disk tier, e.g. P10, E10. </summary>
         public string DiskTier { get; }
+
+        /// <summary> Defines the disk sku name. </summary>
+        public DiskDetailsDiskSkuName? SkuName
+        {
+            get
+            {
+                return Sku.Name;
+            }
+        }
     }
 }

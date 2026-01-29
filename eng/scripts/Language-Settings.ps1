@@ -8,7 +8,6 @@ $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
-
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -17,7 +16,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
-  
+
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
   dotnet msbuild `
@@ -51,7 +50,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $AotCompatOptOut = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -67,49 +66,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # First, check if this artifact has baselined warnings in AOTTestInputs
-      $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
-      $hasBaselinedWarnings = $false
-      if ($aotArtifacts) {
-        $matchingAotArtifact = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-        if ($matchingAotArtifact -and $matchingAotArtifact.ExpectedWarningsFilepath) {
-          $hasBaselinedWarnings = $true
-        }
-      }
-
-      # CheckAOTCompat logic: if set in CI.yml, respect that value; 
-      # if artifact has baselined warnings, run AOT checks; 
-      # otherwise use AotCompatOptOut from project settings
-      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
-      if ($null -ne $shouldAot) {
-        $parsedBool = $null
-        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
-          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
-        }
-      }
-      elseif ($hasBaselinedWarnings) {
-        # If artifact has baselined warnings, enable AOT checks
-        $pkgProp.CIParameters["CheckAOTCompat"] = $true
-      }
-      else {
-        # If not explicitly opted out of AOT compat, run the check
-        $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -ne 'true'
-      }
-
-      # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
-      if ($pkgProp.CIParameters["CheckAOTCompat"]) {
-        if ($aotArtifacts) {
-          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
-        }
-        else {
-          $pkgProp.CIParameters["AOTTestInputs"] = @()
-        }
-      }
-      else {
-        $pkgProp.CIParameters["AOTTestInputs"] = @()
-      }
-
       # BuildSnippets is opt _out_, so we should default to true if not specified
       $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
       if ($null -ne $shouldSnippet) {
@@ -123,11 +79,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
     }
     # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
-    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    # so that when we are checking the package set for which need to "Build Snippets"
     else {
-      # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
-      $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
-      $pkgProp.CIParameters["AOTTestInputs"] = @()
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
@@ -157,22 +110,12 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   Write-Host "Calculating dependencies for $($pkgProp.Name)"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
-  $buildOutputPath = Join-Path $RepoRoot "_dependencylistoutput.txt"
 
-  try {
-    $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+  $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
     "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-    " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+    " /p:OutputProjectFilePath=`"$outputFilePath`""
 
-    Invoke-LoggedCommand $command | Out-Null
-  }
-  catch {
-      Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
-      Write-Host "Dumping erroring build output."
-      Write-Host (Get-Content -Raw $buildOutputPath)
-
-      return @()
-  }
+  Invoke-LoggedMsbuildCommand $command
 
   if (Test-Path $outputFilePath) {
     $dependentProjects = Get-Content $outputFilePath
@@ -608,7 +551,7 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     # Install autorest locally
     Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
 
-    Write-Host "Running npm ci over emitter-package.json in a temp folder to prime the npm cache"
+    Write-Host "Running npm ci over legacy-emitter-package.json in a temp folder to prime the npm cache"
 
     $tempFolder = New-TemporaryFile
     $tempFolder | Remove-Item -Force
@@ -616,9 +559,9 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 
     Push-Location $tempFolder
     try {
-        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
-        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
-            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+        Copy-Item "$RepoRoot/eng/legacy-emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/legacy-emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/legacy-emitter-package-lock.json" "package-lock.json"
             Invoke-LoggedCommand "npm ci"
         } else {
           Invoke-LoggedCommand "npm install"
@@ -641,6 +584,15 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 }
 
 function Get-dotnet-ApiviewStatusCheckRequirement($packageInfo) {
+  $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
+  if ($null -eq $version) {
+    return $false
+  }
+  # Do not check APIView status for prerelease mgmt plane packages
+  if ($packageInfo.SdkType -eq "mgmt" -and $version.IsPrerelease) {
+    return $false
+  }
+
   if ($packageInfo.IsNewSdk -and ($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "mgmt")) {
     return $true
   }

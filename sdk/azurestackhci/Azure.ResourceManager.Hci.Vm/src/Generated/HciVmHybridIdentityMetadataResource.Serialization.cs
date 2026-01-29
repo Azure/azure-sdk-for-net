@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmHybridIdentityMetadataResource : IJsonModel<HciVmHybridIdentityMetadataData>
     {
-        private static HciVmHybridIdentityMetadataData s_dataDeserializationInstance;
-        private static HciVmHybridIdentityMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmHybridIdentityMetadataData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmHybridIdentityMetadataData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmHybridIdentityMetadataData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmHybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmHybridIdentityMetadataData>)Data).Write(writer, options);
 
-        HciVmHybridIdentityMetadataData IJsonModel<HciVmHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmHybridIdentityMetadataData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmHybridIdentityMetadataData IJsonModel<HciVmHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmHybridIdentityMetadataData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmHybridIdentityMetadataData IPersistableModel<HciVmHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmHybridIdentityMetadataData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmHybridIdentityMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

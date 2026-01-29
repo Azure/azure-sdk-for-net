@@ -22,6 +22,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
         }
 
+        [Ignore("Service issue 27040")]
         [LiveOnly]
         [TestCase]
         public async Task BadModelName()

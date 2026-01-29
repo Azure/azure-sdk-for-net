@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     public readonly partial struct DisconnectedOperationsResourceProvisioningState : IEquatable<DisconnectedOperationsResourceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DisconnectedOperationsResourceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static DisconnectedOperationsResourceProvisioningState Succeeded { get; } = new DisconnectedOperationsResourceProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static DisconnectedOperationsResourceProvisioningState Failed { get; } = new DisconnectedOperationsResourceProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static DisconnectedOperationsResourceProvisioningState Canceled { get; } = new DisconnectedOperationsResourceProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsResourceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DisconnectedOperationsResourceProvisioningState left, DisconnectedOperationsResourceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsResourceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DisconnectedOperationsResourceProvisioningState left, DisconnectedOperationsResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DisconnectedOperationsResourceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DisconnectedOperationsResourceProvisioningState(string value) => new DisconnectedOperationsResourceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DisconnectedOperationsResourceProvisioningState?(string value) => value == null ? null : new DisconnectedOperationsResourceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DisconnectedOperationsResourceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DisconnectedOperationsResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

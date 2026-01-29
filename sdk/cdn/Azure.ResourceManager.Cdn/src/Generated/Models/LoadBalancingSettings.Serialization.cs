@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -129,6 +130,66 @@ namespace Azure.ResourceManager.Cdn.Models
             return new LoadBalancingSettings(sampleSize, successfulSamplesRequired, additionalLatencyInMilliseconds, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SampleSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sampleSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SampleSize))
+                {
+                    builder.Append("  sampleSize: ");
+                    builder.AppendLine($"{SampleSize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessfulSamplesRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successfulSamplesRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessfulSamplesRequired))
+                {
+                    builder.Append("  successfulSamplesRequired: ");
+                    builder.AppendLine($"{SuccessfulSamplesRequired.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalLatencyInMilliseconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  additionalLatencyInMilliseconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdditionalLatencyInMilliseconds))
+                {
+                    builder.Append("  additionalLatencyInMilliseconds: ");
+                    builder.AppendLine($"{AdditionalLatencyInMilliseconds.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LoadBalancingSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancingSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +198,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancingSettings)} does not support writing '{options.Format}' format.");
             }

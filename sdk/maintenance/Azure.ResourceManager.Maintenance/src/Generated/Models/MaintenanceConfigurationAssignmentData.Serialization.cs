@@ -54,11 +54,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
-            }
             writer.WriteEndObject();
         }
 
@@ -89,7 +84,6 @@ namespace Azure.ResourceManager.Maintenance.Models
             SystemData systemData = default;
             ResourceIdentifier maintenanceConfigurationId = default;
             ResourceIdentifier resourceId = default;
-            MaintenanceConfigurationAssignmentFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,15 +148,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("filter"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -180,7 +165,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 location,
                 maintenanceConfigurationId,
                 resourceId,
-                filter,
                 serializedAdditionalRawData);
         }
 

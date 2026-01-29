@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AutonomousDatabaseBackupType : IEquatable<AutonomousDatabaseBackupType>
     {
         private readonly string _value;
+        /// <summary> Incremental backup. </summary>
+        private const string IncrementalValue = "Incremental";
+        /// <summary> Full backup. </summary>
+        private const string FullValue = "Full";
+        /// <summary> LongTerm backup. </summary>
+        private const string LongTermValue = "LongTerm";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutonomousDatabaseBackupType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IncrementalValue = "Incremental";
-        private const string FullValue = "Full";
-        private const string LongTermValue = "LongTerm";
+            _value = value;
+        }
 
         /// <summary> Incremental backup. </summary>
         public static AutonomousDatabaseBackupType Incremental { get; } = new AutonomousDatabaseBackupType(IncrementalValue);
+
         /// <summary> Full backup. </summary>
         public static AutonomousDatabaseBackupType Full { get; } = new AutonomousDatabaseBackupType(FullValue);
+
         /// <summary> LongTerm backup. </summary>
         public static AutonomousDatabaseBackupType LongTerm { get; } = new AutonomousDatabaseBackupType(LongTermValue);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseBackupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutonomousDatabaseBackupType left, AutonomousDatabaseBackupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseBackupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutonomousDatabaseBackupType left, AutonomousDatabaseBackupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseBackupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutonomousDatabaseBackupType(string value) => new AutonomousDatabaseBackupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutonomousDatabaseBackupType?(string value) => value == null ? null : new AutonomousDatabaseBackupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutonomousDatabaseBackupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutonomousDatabaseBackupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

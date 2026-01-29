@@ -213,7 +213,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
                 await SetupTestMetricAsync($"test_metric_list_{i}");
             }
 
-            List<ExperimentMetric> metrics = await _client.GetMetricsAsync(maxCount: topCount).ToEnumerableAsync();
+            List<ExperimentMetric> metrics = await _client.GetMetricsAsync(top: topCount).ToEnumerableAsync();
 
             Assert.That(metrics.Count, Is.GreaterThanOrEqualTo(numMetrics));
         }

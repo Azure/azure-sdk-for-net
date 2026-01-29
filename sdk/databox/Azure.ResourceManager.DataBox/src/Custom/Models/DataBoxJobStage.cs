@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxJobStage
     {
         /// <summary> Time for the job stage in UTC ISO 8601 format. </summary>
-        [CodeGenMember("StageOn")]
+        /// without it code generator will rename StageTime to StageOn causing breaking change
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("StageOn")]
         public DateTimeOffset? StageTime { get; }
     }
 }

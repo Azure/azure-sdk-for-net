@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     /// <summary> Model representing customer for connected cache resource. </summary>
     public partial class MccCustomerAdditionalProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MccCustomerAdditionalProperties"/>. </summary>
         public MccCustomerAdditionalProperties()
@@ -81,8 +52,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty3"> Optional property #3 of Mcc response object. </param>
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency, float? customerPropertiesOverviewAverageEgressMbps, float? customerPropertiesOverviewAverageMissMbps, float? customerPropertiesOverviewEgressMbpsMax, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn, float? customerPropertiesOverviewMissMbpsMax, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn, int? customerPropertiesOverviewCacheNodesHealthyCount, int? customerPropertiesOverviewCacheNodesUnhealthyCount, bool? signupStatus, int? signupStatusCode, string signupStatusText, int? signupPhaseStatusCode, string signupPhaseStatusText, DateTimeOffset? peeringDBLastUpdatedOn, string customerOrgName, string customerEmail, string customerTransitAsn, CustomerTransitState? customerTransitState, string customerAsn, float? customerAsnEstimatedEgressPeekGbps, string customerEntitlementSkuId, string customerEntitlementSkuGuid, string customerEntitlementSkuName, DateTimeOffset? customerEntitlementExpiryOn, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency, float? customerPropertiesOverviewAverageEgressMbps, float? customerPropertiesOverviewAverageMissMbps, float? customerPropertiesOverviewEgressMbpsMax, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn, float? customerPropertiesOverviewMissMbpsMax, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn, int? customerPropertiesOverviewCacheNodesHealthyCount, int? customerPropertiesOverviewCacheNodesUnhealthyCount, bool? signupStatus, int? signupStatusCode, string signupStatusText, int? signupPhaseStatusCode, string signupPhaseStatusText, DateTimeOffset? peeringDBLastUpdatedOn, string customerOrgName, string customerEmail, string customerTransitAsn, CustomerTransitState? customerTransitState, string customerAsn, float? customerAsnEstimatedEgressPeekGbps, string customerEntitlementSkuId, string customerEntitlementSkuGuid, string customerEntitlementSkuName, DateTimeOffset? customerEntitlementExpiryOn, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomerPropertiesOverviewCacheEfficiency = customerPropertiesOverviewCacheEfficiency;
             CustomerPropertiesOverviewAverageEgressMbps = customerPropertiesOverviewAverageEgressMbps;
@@ -114,67 +85,96 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             OptionalProperty3 = optionalProperty3;
             OptionalProperty4 = optionalProperty4;
             OptionalProperty5 = optionalProperty5;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Customer resource cache efficiency. </summary>
         public float? CustomerPropertiesOverviewCacheEfficiency { get; }
+
         /// <summary> Customer resource average egress in Mbps. </summary>
         public float? CustomerPropertiesOverviewAverageEgressMbps { get; }
+
         /// <summary> Customer resource average cache miss throughput in Mbps. </summary>
         public float? CustomerPropertiesOverviewAverageMissMbps { get; }
+
         /// <summary> Customer resource maximum egress in Mbps. </summary>
         public float? CustomerPropertiesOverviewEgressMbpsMax { get; }
+
         /// <summary> Customer resource peak egress timestamp. </summary>
         public DateTimeOffset? CustomerPropertiesOverviewEgressMbpsMaxOn { get; }
+
         /// <summary> Customer resource maximum cache miss throughput in Mbps. </summary>
         public float? CustomerPropertiesOverviewMissMbpsMax { get; }
+
         /// <summary> Customer resource peak cache miss throughput timestamp. </summary>
         public DateTimeOffset? CustomerPropertiesOverviewMissMbpsMaxOn { get; }
+
         /// <summary> Customer resource total healthy cache nodes. </summary>
         public int? CustomerPropertiesOverviewCacheNodesHealthyCount { get; }
+
         /// <summary> Customer resource total unhealthy cache nodes. </summary>
         public int? CustomerPropertiesOverviewCacheNodesUnhealthyCount { get; }
+
         /// <summary> Customer resource signup status as boolean. </summary>
         public bool? SignupStatus { get; }
+
         /// <summary> Customer resource signup status as integer code. </summary>
         public int? SignupStatusCode { get; }
+
         /// <summary> Customer resource signup status as string text. </summary>
         public string SignupStatusText { get; }
+
         /// <summary> Customer resource signup phase status code as integer. </summary>
         public int? SignupPhaseStatusCode { get; }
+
         /// <summary> Customer resource signup phase status as string text. </summary>
         public string SignupPhaseStatusText { get; }
+
         /// <summary> Customer resource last PeeringDB update timestamp. </summary>
         public DateTimeOffset? PeeringDBLastUpdatedOn { get; }
+
         /// <summary> Customer resource owner organization name. </summary>
         public string CustomerOrgName { get; }
+
         /// <summary> Customer resource contact email. </summary>
         public string CustomerEmail { get; set; }
+
         /// <summary> Customer resource transit Asn (autonomous system number). </summary>
         public string CustomerTransitAsn { get; set; }
+
         /// <summary> Customer resource transit state. </summary>
         public CustomerTransitState? CustomerTransitState { get; set; }
+
         /// <summary> Customer resource Asn (autonomous system number). </summary>
         public string CustomerAsn { get; set; }
+
         /// <summary> Customer resource estimated Asn peering peak in Gbps. </summary>
         public float? CustomerAsnEstimatedEgressPeekGbps { get; }
+
         /// <summary> Customer resource entitlement Sku Id. </summary>
         public string CustomerEntitlementSkuId { get; set; }
+
         /// <summary> Customer resource entitlement Sku Guid. </summary>
         public string CustomerEntitlementSkuGuid { get; set; }
+
         /// <summary> Customer resource entitlement Sku name. </summary>
         public string CustomerEntitlementSkuName { get; set; }
+
         /// <summary> Customer resource entitlement expiration date string. </summary>
         public DateTimeOffset? CustomerEntitlementExpiryOn { get; set; }
+
         /// <summary> Optional property #1 of Mcc response object. </summary>
         public string OptionalProperty1 { get; set; }
+
         /// <summary> Optional property #2 of Mcc response object. </summary>
         public string OptionalProperty2 { get; set; }
+
         /// <summary> Optional property #3 of Mcc response object. </summary>
         public string OptionalProperty3 { get; set; }
+
         /// <summary> Optional property #4 of Mcc response object. </summary>
         public string OptionalProperty4 { get; set; }
+
         /// <summary> Optional property #5 of Mcc response object. </summary>
         public string OptionalProperty5 { get; set; }
     }

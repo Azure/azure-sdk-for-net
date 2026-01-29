@@ -88,6 +88,7 @@ namespace Microsoft.ClientModel.TestFramework
         public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody BodyRegexSanitizerBody(string value = null, string regex = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer BodyStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody body = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody BodyStringSanitizerBody(string target = null, string value = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer ContentDispositionFilePathSanitizer() { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher CustomDefaultMatcher(bool? compareBodies = default(bool?), string excludedHeaders = null, string ignoredHeaders = null, bool? ignoreQueryOrdering = default(bool?), string ignoredQueryParameters = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer GeneralRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody body = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody GeneralRegexSanitizerBody(string value = null, string regex = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
@@ -159,6 +160,7 @@ namespace Microsoft.ClientModel.TestFramework
         public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer> BodyKeySanitizers { get { throw null; } }
         public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer> BodyRegexSanitizers { get { throw null; } }
         public bool CompareBodies { get { throw null; } set { } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition> CustomSanitizers { get { throw null; } }
         public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer> HeaderRegexSanitizers { get { throw null; } }
         public virtual System.Collections.Generic.List<string> JsonPathSanitizers { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode Mode { get { throw null; } set { } }
@@ -171,6 +173,7 @@ namespace Microsoft.ClientModel.TestFramework
         protected Microsoft.ClientModel.TestFramework.TestRetryHelper TestRetryHelper { get { throw null; } }
         protected override System.DateTime TestStartTime { get { throw null; } }
         public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer> UriRegexSanitizers { get { throw null; } }
+        public bool UseDefaultSanitizers { get { throw null; } set { } }
         protected bool UseLocalDebugProxy { get { throw null; } set { } }
         protected bool ValidateClientInstrumentation { get { throw null; } set { } }
         protected internal override object CreateProxyFromClient(System.Type clientType, object client, System.Collections.Generic.IEnumerable<Castle.DynamicProxy.IInterceptor>? preInterceptors) { throw null; }
@@ -380,7 +383,7 @@ namespace Microsoft.ClientModel.TestFramework
         public static bool IsWindows { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode? Mode { get { throw null; } set { } }
         public string? PathToTestResourceBootstrappingScript { get { throw null; } set { } }
-        public static string? RepositoryRoot { get { throw null; } }
+        public static string? RepositoryRoot { get { throw null; } protected set { } }
         public void BootStrapTestResources() { }
         protected string? GetOptionalVariable(string name) { throw null; }
         protected string? GetRecordedOptionalVariable(string name) { throw null; }
@@ -665,6 +668,19 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContentDispositionFilePathSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer>
+    {
+        public ContentDispositionFilePathSanitizer() { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ContentDispositionFilePathSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CustomDefaultMatcher : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>
     {

@@ -13,47 +13,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> These describe errors that occur at the resource level. </summary>
     public partial class ResourceOperationError
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationError"/>. </summary>
         /// <param name="errorCode"> Code for the error eg 404, 500. </param>
         /// <param name="errorDetails"> Detailed message about the error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errorCode"/> or <paramref name="errorDetails"/> is null. </exception>
         internal ResourceOperationError(string errorCode, string errorDetails)
         {
-            Argument.AssertNotNull(errorCode, nameof(errorCode));
-            Argument.AssertNotNull(errorDetails, nameof(errorDetails));
-
             ErrorCode = errorCode;
             ErrorDetails = errorDetails;
         }
@@ -61,21 +28,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ResourceOperationError"/>. </summary>
         /// <param name="errorCode"> Code for the error eg 404, 500. </param>
         /// <param name="errorDetails"> Detailed message about the error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationError(string errorCode, string errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceOperationError(string errorCode, string errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorDetails = errorDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationError"/> for deserialization. </summary>
-        internal ResourceOperationError()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Code for the error eg 404, 500. </summary>
         public string ErrorCode { get; }
+
         /// <summary> Detailed message about the error. </summary>
         public string ErrorDetails { get; }
     }

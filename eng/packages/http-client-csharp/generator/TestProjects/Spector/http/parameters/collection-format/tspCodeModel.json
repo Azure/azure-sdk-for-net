@@ -44,6 +44,7 @@
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.CollectionFormat",
       "apiVersions": [],
@@ -111,7 +112,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -186,7 +188,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -261,7 +264,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -336,7 +340,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Query"
               },
               "parameters": [
                 {
@@ -394,15 +399,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query",
           "apiVersions": [],
           "parent": {
             "$ref": "1"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "27",
@@ -458,7 +465,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.CollectionFormat.Header"
               },
               "parameters": [
                 {
@@ -516,17 +524,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header",
           "apiVersions": [],
           "parent": {
             "$ref": "1"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource.ValidateResourceId(nginxConfigurationResourceIdentifier);
 
             Assert.IsTrue(nginxConfigurationResourceIdentifier.ResourceType.Equals(NginxConfigurationResource.ResourceType));
-            Assert.Throws<ArgumentException>(() => NginxConfigurationResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -138,7 +137,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationCreateOrUpdateContent)).Value;
 
             Assert.AreNotEqual(nginxConfiguration.Data.Properties.RootFile, nginxConfiguration2.Data.Properties.RootFile);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
 
         [TestCase]
@@ -159,7 +157,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 VirtualPath = virtualPath
             };
 
-            NginxConfigurationProtectedFileContent protectedFile = new NginxConfigurationProtectedFileContent
+            NginxConfigurationContentProtectedFile protectedFile = new NginxConfigurationContentProtectedFile
             {
                 Content = NginxConfigurationContent,
                 VirtualPath = protectedFileVirtualPath

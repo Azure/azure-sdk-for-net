@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     public readonly partial struct DatabaseWatcherHealthValidationStatus : IEquatable<DatabaseWatcherHealthValidationStatus>
     {
         private readonly string _value;
+        /// <summary> Health validation has not started. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> Health validation is running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Health validation completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Health validation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Health validation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Health validation timed out. </summary>
+        private const string TimedOutValue = "TimedOut";
 
         /// <summary> Initializes a new instance of <see cref="DatabaseWatcherHealthValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseWatcherHealthValidationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string RunningValue = "Running";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string TimedOutValue = "TimedOut";
+            _value = value;
+        }
 
         /// <summary> Health validation has not started. </summary>
         public static DatabaseWatcherHealthValidationStatus NotStarted { get; } = new DatabaseWatcherHealthValidationStatus(NotStartedValue);
+
         /// <summary> Health validation is running. </summary>
         public static DatabaseWatcherHealthValidationStatus Running { get; } = new DatabaseWatcherHealthValidationStatus(RunningValue);
+
         /// <summary> Health validation completed successfully. </summary>
         public static DatabaseWatcherHealthValidationStatus Succeeded { get; } = new DatabaseWatcherHealthValidationStatus(SucceededValue);
+
         /// <summary> Health validation failed. </summary>
         public static DatabaseWatcherHealthValidationStatus Failed { get; } = new DatabaseWatcherHealthValidationStatus(FailedValue);
+
         /// <summary> Health validation was canceled. </summary>
         public static DatabaseWatcherHealthValidationStatus Canceled { get; } = new DatabaseWatcherHealthValidationStatus(CanceledValue);
+
         /// <summary> Health validation timed out. </summary>
         public static DatabaseWatcherHealthValidationStatus TimedOut { get; } = new DatabaseWatcherHealthValidationStatus(TimedOutValue);
+
         /// <summary> Determines if two <see cref="DatabaseWatcherHealthValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatabaseWatcherHealthValidationStatus left, DatabaseWatcherHealthValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatabaseWatcherHealthValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatabaseWatcherHealthValidationStatus left, DatabaseWatcherHealthValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseWatcherHealthValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatabaseWatcherHealthValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatabaseWatcherHealthValidationStatus(string value) => new DatabaseWatcherHealthValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatabaseWatcherHealthValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatabaseWatcherHealthValidationStatus?(string value) => value == null ? null : new DatabaseWatcherHealthValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatabaseWatcherHealthValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatabaseWatcherHealthValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

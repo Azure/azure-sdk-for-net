@@ -472,7 +472,7 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return Name?.GetHashCode() ?? 0;
         }
 
         /// <summary>

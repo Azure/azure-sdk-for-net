@@ -1,18 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/appconfiguration/ci.mgmt.yml
-    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
-
 # These comments should stay.
 
 extends:

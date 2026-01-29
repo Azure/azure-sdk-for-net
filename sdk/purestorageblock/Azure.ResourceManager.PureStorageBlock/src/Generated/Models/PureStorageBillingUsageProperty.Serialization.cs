@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class PureStorageBillingUsageProperty : IUtf8JsonSerializable, IJsonModel<PureStorageBillingUsageProperty>
+    /// <summary> Represents an individual billing usage property. </summary>
+    public partial class PureStorageBillingUsageProperty : IJsonModel<PureStorageBillingUsageProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageBillingUsageProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PureStorageBillingUsageProperty"/> for deserialization. </summary>
+        internal PureStorageBillingUsageProperty()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageBillingUsageProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageBillingUsageProperty)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("propertyId"u8);
             writer.WriteStringValue(PropertyId);
             writer.WritePropertyName("propertyName"u8);
@@ -56,21 +61,21 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 writer.WritePropertyName("subProperties"u8);
                 writer.WriteStartArray();
-                foreach (var item in SubProperties)
+                foreach (PureStorageBillingUsageProperty item in SubProperties)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,22 +84,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageBillingUsageProperty IJsonModel<PureStorageBillingUsageProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageBillingUsageProperty IJsonModel<PureStorageBillingUsageProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageBillingUsageProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageBillingUsageProperty)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStorageBillingUsageProperty(document.RootElement, options);
         }
 
-        internal static PureStorageBillingUsageProperty DeserializePureStorageBillingUsageProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PureStorageBillingUsageProperty DeserializePureStorageBillingUsageProperty(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,48 +116,47 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             PureStorageBillingUsageSeverity severity = default;
             string statusMessage = default;
             IReadOnlyList<PureStorageBillingUsageProperty> subProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("propertyId"u8))
+                if (prop.NameEquals("propertyId"u8))
                 {
-                    propertyId = property.Value.GetString();
+                    propertyId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("propertyName"u8))
+                if (prop.NameEquals("propertyName"u8))
                 {
-                    propertyName = property.Value.GetString();
+                    propertyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentValue"u8))
+                if (prop.NameEquals("currentValue"u8))
                 {
-                    currentValue = property.Value.GetString();
+                    currentValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("previousValue"u8))
+                if (prop.NameEquals("previousValue"u8))
                 {
-                    previousValue = property.Value.GetString();
+                    previousValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("severity"u8))
+                if (prop.NameEquals("severity"u8))
                 {
-                    severity = new PureStorageBillingUsageSeverity(property.Value.GetString());
+                    severity = new PureStorageBillingUsageSeverity(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statusMessage"u8))
+                if (prop.NameEquals("statusMessage"u8))
                 {
-                    statusMessage = property.Value.GetString();
+                    statusMessage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subProperties"u8))
+                if (prop.NameEquals("subProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PureStorageBillingUsageProperty> array = new List<PureStorageBillingUsageProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeserializePureStorageBillingUsageProperty(item, options));
                     }
@@ -156,10 +165,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PureStorageBillingUsageProperty(
                 propertyId,
                 propertyName,
@@ -168,13 +176,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 severity,
                 statusMessage,
                 subProperties ?? new ChangeTrackingList<PureStorageBillingUsageProperty>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PureStorageBillingUsageProperty>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PureStorageBillingUsageProperty>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -184,15 +195,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageBillingUsageProperty IPersistableModel<PureStorageBillingUsageProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageBillingUsageProperty IPersistableModel<PureStorageBillingUsageProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageBillingUsageProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBillingUsageProperty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePureStorageBillingUsageProperty(document.RootElement, options);
                     }
                 default:
@@ -200,6 +216,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PureStorageBillingUsageProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

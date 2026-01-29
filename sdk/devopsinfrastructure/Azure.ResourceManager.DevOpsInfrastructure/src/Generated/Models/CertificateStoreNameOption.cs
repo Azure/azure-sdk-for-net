@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct CertificateStoreNameOption : IEquatable<CertificateStoreNameOption>
     {
         private readonly string _value;
+        /// <summary> The X.509 certificate store for personal certificates. </summary>
+        private const string MyValue = "My";
+        /// <summary> The X.509 certificate store for trusted root certificate authorities (CAs). </summary>
+        private const string RootValue = "Root";
 
         /// <summary> Initializes a new instance of <see cref="CertificateStoreNameOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificateStoreNameOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MyValue = "My";
-        private const string RootValue = "Root";
+            _value = value;
+        }
 
         /// <summary> The X.509 certificate store for personal certificates. </summary>
         public static CertificateStoreNameOption My { get; } = new CertificateStoreNameOption(MyValue);
+
         /// <summary> The X.509 certificate store for trusted root certificate authorities (CAs). </summary>
         public static CertificateStoreNameOption Root { get; } = new CertificateStoreNameOption(RootValue);
+
         /// <summary> Determines if two <see cref="CertificateStoreNameOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateStoreNameOption left, CertificateStoreNameOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateStoreNameOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateStoreNameOption left, CertificateStoreNameOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateStoreNameOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateStoreNameOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateStoreNameOption(string value) => new CertificateStoreNameOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateStoreNameOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateStoreNameOption?(string value) => value == null ? null : new CertificateStoreNameOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateStoreNameOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateStoreNameOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -64,7 +64,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfMatch",
-            "decorators": []
+            "decorators": [],
+            "namespace": "SpecialHeaders.ConditionalRequest"
           },
           "parameters": [
             {
@@ -148,7 +149,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfNoneMatch",
-            "decorators": []
+            "decorators": [],
+            "namespace": "SpecialHeaders.ConditionalRequest"
           },
           "parameters": [
             {
@@ -240,7 +242,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.headIfModifiedSince",
-            "decorators": []
+            "decorators": [],
+            "namespace": "SpecialHeaders.ConditionalRequest"
           },
           "parameters": [
             {
@@ -340,7 +343,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfUnmodifiedSince",
-            "decorators": []
+            "decorators": [],
+            "namespace": "SpecialHeaders.ConditionalRequest"
           },
           "parameters": [
             {
@@ -413,9 +417,11 @@
           "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

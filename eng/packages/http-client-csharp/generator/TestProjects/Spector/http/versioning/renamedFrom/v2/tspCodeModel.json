@@ -382,7 +382,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.RenamedFrom"
           },
           "parameters": [
             {
@@ -520,6 +521,7 @@
           "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.RenamedFrom",
       "apiVersions": [
@@ -626,7 +628,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.RenamedFrom"
               },
               "parameters": [
                 {
@@ -713,7 +716,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.endpoint"
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.endpoint"
             },
             {
               "$id": "53",
@@ -740,9 +743,10 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface",
           "apiVersions": [
@@ -751,9 +755,11 @@
           ],
           "parent": {
             "$ref": "25"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

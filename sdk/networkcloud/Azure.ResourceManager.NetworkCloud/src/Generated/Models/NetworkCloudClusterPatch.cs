@@ -59,13 +59,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
-        /// <param name="clusterServicePrincipal"> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
         /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions">
-        /// The list of rack definitions for the compute racks in a multi-rack
-        /// cluster, or an empty list in a single-rack cluster.
-        /// </param>
+        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
         /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
         /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
         /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
@@ -101,16 +98,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public AnalyticsOutputSettings AnalyticsOutputSettings { get; set; }
         /// <summary> The customer-provided location information to identify where the cluster resides. </summary>
         public string ClusterLocation { get; set; }
-        /// <summary> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
+        /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
         public ServicePrincipalInformation ClusterServicePrincipal { get; set; }
         /// <summary> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </summary>
         public CommandOutputSettings CommandOutputSettings { get; set; }
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
         public ValidationThreshold ComputeDeploymentThreshold { get; set; }
-        /// <summary>
-        /// The list of rack definitions for the compute racks in a multi-rack
-        /// cluster, or an empty list in a single-rack cluster.
-        /// </summary>
+        /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
         public IList<NetworkCloudRackDefinition> ComputeRackDefinitions { get; }
         /// <summary> The settings for cluster runtime protection. </summary>
         internal RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get; set; }

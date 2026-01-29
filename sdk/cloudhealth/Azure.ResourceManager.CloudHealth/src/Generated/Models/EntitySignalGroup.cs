@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
     /// <summary> Contains various signal groups that can be assigned to an entity. </summary>
     public partial class EntitySignalGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalGroup"/>. </summary>
         public EntitySignalGroup()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="azureLogAnalytics"> Log Analytics Signal Group. </param>
         /// <param name="azureMonitorWorkspace"> Azure Monitor Workspace Signal Group. </param>
         /// <param name="dependencies"> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySignalGroup(AzureResourceSignalGroup azureResource, LogAnalyticsSignalGroup azureLogAnalytics, AzureMonitorWorkspaceSignalGroup azureMonitorWorkspace, DependenciesSignalGroup dependencies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EntitySignalGroup(AzureResourceSignalGroup azureResource, LogAnalyticsSignalGroup azureLogAnalytics, AzureMonitorWorkspaceSignalGroup azureMonitorWorkspace, DependenciesSignalGroup dependencies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureResource = azureResource;
             AzureLogAnalytics = azureLogAnalytics;
             AzureMonitorWorkspace = azureMonitorWorkspace;
             Dependencies = dependencies;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure Resource Signal Group. </summary>
         public AzureResourceSignalGroup AzureResource { get; set; }
+
         /// <summary> Log Analytics Signal Group. </summary>
         public LogAnalyticsSignalGroup AzureLogAnalytics { get; set; }
+
         /// <summary> Azure Monitor Workspace Signal Group. </summary>
         public AzureMonitorWorkspaceSignalGroup AzureMonitorWorkspace { get; set; }
+
         /// <summary> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </summary>
         public DependenciesSignalGroup Dependencies { get; set; }
     }

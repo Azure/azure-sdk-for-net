@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Cdn
     /// <summary>
     /// A class representing the CdnWebApplicationFirewallPolicy data model.
     /// Defines web application firewall policy for Azure CDN.
-    /// Serialized Name: CdnWebApplicationFirewallPolicy
     /// </summary>
     public partial class CdnWebApplicationFirewallPolicyData : TrackedResourceData
     {
@@ -55,10 +54,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.sku
-        /// </param>
+        /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public CdnWebApplicationFirewallPolicyData(AzureLocation location, CdnSku sku) : base(location)
         {
@@ -76,46 +72,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Gets a unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.etag
-        /// </param>
-        /// <param name="sku">
-        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.sku
-        /// </param>
-        /// <param name="policySettings">
-        /// Describes  policySettings for policy
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.policySettings
-        /// </param>
-        /// <param name="rateLimitSettings">
-        /// Describes rate limit rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.rateLimitRules
-        /// </param>
-        /// <param name="customSettings">
-        /// Describes custom rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.customRules
-        /// </param>
-        /// <param name="managedRules">
-        /// Describes managed rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.managedRules
-        /// </param>
-        /// <param name="endpointLinks">
-        /// Describes Azure CDN endpoints associated with this Web Application Firewall policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.endpointLinks
-        /// </param>
-        /// <param name="extendedProperties">
-        /// Key-Value pair representing additional properties for Web Application Firewall policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.extendedProperties
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the WebApplicationFirewallPolicy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.provisioningState
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState
-        /// </param>
+        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
+        /// <param name="policySettings"> Describes  policySettings for policy. </param>
+        /// <param name="rateLimitSettings"> Describes rate limit rules inside the policy. </param>
+        /// <param name="customSettings"> Describes custom rules inside the policy. </param>
+        /// <param name="managedRules"> Describes managed rules inside the policy. </param>
+        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for Web Application Firewall policy. </param>
+        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -137,20 +103,13 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary>
-        /// Gets a unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.etag
-        /// </summary>
+        /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
-        /// <summary>
-        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.sku
-        /// </summary>
+        /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
         internal CdnSku Sku { get; set; }
-        /// <summary>
-        /// Name of the pricing tier.
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
         public CdnSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -162,20 +121,13 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary>
-        /// Describes  policySettings for policy
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.policySettings
-        /// </summary>
+        /// <summary> Describes  policySettings for policy. </summary>
+        [WirePath("properties.policySettings")]
         public WafPolicySettings PolicySettings { get; set; }
-        /// <summary>
-        /// Describes rate limit rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.rateLimitRules
-        /// </summary>
+        /// <summary> Describes rate limit rules inside the policy. </summary>
         internal RateLimitRuleList RateLimitSettings { get; set; }
-        /// <summary>
-        /// List of rules
-        /// Serialized Name: RateLimitRuleList.rules
-        /// </summary>
+        /// <summary> List of rules. </summary>
+        [WirePath("properties.rateLimitRules.rules")]
         public IList<RateLimitRule> RateLimitRules
         {
             get
@@ -186,15 +138,10 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary>
-        /// Describes custom rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.customRules
-        /// </summary>
+        /// <summary> Describes custom rules inside the policy. </summary>
         internal CustomRuleList CustomSettings { get; set; }
-        /// <summary>
-        /// List of rules
-        /// Serialized Name: CustomRuleList.rules
-        /// </summary>
+        /// <summary> List of rules. </summary>
+        [WirePath("properties.customRules.rules")]
         public IList<CustomRule> CustomRules
         {
             get
@@ -205,15 +152,10 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary>
-        /// Describes managed rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.managedRules
-        /// </summary>
+        /// <summary> Describes managed rules inside the policy. </summary>
         internal ManagedRuleSetList ManagedRules { get; set; }
-        /// <summary>
-        /// List of rule sets.
-        /// Serialized Name: ManagedRuleSetList.managedRuleSets
-        /// </summary>
+        /// <summary> List of rule sets. </summary>
+        [WirePath("properties.managedRules.managedRuleSets")]
         public IList<WafPolicyManagedRuleSet> ManagedRuleSets
         {
             get
@@ -224,25 +166,17 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary>
-        /// Describes Azure CDN endpoints associated with this Web Application Firewall policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.endpointLinks
-        /// </summary>
+        /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.endpointLinks")]
         public IReadOnlyList<SubResource> EndpointLinks { get; }
-        /// <summary>
-        /// Key-Value pair representing additional properties for Web Application Firewall policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.extendedProperties
-        /// </summary>
+        /// <summary> Key-Value pair representing additional properties for Web Application Firewall policy. </summary>
+        [WirePath("properties.extendedProperties")]
         public IDictionary<string, string> ExtendedProperties { get; }
-        /// <summary>
-        /// Provisioning state of the WebApplicationFirewallPolicy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
+        [WirePath("properties.provisioningState")]
         public WebApplicationFirewallPolicyProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Resource status of the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState
-        /// </summary>
+        /// <summary> Resource status of the policy. </summary>
+        [WirePath("properties.resourceState")]
         public PolicyResourceState? ResourceState { get; }
     }
 }

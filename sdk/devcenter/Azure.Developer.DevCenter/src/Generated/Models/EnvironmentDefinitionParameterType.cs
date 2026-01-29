@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.Developer.DevCenter.Models
     public readonly partial struct EnvironmentDefinitionParameterType : IEquatable<EnvironmentDefinitionParameterType>
     {
         private readonly string _value;
+        /// <summary> The parameter accepts an array of values. </summary>
+        private const string ArrayValue = "array";
+        /// <summary> The parameter accepts a boolean value. </summary>
+        private const string BooleanValue = "boolean";
+        /// <summary> The parameter accepts an integer value. </summary>
+        private const string IntegerValue = "integer";
+        /// <summary> The parameter accepts a number value. </summary>
+        private const string NumberValue = "number";
+        /// <summary> The parameter accepts an object value. </summary>
+        private const string ObjectValue = "object";
+        /// <summary> The parameter accepts a string value. </summary>
+        private const string StringValue = "string";
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnvironmentDefinitionParameterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ArrayValue = "array";
-        private const string BooleanValue = "boolean";
-        private const string IntegerValue = "integer";
-        private const string NumberValue = "number";
-        private const string ObjectValue = "object";
-        private const string StringValue = "string";
+            _value = value;
+        }
 
         /// <summary> The parameter accepts an array of values. </summary>
         public static EnvironmentDefinitionParameterType Array { get; } = new EnvironmentDefinitionParameterType(ArrayValue);
+
         /// <summary> The parameter accepts a boolean value. </summary>
         public static EnvironmentDefinitionParameterType Boolean { get; } = new EnvironmentDefinitionParameterType(BooleanValue);
+
         /// <summary> The parameter accepts an integer value. </summary>
         public static EnvironmentDefinitionParameterType Integer { get; } = new EnvironmentDefinitionParameterType(IntegerValue);
+
         /// <summary> The parameter accepts a number value. </summary>
         public static EnvironmentDefinitionParameterType Number { get; } = new EnvironmentDefinitionParameterType(NumberValue);
+
         /// <summary> The parameter accepts an object value. </summary>
         public static EnvironmentDefinitionParameterType Object { get; } = new EnvironmentDefinitionParameterType(ObjectValue);
+
         /// <summary> The parameter accepts a string value. </summary>
         public static EnvironmentDefinitionParameterType String { get; } = new EnvironmentDefinitionParameterType(StringValue);
+
         /// <summary> Determines if two <see cref="EnvironmentDefinitionParameterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnvironmentDefinitionParameterType left, EnvironmentDefinitionParameterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnvironmentDefinitionParameterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnvironmentDefinitionParameterType left, EnvironmentDefinitionParameterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnvironmentDefinitionParameterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnvironmentDefinitionParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnvironmentDefinitionParameterType(string value) => new EnvironmentDefinitionParameterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnvironmentDefinitionParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnvironmentDefinitionParameterType?(string value) => value == null ? null : new EnvironmentDefinitionParameterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnvironmentDefinitionParameterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnvironmentDefinitionParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

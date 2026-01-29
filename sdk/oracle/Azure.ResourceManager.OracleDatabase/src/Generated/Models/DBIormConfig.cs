@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> DbIormConfig for cloud vm cluster. </summary>
     public partial class DBIormConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DBIormConfig"/>. </summary>
         internal DBIormConfig()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="dbName"> The database name. For the default DbPlan, the dbName is default. </param>
         /// <param name="flashCacheLimit"> The flash cache limit for this database. This value is internally configured based on the share value assigned to the database. </param>
         /// <param name="share"> The relative priority of this database. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DBIormConfig(string dbName, string flashCacheLimit, int? share, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DBIormConfig(string dbName, string flashCacheLimit, int? share, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DBName = dbName;
             FlashCacheLimit = flashCacheLimit;
             Share = share;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The database name. For the default DbPlan, the dbName is default. </summary>
         public string DBName { get; }
+
         /// <summary> The flash cache limit for this database. This value is internally configured based on the share value assigned to the database. </summary>
         public string FlashCacheLimit { get; }
+
         /// <summary> The relative priority of this database. </summary>
         public int? Share { get; }
     }

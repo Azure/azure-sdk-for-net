@@ -9,6 +9,7 @@ import { JSONSchemaType } from "@typespec/compiler";
 
 export interface AzureMgmtEmitterOptions extends AzureEmitterOptions {
   "enable-wire-path-attribute"?: boolean;
+  "use-legacy-resource-detection"?: boolean;
 }
 
 export const AzureMgmtEmitterOptionsSchema: JSONSchemaType<AzureMgmtEmitterOptions> =
@@ -23,6 +24,13 @@ export const AzureMgmtEmitterOptionsSchema: JSONSchemaType<AzureMgmtEmitterOptio
         description:
           "Whether to enable the WirePathAttribute on model properties. The default value is 'false'.",
         default: false
+      },
+      "use-legacy-resource-detection": {
+        type: "boolean",
+        nullable: true,
+        description:
+          "Whether to use the legacy custom resource detection logic instead of the standardized resolveArmResources API from @azure-tools/typespec-azure-resource-manager. When true, uses the legacy logic. When false, uses the resolveArmResources API.",
+        default: true
       }
     }
   };

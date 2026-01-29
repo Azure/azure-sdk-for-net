@@ -118,7 +118,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         AzureFineTuningClient client = (AzureFineTuningClient)UnWrap(GetTestClient(GetTestClientOptions(version)));
 
         FineTuningJob job = await client.GetJobsAsync(options: new FineTuningJobCollectionOptions() { PageSize = 10 })
-            .FirstOrDefaultAsync(j => j.Status == "succeeded");
+            .GetFirstOrDefaultAsync(j => j.Status == "succeeded");
 
         //FineTuningJob job = client.GetJob("ftjob-5ad97dff8fd246eeb0934f4fb37e8a76");
         Assert.That(job, Is.Not.Null);
@@ -131,7 +131,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         }
         var checkpoints = job.GetCheckpointsAsync();
 
-        await checkpoints.ToListAsync();  // Fails
+        await checkpoints.ToFxListAsync();  // Fails
 
         //FineTuningJob job2 = await FineTuningJob.RehydrateAsync(UnWrap(client), job.JobId);
 
@@ -175,12 +175,12 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
         FineTuningClient client = GetTestClient(GetTestClientOptions(version));
 
-        FineTuningJob job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
+        FineTuningJob job = await client.GetJobsAsync().GetFirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
 
         Assert.NotNull(job);
         Assert.AreEqual(job.Status, "succeeded");
 
-        var evt = await job.GetEventsAsync(new() { PageSize = 1 }).FirstOrDefaultAsync();
+        var evt = await job.GetEventsAsync(new() { PageSize = 1 }).GetFirstOrDefaultAsync();
 
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Id, !(Is.Null.Or.Empty));
@@ -252,7 +252,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             }
         });
 
-        FineTuningJob job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
+        FineTuningJob job = await client.GetJobsAsync().GetFirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
 
         if (job.Value == null)
         {

@@ -1,0 +1,228 @@
+{
+  "name": "Specs.Azure.Tcgc.ClientLo.NewSub",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [],
+  "models": [],
+  "clients": [
+    {
+      "$id": "1",
+      "kind": "client",
+      "name": "MoveToNewSubClient",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
+      "doc": "Test for @clientLocation decorator - moving operations between clients",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "2",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "3",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "4",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.endpoint"
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "5",
+          "kind": "client",
+          "name": "ProductOperations",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
+          "methods": [
+            {
+              "$id": "6",
+              "kind": "basic",
+              "name": "listProducts",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "7",
+                "name": "listProducts",
+                "resourceName": "ProductOperations",
+                "accessibility": "public",
+                "parameters": [],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-location/move-to-new-sub-client/products",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.listProducts",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.listProducts"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "8",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "9",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "10",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.endpoint"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "1"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "11",
+          "kind": "client",
+          "name": "ArchiveOperations",
+          "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
+          "methods": [
+            {
+              "$id": "12",
+              "kind": "basic",
+              "name": "archiveProduct",
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "13",
+                "name": "archiveProduct",
+                "resourceName": "ProductOperations",
+                "accessibility": "public",
+                "parameters": [],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/azure/client-generator-core/client-location/move-to-new-sub-client/products/archive",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.archiveProduct",
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient"
+              },
+              "parameters": [],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.archiveProduct"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "14",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "15",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "16",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.endpoint"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "1"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}

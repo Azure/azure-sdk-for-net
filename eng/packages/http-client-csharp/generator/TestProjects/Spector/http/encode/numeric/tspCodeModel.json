@@ -253,6 +253,7 @@
           "crossLanguageDefinitionId": "Encode.Numeric.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Encode.Numeric",
       "apiVersions": [],
@@ -353,7 +354,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Numeric.Property.safeintAsString",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Numeric.Property"
               },
               "parameters": [
                 {
@@ -509,7 +511,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Numeric.Property.uint32AsStringOptional",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Numeric.Property"
               },
               "parameters": [
                 {
@@ -665,7 +668,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Numeric.Property.uint8AsString",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Numeric.Property"
               },
               "parameters": [
                 {
@@ -761,17 +765,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Numeric.endpoint"
+              "crossLanguageDefinitionId": "Encode.Numeric.Property.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Numeric.Property",
           "apiVersions": [],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

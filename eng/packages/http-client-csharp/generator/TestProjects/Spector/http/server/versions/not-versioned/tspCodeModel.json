@@ -40,7 +40,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withoutApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.NotVersioned"
           },
           "parameters": [],
           "response": {},
@@ -98,7 +99,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.NotVersioned"
           },
           "parameters": [
             {
@@ -181,7 +183,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.NotVersioned"
           },
           "parameters": [
             {
@@ -236,9 +239,11 @@
           "crossLanguageDefinitionId": "Server.Versions.NotVersioned.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Versions.NotVersioned",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

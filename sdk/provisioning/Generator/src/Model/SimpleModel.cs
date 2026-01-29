@@ -159,7 +159,18 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                             if (property.GenerateDefaultValue) { writer.Write($", defaultValue: Get{property.Name}DefaultValue()"); }
                             if (property.Format is not null) { writer.Write($", format: \"{property.Format}\""); }
                             writer.WriteLine($");");
+
+                            if (GeneratePartialPropertyDefinition)
+                            {
+                                writer.WriteLine("DefineAdditionalProperties();");
+                            }
                         }
+                    }
+
+                    if (GeneratePartialPropertyDefinition)
+                    {
+                        writer.WriteLine();
+                        writer.WriteLine("private partial void DefineAdditionalProperties();");
                     }
                 }
 

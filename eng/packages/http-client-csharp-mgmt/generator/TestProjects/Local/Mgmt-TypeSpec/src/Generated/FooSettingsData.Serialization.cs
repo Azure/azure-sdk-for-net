@@ -162,7 +162,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeFooSettingsData(document.RootElement, options);
                     }
@@ -186,11 +186,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooSettingsData"/> from. </param>
-        internal static FooSettingsData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FooSettingsData"/> from. </param>
+        internal static FooSettingsData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFooSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

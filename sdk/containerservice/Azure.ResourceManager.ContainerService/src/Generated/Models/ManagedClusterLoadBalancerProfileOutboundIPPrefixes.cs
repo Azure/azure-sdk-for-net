@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Desired outbound IP Prefix resources for the cluster load balancer. </summary>
+    /// <summary>
+    /// Desired outbound IP Prefix resources for the cluster load balancer.
+    /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPPrefixes
+    /// </summary>
     internal partial class ManagedClusterLoadBalancerProfileOutboundIPPrefixes
     {
         /// <summary>
@@ -53,7 +56,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPPrefixes"/>. </summary>
-        /// <param name="publicIPPrefixes"> A list of public IP prefix resources. </param>
+        /// <param name="publicIPPrefixes">
+        /// A list of public IP prefix resources.
+        /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPPrefixes.publicIPPrefixes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterLoadBalancerProfileOutboundIPPrefixes(IList<WritableSubResource> publicIPPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +67,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of public IP prefix resources. </summary>
+        /// <summary>
+        /// A list of public IP prefix resources.
+        /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPPrefixes.publicIPPrefixes
+        /// </summary>
         [WirePath("publicIPPrefixes")]
         public IList<WritableSubResource> PublicIPPrefixes { get; }
     }

@@ -13,37 +13,8 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Provides remote connection information for a Dev Box. </summary>
     public partial class RemoteConnection
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RemoteConnection"/>. </summary>
         internal RemoteConnection()
@@ -53,16 +24,17 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="RemoteConnection"/>. </summary>
         /// <param name="webUri"> URL to open a browser based RDP session. </param>
         /// <param name="rdpConnectionUri"> Link to open a Remote Desktop session. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteConnection(Uri webUri, Uri rdpConnectionUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteConnection(Uri webUri, Uri rdpConnectionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebUri = webUri;
             RdpConnectionUri = rdpConnectionUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> URL to open a browser based RDP session. </summary>
         public Uri WebUri { get; }
+
         /// <summary> Link to open a Remote Desktop session. </summary>
         public Uri RdpConnectionUri { get; }
     }

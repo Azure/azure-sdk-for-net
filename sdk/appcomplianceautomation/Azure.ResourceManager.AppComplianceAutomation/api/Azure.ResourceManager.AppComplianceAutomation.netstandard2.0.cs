@@ -342,9 +342,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus Passed { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus PendingApproval { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus (string value) { throw null; }
@@ -392,9 +390,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus Passed { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus PendingApproval { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus (string value) { throw null; }
@@ -426,9 +422,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType ComplianceReport { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType ResourceList { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType (string value) { throw null; }
@@ -494,9 +488,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState Verifying { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState (string value) { throw null; }
@@ -551,9 +543,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType Data { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType File { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType (string value) { throw null; }
@@ -616,9 +606,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason (string value) { throw null; }
@@ -734,9 +722,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus Reviewing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus (string value) { throw null; }
@@ -867,9 +853,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus Passed { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus PendingApproval { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus (string value) { throw null; }
@@ -921,9 +905,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification False { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification left, Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification (string value) { throw null; }
@@ -962,9 +944,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution False { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution left, Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution (string value) { throw null; }
@@ -1004,9 +984,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem ValidEmail { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem ValidGuid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem left, Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem (string value) { throw null; }
@@ -1166,9 +1144,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin Azure { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin Gcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin (string value) { throw null; }
@@ -1184,9 +1160,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus Healthy { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus Unhealthy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus (string value) { throw null; }
@@ -1202,9 +1176,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult Failed { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult (string value) { throw null; }
@@ -1248,9 +1220,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment Gcp { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment General { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment (string value) { throw null; }
@@ -1284,9 +1254,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity Low { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity (string value) { throw null; }
@@ -1304,9 +1272,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus Passed { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus PendingApproval { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus (string value) { throw null; }
@@ -1323,9 +1289,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType Manual { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType ScopedManual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType (string value) { throw null; }
@@ -1385,9 +1349,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType YearPicker { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType YesNoNa { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType left, Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType (string value) { throw null; }
@@ -1414,9 +1376,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent False { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent left, Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent (string value) { throw null; }
@@ -1503,9 +1463,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey False { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey left, Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey (string value) { throw null; }
@@ -1520,9 +1478,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public WebhookContentType(string value) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType ApplicationJson { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType (string value) { throw null; }
@@ -1539,9 +1495,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus NotStarted { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus (string value) { throw null; }
@@ -1557,9 +1511,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled False { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled (string value) { throw null; }
@@ -1578,9 +1530,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent ReportConfigurationChanges { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent ReportDeletion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent (string value) { throw null; }
@@ -1596,9 +1546,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus (string value) { throw null; }

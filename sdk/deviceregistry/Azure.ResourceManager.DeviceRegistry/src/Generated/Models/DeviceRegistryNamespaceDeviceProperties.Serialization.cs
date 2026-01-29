@@ -122,6 +122,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(Policy))
+            {
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(Policy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -178,6 +183,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             long? version = default;
             DateTimeOffset? lastTransitionOn = default;
             DeviceRegistryProvisioningState? provisioningState = default;
+            DeviceCredentialPolicy policy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -291,6 +297,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     provisioningState = new DeviceRegistryProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("policy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policy = DeviceCredentialPolicy.DeserializeDeviceCredentialPolicy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -311,6 +326,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 version,
                 lastTransitionOn,
                 provisioningState,
+                policy,
                 additionalBinaryDataProperties);
         }
 
@@ -342,7 +358,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDeviceRegistryNamespaceDeviceProperties(document.RootElement, options);
                     }

@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return subscriptionResource.GetCachedClient(client => new MockableWeightsAndBiasesSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="WeightsAndBiasesInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WeightsAndBiasesInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWeightsAndBiasesArmClient.GetWeightsAndBiasesInstanceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return GetMockableWeightsAndBiasesArmClient(client).GetWeightsAndBiasesInstanceResource(id);
         }
 
-        /// <summary> Gets a collection of WeightsAndBiasesInstances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of WeightsAndBiasesInstances in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetWeightsAndBiasesInstances()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of WeightsAndBiasesInstances and their operations over a WeightsAndBiasesInstanceResource. </returns>
@@ -60,7 +72,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetWeightsAndBiasesInstances();
         }
 
-        /// <summary> Get a InstanceResource. </summary>
+        /// <summary>
+        /// Get a InstanceResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetWeightsAndBiasesInstanceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,7 +91,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return await GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetWeightsAndBiasesInstanceAsync(instancename, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a InstanceResource. </summary>
+        /// <summary>
+        /// Get a InstanceResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetWeightsAndBiasesInstance(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,7 +110,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetWeightsAndBiasesInstance(instancename, cancellationToken);
         }
 
-        /// <summary> List InstanceResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List InstanceResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstancesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return GetMockableWeightsAndBiasesSubscriptionResource(subscriptionResource).GetWeightsAndBiasesInstancesAsync(cancellationToken);
         }
 
-        /// <summary> List InstanceResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List InstanceResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

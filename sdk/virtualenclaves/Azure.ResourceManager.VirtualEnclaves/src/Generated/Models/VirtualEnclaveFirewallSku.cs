@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct VirtualEnclaveFirewallSku : IEquatable<VirtualEnclaveFirewallSku>
     {
         private readonly string _value;
+        /// <summary> FirewallSKU Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> FirwallSKU Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> FirewallSKU Premium. </summary>
+        private const string PremiumValue = "Premium";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveFirewallSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualEnclaveFirewallSku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
+            _value = value;
+        }
 
         /// <summary> FirewallSKU Basic. </summary>
         public static VirtualEnclaveFirewallSku Basic { get; } = new VirtualEnclaveFirewallSku(BasicValue);
+
         /// <summary> FirwallSKU Standard. </summary>
         public static VirtualEnclaveFirewallSku Standard { get; } = new VirtualEnclaveFirewallSku(StandardValue);
+
         /// <summary> FirewallSKU Premium. </summary>
         public static VirtualEnclaveFirewallSku Premium { get; } = new VirtualEnclaveFirewallSku(PremiumValue);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveFirewallSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveFirewallSku left, VirtualEnclaveFirewallSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveFirewallSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveFirewallSku left, VirtualEnclaveFirewallSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveFirewallSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveFirewallSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEnclaveFirewallSku(string value) => new VirtualEnclaveFirewallSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveFirewallSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEnclaveFirewallSku?(string value) => value == null ? null : new VirtualEnclaveFirewallSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveFirewallSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEnclaveFirewallSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

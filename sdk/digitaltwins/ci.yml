@@ -11,18 +11,6 @@ trigger:
     - sdk/digitaltwins/ci.yml
     - sdk/digitaltwins/Azure.DigitalTwins.Core
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/digitaltwins/ci.yml
-    - sdk/digitaltwins/Azure.DigitalTwins.Core
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

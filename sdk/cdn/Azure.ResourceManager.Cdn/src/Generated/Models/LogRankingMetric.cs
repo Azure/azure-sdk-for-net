@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The LogRankingMetric.
-    /// Serialized Name: LogRankingMetric
-    /// </summary>
+    /// <summary> The LogRankingMetric. </summary>
     public readonly partial struct LogRankingMetric : IEquatable<LogRankingMetric>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UserErrorCountValue = "userErrorCount";
         private const string ErrorCountValue = "errorCount";
 
-        /// <summary>
-        /// clientRequestCount
-        /// Serialized Name: LogRankingMetric.clientRequestCount
-        /// </summary>
+        /// <summary> clientRequestCount. </summary>
         public static LogRankingMetric ClientRequestCount { get; } = new LogRankingMetric(ClientRequestCountValue);
-        /// <summary>
-        /// clientRequestTraffic
-        /// Serialized Name: LogRankingMetric.clientRequestTraffic
-        /// </summary>
+        /// <summary> clientRequestTraffic. </summary>
         public static LogRankingMetric ClientRequestTraffic { get; } = new LogRankingMetric(ClientRequestTrafficValue);
-        /// <summary>
-        /// hitCount
-        /// Serialized Name: LogRankingMetric.hitCount
-        /// </summary>
+        /// <summary> hitCount. </summary>
         public static LogRankingMetric HitCount { get; } = new LogRankingMetric(HitCountValue);
-        /// <summary>
-        /// missCount
-        /// Serialized Name: LogRankingMetric.missCount
-        /// </summary>
+        /// <summary> missCount. </summary>
         public static LogRankingMetric MissCount { get; } = new LogRankingMetric(MissCountValue);
-        /// <summary>
-        /// userErrorCount
-        /// Serialized Name: LogRankingMetric.userErrorCount
-        /// </summary>
+        /// <summary> userErrorCount. </summary>
         public static LogRankingMetric UserErrorCount { get; } = new LogRankingMetric(UserErrorCountValue);
-        /// <summary>
-        /// errorCount
-        /// Serialized Name: LogRankingMetric.errorCount
-        /// </summary>
+        /// <summary> errorCount. </summary>
         public static LogRankingMetric ErrorCount { get; } = new LogRankingMetric(ErrorCountValue);
         /// <summary> Determines if two <see cref="LogRankingMetric"/> values are the same. </summary>
         public static bool operator ==(LogRankingMetric left, LogRankingMetric right) => left.Equals(right);

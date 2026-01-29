@@ -6,15 +6,15 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CloudEndpointAfsShareMetadataCertificatePublicKeys))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointArray))]
@@ -22,9 +22,11 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(CloudEndpointChangeEnumerationActivity))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointChangeEnumerationStatus))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(CloudEndpointCreateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointData))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointLastChangeEnumerationStatus))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointPostBackupResult))]
+    [ModelReaderWriterBuildable(typeof(CloudEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointResource))]
     [ModelReaderWriterBuildable(typeof(CloudTieringCachePerformance))]
     [ModelReaderWriterBuildable(typeof(CloudTieringDatePolicyStatus))]
@@ -34,22 +36,31 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(CloudTieringVolumeFreeSpacePolicyStatus))]
     [ModelReaderWriterBuildable(typeof(FilesNotTieringError))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(PostBackupResponseProperties))]
     [ModelReaderWriterBuildable(typeof(PostRestoreContent))]
     [ModelReaderWriterBuildable(typeof(PreRestoreContent))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(RecallActionContent))]
     [ModelReaderWriterBuildable(typeof(RegisteredServerArray))]
+    [ModelReaderWriterBuildable(typeof(RegisteredServerCreateParametersProperties))]
+    [ModelReaderWriterBuildable(typeof(RegisteredServerProperties))]
+    [ModelReaderWriterBuildable(typeof(RegisteredServerUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreFileSpec))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointArray))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointBackgroundDataDownloadActivity))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointCloudTieringStatus))]
+    [ModelReaderWriterBuildable(typeof(ServerEndpointCreateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointFilesNotSyncingError))]
+    [ModelReaderWriterBuildable(typeof(ServerEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointProvisioningStepStatus))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointRecallError))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointRecallStatus))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointSyncActivityStatus))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointSyncSessionStatus))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointSyncStatus))]
+    [ModelReaderWriterBuildable(typeof(ServerEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StorageSyncGroupCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(StorageSyncGroupData))]
     [ModelReaderWriterBuildable(typeof(StorageSyncGroupResource))]
@@ -60,6 +71,7 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(StorageSyncPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(StorageSyncRegisteredServerCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(StorageSyncRegisteredServerData))]
@@ -72,18 +84,22 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(StorageSyncServerEndpointResource))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceArray))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(StorageSyncServiceCreateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceData))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServicePatch))]
+    [ModelReaderWriterBuildable(typeof(StorageSyncServiceProperties))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceResource))]
+    [ModelReaderWriterBuildable(typeof(StorageSyncServiceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StorageSyncWorkflowData))]
     [ModelReaderWriterBuildable(typeof(StorageSyncWorkflowResource))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SyncGroupArray))]
+    [ModelReaderWriterBuildable(typeof(SyncGroupProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TriggerChangeDetectionContent))]
     [ModelReaderWriterBuildable(typeof(TriggerRolloverContent))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkflowArray))]
+    [ModelReaderWriterBuildable(typeof(WorkflowProperties))]
     public partial class AzureResourceManagerStorageSyncContext : ModelReaderWriterContext
     {
     }

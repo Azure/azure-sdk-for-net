@@ -10,24 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Unknown version of DataBoxValidationContent. </summary>
     internal partial class UnknownValidationRequest : DataBoxValidationContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/>. </summary>
         /// <param name="validationCategory"> Identify the nature of validation. </param>
-        /// <param name="individualRequestDetails">
-        /// List of request details contain validationType and its request as key and value respectively.
-        /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxValidateAddressContent"/>, <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownValidationRequest(string validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)
-        {
-            ValidationCategory = validationCategory ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/> for deserialization. </summary>
-        internal UnknownValidationRequest()
+        /// <param name="individualRequestDetails"> List of request details contain validationType and its request as key and value respectively. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownValidationRequest(string validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(validationCategory ?? "unknown", individualRequestDetails, additionalBinaryDataProperties)
         {
         }
     }

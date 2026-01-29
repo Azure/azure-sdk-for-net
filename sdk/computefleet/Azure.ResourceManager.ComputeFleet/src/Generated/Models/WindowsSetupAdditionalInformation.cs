@@ -17,37 +17,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// </summary>
     public partial class WindowsSetupAdditionalInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WindowsSetupAdditionalInformation"/>. </summary>
         public WindowsSetupAdditionalInformation()
@@ -69,28 +40,31 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// the specified path and component. The XML must be less than 4KB and must
         /// include the root element for the setting or feature that is being inserted.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsSetupAdditionalInformation(WindowsSetupAdditionalInformationPassName? passName, WindowsSetupAdditionalInformationComponentName? componentName, AdditionalInformationSettingName? settingName, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsSetupAdditionalInformation(WindowsSetupAdditionalInformationPassName? passName, WindowsSetupAdditionalInformationComponentName? componentName, AdditionalInformationSettingName? settingName, string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PassName = passName;
             ComponentName = componentName;
             SettingName = settingName;
             Content = content;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The pass name. Currently, the only allowable value is OobeSystem. </summary>
         public WindowsSetupAdditionalInformationPassName? PassName { get; set; }
+
         /// <summary>
         /// The component name. Currently, the only allowable value is
         /// Microsoft-Windows-Shell-Setup.
         /// </summary>
         public WindowsSetupAdditionalInformationComponentName? ComponentName { get; set; }
+
         /// <summary>
         /// Specifies the name of the setting to which the content applies. Possible values
         /// are: FirstLogonCommands and AutoLogon.
         /// </summary>
         public AdditionalInformationSettingName? SettingName { get; set; }
+
         /// <summary>
         /// Specifies the XML formatted content that is added to the unattend.xml file for
         /// the specified path and component. The XML must be less than 4KB and must

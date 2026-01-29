@@ -1,3 +1,0 @@
-﻿This shouldn't get successfully saved - the tests access it only via
-a 'bad' path that would go outside the container, and assert that trying
-to use that path gives an error.

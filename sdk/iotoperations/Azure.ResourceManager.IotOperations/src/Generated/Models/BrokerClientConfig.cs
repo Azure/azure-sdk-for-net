@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> The settings of Client Config. </summary>
     public partial class BrokerClientConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrokerClientConfig"/>. </summary>
         public BrokerClientConfig()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="subscriberQueueLimit"> The limit on the number of queued messages for a subscriber. </param>
         /// <param name="maxReceiveMaximum"> Upper bound of Receive Maximum that a client can request in the CONNECT packet. </param>
         /// <param name="maxKeepAliveSeconds"> Upper bound of a client's Keep Alive, in seconds. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerClientConfig(int? maxSessionExpirySeconds, int? maxMessageExpirySeconds, int? maxPacketSizeBytes, SubscriberQueueLimit subscriberQueueLimit, int? maxReceiveMaximum, int? maxKeepAliveSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerClientConfig(int? maxSessionExpirySeconds, int? maxMessageExpirySeconds, int? maxPacketSizeBytes, SubscriberQueueLimit subscriberQueueLimit, int? maxReceiveMaximum, int? maxKeepAliveSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxSessionExpirySeconds = maxSessionExpirySeconds;
             MaxMessageExpirySeconds = maxMessageExpirySeconds;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.IotOperations.Models
             SubscriberQueueLimit = subscriberQueueLimit;
             MaxReceiveMaximum = maxReceiveMaximum;
             MaxKeepAliveSeconds = maxKeepAliveSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Upper bound of Session Expiry Interval, in seconds. </summary>
         public int? MaxSessionExpirySeconds { get; set; }
+
         /// <summary> Upper bound of Message Expiry Interval, in seconds. </summary>
         public int? MaxMessageExpirySeconds { get; set; }
+
         /// <summary> Max message size for a packet in Bytes. </summary>
         public int? MaxPacketSizeBytes { get; set; }
+
         /// <summary> The limit on the number of queued messages for a subscriber. </summary>
         public SubscriberQueueLimit SubscriberQueueLimit { get; set; }
+
         /// <summary> Upper bound of Receive Maximum that a client can request in the CONNECT packet. </summary>
         public int? MaxReceiveMaximum { get; set; }
+
         /// <summary> Upper bound of a client's Keep Alive, in seconds. </summary>
         public int? MaxKeepAliveSeconds { get; set; }
     }

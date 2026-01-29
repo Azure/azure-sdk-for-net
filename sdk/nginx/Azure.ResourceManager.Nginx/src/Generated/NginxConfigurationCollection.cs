@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Nginx
     /// </summary>
     public partial class NginxConfigurationCollection : ArmCollection, IEnumerable<NginxConfigurationResource>, IAsyncEnumerable<NginxConfigurationResource>
     {
-        private readonly ClientDiagnostics _nginxConfigurationConfigurationsClientDiagnostics;
-        private readonly ConfigurationsRestOperations _nginxConfigurationConfigurationsRestClient;
+        private readonly ClientDiagnostics _nginxConfigurationResponsesClientDiagnostics;
+        private readonly NginxConfigurationResponses _nginxConfigurationResponsesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NginxConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NginxConfigurationCollection for mocking. </summary>
         protected NginxConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NginxConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NginxConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _nginxConfigurationConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NginxConfigurationResource.ResourceType, out string nginxConfigurationConfigurationsApiVersion);
-            _nginxConfigurationConfigurationsRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxConfigurationConfigurationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NginxConfigurationResource.ResourceType, out string nginxConfigurationApiVersion);
+            _nginxConfigurationResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _nginxConfigurationResponsesRestClient = new NginxConfigurationResponses(_nginxConfigurationResponsesClientDiagnostics, Pipeline, Endpoint, nginxConfigurationApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NginxDeploymentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update the NGINX configuration for given NGINX deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,33 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="content"> The NGINX configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NginxConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, NginxConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, NginxConfigurationCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxConfigurationResource>(new NginxConfigurationOperationSource(Client), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, _nginxConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, NginxConfigurationCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NginxArmOperation<NginxConfigurationResource> operation = new NginxArmOperation<NginxConfigurationResource>(
+                    new NginxConfigurationOperationSource(Client),
+                    _nginxConfigurationResponsesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +116,16 @@ namespace Azure.ResourceManager.Nginx
         /// Create or update the NGINX configuration for given NGINX deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +133,33 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="content"> The NGINX configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NginxConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, NginxConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, NginxConfigurationCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken);
-                var operation = new NginxArmOperation<NginxConfigurationResource>(new NginxConfigurationOperationSource(Client), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, _nginxConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, NginxConfigurationCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NginxArmOperation<NginxConfigurationResource> operation = new NginxArmOperation<NginxConfigurationResource>(
+                    new NginxConfigurationOperationSource(Client),
+                    _nginxConfigurationResponsesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +173,42 @@ namespace Azure.ResourceManager.Nginx
         /// Get the NGINX configuration of given NGINX deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NginxConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Get");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NginxConfigurationData> response = Response.FromValue(NginxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +222,42 @@ namespace Azure.ResourceManager.Nginx
         /// Get the NGINX configuration of given NGINX deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NginxConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Get");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NginxConfigurationData> response = Response.FromValue(NginxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +271,44 @@ namespace Azure.ResourceManager.Nginx
         /// List the NGINX configuration of given NGINX deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NginxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NginxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NginxConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxConfigurationConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxConfigurationResource(Client, NginxConfigurationData.DeserializeNginxConfigurationData(e)), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, "NginxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllAsyncCollectionResultOfT(_nginxConfigurationResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// List the NGINX configuration of given NGINX deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +316,61 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> A collection of <see cref="NginxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NginxConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxConfigurationConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxConfigurationResource(Client, NginxConfigurationData.DeserializeNginxConfigurationData(e)), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, "NginxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllCollectionResultOfT(_nginxConfigurationResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Exists");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NginxConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +384,50 @@ namespace Azure.ResourceManager.Nginx
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Exists");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NginxConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +441,54 @@ namespace Azure.ResourceManager.Nginx
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NginxConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NginxConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NginxConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +502,54 @@ namespace Azure.ResourceManager.Nginx
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NginxConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _nginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxConfigurationResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NginxConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NginxConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +569,7 @@ namespace Azure.ResourceManager.Nginx
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NginxConfigurationResource> IAsyncEnumerable<NginxConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
