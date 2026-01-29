@@ -73,9 +73,321 @@ namespace Azure.AI.Agents.Persistent
             null;
 
         /// <inheritdoc />
-        public virtual Task<ChatResponse> GetResponseAsync(
-            IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default) =>
-            GetStreamingResponseAsync(messages, options, cancellationToken).ToChatResponseAsync(cancellationToken);
+        public virtual async Task<ChatResponse> GetResponseAsync(
+            IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(messages, nameof(messages));
+
+            // Prepare the run context (shared logic with streaming)
+            var prepared = await PrepareRunContextAsync(messages, options, cancellationToken).ConfigureAwait(false);
+
+            ThreadRun? threadRun;
+
+            // Submit tool results or create a new run
+            if (prepared.HasToolResultsForActiveRun)
+            {
+                // There's an active run and we have tool results to submit for that run, so submit the results.
+                threadRun = (await _client!.Runs.SubmitToolOutputsToRunAsync(prepared.ActiveRun!, prepared.ToolOutputs!, prepared.ToolApprovals!, cancellationToken).ConfigureAwait(false)).Value;
+            }
+            else
+            {
+                // Ensure thread exists (creates if needed, cancels active run if present)
+                await prepared.EnsureThreadAsync().ConfigureAwait(false);
+
+                // Create a new run using non-streaming API
+                threadRun = (await _client!.Runs.CreateRunAsync(
+                    threadId: prepared.ThreadId!,
+                    assistantId: _agentId!,
+                    overrideModelName: prepared.RunOptions.OverrideModelName,
+                    overrideInstructions: prepared.RunOptions.OverrideInstructions,
+                    additionalInstructions: null,
+                    additionalMessages: prepared.RunOptions.ThreadOptions.Messages,
+                    overrideTools: prepared.RunOptions.OverrideTools,
+                    stream: false,
+                    temperature: prepared.RunOptions.Temperature,
+                    topP: prepared.RunOptions.TopP,
+                    maxPromptTokens: prepared.RunOptions.MaxPromptTokens,
+                    maxCompletionTokens: prepared.RunOptions.MaxCompletionTokens,
+                    truncationStrategy: prepared.RunOptions.TruncationStrategy,
+                    toolChoice: prepared.RunOptions.ToolChoice,
+                    responseFormat: prepared.RunOptions.ResponseFormat,
+                    parallelToolCalls: prepared.RunOptions.ParallelToolCalls,
+                    metadata: prepared.RunOptions.Metadata,
+                    include: null,
+                    cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
+            }
+
+            // Poll for run completion
+            string threadId = prepared.ThreadId!;
+            while (threadRun.Status == RunStatus.Queued || threadRun.Status == RunStatus.InProgress)
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken).ConfigureAwait(false);
+                threadRun = (await _client!.Runs.GetRunAsync(threadId, threadRun.Id, cancellationToken).ConfigureAwait(false)).Value;
+            }
+
+            // Build the ChatResponse from the run result
+            return await BuildChatResponseFromRunAsync(threadId, threadRun, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Builds a <see cref="ChatResponse"/> from a completed <see cref="ThreadRun"/>.
+        /// </summary>
+        private async Task<ChatResponse> BuildChatResponseFromRunAsync(string threadId, ThreadRun run, CancellationToken cancellationToken)
+        {
+            List<ChatMessage> responseMessages = [];
+            UsageDetails? usage = null;
+
+            // Handle usage from the run
+            if (run.Usage is { } runUsage)
+            {
+                usage = new()
+                {
+                    InputTokenCount = runUsage.PromptTokens,
+                    OutputTokenCount = runUsage.CompletionTokens,
+                    TotalTokenCount = runUsage.TotalTokens,
+                };
+            }
+
+            // Handle error case
+            if (run.Status == RunStatus.Failed && run.LastError is { } error)
+            {
+                if (_throwOnContentErrors)
+                {
+                    throw new InvalidOperationException(error.Message) { Data = { ["ErrorCode"] = error.Code } };
+                }
+
+                ChatMessage errorMessage = new(ChatRole.Assistant, [new ErrorContent(error.Message) { ErrorCode = error.Code, RawRepresentation = error }]);
+                responseMessages.Add(errorMessage);
+
+                return new ChatResponse(responseMessages)
+                {
+                    ConversationId = threadId,
+                    ResponseId = run.Id,
+                    ModelId = run.Model,
+                    CreatedAt = run.CreatedAt,
+                    RawRepresentation = run,
+                    Usage = usage,
+                };
+            }
+
+            // Handle requires_action (function calls)
+            if (run.Status == RunStatus.RequiresAction && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
+            {
+                List<AIContent> contents = [];
+                foreach (RequiredToolCall toolCall in submitToolOutputsAction.ToolCalls)
+                {
+                    if (toolCall is RequiredFunctionToolCall functionToolCall)
+                    {
+                        contents.Add(new FunctionCallContent(
+                            JsonSerializer.Serialize([run.Id, functionToolCall.Id], AgentsChatClientJsonContext.Default.StringArray),
+                            functionToolCall.Name,
+                            JsonSerializer.Deserialize(functionToolCall.Arguments, AgentsChatClientJsonContext.Default.IDictionaryStringObject)!));
+                    }
+                    else if (toolCall is RequiredMcpToolCall mcpToolCall)
+                    {
+                        contents.Add(new McpServerToolApprovalRequestContent(
+                            JsonSerializer.Serialize([run.Id, mcpToolCall.Id], AgentsChatClientJsonContext.Default.StringArray),
+                            new McpServerToolCallContent(mcpToolCall.Id, mcpToolCall.Name, mcpToolCall.ServerLabel)
+                            {
+                                Arguments = JsonSerializer.Deserialize(mcpToolCall.Arguments, AgentsChatClientJsonContext.Default.IReadOnlyDictionaryStringObject)!,
+                            }));
+                    }
+                }
+
+                if (contents.Count > 0)
+                {
+                    responseMessages.Add(new ChatMessage(ChatRole.Assistant, contents));
+                }
+
+                return new ChatResponse(responseMessages)
+                {
+                    ConversationId = threadId,
+                    ResponseId = run.Id,
+                    ModelId = run.Model,
+                    CreatedAt = run.CreatedAt,
+                    RawRepresentation = run,
+                    Usage = usage,
+                };
+            }
+
+            // For completed runs, fetch run steps for CodeInterpreter and MCP results, then fetch messages
+            if (run.Status == RunStatus.Completed)
+            {
+                // Fetch run steps to extract CodeInterpreter and MCP tool call results
+                await foreach (RunStep runStep in _client!.Runs.GetRunStepsAsync(
+                    threadId: threadId,
+                    runId: run.Id,
+                    limit: null,
+                    order: ListSortOrder.Ascending,
+                    after: null,
+                    before: null,
+                    include: null,
+                    cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+                    {
+                        foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+                        {
+                            switch (toolCall)
+                            {
+                                case RunStepCodeInterpreterToolCall codeInterpreterToolCall:
+                                    // Add CodeInterpreter input as a tool call content
+                                    if (!string.IsNullOrEmpty(codeInterpreterToolCall.Input))
+                                    {
+                                        CodeInterpreterToolCallContent citcc = new()
+                                        {
+                                            CallId = codeInterpreterToolCall.Id,
+                                            Inputs = [new DataContent(Encoding.UTF8.GetBytes(codeInterpreterToolCall.Input), "text/x-python")],
+                                            RawRepresentation = codeInterpreterToolCall,
+                                        };
+
+                                        responseMessages.Add(new ChatMessage(ChatRole.Assistant, [citcc]));
+                                    }
+
+                                    // Add CodeInterpreter outputs as a tool result content
+                                    if (codeInterpreterToolCall.Outputs is { Count: > 0 })
+                                    {
+                                        CodeInterpreterToolResultContent citrc = new()
+                                        {
+                                            CallId = codeInterpreterToolCall.Id,
+                                            RawRepresentation = codeInterpreterToolCall,
+                                        };
+
+                                        foreach (var output in codeInterpreterToolCall.Outputs)
+                                        {
+                                            switch (output)
+                                            {
+                                                case RunStepCodeInterpreterImageOutput imageOutput when imageOutput.Image?.FileId is string imageFileId && !string.IsNullOrWhiteSpace(imageFileId):
+                                                    (citrc.Outputs ??= []).Add(new HostedFileContent(imageFileId) { MediaType = "image/*" });
+                                                    break;
+
+                                                case RunStepCodeInterpreterLogOutput logOutput when logOutput.Logs is string logs && !string.IsNullOrEmpty(logs):
+                                                    (citrc.Outputs ??= []).Add(new TextContent(logs));
+                                                    break;
+                                            }
+                                        }
+
+                                        if (citrc.Outputs?.Count > 0)
+                                        {
+                                            responseMessages.Add(new ChatMessage(ChatRole.Assistant, [citrc]));
+                                        }
+                                    }
+                                    break;
+
+                                case RunStepMcpToolCall mcpToolCall:
+                                    // Add MCP tool call result content
+                                    McpServerToolResultContent mcpResultContent = new(mcpToolCall.Id)
+                                    {
+                                        RawRepresentation = mcpToolCall,
+                                    };
+
+                                    // Add output if present
+                                    if (!string.IsNullOrEmpty(mcpToolCall.Output))
+                                    {
+                                        mcpResultContent.Output = [new TextContent(mcpToolCall.Output)];
+                                    }
+
+                                    responseMessages.Add(new ChatMessage(ChatRole.Assistant, [mcpResultContent]));
+                                    break;
+                            }
+                        }
+                    }
+                    // Note: RunStepActivityDetails (e.g., mcp_list_tools events) are informational-only
+                    // and do not need to be converted to ChatMessage content
+                }
+
+                // Fetch messages from the thread
+                await foreach (PersistentThreadMessage threadMessage in _client!.Messages.GetMessagesAsync(
+                    threadId: threadId,
+                    runId: run.Id,
+                    limit: null,
+                    order: ListSortOrder.Ascending,
+                    after: null,
+                    before: null,
+                    cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    ChatMessage chatMessage = ConvertThreadMessageToChatMessage(threadMessage);
+                    responseMessages.Add(chatMessage);
+                }
+            }
+
+            return new ChatResponse(responseMessages)
+            {
+                ConversationId = threadId,
+                ResponseId = run.Id,
+                ModelId = run.Model,
+                CreatedAt = run.CreatedAt,
+                RawRepresentation = run,
+                Usage = usage,
+            };
+        }
+
+        /// <summary>
+        /// Converts a <see cref="PersistentThreadMessage"/> to a <see cref="ChatMessage"/>.
+        /// </summary>
+        private ChatMessage ConvertThreadMessageToChatMessage(PersistentThreadMessage threadMessage)
+        {
+            ChatRole role = threadMessage.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant;
+            List<AIContent> contents = [];
+
+            foreach (MessageContent contentItem in threadMessage.ContentItems)
+            {
+                switch (contentItem)
+                {
+                    case MessageTextContent textContent:
+                        TextContent tc = new(textContent.Text) { RawRepresentation = textContent };
+
+                        // Add annotations if present
+                        if (textContent.Annotations is { Count: > 0 })
+                        {
+                            tc.Annotations = [];
+                            foreach (MessageTextAnnotation annotation in textContent.Annotations)
+                            {
+                                string? fileId = null;
+                                string? toolName = null;
+                                int? startIndex = null;
+                                int? endIndex = null;
+
+                                switch (annotation)
+                                {
+                                    case MessageTextFileCitationAnnotation fileCitation:
+                                        fileId = fileCitation.InternalDetails?.FileId;
+                                        toolName = "file_search";
+                                        startIndex = fileCitation.StartIndex;
+                                        endIndex = fileCitation.EndIndex;
+                                        break;
+
+                                    case MessageTextFilePathAnnotation filePath:
+                                        fileId = filePath.InternalDetails?.FileId;
+                                        toolName = "code_interpreter";
+                                        startIndex = filePath.StartIndex;
+                                        endIndex = filePath.EndIndex;
+                                        break;
+                                }
+
+                                tc.Annotations.Add(new CitationAnnotation
+                                {
+                                    RawRepresentation = annotation,
+                                    AnnotatedRegions = startIndex.HasValue && endIndex.HasValue
+                                        ? [new TextSpanAnnotatedRegion { StartIndex = startIndex.Value, EndIndex = endIndex.Value }]
+                                        : null,
+                                    FileId = fileId,
+                                    ToolName = toolName,
+                                });
+                            }
+                        }
+
+                        contents.Add(tc);
+                        break;
+
+                    case MessageImageFileContent imageFileContent:
+                        contents.Add(new HostedFileContent(imageFileContent.FileId) { MediaType = "image/*", RawRepresentation = imageFileContent });
+                        break;
+                }
+            }
+
+            return new ChatMessage(role, contents) { RawRepresentation = threadMessage };
+        }
 
         /// <inheritdoc />
         public virtual async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
@@ -83,93 +395,49 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
-            RequestContext requestContext = CreateMeaiRequestContext(cancellationToken);
-
-            // Extract necessary state from messages and options.
-            (ThreadAndRunOptions runOptions, List<FunctionResultContent>? toolResults, List<McpServerToolApprovalResponseContent>? approvalResults) =
-                await CreateRunOptionsAsync(messages, options, cancellationToken).ConfigureAwait(false);
-
-            // Get the thread ID.
-            string? threadId = options?.ConversationId ?? _defaultThreadId;
-
-            // Get any active run ID for this thread.
-            ThreadRun? threadRun = null;
-            if (threadId is not null)
-            {
-                await foreach (ThreadRun run in _client!.Runs.GetRunsAsync(threadId, 1, ListSortOrder.Descending, after: null, before: null, context: requestContext).ConfigureAwait(false))
-                {
-                    if (run.Status != RunStatus.Incomplete &&
-                        run.Status != RunStatus.Completed &&
-                        run.Status != RunStatus.Cancelled &&
-                        run.Status != RunStatus.Failed &&
-                        run.Status != RunStatus.Expired)
-                    {
-                        threadRun = run;
-                    }
-                    break;
-                }
-            }
+            // Prepare the run context (shared logic with non-streaming)
+            var prepared = await PrepareRunContextAsync(messages, options, cancellationToken).ConfigureAwait(false);
 
             // Submit the request.
             IAsyncEnumerable<StreamingUpdate> updates;
-            if ((toolResults is not null || approvalResults is not null) &&
-                threadRun is not null &&
-                ConvertFunctionResultsToToolOutput(toolResults, approvalResults, out List<ToolOutput> toolOutputs, out List<ToolApproval> toolApprovals) is { } toolRunId &&
-                toolRunId == threadRun.Id)
+            if (prepared.HasToolResultsForActiveRun)
             {
                 // There's an active run and we have tool results to submit for that run, so submit the results and continue streaming.
                 // This is going to ignore any additional messages in the run options, as we are only submitting tool outputs,
                 // but there doesn't appear to be a way to submit additional messages, and having such additional messages is rare.
-                updates = _client!.Runs.SubmitToolOutputsToStreamWithRequestContextAsync(threadRun, toolOutputs, toolApprovals, requestContext, currentRetry: 0);
+                updates = _client!.Runs.SubmitToolOutputsToStreamWithRequestContextAsync(prepared.ActiveRun!, prepared.ToolOutputs!, prepared.ToolApprovals!, prepared.RequestContext, currentRetry: 0);
             }
             else
             {
-                if (threadId is null)
-                {
-                    // No thread ID was provided, so create a new thread.
-                    CreateThreadRequest createThreadRequest = new(
-                        messages: runOptions.ThreadOptions.Messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
-                        toolResources: runOptions.ToolResources,
-                        metadata: runOptions.Metadata ?? new ChangeTrackingDictionary<string, string>(),
-                        serializedAdditionalRawData: null);
-
-                    Response threadResponse = await _client!.Threads.CreateThreadAsync(createThreadRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
-                    PersistentAgentThread thread = PersistentAgentThread.FromResponse(threadResponse);
-                    runOptions.ThreadOptions.Messages?.Clear();
-                    threadId = thread.Id;
-                }
-                else if (threadRun is not null)
-                {
-                    // There was an active run; we need to cancel it before starting a new run.
-                    await _client!.Runs.CancelRunAsync(threadId, threadRun.Id, requestContext).ConfigureAwait(false);
-                    threadRun = null;
-                }
+                // Ensure thread exists (creates if needed, cancels active run if present)
+                await prepared.EnsureThreadAsync().ConfigureAwait(false);
 
                 // Now create a new run and stream the results.
                 CreateRunStreamingOptions opts = new()
                 {
-                    OverrideModelName = runOptions.OverrideModelName,
-                    OverrideInstructions = runOptions.OverrideInstructions,
+                    OverrideModelName = prepared.RunOptions.OverrideModelName,
+                    OverrideInstructions = prepared.RunOptions.OverrideInstructions,
                     AdditionalInstructions = null,
-                    AdditionalMessages = runOptions.ThreadOptions.Messages,
-                    OverrideTools = runOptions.OverrideTools,
-                    ToolResources = runOptions.ToolResources,
-                    Temperature = runOptions.Temperature,
-                    TopP = runOptions.TopP,
-                    MaxPromptTokens = runOptions.MaxPromptTokens,
-                    MaxCompletionTokens = runOptions.MaxCompletionTokens,
-                    TruncationStrategy = runOptions.TruncationStrategy,
-                    ToolChoice = runOptions.ToolChoice,
-                    ResponseFormat = runOptions.ResponseFormat,
-                    ParallelToolCalls = runOptions.ParallelToolCalls,
-                    Metadata = runOptions.Metadata
+                    AdditionalMessages = prepared.RunOptions.ThreadOptions.Messages,
+                    OverrideTools = prepared.RunOptions.OverrideTools,
+                    ToolResources = prepared.RunOptions.ToolResources,
+                    Temperature = prepared.RunOptions.Temperature,
+                    TopP = prepared.RunOptions.TopP,
+                    MaxPromptTokens = prepared.RunOptions.MaxPromptTokens,
+                    MaxCompletionTokens = prepared.RunOptions.MaxCompletionTokens,
+                    TruncationStrategy = prepared.RunOptions.TruncationStrategy,
+                    ToolChoice = prepared.RunOptions.ToolChoice,
+                    ResponseFormat = prepared.RunOptions.ResponseFormat,
+                    ParallelToolCalls = prepared.RunOptions.ParallelToolCalls,
+                    Metadata = prepared.RunOptions.Metadata
                 };
 
                 // This method added for compatibility, before the include parameter support was enabled.
-                updates = _client!.Runs.CreateRunStreamingWithRequestContextAsync(threadId, _agentId, opts, requestContext);
+                updates = _client!.Runs.CreateRunStreamingWithRequestContextAsync(prepared.ThreadId, _agentId, opts, prepared.RequestContext);
             }
 
             // Process each update.
+            string? threadId = prepared.ThreadId;
             string? responseId = null;
             await foreach (StreamingUpdate? update in updates.ConfigureAwait(false))
             {
@@ -351,6 +619,128 @@ namespace Azure.AI.Agents.Persistent
 
         /// <inheritdoc />
         public void Dispose() { }
+
+        /// <summary>
+        /// Holds the prepared run context for both streaming and non-streaming operations.
+        /// </summary>
+        private sealed class PreparedRunContext
+        {
+            private readonly PersistentAgentsChatClient _chatClient;
+            private ThreadRun? _activeRun;
+
+            public PreparedRunContext(
+                PersistentAgentsChatClient chatClient,
+                RequestContext requestContext,
+                ThreadAndRunOptions runOptions,
+                string? threadId,
+                ThreadRun? activeRun,
+                List<ToolOutput>? toolOutputs,
+                List<ToolApproval>? toolApprovals,
+                bool hasToolResultsForActiveRun)
+            {
+                _chatClient = chatClient;
+                RequestContext = requestContext;
+                RunOptions = runOptions;
+                ThreadId = threadId;
+                _activeRun = activeRun;
+                ToolOutputs = toolOutputs;
+                ToolApprovals = toolApprovals;
+                HasToolResultsForActiveRun = hasToolResultsForActiveRun;
+            }
+
+            public RequestContext RequestContext { get; }
+            public ThreadAndRunOptions RunOptions { get; }
+            public string? ThreadId { get; private set; }
+            public ThreadRun? ActiveRun => _activeRun;
+            public List<ToolOutput>? ToolOutputs { get; }
+            public List<ToolApproval>? ToolApprovals { get; }
+            public bool HasToolResultsForActiveRun { get; }
+
+            /// <summary>
+            /// Ensures a thread exists. Creates one if needed, or cancels an active run if present.
+            /// </summary>
+            public async Task EnsureThreadAsync()
+            {
+                if (ThreadId is null)
+                {
+                    // No thread ID was provided, so create a new thread.
+                    CreateThreadRequest createThreadRequest = new(
+                        messages: RunOptions.ThreadOptions.Messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                        toolResources: RunOptions.ToolResources,
+                        metadata: RunOptions.Metadata ?? new ChangeTrackingDictionary<string, string>(),
+                        serializedAdditionalRawData: null);
+
+                    Response threadResponse = await _chatClient._client!.Threads.CreateThreadAsync(createThreadRequest.ToRequestContent(), RequestContext).ConfigureAwait(false);
+                    PersistentAgentThread thread = PersistentAgentThread.FromResponse(threadResponse);
+                    RunOptions.ThreadOptions.Messages?.Clear();
+                    ThreadId = thread.Id;
+                }
+                else if (_activeRun is not null)
+                {
+                    // There was an active run; we need to cancel it before starting a new run.
+                    await _chatClient._client!.Runs.CancelRunAsync(ThreadId, _activeRun.Id, RequestContext).ConfigureAwait(false);
+                    _activeRun = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prepares the run context by extracting state from messages and options,
+        /// getting the thread ID, and checking for active runs.
+        /// </summary>
+        private async Task<PreparedRunContext> PrepareRunContextAsync(
+            IEnumerable<ChatMessage> messages, ChatOptions? options, CancellationToken cancellationToken)
+        {
+            RequestContext requestContext = CreateMeaiRequestContext(cancellationToken);
+
+            // Extract necessary state from messages and options.
+            (ThreadAndRunOptions runOptions, List<FunctionResultContent>? toolResults, List<McpServerToolApprovalResponseContent>? approvalResults) =
+                await CreateRunOptionsAsync(messages, options, cancellationToken).ConfigureAwait(false);
+
+            // Get the thread ID.
+            string? threadId = options?.ConversationId ?? _defaultThreadId;
+
+            // Get any active run for this thread.
+            ThreadRun? activeRun = null;
+            if (threadId is not null)
+            {
+                await foreach (ThreadRun run in _client!.Runs.GetRunsAsync(threadId, 1, ListSortOrder.Descending, after: null, before: null, context: requestContext).ConfigureAwait(false))
+                {
+                    if (run.Status != RunStatus.Incomplete &&
+                        run.Status != RunStatus.Completed &&
+                        run.Status != RunStatus.Cancelled &&
+                        run.Status != RunStatus.Failed &&
+                        run.Status != RunStatus.Expired)
+                    {
+                        activeRun = run;
+                    }
+                    break;
+                }
+            }
+
+            // Check if we have tool results to submit to an active run
+            List<ToolOutput>? toolOutputs = null;
+            List<ToolApproval>? toolApprovals = null;
+            bool hasToolResultsForActiveRun = false;
+
+            if ((toolResults is not null || approvalResults is not null) &&
+                activeRun is not null &&
+                ConvertFunctionResultsToToolOutput(toolResults, approvalResults, out toolOutputs, out toolApprovals) is { } toolRunId &&
+                toolRunId == activeRun.Id)
+            {
+                hasToolResultsForActiveRun = true;
+            }
+
+            return new PreparedRunContext(
+                this,
+                requestContext,
+                runOptions,
+                threadId,
+                activeRun,
+                toolOutputs,
+                toolApprovals,
+                hasToolResultsForActiveRun);
+        }
 
         /// <summary>
         /// Creates the <see cref="ThreadAndRunOptions"/> to use for the request and extracts any function result contents
