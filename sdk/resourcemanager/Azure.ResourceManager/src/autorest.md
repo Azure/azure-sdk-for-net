@@ -16,8 +16,8 @@ use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 enable-bicep-serialization: true
 
-mgmt-debug:
-  show-serialized-names: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 batch:
   - tag: package-common-type
