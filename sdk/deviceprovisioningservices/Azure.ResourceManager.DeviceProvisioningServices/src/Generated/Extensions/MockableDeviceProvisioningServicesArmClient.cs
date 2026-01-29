@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDeviceProvisioningServicesArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceProvisioningServicesArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDeviceProvisioningServicesArmClient for mocking. </summary>
         protected MockableDeviceProvisioningServicesArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceProvisioningServicesArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDeviceProvisioningServicesArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDeviceProvisioningServicesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDeviceProvisioningServicesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServicesCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServicesCertificateResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceProvisioningServicesCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource"/> object. </returns>
         public virtual DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
             return new DeviceProvisioningServicesCertificateResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServiceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceProvisioningServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceProvisioningServiceResource"/> object. </returns>
         public virtual DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
             return new DeviceProvisioningServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> object. </returns>
         public virtual DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
             return new DeviceProvisioningServicesPrivateLinkResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
