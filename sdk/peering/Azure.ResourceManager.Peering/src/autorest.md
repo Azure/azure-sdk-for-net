@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Peering
 namespace: Azure.ResourceManager.Peering
-require: https://github.com/Azure/azure-rest-api-specs/blob/5fc05d0f0b15cbf16de942cadce464b495c66a58/specification/peering/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c962e41380036bf2bbb2e2385ed532c4092f5acd/specification/peering/resource-manager/Microsoft.Peering/Peering/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -101,19 +101,15 @@ rename-mapping:
   CdnPeeringPrefix.properties.azureRegion: -|azure-location
   PeeringServiceLocation.properties.azureRegion: -|azure-location
   RpUnbilledPrefix.azureRegion: -|azure-location
+  CheckServiceProviderAvailabilityResponse: PeeringServiceProviderAvailability
+  ConnectivityProbe: PeeringConnectivityProbe
+  Protocol: PeeringConnectivityProbeTrafficProtocol
 
 directive:
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability"].post.responses.200.schema
-    transform: >
-      $["x-ms-enum"] = {
-        "name": "PeeringServiceProviderAvailability",
-        "modelAsString": true
-      }
 # there are multiple patch operations using the same definition of body parameter schema. This is very likely to be a source of future breaking changes.
 # here we add some directive to decouple them
   - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}"].patch.parameters[2].schema
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}"].patch.parameters[4].schema
     transform: >
       return {
         "type": "object",
@@ -124,7 +120,7 @@ directive:
         ]
       }
   - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}"].patch.parameters[2].schema
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}"].patch.parameters[4].schema
     transform: >
       return {
         "type": "object",
@@ -133,5 +129,5 @@ directive:
             "$ref": "#/definitions/ResourceTags"
           }
         ]
-      }
+      };
 ```

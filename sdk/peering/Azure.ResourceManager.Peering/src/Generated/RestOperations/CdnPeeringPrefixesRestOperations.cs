@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/cdnPeeringPrefixes", false);
-            uri.AppendQuery("peeringLocation", peeringLocation, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("peeringLocation", peeringLocation, true);
             return uri;
         }
 
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/cdnPeeringPrefixes", false);
-            uri.AppendQuery("peeringLocation", peeringLocation, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("peeringLocation", peeringLocation, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists all of the advertised prefixes for the specified peering location. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="peeringLocation"/> is null. </exception>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists all of the advertised prefixes for the specified peering location. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="peeringLocation"/> is null. </exception>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all of the advertised prefixes for the specified peering location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="peeringLocation"/> is null. </exception>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all of the advertised prefixes for the specified peering location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="peeringLocation"/> is null. </exception>

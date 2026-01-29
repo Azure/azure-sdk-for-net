@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of peering registered ASNs. </summary>
+    /// <summary> The response of a PeeringRegisteredAsn list operation. </summary>
     internal partial class PeeringRegisteredAsnListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Peering.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnListResult"/>. </summary>
-        internal PeeringRegisteredAsnListResult()
+        /// <param name="value"> The PeeringRegisteredAsn items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PeeringRegisteredAsnListResult(IEnumerable<PeeringRegisteredAsnData> value)
         {
-            Value = new ChangeTrackingList<PeeringRegisteredAsnData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnListResult"/>. </summary>
-        /// <param name="value"> The list of peering registered ASNs. </param>
-        /// <param name="nextLink"> The link to fetch the next page of peering registered ASNs. </param>
+        /// <param name="value"> The PeeringRegisteredAsn items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringRegisteredAsnListResult(IReadOnlyList<PeeringRegisteredAsnData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PeeringRegisteredAsnListResult(IReadOnlyList<PeeringRegisteredAsnData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of peering registered ASNs. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnListResult"/> for deserialization. </summary>
+        internal PeeringRegisteredAsnListResult()
+        {
+        }
+
+        /// <summary> The PeeringRegisteredAsn items on this page. </summary>
         public IReadOnlyList<PeeringRegisteredAsnData> Value { get; }
-        /// <summary> The link to fetch the next page of peering registered ASNs. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/rpUnbilledPrefixes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (consolidate != null)
             {
                 uri.AppendQuery("consolidate", consolidate.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/rpUnbilledPrefixes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (consolidate != null)
             {
                 uri.AppendQuery("consolidate", consolidate.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists all of the RP unbilled prefixes for the specified peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The Azure resource group name. </param>
-        /// <param name="peeringName"> The peering name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists all of the RP unbilled prefixes for the specified peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The Azure resource group name. </param>
-        /// <param name="peeringName"> The peering name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all of the RP unbilled prefixes for the specified peering. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The Azure resource group name. </param>
-        /// <param name="peeringName"> The peering name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all of the RP unbilled prefixes for the specified peering. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The Azure resource group name. </param>
-        /// <param name="peeringName"> The peering name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
