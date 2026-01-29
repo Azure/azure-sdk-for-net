@@ -17,6 +17,7 @@
     <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'true' or '$(IsClientLibrary)' != 'true'">false</IncludeAutorestDependency>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
     <IsSourceGenerator Condition="'$(IsSourceGenerator)' == '' and $(MSBuildProjectName.EndsWith('.SourceGeneration'))">true</IsSourceGenerator>
+    <IsAnalzyer Condition="'$(IsAnalzyer)' == '' and $(MSBuildProjectName.EndsWith('Analyzers'))">true</IsAnalzyer>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="'$(IsSamplesProject)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
@@ -24,7 +25,7 @@
     <IsStressProject Condition="'$(IsStressProject)' == '' and $(MSBuildProjectName.EndsWith('.Stress'))">true</IsStressProject>
     <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
-    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true'">true</IsShippingClientLibrary>
+    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true' and '$(IsAnalzyer)' != 'true'">true</IsShippingClientLibrary>
     <TestFrameworkSupportFiles>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Shared/*.cs</TestFrameworkSupportFiles>
 
     <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and ('$(IsMgmtLibrary)' == 'true' or '$(IsGeneratorLibraryGenerationTest)' == 'true') and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
@@ -222,7 +223,7 @@
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">$(RequiredRunnableTargetFrameworks);netstandard2.0</RequiredTargetFrameworks>
 
     <!-- Source generators, such as System.ClientModel.SourceGeneration, must only target netstandard2.0 -->
-    <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true' or '$(IsAnalzyer)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
 
     <!-- Libraries that are part of our code generator only support the current LTS framework -->
     <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">$(LtsTargetFramework)</RequiredTargetFrameworks>
@@ -262,7 +263,7 @@
   </ItemGroup>
 
   <!-- SourceGeneration common settings -->
-  <PropertyGroup Condition="'$(IsSourceGenerator)' == 'true'">
+  <PropertyGroup Condition="'$(IsSourceGenerator)' == 'true' or '$(IsAnalzyer)' == 'true'">
     <OutputItemType>Analyzer</OutputItemType>
     <AnalyzerLanguage>cs</AnalyzerLanguage>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>

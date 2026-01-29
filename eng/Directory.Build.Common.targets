@@ -104,6 +104,7 @@
     <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers'" Include="$(RepoEngPath)\tools\Azure.SdkAnalyzers\src\Azure.SdkAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
   </ItemGroup>
