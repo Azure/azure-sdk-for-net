@@ -216,6 +216,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ServiceGateway))
+            {
+                writer.WritePropertyName("serviceGateway"u8);
+                ((IJsonModel<WritableSubResource>)ServiceGateway).Write(writer, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -265,6 +270,7 @@ namespace Azure.ResourceManager.Network
             SharingScope? sharingScope = default;
             bool? defaultOutboundAccess = default;
             IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = default;
+            WritableSubResource serviceGateway = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -560,6 +566,15 @@ namespace Azure.ResourceManager.Network
                             ipamPoolPrefixAllocations = array;
                             continue;
                         }
+                        if (property0.NameEquals("serviceGateway"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceGateway = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -596,7 +611,8 @@ namespace Azure.ResourceManager.Network
                 applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
                 sharingScope,
                 defaultOutboundAccess,
-                ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>());
+                ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>(),
+                serviceGateway);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -1123,6 +1139,26 @@ namespace Azure.ResourceManager.Network
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ServiceGatewayId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceGateway: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      serviceGateway: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceGateway))
+                {
+                    builder.Append("    serviceGateway: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServiceGateway, options, 4, false, "    serviceGateway: ");
                 }
             }
 
