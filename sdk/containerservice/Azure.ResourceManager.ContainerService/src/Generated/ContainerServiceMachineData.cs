@@ -63,33 +63,33 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="zones">
-        /// The Availability zone in which machine is located.
-        /// Serialized Name: Machine.zones
-        /// </param>
         /// <param name="properties">
         /// The properties of the machine
         /// Serialized Name: Machine.properties
         /// </param>
+        /// <param name="zones">
+        /// The Availability zone in which machine is located.
+        /// Serialized Name: Machine.zones
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> zones, ContainerServiceMachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServiceMachineProperties properties, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Zones = zones;
             Properties = properties;
+            Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary>
+        /// The properties of the machine
+        /// Serialized Name: Machine.properties
+        /// </summary>
+        [WirePath("properties")]
+        public ContainerServiceMachineProperties Properties { get; set; }
         /// <summary>
         /// The Availability zone in which machine is located.
         /// Serialized Name: Machine.zones
         /// </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
-        /// <summary>
-        /// The properties of the machine
-        /// Serialized Name: Machine.properties
-        /// </summary>
-        [WirePath("properties")]
-        public ContainerServiceMachineProperties Properties { get; }
     }
 }

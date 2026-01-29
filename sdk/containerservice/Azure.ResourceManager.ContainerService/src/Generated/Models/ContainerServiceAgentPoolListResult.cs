@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The response from the List Agent Pools operation.
+    /// The response of a AgentPool list operation.
     /// Serialized Name: AgentPoolListResult
     /// </summary>
     internal partial class ContainerServiceAgentPoolListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolListResult"/>. </summary>
-        internal ContainerServiceAgentPoolListResult()
+        /// <param name="value">
+        /// The AgentPool items on this page
+        /// Serialized Name: AgentPoolListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ContainerServiceAgentPoolListResult(IEnumerable<ContainerServiceAgentPoolData> value)
         {
-            Value = new ChangeTrackingList<ContainerServiceAgentPoolData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolListResult"/>. </summary>
         /// <param name="value">
-        /// The list of agent pools.
+        /// The AgentPool items on this page
         /// Serialized Name: AgentPoolListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// The URL to get the next set of agent pool results.
+        /// The link to the next page of items
         /// Serialized Name: AgentPoolListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceAgentPoolListResult(IReadOnlyList<ContainerServiceAgentPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceAgentPoolListResult(IReadOnlyList<ContainerServiceAgentPoolData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolListResult"/> for deserialization. </summary>
+        internal ContainerServiceAgentPoolListResult()
+        {
+        }
+
         /// <summary>
-        /// The list of agent pools.
+        /// The AgentPool items on this page
         /// Serialized Name: AgentPoolListResult.value
         /// </summary>
         public IReadOnlyList<ContainerServiceAgentPoolData> Value { get; }
         /// <summary>
-        /// The URL to get the next set of agent pool results.
+        /// The link to the next page of items
         /// Serialized Name: AgentPoolListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

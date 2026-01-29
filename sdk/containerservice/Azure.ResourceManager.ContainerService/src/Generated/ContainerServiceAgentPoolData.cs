@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: AgentPool.properties.nodePublicIPPrefixID
         /// </param>
         /// <param name="scaleSetPriority">
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
+        /// The Virtual Machine Scale Set priority.
         /// Serialized Name: AgentPool.properties.scaleSetPriority
         /// </param>
         /// <param name="scaleSetEvictionPolicy">
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
+        /// The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
         /// Serialized Name: AgentPool.properties.scaleSetEvictionPolicy
         /// </param>
         /// <param name="spotMaxPrice">
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Serialized Name: AgentPool.properties.creationData
         /// </param>
         /// <param name="capacityReservationGroupId">
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
+        /// The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
         /// Serialized Name: AgentPool.properties.capacityReservationGroupID
         /// </param>
         /// <param name="hostGroupId">
@@ -533,13 +533,13 @@ namespace Azure.ResourceManager.ContainerService
         [WirePath("properties.nodePublicIPPrefixID")]
         public ResourceIdentifier NodePublicIPPrefixId { get; set; }
         /// <summary>
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
+        /// The Virtual Machine Scale Set priority.
         /// Serialized Name: AgentPool.properties.scaleSetPriority
         /// </summary>
         [WirePath("properties.scaleSetPriority")]
         public ScaleSetPriority? ScaleSetPriority { get; set; }
         /// <summary>
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
+        /// The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
         /// Serialized Name: AgentPool.properties.scaleSetEvictionPolicy
         /// </summary>
         [WirePath("properties.scaleSetEvictionPolicy")]
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
+        /// The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview)
         /// Serialized Name: AgentPool.properties.capacityReservationGroupID
         /// </summary>
         [WirePath("properties.capacityReservationGroupID")]

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The result of a request to list managed namespaces in a managed cluster.
+    /// The response of a ManagedNamespace list operation.
     /// Serialized Name: ManagedNamespaceListResult
     /// </summary>
     internal partial class ManagedNamespaceListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedNamespaceListResult"/>. </summary>
-        internal ManagedNamespaceListResult()
+        /// <param name="value">
+        /// The ManagedNamespace items on this page
+        /// Serialized Name: ManagedNamespaceListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ManagedNamespaceListResult(IEnumerable<ManagedClusterNamespaceData> value)
         {
-            Value = new ChangeTrackingList<ManagedClusterNamespaceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNamespaceListResult"/>. </summary>
         /// <param name="value">
-        /// The list of managed namespaces.
+        /// The ManagedNamespace items on this page
         /// Serialized Name: ManagedNamespaceListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// The URI to fetch the next page of results, if any.
+        /// The link to the next page of items
         /// Serialized Name: ManagedNamespaceListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNamespaceListResult(IReadOnlyList<ManagedClusterNamespaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedNamespaceListResult(IReadOnlyList<ManagedClusterNamespaceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedNamespaceListResult"/> for deserialization. </summary>
+        internal ManagedNamespaceListResult()
+        {
+        }
+
         /// <summary>
-        /// The list of managed namespaces.
+        /// The ManagedNamespace items on this page
         /// Serialized Name: ManagedNamespaceListResult.value
         /// </summary>
         public IReadOnlyList<ManagedClusterNamespaceData> Value { get; }
         /// <summary>
-        /// The URI to fetch the next page of results, if any.
+        /// The link to the next page of items
         /// Serialized Name: ManagedNamespaceListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.ContainerService
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -48,11 +53,6 @@ namespace Azure.ResourceManager.ContainerService
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            IReadOnlyList<string> zones = default;
             ContainerServiceMachineProperties properties = default;
+            IReadOnlyList<string> zones = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -86,6 +86,15 @@ namespace Azure.ResourceManager.ContainerService
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ContainerServiceMachineProperties.DeserializeContainerServiceMachineProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -98,15 +107,6 @@ namespace Azure.ResourceManager.ContainerService
                         array.Add(item.GetString());
                     }
                     zones = array;
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ContainerServiceMachineProperties.DeserializeContainerServiceMachineProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.ContainerService
                 name,
                 type,
                 systemData,
-                zones ?? new ChangeTrackingList<string>(),
                 properties,
+                zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -183,6 +183,21 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    builder.Append("  properties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zones), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -216,21 +231,6 @@ namespace Azure.ResourceManager.ContainerService
                         }
                         builder.AppendLine("  ]");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  properties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Properties))
-                {
-                    builder.Append("  properties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
                 }
             }
 

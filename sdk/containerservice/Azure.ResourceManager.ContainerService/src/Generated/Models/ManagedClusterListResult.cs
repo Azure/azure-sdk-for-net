@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The response from the List Managed Clusters operation.
+    /// The response of a ManagedCluster list operation.
     /// Serialized Name: ManagedClusterListResult
     /// </summary>
     internal partial class ManagedClusterListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
-        internal ManagedClusterListResult()
+        /// <param name="value">
+        /// The ManagedCluster items on this page
+        /// Serialized Name: ManagedClusterListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ManagedClusterListResult(IEnumerable<ContainerServiceManagedClusterData> value)
         {
-            Value = new ChangeTrackingList<ContainerServiceManagedClusterData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         /// <param name="value">
-        /// The list of managed clusters.
+        /// The ManagedCluster items on this page
         /// Serialized Name: ManagedClusterListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// The URL to get the next set of managed cluster results.
+        /// The link to the next page of items
         /// Serialized Name: ManagedClusterListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/> for deserialization. </summary>
+        internal ManagedClusterListResult()
+        {
+        }
+
         /// <summary>
-        /// The list of managed clusters.
+        /// The ManagedCluster items on this page
         /// Serialized Name: ManagedClusterListResult.value
         /// </summary>
         public IReadOnlyList<ContainerServiceManagedClusterData> Value { get; }
         /// <summary>
-        /// The URL to get the next set of managed cluster results.
+        /// The link to the next page of items
         /// Serialized Name: ManagedClusterListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

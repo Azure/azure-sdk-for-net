@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The response from the List Machines operation.
+    /// The response of a Machine list operation.
     /// Serialized Name: MachineListResult
     /// </summary>
     internal partial class MachineListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
-        internal MachineListResult()
+        /// <param name="value">
+        /// The Machine items on this page
+        /// Serialized Name: MachineListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal MachineListResult(IEnumerable<ContainerServiceMachineData> value)
         {
-            Value = new ChangeTrackingList<ContainerServiceMachineData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
-        /// <param name="nextLink">
-        /// The URL to get the next set of machine results.
-        /// Serialized Name: MachineListResult.nextLink
-        /// </param>
         /// <param name="value">
-        /// The list of Machines in cluster.
+        /// The Machine items on this page
         /// Serialized Name: MachineListResult.value
         /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: MachineListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineListResult(Uri nextLink, IReadOnlyList<ContainerServiceMachineData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineListResult(IReadOnlyList<ContainerServiceMachineData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineListResult"/> for deserialization. </summary>
+        internal MachineListResult()
+        {
+        }
+
         /// <summary>
-        /// The URL to get the next set of machine results.
-        /// Serialized Name: MachineListResult.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
-        /// <summary>
-        /// The list of Machines in cluster.
+        /// The Machine items on this page
         /// Serialized Name: MachineListResult.value
         /// </summary>
         public IReadOnlyList<ContainerServiceMachineData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: MachineListResult.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

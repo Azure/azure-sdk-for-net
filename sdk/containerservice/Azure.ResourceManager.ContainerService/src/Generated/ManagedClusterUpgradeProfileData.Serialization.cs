@@ -43,13 +43,16 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStartObject();
             writer.WritePropertyName("controlPlaneProfile"u8);
             writer.WriteObjectValue(ControlPlaneProfile, options);
-            writer.WritePropertyName("agentPoolProfiles"u8);
-            writer.WriteStartArray();
-            foreach (var item in AgentPoolProfiles)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("agentPoolProfiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in AgentPoolProfiles)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 

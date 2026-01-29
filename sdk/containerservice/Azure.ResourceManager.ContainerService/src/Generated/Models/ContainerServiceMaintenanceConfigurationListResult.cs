@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The response from the List maintenance configurations operation.
+    /// The response of a MaintenanceConfiguration list operation.
     /// Serialized Name: MaintenanceConfigurationListResult
     /// </summary>
     internal partial class ContainerServiceMaintenanceConfigurationListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationListResult"/>. </summary>
-        internal ContainerServiceMaintenanceConfigurationListResult()
+        /// <param name="value">
+        /// The MaintenanceConfiguration items on this page
+        /// Serialized Name: MaintenanceConfigurationListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ContainerServiceMaintenanceConfigurationListResult(IEnumerable<ContainerServiceMaintenanceConfigurationData> value)
         {
-            Value = new ChangeTrackingList<ContainerServiceMaintenanceConfigurationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationListResult"/>. </summary>
         /// <param name="value">
-        /// The list of maintenance configurations.
+        /// The MaintenanceConfiguration items on this page
         /// Serialized Name: MaintenanceConfigurationListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// The URL to get the next set of maintenance configuration results.
+        /// The link to the next page of items
         /// Serialized Name: MaintenanceConfigurationListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMaintenanceConfigurationListResult(IReadOnlyList<ContainerServiceMaintenanceConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceMaintenanceConfigurationListResult(IReadOnlyList<ContainerServiceMaintenanceConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationListResult"/> for deserialization. </summary>
+        internal ContainerServiceMaintenanceConfigurationListResult()
+        {
+        }
+
         /// <summary>
-        /// The list of maintenance configurations.
+        /// The MaintenanceConfiguration items on this page
         /// Serialized Name: MaintenanceConfigurationListResult.value
         /// </summary>
         public IReadOnlyList<ContainerServiceMaintenanceConfigurationData> Value { get; }
         /// <summary>
-        /// The URL to get the next set of maintenance configuration results.
+        /// The link to the next page of items
         /// Serialized Name: MaintenanceConfigurationListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
     /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
-    /// Serialized Name: OSSku
+    /// Serialized Name: Ossku
     /// </summary>
     public readonly partial struct ContainerServiceOSSku : IEquatable<ContainerServiceOSSku>
     {
@@ -36,42 +36,42 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary>
         /// Use Ubuntu as the OS for node images.
-        /// Serialized Name: OSSku.Ubuntu
+        /// Serialized Name: Ossku.Ubuntu
         /// </summary>
         public static ContainerServiceOSSku Ubuntu { get; } = new ContainerServiceOSSku(UbuntuValue);
         /// <summary>
         /// Use AzureLinux as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information.
-        /// Serialized Name: OSSku.AzureLinux
+        /// Serialized Name: Ossku.AzureLinux
         /// </summary>
         public static ContainerServiceOSSku AzureLinux { get; } = new ContainerServiceOSSku(AzureLinuxValue);
         /// <summary>
         /// Use AzureLinux3 as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. For limitations, visit https://aka.ms/aks/node-images. For OS migration guidance, see https://aka.ms/aks/upgrade-os-version.
-        /// Serialized Name: OSSku.AzureLinux3
+        /// Serialized Name: Ossku.AzureLinux3
         /// </summary>
         public static ContainerServiceOSSku AzureLinux3 { get; } = new ContainerServiceOSSku(AzureLinux3Value);
         /// <summary>
         /// Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead.
-        /// Serialized Name: OSSku.CBLMariner
+        /// Serialized Name: Ossku.CBLMariner
         /// </summary>
         public static ContainerServiceOSSku CblMariner { get; } = new ContainerServiceOSSku(CblMarinerValue);
         /// <summary>
         /// Use Windows2019 as the OS for node images. Unsupported for system node pools. Windows2019 only supports Windows2019 containers; it cannot run Windows2022 containers and vice versa.
-        /// Serialized Name: OSSku.Windows2019
+        /// Serialized Name: Ossku.Windows2019
         /// </summary>
         public static ContainerServiceOSSku Windows2019 { get; } = new ContainerServiceOSSku(Windows2019Value);
         /// <summary>
         /// Use Windows2022 as the OS for node images. Unsupported for system node pools. Windows2022 only supports Windows2022 containers; it cannot run Windows2019 containers and vice versa.
-        /// Serialized Name: OSSku.Windows2022
+        /// Serialized Name: Ossku.Windows2022
         /// </summary>
         public static ContainerServiceOSSku Windows2022 { get; } = new ContainerServiceOSSku(Windows2022Value);
         /// <summary>
         /// Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions
-        /// Serialized Name: OSSku.Ubuntu2204
+        /// Serialized Name: Ossku.Ubuntu2204
         /// </summary>
         public static ContainerServiceOSSku Ubuntu2204 { get; } = new ContainerServiceOSSku(Ubuntu2204Value);
         /// <summary>
-        /// Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions
-        /// Serialized Name: OSSku.Ubuntu2404
+        /// Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions
+        /// Serialized Name: Ossku.Ubuntu2404
         /// </summary>
         public static ContainerServiceOSSku Ubuntu2404 { get; } = new ContainerServiceOSSku(Ubuntu2404Value);
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are the same. </summary>

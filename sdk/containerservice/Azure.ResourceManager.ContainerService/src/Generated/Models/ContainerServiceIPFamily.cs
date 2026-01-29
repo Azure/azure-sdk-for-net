@@ -11,8 +11,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
-    /// The IP version to use for cluster networking and IP assignment.
-    /// Serialized Name: IpFamily
+    /// To determine if address belongs IPv4 or IPv6 family
+    /// Serialized Name: IPFamily
     /// </summary>
     public readonly partial struct ContainerServiceIPFamily : IEquatable<ContainerServiceIPFamily>
     {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string IPv6Value = "IPv6";
 
         /// <summary>
-        /// IPv4
-        /// Serialized Name: IpFamily.IPv4
+        /// IPv4 family
+        /// Serialized Name: IPFamily.IPv4
         /// </summary>
         public static ContainerServiceIPFamily IPv4 { get; } = new ContainerServiceIPFamily(IPv4Value);
         /// <summary>
-        /// IPv6
-        /// Serialized Name: IpFamily.IPv6
+        /// IPv6 family
+        /// Serialized Name: IPFamily.IPv6
         /// </summary>
         public static ContainerServiceIPFamily IPv6 { get; } = new ContainerServiceIPFamily(IPv6Value);
         /// <summary> Determines if two <see cref="ContainerServiceIPFamily"/> values are the same. </summary>

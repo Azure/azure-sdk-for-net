@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string DisabledValue = "Disabled";
 
         /// <summary>
-        /// Enabled
+        /// Inbound/Outbound to the managedCluster is allowed.
         /// Serialized Name: PublicNetworkAccess.Enabled
         /// </summary>
         public static ContainerServicePublicNetworkAccess Enabled { get; } = new ContainerServicePublicNetworkAccess(EnabledValue);
         /// <summary>
-        /// Disabled
+        /// Inbound traffic to managedCluster is disabled, traffic from managedCluster is allowed.
         /// Serialized Name: PublicNetworkAccess.Disabled
         /// </summary>
         public static ContainerServicePublicNetworkAccess Disabled { get; } = new ContainerServicePublicNetworkAccess(DisabledValue);

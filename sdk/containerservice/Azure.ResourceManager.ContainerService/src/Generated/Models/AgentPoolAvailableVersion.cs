@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary>
     /// The AgentPoolAvailableVersion.
-    /// Serialized Name: AgentPoolAvailableVersion
+    /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem
     /// </summary>
     public partial class AgentPoolAvailableVersion
     {
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
         /// <param name="isDefault">
         /// Whether this version is the default agent pool version.
-        /// Serialized Name: AgentPoolAvailableVersion.default
+        /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.default
         /// </param>
         /// <param name="kubernetesVersion">
         /// The Kubernetes version (major.minor.patch).
-        /// Serialized Name: AgentPoolAvailableVersion.kubernetesVersion
+        /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.kubernetesVersion
         /// </param>
         /// <param name="isPreview">
         /// Whether Kubernetes version is currently in preview.
-        /// Serialized Name: AgentPoolAvailableVersion.isPreview
+        /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.isPreview
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolAvailableVersion(bool? isDefault, string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary>
         /// Whether this version is the default agent pool version.
-        /// Serialized Name: AgentPoolAvailableVersion.default
+        /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.default
         /// </summary>
         [WirePath("default")]
         public bool? IsDefault { get; }
         /// <summary>
         /// The Kubernetes version (major.minor.patch).
-        /// Serialized Name: AgentPoolAvailableVersion.kubernetesVersion
+        /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.kubernetesVersion
         /// </summary>
         [WirePath("kubernetesVersion")]
         public string KubernetesVersion { get; }
         /// <summary>
         /// Whether Kubernetes version is currently in preview.
-        /// Serialized Name: AgentPoolAvailableVersion.isPreview
+        /// Serialized Name: AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem.isPreview
         /// </summary>
         [WirePath("isPreview")]
         public bool? IsPreview { get; }
