@@ -31,7 +31,7 @@
   <ItemGroup>
 		<PackageReference Include="Azure.Storage.Blobs" />
 		<PackageReference Include="Microsoft.Azure.Management.Batch" />
-		<!-- Legacy ADAL/MSAL versions scoped in eng/Packages.Data.props -->
+		<!-- Legacy ADAL/MSAL versions scoped in eng/Directory.Packages.props -->
 		<PackageReference Include="Microsoft.Identity.Client" />
 		<PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />

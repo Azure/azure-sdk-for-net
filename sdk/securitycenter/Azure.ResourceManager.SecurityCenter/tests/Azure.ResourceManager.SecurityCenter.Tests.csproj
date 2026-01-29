@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" />
-    <!-- Beta versions scoped in eng/Packages.Data.props -->
+    <!-- Beta versions scoped in eng/Directory.Packages.props -->
     <PackageReference Include="Azure.ResourceManager.IotHub" />
     <PackageReference Include="Azure.ResourceManager.Logic" />
     <PackageReference Include="Azure.ResourceManager.Network" />

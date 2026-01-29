@@ -17,7 +17,7 @@
     <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'net47'" />
 
     <!--Temporary solution to pin the version of generator here to workaround the issue in our pipelines that gets conflicts in git push.
-    Version is scoped in eng/Packages.Data.props -->
+    Version is scoped in eng/Directory.Packages.props -->
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <!--

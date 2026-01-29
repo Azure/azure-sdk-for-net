@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Server.WebListener" />
-    <!-- Legacy ADAL version scoped in eng/Packages.Data.props -->
+    <!-- Legacy ADAL version scoped in eng/Directory.Packages.props -->
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />

@@ -63,10 +63,6 @@
     <!-- We're not a client library, but I want the same versions used by client libraries -->
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
-  <!-- Note: Package versions are now managed via Central Package Management (CPM).
-       The Directory.Packages.props file is automatically imported via DirectoryPackagesPropsPath
-       set in the root Directory.Build.props. The IsClientLibrary property above ensures
-       this project gets access to client library package versions. -->
 
   <!-- Copy XML generated docs into our bin dir -->
   <Target Name="_ResolveCopyLocalNuGetPkgXmls" AfterTargets="ResolveReferences">

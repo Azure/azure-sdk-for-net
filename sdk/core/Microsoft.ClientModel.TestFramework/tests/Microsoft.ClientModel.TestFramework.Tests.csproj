@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- NUnit 4.x versions are scoped in eng/Packages.Data.props -->
+    <!-- NUnit 4.x versions are scoped in eng/Directory.Packages.props -->
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
