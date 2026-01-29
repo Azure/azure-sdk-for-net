@@ -2,7 +2,7 @@
 
 This directory contains GitHub Copilot Agent Skills for Azure SDK development. These skills are designed to be **cross-language compatible** and can be adapted for Java, Python, .NET, and JavaScript SDKs.
 
-## 📐 Design Principles
+## Design Principles
 
 ### 1. Naming Convention
 
@@ -24,7 +24,7 @@ Skills should define **what to do**, not **how to do it**:
 | SKILL.md | Universal description, workflow, checklist | "Compile SDK" |
 | scripts/ | Language-specific implementation | `compile.ps1` / `compile.sh` |
 
-## 📦 Available Skills
+## Available Skills
 
 ### Core SDK Skills
 
@@ -50,7 +50,7 @@ Skills should define **what to do**, not **how to do it**:
 |-------|-------------|
 | [`sdkinternal-dotnet-workflow-review-sample-quality`](sdkinternal-dotnet-workflow-review-sample-quality/) | Review sample code quality |
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Setup Environment
 
@@ -83,7 +83,7 @@ Skills should define **what to do**, not **how to do it**:
 .github/skills/sdkinternal-dotnet-test-push-recordings/scripts/push-recordings.ps1
 ```
 
-## 🔧 .NET-Specific Commands
+## .NET-Specific Commands
 
 | Action | Command |
 |--------|---------|

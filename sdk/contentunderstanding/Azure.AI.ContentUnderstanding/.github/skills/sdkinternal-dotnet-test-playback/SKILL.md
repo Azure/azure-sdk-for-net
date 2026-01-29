@@ -7,20 +7,20 @@ description: Run Azure SDK tests in PLAYBACK mode using recorded API responses. 
 
 This skill runs Azure SDK tests in PLAYBACK mode using previously recorded API responses.
 
-## 🎯 What This Skill Does
+## What This Skill Does
 
 1. Sets `AZURE_TEST_MODE=Playback` environment variable
 2. Restores session recordings from assets repo
 3. Runs tests using recorded HTTP responses
 4. Validates SDK behavior without live Azure access
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] Session recordings available (via `test-proxy restore`)
 - [ ] `assets.json` file present in module directory
 - [ ] Test proxy installed (`test-proxy` command available)
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -40,7 +40,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github/skills/sdk-test-playback/scripts/test-playback.sh
 ```
 
-## 📦 Test Options
+## Test Options
 
 ### Run Specific Test
 
@@ -56,7 +56,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github\skills\sdk-test-playback\scripts\test-playback.ps1 -Framework net8.0
 ```
 
-## ⚠️ Important Notes
+## Important Notes
 
 ### No Azure Credentials Required
 
@@ -73,7 +73,7 @@ test-proxy restore -a assets.json
 
 If tests fail due to API changes, re-record with `sdk-test-record`.
 
-## 🌐 Cross-Language Test Mode
+## Cross-Language Test Mode
 
 | Language | Environment Variable | Command Flag |
 |----------|---------------------|--------------|

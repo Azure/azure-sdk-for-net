@@ -7,20 +7,20 @@ description: Run a single Azure SDK sample to verify functionality. Execute indi
 
 This skill runs a single Azure SDK sample to verify functionality.
 
-## 🎯 What This Skill Does
+## What This Skill Does
 
 1. Locates the specified sample file
 2. Sets up test environment (PLAYBACK mode by default)
 3. Executes the sample as a test
 4. Reports results with output
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] SDK compiled successfully (`sdk-compile`)
 - [ ] Sample file exists in `tests/samples/` directory
 - [ ] For LIVE mode: Azure credentials configured
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -40,7 +40,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github/skills/sdk-run-sample/scripts/run-sample.sh -s "Sample01_AnalyzeBinary"
 ```
 
-## 📦 Options
+## Options
 
 ### Run in Live Mode
 
@@ -55,7 +55,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github\skills\sdk-run-sample\scripts\run-sample.ps1 -List
 ```
 
-## ⚠️ Important Notes
+## Important Notes
 
 ### Sample Location
 
@@ -71,7 +71,7 @@ Samples are located in `tests/samples/` directory as recorded tests.
 Samples follow the pattern: `Sample{NN}_{Description}.cs`
 - Example: `Sample01_AnalyzeBinary.cs`
 
-## 🌐 Cross-Language Sample Patterns
+## Cross-Language Sample Patterns
 
 | Language | Sample Location | Run Command |
 |----------|----------------|-------------|

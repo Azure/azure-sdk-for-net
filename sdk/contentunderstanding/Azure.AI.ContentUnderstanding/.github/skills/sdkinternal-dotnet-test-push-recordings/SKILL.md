@@ -7,21 +7,21 @@ description: Push test session recordings to Azure SDK Assets repository. Push n
 
 This skill pushes test session recordings to the Azure SDK Assets repository.
 
-## 🎯 What This Skill Does
+## What This Skill Does
 
 1. Validates local recordings exist
 2. Pushes recordings to Azure SDK Assets repo
 3. Updates `assets.json` with new recording tag
 4. Verifies push was successful
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] Test recordings generated (via `sdk-test-record`)
 - [ ] `assets.json` file present in module directory
 - [ ] Git credentials configured for Azure/azure-sdk-assets
 - [ ] `test-proxy` command available
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -41,7 +41,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github/skills/sdk-push-recordings/scripts/push-recordings.sh
 ```
 
-## 📦 Options
+## Options
 
 ### Dry Run (Preview)
 
@@ -50,7 +50,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github\skills\sdk-push-recordings\scripts\push-recordings.ps1 -DryRun
 ```
 
-## ⚠️ Important Notes
+## Important Notes
 
 ### Git Credentials Required
 
@@ -67,7 +67,7 @@ Push requires write access to `Azure/azure-sdk-assets` repository.
 
 Recordings are stored in: `https://github.com/Azure/azure-sdk-assets`
 
-## 🌐 Cross-Language Command
+## Cross-Language Command
 
 All languages use the same test-proxy command:
 

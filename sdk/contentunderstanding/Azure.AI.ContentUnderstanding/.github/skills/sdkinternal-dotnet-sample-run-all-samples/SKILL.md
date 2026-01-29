@@ -7,20 +7,20 @@ description: Run all Azure SDK samples to verify complete functionality. Execute
 
 This skill runs all Azure SDK samples to verify complete functionality.
 
-## 🎯 What This Skill Does
+## What This Skill Does
 
 1. Discovers all sample files in the tests/samples directory
 2. Sets up test environment (PLAYBACK mode by default)
 3. Executes all samples sequentially
 4. Reports overall results with summary
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] SDK compiled successfully (`sdk-compile`)
 - [ ] Sample files exist in `tests/samples/` directory
 - [ ] For LIVE mode: Azure credentials configured
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -40,7 +40,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github/skills/sdk-run-all-samples/scripts/run-all-samples.sh
 ```
 
-## 📦 Options
+## Options
 
 ### Run in Live Mode
 
@@ -56,7 +56,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github\skills\sdk-run-all-samples\scripts\run-all-samples.ps1 -ContinueOnError
 ```
 
-## ⚠️ Important Notes
+## Important Notes
 
 ### Execution Order
 
@@ -71,7 +71,7 @@ Samples are executed in filename order (Sample01, Sample02, etc.).
 
 Running all samples may take several minutes depending on the number of samples.
 
-## 🌐 Cross-Language Sample Patterns
+## Cross-Language Sample Patterns
 
 | Language | Run All Command |
 |----------|----------------|

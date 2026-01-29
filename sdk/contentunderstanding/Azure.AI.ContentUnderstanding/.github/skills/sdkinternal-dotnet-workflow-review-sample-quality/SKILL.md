@@ -185,13 +185,13 @@ For each sample, verify:
 ## Example Workflow
 
 ```
-1. Check git status → Clean ✓
+1. Check git status → Clean
 2. Enumerate samples → Found 12 samples
 3. Run sdk-compile → Build successful
 4. Run sdk-run-all-samples → All passed
 5. Review Sample01_AnalyzeBinary.cs
-   - Code review ✓
-   - Output verification ✓
+   - Code review
+   - Output verification
    - Made 2 documentation fixes
 6. Review Sample02_AnalyzeUris.cs
    - Found logic error in error handling

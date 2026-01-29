@@ -7,7 +7,7 @@ description: Complete workflow to record tests and push recordings to Azure SDK 
 
 This workflow skill combines recording tests and pushing to the Azure SDK Assets repository.
 
-## 🎯 What This Workflow Does
+## What This Workflow Does
 
 1. **Setup**: Load environment variables from `.env`
 2. **Compile**: Build SDK to ensure no compilation errors
@@ -15,14 +15,14 @@ This workflow skill combines recording tests and pushing to the Azure SDK Assets
 4. **Push**: Push new recordings to Azure SDK Assets repo
 5. **Verify**: Run tests in PLAYBACK mode to confirm recordings work
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] `.env` file configured with Azure credentials
 - [ ] Git credentials for Azure/azure-sdk-assets
 - [ ] Live Azure service access
 - [ ] `test-proxy` tool installed
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -42,7 +42,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github/skills/sdk-workflow-record-push/scripts/run-workflow.sh
 ```
 
-## 📦 Options
+## Options
 
 ### Skip Steps
 
@@ -61,7 +61,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github\skills\sdk-workflow-record-push\scripts\run-workflow.ps1 -Filter "Sample01"
 ```
 
-## ⚠️ Workflow Steps Detail
+## Workflow Steps Detail
 
 ### Step 1: Setup Environment
 ```powershell

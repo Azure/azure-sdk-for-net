@@ -7,18 +7,18 @@ description: Load environment variables from .env file for Azure SDK development
 
 This skill loads environment variables from `.env` files for Azure SDK development and testing.
 
-## 🎯 What This Skill Does
+## What This Skill Does
 
 1. Locates `.env` files in your workspace
 2. Loads environment variables into the current shell session
 3. Validates required variables for SDK testing
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] `.env` file exists in the SDK module directory
 - [ ] Required Azure credentials are configured
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -40,7 +40,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 source .github/skills/sdk-setup-env/scripts/load-env.sh
 ```
 
-## 📦 Required Environment Variables
+## Required Environment Variables
 
 ### Content Understanding Service
 
@@ -58,13 +58,13 @@ source .github/skills/sdk-setup-env/scripts/load-env.sh
 | `TEXT_EMBEDDING_3_LARGE_DEPLOYMENT` | Text embedding model deployment name |
 | `AZURE_TEST_USE_CLI_AUTH` | Use Azure CLI authentication |
 
-## ⚠️ Security Notes
+## Security Notes
 
 - Never commit `.env` files to version control
 - Ensure `.gitignore` includes `.env`
 - Use Azure Key Vault for production secrets
 
-## 🌐 Cross-Language Support
+## Cross-Language Support
 
 | Language | Script | Notes |
 |----------|--------|-------|

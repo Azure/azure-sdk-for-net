@@ -7,19 +7,19 @@ description: Compile Azure SDK source code. This skill helps you build SDK modul
 
 This skill compiles Azure SDK source code for local development and testing.
 
-## 🎯 What This Skill Does
+## What This Skill Does
 
 1. Detects the SDK language and build system
 2. Compiles source code with appropriate flags
 3. Reports compilation errors with context
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] SDK source code checked out
 - [ ] .NET SDK installed (6.0+)
 - [ ] Dependencies restored
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -41,7 +41,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 .github/skills/sdk-compile/scripts/compile.sh
 ```
 
-## 📦 .NET-Specific Notes
+## .NET-Specific Notes
 
 ### Build Single Project
 
@@ -69,7 +69,7 @@ dotnet build -c Release
 2. **Framework mismatch**: Check `TargetFrameworks` in `.csproj`
 3. **Analyzer warnings**: Fix code issues or adjust severity in `.editorconfig`
 
-## 🌐 Cross-Language Commands
+## Cross-Language Commands
 
 | Language | Compile Command | Notes |
 |----------|----------------|-------|

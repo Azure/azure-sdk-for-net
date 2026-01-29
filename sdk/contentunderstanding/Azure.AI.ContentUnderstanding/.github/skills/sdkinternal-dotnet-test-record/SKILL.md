@@ -7,14 +7,14 @@ description: Run Azure SDK tests in RECORD mode to capture live API responses. R
 
 This skill runs Azure SDK tests in RECORD mode to capture live API responses for playback testing.
 
-## 🎯 What This Skill Does
+## What This Skill Does
 
 1. Sets `AZURE_TEST_MODE=Record` environment variable
 2. Runs tests against live Azure services
 3. Captures HTTP request/response pairs via test-proxy
 4. Saves session records to `.assets` directory
 
-## 📋 Pre-requisites
+## Pre-requisites
 
 - [ ] Azure credentials configured (via `.env` or environment)
 - [ ] Test proxy installed (`test-proxy` command available)
@@ -22,7 +22,7 @@ This skill runs Azure SDK tests in RECORD mode to capture live API responses for
 - [ ] Live Azure service endpoint accessible
 - [ ] Environment variables loaded (`sdk-setup-env`)
 
-## 🔧 Usage
+## Usage
 
 ### PowerShell (Windows)
 
@@ -48,7 +48,7 @@ source .github/skills/sdk-setup-env/scripts/load-env.sh
 .github/skills/sdk-test-record/scripts/test-record.sh
 ```
 
-## 📦 Test Options
+## Test Options
 
 ### Run Specific Test
 
@@ -64,7 +64,7 @@ source .github/skills/sdk-setup-env/scripts/load-env.sh
 .github\skills\sdk-test-record\scripts\test-record.ps1 -Framework net8.0
 ```
 
-## ⚠️ Important Notes
+## Important Notes
 
 ### Recording Requirements
 
@@ -83,7 +83,7 @@ Push recordings to assets repo:
 test-proxy push -a assets.json
 ```
 
-## 🌐 Cross-Language Test Mode
+## Cross-Language Test Mode
 
 | Language | Environment Variable | Command Flag |
 |----------|---------------------|--------------|
