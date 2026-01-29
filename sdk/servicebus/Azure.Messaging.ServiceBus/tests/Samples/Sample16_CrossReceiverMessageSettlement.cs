@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #else
                 var credential = TestEnvironment.Credential;
 #endif
-                ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
+                await using ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
                 ServiceBusSender sender = client1.CreateSender(queueName);
 
                 ServiceBusMessage message = new("some message");
@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 AmqpAnnotatedMessage amqpMessage = AmqpAnnotatedMessage.FromBytes(new BinaryData(amqpMessageBytes));
                 ServiceBusReceivedMessage rehydratedMessage = ServiceBusReceivedMessage.FromAmqpMessage(amqpMessage, new BinaryData(lockTokenBytes));
 
-                var client2 = new ServiceBusClient(fullyQualifiedNamespace, credential);
+                await using var client2 = new ServiceBusClient(fullyQualifiedNamespace, credential);
                 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
                 await receiver2.CompleteMessageAsync(rehydratedMessage);
 #endregion
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:ServiceBusWriteReceivedMessageLockToken
 
-                ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
+                await using ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
                 ServiceBusSender sender = client1.CreateSender(queueName);
 
                 ServiceBusMessage message = new("some message");
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusReceivedMessage rehydratedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockTokenGuid: new Guid(lockTokenBytes.ToArray()));
 
-                ServiceBusClient client2 = new(fullyQualifiedNamespace, credential);
+                await using ServiceBusClient client2 = new(fullyQualifiedNamespace, credential);
                 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
                 await receiver2.CompleteMessageAsync(rehydratedMessage);
                 #endregion
