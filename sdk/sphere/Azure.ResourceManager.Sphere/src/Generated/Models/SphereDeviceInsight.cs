@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Sphere.Models
     /// <summary> Device insight report. </summary>
     public partial class SphereDeviceInsight
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/>. </summary>
         /// <param name="deviceId"> Device ID. </param>
@@ -54,15 +25,8 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="eventClass"> Event class. </param>
         /// <param name="eventType"> Event type. </param>
         /// <param name="eventCount"> Event count. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/>, <paramref name="description"/>, <paramref name="eventCategory"/>, <paramref name="eventClass"/> or <paramref name="eventType"/> is null. </exception>
         internal SphereDeviceInsight(string deviceId, string description, DateTimeOffset startTimestampUtc, DateTimeOffset endTimestampUtc, string eventCategory, string eventClass, string eventType, int eventCount)
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(eventCategory, nameof(eventCategory));
-            Argument.AssertNotNull(eventClass, nameof(eventClass));
-            Argument.AssertNotNull(eventType, nameof(eventType));
-
             DeviceId = deviceId;
             Description = description;
             StartTimestampUtc = startTimestampUtc;
@@ -82,8 +46,8 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="eventClass"> Event class. </param>
         /// <param name="eventType"> Event type. </param>
         /// <param name="eventCount"> Event count. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SphereDeviceInsight(string deviceId, string description, DateTimeOffset startTimestampUtc, DateTimeOffset endTimestampUtc, string eventCategory, string eventClass, string eventType, int eventCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SphereDeviceInsight(string deviceId, string description, DateTimeOffset startTimestampUtc, DateTimeOffset endTimestampUtc, string eventCategory, string eventClass, string eventType, int eventCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             Description = description;
@@ -93,28 +57,30 @@ namespace Azure.ResourceManager.Sphere.Models
             EventClass = eventClass;
             EventType = eventType;
             EventCount = eventCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/> for deserialization. </summary>
-        internal SphereDeviceInsight()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Device ID. </summary>
         public string DeviceId { get; }
+
         /// <summary> Event description. </summary>
         public string Description { get; }
+
         /// <summary> Event start timestamp. </summary>
         public DateTimeOffset StartTimestampUtc { get; }
+
         /// <summary> Event end timestamp. </summary>
         public DateTimeOffset EndTimestampUtc { get; }
+
         /// <summary> Event category. </summary>
         public string EventCategory { get; }
+
         /// <summary> Event class. </summary>
         public string EventClass { get; }
+
         /// <summary> Event type. </summary>
         public string EventType { get; }
+
         /// <summary> Event count. </summary>
         public int EventCount { get; }
     }

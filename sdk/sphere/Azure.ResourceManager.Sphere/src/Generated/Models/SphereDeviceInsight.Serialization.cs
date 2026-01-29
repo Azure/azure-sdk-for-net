@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class SphereDeviceInsight : IUtf8JsonSerializable, IJsonModel<SphereDeviceInsight>
+    /// <summary> Device insight report. </summary>
+    public partial class SphereDeviceInsight : IJsonModel<SphereDeviceInsight>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceInsight>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/> for deserialization. </summary>
+        internal SphereDeviceInsight()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SphereDeviceInsight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SphereDeviceInsight)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("deviceId"u8);
             writer.WriteStringValue(DeviceId);
             writer.WritePropertyName("description"u8);
@@ -50,15 +55,15 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteStringValue(EventType);
             writer.WritePropertyName("eventCount"u8);
             writer.WriteNumberValue(EventCount);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,22 +72,27 @@ namespace Azure.ResourceManager.Sphere.Models
             }
         }
 
-        SphereDeviceInsight IJsonModel<SphereDeviceInsight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SphereDeviceInsight IJsonModel<SphereDeviceInsight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SphereDeviceInsight JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SphereDeviceInsight)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSphereDeviceInsight(document.RootElement, options);
         }
 
-        internal static SphereDeviceInsight DeserializeSphereDeviceInsight(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SphereDeviceInsight DeserializeSphereDeviceInsight(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,56 +105,54 @@ namespace Azure.ResourceManager.Sphere.Models
             string eventClass = default;
             string eventType = default;
             int eventCount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"u8))
+                if (prop.NameEquals("deviceId"u8))
                 {
-                    deviceId = property.Value.GetString();
+                    deviceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimestampUtc"u8))
+                if (prop.NameEquals("startTimestampUtc"u8))
                 {
-                    startTimestampUtc = property.Value.GetDateTimeOffset("O");
+                    startTimestampUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTimestampUtc"u8))
+                if (prop.NameEquals("endTimestampUtc"u8))
                 {
-                    endTimestampUtc = property.Value.GetDateTimeOffset("O");
+                    endTimestampUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("eventCategory"u8))
+                if (prop.NameEquals("eventCategory"u8))
                 {
-                    eventCategory = property.Value.GetString();
+                    eventCategory = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventClass"u8))
+                if (prop.NameEquals("eventClass"u8))
                 {
-                    eventClass = property.Value.GetString();
+                    eventClass = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventType"u8))
+                if (prop.NameEquals("eventType"u8))
                 {
-                    eventType = property.Value.GetString();
+                    eventType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventCount"u8))
+                if (prop.NameEquals("eventCount"u8))
                 {
-                    eventCount = property.Value.GetInt32();
+                    eventCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SphereDeviceInsight(
                 deviceId,
                 description,
@@ -154,13 +162,16 @@ namespace Azure.ResourceManager.Sphere.Models
                 eventClass,
                 eventType,
                 eventCount,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SphereDeviceInsight>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SphereDeviceInsight>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -170,15 +181,20 @@ namespace Azure.ResourceManager.Sphere.Models
             }
         }
 
-        SphereDeviceInsight IPersistableModel<SphereDeviceInsight>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SphereDeviceInsight IPersistableModel<SphereDeviceInsight>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SphereDeviceInsight PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSphereDeviceInsight(document.RootElement, options);
                     }
                 default:
@@ -186,6 +202,7 @@ namespace Azure.ResourceManager.Sphere.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SphereDeviceInsight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

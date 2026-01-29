@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereCertificateCollection : ArmCollection, IEnumerable<SphereCertificateResource>, IAsyncEnumerable<SphereCertificateResource>
     {
-        private readonly ClientDiagnostics _sphereCertificateCertificatesClientDiagnostics;
-        private readonly CertificatesRestOperations _sphereCertificateCertificatesRestClient;
+        private readonly ClientDiagnostics _certificatesClientDiagnostics;
+        private readonly Certificates _certificatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SphereCertificateCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SphereCertificateCollection for mocking. </summary>
         protected SphereCertificateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SphereCertificateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SphereCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sphereCertificateCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereCertificateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SphereCertificateResource.ResourceType, out string sphereCertificateCertificatesApiVersion);
-            _sphereCertificateCertificatesRestClient = new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sphereCertificateCertificatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SphereCertificateResource.ResourceType, out string sphereCertificateApiVersion);
+            _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereCertificateResource.ResourceType.Namespace, Diagnostics);
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, sphereCertificateApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SphereCatalogResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Certificate
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SphereCertificateResource>> GetAsync(string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
-            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Get");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sphereCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SphereCertificateData> response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.Sphere
         /// Get a Certificate
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SphereCertificateResource> Get(string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
-            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Get");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = _sphereCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SphereCertificateData> response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,54 +156,16 @@ namespace Azure.ResourceManager.Sphere
         /// List Certificate resources by Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_ListByCatalog</description>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_ListByCatalog. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereCertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SphereCertificateResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
-        }
-
-        /// <summary>
-        /// List Certificate resources by Catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_ListByCatalog</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,47 +175,113 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SphereCertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SphereCertificateResource> GetAll(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SphereCertificateResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SphereCertificateData, SphereCertificateResource>(new CertificatesGetByCatalogAsyncCollectionResultOfT(
+                _certificatesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                maxpagesize,
+                context), data => new SphereCertificateResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Certificate resources by Catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_ListByCatalog. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SphereCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SphereCertificateResource> GetAll(string filter = default, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SphereCertificateData, SphereCertificateResource>(new CertificatesGetByCatalogCollectionResultOfT(
+                _certificatesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                maxpagesize,
+                context), data => new SphereCertificateResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
-            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Exists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sphereCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SphereCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -256,36 +295,50 @@ namespace Azure.ResourceManager.Sphere
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
-            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Exists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sphereCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SphereCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,38 +352,54 @@ namespace Azure.ResourceManager.Sphere
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SphereCertificateResource>> GetIfExistsAsync(string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
-            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sphereCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SphereCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SphereCertificateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,38 +413,54 @@ namespace Azure.ResourceManager.Sphere
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SphereCertificateResource> GetIfExists(string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
-            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sphereCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SphereCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SphereCertificateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,6 +480,7 @@ namespace Azure.ResourceManager.Sphere
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SphereCertificateResource> IAsyncEnumerable<SphereCertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

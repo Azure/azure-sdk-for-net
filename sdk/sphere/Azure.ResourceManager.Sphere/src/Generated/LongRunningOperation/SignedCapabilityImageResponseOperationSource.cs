@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal class SignedCapabilityImageResponseOperationSource : IOperationSource<SignedCapabilityImageResponse>
+    /// <summary></summary>
+    internal partial class SignedCapabilityImageResponseOperationSource : IOperationSource<SignedCapabilityImageResponse>
     {
-        SignedCapabilityImageResponse IOperationSource<SignedCapabilityImageResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal SignedCapabilityImageResponseOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return SignedCapabilityImageResponse.DeserializeSignedCapabilityImageResponse(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        SignedCapabilityImageResponse IOperationSource<SignedCapabilityImageResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SignedCapabilityImageResponse result = SignedCapabilityImageResponse.DeserializeSignedCapabilityImageResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SignedCapabilityImageResponse> IOperationSource<SignedCapabilityImageResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return SignedCapabilityImageResponse.DeserializeSignedCapabilityImageResponse(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SignedCapabilityImageResponse result = SignedCapabilityImageResponse.DeserializeSignedCapabilityImageResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }
