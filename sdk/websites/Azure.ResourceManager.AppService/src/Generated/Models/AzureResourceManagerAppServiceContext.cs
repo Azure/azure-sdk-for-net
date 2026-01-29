@@ -585,6 +585,7 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(WebAppNetworkTrace))]
     [ModelReaderWriterBuildable(typeof(WebAppProcessThreadInfo))]
     [ModelReaderWriterBuildable(typeof(WebAppProcessThreadInfoListResult))]
+    [ModelReaderWriterBuildable(typeof(WebAppProcessThreadProperties))]
     [ModelReaderWriterBuildable(typeof(WebAppPushSettings))]
     [ModelReaderWriterBuildable(typeof(WebAppRequest))]
     [ModelReaderWriterBuildable(typeof(WebAppRequestHistoryData))]

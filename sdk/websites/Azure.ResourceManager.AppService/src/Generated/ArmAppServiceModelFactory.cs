@@ -5265,41 +5265,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identifier"> Site extension ID. </param>
-        /// <param name="href"> HRef URI. </param>
-        /// <param name="process"> Process URI. </param>
-        /// <param name="startAddress"> Start address. </param>
-        /// <param name="currentPriority"> Current thread priority. </param>
-        /// <param name="priorityLevel"> Thread priority level. </param>
-        /// <param name="basePriority"> Base priority. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="totalProcessorTime"> Total processor time. </param>
-        /// <param name="userProcessorTime"> User processor time. </param>
-        /// <param name="state"> Thread state. </param>
-        /// <param name="waitReason"> Wait reason. </param>
+        /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppProcessThreadInfo"/> instance for mocking. </returns>
-        public static WebAppProcessThreadInfo WebAppProcessThreadInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? identifier = null, string href = null, string process = null, string startAddress = null, int? currentPriority = null, string priorityLevel = null, int? basePriority = null, DateTimeOffset? startOn = null, string totalProcessorTime = null, string userProcessorTime = null, string state = null, string waitReason = null, string kind = null)
+        public static WebAppProcessThreadInfo WebAppProcessThreadInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebAppProcessThreadProperties properties = null, string kind = null)
         {
             return new WebAppProcessThreadInfo(
                 id,
                 name,
                 resourceType,
                 systemData,
-                identifier,
-                href,
-                process,
-                startAddress,
-                currentPriority,
-                priorityLevel,
-                basePriority,
-                startOn,
-                totalProcessorTime,
-                userProcessorTime,
-                state,
-                waitReason,
+                properties,
                 kind,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppProcessThreadProperties"/>. </summary>
+        /// <param name="id"> Thread ID. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="state"> Thread state. </param>
+        /// <returns> A new <see cref="Models.WebAppProcessThreadProperties"/> instance for mocking. </returns>
+        public static WebAppProcessThreadProperties WebAppProcessThreadProperties(int? id = null, Uri href = null, string state = null)
+        {
+            return new WebAppProcessThreadProperties(id, href, state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.ProcessModuleInfoData"/>. </summary>

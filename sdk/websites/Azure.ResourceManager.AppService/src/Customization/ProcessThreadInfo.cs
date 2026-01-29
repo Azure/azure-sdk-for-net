@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="webAppProcessThreadInfo"> The instance of WebAppProcessThreadInfo. </param>
         internal ProcessThreadInfo(WebAppProcessThreadInfo webAppProcessThreadInfo)
         {
-            Identifier = webAppProcessThreadInfo.Identifier;
-            Href = webAppProcessThreadInfo.Href;
+            Identifier = webAppProcessThreadInfo.Properties.Id;
+            Href = webAppProcessThreadInfo.Properties.Href.AbsolutePath;
             Process = default;
             StartAddress = default;
             CurrentPriority = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
             StartOn = default;
             TotalProcessorTime = default;
             UserProcessorTime = default;
-            State = webAppProcessThreadInfo.State;
+            State = webAppProcessThreadInfo.Properties.State;
             WaitReason = default;
             Kind = default;
             _serializedAdditionalRawData = default;
