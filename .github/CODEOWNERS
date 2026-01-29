@@ -1210,6 +1210,7 @@
 
 # Add owners for package dependency changes
 /eng/Directory.Packages.props                                       @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
+/eng/Packages.Legacy.props                                          @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
