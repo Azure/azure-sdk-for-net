@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         private const string DjangoValue = "django";
         private const string NodejsValue = "nodejs";
         private const string SpringBootValue = "springBoot";
+        private const string KafkaSpringBootValue = "kafka-springBoot";
+        private const string JmsSpringBootValue = "jms-springBoot";
+        private const string DaprValue = "dapr";
 
         /// <summary> none. </summary>
         public static LinkerClientType None { get; } = new LinkerClientType(NoneValue);
@@ -53,6 +56,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static LinkerClientType Nodejs { get; } = new LinkerClientType(NodejsValue);
         /// <summary> springBoot. </summary>
         public static LinkerClientType SpringBoot { get; } = new LinkerClientType(SpringBootValue);
+        /// <summary> kafka-springBoot. </summary>
+        public static LinkerClientType KafkaSpringBoot { get; } = new LinkerClientType(KafkaSpringBootValue);
+        /// <summary> jms-springBoot. </summary>
+        public static LinkerClientType JmsSpringBoot { get; } = new LinkerClientType(JmsSpringBootValue);
+        /// <summary> dapr. </summary>
+        public static LinkerClientType Dapr { get; } = new LinkerClientType(DaprValue);
         /// <summary> Determines if two <see cref="LinkerClientType"/> values are the same. </summary>
         public static bool operator ==(LinkerClientType left, LinkerClientType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkerClientType"/> values are not the same. </summary>

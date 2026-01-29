@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The list of Linker. </summary>
-    internal partial class LinkerList
+    /// <summary> The dapr component metadata. </summary>
+    public partial class DaprMetadata
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,37 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LinkerList"/>. </summary>
-        internal LinkerList()
+        /// <summary> Initializes a new instance of <see cref="DaprMetadata"/>. </summary>
+        public DaprMetadata()
         {
-            Value = new ChangeTrackingList<LinkerResourceData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkerList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of Linker list. </param>
-        /// <param name="value"> The list of Linkers. </param>
+        /// <summary> Initializes a new instance of <see cref="DaprMetadata"/>. </summary>
+        /// <param name="name"> Metadata property name. </param>
+        /// <param name="value"> Metadata property value. </param>
+        /// <param name="secretRef"> The secret name where dapr could get value. </param>
+        /// <param name="description"> The description of the metadata, returned from configuration api. </param>
+        /// <param name="required"> The value indicating whether the metadata is required or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkerList(string nextLink, IReadOnlyList<LinkerResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DaprMetadata(string name, string value, string secretRef, string description, DaprMetadataRequired? required, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
+            Name = name;
             Value = value;
+            SecretRef = secretRef;
+            Description = description;
+            Required = required;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of Linker list. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of Linkers. </summary>
-        public IReadOnlyList<LinkerResourceData> Value { get; }
+        /// <summary> Metadata property name. </summary>
+        public string Name { get; set; }
+        /// <summary> Metadata property value. </summary>
+        public string Value { get; set; }
+        /// <summary> The secret name where dapr could get value. </summary>
+        public string SecretRef { get; set; }
+        /// <summary> The description of the metadata, returned from configuration api. </summary>
+        public string Description { get; set; }
+        /// <summary> The value indicating whether the metadata is required or not. </summary>
+        public DaprMetadataRequired? Required { get; set; }
     }
 }

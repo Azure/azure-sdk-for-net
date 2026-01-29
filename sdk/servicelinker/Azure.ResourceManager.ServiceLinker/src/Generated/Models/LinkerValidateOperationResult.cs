@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The validation operation result for a linker. </summary>
+    /// <summary> The validation operation result for a Linker. </summary>
     public partial class LinkerValidateOperationResult
     {
         /// <summary>
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkerValidateOperationResult"/>. </summary>
-        /// <param name="resourceId"> Validated linker id. </param>
+        /// <param name="resourceId"> Validated Linker id. </param>
         /// <param name="status"> Validation operation status. </param>
         /// <param name="linkerName"> The linker name. </param>
         /// <param name="isConnectionAvailable"> A boolean value indicating whether the connection is available or not. </param>
         /// <param name="reportStartOn"> The start time of the validation report. </param>
         /// <param name="reportEndOn"> The end time of the validation report. </param>
-        /// <param name="sourceId"> The resource id of the linker source application. </param>
+        /// <param name="sourceId"> The resource id of the Linker source application. </param>
         /// <param name="targetId"> The resource Id of target service. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="validationDetail"> The detail of validation result. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Validated linker id. </summary>
+        /// <summary> Validated Linker id. </summary>
         public ResourceIdentifier ResourceId { get; }
         /// <summary> Validation operation status. </summary>
         public string Status { get; }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public DateTimeOffset? ReportStartOn { get; }
         /// <summary> The end time of the validation report. </summary>
         public DateTimeOffset? ReportEndOn { get; }
-        /// <summary> The resource id of the linker source application. </summary>
+        /// <summary> The resource id of the Linker source application. </summary>
         public ResourceIdentifier SourceId { get; }
         /// <summary> The resource Id of target service. </summary>
         public ResourceIdentifier TargetId { get; }
