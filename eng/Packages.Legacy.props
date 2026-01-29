@@ -34,7 +34,9 @@
       and '$(IsPerfProject)' != 'true'
       and '$(IsStressProject)' != 'true'
       and '$(IsSamplesProject)' != 'true'
+      and '$(IsClientLibrary)' != 'true'
       and $(MSBuildProjectName.StartsWith('Microsoft.Azure'))">
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="System.Net.Http" Version="4.3.4" />
     <PackageVersion Include="System.Text.Encodings.Web" Version="4.5.1" />
     <PackageVersion Include="System.Text.Json" Version="4.7.2" />

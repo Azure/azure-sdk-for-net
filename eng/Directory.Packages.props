@@ -246,7 +246,8 @@
     <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
     <PackageVersion Include="Microsoft.Azure.SignalR.Management" Version="1.32.0" />
   </ItemGroup>
-  <ItemGroup Condition ="$(MSBuildProjectName.StartsWith('Microsoft.'))
+  <ItemGroup Condition ="'$(IsClientLibrary)' == 'true'
+      and $(MSBuildProjectName.StartsWith('Microsoft.'))
       and '$(IsTestProject)' != 'true'
       and '$(IsTestSupportProject)' != 'true'
       and '$(IsPerfProject)' != 'true'
