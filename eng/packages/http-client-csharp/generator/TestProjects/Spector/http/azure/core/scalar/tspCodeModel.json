@@ -163,6 +163,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "AzureLocationModel"
+        }
+      },
       "properties": [
         {
           "$id": "19",

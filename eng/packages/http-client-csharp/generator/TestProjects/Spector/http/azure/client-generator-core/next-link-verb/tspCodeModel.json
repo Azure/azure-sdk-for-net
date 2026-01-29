@@ -30,6 +30,11 @@
       "usage": "Output,Json",
       "doc": "Paged response model.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ListTestResult"
+        }
+      },
       "properties": [
         {
           "$id": "4",
@@ -50,6 +55,11 @@
               "usage": "Output,Json",
               "doc": "Test model.",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "Test"
+                }
+              },
               "properties": [
                 {
                   "$id": "7",
