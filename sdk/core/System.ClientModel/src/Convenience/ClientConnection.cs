@@ -115,5 +115,5 @@ public readonly struct ClientConnection
     public override string ToString() => $"{Id} => {Locator}";
 
     /// <summary> Metadata of the connection. </summary>
-    public IReadOnlyDictionary<string, string> Metadata { get; }
+    public IReadOnlyDictionary<string, string> Metadata { get; init; }
 }

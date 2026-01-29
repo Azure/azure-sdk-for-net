@@ -134,7 +134,7 @@ public class SampleResource : IJsonModel<SampleResource>
         Id = id;
     }
 
-    public string Id { get; init; }
+    public string Id { get; set; }
 
     SampleResource IJsonModel<SampleResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         => FromJson(reader);
