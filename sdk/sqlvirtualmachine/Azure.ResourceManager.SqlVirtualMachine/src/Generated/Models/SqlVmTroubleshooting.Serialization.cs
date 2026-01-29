@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
-            TroubleshootingScenario? troubleshootingScenario = default;
+            SqlVmTroubleshootingScenario? troubleshootingScenario = default;
             TroubleshootingAdditionalProperties properties = default;
             string virtualMachineResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    troubleshootingScenario = new TroubleshootingScenario(prop.Value.GetString());
+                    troubleshootingScenario = new SqlVmTroubleshootingScenario(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

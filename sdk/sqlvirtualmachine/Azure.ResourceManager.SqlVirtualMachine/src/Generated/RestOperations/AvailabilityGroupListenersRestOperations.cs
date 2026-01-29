@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, string availabilityGroupListenerName, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
-            uri.AppendPath(sqlVirtualMachineGroupName, true);
+            uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners/", false);
             uri.AppendPath(availabilityGroupListenerName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, string availabilityGroupListenerName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
-            uri.AppendPath(sqlVirtualMachineGroupName, true);
+            uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners/", false);
             uri.AppendPath(availabilityGroupListenerName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, string availabilityGroupListenerName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
-            uri.AppendPath(sqlVirtualMachineGroupName, true);
+            uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners/", false);
             uri.AppendPath(availabilityGroupListenerName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             return message;
         }
 
-        internal HttpMessage CreateGetByGroupRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, RequestContext context)
+        internal HttpMessage CreateGetByGroupRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
-            uri.AppendPath(sqlVirtualMachineGroupName, true);
+            uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             return message;
         }
 
-        internal HttpMessage CreateNextGetByGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, RequestContext context)
+        internal HttpMessage CreateNextGetByGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string sqlVmGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

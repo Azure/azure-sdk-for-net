@@ -14,11 +14,11 @@ using Azure.ResourceManager.SqlVirtualMachine;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Status of last troubleshooting operation on this SQL VM. </summary>
-    public partial class TroubleshootingStatus : IJsonModel<TroubleshootingStatus>
+    public partial class SqlVmTroubleshootingStatus : IJsonModel<SqlVmTroubleshootingStatus>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TroubleshootingStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlVmTroubleshootingStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmTroubleshootingStatus)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(RootCause))
             {
@@ -83,24 +83,24 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TroubleshootingStatus IJsonModel<TroubleshootingStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlVmTroubleshootingStatus IJsonModel<SqlVmTroubleshootingStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TroubleshootingStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlVmTroubleshootingStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmTroubleshootingStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTroubleshootingStatus(document.RootElement, options);
+            return DeserializeSqlVmTroubleshootingStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TroubleshootingStatus DeserializeTroubleshootingStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlVmTroubleshootingStatus DeserializeSqlVmTroubleshootingStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             DateTimeOffset? lastTriggerTimeUtc = default;
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
-            TroubleshootingScenario? troubleshootingScenario = default;
+            SqlVmTroubleshootingScenario? troubleshootingScenario = default;
             TroubleshootingAdditionalProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    troubleshootingScenario = new TroubleshootingScenario(prop.Value.GetString());
+                    troubleshootingScenario = new SqlVmTroubleshootingScenario(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TroubleshootingStatus(
+            return new SqlVmTroubleshootingStatus(
                 rootCause,
                 lastTriggerTimeUtc,
                 startTimeUtc,
@@ -181,43 +181,43 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TroubleshootingStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlVmTroubleshootingStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmTroubleshootingStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TroubleshootingStatus IPersistableModel<TroubleshootingStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlVmTroubleshootingStatus IPersistableModel<SqlVmTroubleshootingStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TroubleshootingStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlVmTroubleshootingStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmTroubleshootingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTroubleshootingStatus(document.RootElement, options);
+                        return DeserializeSqlVmTroubleshootingStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmTroubleshootingStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TroubleshootingStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlVmTroubleshootingStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

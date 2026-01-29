@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="properties"> Troubleshooting properties. </param>
         /// <param name="virtualMachineResourceId"> Virtual machine resource id for response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlVmTroubleshooting(DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, TroubleshootingScenario? troubleshootingScenario, TroubleshootingAdditionalProperties properties, string virtualMachineResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlVmTroubleshooting(DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, SqlVmTroubleshootingScenario? troubleshootingScenario, TroubleshootingAdditionalProperties properties, string virtualMachineResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartTimeUtc = startTimeUtc;
             EndTimeUtc = endTimeUtc;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public DateTimeOffset? EndTimeUtc { get; set; }
 
         /// <summary> SQL VM troubleshooting scenario. </summary>
-        public TroubleshootingScenario? TroubleshootingScenario { get; set; }
+        public SqlVmTroubleshootingScenario? TroubleshootingScenario { get; set; }
 
         /// <summary> Troubleshooting properties. </summary>
         internal TroubleshootingAdditionalProperties Properties { get; set; }

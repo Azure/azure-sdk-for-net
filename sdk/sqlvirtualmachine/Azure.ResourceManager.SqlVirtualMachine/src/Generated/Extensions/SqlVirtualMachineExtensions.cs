@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SqlVmResource>> GetSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlVmResource>> GetSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmAsync(sqlVirtualMachineName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmAsync(sqlVmName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SqlVmResource> GetSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<SqlVmResource> GetSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVm(sqlVirtualMachineName, expand, cancellationToken);
+            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVm(sqlVmName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -180,15 +180,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SqlVmGroupResource>> GetSqlVmGroupAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlVmGroupResource>> GetSqlVmGroupAsync(this ResourceGroupResource resourceGroupResource, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmGroupAsync(sqlVirtualMachineGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmGroupAsync(sqlVmGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -199,15 +199,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SqlVmGroupResource> GetSqlVmGroup(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        public static Response<SqlVmGroupResource> GetSqlVmGroup(this ResourceGroupResource resourceGroupResource, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmGroup(sqlVirtualMachineGroupName, cancellationToken);
+            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmGroup(sqlVmGroupName, cancellationToken);
         }
 
         /// <summary>

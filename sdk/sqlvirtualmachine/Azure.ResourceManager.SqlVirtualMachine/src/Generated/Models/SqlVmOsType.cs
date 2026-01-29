@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Operating System of the current SQL Virtual Machine. </summary>
-    public enum OsType
+    public enum SqlVmOsType
     {
         /// <summary> Windows. </summary>
         Windows,

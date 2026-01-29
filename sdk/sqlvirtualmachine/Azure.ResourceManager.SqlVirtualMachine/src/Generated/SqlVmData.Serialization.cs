@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             SqlVirtualMachineProperties properties = default;
+            string sqlVmName = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,6 +183,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                sqlVmName,
                 identity);
         }
 

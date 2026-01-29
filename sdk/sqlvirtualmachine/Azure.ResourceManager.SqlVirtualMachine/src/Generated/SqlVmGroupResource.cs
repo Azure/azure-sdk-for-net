@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sqlVmGroupPatch"> The SQL virtual machine group. </param>
+        /// <param name="patch"> The SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupPatch"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlVmGroupResource>> UpdateAsync(WaitUntil waitUntil, SqlVmGroupPatch sqlVmGroupPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlVmGroupResource>> UpdateAsync(WaitUntil waitUntil, SqlVmGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sqlVmGroupPatch, nameof(sqlVmGroupPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _sqlVirtualMachineGroupsClientDiagnostics.CreateScope("SqlVmGroupResource.Update");
             scope.Start();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachineGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlVmGroupPatch.ToRequestContent(sqlVmGroupPatch), context);
+                HttpMessage message = _sqlVirtualMachineGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlVmGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<SqlVmGroupResource> operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(
                     new SqlVmGroupOperationSource(Client),
@@ -274,12 +274,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sqlVmGroupPatch"> The SQL virtual machine group. </param>
+        /// <param name="patch"> The SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupPatch"/> is null. </exception>
-        public virtual ArmOperation<SqlVmGroupResource> Update(WaitUntil waitUntil, SqlVmGroupPatch sqlVmGroupPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<SqlVmGroupResource> Update(WaitUntil waitUntil, SqlVmGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sqlVmGroupPatch, nameof(sqlVmGroupPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _sqlVirtualMachineGroupsClientDiagnostics.CreateScope("SqlVmGroupResource.Update");
             scope.Start();
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachineGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlVmGroupPatch.ToRequestContent(sqlVmGroupPatch), context);
+                HttpMessage message = _sqlVirtualMachineGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlVmGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<SqlVmGroupResource> operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(
                     new SqlVmGroupOperationSource(Client),

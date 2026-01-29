@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Display metadata associated with the operation. </summary>
-    public partial class OperationDisplay
+    public partial class SqlVmOperationDisplay
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
-        internal OperationDisplay()
+        /// <summary> Initializes a new instance of <see cref="SqlVmOperationDisplay"/>. </summary>
+        internal SqlVmOperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmOperationDisplay"/>. </summary>
         /// <param name="provider"> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </param>
         /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </param>
         /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </param>
         /// <param name="description"> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlVmOperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             Resource = resource;

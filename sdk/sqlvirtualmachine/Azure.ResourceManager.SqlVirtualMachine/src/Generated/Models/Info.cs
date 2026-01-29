@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="origin"> The intended executor of the operation.". </param>
         /// <param name="properties"> Additional descriptions for the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Info(string name, OperationDisplay display, OperationOrigin? origin, IReadOnlyDictionary<string, OperationProperty> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Info(string name, SqlVmOperationDisplay display, SqlVmOperationOrigin? origin, IReadOnlyDictionary<string, OperationProperty> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Display = display;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public string Name { get; }
 
         /// <summary> he localized display information for this particular operation / action. </summary>
-        public OperationDisplay Display { get; }
+        public SqlVmOperationDisplay Display { get; }
 
         /// <summary> The intended executor of the operation.". </summary>
-        public OperationOrigin? Origin { get; }
+        public SqlVmOperationOrigin? Origin { get; }
 
         /// <summary> Additional descriptions for the operation. </summary>
         public IReadOnlyDictionary<string, OperationProperty> Properties { get; }

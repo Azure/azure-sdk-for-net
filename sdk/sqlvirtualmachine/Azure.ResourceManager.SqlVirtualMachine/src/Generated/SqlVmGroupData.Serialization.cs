@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             SqlVirtualMachineGroupProperties properties = default;
+            string sqlVmGroupName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -166,7 +167,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                sqlVmGroupName);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

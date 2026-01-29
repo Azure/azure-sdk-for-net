@@ -12,16 +12,16 @@ using Azure.ResourceManager.SqlVirtualMachine;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> The intended executor of the operation. </summary>
-    public readonly partial struct OperationOrigin : IEquatable<OperationOrigin>
+    public readonly partial struct SqlVmOperationOrigin : IEquatable<SqlVmOperationOrigin>
     {
         private readonly string _value;
         private const string UserValue = "user";
         private const string SystemValue = "system";
 
-        /// <summary> Initializes a new instance of <see cref="OperationOrigin"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmOperationOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OperationOrigin(string value)
+        public SqlVmOperationOrigin(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,35 +29,35 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Gets the User. </summary>
-        public static OperationOrigin User { get; } = new OperationOrigin(UserValue);
+        public static SqlVmOperationOrigin User { get; } = new SqlVmOperationOrigin(UserValue);
 
         /// <summary> Gets the System. </summary>
-        public static OperationOrigin System { get; } = new OperationOrigin(SystemValue);
+        public static SqlVmOperationOrigin System { get; } = new SqlVmOperationOrigin(SystemValue);
 
-        /// <summary> Determines if two <see cref="OperationOrigin"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmOperationOrigin"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OperationOrigin left, OperationOrigin right) => left.Equals(right);
+        public static bool operator ==(SqlVmOperationOrigin left, SqlVmOperationOrigin right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OperationOrigin"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmOperationOrigin"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OperationOrigin left, OperationOrigin right) => !left.Equals(right);
+        public static bool operator !=(SqlVmOperationOrigin left, SqlVmOperationOrigin right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OperationOrigin"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmOperationOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationOrigin(string value) => new OperationOrigin(value);
+        public static implicit operator SqlVmOperationOrigin(string value) => new SqlVmOperationOrigin(value);
 
-        /// <summary> Converts a string to a <see cref="OperationOrigin"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmOperationOrigin"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationOrigin?(string value) => value == null ? null : new OperationOrigin(value);
+        public static implicit operator SqlVmOperationOrigin?(string value) => value == null ? null : new SqlVmOperationOrigin(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OperationOrigin other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlVmOperationOrigin other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OperationOrigin other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlVmOperationOrigin other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

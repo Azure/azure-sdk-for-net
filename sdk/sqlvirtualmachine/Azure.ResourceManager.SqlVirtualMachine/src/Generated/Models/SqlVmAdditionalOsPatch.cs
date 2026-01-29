@@ -12,17 +12,17 @@ using Azure.ResourceManager.SqlVirtualMachine;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Additional VM Patching solution enabled on the Virtual Machine. </summary>
-    public readonly partial struct AdditionalOsPatch : IEquatable<AdditionalOsPatch>
+    public readonly partial struct SqlVmAdditionalOsPatch : IEquatable<SqlVmAdditionalOsPatch>
     {
         private readonly string _value;
         private const string WUValue = "WU";
         private const string WUMUValue = "WUMU";
         private const string WSUSValue = "WSUS";
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalOsPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAdditionalOsPatch"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AdditionalOsPatch(string value)
+        public SqlVmAdditionalOsPatch(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Gets the WU. </summary>
-        public static AdditionalOsPatch WU { get; } = new AdditionalOsPatch(WUValue);
+        public static SqlVmAdditionalOsPatch WU { get; } = new SqlVmAdditionalOsPatch(WUValue);
 
         /// <summary> Gets the WUMU. </summary>
-        public static AdditionalOsPatch WUMU { get; } = new AdditionalOsPatch(WUMUValue);
+        public static SqlVmAdditionalOsPatch WUMU { get; } = new SqlVmAdditionalOsPatch(WUMUValue);
 
         /// <summary> Gets the WSUS. </summary>
-        public static AdditionalOsPatch WSUS { get; } = new AdditionalOsPatch(WSUSValue);
+        public static SqlVmAdditionalOsPatch WSUS { get; } = new SqlVmAdditionalOsPatch(WSUSValue);
 
-        /// <summary> Determines if two <see cref="AdditionalOsPatch"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmAdditionalOsPatch"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AdditionalOsPatch left, AdditionalOsPatch right) => left.Equals(right);
+        public static bool operator ==(SqlVmAdditionalOsPatch left, SqlVmAdditionalOsPatch right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AdditionalOsPatch"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmAdditionalOsPatch"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AdditionalOsPatch left, AdditionalOsPatch right) => !left.Equals(right);
+        public static bool operator !=(SqlVmAdditionalOsPatch left, SqlVmAdditionalOsPatch right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AdditionalOsPatch"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmAdditionalOsPatch"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalOsPatch(string value) => new AdditionalOsPatch(value);
+        public static implicit operator SqlVmAdditionalOsPatch(string value) => new SqlVmAdditionalOsPatch(value);
 
-        /// <summary> Converts a string to a <see cref="AdditionalOsPatch"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmAdditionalOsPatch"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalOsPatch?(string value) => value == null ? null : new AdditionalOsPatch(value);
+        public static implicit operator SqlVmAdditionalOsPatch?(string value) => value == null ? null : new SqlVmAdditionalOsPatch(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AdditionalOsPatch other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlVmAdditionalOsPatch other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AdditionalOsPatch other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlVmAdditionalOsPatch other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

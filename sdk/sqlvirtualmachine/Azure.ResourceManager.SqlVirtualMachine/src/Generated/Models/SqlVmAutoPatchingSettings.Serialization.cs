@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             SqlVmAutoPatchingDayOfWeek? dayOfWeek = default;
             int? maintenanceWindowStartingHour = default;
             int? maintenanceWindowDurationInMinutes = default;
-            AdditionalVmPatch? additionalVmPatch = default;
+            SqlVmAdditionalVmPatch? additionalVmPatch = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    additionalVmPatch = new AdditionalVmPatch(prop.Value.GetString());
+                    additionalVmPatch = new SqlVmAdditionalVmPatch(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

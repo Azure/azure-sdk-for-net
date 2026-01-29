@@ -9,28 +9,28 @@ using System;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal static partial class OsTypeExtensions
+    internal static partial class SqlVmOsTypeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
-        public static string ToSerialString(this OsType value) => value switch
+        public static string ToSerialString(this SqlVmOsType value) => value switch
         {
-            OsType.Windows => "Windows",
-            OsType.Linux => "Linux",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OsType value.")
+            SqlVmOsType.Windows => "Windows",
+            SqlVmOsType.Linux => "Linux",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlVmOsType value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
-        public static OsType ToOsType(this string value)
+        public static SqlVmOsType ToSqlVmOsType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows"))
             {
-                return OsType.Windows;
+                return SqlVmOsType.Windows;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux"))
             {
-                return OsType.Linux;
+                return SqlVmOsType.Linux;
             }
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OsType value.");
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlVmOsType value.");
         }
     }
 }

@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Status of last troubleshooting operation on this SQL VM. </summary>
-    public partial class TroubleshootingStatus
+    public partial class SqlVmTroubleshootingStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TroubleshootingStatus"/>. </summary>
-        internal TroubleshootingStatus()
+        /// <summary> Initializes a new instance of <see cref="SqlVmTroubleshootingStatus"/>. </summary>
+        internal SqlVmTroubleshootingStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TroubleshootingStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmTroubleshootingStatus"/>. </summary>
         /// <param name="rootCause"> Root cause of the issue. </param>
         /// <param name="lastTriggerTimeUtc"> Last troubleshooting trigger time in UTC timezone. </param>
         /// <param name="startTimeUtc"> Start time in UTC timezone. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="troubleshootingScenario"> SQL VM troubleshooting scenario. </param>
         /// <param name="properties"> Troubleshooting properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshootingStatus(string rootCause, DateTimeOffset? lastTriggerTimeUtc, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, TroubleshootingScenario? troubleshootingScenario, TroubleshootingAdditionalProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlVmTroubleshootingStatus(string rootCause, DateTimeOffset? lastTriggerTimeUtc, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, SqlVmTroubleshootingScenario? troubleshootingScenario, TroubleshootingAdditionalProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RootCause = rootCause;
             LastTriggerTimeUtc = lastTriggerTimeUtc;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public DateTimeOffset? EndTimeUtc { get; }
 
         /// <summary> SQL VM troubleshooting scenario. </summary>
-        public TroubleshootingScenario? TroubleshootingScenario { get; }
+        public SqlVmTroubleshootingScenario? TroubleshootingScenario { get; }
 
         /// <summary> Troubleshooting properties. </summary>
         internal TroubleshootingAdditionalProperties Properties { get; }

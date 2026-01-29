@@ -34,14 +34,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Resource properties. </param>
-        internal SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineGroupProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
+        internal SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineGroupProperties properties, string sqlVmGroupName) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            SqlVmGroupName = sqlVmGroupName;
         }
 
         /// <summary> Resource properties. </summary>
         internal SqlVirtualMachineGroupProperties Properties { get; set; }
+
+        /// <summary> Name of the SQL virtual machine group. </summary>
+        public string SqlVmGroupName { get; }
 
         /// <summary> Provisioning state to track the async operation status. </summary>
         public string ProvisioningState

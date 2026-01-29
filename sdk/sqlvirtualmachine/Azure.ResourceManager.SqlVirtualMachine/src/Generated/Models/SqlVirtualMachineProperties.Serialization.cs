@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings = default;
             SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings = default;
             SqlVmStorageConfigurationSettings storageConfigurationSettings = default;
-            TroubleshootingStatus troubleshootingStatus = default;
+            SqlVmTroubleshootingStatus troubleshootingStatus = default;
             SqlVmAssessmentSettings assessmentSettings = default;
             bool? enableAutomaticUpgrade = default;
-            AdditionalOsPatch? additionalVmPatch = default;
-            VirtualMachineIdentity virtualMachineIdentitySettings = default;
-            OsType? osType = default;
+            SqlVmAdditionalOsPatch? additionalVmPatch = default;
+            SqlVmIdentity virtualMachineIdentitySettings = default;
+            SqlVmOsType? osType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    troubleshootingStatus = TroubleshootingStatus.DeserializeTroubleshootingStatus(prop.Value, options);
+                    troubleshootingStatus = SqlVmTroubleshootingStatus.DeserializeSqlVmTroubleshootingStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("assessmentSettings"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    additionalVmPatch = new AdditionalOsPatch(prop.Value.GetString());
+                    additionalVmPatch = new SqlVmAdditionalOsPatch(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("virtualMachineIdentitySettings"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    virtualMachineIdentitySettings = VirtualMachineIdentity.DeserializeVirtualMachineIdentity(prop.Value, options);
+                    virtualMachineIdentitySettings = SqlVmIdentity.DeserializeSqlVmIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    osType = prop.Value.GetString().ToOsType();
+                    osType = prop.Value.GetString().ToSqlVmOsType();
                     continue;
                 }
                 if (options.Format != "W")

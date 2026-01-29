@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="data"> The SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SqlVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sqlVirtualMachineName, SqlVmData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SqlVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sqlVmName, SqlVmData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.CreateOrUpdate");
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, SqlVmData.ToRequestContent(data), context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
                     new SqlVmOperationSource(Client),
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="data"> The SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SqlVmResource> CreateOrUpdate(WaitUntil waitUntil, string sqlVirtualMachineName, SqlVmData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SqlVmResource> CreateOrUpdate(WaitUntil waitUntil, string sqlVmName, SqlVmData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.CreateOrUpdate");
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, SqlVmData.ToRequestContent(data), context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
                     new SqlVmOperationSource(Client),
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SqlVmResource>> GetAsync(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SqlVmResource>> GetAsync(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Get");
             scope.Start();
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, expand, context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlVmData> response = Response.FromValue(SqlVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SqlVmResource> Get(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SqlVmResource> Get(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Get");
             scope.Start();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, expand, context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlVmData> response = Response.FromValue(SqlVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -348,14 +348,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Exists");
             scope.Start();
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, expand, context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;
@@ -406,14 +406,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Exists");
             scope.Start();
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, expand, context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;
@@ -464,14 +464,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SqlVmResource>> GetIfExistsAsync(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SqlVmResource>> GetIfExistsAsync(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.GetIfExists");
             scope.Start();
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, expand, context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;
@@ -526,14 +526,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SqlVmResource> GetIfExists(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SqlVmResource> GetIfExists(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using DiagnosticScope scope = _sqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.GetIfExists");
             scope.Start();
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, expand, context);
+                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;

@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 return null;
             }
             string name = default;
-            OperationDisplay display = default;
-            OperationOrigin? origin = default;
+            SqlVmOperationDisplay display = default;
+            SqlVmOperationOrigin? origin = default;
             IReadOnlyDictionary<string, OperationProperty> properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(prop.Value, options);
+                    display = SqlVmOperationDisplay.DeserializeSqlVmOperationDisplay(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("origin"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    origin = new OperationOrigin(prop.Value.GetString());
+                    origin = new SqlVmOperationOrigin(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

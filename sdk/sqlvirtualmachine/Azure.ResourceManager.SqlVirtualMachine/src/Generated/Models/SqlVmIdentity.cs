@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Virtual Machine Identity details used for Sql IaaS extension configurations. </summary>
-    public partial class VirtualMachineIdentity
+    public partial class SqlVmIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineIdentity"/>. </summary>
-        public VirtualMachineIdentity()
+        /// <summary> Initializes a new instance of <see cref="SqlVmIdentity"/>. </summary>
+        public SqlVmIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmIdentity"/>. </summary>
         /// <param name="type"> Identity type of the virtual machine. Specify None to opt-out of Managed Identities. </param>
         /// <param name="resourceId"> ARM Resource Id of the identity. Only required when UserAssigned identity is selected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineIdentity(VmIdentityType? @type, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlVmIdentity(SqlVmVmIdentityType? @type, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ResourceId = resourceId;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Identity type of the virtual machine. Specify None to opt-out of Managed Identities. </summary>
-        public VmIdentityType? Type { get; set; }
+        public SqlVmVmIdentityType? Type { get; set; }
 
         /// <summary> ARM Resource Id of the identity. Only required when UserAssigned identity is selected. </summary>
         public ResourceIdentifier ResourceId { get; set; }

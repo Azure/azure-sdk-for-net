@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateTroubleshootRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateTroubleshootRequest(string subscriptionId, string resourceGroupName, string sqlVmName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
-            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath(sqlVmName, true);
             uri.AppendPath("/troubleshoot", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();

@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlVmResource>> GetSqlVmAsync(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlVmResource>> GetSqlVmAsync(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            return await GetSqlVms().GetAsync(sqlVirtualMachineName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetSqlVms().GetAsync(sqlVmName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlVmResource> GetSqlVm(string sqlVirtualMachineName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<SqlVmResource> GetSqlVm(string sqlVmName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            return GetSqlVms().Get(sqlVirtualMachineName, expand, cancellationToken);
+            return GetSqlVms().Get(sqlVmName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlVmGroups in the <see cref="ResourceGroupResource"/>. </summary>
@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlVmGroupResource>> GetSqlVmGroupAsync(string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlVmGroupResource>> GetSqlVmGroupAsync(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineGroupName, nameof(sqlVirtualMachineGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            return await GetSqlVmGroups().GetAsync(sqlVirtualMachineGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlVmGroups().GetAsync(sqlVmGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -151,16 +151,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlVmGroupResource> GetSqlVmGroup(string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlVmGroupResource> GetSqlVmGroup(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineGroupName, nameof(sqlVirtualMachineGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            return GetSqlVmGroups().Get(sqlVirtualMachineGroupName, cancellationToken);
+            return GetSqlVmGroups().Get(sqlVmGroupName, cancellationToken);
         }
     }
 }

@@ -12,16 +12,16 @@ using Azure.ResourceManager.SqlVirtualMachine;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Additional Patch to be enable or enabled on the SQL Virtual Machine. </summary>
-    public readonly partial struct AdditionalVmPatch : IEquatable<AdditionalVmPatch>
+    public readonly partial struct SqlVmAdditionalVmPatch : IEquatable<SqlVmAdditionalVmPatch>
     {
         private readonly string _value;
         private const string NotSetValue = "NotSet";
         private const string MicrosoftUpdateValue = "MicrosoftUpdate";
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalVmPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAdditionalVmPatch"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AdditionalVmPatch(string value)
+        public SqlVmAdditionalVmPatch(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,35 +29,35 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Gets the NotSet. </summary>
-        public static AdditionalVmPatch NotSet { get; } = new AdditionalVmPatch(NotSetValue);
+        public static SqlVmAdditionalVmPatch NotSet { get; } = new SqlVmAdditionalVmPatch(NotSetValue);
 
         /// <summary> Gets the MicrosoftUpdate. </summary>
-        public static AdditionalVmPatch MicrosoftUpdate { get; } = new AdditionalVmPatch(MicrosoftUpdateValue);
+        public static SqlVmAdditionalVmPatch MicrosoftUpdate { get; } = new SqlVmAdditionalVmPatch(MicrosoftUpdateValue);
 
-        /// <summary> Determines if two <see cref="AdditionalVmPatch"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmAdditionalVmPatch"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AdditionalVmPatch left, AdditionalVmPatch right) => left.Equals(right);
+        public static bool operator ==(SqlVmAdditionalVmPatch left, SqlVmAdditionalVmPatch right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AdditionalVmPatch"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmAdditionalVmPatch"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AdditionalVmPatch left, AdditionalVmPatch right) => !left.Equals(right);
+        public static bool operator !=(SqlVmAdditionalVmPatch left, SqlVmAdditionalVmPatch right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AdditionalVmPatch"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmAdditionalVmPatch"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalVmPatch(string value) => new AdditionalVmPatch(value);
+        public static implicit operator SqlVmAdditionalVmPatch(string value) => new SqlVmAdditionalVmPatch(value);
 
-        /// <summary> Converts a string to a <see cref="AdditionalVmPatch"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmAdditionalVmPatch"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalVmPatch?(string value) => value == null ? null : new AdditionalVmPatch(value);
+        public static implicit operator SqlVmAdditionalVmPatch?(string value) => value == null ? null : new SqlVmAdditionalVmPatch(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AdditionalVmPatch other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlVmAdditionalVmPatch other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AdditionalVmPatch other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlVmAdditionalVmPatch other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

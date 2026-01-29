@@ -35,16 +35,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Resource properties. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="identity"> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </param>
-        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, string sqlVmName, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            SqlVmName = sqlVmName;
             Identity = identity;
         }
 
         /// <summary> Resource properties. </summary>
         internal SqlVirtualMachineProperties Properties { get; set; }
+
+        /// <summary> Name of the SQL virtual machine. </summary>
+        public string SqlVmName { get; }
 
         /// <summary> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </summary>
         public ManagedServiceIdentity Identity { get; set; }
@@ -297,7 +302,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Troubleshooting status. </summary>
-        public TroubleshootingStatus TroubleshootingStatus
+        public SqlVmTroubleshootingStatus TroubleshootingStatus
         {
             get
             {
@@ -340,7 +345,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Additional VM Patching solution enabled on the Virtual Machine. </summary>
-        public AdditionalOsPatch? AdditionalVmPatch
+        public SqlVmAdditionalOsPatch? AdditionalVmPatch
         {
             get
             {
@@ -349,7 +354,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Virtual Machine Identity details used for Sql IaaS extension configurations. </summary>
-        public VirtualMachineIdentity VirtualMachineIdentitySettings
+        public SqlVmIdentity VirtualMachineIdentitySettings
         {
             get
             {
@@ -366,7 +371,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Operating System of the current SQL Virtual Machine. </summary>
-        public OsType? OsType
+        public SqlVmOsType? OsType
         {
             get
             {

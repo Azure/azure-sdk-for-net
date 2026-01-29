@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="maintenanceWindowDurationInMinutes"> Duration of patching. </param>
         /// <param name="additionalVmPatch"> Additional Patch to be enable or enabled on the SQL Virtual Machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlVmAutoPatchingSettings(bool? isEnabled, SqlVmAutoPatchingDayOfWeek? dayOfWeek, int? maintenanceWindowStartingHour, int? maintenanceWindowDurationInMinutes, AdditionalVmPatch? additionalVmPatch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlVmAutoPatchingSettings(bool? isEnabled, SqlVmAutoPatchingDayOfWeek? dayOfWeek, int? maintenanceWindowStartingHour, int? maintenanceWindowDurationInMinutes, SqlVmAdditionalVmPatch? additionalVmPatch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             DayOfWeek = dayOfWeek;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public int? MaintenanceWindowDurationInMinutes { get; set; }
 
         /// <summary> Additional Patch to be enable or enabled on the SQL Virtual Machine. </summary>
-        public AdditionalVmPatch? AdditionalVmPatch { get; set; }
+        public SqlVmAdditionalVmPatch? AdditionalVmPatch { get; set; }
     }
 }
