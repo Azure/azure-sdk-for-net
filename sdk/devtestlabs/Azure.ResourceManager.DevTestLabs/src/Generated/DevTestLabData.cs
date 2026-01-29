@@ -13,158 +13,270 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLab data model.
-    /// A lab.
-    /// </summary>
+    /// <summary> A lab. </summary>
     public partial class DevTestLabData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabData(AzureLocation location) : base(location)
         {
-            MandatoryArtifactsResourceIdsLinux = new ChangeTrackingList<string>();
-            MandatoryArtifactsResourceIdsWindows = new ChangeTrackingList<string>();
-            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="defaultStorageAccount"> The lab's default storage account. </param>
-        /// <param name="defaultPremiumStorageAccount"> The lab's default premium storage account. </param>
-        /// <param name="artifactsStorageAccount"> The lab's artifact storage account. </param>
-        /// <param name="premiumDataDiskStorageAccount"> The lab's premium data disk storage account. </param>
-        /// <param name="vaultName"> The lab's Key vault. </param>
-        /// <param name="labStorageType"> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </param>
-        /// <param name="mandatoryArtifactsResourceIdsLinux"> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </param>
-        /// <param name="mandatoryArtifactsResourceIdsWindows"> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </param>
-        /// <param name="createdOn"> The creation date of the lab. </param>
-        /// <param name="premiumDataDisks">
-        /// The setting to enable usage of premium data disks.
-        /// When its value is 'Enabled', creation of standard or premium data disks is allowed.
-        /// When its value is 'Disabled', only creation of standard data disks is allowed.
-        /// </param>
-        /// <param name="environmentPermission"> The access rights to be granted to the user when provisioning an environment. </param>
-        /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>
-        /// <param name="support"> The properties of any lab support message associated with this lab. </param>
-        /// <param name="vmCreationResourceGroup"> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </param>
-        /// <param name="publicIPId"> The public IP address for the lab's load balancer. </param>
-        /// <param name="loadBalancerId"> The load balancer used to for lab VMs that use shared IP address. </param>
-        /// <param name="networkSecurityGroupId"> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </param>
-        /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, LabProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            DefaultStorageAccount = defaultStorageAccount;
-            DefaultPremiumStorageAccount = defaultPremiumStorageAccount;
-            ArtifactsStorageAccount = artifactsStorageAccount;
-            PremiumDataDiskStorageAccount = premiumDataDiskStorageAccount;
-            VaultName = vaultName;
-            LabStorageType = labStorageType;
-            MandatoryArtifactsResourceIdsLinux = mandatoryArtifactsResourceIdsLinux;
-            MandatoryArtifactsResourceIdsWindows = mandatoryArtifactsResourceIdsWindows;
-            CreatedOn = createdOn;
-            PremiumDataDisks = premiumDataDisks;
-            EnvironmentPermission = environmentPermission;
-            Announcement = announcement;
-            Support = support;
-            VmCreationResourceGroup = vmCreationResourceGroup;
-            PublicIPId = publicIPId;
-            LoadBalancerId = loadBalancerId;
-            NetworkSecurityGroupId = networkSecurityGroupId;
-            ExtendedProperties = extendedProperties;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabData"/> for deserialization. </summary>
-        internal DevTestLabData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal LabProperties Properties { get; set; }
 
         /// <summary> The lab's default storage account. </summary>
-        public string DefaultStorageAccount { get; }
+        public string DefaultStorageAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultStorageAccount;
+            }
+        }
+
         /// <summary> The lab's default premium storage account. </summary>
-        public string DefaultPremiumStorageAccount { get; }
+        public string DefaultPremiumStorageAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultPremiumStorageAccount;
+            }
+        }
+
         /// <summary> The lab's artifact storage account. </summary>
-        public string ArtifactsStorageAccount { get; }
+        public string ArtifactsStorageAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArtifactsStorageAccount;
+            }
+        }
+
         /// <summary> The lab's premium data disk storage account. </summary>
-        public string PremiumDataDiskStorageAccount { get; }
+        public string PremiumDataDiskStorageAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PremiumDataDiskStorageAccount;
+            }
+        }
+
         /// <summary> The lab's Key vault. </summary>
-        public string VaultName { get; }
+        public string VaultName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VaultName;
+            }
+        }
+
         /// <summary> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </summary>
-        public DevTestLabStorageType? LabStorageType { get; set; }
+        public DevTestLabStorageType? LabStorageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LabStorageType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                Properties.LabStorageType = value.Value;
+            }
+        }
+
         /// <summary> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </summary>
-        public IList<string> MandatoryArtifactsResourceIdsLinux { get; }
+        public IList<string> MandatoryArtifactsResourceIdsLinux
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                return Properties.MandatoryArtifactsResourceIdsLinux;
+            }
+        }
+
         /// <summary> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </summary>
-        public IList<string> MandatoryArtifactsResourceIdsWindows { get; }
+        public IList<string> MandatoryArtifactsResourceIdsWindows
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                return Properties.MandatoryArtifactsResourceIdsWindows;
+            }
+        }
+
         /// <summary> The creation date of the lab. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary>
         /// The setting to enable usage of premium data disks.
         /// When its value is 'Enabled', creation of standard or premium data disks is allowed.
         /// When its value is 'Disabled', only creation of standard data disks is allowed.
         /// </summary>
-        public DevTestLabPremiumDataDisk? PremiumDataDisks { get; set; }
+        public DevTestLabPremiumDataDisk? PremiumDataDisks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PremiumDataDisks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                Properties.PremiumDataDisks = value.Value;
+            }
+        }
+
         /// <summary> The access rights to be granted to the user when provisioning an environment. </summary>
-        public DevTestLabEnvironmentPermission? EnvironmentPermission { get; set; }
+        public DevTestLabEnvironmentPermission? EnvironmentPermission
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentPermission;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                Properties.EnvironmentPermission = value.Value;
+            }
+        }
+
         /// <summary> The properties of any lab announcement associated with this lab. </summary>
-        public DevTestLabAnnouncement Announcement { get; set; }
+        public DevTestLabAnnouncement Announcement
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Announcement;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                Properties.Announcement = value;
+            }
+        }
+
         /// <summary> The properties of any lab support message associated with this lab. </summary>
-        public DevTestLabSupport Support { get; set; }
+        public DevTestLabSupport Support
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Support;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                Properties.Support = value;
+            }
+        }
+
         /// <summary> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </summary>
-        public string VmCreationResourceGroup { get; }
+        public string VmCreationResourceGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmCreationResourceGroup;
+            }
+        }
+
         /// <summary> The public IP address for the lab's load balancer. </summary>
-        public string PublicIPId { get; }
+        public string PublicIPId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPId;
+            }
+        }
+
         /// <summary> The load balancer used to for lab VMs that use shared IP address. </summary>
-        public string LoadBalancerId { get; }
+        public string LoadBalancerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerId;
+            }
+        }
+
         /// <summary> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </summary>
-        public string NetworkSecurityGroupId { get; }
+        public string NetworkSecurityGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSecurityGroupId;
+            }
+        }
+
         /// <summary> Extended properties of the lab used for experimental features. </summary>
-        public IDictionary<string, string> ExtendedProperties { get; }
+        public IDictionary<string, string> ExtendedProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabProperties();
+                }
+                return Properties.ExtendedProperties;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
     }
 }

@@ -13,100 +13,142 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabNotificationChannel data model.
-    /// A notification.
-    /// </summary>
+    /// <summary> A notification. </summary>
     public partial class DevTestLabNotificationChannelData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabNotificationChannelData(AzureLocation location) : base(location)
         {
-            Events = new ChangeTrackingList<DevTestLabNotificationChannelEvent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="webHookUri"> The webhook URL to send notifications to. </param>
-        /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
-        /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
-        /// <param name="description"> Description of notification. </param>
-        /// <param name="events"> The list of event for which this notification is enabled. </param>
-        /// <param name="createdOn"> The creation date of the notification channel. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabNotificationChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri webHookUri, string emailRecipient, string notificationLocale, string description, IList<DevTestLabNotificationChannelEvent> events, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabNotificationChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, NotificationChannelProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            WebHookUri = webHookUri;
-            EmailRecipient = emailRecipient;
-            NotificationLocale = notificationLocale;
-            Description = description;
-            Events = events;
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelData"/> for deserialization. </summary>
-        internal DevTestLabNotificationChannelData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal NotificationChannelProperties Properties { get; set; }
 
         /// <summary> The webhook URL to send notifications to. </summary>
-        public Uri WebHookUri { get; set; }
+        public Uri WebHookUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebHookUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationChannelProperties();
+                }
+                Properties.WebHookUri = value;
+            }
+        }
+
         /// <summary> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </summary>
-        public string EmailRecipient { get; set; }
+        public string EmailRecipient
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EmailRecipient;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationChannelProperties();
+                }
+                Properties.EmailRecipient = value;
+            }
+        }
+
         /// <summary> The locale to use when sending a notification (fallback for unsupported languages is EN). </summary>
-        public string NotificationLocale { get; set; }
+        public string NotificationLocale
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NotificationLocale;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationChannelProperties();
+                }
+                Properties.NotificationLocale = value;
+            }
+        }
+
         /// <summary> Description of notification. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationChannelProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The list of event for which this notification is enabled. </summary>
-        public IList<DevTestLabNotificationChannelEvent> Events { get; }
+        public IList<DevTestLabNotificationChannelEvent> Events
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationChannelProperties();
+                }
+                return Properties.Events;
+            }
+        }
+
         /// <summary> The creation date of the notification channel. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
     }
 }

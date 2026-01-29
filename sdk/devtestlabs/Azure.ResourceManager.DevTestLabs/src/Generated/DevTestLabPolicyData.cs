@@ -13,103 +13,163 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabPolicy data model.
-    /// A Policy.
-    /// </summary>
+    /// <summary> A Policy. </summary>
     public partial class DevTestLabPolicyData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabPolicyData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="description"> The description of the policy. </param>
-        /// <param name="status"> The status of the policy. </param>
-        /// <param name="factName"> The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. </param>
-        /// <param name="factData"> The fact data of the policy. </param>
-        /// <param name="threshold"> The threshold of the policy (i.e. a number for MaxValuePolicy, and a JSON array of values for AllowedValuesPolicy). </param>
-        /// <param name="evaluatorType"> The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy). </param>
-        /// <param name="createdOn"> The creation date of the policy. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, DevTestLabPolicyStatus? status, DevTestLabPolicyFactName? factName, string factData, string threshold, DevTestLabPolicyEvaluatorType? evaluatorType, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, PolicyProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            Description = description;
-            Status = status;
-            FactName = factName;
-            FactData = factData;
-            Threshold = threshold;
-            EvaluatorType = evaluatorType;
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyData"/> for deserialization. </summary>
-        internal DevTestLabPolicyData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal PolicyProperties Properties { get; set; }
 
         /// <summary> The description of the policy. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PolicyProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The status of the policy. </summary>
-        public DevTestLabPolicyStatus? Status { get; set; }
+        public DevTestLabPolicyStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PolicyProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. </summary>
-        public DevTestLabPolicyFactName? FactName { get; set; }
+        public DevTestLabPolicyFactName? FactName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FactName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PolicyProperties();
+                }
+                Properties.FactName = value.Value;
+            }
+        }
+
         /// <summary> The fact data of the policy. </summary>
-        public string FactData { get; set; }
+        public string FactData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FactData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PolicyProperties();
+                }
+                Properties.FactData = value;
+            }
+        }
+
         /// <summary> The threshold of the policy (i.e. a number for MaxValuePolicy, and a JSON array of values for AllowedValuesPolicy). </summary>
-        public string Threshold { get; set; }
+        public string Threshold
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Threshold;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PolicyProperties();
+                }
+                Properties.Threshold = value;
+            }
+        }
+
         /// <summary> The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy). </summary>
-        public DevTestLabPolicyEvaluatorType? EvaluatorType { get; set; }
+        public DevTestLabPolicyEvaluatorType? EvaluatorType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EvaluatorType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PolicyProperties();
+                }
+                Properties.EvaluatorType = value.Value;
+            }
+        }
+
         /// <summary> The creation date of the policy. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
     }
 }

@@ -13,210 +13,521 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabVm data model.
-    /// A virtual machine.
-    /// </summary>
+    /// <summary> A virtual machine. </summary>
     public partial class DevTestLabVmData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabVmData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabVmData(AzureLocation location) : base(location)
         {
-            Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
-            DataDiskParameters = new ChangeTrackingList<DevTestLabDataDiskProperties>();
-            ScheduleParameters = new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabVmData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="notes"> The notes of the virtual machine. </param>
-        /// <param name="ownerObjectId"> The object identifier of the owner of the virtual machine. </param>
-        /// <param name="ownerUserPrincipalName"> The user principal name of the virtual machine owner. </param>
-        /// <param name="createdByUserId"> The object identifier of the creator of the virtual machine. </param>
-        /// <param name="createdByUser"> The email address of creator of the virtual machine. </param>
-        /// <param name="createdOn"> The creation date of the virtual machine. </param>
-        /// <param name="computeId"> The resource identifier (Microsoft.Compute) of the virtual machine. </param>
-        /// <param name="customImageId"> The custom image identifier of the virtual machine. </param>
-        /// <param name="osType"> The OS type of the virtual machine. </param>
-        /// <param name="size"> The size of the virtual machine. </param>
-        /// <param name="userName"> The user name of the virtual machine. </param>
-        /// <param name="password"> The password of the virtual machine administrator. </param>
-        /// <param name="sshKey"> The SSH key of the virtual machine administrator. </param>
-        /// <param name="isAuthenticationWithSshKey"> Indicates whether this virtual machine uses an SSH key for authentication. </param>
-        /// <param name="fqdn"> The fully-qualified domain name of the virtual machine. </param>
-        /// <param name="labSubnetName"> The lab subnet name of the virtual machine. </param>
-        /// <param name="labVirtualNetworkId"> The lab virtual network identifier of the virtual machine. </param>
-        /// <param name="disallowPublicIPAddress"> Indicates whether the virtual machine is to be created without a public IP address. </param>
-        /// <param name="artifacts"> The artifacts to be installed on the virtual machine. </param>
-        /// <param name="artifactDeploymentStatus"> The artifact deployment status for the virtual machine. </param>
-        /// <param name="galleryImageReference"> The Microsoft Azure Marketplace image reference of the virtual machine. </param>
-        /// <param name="planId"> The id of the plan associated with the virtual machine image. </param>
-        /// <param name="computeVm"> The compute virtual machine properties. </param>
-        /// <param name="networkInterface"> The network interface properties. </param>
-        /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
-        /// <param name="expireOn"> The expiration date for VM. </param>
-        /// <param name="allowClaim"> Indicates whether another user can take ownership of the virtual machine. </param>
-        /// <param name="storageType"> Storage type to use for virtual machine (i.e. Standard, Premium). </param>
-        /// <param name="vmCreationSource"> Tells source of creation of lab virtual machine. Output property only. </param>
-        /// <param name="environmentId"> The resource ID of the environment that contains this virtual machine, if any. </param>
-        /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
-        /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
-        /// <param name="lastKnownPowerState"> Last known compute power state captured in DTL. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, LabVirtualMachineProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            Notes = notes;
-            OwnerObjectId = ownerObjectId;
-            OwnerUserPrincipalName = ownerUserPrincipalName;
-            CreatedByUserId = createdByUserId;
-            CreatedByUser = createdByUser;
-            CreatedOn = createdOn;
-            ComputeId = computeId;
-            CustomImageId = customImageId;
-            OSType = osType;
-            Size = size;
-            UserName = userName;
-            Password = password;
-            SshKey = sshKey;
-            IsAuthenticationWithSshKey = isAuthenticationWithSshKey;
-            Fqdn = fqdn;
-            LabSubnetName = labSubnetName;
-            LabVirtualNetworkId = labVirtualNetworkId;
-            DisallowPublicIPAddress = disallowPublicIPAddress;
-            Artifacts = artifacts;
-            ArtifactDeploymentStatus = artifactDeploymentStatus;
-            GalleryImageReference = galleryImageReference;
-            PlanId = planId;
-            ComputeVm = computeVm;
-            NetworkInterface = networkInterface;
-            ApplicableSchedule = applicableSchedule;
-            ExpireOn = expireOn;
-            AllowClaim = allowClaim;
-            StorageType = storageType;
-            VmCreationSource = vmCreationSource;
-            EnvironmentId = environmentId;
-            DataDiskParameters = dataDiskParameters;
-            ScheduleParameters = scheduleParameters;
-            LastKnownPowerState = lastKnownPowerState;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabVmData"/> for deserialization. </summary>
-        internal DevTestLabVmData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal LabVirtualMachineProperties Properties { get; set; }
 
         /// <summary> The notes of the virtual machine. </summary>
-        public string Notes { get; set; }
+        public string Notes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Notes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.Notes = value;
+            }
+        }
+
         /// <summary> The object identifier of the owner of the virtual machine. </summary>
-        public string OwnerObjectId { get; set; }
+        public string OwnerObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OwnerObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.OwnerObjectId = value;
+            }
+        }
+
         /// <summary> The user principal name of the virtual machine owner. </summary>
-        public string OwnerUserPrincipalName { get; set; }
+        public string OwnerUserPrincipalName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OwnerUserPrincipalName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.OwnerUserPrincipalName = value;
+            }
+        }
+
         /// <summary> The object identifier of the creator of the virtual machine. </summary>
-        public string CreatedByUserId { get; }
+        public string CreatedByUserId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedByUserId;
+            }
+        }
+
         /// <summary> The email address of creator of the virtual machine. </summary>
-        public string CreatedByUser { get; }
+        public string CreatedByUser
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedByUser;
+            }
+        }
+
         /// <summary> The creation date of the virtual machine. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.CreatedOn = value.Value;
+            }
+        }
+
         /// <summary> The resource identifier (Microsoft.Compute) of the virtual machine. </summary>
-        public ResourceIdentifier ComputeId { get; }
+        public ResourceIdentifier ComputeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeId;
+            }
+        }
+
         /// <summary> The custom image identifier of the virtual machine. </summary>
-        public string CustomImageId { get; set; }
+        public string CustomImageId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomImageId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.CustomImageId = value;
+            }
+        }
+
         /// <summary> The OS type of the virtual machine. </summary>
-        public string OSType { get; }
+        public string OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+        }
+
         /// <summary> The size of the virtual machine. </summary>
-        public string Size { get; set; }
+        public string Size
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Size;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.Size = value;
+            }
+        }
+
         /// <summary> The user name of the virtual machine. </summary>
-        public string UserName { get; set; }
+        public string UserName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.UserName = value;
+            }
+        }
+
         /// <summary> The password of the virtual machine administrator. </summary>
-        public string Password { get; set; }
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.Password = value;
+            }
+        }
+
         /// <summary> The SSH key of the virtual machine administrator. </summary>
-        public string SshKey { get; set; }
+        public string SshKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SshKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.SshKey = value;
+            }
+        }
+
         /// <summary> Indicates whether this virtual machine uses an SSH key for authentication. </summary>
-        public bool? IsAuthenticationWithSshKey { get; set; }
+        public bool? IsAuthenticationWithSshKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAuthenticationWithSshKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.IsAuthenticationWithSshKey = value.Value;
+            }
+        }
+
         /// <summary> The fully-qualified domain name of the virtual machine. </summary>
-        public string Fqdn { get; }
+        public string Fqdn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Fqdn;
+            }
+        }
+
         /// <summary> The lab subnet name of the virtual machine. </summary>
-        public string LabSubnetName { get; set; }
+        public string LabSubnetName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LabSubnetName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.LabSubnetName = value;
+            }
+        }
+
         /// <summary> The lab virtual network identifier of the virtual machine. </summary>
-        public ResourceIdentifier LabVirtualNetworkId { get; set; }
+        public ResourceIdentifier LabVirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LabVirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.LabVirtualNetworkId = value;
+            }
+        }
+
         /// <summary> Indicates whether the virtual machine is to be created without a public IP address. </summary>
-        public bool? DisallowPublicIPAddress { get; set; }
+        public bool? DisallowPublicIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisallowPublicIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.DisallowPublicIPAddress = value.Value;
+            }
+        }
+
         /// <summary> The artifacts to be installed on the virtual machine. </summary>
-        public IList<DevTestLabArtifactInstallInfo> Artifacts { get; }
+        public IList<DevTestLabArtifactInstallInfo> Artifacts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                return Properties.Artifacts;
+            }
+        }
+
         /// <summary> The artifact deployment status for the virtual machine. </summary>
-        public DevTestLabArtifactDeploymentStatus ArtifactDeploymentStatus { get; }
+        public DevTestLabArtifactDeploymentStatus ArtifactDeploymentStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArtifactDeploymentStatus;
+            }
+        }
+
         /// <summary> The Microsoft Azure Marketplace image reference of the virtual machine. </summary>
-        public DevTestLabGalleryImageReference GalleryImageReference { get; set; }
+        public DevTestLabGalleryImageReference GalleryImageReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GalleryImageReference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.GalleryImageReference = value;
+            }
+        }
+
         /// <summary> The id of the plan associated with the virtual machine image. </summary>
-        public string PlanId { get; set; }
+        public string PlanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.PlanId = value;
+            }
+        }
+
         /// <summary> The compute virtual machine properties. </summary>
-        public ComputeVmProperties ComputeVm { get; }
+        public ComputeVmProperties ComputeVm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeVm;
+            }
+        }
+
         /// <summary> The network interface properties. </summary>
-        public DevTestLabNetworkInterface NetworkInterface { get; set; }
+        public DevTestLabNetworkInterface NetworkInterface
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkInterface;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.NetworkInterface = value;
+            }
+        }
+
         /// <summary> The applicable schedule for the virtual machine. </summary>
-        public DevTestLabApplicableSchedule ApplicableSchedule { get; }
+        public DevTestLabApplicableSchedule ApplicableSchedule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicableSchedule;
+            }
+        }
+
         /// <summary> The expiration date for VM. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.ExpireOn = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether another user can take ownership of the virtual machine. </summary>
-        public bool? AllowClaim { get; set; }
+        public bool? AllowClaim
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowClaim;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.AllowClaim = value.Value;
+            }
+        }
+
         /// <summary> Storage type to use for virtual machine (i.e. Standard, Premium). </summary>
-        public string StorageType { get; set; }
+        public string StorageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.StorageType = value;
+            }
+        }
+
         /// <summary> Tells source of creation of lab virtual machine. Output property only. </summary>
-        public DevTestLabVmCreationSource? VmCreationSource { get; }
+        public DevTestLabVmCreationSource? VmCreationSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmCreationSource;
+            }
+        }
+
         /// <summary> The resource ID of the environment that contains this virtual machine, if any. </summary>
-        public ResourceIdentifier EnvironmentId { get; set; }
+        public ResourceIdentifier EnvironmentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                Properties.EnvironmentId = value;
+            }
+        }
+
         /// <summary> New or existing data disks to attach to the virtual machine after creation. </summary>
-        public IList<DevTestLabDataDiskProperties> DataDiskParameters { get; }
+        public IList<DevTestLabDataDiskProperties> DataDiskParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                return Properties.DataDiskParameters;
+            }
+        }
+
         /// <summary> Virtual Machine schedules to be created. </summary>
-        public IList<DevTestLabScheduleCreationParameter> ScheduleParameters { get; }
+        public IList<DevTestLabScheduleCreationParameter> ScheduleParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabVirtualMachineProperties();
+                }
+                return Properties.ScheduleParameters;
+            }
+        }
+
         /// <summary> Last known compute power state captured in DTL. </summary>
-        public string LastKnownPowerState { get; }
+        public string LastKnownPowerState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastKnownPowerState;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
     }
 }
