@@ -153,10 +153,17 @@ namespace Azure.AI.Projects.Tests
             return TestEnvironment.Credential;
         }
 
-        protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default)
+        protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default, bool useDefaultEndpoint=false)
         {
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
-            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
+            Uri endpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+            if (useDefaultEndpoint)
+            {
+                string[] segments = endpoint.Segments;
+                segments[segments.Length - 1] = "_default";
+                endpoint = new Uri(new Uri($"{endpoint.Scheme}://{endpoint.Host}"), relativeUri: string.Join("", segments));
+            }
+            return CreateProxyFromClient(new AIProjectClient(endpoint, GetTestTokenProvider(), projectClientOptions));
         }
 
         protected AIProjectClient GetTestProjectClientForLegacyAgents(Dictionary<string, string> headers = default)

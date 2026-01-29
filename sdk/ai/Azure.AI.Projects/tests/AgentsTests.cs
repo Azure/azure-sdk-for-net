@@ -329,9 +329,11 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task SimplePromptAgentWithoutConversation()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task SimplePromptAgentWithoutConversation(bool useDefaultEndpoint)
     {
-        AIProjectClient projectClient = GetTestProjectClient();
+        AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: useDefaultEndpoint);
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
         {
