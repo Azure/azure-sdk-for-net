@@ -19,9 +19,34 @@ namespace Azure.ResourceManager.Search.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CheckSearchServiceNameAvailability_SearchCheckNameAvailability()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/stable/2025-05-01/examples/SearchCheckNameAvailability.json
+            // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            SearchServiceNameAvailabilityContent content = new SearchServiceNameAvailabilityContent("mysearchservice");
+            SearchServiceNameAvailabilityResult result = await subscriptionResource.CheckSearchServiceNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSearchServices_SearchListServicesBySubscription()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchListServicesBySubscription.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/stable/2025-05-01/examples/SearchListServicesBySubscription.json
             // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +56,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -50,34 +75,9 @@ namespace Azure.ResourceManager.Search.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckSearchServiceNameAvailability_SearchCheckNameAvailability()
-        {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCheckNameAvailability.json
-            // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            SearchServiceNameAvailabilityContent content = new SearchServiceNameAvailabilityContent("mysearchservice");
-            SearchServiceNameAvailabilityResult result = await subscriptionResource.CheckSearchServiceNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetUsagesBySubscription_GetQuotaUsagesList()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/GetQuotaUsagesList.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/stable/2025-05-01/examples/GetQuotaUsagesList.json
             // this example is just showing the usage of "Usages_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UsageBySubscriptionSku_GetQuotaUsage()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/GetQuotaUsage.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/stable/2025-05-01/examples/GetQuotaUsage.json
             // this example is just showing the usage of "UsageBySubscriptionSku" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
