@@ -7,65 +7,31 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> List Restore Ranges Response. </summary>
-    public partial class BackupFindRestorableTimeRangeResult : ResourceData
+    public partial class BackupFindRestorableTimeRangeResult : DppResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
-        public BackupFindRestorableTimeRangeResult()
+        internal BackupFindRestorableTimeRangeResult()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Resource Id represents the complete path to the resource. </param>
+        /// <param name="name"> Resource name associated with the resource. </param>
+        /// <param name="type"> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> AzureBackupFindRestorableTimeRangesResponseResource properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupFindRestorableTimeRangeResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupFindRestorableTimeRangeResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BackupFindRestorableTimeRangeResult(string id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupFindRestorableTimeRangeResultProperties properties) : base(id, name, @type, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AzureBackupFindRestorableTimeRangesResponseResource properties. </summary>
-        public BackupFindRestorableTimeRangeResultProperties Properties { get; set; }
+        public BackupFindRestorableTimeRangeResultProperties Properties { get; }
     }
 }

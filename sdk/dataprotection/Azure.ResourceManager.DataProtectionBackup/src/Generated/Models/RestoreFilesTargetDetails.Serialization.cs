@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable, IJsonModel<RestoreFilesTargetDetails>
+    /// <summary> Class encapsulating target details, used where the destination is not a datasource. </summary>
+    public partial class RestoreFilesTargetDetails : IJsonModel<RestoreFilesTargetDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreFilesTargetDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetDetails"/> for deserialization. </summary>
+        internal RestoreFilesTargetDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestoreFilesTargetDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,32 +35,31 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("filePrefix"u8);
             writer.WriteStringValue(FilePrefix);
             writer.WritePropertyName("restoreTargetLocationType"u8);
             writer.WriteStringValue(RestoreTargetLocationType.ToString());
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Uri);
             if (Optional.IsDefined(TargetResourceArmId))
             {
                 writer.WritePropertyName("targetResourceArmId"u8);
                 writer.WriteStringValue(TargetResourceArmId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,71 +68,77 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        RestoreFilesTargetDetails IJsonModel<RestoreFilesTargetDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreFilesTargetDetails IJsonModel<RestoreFilesTargetDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestoreFilesTargetDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRestoreFilesTargetDetails(document.RootElement, options);
         }
 
-        internal static RestoreFilesTargetDetails DeserializeRestoreFilesTargetDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RestoreFilesTargetDetails DeserializeRestoreFilesTargetDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string filePrefix = default;
             RestoreTargetLocationType restoreTargetLocationType = default;
-            Uri url = default;
+            string uri = default;
             ResourceIdentifier targetResourceArmId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("filePrefix"u8))
+                if (prop.NameEquals("filePrefix"u8))
                 {
-                    filePrefix = property.Value.GetString();
+                    filePrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restoreTargetLocationType"u8))
+                if (prop.NameEquals("restoreTargetLocationType"u8))
                 {
-                    restoreTargetLocationType = new RestoreTargetLocationType(property.Value.GetString());
+                    restoreTargetLocationType = new RestoreTargetLocationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    uri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceArmId"u8))
+                if (prop.NameEquals("targetResourceArmId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetResourceArmId = new ResourceIdentifier(property.Value.GetString());
+                    targetResourceArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RestoreFilesTargetDetails(filePrefix, restoreTargetLocationType, url, targetResourceArmId, serializedAdditionalRawData);
+            return new RestoreFilesTargetDetails(filePrefix, restoreTargetLocationType, uri, targetResourceArmId, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<RestoreFilesTargetDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RestoreFilesTargetDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -136,15 +148,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        RestoreFilesTargetDetails IPersistableModel<RestoreFilesTargetDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreFilesTargetDetails IPersistableModel<RestoreFilesTargetDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestoreFilesTargetDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRestoreFilesTargetDetails(document.RootElement, options);
                     }
                 default:
@@ -152,6 +169,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RestoreFilesTargetDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

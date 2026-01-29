@@ -5,7 +5,7 @@
 
 using System;
 using System.ComponentModel;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Gets or sets the type of the datastore. </summary>
@@ -19,3 +19,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static StorageSettingStoreType SnapshotStore { get; } = new StorageSettingStoreType(SnapshotStoreValue);
     }
 }
+*/

@@ -5,132 +5,28 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDataProtectionBackupArmClient : ArmResource
     {
-        private ClientDiagnostics _backupInstancesExtensionRoutingClientDiagnostics;
-        private BackupInstancesExtensionRoutingRestOperations _backupInstancesExtensionRoutingRestClient;
-
-        /// <summary> Initializes a new instance of the <see cref="MockableDataProtectionBackupArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataProtectionBackupArmClient for mocking. </summary>
         protected MockableDataProtectionBackupArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataProtectionBackupArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataProtectionBackupArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataProtectionBackupArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDataProtectionBackupArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private ClientDiagnostics BackupInstancesExtensionRoutingClientDiagnostics => _backupInstancesExtensionRoutingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupInstancesExtensionRoutingRestOperations BackupInstancesExtensionRoutingRestClient => _backupInstancesExtensionRoutingRestClient ??= new BackupInstancesExtensionRoutingRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets a list of backup instances associated with a tracked resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.DataProtection/backupInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstancesExtensionRouting_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupInstancesExtensionRoutingRestClient.CreateListRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupInstancesExtensionRoutingRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupInstanceResource(Client, DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e)), BackupInstancesExtensionRoutingClientDiagnostics, Pipeline, "MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstances", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of backup instances associated with a tracked resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.DataProtection/backupInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstancesExtensionRouting_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupInstancesExtensionRoutingRestClient.CreateListRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupInstancesExtensionRoutingRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupInstanceResource(Client, DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e)), BackupInstancesExtensionRoutingClientDiagnostics, Pipeline, "MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstances", "value", "nextLink", cancellationToken);
-        }
-        /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProtectionBackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionBackupVaultResource"/> object. </returns>
-        public virtual DataProtectionBackupVaultResource GetDataProtectionBackupVaultResource(ResourceIdentifier id)
-        {
-            DataProtectionBackupVaultResource.ValidateResourceId(id);
-            return new DataProtectionBackupVaultResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardResource"/> object. </returns>
-        public virtual ResourceGuardResource GetResourceGuardResource(ResourceIdentifier id)
-        {
-            ResourceGuardResource.ValidateResourceId(id);
-            return new ResourceGuardResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource"/> object. </returns>
         public virtual DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(ResourceIdentifier id)
@@ -139,34 +35,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             return new DataProtectionBackupInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProtectionBackupRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupRecoveryPointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataProtectionBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource"/> object. </returns>
-        public virtual DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupVaultResource"/> object. </returns>
+        public virtual DataProtectionBackupVaultResource GetDataProtectionBackupVaultResource(ResourceIdentifier id)
         {
-            DataProtectionBackupRecoveryPointResource.ValidateResourceId(id);
-            return new DataProtectionBackupRecoveryPointResource(Client, id);
+            DataProtectionBackupVaultResource.ValidateResourceId(id);
+            return new DataProtectionBackupVaultResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProtectionBackupJobResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeletedBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionBackupJobResource"/> object. </returns>
-        public virtual DataProtectionBackupJobResource GetDataProtectionBackupJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedBackupVaultResource"/> object. </returns>
+        public virtual DeletedBackupVaultResource GetDeletedBackupVaultResource(ResourceIdentifier id)
         {
-            DataProtectionBackupJobResource.ValidateResourceId(id);
-            return new DataProtectionBackupJobResource(Client, id);
+            DeletedBackupVaultResource.ValidateResourceId(id);
+            return new DeletedBackupVaultResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProtectionBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataProtectionBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource"/> object. </returns>
         public virtual DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(ResourceIdentifier id)
@@ -175,28 +62,49 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             return new DataProtectionBackupPolicyResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGuardProxyBaseResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGuardProxyBaseResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardProxyBaseResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataProtectionBackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource"/> object. </returns>
-        public virtual ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource"/> object. </returns>
+        public virtual DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(ResourceIdentifier id)
         {
-            ResourceGuardProxyBaseResource.ValidateResourceId(id);
-            return new ResourceGuardProxyBaseResource(Client, id);
+            DataProtectionBackupRecoveryPointResource.ValidateResourceId(id);
+            return new DataProtectionBackupRecoveryPointResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeletedDataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedDataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeletedDataProtectionBackupInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataProtectionBackupJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataProtectionBackupJobResource"/> object. </returns>
+        public virtual DataProtectionBackupJobResource GetDataProtectionBackupJobResource(ResourceIdentifier id)
+        {
+            DataProtectionBackupJobResource.ValidateResourceId(id);
+            return new DataProtectionBackupJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DeletedDataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource"/> object. </returns>
         public virtual DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(ResourceIdentifier id)
         {
             DeletedDataProtectionBackupInstanceResource.ValidateResourceId(id);
             return new DeletedDataProtectionBackupInstanceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ResourceGuardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGuardResource"/> object. </returns>
+        public virtual ResourceGuardResource GetResourceGuardResource(ResourceIdentifier id)
+        {
+            ResourceGuardResource.ValidateResourceId(id);
+            return new ResourceGuardResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ResourceGuardProxyBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource"/> object. </returns>
+        public virtual ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(ResourceIdentifier id)
+        {
+            ResourceGuardProxyBaseResource.ValidateResourceId(id);
+            return new ResourceGuardProxyBaseResource(Client, id);
         }
     }
 }

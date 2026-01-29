@@ -8,96 +8,160 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataProtectionBackup;
 using Azure.ResourceManager.DataProtectionBackup.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDataProtectionBackupSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _dataProtectionBackupVaultBackupVaultsClientDiagnostics;
-        private BackupVaultsRestOperations _dataProtectionBackupVaultBackupVaultsRestClient;
-        private ClientDiagnostics _dataProtectionClientDiagnostics;
-        private DataProtectionRestOperations _dataProtectionRestClient;
-        private ClientDiagnostics _resourceGuardClientDiagnostics;
-        private ResourceGuardsRestOperations _resourceGuardRestClient;
+        private ClientDiagnostics _backupVaultResourcesClientDiagnostics;
+        private BackupVaultResources _backupVaultResourcesRestClient;
+        private ClientDiagnostics _resourceGuardResourcesClientDiagnostics;
+        private ResourceGuardResources _resourceGuardResourcesRestClient;
+        private ClientDiagnostics _dataProtectionOperationGroupClientDiagnostics;
+        private DataProtectionOperationGroup _dataProtectionOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataProtectionBackupSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataProtectionBackupSubscriptionResource for mocking. </summary>
         protected MockableDataProtectionBackupSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataProtectionBackupSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataProtectionBackupSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataProtectionBackupSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DataProtectionBackupVaultBackupVaultsClientDiagnostics => _dataProtectionBackupVaultBackupVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
-        private BackupVaultsRestOperations DataProtectionBackupVaultBackupVaultsRestClient => _dataProtectionBackupVaultBackupVaultsRestClient ??= new BackupVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataProtectionBackupVaultResource.ResourceType));
-        private ClientDiagnostics DataProtectionClientDiagnostics => _dataProtectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DataProtectionRestOperations DataProtectionRestClient => _dataProtectionRestClient ??= new DataProtectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ResourceGuardClientDiagnostics => _resourceGuardClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
-        private ResourceGuardsRestOperations ResourceGuardRestClient => _resourceGuardRestClient ??= new ResourceGuardsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceGuardResource.ResourceType));
+        private ClientDiagnostics BackupVaultResourcesClientDiagnostics => _backupVaultResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics ResourceGuardResourcesClientDiagnostics => _resourceGuardResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics DataProtectionOperationGroupClientDiagnostics => _dataProtectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DataProtectionOperationGroup DataProtectionOperationGroupRestClient => _dataProtectionOperationGroupRestClient ??= new DataProtectionOperationGroup(DataProtectionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        /// <summary> Gets a collection of DeletedBackupVaultResources in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of DeletedBackupVaultResources and their operations over a DeletedBackupVaultResource. </returns>
+        public virtual DeletedBackupVaultResourceCollection GetDeletedBackupVaultResources(AzureLocation location)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new DeletedBackupVaultResourceCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets a deleted backup vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/deletedVaults/{deletedVaultName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedBackupVaults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedBackupVaultResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeletedBackupVaultResource>> GetDeletedBackupVaultResourceAsync(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
+
+            return await GetDeletedBackupVaultResources(location).GetAsync(deletedVaultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a deleted backup vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/deletedVaults/{deletedVaultName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedBackupVaults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedBackupVaultResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeletedBackupVaultResource> GetDeletedBackupVaultResource(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
+
+            return GetDeletedBackupVaultResources(location).Get(deletedVaultName, cancellationToken);
         }
 
         /// <summary>
         /// Returns resource collection belonging to a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_GetInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultResources_GetInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataProtectionBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionAsyncCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
         /// Returns resource collection belonging to a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_GetInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultResources_GetInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,25 +169,83 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataProtectionBackupVaultResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns ResourceGuards collection belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardResources_GetResourcesInSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGuardResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns ResourceGuards collection belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardResources_GetResourcesInSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardResource> GetResourceGuards(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
         /// Validates if a feature is supported
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataProtection_CheckFeatureSupport</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataProtectionOperationGroup_CheckFeatureSupport. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,11 +257,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DataProtectionClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
+            using DiagnosticScope scope = DataProtectionOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
             scope.Start();
             try
             {
-                var response = await DataProtectionRestClient.CheckFeatureSupportAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DataProtectionOperationGroupRestClient.CreateCheckDataProtectionBackupFeatureSupportRequest(Guid.Parse(Id.SubscriptionId), location, BackupFeatureValidationContentBase.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BackupFeatureValidationResultBase> response = Response.FromValue(BackupFeatureValidationResultBase.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -153,16 +285,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// Validates if a feature is supported
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataProtection_CheckFeatureSupport</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataProtectionOperationGroup_CheckFeatureSupport. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,11 +306,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DataProtectionClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
+            using DiagnosticScope scope = DataProtectionOperationGroupClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
             scope.Start();
             try
             {
-                var response = DataProtectionRestClient.CheckFeatureSupport(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DataProtectionOperationGroupRestClient.CreateCheckDataProtectionBackupFeatureSupportRequest(Guid.Parse(Id.SubscriptionId), location, BackupFeatureValidationContentBase.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BackupFeatureValidationResultBase> response = Response.FromValue(BackupFeatureValidationResultBase.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -186,66 +328,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Returns ResourceGuards collection belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetResourcesInSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns ResourceGuards collection belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetResourcesInSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardResource> GetResourceGuards(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards", "value", "nextLink", cancellationToken);
         }
     }
 }

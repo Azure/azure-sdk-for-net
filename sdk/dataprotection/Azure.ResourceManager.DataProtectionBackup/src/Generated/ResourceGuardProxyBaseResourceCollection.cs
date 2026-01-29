@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// </summary>
     public partial class ResourceGuardProxyBaseResourceCollection : ArmCollection, IEnumerable<ResourceGuardProxyBaseResource>, IAsyncEnumerable<ResourceGuardProxyBaseResource>
     {
-        private readonly ClientDiagnostics _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics;
-        private readonly DppResourceGuardProxyRestOperations _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient;
+        private readonly ClientDiagnostics _resourceGuardProxyBaseResourcesClientDiagnostics;
+        private readonly ResourceGuardProxyBaseResources _resourceGuardProxyBaseResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGuardProxyBaseResourceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceCollection for mocking. </summary>
         protected ResourceGuardProxyBaseResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGuardProxyBaseResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBaseResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceGuardProxyBaseResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardProxyBaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceGuardProxyBaseResource.ResourceType, out string resourceGuardProxyBaseResourceDppResourceGuardProxyApiVersion);
-            _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient = new DppResourceGuardProxyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGuardProxyBaseResourceDppResourceGuardProxyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceGuardProxyBaseResource.ResourceType, out string resourceGuardProxyBaseResourceApiVersion);
+            _resourceGuardProxyBaseResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardProxyBaseResource.ResourceType.Namespace, Diagnostics);
+            _resourceGuardProxyBaseResourcesRestClient = new ResourceGuardProxyBaseResources(_resourceGuardProxyBaseResourcesClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyBaseResourceApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataProtectionBackupVaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates or Updates a ResourceGuardProxy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ResourceGuardProxyBaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceGuardProxyName, ResourceGuardProxyBaseResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataProtectionBackupArmOperation<ResourceGuardProxyBaseResource>(Response.FromValue(new ResourceGuardProxyBaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, ResourceGuardProxyBaseResourceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProxyBaseResourceData> response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataProtectionBackupArmOperation<ResourceGuardProxyBaseResource> operation = new DataProtectionBackupArmOperation<ResourceGuardProxyBaseResource>(Response.FromValue(new ResourceGuardProxyBaseResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Creates or Updates a ResourceGuardProxy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ResourceGuardProxyBaseResource> CreateOrUpdate(WaitUntil waitUntil, string resourceGuardProxyName, ResourceGuardProxyBaseResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, data, cancellationToken);
-                var uri = _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataProtectionBackupArmOperation<ResourceGuardProxyBaseResource>(Response.FromValue(new ResourceGuardProxyBaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, ResourceGuardProxyBaseResourceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProxyBaseResourceData> response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataProtectionBackupArmOperation<ResourceGuardProxyBaseResource> operation = new DataProtectionBackupArmOperation<ResourceGuardProxyBaseResource>(Response.FromValue(new ResourceGuardProxyBaseResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Returns the ResourceGuardProxy object associated with the vault, and that matches the name in the request
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ResourceGuardProxyBaseResource>> GetAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Get");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProxyBaseResourceData> response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGuardProxyBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Returns the ResourceGuardProxy object associated with the vault, and that matches the name in the request
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ResourceGuardProxyBaseResource> Get(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Get");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProxyBaseResourceData> response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGuardProxyBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,44 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Returns the list of ResourceGuardProxies associated with the vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProxyBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProxyBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProxyBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyBaseResource(Client, ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(e)), _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllAsyncCollectionResultOfT(_resourceGuardProxyBaseResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ResourceGuardProxyBaseResource(Client, data));
         }
 
         /// <summary>
         /// Returns the list of ResourceGuardProxies associated with the vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +311,61 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="ResourceGuardProxyBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProxyBaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyBaseResource(Client, ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(e)), _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllCollectionResultOfT(_resourceGuardProxyBaseResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ResourceGuardProxyBaseResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Exists");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ResourceGuardProxyBaseResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceGuardProxyBaseResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +379,50 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Exists");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ResourceGuardProxyBaseResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceGuardProxyBaseResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +436,54 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ResourceGuardProxyBaseResource>> GetIfExistsAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ResourceGuardProxyBaseResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceGuardProxyBaseResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ResourceGuardProxyBaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGuardProxyBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +497,54 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DppResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxyBaseResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyBaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ResourceGuardProxyBaseResource> GetIfExists(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceGuardProxyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resourceGuardProxyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ResourceGuardProxyBaseResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceGuardProxyBaseResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceGuardProxyBaseResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ResourceGuardProxyBaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGuardProxyBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +564,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ResourceGuardProxyBaseResource> IAsyncEnumerable<ResourceGuardProxyBaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

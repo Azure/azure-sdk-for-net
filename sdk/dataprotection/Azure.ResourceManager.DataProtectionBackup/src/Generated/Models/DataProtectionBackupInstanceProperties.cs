@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Instance. </summary>
     public partial class DataProtectionBackupInstanceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
@@ -72,19 +45,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
         /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
-        /// <param name="dataSourceAuthCredentials">
-        /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
-        /// </param>
+        /// <param name="dataSourceAuthCredentials"> Credentials to use to authenticate with data source provider. </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="objectType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -99,46 +68,46 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ValidationType = validationType;
             IdentityDetails = identityDetails;
             ObjectType = objectType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/> for deserialization. </summary>
-        internal DataProtectionBackupInstanceProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Backup Instance friendly name. </summary>
         public string FriendlyName { get; set; }
+
         /// <summary> Gets or sets the data source information. </summary>
         public DataSourceInfo DataSourceInfo { get; set; }
+
         /// <summary> Gets or sets the data source set information. </summary>
         public DataSourceSetInfo DataSourceSetInfo { get; set; }
+
         /// <summary> Gets or sets the policy information. </summary>
         public BackupInstancePolicyInfo PolicyInfo { get; set; }
+
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
+
         /// <summary> Specifies the protection status of the resource. </summary>
         public BackupInstanceProtectionStatusDetails ProtectionStatus { get; }
+
         /// <summary> Specifies the current protection state of the resource. </summary>
         public CurrentProtectionState? CurrentProtectionState { get; }
-        /// <summary> Specifies the protection error of the resource. </summary>
-        public ResponseError ProtectionErrorDetails { get; }
+
         /// <summary> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
-        /// </summary>
+
+        /// <summary> Credentials to use to authenticate with data source provider. </summary>
         public DataProtectionBackupAuthCredentials DataSourceAuthCredentials { get; set; }
+
         /// <summary> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </summary>
         public BackupValidationType? ValidationType { get; set; }
+
         /// <summary>
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </summary>
         public DataProtectionIdentityDetails IdentityDetails { get; set; }
-        /// <summary> Gets or sets the object type. </summary>
+
+        /// <summary> Gets or sets the ObjectType. </summary>
         public string ObjectType { get; set; }
     }
 }

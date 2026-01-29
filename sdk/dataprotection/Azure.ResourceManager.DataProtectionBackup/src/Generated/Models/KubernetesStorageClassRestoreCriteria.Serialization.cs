@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class KubernetesStorageClassRestoreCriteria : IUtf8JsonSerializable, IJsonModel<KubernetesStorageClassRestoreCriteria>
+    /// <summary> Item Level kubernetes storage class target info for restore operation. </summary>
+    public partial class KubernetesStorageClassRestoreCriteria : ItemLevelRestoreCriteria, IJsonModel<KubernetesStorageClassRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesStorageClassRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesStorageClassRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SelectedStorageClassName))
             {
@@ -47,61 +47,67 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        KubernetesStorageClassRestoreCriteria IJsonModel<KubernetesStorageClassRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesStorageClassRestoreCriteria IJsonModel<KubernetesStorageClassRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KubernetesStorageClassRestoreCriteria)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubernetesStorageClassRestoreCriteria(document.RootElement, options);
         }
 
-        internal static KubernetesStorageClassRestoreCriteria DeserializeKubernetesStorageClassRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KubernetesStorageClassRestoreCriteria DeserializeKubernetesStorageClassRestoreCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string objectType = "KubernetesStorageClassRestoreCriteria";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string selectedStorageClassName = default;
             string provisioner = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("selectedStorageClassName"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    selectedStorageClassName = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioner"u8))
+                if (prop.NameEquals("selectedStorageClassName"u8))
                 {
-                    provisioner = property.Value.GetString();
+                    selectedStorageClassName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("provisioner"u8))
                 {
-                    objectType = property.Value.GetString();
+                    provisioner = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KubernetesStorageClassRestoreCriteria(objectType, serializedAdditionalRawData, selectedStorageClassName, provisioner);
+            return new KubernetesStorageClassRestoreCriteria(objectType, additionalBinaryDataProperties, selectedStorageClassName, provisioner);
         }
 
-        BinaryData IPersistableModel<KubernetesStorageClassRestoreCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KubernetesStorageClassRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -111,15 +117,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        KubernetesStorageClassRestoreCriteria IPersistableModel<KubernetesStorageClassRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesStorageClassRestoreCriteria IPersistableModel<KubernetesStorageClassRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesStorageClassRestoreCriteria)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKubernetesStorageClassRestoreCriteria(document.RootElement, options);
                     }
                 default:
@@ -127,6 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KubernetesStorageClassRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

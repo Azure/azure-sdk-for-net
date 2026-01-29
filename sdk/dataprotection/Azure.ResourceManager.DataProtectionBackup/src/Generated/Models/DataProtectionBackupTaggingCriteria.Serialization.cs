@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupTaggingCriteria : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupTaggingCriteria>
+    /// <summary> Tagging criteria. </summary>
+    public partial class DataProtectionBackupTaggingCriteria : IJsonModel<DataProtectionBackupTaggingCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupTaggingCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTaggingCriteria"/> for deserialization. </summary>
+        internal DataProtectionBackupTaggingCriteria()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataProtectionBackupTaggingCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +34,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProtectionBackupTaggingCriteria)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStartArray();
-                foreach (var item in Criteria)
+                foreach (DataProtectionBackupCriteria item in Criteria)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,15 +55,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteNumberValue(TaggingPriority);
             writer.WritePropertyName("tagInfo"u8);
             writer.WriteObjectValue(TagInfo, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,22 +72,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        DataProtectionBackupTaggingCriteria IJsonModel<DataProtectionBackupTaggingCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupTaggingCriteria IJsonModel<DataProtectionBackupTaggingCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataProtectionBackupTaggingCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProtectionBackupTaggingCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataProtectionBackupTaggingCriteria(document.RootElement, options);
         }
 
-        internal static DataProtectionBackupTaggingCriteria DeserializeDataProtectionBackupTaggingCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataProtectionBackupTaggingCriteria DeserializeDataProtectionBackupTaggingCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,52 +101,53 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             bool isDefault = default;
             long taggingPriority = default;
             DataProtectionBackupRetentionTag tagInfo = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("criteria"u8))
+                if (prop.NameEquals("criteria"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataProtectionBackupCriteria> array = new List<DataProtectionBackupCriteria>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataProtectionBackupCriteria.DeserializeDataProtectionBackupCriteria(item, options));
                     }
                     criteria = array;
                     continue;
                 }
-                if (property.NameEquals("isDefault"u8))
+                if (prop.NameEquals("isDefault"u8))
                 {
-                    isDefault = property.Value.GetBoolean();
+                    isDefault = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("taggingPriority"u8))
+                if (prop.NameEquals("taggingPriority"u8))
                 {
-                    taggingPriority = property.Value.GetInt64();
+                    taggingPriority = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("tagInfo"u8))
+                if (prop.NameEquals("tagInfo"u8))
                 {
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
+                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataProtectionBackupTaggingCriteria(criteria ?? new ChangeTrackingList<DataProtectionBackupCriteria>(), isDefault, taggingPriority, tagInfo, serializedAdditionalRawData);
+            return new DataProtectionBackupTaggingCriteria(criteria ?? new ChangeTrackingList<DataProtectionBackupCriteria>(), isDefault, taggingPriority, tagInfo, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataProtectionBackupTaggingCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataProtectionBackupTaggingCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -146,15 +157,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        DataProtectionBackupTaggingCriteria IPersistableModel<DataProtectionBackupTaggingCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupTaggingCriteria IPersistableModel<DataProtectionBackupTaggingCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataProtectionBackupTaggingCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataProtectionBackupTaggingCriteria(document.RootElement, options);
                     }
                 default:
@@ -162,6 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataProtectionBackupTaggingCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

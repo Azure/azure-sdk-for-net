@@ -5,7 +5,7 @@
 
 using System;
 using Azure.Core;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc trigger context. </summary>
@@ -30,3 +30,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
     }
 }
+*/

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupVaultResourceMoveState : IEquatable<BackupVaultResourceMoveState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceMoveState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupVaultResourceMoveState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string InProgressValue = "InProgress";
         private const string PrepareFailedValue = "PrepareFailed";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private const string PartialSuccessValue = "PartialSuccess";
         private const string MoveSucceededValue = "MoveSucceeded";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceMoveState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupVaultResourceMoveState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static BackupVaultResourceMoveState Unknown { get; } = new BackupVaultResourceMoveState(UnknownValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> Gets the InProgress. </summary>
         public static BackupVaultResourceMoveState InProgress { get; } = new BackupVaultResourceMoveState(InProgressValue);
-        /// <summary> PrepareFailed. </summary>
+
+        /// <summary> Gets the PrepareFailed. </summary>
         public static BackupVaultResourceMoveState PrepareFailed { get; } = new BackupVaultResourceMoveState(PrepareFailedValue);
-        /// <summary> CommitFailed. </summary>
+
+        /// <summary> Gets the CommitFailed. </summary>
         public static BackupVaultResourceMoveState CommitFailed { get; } = new BackupVaultResourceMoveState(CommitFailedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static BackupVaultResourceMoveState Failed { get; } = new BackupVaultResourceMoveState(FailedValue);
-        /// <summary> PrepareTimedout. </summary>
+
+        /// <summary> Gets the PrepareTimedOut. </summary>
         public static BackupVaultResourceMoveState PrepareTimedOut { get; } = new BackupVaultResourceMoveState(PrepareTimedOutValue);
-        /// <summary> CommitTimedout. </summary>
+
+        /// <summary> Gets the CommitTimedOut. </summary>
         public static BackupVaultResourceMoveState CommitTimedOut { get; } = new BackupVaultResourceMoveState(CommitTimedOutValue);
-        /// <summary> CriticalFailure. </summary>
+
+        /// <summary> Gets the CriticalFailure. </summary>
         public static BackupVaultResourceMoveState CriticalFailure { get; } = new BackupVaultResourceMoveState(CriticalFailureValue);
-        /// <summary> PartialSuccess. </summary>
+
+        /// <summary> Gets the PartialSuccess. </summary>
         public static BackupVaultResourceMoveState PartialSuccess { get; } = new BackupVaultResourceMoveState(PartialSuccessValue);
-        /// <summary> MoveSucceeded. </summary>
+
+        /// <summary> Gets the MoveSucceeded. </summary>
         public static BackupVaultResourceMoveState MoveSucceeded { get; } = new BackupVaultResourceMoveState(MoveSucceededValue);
+
         /// <summary> Determines if two <see cref="BackupVaultResourceMoveState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupVaultResourceMoveState left, BackupVaultResourceMoveState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupVaultResourceMoveState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupVaultResourceMoveState left, BackupVaultResourceMoveState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultResourceMoveState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupVaultResourceMoveState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupVaultResourceMoveState(string value) => new BackupVaultResourceMoveState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupVaultResourceMoveState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupVaultResourceMoveState?(string value) => value == null ? null : new BackupVaultResourceMoveState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupVaultResourceMoveState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupVaultResourceMoveState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct FeatureSupportStatus : IEquatable<FeatureSupportStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FeatureSupportStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FeatureSupportStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string NotSupportedValue = "NotSupported";
         private const string AlphaPreviewValue = "AlphaPreview";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private const string PublicPreviewValue = "PublicPreview";
         private const string GenerallyAvailableValue = "GenerallyAvailable";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureSupportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FeatureSupportStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static FeatureSupportStatus Invalid { get; } = new FeatureSupportStatus(InvalidValue);
-        /// <summary> NotSupported. </summary>
+
+        /// <summary> Gets the NotSupported. </summary>
         public static FeatureSupportStatus NotSupported { get; } = new FeatureSupportStatus(NotSupportedValue);
-        /// <summary> AlphaPreview. </summary>
+
+        /// <summary> Gets the AlphaPreview. </summary>
         public static FeatureSupportStatus AlphaPreview { get; } = new FeatureSupportStatus(AlphaPreviewValue);
-        /// <summary> PrivatePreview. </summary>
+
+        /// <summary> Gets the PrivatePreview. </summary>
         public static FeatureSupportStatus PrivatePreview { get; } = new FeatureSupportStatus(PrivatePreviewValue);
-        /// <summary> PublicPreview. </summary>
+
+        /// <summary> Gets the PublicPreview. </summary>
         public static FeatureSupportStatus PublicPreview { get; } = new FeatureSupportStatus(PublicPreviewValue);
-        /// <summary> GenerallyAvailable. </summary>
+
+        /// <summary> Gets the GenerallyAvailable. </summary>
         public static FeatureSupportStatus GenerallyAvailable { get; } = new FeatureSupportStatus(GenerallyAvailableValue);
+
         /// <summary> Determines if two <see cref="FeatureSupportStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FeatureSupportStatus left, FeatureSupportStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FeatureSupportStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FeatureSupportStatus left, FeatureSupportStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FeatureSupportStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FeatureSupportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FeatureSupportStatus(string value) => new FeatureSupportStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FeatureSupportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FeatureSupportStatus?(string value) => value == null ? null : new FeatureSupportStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FeatureSupportStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FeatureSupportStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

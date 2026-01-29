@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct KubernetesClusterRestoreExistingResourcePolicy : IEquatable<KubernetesClusterRestoreExistingResourcePolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="KubernetesClusterRestoreExistingResourcePolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public KubernetesClusterRestoreExistingResourcePolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SkipValue = "Skip";
         private const string PatchValue = "Patch";
 
-        /// <summary> Skip. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterRestoreExistingResourcePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public KubernetesClusterRestoreExistingResourcePolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Skip. </summary>
         public static KubernetesClusterRestoreExistingResourcePolicy Skip { get; } = new KubernetesClusterRestoreExistingResourcePolicy(SkipValue);
-        /// <summary> Patch. </summary>
+
+        /// <summary> Gets the Patch. </summary>
         public static KubernetesClusterRestoreExistingResourcePolicy Patch { get; } = new KubernetesClusterRestoreExistingResourcePolicy(PatchValue);
+
         /// <summary> Determines if two <see cref="KubernetesClusterRestoreExistingResourcePolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubernetesClusterRestoreExistingResourcePolicy left, KubernetesClusterRestoreExistingResourcePolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KubernetesClusterRestoreExistingResourcePolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubernetesClusterRestoreExistingResourcePolicy left, KubernetesClusterRestoreExistingResourcePolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesClusterRestoreExistingResourcePolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KubernetesClusterRestoreExistingResourcePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KubernetesClusterRestoreExistingResourcePolicy(string value) => new KubernetesClusterRestoreExistingResourcePolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KubernetesClusterRestoreExistingResourcePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KubernetesClusterRestoreExistingResourcePolicy?(string value) => value == null ? null : new KubernetesClusterRestoreExistingResourcePolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubernetesClusterRestoreExistingResourcePolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KubernetesClusterRestoreExistingResourcePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,7 +4,7 @@
 #nullable disable
 
 using Azure.Core;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     [CodeGenModel(Usage = new[] { "input" })]
@@ -12,3 +12,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
     }
 }
+*/

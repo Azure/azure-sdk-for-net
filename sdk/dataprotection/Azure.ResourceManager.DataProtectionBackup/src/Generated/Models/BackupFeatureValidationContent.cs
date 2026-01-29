@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class BackupFeatureValidationContent : BackupFeatureValidationContentBase
     {
         /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContent"/>. </summary>
-        public BackupFeatureValidationContent()
+        public BackupFeatureValidationContent() : base("FeatureValidationRequest")
         {
-            ObjectType = "FeatureValidationRequest";
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContent"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="featureType"> backup support feature type. </param>
         /// <param name="featureName"> backup support feature name. </param>
-        internal BackupFeatureValidationContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupSupportedFeatureType? featureType, string featureName) : base(objectType, serializedAdditionalRawData)
+        internal BackupFeatureValidationContent(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupSupportedFeatureType? featureType, string featureName) : base(objectType, additionalBinaryDataProperties)
         {
             FeatureType = featureType;
             FeatureName = featureName;
-            ObjectType = objectType ?? "FeatureValidationRequest";
         }
 
         /// <summary> backup support feature type. </summary>
         public BackupSupportedFeatureType? FeatureType { get; set; }
+
         /// <summary> backup support feature name. </summary>
         public string FeatureName { get; set; }
     }

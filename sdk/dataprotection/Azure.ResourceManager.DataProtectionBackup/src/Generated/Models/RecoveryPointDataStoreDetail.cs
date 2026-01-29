@@ -13,85 +13,64 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> RecoveryPoint datastore details. </summary>
     public partial class RecoveryPointDataStoreDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
-        public RecoveryPointDataStoreDetail()
+        internal RecoveryPointDataStoreDetail()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
         /// <param name="createdOn"></param>
         /// <param name="expireOn"></param>
-        /// <param name="recoveryPointDataStoreId"></param>
+        /// <param name="id"></param>
         /// <param name="metadata"></param>
         /// <param name="state"></param>
         /// <param name="recoveryPointDataStoreType"></param>
         /// <param name="isVisible"></param>
         /// <param name="rehydrationExpireOn"></param>
         /// <param name="rehydrationStatus"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? recoveryPointDataStoreId, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? id, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ExpireOn = expireOn;
-            RecoveryPointDataStoreId = recoveryPointDataStoreId;
+            Id = id;
             Metadata = metadata;
             State = state;
             RecoveryPointDataStoreType = recoveryPointDataStoreType;
             IsVisible = isVisible;
             RehydrationExpireOn = rehydrationExpireOn;
             RehydrationStatus = rehydrationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the created on. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> Gets or sets the expire on. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Gets or sets the recovery point data store id. </summary>
-        public Guid? RecoveryPointDataStoreId { get; set; }
-        /// <summary> Gets or sets the metadata. </summary>
-        public string Metadata { get; set; }
-        /// <summary> Gets or sets the state. </summary>
-        public string State { get; set; }
-        /// <summary> Gets or sets the recovery point data store type. </summary>
-        public string RecoveryPointDataStoreType { get; set; }
-        /// <summary> Gets or sets the is visible. </summary>
-        public bool? IsVisible { get; set; }
-        /// <summary> Gets the rehydration expire on. </summary>
+        /// <summary> Gets the CreatedOn. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+
+        /// <summary> Gets the ExpireOn. </summary>
+        public DateTimeOffset? ExpireOn { get; }
+
+        /// <summary> Gets the Id. </summary>
+        public Guid? Id { get; }
+
+        /// <summary> Gets the Metadata. </summary>
+        public string Metadata { get; }
+
+        /// <summary> Gets the State. </summary>
+        public string State { get; }
+
+        /// <summary> Gets the RecoveryPointDataStoreType. </summary>
+        public string RecoveryPointDataStoreType { get; }
+
+        /// <summary> Gets the IsVisible. </summary>
+        public bool? IsVisible { get; }
+
+        /// <summary> Gets the RehydrationExpireOn. </summary>
         public DateTimeOffset? RehydrationExpireOn { get; }
-        /// <summary> Gets the rehydration status. </summary>
+
+        /// <summary> Gets the RehydrationStatus. </summary>
         public RecoveryPointDataStoreRehydrationStatus? RehydrationStatus { get; }
     }
 }

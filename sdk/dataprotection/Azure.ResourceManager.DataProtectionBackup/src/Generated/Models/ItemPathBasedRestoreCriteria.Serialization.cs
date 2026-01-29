@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ItemPathBasedRestoreCriteria : IUtf8JsonSerializable, IJsonModel<ItemPathBasedRestoreCriteria>
+    /// <summary> Prefix criteria to be used to during restore. </summary>
+    public partial class ItemPathBasedRestoreCriteria : ItemLevelRestoreCriteria, IJsonModel<ItemPathBasedRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemPathBasedRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/> for deserialization. </summary>
+        internal ItemPathBasedRestoreCriteria()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ItemPathBasedRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("itemPath"u8);
             writer.WriteStringValue(ItemPath);
@@ -43,8 +48,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("subItemPathPrefix"u8);
                 writer.WriteStartArray();
-                foreach (var item in SubItemPathPrefix)
+                foreach (string item in SubItemPathPrefix)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -56,88 +66,101 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        ItemPathBasedRestoreCriteria IJsonModel<ItemPathBasedRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ItemPathBasedRestoreCriteria IJsonModel<ItemPathBasedRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ItemPathBasedRestoreCriteria)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeItemPathBasedRestoreCriteria(document.RootElement, options);
         }
 
-        internal static ItemPathBasedRestoreCriteria DeserializeItemPathBasedRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ItemPathBasedRestoreCriteria DeserializeItemPathBasedRestoreCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string objectType = "ItemPathBasedRestoreCriteria";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemPath = default;
             bool isPathRelativeToBackupItem = default;
             IList<string> subItemPathPrefix = default;
             string renameTo = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("itemPath"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    itemPath = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPathRelativeToBackupItem"u8))
+                if (prop.NameEquals("itemPath"u8))
                 {
-                    isPathRelativeToBackupItem = property.Value.GetBoolean();
+                    itemPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subItemPathPrefix"u8))
+                if (prop.NameEquals("isPathRelativeToBackupItem"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    isPathRelativeToBackupItem = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("subItemPathPrefix"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     subItemPathPrefix = array;
                     continue;
                 }
-                if (property.NameEquals("renameTo"u8))
+                if (prop.NameEquals("renameTo"u8))
                 {
-                    renameTo = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
+                    renameTo = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ItemPathBasedRestoreCriteria(
                 objectType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 itemPath,
                 isPathRelativeToBackupItem,
                 subItemPathPrefix ?? new ChangeTrackingList<string>(),
                 renameTo);
         }
 
-        BinaryData IPersistableModel<ItemPathBasedRestoreCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ItemPathBasedRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -147,15 +170,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        ItemPathBasedRestoreCriteria IPersistableModel<ItemPathBasedRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ItemPathBasedRestoreCriteria IPersistableModel<ItemPathBasedRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (ItemPathBasedRestoreCriteria)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeItemPathBasedRestoreCriteria(document.RootElement, options);
                     }
                 default:
@@ -163,6 +191,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ItemPathBasedRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

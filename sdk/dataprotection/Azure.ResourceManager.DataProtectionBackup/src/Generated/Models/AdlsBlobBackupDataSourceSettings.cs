@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,24 +17,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="AdlsBlobBackupDataSourceSettings"/>. </summary>
         /// <param name="containersList"> List of containers to be backed up during configuration of backup of blobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containersList"/> is null. </exception>
-        public AdlsBlobBackupDataSourceSettings(IEnumerable<string> containersList) : base(containersList)
+        public AdlsBlobBackupDataSourceSettings(IEnumerable<string> containersList) : base("AdlsBlobBackupDatasourceParameters", containersList)
         {
             Argument.AssertNotNull(containersList, nameof(containersList));
 
-            ObjectType = "AdlsBlobBackupDatasourceParameters";
         }
 
         /// <summary> Initializes a new instance of <see cref="AdlsBlobBackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containersList"> List of containers to be backed up during configuration of backup of blobs. </param>
-        internal AdlsBlobBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> containersList) : base(objectType, serializedAdditionalRawData, containersList)
-        {
-            ObjectType = objectType ?? "AdlsBlobBackupDatasourceParameters";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AdlsBlobBackupDataSourceSettings"/> for deserialization. </summary>
-        internal AdlsBlobBackupDataSourceSettings()
+        internal AdlsBlobBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> containersList) : base(objectType, additionalBinaryDataProperties, containersList)
         {
         }
     }

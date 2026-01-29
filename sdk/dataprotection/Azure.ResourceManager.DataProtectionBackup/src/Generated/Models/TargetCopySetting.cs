@@ -7,50 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Target copy settings. </summary>
     public partial class TargetCopySetting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TargetCopySetting"/>. </summary>
-        /// <param name="copyAfter">
-        /// It can be CustomCopyOption or ImmediateCopyOption.
-        /// Please note <see cref="DataProtectionBackupCopySetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CopyOnExpirySetting"/>, <see cref="CustomCopySetting"/> and <see cref="ImmediateCopySetting"/>.
-        /// </param>
+        /// <param name="copyAfter"> It can be CustomCopyOption or ImmediateCopyOption. </param>
         /// <param name="dataStore"> Info of target datastore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyAfter"/> or <paramref name="dataStore"/> is null. </exception>
         public TargetCopySetting(DataProtectionBackupCopySetting copyAfter, DataStoreInfoBase dataStore)
@@ -63,31 +31,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetCopySetting"/>. </summary>
-        /// <param name="copyAfter">
-        /// It can be CustomCopyOption or ImmediateCopyOption.
-        /// Please note <see cref="DataProtectionBackupCopySetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CopyOnExpirySetting"/>, <see cref="CustomCopySetting"/> and <see cref="ImmediateCopySetting"/>.
-        /// </param>
+        /// <param name="copyAfter"> It can be CustomCopyOption or ImmediateCopyOption. </param>
         /// <param name="dataStore"> Info of target datastore. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetCopySetting(DataProtectionBackupCopySetting copyAfter, DataStoreInfoBase dataStore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TargetCopySetting(DataProtectionBackupCopySetting copyAfter, DataStoreInfoBase dataStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CopyAfter = copyAfter;
             DataStore = dataStore;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetCopySetting"/> for deserialization. </summary>
-        internal TargetCopySetting()
-        {
-        }
-
-        /// <summary>
-        /// It can be CustomCopyOption or ImmediateCopyOption.
-        /// Please note <see cref="DataProtectionBackupCopySetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CopyOnExpirySetting"/>, <see cref="CustomCopySetting"/> and <see cref="ImmediateCopySetting"/>.
-        /// </summary>
+        /// <summary> It can be CustomCopyOption or ImmediateCopyOption. </summary>
         public DataProtectionBackupCopySetting CopyAfter { get; set; }
+
         /// <summary> Info of target datastore. </summary>
         public DataStoreInfoBase DataStore { get; set; }
     }

@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary> A class representing the ResourceGuard data model. </summary>
@@ -18,3 +18,4 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public ManagedServiceIdentity Identity { get; set; }
     }
 }
+*/

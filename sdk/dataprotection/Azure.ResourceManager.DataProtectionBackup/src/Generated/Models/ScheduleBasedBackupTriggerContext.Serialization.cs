@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ScheduleBasedBackupTriggerContext : IUtf8JsonSerializable, IJsonModel<ScheduleBasedBackupTriggerContext>
+    /// <summary> Schedule based trigger context. </summary>
+    public partial class ScheduleBasedBackupTriggerContext : DataProtectionBackupTriggerContext, IJsonModel<ScheduleBasedBackupTriggerContext>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleBasedBackupTriggerContext>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupTriggerContext"/> for deserialization. </summary>
+        internal ScheduleBasedBackupTriggerContext()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduleBasedBackupTriggerContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,84 +34,89 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("taggingCriteria"u8);
             writer.WriteStartArray();
-            foreach (var item in TaggingCriteriaList)
+            foreach (DataProtectionBackupTaggingCriteria item in TaggingCriteriaList)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
         }
 
-        ScheduleBasedBackupTriggerContext IJsonModel<ScheduleBasedBackupTriggerContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduleBasedBackupTriggerContext IJsonModel<ScheduleBasedBackupTriggerContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ScheduleBasedBackupTriggerContext)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataProtectionBackupTriggerContext JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScheduleBasedBackupTriggerContext(document.RootElement, options);
         }
 
-        internal static ScheduleBasedBackupTriggerContext DeserializeScheduleBasedBackupTriggerContext(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScheduleBasedBackupTriggerContext DeserializeScheduleBasedBackupTriggerContext(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string objectType = "ScheduleBasedTriggerContext";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataProtectionBackupSchedule schedule = default;
-            IList<DataProtectionBackupTaggingCriteria> taggingCriteria = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<DataProtectionBackupTaggingCriteria> taggingCriteriaList = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("schedule"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(property.Value, options);
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taggingCriteria"u8))
+                if (prop.NameEquals("schedule"u8))
+                {
+                    schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("taggingCriteria"u8))
                 {
                     List<DataProtectionBackupTaggingCriteria> array = new List<DataProtectionBackupTaggingCriteria>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataProtectionBackupTaggingCriteria.DeserializeDataProtectionBackupTaggingCriteria(item, options));
                     }
-                    taggingCriteria = array;
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
+                    taggingCriteriaList = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ScheduleBasedBackupTriggerContext(objectType, serializedAdditionalRawData, schedule, taggingCriteria);
+            return new ScheduleBasedBackupTriggerContext(objectType, additionalBinaryDataProperties, schedule, taggingCriteriaList);
         }
 
-        BinaryData IPersistableModel<ScheduleBasedBackupTriggerContext>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScheduleBasedBackupTriggerContext>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -115,15 +126,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        ScheduleBasedBackupTriggerContext IPersistableModel<ScheduleBasedBackupTriggerContext>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduleBasedBackupTriggerContext IPersistableModel<ScheduleBasedBackupTriggerContext>.Create(BinaryData data, ModelReaderWriterOptions options) => (ScheduleBasedBackupTriggerContext)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataProtectionBackupTriggerContext PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScheduleBasedBackupTriggerContext(document.RootElement, options);
                     }
                 default:
@@ -131,6 +147,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScheduleBasedBackupTriggerContext>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

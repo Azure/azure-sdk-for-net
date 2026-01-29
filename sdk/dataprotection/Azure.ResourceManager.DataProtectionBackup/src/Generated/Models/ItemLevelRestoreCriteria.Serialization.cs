@@ -8,15 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
+    /// <summary>
+    /// Class to contain criteria for item level restore
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="RangeBasedItemLevelRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, and <see cref="KubernetesClusterVaultTierRestoreCriteria"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownItemLevelRestoreCriteria))]
-    public partial class ItemLevelRestoreCriteria : IUtf8JsonSerializable, IJsonModel<ItemLevelRestoreCriteria>
+    public abstract partial class ItemLevelRestoreCriteria : IJsonModel<ItemLevelRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ItemLevelRestoreCriteria"/> for deserialization. </summary>
+        internal ItemLevelRestoreCriteria()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ItemLevelRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +37,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,45 +61,59 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        ItemLevelRestoreCriteria IJsonModel<ItemLevelRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ItemLevelRestoreCriteria IJsonModel<ItemLevelRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ItemLevelRestoreCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeItemLevelRestoreCriteria(document.RootElement, options);
         }
 
-        internal static ItemLevelRestoreCriteria DeserializeItemLevelRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ItemLevelRestoreCriteria DeserializeItemLevelRestoreCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            if (element.TryGetProperty("objectType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemPathBasedRestoreCriteria": return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element, options);
-                    case "KubernetesClusterRestoreCriteria": return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element, options);
-                    case "KubernetesClusterVaultTierRestoreCriteria": return KubernetesClusterVaultTierRestoreCriteria.DeserializeKubernetesClusterVaultTierRestoreCriteria(element, options);
-                    case "KubernetesPVRestoreCriteria": return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element, options);
-                    case "KubernetesStorageClassRestoreCriteria": return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element, options);
-                    case "RangeBasedItemLevelRestoreCriteria": return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element, options);
+                    case "ItemPathBasedRestoreCriteria":
+                        return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element, options);
+                    case "RangeBasedItemLevelRestoreCriteria":
+                        return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element, options);
+                    case "KubernetesStorageClassRestoreCriteria":
+                        return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element, options);
+                    case "KubernetesPVRestoreCriteria":
+                        return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element, options);
+                    case "KubernetesClusterRestoreCriteria":
+                        return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element, options);
+                    case "KubernetesClusterVaultTierRestoreCriteria":
+                        return KubernetesClusterVaultTierRestoreCriteria.DeserializeKubernetesClusterVaultTierRestoreCriteria(element, options);
                 }
             }
             return UnknownItemLevelRestoreCriteria.DeserializeUnknownItemLevelRestoreCriteria(element, options);
         }
 
-        BinaryData IPersistableModel<ItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -101,15 +123,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        ItemLevelRestoreCriteria IPersistableModel<ItemLevelRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ItemLevelRestoreCriteria IPersistableModel<ItemLevelRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeItemLevelRestoreCriteria(document.RootElement, options);
                     }
                 default:
@@ -117,6 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ItemLevelRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

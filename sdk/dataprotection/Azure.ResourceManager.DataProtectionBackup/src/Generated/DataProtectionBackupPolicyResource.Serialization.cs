@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
+    /// <summary></summary>
     public partial class DataProtectionBackupPolicyResource : IJsonModel<DataProtectionBackupPolicyData>
     {
-        private static DataProtectionBackupPolicyData s_dataDeserializationInstance;
-        private static DataProtectionBackupPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataProtectionBackupPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataProtectionBackupPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataProtectionBackupPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataProtectionBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataProtectionBackupPolicyData>)Data).Write(writer, options);
 
-        DataProtectionBackupPolicyData IJsonModel<DataProtectionBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataProtectionBackupPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupPolicyData IJsonModel<DataProtectionBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataProtectionBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataProtectionBackupPolicyData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataProtectionBackupPolicyData IPersistableModel<DataProtectionBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProtectionBackupPolicyData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        string IPersistableModel<DataProtectionBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataProtectionBackupPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataProtectionBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

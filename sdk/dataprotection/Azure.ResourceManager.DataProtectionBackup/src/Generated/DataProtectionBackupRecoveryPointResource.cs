@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A Class representing a DataProtectionBackupRecoveryPoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupRecoveryPointResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDataProtectionBackupRecoveryPointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupInstanceResource"/> using the GetDataProtectionBackupRecoveryPoint method.
+    /// A class representing a DataProtectionBackupRecoveryPoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupRecoveryPointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupInstanceResource"/> using the GetDataProtectionBackupRecoveryPoints method.
     /// </summary>
     public partial class DataProtectionBackupRecoveryPointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataProtectionBackupRecoveryPointResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vaultName"> The vaultName. </param>
-        /// <param name="backupInstanceName"> The backupInstanceName. </param>
-        /// <param name="recoveryPointId"> The recoveryPointId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string recoveryPointId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dataProtectionBackupRecoveryPointRecoveryPointsClientDiagnostics;
-        private readonly RecoveryPointsRestOperations _dataProtectionBackupRecoveryPointRecoveryPointsRestClient;
+        private readonly ClientDiagnostics _azureBackupRecoveryPointResourcesClientDiagnostics;
+        private readonly AzureBackupRecoveryPointResources _azureBackupRecoveryPointResourcesRestClient;
         private readonly DataProtectionBackupRecoveryPointData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances/recoveryPoints";
 
-        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupRecoveryPointResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointResource for mocking. </summary>
         protected DataProtectionBackupRecoveryPointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupRecoveryPointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataProtectionBackupRecoveryPointResource(ArmClient client, DataProtectionBackupRecoveryPointData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupRecoveryPointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataProtectionBackupRecoveryPointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataProtectionBackupRecoveryPointRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataProtectionBackupRecoveryPointRecoveryPointsApiVersion);
-            _dataProtectionBackupRecoveryPointRecoveryPointsRestClient = new RecoveryPointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupRecoveryPointRecoveryPointsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string dataProtectionBackupRecoveryPointApiVersion);
+            _azureBackupRecoveryPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupRecoveryPointApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DataProtectionBackupRecoveryPointData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupInstanceName"> The backupInstanceName. </param>
+        /// <param name="recoveryPointId"> The recoveryPointId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string recoveryPointId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets a Recovery Point using recoveryPointId for a Datasource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureBackupRecoveryPointResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataProtectionBackupRecoveryPointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataProtectionBackupRecoveryPointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataProtectionBackupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointResource.Get");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataProtectionBackupRecoveryPointData> response = Response.FromValue(DataProtectionBackupRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a Recovery Point using recoveryPointId for a Datasource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureBackupRecoveryPointResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataProtectionBackupRecoveryPointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataProtectionBackupRecoveryPointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataProtectionBackupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointResource.Get");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointResource.Get");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataProtectionBackupRecoveryPointData> response = Response.FromValue(DataProtectionBackupRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

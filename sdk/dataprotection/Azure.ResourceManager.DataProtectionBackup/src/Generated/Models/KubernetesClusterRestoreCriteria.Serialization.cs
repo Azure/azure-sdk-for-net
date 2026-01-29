@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class KubernetesClusterRestoreCriteria : IUtf8JsonSerializable, IJsonModel<KubernetesClusterRestoreCriteria>
+    /// <summary> kubernetes Cluster Backup target info for restore operation. </summary>
+    public partial class KubernetesClusterRestoreCriteria : ItemLevelRestoreCriteria, IJsonModel<KubernetesClusterRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterRestoreCriteria"/> for deserialization. </summary>
+        internal KubernetesClusterRestoreCriteria()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesClusterRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
@@ -41,8 +46,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("includedNamespaces"u8);
                 writer.WriteStartArray();
-                foreach (var item in IncludedNamespaces)
+                foreach (string item in IncludedNamespaces)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -51,8 +61,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludedNamespaces)
+                foreach (string item in ExcludedNamespaces)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -61,8 +76,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("includedResourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in IncludedResourceTypes)
+                foreach (string item in IncludedResourceTypes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -71,8 +91,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("excludedResourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludedResourceTypes)
+                foreach (string item in ExcludedResourceTypes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -81,8 +106,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("labelSelectors"u8);
                 writer.WriteStartArray();
-                foreach (var item in LabelSelectors)
+                foreach (string item in LabelSelectors)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -104,6 +134,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 foreach (var item in NamespaceMappings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -112,7 +147,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("restoreHookReferences"u8);
                 writer.WriteStartArray();
-                foreach (var item in RestoreHookReferences)
+                foreach (NamespacedName item in RestoreHookReferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -125,27 +160,34 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        KubernetesClusterRestoreCriteria IJsonModel<KubernetesClusterRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterRestoreCriteria IJsonModel<KubernetesClusterRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KubernetesClusterRestoreCriteria)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubernetesClusterRestoreCriteria(document.RootElement, options);
         }
 
-        internal static KubernetesClusterRestoreCriteria DeserializeKubernetesClusterRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KubernetesClusterRestoreCriteria DeserializeKubernetesClusterRestoreCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool includeClusterScopeResources = default;
+            string objectType = "KubernetesClusterRestoreCriteria";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool isClusterScopeResourcesIncluded = default;
             IList<string> includedNamespaces = default;
             IList<string> excludedNamespaces = default;
             IList<string> includedResourceTypes = default;
@@ -156,156 +198,194 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IDictionary<string, string> namespaceMappings = default;
             IList<NamespacedName> restoreHookReferences = default;
             NamespacedName resourceModifierReference = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("includeClusterScopeResources"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    includeClusterScopeResources = property.Value.GetBoolean();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includedNamespaces"u8))
+                if (prop.NameEquals("includeClusterScopeResources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    isClusterScopeResourcesIncluded = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("includedNamespaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     includedNamespaces = array;
                     continue;
                 }
-                if (property.NameEquals("excludedNamespaces"u8))
+                if (prop.NameEquals("excludedNamespaces"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     excludedNamespaces = array;
                     continue;
                 }
-                if (property.NameEquals("includedResourceTypes"u8))
+                if (prop.NameEquals("includedResourceTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     includedResourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("excludedResourceTypes"u8))
+                if (prop.NameEquals("excludedResourceTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     excludedResourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"u8))
+                if (prop.NameEquals("labelSelectors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     labelSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("persistentVolumeRestoreMode"u8))
+                if (prop.NameEquals("persistentVolumeRestoreMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    persistentVolumeRestoreMode = new PersistentVolumeRestoreMode(property.Value.GetString());
+                    persistentVolumeRestoreMode = new PersistentVolumeRestoreMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("conflictPolicy"u8))
+                if (prop.NameEquals("conflictPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    conflictPolicy = new KubernetesClusterRestoreExistingResourcePolicy(property.Value.GetString());
+                    conflictPolicy = new KubernetesClusterRestoreExistingResourcePolicy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("namespaceMappings"u8))
+                if (prop.NameEquals("namespaceMappings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     namespaceMappings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("restoreHookReferences"u8))
+                if (prop.NameEquals("restoreHookReferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NamespacedName> array = new List<NamespacedName>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NamespacedName.DeserializeNamespacedName(item, options));
                     }
                     restoreHookReferences = array;
                     continue;
                 }
-                if (property.NameEquals("resourceModifierReference"u8))
+                if (prop.NameEquals("resourceModifierReference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceModifierReference = NamespacedName.DeserializeNamespacedName(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
+                    resourceModifierReference = NamespacedName.DeserializeNamespacedName(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesClusterRestoreCriteria(
                 objectType,
-                serializedAdditionalRawData,
-                includeClusterScopeResources,
+                additionalBinaryDataProperties,
+                isClusterScopeResourcesIncluded,
                 includedNamespaces ?? new ChangeTrackingList<string>(),
                 excludedNamespaces ?? new ChangeTrackingList<string>(),
                 includedResourceTypes ?? new ChangeTrackingList<string>(),
@@ -318,10 +398,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 resourceModifierReference);
         }
 
-        BinaryData IPersistableModel<KubernetesClusterRestoreCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KubernetesClusterRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -331,15 +414,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        KubernetesClusterRestoreCriteria IPersistableModel<KubernetesClusterRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterRestoreCriteria IPersistableModel<KubernetesClusterRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesClusterRestoreCriteria)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKubernetesClusterRestoreCriteria(document.RootElement, options);
                     }
                 default:
@@ -347,6 +435,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KubernetesClusterRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

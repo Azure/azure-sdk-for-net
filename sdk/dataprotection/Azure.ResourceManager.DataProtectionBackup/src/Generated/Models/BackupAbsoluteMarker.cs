@@ -7,54 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The BackupAbsoluteMarker. </summary>
+    /// <summary></summary>
     public readonly partial struct BackupAbsoluteMarker : IEquatable<BackupAbsoluteMarker>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupAbsoluteMarker"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupAbsoluteMarker(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllBackupValue = "AllBackup";
         private const string FirstOfDayValue = "FirstOfDay";
         private const string FirstOfMonthValue = "FirstOfMonth";
         private const string FirstOfWeekValue = "FirstOfWeek";
         private const string FirstOfYearValue = "FirstOfYear";
 
-        /// <summary> AllBackup. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupAbsoluteMarker"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupAbsoluteMarker(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AllBackup. </summary>
         public static BackupAbsoluteMarker AllBackup { get; } = new BackupAbsoluteMarker(AllBackupValue);
-        /// <summary> FirstOfDay. </summary>
+
+        /// <summary> Gets the FirstOfDay. </summary>
         public static BackupAbsoluteMarker FirstOfDay { get; } = new BackupAbsoluteMarker(FirstOfDayValue);
-        /// <summary> FirstOfMonth. </summary>
+
+        /// <summary> Gets the FirstOfMonth. </summary>
         public static BackupAbsoluteMarker FirstOfMonth { get; } = new BackupAbsoluteMarker(FirstOfMonthValue);
-        /// <summary> FirstOfWeek. </summary>
+
+        /// <summary> Gets the FirstOfWeek. </summary>
         public static BackupAbsoluteMarker FirstOfWeek { get; } = new BackupAbsoluteMarker(FirstOfWeekValue);
-        /// <summary> FirstOfYear. </summary>
+
+        /// <summary> Gets the FirstOfYear. </summary>
         public static BackupAbsoluteMarker FirstOfYear { get; } = new BackupAbsoluteMarker(FirstOfYearValue);
+
         /// <summary> Determines if two <see cref="BackupAbsoluteMarker"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupAbsoluteMarker left, BackupAbsoluteMarker right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupAbsoluteMarker"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupAbsoluteMarker left, BackupAbsoluteMarker right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupAbsoluteMarker"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupAbsoluteMarker"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupAbsoluteMarker(string value) => new BackupAbsoluteMarker(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupAbsoluteMarker"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupAbsoluteMarker?(string value) => value == null ? null : new BackupAbsoluteMarker(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupAbsoluteMarker other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupAbsoluteMarker other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

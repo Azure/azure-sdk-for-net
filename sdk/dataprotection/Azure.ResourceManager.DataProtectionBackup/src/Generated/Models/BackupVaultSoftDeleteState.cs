@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupVaultSoftDeleteState : IEquatable<BackupVaultSoftDeleteState>
     {
         private readonly string _value;
+        /// <summary> Soft Delete is turned off for the BackupVault. </summary>
+        private const string OffValue = "Off";
+        /// <summary> Soft Delete is enabled for the BackupVault but can be turned off. </summary>
+        private const string OnValue = "On";
+        /// <summary> Soft Delete is permanently enabled for the BackupVault and the setting cannot be changed. </summary>
+        private const string AlwaysOnValue = "AlwaysOn";
 
         /// <summary> Initializes a new instance of <see cref="BackupVaultSoftDeleteState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BackupVaultSoftDeleteState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OffValue = "Off";
-        private const string OnValue = "On";
-        private const string AlwaysOnValue = "AlwaysOn";
+            _value = value;
+        }
 
         /// <summary> Soft Delete is turned off for the BackupVault. </summary>
         public static BackupVaultSoftDeleteState Off { get; } = new BackupVaultSoftDeleteState(OffValue);
+
         /// <summary> Soft Delete is enabled for the BackupVault but can be turned off. </summary>
         public static BackupVaultSoftDeleteState On { get; } = new BackupVaultSoftDeleteState(OnValue);
+
         /// <summary> Soft Delete is permanently enabled for the BackupVault and the setting cannot be changed. </summary>
         public static BackupVaultSoftDeleteState AlwaysOn { get; } = new BackupVaultSoftDeleteState(AlwaysOnValue);
+
         /// <summary> Determines if two <see cref="BackupVaultSoftDeleteState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupVaultSoftDeleteState left, BackupVaultSoftDeleteState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupVaultSoftDeleteState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupVaultSoftDeleteState left, BackupVaultSoftDeleteState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultSoftDeleteState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupVaultSoftDeleteState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupVaultSoftDeleteState(string value) => new BackupVaultSoftDeleteState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupVaultSoftDeleteState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupVaultSoftDeleteState?(string value) => value == null ? null : new BackupVaultSoftDeleteState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupVaultSoftDeleteState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupVaultSoftDeleteState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
