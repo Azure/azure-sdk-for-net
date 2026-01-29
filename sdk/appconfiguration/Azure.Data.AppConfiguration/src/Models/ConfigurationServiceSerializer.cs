@@ -86,6 +86,10 @@ namespace Azure.Data.AppConfiguration
             {
                 setting = new SecretReferenceConfigurationSetting();
             }
+            else if (IsSnapshotReference(root))
+            {
+                setting = new SnapshotReferenceConfigurationSetting();
+            }
             else
             {
                 setting = new ConfigurationSetting();
@@ -104,6 +108,13 @@ namespace Azure.Data.AppConfiguration
             return settingElement.TryGetProperty("content_type", out var contentTypeProperty) &&
                    contentTypeProperty.ValueKind == JsonValueKind.String &&
                    contentTypeProperty.GetString() == SecretReferenceConfigurationSetting.SecretReferenceContentType;
+        }
+
+        private static bool IsSnapshotReference(JsonElement settingElement)
+        {
+            return settingElement.TryGetProperty("content_type", out var contentTypeProperty) &&
+                   contentTypeProperty.ValueKind == JsonValueKind.String &&
+                   contentTypeProperty.GetString() == SnapshotReferenceConfigurationSetting.SnapshotReferenceContentType;
         }
 
         private static bool IsFeatureFlag(JsonElement settingElement)
