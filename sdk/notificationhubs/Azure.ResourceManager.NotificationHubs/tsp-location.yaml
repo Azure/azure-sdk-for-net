@@ -1,0 +1,4 @@
+directory: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/NotificationHubs
+commit: dd0d729b7a60023a39f40b5849ae3203955ff688
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath:  eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
