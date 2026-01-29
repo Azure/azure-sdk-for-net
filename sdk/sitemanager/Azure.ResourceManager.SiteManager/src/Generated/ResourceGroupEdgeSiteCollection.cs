@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SiteManager
@@ -25,51 +26,57 @@ namespace Azure.ResourceManager.SiteManager
     /// </summary>
     public partial class ResourceGroupEdgeSiteCollection : ArmCollection, IEnumerable<ResourceGroupEdgeSiteResource>, IAsyncEnumerable<ResourceGroupEdgeSiteResource>
     {
-        private readonly ClientDiagnostics _resourceGroupEdgeSiteSitesClientDiagnostics;
-        private readonly SitesRestOperations _resourceGroupEdgeSiteSitesRestClient;
+        private readonly ClientDiagnostics _resourceGroupEdgeSiteClientDiagnostics;
+        private readonly ResourceGroupEdgeSite _resourceGroupEdgeSiteRestClient;
+        private readonly ClientDiagnostics _serviceGroupEdgeSiteClientDiagnostics;
+        private readonly ServiceGroupEdgeSite _serviceGroupEdgeSiteRestClient;
+        private readonly ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
+        private readonly SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupEdgeSiteCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupEdgeSiteCollection for mocking. </summary>
         protected ResourceGroupEdgeSiteCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupEdgeSiteCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupEdgeSiteCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceGroupEdgeSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceGroupEdgeSiteSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceGroupEdgeSiteResource.ResourceType, out string resourceGroupEdgeSiteSitesApiVersion);
-            _resourceGroupEdgeSiteSitesRestClient = new SitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupEdgeSiteSitesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceGroupEdgeSiteResource.ResourceType, out string resourceGroupEdgeSiteApiVersion);
+            _resourceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
+            _resourceGroupEdgeSiteRestClient = new ResourceGroupEdgeSite(_resourceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
+            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
+            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +84,34 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ResourceGroupEdgeSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _resourceGroupEdgeSiteSitesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, siteName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteOperationSource(Client), _resourceGroupEdgeSiteSitesClientDiagnostics, Pipeline, _resourceGroupEdgeSiteSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
+                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    _resourceGroupEdgeSiteClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +125,16 @@ namespace Azure.ResourceManager.SiteManager
         /// Create a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +142,34 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ResourceGroupEdgeSiteResource> CreateOrUpdate(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _resourceGroupEdgeSiteSitesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, siteName, data, cancellationToken);
-                var operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteOperationSource(Client), _resourceGroupEdgeSiteSitesClientDiagnostics, Pipeline, _resourceGroupEdgeSiteSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
+                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    _resourceGroupEdgeSiteClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +183,42 @@ namespace Azure.ResourceManager.SiteManager
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ResourceGroupEdgeSiteResource>> GetAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Get");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Get");
             scope.Start();
             try
             {
-                var response = await _resourceGroupEdgeSiteSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, siteName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +232,42 @@ namespace Azure.ResourceManager.SiteManager
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ResourceGroupEdgeSiteResource> Get(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Get");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Get");
             scope.Start();
             try
             {
-                var response = _resourceGroupEdgeSiteSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, siteName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +281,44 @@ namespace Azure.ResourceManager.SiteManager
         /// List a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGroupEdgeSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupEdgeSiteSitesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupEdgeSiteSitesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupEdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), _resourceGroupEdgeSiteSitesClientDiagnostics, Pipeline, "ResourceGroupEdgeSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupAsyncCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
         /// List a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +326,61 @@ namespace Azure.ResourceManager.SiteManager
         /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGroupEdgeSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupEdgeSiteSitesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupEdgeSiteSitesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupEdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), _resourceGroupEdgeSiteSitesClientDiagnostics, Pipeline, "ResourceGroupEdgeSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Exists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _resourceGroupEdgeSiteSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeSiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +394,50 @@ namespace Azure.ResourceManager.SiteManager
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Exists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.Exists");
             scope.Start();
             try
             {
-                var response = _resourceGroupEdgeSiteSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, siteName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeSiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +451,54 @@ namespace Azure.ResourceManager.SiteManager
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ResourceGroupEdgeSiteResource>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _resourceGroupEdgeSiteSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeSiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ResourceGroupEdgeSiteResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +512,54 @@ namespace Azure.ResourceManager.SiteManager
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ResourceGroupEdgeSiteResource> GetIfExists(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _resourceGroupEdgeSiteSitesClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _resourceGroupEdgeSiteSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, siteName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeSiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ResourceGroupEdgeSiteResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +579,7 @@ namespace Azure.ResourceManager.SiteManager
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ResourceGroupEdgeSiteResource> IAsyncEnumerable<ResourceGroupEdgeSiteResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
