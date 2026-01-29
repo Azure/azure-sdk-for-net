@@ -248,44 +248,6 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary>
-        /// Unregisters the given container from your Recovery Services vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.DeleteRegisteredIdentityAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="identityName"> Name of the protection container to unregister. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response> DeleteRegisteredIdentityAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string identityName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).DeleteRegisteredIdentityAsync(vaultName, identityName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Unregisters the given container from your Recovery Services vault.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.DeleteRegisteredIdentity(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="identityName"> Name of the protection container to unregister. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response DeleteRegisteredIdentity(this ResourceGroupResource resourceGroupResource, string vaultName, string identityName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).DeleteRegisteredIdentity(vaultName, identityName, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a collection of RecoveryServicesDeletedVaults in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>

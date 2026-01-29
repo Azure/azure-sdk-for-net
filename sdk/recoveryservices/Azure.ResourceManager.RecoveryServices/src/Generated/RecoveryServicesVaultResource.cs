@@ -535,6 +535,102 @@ namespace Azure.ResourceManager.RecoveryServices
             return new VaultsGetUsagesByVaultsCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
+        /// <summary>
+        /// Unregisters the given container from your Recovery Services vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/registeredIdentities/{identityName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_RegisteredIdentitiesDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="identityName"> Name of the protection container to unregister. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="identityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteRegisteredIdentityAsync(string identityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
+
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateDeleteRegisteredIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unregisters the given container from your Recovery Services vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/registeredIdentities/{identityName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_RegisteredIdentitiesDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesVaultResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="identityName"> Name of the protection container to unregister. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="identityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteRegisteredIdentity(string identityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
+
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vaultsRestClient.CreateDeleteRegisteredIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
