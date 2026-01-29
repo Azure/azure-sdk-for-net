@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
-            Assert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
+            Assert.That(assemblyName.EndsWith(TestAssemblySuffix), Is.True, $"The test assembly should end with {TestAssemblySuffix}");
             var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
 
             if (rpNamespace == ResourceManagerAssemblyName || rpNamespace == TestFrameworkAssembly)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.TestFramework
             // find the SDK assembly by filtering the assemblies in current domain, or load it if not found (when there is no test case)
             var sdkAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == rpNamespace) ?? Assembly.Load(rpNamespace);
 
-            Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
+            Assert.That(sdkAssembly, Is.Not.Null, $"The SDK assembly {rpNamespace} not found");
 
             // find the extension class
             foreach (var type in sdkAssembly.GetTypes())
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TestFramework
             var rpNamespace = extensionType.Namespace;
             var rpName = GetRPName(rpNamespace);
 
-            Assert.IsNotNull(extensionType);
+            Assert.That(extensionType, Is.Not.Null);
 
             foreach (var method in extensionType.GetMethods(BindingFlags.Public | BindingFlags.Static))
             {
@@ -109,19 +109,19 @@ namespace Azure.ResourceManager.TestFramework
             var mockingExtensionTypeName = GetMockableResourceTypeName(rpNamespace, rpName, extendedType.Name);
 
             var mockingExtensionType = assembly.GetType(mockingExtensionTypeName);
-            Assert.IsNotNull(mockingExtensionType, $"The mocking extension class {mockingExtensionTypeName} must exist");
-            Assert.IsTrue(mockingExtensionType.IsPublic, $"The mocking extension class {mockingExtensionType} must be public");
+            Assert.That(mockingExtensionType, Is.Not.Null, $"The mocking extension class {mockingExtensionTypeName} must exist");
+            Assert.That(mockingExtensionType.IsPublic, Is.True, $"The mocking extension class {mockingExtensionType} must be public");
 
             // validate the mocking extension class has a method with the exact name and parameter list
             var expectedTypes = parameters.Skip(1).Select(p => p.ParameterType).ToArray();
             var methodOnExtension = mockingExtensionType.GetMethod(method.Name, parameters.Skip(1).Select(p => p.ParameterType).ToArray());
 
-            Assert.IsNotNull(methodOnExtension, $"The class {mockingExtensionType} must have method {method}");
-            Assert.IsTrue(methodOnExtension.IsVirtual, $"The method on {mockingExtensionType} must be virtual");
-            Assert.IsTrue(methodOnExtension.IsPublic, $"The method on {mockingExtensionType} must be public");
+            Assert.That(methodOnExtension, Is.Not.Null, $"The class {mockingExtensionType} must have method {method}");
+            Assert.That(methodOnExtension.IsVirtual, Is.True, $"The method on {mockingExtensionType} must be virtual");
+            Assert.That(methodOnExtension.IsPublic, Is.True, $"The method on {mockingExtensionType} must be public");
 
             // validate they should both have or both not have the EditorBrowsable(Never) attribute
-            Assert.AreEqual(method.IsDefined(typeof(EditorBrowsableAttribute)), methodOnExtension.IsDefined(typeof(EditorBrowsableAttribute)), $"The method {method} and {methodOnExtension} should both have or neither have the EditorBrowsableAttribute on them");
+            Assert.That(methodOnExtension.IsDefined(typeof(EditorBrowsableAttribute)), Is.EqualTo(method.IsDefined(typeof(EditorBrowsableAttribute))), $"The method {method} and {methodOnExtension} should both have or neither have the EditorBrowsableAttribute on them");
 
             ValidateMocking(extendedType, mockingExtensionType, method, methodOnExtension);
         }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 var result = extensionMethod.Invoke(null, arguments.ToArray());
 
-                Assert.IsNotNull(result, $"Mocking of extension method {extensionMethod} is not working properly, please check the implementation to ensure it to call the method with same name and parameter list in {mockingExtensionType}");
+                Assert.That(result, Is.Not.Null, $"Mocking of extension method {extensionMethod} is not working properly, please check the implementation to ensure it to call the method with same name and parameter list in {mockingExtensionType}");
             }
             catch (Exception)
             {

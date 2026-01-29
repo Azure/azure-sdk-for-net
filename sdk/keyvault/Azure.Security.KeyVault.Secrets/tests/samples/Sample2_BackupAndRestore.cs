@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading;
+using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
@@ -81,12 +81,12 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
         private static void AssertSecretsEqual(SecretProperties exp, SecretProperties act)
         {
-            Assert.AreEqual(exp.Name, act.Name);
-            Assert.AreEqual(exp.Version, act.Version);
-            Assert.AreEqual(exp.Managed, act.Managed);
-            Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
-            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
-            Assert.AreEqual(exp.NotBefore, act.NotBefore);
+            Assert.That(act.Name, Is.EqualTo(exp.Name));
+            Assert.That(act.Version, Is.EqualTo(exp.Version));
+            Assert.That(act.Managed, Is.EqualTo(exp.Managed));
+            Assert.That(act.RecoveryLevel, Is.EqualTo(exp.RecoveryLevel));
+            Assert.That(act.ExpiresOn, Is.EqualTo(exp.ExpiresOn));
+            Assert.That(act.NotBefore, Is.EqualTo(exp.NotBefore));
         }
     }
 }

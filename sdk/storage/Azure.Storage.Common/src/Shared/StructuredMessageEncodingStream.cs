@@ -424,7 +424,7 @@ internal class StructuredMessageEncodingStream : Stream
             crc64: UseCrcSegment
                 ? new Span<byte>(
                     _segmentCrcs,
-                    (CurrentEncodingSegment-1) * _totalCrc.HashLengthInBytes,
+                    (CurrentEncodingSegment - 1) * _totalCrc.HashLengthInBytes,
                     _totalCrc.HashLengthInBytes)
                 : default);
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
@@ -521,7 +521,7 @@ internal class StructuredMessageEncodingStream : Stream
                 Position += offset;
                 break;
             case SeekOrigin.End:
-                Position  = Length + offset;
+                Position = Length + offset;
                 break;
         }
         return Position;

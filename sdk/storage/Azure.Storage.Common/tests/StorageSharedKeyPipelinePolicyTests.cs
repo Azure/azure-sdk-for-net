@@ -24,13 +24,13 @@ namespace Azure.Storage.Tests
 
             // Act
             policy.OnSendingRequest(message);
-            Assert.IsTrue(message.Request.Headers.TryGetValue("x-ms-date", out string firstDate));
+            Assert.That(message.Request.Headers.TryGetValue("x-ms-date", out string firstDate), Is.True);
             await Task.Delay(1000);
             policy.OnSendingRequest(message);
 
             // Assert
-            Assert.IsTrue(message.Request.Headers.TryGetValue("x-ms-date", out string secondDate));
-            Assert.IsTrue(Convert.ToDateTime(firstDate) < Convert.ToDateTime(secondDate));
+            Assert.That(message.Request.Headers.TryGetValue("x-ms-date", out string secondDate), Is.True);
+            Assert.That(Convert.ToDateTime(firstDate) < Convert.ToDateTime(secondDate), Is.True);
         }
 
         [Test]
@@ -67,10 +67,10 @@ namespace Azure.Storage.Tests
 
             // Act
             policy.OnSendingRequest(message);
-            Assert.IsTrue(message.Request.Headers.TryGetValue("x-ms-date", out string date));
+            Assert.That(message.Request.Headers.TryGetValue("x-ms-date", out string date), Is.True);
 
             // Assert
-            Assert.IsTrue(message.Request.Headers.TryGetValue(Constants.HeaderNames.Authorization, out string authentication));
+            Assert.That(message.Request.Headers.TryGetValue(Constants.HeaderNames.Authorization, out string authentication), Is.True);
             var signature = authentication.Substring(authentication.IndexOf(credentials.AccountName, StringComparison.Ordinal) + credentials.AccountName.Length + 1);
 
             var expectedStringToSign = new StringBuilder()
@@ -95,7 +95,7 @@ namespace Azure.Storage.Tests
 
             var expectedSignature = StorageSharedKeyCredentialInternals.ComputeSasSignature(credentials, expectedStringToSign);
 
-            Assert.AreEqual(expectedSignature, signature);
+            Assert.That(signature, Is.EqualTo(expectedSignature));
         }
     }
 }

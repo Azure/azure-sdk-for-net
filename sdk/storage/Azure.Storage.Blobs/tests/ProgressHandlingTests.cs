@@ -42,9 +42,9 @@ namespace Azure.Storage.Blobs.Tests
             });
 
             // Assert
-            Assert.AreNotEqual(0, progress.List.Count);
-            Assert.AreEqual(size, progress.List.Max());
-            Assert.IsTrue(Enumerable.SequenceEqual(data, result.Value.Content.ToArray()));
+            Assert.That(progress.List.Count, Is.Not.EqualTo(0));
+            Assert.That(progress.List.Max(), Is.EqualTo(size));
+            Assert.That(Enumerable.SequenceEqual(data, result.Value.Content.ToArray()), Is.True);
         }
 
         [RecordedTest]
@@ -71,9 +71,9 @@ namespace Azure.Storage.Blobs.Tests
             });
 
             // Assert
-            Assert.AreNotEqual(0, progress.List.Count);
-            Assert.AreEqual(length, progress.List.Max());
-            Assert.IsTrue(new ReadOnlySpan<byte>(data, offset, length).SequenceEqual(result.Value.Content.ToArray()));
+            Assert.That(progress.List.Count, Is.Not.EqualTo(0));
+            Assert.That(progress.List.Max(), Is.EqualTo(length));
+            Assert.That(new ReadOnlySpan<byte>(data, offset, length).SequenceEqual(result.Value.Content.ToArray()), Is.True);
         }
 
         [RecordedTest]
@@ -101,8 +101,8 @@ namespace Azure.Storage.Blobs.Tests
             }
 
             // Assert
-            Assert.AreNotEqual(0, progress.List.Count);
-            Assert.AreEqual(size, progress.List.Max());
+            Assert.That(progress.List.Count, Is.Not.EqualTo(0));
+            Assert.That(progress.List.Max(), Is.EqualTo(size));
         }
 
         [RecordedTest]
@@ -134,9 +134,9 @@ namespace Azure.Storage.Blobs.Tests
             }
 
             // Assert
-            Assert.AreNotEqual(0, progress.List.Count);
-            Assert.AreEqual(length, progress.List.Max());
-            Assert.IsTrue(new ReadOnlySpan<byte>(data, offset, length).SequenceEqual(downloadedData));
+            Assert.That(progress.List.Count, Is.Not.EqualTo(0));
+            Assert.That(progress.List.Max(), Is.EqualTo(length));
+            Assert.That(new ReadOnlySpan<byte>(data, offset, length).SequenceEqual(downloadedData), Is.True);
         }
 
         [RecordedTest]
@@ -169,10 +169,10 @@ namespace Azure.Storage.Blobs.Tests
             });
 
             // Assert
-            Assert.AreNotEqual(0, progress.List.Count);
-            Assert.AreEqual(downloadedData.Length, progress.List.Max());
-            Assert.AreEqual(data.Length, downloadedData.Length);
-            Assert.IsTrue(Enumerable.SequenceEqual(data, downloadedData.ToArray()));
+            Assert.That(progress.List.Count, Is.Not.EqualTo(0));
+            Assert.That(progress.List.Max(), Is.EqualTo(downloadedData.Length));
+            Assert.That(downloadedData.Length, Is.EqualTo(data.Length));
+            Assert.That(Enumerable.SequenceEqual(data, downloadedData.ToArray()), Is.True);
         }
     }
 }

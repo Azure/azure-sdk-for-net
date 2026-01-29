@@ -15,7 +15,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             AvailabilitySetData model = new("eastus");
 
-            Assert.IsFalse(model.Patch.TryGetJson("$.extraSku"u8, out _));
+            Assert.That(model.Patch.TryGetJson("$.extraSku"u8, out _), Is.False);
         }
 
         [Test]
@@ -25,21 +25,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var pointer = "$.foobar"u8;
             model.Patch.Set(pointer, 5);
 
-            Assert.AreEqual(5, model.Patch.GetInt32(pointer));
-            Assert.AreEqual(5, model.Patch.GetNullableValue<int>(pointer));
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":5}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetInt32(pointer), Is.EqualTo(5));
+            Assert.That(model.Patch.GetNullableValue<int>(pointer), Is.EqualTo(5));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":5}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":5}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":5}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(5, model2.Patch.GetInt32(pointer));
-            Assert.AreEqual(5, model2.Patch.GetNullableValue<int>(pointer));
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetInt32(pointer), Is.EqualTo(5));
+            Assert.That(model2.Patch.GetNullableValue<int>(pointer), Is.EqualTo(5));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2);
         }
@@ -52,12 +52,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.Throws<FormatException>(() => model.Patch.GetInt32("$.foobar"u8));
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":null}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":null}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(null, model2.Patch.GetNullableValue<int>("$.foobar"u8));
+            Assert.That(model2.Patch.GetNullableValue<int>("$.foobar"u8), Is.EqualTo(null));
             Assert.Throws<FormatException>(() => model2.Patch.GetInt32("$.foobar"u8));
 
             AssertCommon(model, model2);
@@ -72,14 +72,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = GetInitialModel();
             model.Patch.Set(pointer, value);
 
-            Assert.AreEqual(value, model.Patch.GetString(pointer));
+            Assert.That(model.Patch.GetString(pointer), Is.EqualTo(value));
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":\"some value\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":\"some value\"}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(value, model2.Patch.GetString(pointer));
+            Assert.That(model2.Patch.GetString(pointer), Is.EqualTo(value));
 
             AssertCommon(model, model2);
         }
@@ -92,27 +92,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model = GetInitialModel();
             model.Patch.Set(pointer, value);
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some value\"}]",
-                model.Patch.ToString());
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some value\"}]"));
 
             model.Patch.Set("$['foobar']"u8, "some other value");
 
-            Assert.AreEqual("some other value", model.Patch.GetString(pointer));
-            Assert.AreEqual("some other value", model.Patch.GetString("$['foobar']"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some other value\"}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetString(pointer), Is.EqualTo("some other value"));
+            Assert.That(model.Patch.GetString("$['foobar']"u8), Is.EqualTo("some other value"));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some other value\"}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":\"some other value\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":\"some other value\"}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("some other value", model2.Patch.GetString(pointer));
-            Assert.AreEqual("some other value", model2.Patch.GetString("$['foobar']"u8));
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetString(pointer), Is.EqualTo("some other value"));
+            Assert.That(model2.Patch.GetString("$['foobar']"u8), Is.EqualTo("some other value"));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2);
         }
@@ -124,21 +124,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model = GetInitialModel();
             model.Patch.SetNull(pointer);
-            Assert.AreEqual(null, model.Patch.GetString(pointer));
-            Assert.AreEqual(null, model.Patch.GetNullableValue<int>(pointer));
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":null}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetString(pointer), Is.EqualTo(null));
+            Assert.That(model.Patch.GetNullableValue<int>(pointer), Is.EqualTo(null));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":null}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":null}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":null}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(null, model2.Patch.GetString(pointer));
-            Assert.AreEqual(null, model2.Patch.GetNullableValue<int>(pointer));
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetString(pointer), Is.EqualTo(null));
+            Assert.That(model2.Patch.GetNullableValue<int>(pointer), Is.EqualTo(null));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2);
         }
@@ -153,22 +153,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(propertyNameSpan, expectedValue);
 
-            Assert.AreEqual(expectedValue, model.Patch.GetInt32(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model.Patch.GetNullableValue<int>(propertyNameSpan));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/properties/platformUpdateDomainCount\",\"value\":999}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetInt32(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model.Patch.GetNullableValue<int>(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/properties/platformUpdateDomainCount\",\"value\":999}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformFaultDomainCount\":3,\"platformUpdateDomainCount\":999},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformFaultDomainCount\":3,\"platformUpdateDomainCount\":999},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}"));
 
             var model2 = GetRoundTripModel(data);
 
-            Assert.AreEqual(expectedValue, model2.Patch.GetInt32(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model2.PlatformUpdateDomainCount);
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetInt32(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model2.PlatformUpdateDomainCount, Is.EqualTo(expectedValue));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2, "platformUpdateDomainCount");
         }
@@ -184,21 +184,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(propertyNameSpan, expectedValue);
 
-            Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
-            Assert.AreEqual("eastus", model.Location);
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetString(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model.Location, Is.EqualTo("eastus"));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"location\":\"new-location\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"location\":\"new-location\"}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model2.Location);
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetString(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model2.Location, Is.EqualTo(expectedValue));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2, propertyName);
         }
@@ -211,28 +211,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model = GetInitialModel();
 
-            Assert.AreEqual("Classic", model.Sku.Name);
+            Assert.That(model.Sku.Name, Is.EqualTo("Classic"));
 
             model.Patch.Set(propertyNameSpan, expectedValue);
 
-            Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model.Sku.Patch.GetString("$.name"u8));
-            Assert.AreEqual("[]", model.Patch.ToString());
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/name\",\"value\":\"new-sku-name\"}]",
-                model.Sku.Patch.ToString());
+            Assert.That(model.Patch.GetString(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model.Sku.Patch.GetString("$.name"u8), Is.EqualTo(expectedValue));
+            Assert.That(model.Patch.ToString(), Is.EqualTo("[]"));
+            Assert.That(
+                model.Sku.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/name\",\"value\":\"new-sku-name\"}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"new-sku-name\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"new-sku-name\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("$.name"u8));
-            Assert.AreEqual(expectedValue, model2.Sku.Name);
-            Assert.AreEqual("[]", model2.Patch.ToString());
-            Assert.AreEqual("[]", model2.Sku.Patch.ToString());
+            Assert.That(model2.Patch.GetString(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model2.Sku.Patch.GetString("$.name"u8), Is.EqualTo(expectedValue));
+            Assert.That(model2.Sku.Name, Is.EqualTo(expectedValue));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
+            Assert.That(model2.Sku.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2, "sku");
         }
@@ -247,25 +247,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(propertyNameSpan, expectedValue);
 
-            Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model.Sku.Patch.GetString("$.something"u8));
-            Assert.AreEqual("[]", model.Patch.ToString());
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/something\",\"value\":\"something-value\"}]",
-                model.Sku.Patch.ToString());
+            Assert.That(model.Patch.GetString(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model.Sku.Patch.GetString("$.something"u8), Is.EqualTo(expectedValue));
+            Assert.That(model.Patch.ToString(), Is.EqualTo("[]"));
+            Assert.That(
+                model.Sku.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/something\",\"value\":\"something-value\"}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\",\"something\":\"something-value\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\",\"something\":\"something-value\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}"));
 
             var model2 = GetRoundTripModel(data);
 
-            Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
-            Assert.AreEqual("Classic", model2.Sku.Name);
-            Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("$.something"u8));
-            Assert.AreEqual("[]", model2.Patch.ToString());
-            Assert.AreEqual("[]", model2.Sku.Patch.ToString());
+            Assert.That(model2.Patch.GetString(propertyNameSpan), Is.EqualTo(expectedValue));
+            Assert.That(model2.Sku.Name, Is.EqualTo("Classic"));
+            Assert.That(model2.Sku.Patch.GetString("$.something"u8), Is.EqualTo(expectedValue));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
+            Assert.That(model2.Sku.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2, "sku");
         }
@@ -279,26 +279,26 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(pointer, expectedValue);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
-            Assert.AreEqual("{\"y\":123}"u8.ToArray(), model.Patch.GetJson("$.foobar.x"u8).ToArray());
-            Assert.AreEqual(123, model.Patch.GetInt32("$.foobar.x.y"u8));
-            Assert.AreEqual(123, model.Patch.GetNullableValue<int>("$.foobar.x.y"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
+            Assert.That(model.Patch.GetJson("$.foobar.x"u8).ToArray(), Is.EqualTo("{\"y\":123}"u8.ToArray()));
+            Assert.That(model.Patch.GetInt32("$.foobar.x.y"u8), Is.EqualTo(123));
+            Assert.That(model.Patch.GetNullableValue<int>("$.foobar.x.y"u8), Is.EqualTo(123));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":{\"y\":123}}}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":{\"y\":123}}}"));
 
             var model2 = GetRoundTripModel(data);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
-            Assert.AreEqual("{\"y\":123}"u8.ToArray(), model2.Patch.GetJson("$.foobar.x"u8).ToArray());
-            Assert.AreEqual(123, model2.Patch.GetInt32("$.foobar.x.y"u8));
-            Assert.AreEqual(123, model2.Patch.GetNullableValue<int>("$.foobar.x.y"u8));
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
+            Assert.That(model2.Patch.GetJson("$.foobar.x"u8).ToArray(), Is.EqualTo("{\"y\":123}"u8.ToArray()));
+            Assert.That(model2.Patch.GetInt32("$.foobar.x.y"u8), Is.EqualTo(123));
+            Assert.That(model2.Patch.GetNullableValue<int>("$.foobar.x.y"u8), Is.EqualTo(123));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2);
         }
@@ -318,19 +318,19 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 }
             }));
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":{\"y\":123}}}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":{\"y\":123}}}"));
 
             var model2 = GetRoundTripModel(data);
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2);
         }
@@ -344,25 +344,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(pointer, expectedValue);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
-            Assert.AreEqual("[]", model.Patch.ToString());
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/\",\"value\":{\"name\":\"replaced-name\",\"foo\":123}}]",
-                model.Sku.Patch.ToString());
+            Assert.That(model.Patch.GetJson(pointer).ToArray(), Is.EqualTo(expectedValue.ToArray()).AsCollection);
+            Assert.That(model.Patch.ToString(), Is.EqualTo("[]"));
+            Assert.That(
+                model.Sku.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/\",\"value\":{\"name\":\"replaced-name\",\"foo\":123}}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"replaced-name\",\"foo\":123},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"replaced-name\",\"foo\":123},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}"));
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("replaced-name", model2.Sku.Name);
-            Assert.AreEqual(123, model2.Sku.Patch.GetInt32("$.foo"u8));
-            Assert.AreEqual("[]", model2.Patch.ToString());
-            Assert.AreEqual("[]", model2.Sku.Patch.ToString());
+            Assert.That(model2.Sku.Name, Is.EqualTo("replaced-name"));
+            Assert.That(model2.Sku.Patch.GetInt32("$.foo"u8), Is.EqualTo(123));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
+            Assert.That(model2.Sku.Patch.ToString(), Is.EqualTo("[]"));
 
             model2.Patch.Set("$.sku.foo"u8, 999);
-            Assert.AreEqual("[{\"op\":\"replace\",\"path\":\"/foo\",\"value\":999}]", model2.Sku.Patch.ToString());
+            Assert.That(model2.Sku.Patch.ToString(), Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/foo\",\"value\":999}]"));
 
             AssertCommon(model, model2, "sku");
         }
@@ -375,25 +375,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set(pointer, "new-location");
 
-            Assert.AreEqual("new-location", model.Patch.GetString(pointer));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetString(pointer), Is.EqualTo("new-location"));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]"));
 
             //setting the location property directly does not override the patch
             //if we want this we need to tie property setters to the patch which is very tricky
             model.Location = "another-location";
-            Assert.AreEqual("new-location", model.Patch.GetString(pointer));
+            Assert.That(model.Patch.GetString(pointer), Is.EqualTo("new-location"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"location\":\"new-location\"}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"location\":\"new-location\"}"));
 
             var model2 = GetRoundTripModel(data);
 
-            Assert.AreEqual("new-location", model2.Location);
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Location, Is.EqualTo("new-location"));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
         }
 
         [Test]
@@ -403,28 +403,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set("$.foobar"u8, "{\"x\":\"value\"}"u8);
 
-            Assert.AreEqual("{\"x\":\"value\"}"u8.ToArray(), model.Patch.GetJson("$.foobar"u8).ToArray());
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\"}}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetJson("$.foobar"u8).ToArray(), Is.EqualTo("{\"x\":\"value\"}"u8.ToArray()));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\"}}]"));
 
             model.Patch.Set("$.foobar.name"u8, "vmName1");
 
-            Assert.AreEqual("vmName1", model.Patch.GetString("$.foobar.name"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\",\"name\":\"vmName1\"}}]",
-                model.Patch.ToString());
+            Assert.That(model.Patch.GetString("$.foobar.name"u8), Is.EqualTo("vmName1"));
+            Assert.That(
+                model.Patch.ToString(),
+                Is.EqualTo("[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\",\"name\":\"vmName1\"}}]"));
 
             var data = ModelReaderWriter.Write(model);
-            Assert.AreEqual(
-                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":\"value\",\"name\":\"vmName1\"}}",
-                data.ToString());
+            Assert.That(
+                data.ToString(),
+                Is.EqualTo("{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":\"value\",\"name\":\"vmName1\"}}"));
 
             var model2 = GetRoundTripModel(data);
 
-            Assert.AreEqual("{\"x\":\"value\",\"name\":\"vmName1\"}"u8.ToArray(), model2.Patch.GetJson("$.foobar"u8).ToArray());
-            Assert.AreEqual("vmName1", model2.Patch.GetString("$.foobar.name"u8));
-            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.That(model2.Patch.GetJson("$.foobar"u8).ToArray(), Is.EqualTo("{\"x\":\"value\",\"name\":\"vmName1\"}"u8.ToArray()));
+            Assert.That(model2.Patch.GetString("$.foobar.name"u8), Is.EqualTo("vmName1"));
+            Assert.That(model2.Patch.ToString(), Is.EqualTo("[]"));
 
             AssertCommon(model, model2);
         }
@@ -432,21 +432,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         private AvailabilitySetData GetInitialModel()
         {
             var model = ModelReaderWriter.Read<AvailabilitySetData>(BinaryData.FromString(JsonPayload));
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             return model!;
         }
 
         private static AvailabilitySetData GetRoundTripModel(BinaryData data)
         {
             var model2 = ModelReaderWriter.Read<AvailabilitySetData>(data);
-            Assert.IsNotNull(model2);
+            Assert.That(model2, Is.Not.Null);
             return model2!;
         }
 
         private static void AssertCommon(AvailabilitySetData model, AvailabilitySetData model2, params string[] skips)
         {
-            Assert.AreEqual("extraSku", model2.Patch.GetString("$.extraSku"u8));
-            Assert.AreEqual("extraRoot", model2.Patch.GetString("$.extraRoot"u8));
+            Assert.That(model2.Patch.GetString("$.extraSku"u8), Is.EqualTo("extraSku"));
+            Assert.That(model2.Patch.GetString("$.extraRoot"u8), Is.EqualTo("extraRoot"));
             CompareAvailabilitySetData(model, model2, "J", skips);
         }
     }

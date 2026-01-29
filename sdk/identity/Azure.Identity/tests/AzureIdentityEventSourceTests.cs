@@ -52,10 +52,10 @@ namespace Azure.Identity.Tests
             Type eventSourceType = typeof(AzureIdentityEventSource);
 
             // Assert
-            Assert.NotNull(eventSourceType);
-            Assert.AreEqual("Azure-Identity", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("50c8e6e8-b11b-5998-63f4-3944e66d312a"), EventSource.GetGuid(eventSourceType));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.That(eventSourceType, Is.Not.Null);
+            Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Identity"));
+            Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("50c8e6e8-b11b-5998-63f4-3944e66d312a")));
+            Assert.That(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"), Is.Not.Empty);
         }
 
         [Test]
@@ -210,20 +210,20 @@ namespace Azure.Identity.Tests
 
             EventWrittenEventArgs e = _listener.SingleEventById(GetTokenEvent);
 
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("GetToken", e.EventName);
-            Assert.AreEqual(method, e.GetProperty<string>("method"));
-            Assert.AreEqual($"[ {string.Join(", ", expScopes)} ]", e.GetProperty<string>("scopes"));
-            Assert.AreEqual(expParentRequestId, e.GetProperty<string>("parentRequestId"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("GetToken"));
+            Assert.That(e.GetProperty<string>("method"), Is.EqualTo(method));
+            Assert.That(e.GetProperty<string>("scopes"), Is.EqualTo($"[ {string.Join(", ", expScopes)} ]"));
+            Assert.That(e.GetProperty<string>("parentRequestId"), Is.EqualTo(expParentRequestId));
 
             e = _listener.SingleEventById(GetTokenSucceededEvent);
 
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("GetTokenSucceeded", e.EventName);
-            Assert.AreEqual(method, e.GetProperty<string>("method"));
-            Assert.AreEqual($"[ {string.Join(", ", expScopes)} ]", e.GetProperty<string>("scopes"));
-            Assert.AreEqual(expParentRequestId, e.GetProperty<string>("parentRequestId"));
-            Assert.IsTrue(DateTimeOffset.TryParse(e.GetProperty<string>("expiresOn"), out _));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("GetTokenSucceeded"));
+            Assert.That(e.GetProperty<string>("method"), Is.EqualTo(method));
+            Assert.That(e.GetProperty<string>("scopes"), Is.EqualTo($"[ {string.Join(", ", expScopes)} ]"));
+            Assert.That(e.GetProperty<string>("parentRequestId"), Is.EqualTo(expParentRequestId));
+            Assert.That(DateTimeOffset.TryParse(e.GetProperty<string>("expiresOn"), out _), Is.True);
         }
 
         private async Task AssertCredentialGetTokenFailedAsync(TokenCredential credential, string method, string expExMessage)
@@ -236,19 +236,19 @@ namespace Azure.Identity.Tests
 
             EventWrittenEventArgs e = _listener.SingleEventById(GetTokenEvent);
 
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("GetToken", e.EventName);
-            Assert.AreEqual(method, e.GetProperty<string>("method"));
-            Assert.AreEqual($"[ {string.Join(", ", expScopes)} ]", e.GetProperty<string>("scopes"));
-            Assert.AreEqual(expParentRequestId, e.GetProperty<string>("parentRequestId"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("GetToken"));
+            Assert.That(e.GetProperty<string>("method"), Is.EqualTo(method));
+            Assert.That(e.GetProperty<string>("scopes"), Is.EqualTo($"[ {string.Join(", ", expScopes)} ]"));
+            Assert.That(e.GetProperty<string>("parentRequestId"), Is.EqualTo(expParentRequestId));
 
             e = _listener.SingleEventById(GetTokenFailedEvent);
 
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("GetTokenFailed", e.EventName);
-            Assert.AreEqual(method, e.GetProperty<string>("method"));
-            Assert.AreEqual($"[ {string.Join(", ", expScopes)} ]", e.GetProperty<string>("scopes"));
-            Assert.AreEqual(expParentRequestId, e.GetProperty<string>("parentRequestId"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("GetTokenFailed"));
+            Assert.That(e.GetProperty<string>("method"), Is.EqualTo(method));
+            Assert.That(e.GetProperty<string>("scopes"), Is.EqualTo($"[ {string.Join(", ", expScopes)} ]"));
+            Assert.That(e.GetProperty<string>("parentRequestId"), Is.EqualTo(expParentRequestId));
             Assert.That(e.GetProperty<string>("exception"), Does.Contain(expExMessage));
 
             await Task.CompletedTask;

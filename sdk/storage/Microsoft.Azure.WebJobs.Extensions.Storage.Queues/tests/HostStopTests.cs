@@ -47,14 +47,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 // Start and wait for the function to be invoked.
                 await host.StartAsync();
                 bool completed = _functionStarted.Task.WaitUntilCompleted(secondsToWait * 1000);
-                Assert.True(completed, $"Function did not start in {secondsToWait} seconds.");
+                Assert.That(completed, Is.True, $"Function did not start in {secondsToWait} seconds.");
 
                 // Stop the host and let the function know it can continue.
                 Task stopTask = host.StopAsync();
                 _stopHostCalled.TrySetResult(null);
 
                 completed = _testTaskSource.Task.WaitUntilCompleted(secondsToWait * 1000);
-                Assert.True(completed, $"Host did not shut down in {secondsToWait} seconds.");
+                Assert.That(completed, Is.True, $"Host did not shut down in {secondsToWait} seconds.");
 
                 // Give a nicer test failure message for faulted tasks.
                 if (_testTaskSource.Task.Status == TaskStatus.Faulted)
@@ -62,10 +62,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                     await _testTaskSource.Task;
                 }
 
-                Assert.AreEqual(TaskStatus.RanToCompletion, _testTaskSource.Task.Status);
+                Assert.That(_testTaskSource.Task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
 
                 stopTask.WaitUntilCompleted(3 * 1000);
-                Assert.AreEqual(TaskStatus.RanToCompletion, stopTask.Status);
+                Assert.That(stopTask.Status, Is.EqualTo(TaskStatus.RanToCompletion));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
                 // Wait to continue until the StopHost has been called.
                 bool started = _stopHostCalled.Task.WaitUntilCompleted(3 * 1000);
-                Assert.True(started); // Guard
+                Assert.That(started, Is.True); // Guard
 
                 // Signal the test is complete with the actual value.
                 _testTaskSource.TrySetResult(cancellationToken.IsCancellationRequested);

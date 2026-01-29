@@ -29,9 +29,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var queueOptions = SharedBlobQueueListenerFactory.BlobsOptionsToQueuesOptions(blobOptions);
 
             // Assert
-            Assert.AreEqual(expectedBatchSize, queueOptions.BatchSize);
-            Assert.AreEqual(expectedNewBatchThreshold, queueOptions.NewBatchThreshold);
-            Assert.AreEqual(poisonBlobThreshold, queueOptions.MaxDequeueCount);
+            Assert.That(queueOptions.BatchSize, Is.EqualTo(expectedBatchSize));
+            Assert.That(queueOptions.NewBatchThreshold, Is.EqualTo(expectedNewBatchThreshold));
+            Assert.That(queueOptions.MaxDequeueCount, Is.EqualTo(poisonBlobThreshold));
         }
     }
 }

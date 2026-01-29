@@ -22,7 +22,6 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 using static Azure.Storage.Constants.ClientSideEncryption;
 using static Azure.Storage.Test.Shared.ClientSideEncryptionTestExtensions;
 
@@ -174,27 +173,27 @@ namespace Azure.Storage.Queues.Test
                 ClientSideEncryption = options1
             });
 
-            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options1.KeyResolver, client.ClientConfiguration.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.That(client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey, Is.EqualTo(options1.KeyEncryptionKey));
+            Assert.That(client.ClientConfiguration.ClientSideEncryption.KeyResolver, Is.EqualTo(options1.KeyResolver));
+            Assert.That(client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm, Is.EqualTo(options1.KeyWrapAlgorithm));
 
-            Assert.AreEqual(0, options1EventCalled);
-            Assert.AreEqual(0, options2EventCalled);
+            Assert.That(options1EventCalled, Is.EqualTo(0));
+            Assert.That(options2EventCalled, Is.EqualTo(0));
             client.ClientConfiguration.ClientSideEncryption.OnDecryptionFailed(default, default);
-            Assert.AreEqual(1, options1EventCalled);
-            Assert.AreEqual(0, options2EventCalled);
+            Assert.That(options1EventCalled, Is.EqualTo(1));
+            Assert.That(options2EventCalled, Is.EqualTo(0));
 
             client = client.WithClientSideEncryptionOptions(options2);
 
-            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options2.KeyResolver, client.ClientConfiguration.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.That(client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey, Is.EqualTo(options2.KeyEncryptionKey));
+            Assert.That(client.ClientConfiguration.ClientSideEncryption.KeyResolver, Is.EqualTo(options2.KeyResolver));
+            Assert.That(client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm, Is.EqualTo(options2.KeyWrapAlgorithm));
 
-            Assert.AreEqual(1, options1EventCalled);
-            Assert.AreEqual(0, options2EventCalled);
+            Assert.That(options1EventCalled, Is.EqualTo(1));
+            Assert.That(options2EventCalled, Is.EqualTo(0));
             client.ClientConfiguration.ClientSideEncryption.OnDecryptionFailed(default, default);
-            Assert.AreEqual(1, options1EventCalled);
-            Assert.AreEqual(1, options2EventCalled);
+            Assert.That(options1EventCalled, Is.EqualTo(1));
+            Assert.That(options2EventCalled, Is.EqualTo(1));
         }
 
 #pragma warning disable CS0618 // obsolete
@@ -226,13 +225,13 @@ namespace Azure.Storage.Queues.Test
 
                 // download without decrypting
                 var receivedMessages = (await InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials())).ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
-                Assert.AreEqual(1, receivedMessages.Length);
+                Assert.That(receivedMessages.Length, Is.EqualTo(1));
                 var encryptedMessage = receivedMessages[0].Body; // json of message and metadata
                 var parsedEncryptedMessage = EncryptedMessageSerializer.Deserialize(encryptedMessage);
 
                 // encrypt original data manually for comparison
                 EncryptionData encryptionMetadata = parsedEncryptedMessage.EncryptionData;
-                Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+                Assert.That(encryptionMetadata, Is.Not.Null, "Never encrypted data.");
 
                 var explicitlyUnwrappedContent = IsAsync
                     ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -271,12 +270,13 @@ namespace Azure.Storage.Queues.Test
                             explicitlyUnwrappedKey);
                         versionInternal = ClientSideEncryptionVersionInternal.V2_0;
                         break;
-                    default: throw new ArgumentException("Test does not support clientside encryption version");
+                    default:
+                        throw new ArgumentException("Test does not support clientside encryption version");
                 }
 
                 // compare data
-                Assert.AreEqual(versionInternal, parsedEncryptedMessage.EncryptionData.EncryptionAgent.EncryptionVersion);
-                Assert.AreEqual(expectedEncryptedMessage, parsedEncryptedMessage.EncryptedMessageText);
+                Assert.That(parsedEncryptedMessage.EncryptionData.EncryptionAgent.EncryptionVersion, Is.EqualTo(versionInternal));
+                Assert.That(parsedEncryptedMessage.EncryptedMessageText, Is.EqualTo(expectedEncryptedMessage));
             }
         }
 
@@ -311,11 +311,11 @@ namespace Azure.Storage.Queues.Test
 
                 // download with decryption
                 var receivedMessages = (await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
-                Assert.AreEqual(1, receivedMessages.Length);
+                Assert.That(receivedMessages.Length, Is.EqualTo(1));
                 var downloadedMessage = receivedMessages[0].MessageText;
 
                 // compare data
-                Assert.AreEqual(message, downloadedMessage);
+                Assert.That(downloadedMessage, Is.EqualTo(message));
             }
         }
 
@@ -370,11 +370,11 @@ namespace Azure.Storage.Queues.Test
 
                 // download with track 2
                 var receivedMessages = (await track2Queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
-                Assert.AreEqual(1, receivedMessages.Length);
+                Assert.That(receivedMessages.Length, Is.EqualTo(1));
                 var downloadedMessage = receivedMessages[0].MessageText;
 
                 // compare original data to downloaded data
-                Assert.AreEqual(message, downloadedMessage);
+                Assert.That(downloadedMessage, Is.EqualTo(message));
             }
         }
 
@@ -426,7 +426,7 @@ namespace Azure.Storage.Queues.Test
                     null);
 
                 // compare original data to downloaded data
-                Assert.AreEqual(message, response.AsString);
+                Assert.That(response.AsString, Is.EqualTo(message));
             }
         }
 
@@ -450,10 +450,10 @@ namespace Azure.Storage.Queues.Test
                 await queue.SendMessageAsync(message, cancellationToken: s_cancellationToken);
 
                 var receivedMessages = (await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
-                Assert.AreEqual(1, receivedMessages.Length);
+                Assert.That(receivedMessages.Length, Is.EqualTo(1));
                 var downloadedMessage = receivedMessages[0].MessageText;
 
-                Assert.AreEqual(message, downloadedMessage);
+                Assert.That(downloadedMessage, Is.EqualTo(message));
             }
         }
 
@@ -482,11 +482,11 @@ namespace Azure.Storage.Queues.Test
 
                 // download with decryption
                 var receivedMessages = (await encryptedQueueClient.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
-                Assert.AreEqual(1, receivedMessages.Length);
+                Assert.That(receivedMessages.Length, Is.EqualTo(1));
                 var downloadedMessage = receivedMessages[0].MessageText;
 
                 // compare data
-                Assert.AreEqual(message, downloadedMessage);
+                Assert.That(downloadedMessage, Is.EqualTo(message));
             }
         }
 
@@ -514,12 +514,12 @@ namespace Azure.Storage.Queues.Test
                 var wrapSyncMethod = typeof(IKeyEncryptionKey).GetMethod("WrapKey");
                 var wrapAsyncMethod = typeof(IKeyEncryptionKey).GetMethod("WrapKeyAsync");
 
-                Assert.AreEqual(1, IsAsync
+                Assert.That(IsAsync
                     ? mockKey.Invocations.Count(invocation => invocation.Method == wrapAsyncMethod)
-                    : mockKey.Invocations.Count(invocation => invocation.Method == wrapSyncMethod));
-                Assert.AreEqual(0, IsAsync
+                    : mockKey.Invocations.Count(invocation => invocation.Method == wrapSyncMethod), Is.EqualTo(1));
+                Assert.That(IsAsync
                     ? mockKey.Invocations.Count(invocation => invocation.Method == wrapSyncMethod)
-                    : mockKey.Invocations.Count(invocation => invocation.Method == wrapAsyncMethod));
+                    : mockKey.Invocations.Count(invocation => invocation.Method == wrapAsyncMethod), Is.EqualTo(0));
             }
         }
 
@@ -550,11 +550,11 @@ namespace Azure.Storage.Queues.Test
 
                 // download with decryption
                 var receivedMessages = (await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value; // invokes key unwrap second time
-                Assert.AreEqual(1, receivedMessages.Length);
+                Assert.That(receivedMessages.Length, Is.EqualTo(1));
                 var downloadedMessage = receivedMessages[0].MessageText;
 
                 // compare data
-                Assert.AreEqual(message2, downloadedMessage);
+                Assert.That(downloadedMessage, Is.EqualTo(message2));
 
                 // assert key wrap and unwrap were each invoked twice
                 MethodInfo keyWrap;
@@ -569,8 +569,8 @@ namespace Azure.Storage.Queues.Test
                     keyWrap = typeof(IKeyEncryptionKey).GetMethod("WrapKey");
                     keyUnwrap = typeof(IKeyEncryptionKey).GetMethod("UnwrapKey");
                 }
-                Assert.AreEqual(2, mockKey.Invocations.Count(invocation => invocation.Method == keyWrap));
-                Assert.AreEqual(2, mockKey.Invocations.Count(invocation => invocation.Method == keyUnwrap));
+                Assert.That(mockKey.Invocations.Count(invocation => invocation.Method == keyWrap), Is.EqualTo(2));
+                Assert.That(mockKey.Invocations.Count(invocation => invocation.Method == keyUnwrap), Is.EqualTo(2));
             }
         }
 
@@ -613,19 +613,19 @@ namespace Azure.Storage.Queues.Test
                 System.Reflection.MethodInfo unwrapSyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKey");
                 System.Reflection.MethodInfo unwrapAsyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKeyAsync");
 
-                Assert.AreEqual(1, IsAsync
+                Assert.That(IsAsync
                     ? mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveAsyncMethod)
-                    : mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveSyncMethod));
-                Assert.AreEqual(0, IsAsync
+                    : mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveSyncMethod), Is.EqualTo(1));
+                Assert.That(IsAsync
                     ? mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveSyncMethod)
-                    : mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveAsyncMethod));
+                    : mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveAsyncMethod), Is.EqualTo(0));
 
-                Assert.AreEqual(1, IsAsync
+                Assert.That(IsAsync
                     ? mockKey.Invocations.Count(invocation => invocation.Method == unwrapAsyncMethod)
-                    : mockKey.Invocations.Count(invocation => invocation.Method == unwrapSyncMethod));
-                Assert.AreEqual(0, IsAsync
+                    : mockKey.Invocations.Count(invocation => invocation.Method == unwrapSyncMethod), Is.EqualTo(1));
+                Assert.That(IsAsync
                     ? mockKey.Invocations.Count(invocation => invocation.Method == unwrapSyncMethod)
-                    : mockKey.Invocations.Count(invocation => invocation.Method == unwrapAsyncMethod));
+                    : mockKey.Invocations.Count(invocation => invocation.Method == unwrapAsyncMethod), Is.EqualTo(0));
             }
         }
 
@@ -690,18 +690,18 @@ namespace Azure.Storage.Queues.Test
                 }
                 finally
                 {
-                    Assert.AreNotEqual(useListener, threw);
+                    Assert.That(threw, Is.Not.EqualTo(useListener));
 
                     if (useListener)
                     {
                         // we already asserted the correct method was called in `catch (MockException e)`
-                        Assert.AreEqual(numMessages, resolver.Invocations.Count);
+                        Assert.That(resolver.Invocations.Count, Is.EqualTo(numMessages));
 
                         // assert event was called for each message
-                        Assert.AreEqual(numMessages, failureEventCalled);
+                        Assert.That(failureEventCalled, Is.EqualTo(numMessages));
 
                         // assert all messages were filtered out of formal response
-                        Assert.AreEqual(0, returnedMessages);
+                        Assert.That(returnedMessages, Is.EqualTo(0));
                     }
                 }
             }
@@ -731,13 +731,13 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = new QueueClient(
                 connectionString,
                 GetNewQueueName());
-            Assert.IsTrue(queue.CanGenerateSasUri);
+            Assert.That(queue.CanGenerateSasUri, Is.True);
 
             // Act
             QueueClient queueEncrypted = queue.WithClientSideEncryptionOptions(options);
 
             // Assert
-            Assert.IsTrue(queueEncrypted.CanGenerateSasUri);
+            Assert.That(queueEncrypted.CanGenerateSasUri, Is.True);
         }
 
 #pragma warning disable CS0618 // obsolete
@@ -761,13 +761,13 @@ namespace Azure.Storage.Queues.Test
             QueueClient queue = InstrumentClient(new QueueClient(
                 blobEndpoint,
                 GetOptions()));
-            Assert.IsFalse(queue.CanGenerateSasUri);
+            Assert.That(queue.CanGenerateSasUri, Is.False);
 
             // Act
             QueueClient queueEncrypted = queue.WithClientSideEncryptionOptions(options);
 
             // Assert
-            Assert.IsFalse(queueEncrypted.CanGenerateSasUri);
+            Assert.That(queueEncrypted.CanGenerateSasUri, Is.False);
         }
     }
 }

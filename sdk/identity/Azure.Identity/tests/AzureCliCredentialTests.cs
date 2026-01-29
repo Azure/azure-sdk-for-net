@@ -63,8 +63,8 @@ namespace Azure.Identity.Tests
                 InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
             AccessToken actualToken = await credential.GetTokenAsync(context);
 
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            Assert.That(actualToken.Token, Is.EqualTo(expectedToken));
+            Assert.That(actualToken.ExpiresOn, Is.EqualTo(expectedExpiresOn));
 
             var expectTenantId = expectedTenantId != null;
             if (expectTenantId)
@@ -106,17 +106,17 @@ namespace Azure.Identity.Tests
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             AccessToken actualToken1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expectedToken1, actualToken1.Token, "The tokens should match.");
-            Assert.AreEqual(expectedExpiresOn, actualToken1.ExpiresOn, "The expires on value should be the same for token1.");
+            Assert.That(actualToken1.Token, Is.EqualTo(expectedToken1), "The tokens should match.");
+            Assert.That(actualToken1.ExpiresOn, Is.EqualTo(expectedExpiresOn), "The expires on value should be the same for token1.");
 
             testProcess = new TestProcess { Output = processOutput2 };
             credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             AccessToken actualToken2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expectedToken2, actualToken2.Token);
-            Assert.AreEqual(expectedExpiresOn, actualToken2.ExpiresOn, "The expires on value should be the same for token2.");
+            Assert.That(actualToken2.Token, Is.EqualTo(expectedToken2));
+            Assert.That(actualToken2.ExpiresOn, Is.EqualTo(expectedExpiresOn), "The expires on value should be the same for token2.");
 
-            Assert.AreEqual(actualToken1.ExpiresOn, actualToken2.ExpiresOn);
+            Assert.That(actualToken2.ExpiresOn, Is.EqualTo(actualToken1.ExpiresOn));
         }
 
         [Test]
@@ -318,8 +318,8 @@ namespace Azure.Identity.Tests
             var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
 
             var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
-            Assert.AreEqual(expectedToken, token.Token);
-            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+            Assert.That(token.Token, Is.EqualTo(expectedToken));
+            Assert.That(token.ExpiresOn, Is.EqualTo(expectedExpiresOn));
         }
     }
 }

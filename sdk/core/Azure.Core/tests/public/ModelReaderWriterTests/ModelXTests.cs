@@ -16,22 +16,22 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void CompareModels(ModelX model, ModelX model2, string format)
         {
-            Assert.AreEqual(model.Name, model2.Name);
-            Assert.AreEqual(model.Kind, model2.Kind);
+            Assert.That(model.Name, Is.EqualTo(model2.Name));
+            Assert.That(model.Kind, Is.EqualTo(model2.Kind));
 
-            Assert.AreEqual(model.Fields, model2.Fields);
-            Assert.AreEqual(model.KeyValuePairs, model2.KeyValuePairs);
-            Assert.AreEqual(model.NullProperty, model2.NullProperty);
+            Assert.That(model.Fields, Is.EqualTo(model2.Fields));
+            Assert.That(model.KeyValuePairs, Is.EqualTo(model2.KeyValuePairs));
+            Assert.That(model.NullProperty, Is.EqualTo(model2.NullProperty));
 
             if (format == "J")
             {
-                Assert.AreEqual(model.XProperty, model2.XProperty);
+                Assert.That(model.XProperty, Is.EqualTo(model2.XProperty));
                 var rawData = GetRawData(model);
                 var rawData2 = GetRawData(model2);
-                Assert.IsNotNull(rawData);
-                Assert.IsNotNull(rawData2);
-                Assert.AreEqual(rawData.Count, rawData2.Count);
-                Assert.AreEqual(rawData["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData, Is.Not.Null);
+                Assert.That(rawData2, Is.Not.Null);
+                Assert.That(rawData.Count, Is.EqualTo(rawData2.Count));
+                Assert.That(rawData["extra"].ToObjectFromJson<string>(), Is.EqualTo(rawData2["extra"].ToObjectFromJson<string>()));
             }
         }
 
@@ -50,21 +50,21 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void VerifyModel(ModelX model, string format)
         {
-            Assert.AreEqual("X", model.Kind);
-            Assert.AreEqual("xmodel", model.Name);
+            Assert.That(model.Kind, Is.EqualTo("X"));
+            Assert.That(model.Name, Is.EqualTo("xmodel"));
 
-            Assert.AreEqual(1, model.Fields.Count);
-            Assert.AreEqual("testField", model.Fields[0]);
-            Assert.AreEqual(1, model.KeyValuePairs.Count);
-            Assert.AreEqual("red", model.KeyValuePairs["color"]);
-            Assert.IsNull(model.NullProperty);
+            Assert.That(model.Fields.Count, Is.EqualTo(1));
+            Assert.That(model.Fields[0], Is.EqualTo("testField"));
+            Assert.That(model.KeyValuePairs.Count, Is.EqualTo(1));
+            Assert.That(model.KeyValuePairs["color"], Is.EqualTo("red"));
+            Assert.That(model.NullProperty, Is.Null);
 
             var rawData = GetRawData(model);
-            Assert.IsNotNull(rawData);
+            Assert.That(rawData, Is.Not.Null);
             if (format == "J")
             {
-                Assert.AreEqual(100, model.XProperty);
-                Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
+                Assert.That(model.XProperty, Is.EqualTo(100));
+                Assert.That(rawData["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));
             }
         }
     }

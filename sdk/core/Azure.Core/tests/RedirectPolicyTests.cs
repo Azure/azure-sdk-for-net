@@ -35,19 +35,19 @@ namespace Azure.Core.Tests
                 message.Request.Uri.Reset(new Uri("https://example.com/"));
             }, RedirectPolicy.Shared);
 
-            Assert.AreEqual(200, response.Status);
-            Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://new.host/", mockTransport.Requests[1].Uri.ToString());
-            Assert.True(fistResponse.IsDisposed);
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://new.host/"));
+            Assert.That(fistResponse.IsDisposed, Is.True);
 
             var e = testListener.SingleEventById(20);
 
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("RequestRedirect", e.EventName);
-            Assert.AreEqual(mockTransport.Requests[0].ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://example.com/", e.GetProperty<string>("from"));
-            Assert.AreEqual("https://new.host/", e.GetProperty<string>("to"));
-            Assert.AreEqual(code, e.GetProperty<int>("status"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("RequestRedirect"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(mockTransport.Requests[0].ClientRequestId));
+            Assert.That(e.GetProperty<string>("from"), Is.EqualTo("https://example.com/"));
+            Assert.That(e.GetProperty<string>("to"), Is.EqualTo("https://new.host/"));
+            Assert.That(e.GetProperty<int>("status"), Is.EqualTo(code));
         }
 
         [TestCaseSource(nameof(RedirectStatusCodes))]
@@ -64,9 +64,9 @@ namespace Azure.Core.Tests
                 message.Request.Uri.Reset(new Uri("https://example.com/"));
             }, RedirectPolicy.Shared);
 
-            Assert.AreEqual(200, response.Status);
-            Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://example.com/uploads/", mockTransport.Requests[1].Uri.ToString());
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://example.com/uploads/"));
         }
 
         [TestCaseSource(nameof(RedirectStatusCodesOldMethodsNewMethods))]
@@ -83,9 +83,9 @@ namespace Azure.Core.Tests
                 message.Request.Method = new RequestMethod(oldMethod);
             }, RedirectPolicy.Shared);
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://new.host/", mockTransport.Requests[1].Uri.ToString());
-            Assert.AreEqual(newMethod, mockTransport.Requests[1].Method.ToString());
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://new.host/"));
+            Assert.That(mockTransport.Requests[1].Method.ToString(), Is.EqualTo(newMethod));
         }
 
         [Test]
@@ -104,17 +104,17 @@ namespace Azure.Core.Tests
                 message.Request.Uri.Reset(new Uri("https://example.com/"));
             }, RedirectPolicy.Shared);
 
-            Assert.AreEqual(300, response.Status);
-            Assert.AreEqual(51, mockTransport.Requests.Count);
-            Assert.AreEqual("https://new.host/", mockTransport.Requests[1].Uri.ToString());
+            Assert.That(response.Status, Is.EqualTo(300));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(51));
+            Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://new.host/"));
 
             var e = testListener.SingleEventById(22);
 
-            Assert.AreEqual(EventLevel.Warning, e.Level);
-            Assert.AreEqual("RequestRedirectCountExceeded", e.EventName);
-            Assert.AreEqual(mockTransport.Requests[0].ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://new.host/", e.GetProperty<string>("from"));
-            Assert.AreEqual("https://new.host/", e.GetProperty<string>("to"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Warning));
+            Assert.That(e.EventName, Is.EqualTo("RequestRedirectCountExceeded"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(mockTransport.Requests[0].ClientRequestId));
+            Assert.That(e.GetProperty<string>("from"), Is.EqualTo("https://new.host/"));
+            Assert.That(e.GetProperty<string>("to"), Is.EqualTo("https://new.host/"));
         }
 
         [Test]
@@ -133,16 +133,16 @@ namespace Azure.Core.Tests
                 message.Request.Uri.Reset(new Uri("https://example.com/"));
             }, RedirectPolicy.Shared);
 
-            Assert.AreEqual(300, response.Status);
-            Assert.AreEqual(1, mockTransport.Requests.Count);
+            Assert.That(response.Status, Is.EqualTo(300));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
 
             var e = testListener.SingleEventById(21);
 
-            Assert.AreEqual(EventLevel.Warning, e.Level);
-            Assert.AreEqual("RequestRedirectBlocked", e.EventName);
-            Assert.AreEqual(mockTransport.Requests[0].ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://example.com/", e.GetProperty<string>("from"));
-            Assert.AreEqual("http://new.host/", e.GetProperty<string>("to"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Warning));
+            Assert.That(e.EventName, Is.EqualTo("RequestRedirectBlocked"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(mockTransport.Requests[0].ClientRequestId));
+            Assert.That(e.GetProperty<string>("from"), Is.EqualTo("https://example.com/"));
+            Assert.That(e.GetProperty<string>("to"), Is.EqualTo("http://new.host/"));
         }
 
         [Test]
@@ -160,9 +160,9 @@ namespace Azure.Core.Tests
                 message.Request.Uri.Reset(new Uri("https://example.com/"));
             }, RedirectPolicy.Shared);
 
-            Assert.AreEqual(200, response.Status);
-            Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.False(mockTransport.Requests[1].Headers.Contains("Authorization"));
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.That(mockTransport.Requests[1].Headers.Contains("Authorization"), Is.False);
         }
 
         [Test]
@@ -182,13 +182,13 @@ namespace Azure.Core.Tests
 
             if (isClientRedirectEnabled)
             {
-                Assert.AreEqual(200, response.Status);
-                Assert.AreEqual(2, mockTransport.Requests.Count);
+                Assert.That(response.Status, Is.EqualTo(200));
+                Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
             }
             else
             {
-                Assert.AreEqual(300, response.Status);
-                Assert.AreEqual(1, mockTransport.Requests.Count);
+                Assert.That(response.Status, Is.EqualTo(300));
+                Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
             }
         }
 
@@ -213,13 +213,13 @@ namespace Azure.Core.Tests
 
             if (setAllowAutoRedirect ?? false || (!setAllowAutoRedirect.HasValue && isClientRedirectEnabled))
             {
-                Assert.AreEqual(200, response.Status);
-                Assert.AreEqual(2, mockTransport.Requests.Count);
+                Assert.That(response.Status, Is.EqualTo(200));
+                Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
             }
             else
             {
-                Assert.AreEqual(300, response.Status);
-                Assert.AreEqual(1, mockTransport.Requests.Count);
+                Assert.That(response.Status, Is.EqualTo(300));
+                Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
             }
         }
 

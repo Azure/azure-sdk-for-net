@@ -64,7 +64,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-                Assert.AreEqual(orig.Replace("\r", "").Replace("\n", "").Replace(" ", ""), json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(orig.Replace("\r", "").Replace("\n", "").Replace(" ", "")));
 
                 // Make changes from the top down.
 
@@ -130,7 +130,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-                Assert.AreEqual(changed.Replace("\r", "").Replace("\n", "").Replace(" ", ""), json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(changed.Replace("\r", "").Replace("\n", "").Replace(" ", "")));
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-                Assert.AreEqual(orig.Replace("\r", "").Replace("\n", "").Replace(" ", ""), json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(orig.Replace("\r", "").Replace("\n", "").Replace(" ", "")));
 
                 // Make changes from the bottom up
                 // Changes to C - marked with 0
@@ -254,7 +254,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-                Assert.AreEqual(changed.Replace("\r", "").Replace("\n", "").Replace(" ", ""), json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(changed.Replace("\r", "").Replace("\n", "").Replace(" ", "")));
             }
         }
 
@@ -313,7 +313,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-                Assert.AreEqual(orig.Replace("\r", "").Replace("\n", "").Replace(" ", ""), json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(orig.Replace("\r", "").Replace("\n", "").Replace(" ", "")));
 
                 // Make changes from the left to the right
 
@@ -365,7 +365,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-                Assert.AreEqual(changed.Replace("\r", "").Replace("\n", "").Replace(" ", ""), json.ToString());
+                Assert.That(json.ToString(), Is.EqualTo(changed.Replace("\r", "").Replace("\n", "").Replace(" ", "")));
             }
         }
     }

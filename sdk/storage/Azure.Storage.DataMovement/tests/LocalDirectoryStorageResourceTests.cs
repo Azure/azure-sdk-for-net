@@ -31,8 +31,8 @@ namespace Azure.Storage.DataMovement.Tests
                 LocalDirectoryStorageResourceContainer storageResource = new LocalDirectoryStorageResourceContainer(path);
 
                 // Assert
-                Assert.AreEqual(path, storageResource.Uri.LocalPath);
-                Assert.AreEqual(Uri.UriSchemeFile, storageResource.Uri.Scheme);
+                Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+                Assert.That(storageResource.Uri.Scheme, Is.EqualTo(Uri.UriSchemeFile));
             }
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Ctor_Error()
         {
-            Assert.Catch<ArgumentException>( () =>
+            Assert.Catch<ArgumentException>(() =>
                 new LocalDirectoryStorageResourceContainer(""));
 
             Assert.Catch<ArgumentException>(() =>
@@ -104,9 +104,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Assert
-            Assert.IsNotEmpty(resultPaths);
-            Assert.AreEqual(paths.Count, resultPaths.Count);
-            Assert.IsTrue(paths.All(path => resultPaths.Contains(path)));
+            Assert.That(resultPaths, Is.Not.Empty);
+            Assert.That(resultPaths.Count, Is.EqualTo(paths.Count));
+            Assert.That(paths.All(path => resultPaths.Contains(path)), Is.True);
         }
 
         [Test]
@@ -213,7 +213,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer childContainer = container.GetChildStorageResourceContainer(childPath);
 
             string fullPath = Path.Combine(folderPath, childPath);
-            Assert.AreEqual(childContainer.Uri, new Uri(fullPath));
+            Assert.That(new Uri(fullPath), Is.EqualTo(childContainer.Uri));
         }
 
         [Test]

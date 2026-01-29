@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 

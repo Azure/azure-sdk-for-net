@@ -21,8 +21,7 @@
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
     <MSTestVersion>1.3.2</MSTestVersion>
-    <NUnitVersion>3.14.0</NUnitVersion>
-    <OpenTelemetryInstrumentationHttpVersion>1.14.0</OpenTelemetryInstrumentationHttpVersion>
+    <NUnitVersion>3.14.0</NUnitVersion>    <OpenTelemetryInstrumentationHttpVersion>1.14.0</OpenTelemetryInstrumentationHttpVersion>
     <OpenTelemetryVersion>1.14.0</OpenTelemetryVersion>
 
     <!-- Internal tooling from the Azure Development Feed -->
@@ -262,8 +261,7 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
     <PackageReference Update="MSTest.TestFramework" Version="$(MSTestVersion)" />
-    <PackageReference Update="NUnit" Version="$(NUnitVersion)" />
-  </ItemGroup>
+    <PackageReference Update="NUnit" Version="$(NUnitVersion)" />  </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <PackageReference Update="Microsoft.Extensions.Telemetry" Version="10.1.0" />
@@ -533,6 +531,29 @@
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
   </ItemGroup>
 
+  <!-- Temporary section for phased NUnit 4 migration -->
+    <ItemGroup Condition="('$(IsTestProject)' == 'true'
+      or '$(IsTestSupportProject)' == 'true'
+      or '$(IsPerfProject)' == 'true'
+      or '$(IsStressProject)' == 'true'
+      or '$(IsSamplesProject)' == 'true')
+      and ($(MSBuildProjectDirectory.Contains('\sdk\core\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\template\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storage\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagecache\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storageactions\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagemover\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagepool\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagesync\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\storagediscovery\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\identity\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\keyvault\'))
+      or $(MSBuildProjectDirectory.Contains('\sdk\entra\')))">
+      <PackageReference Update="NUnit" Version="4.4.0" />
+      <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
+      <PackageReference Update="NUnit.Analyzers" Version="4.5.0" />
+    </ItemGroup>
+
   <!--
     FluentAssertions is approved only for legacy use. Azure SDK test projects should
     use NUnit assertions.
@@ -580,10 +601,11 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" />
   </ItemGroup>
 
-  <!-- The unbranded test framework is the first to use NUnit 4; the repository will migrate fully in the near future -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageReference Update="NUnit" Version="4.4.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Update="NUnit.Analyzers" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

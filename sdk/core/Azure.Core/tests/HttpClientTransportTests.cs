@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
             response.ContentStream = new MemoryStream();
             response.Dispose();
 
-            Assert.False(disposeTrackingContent.IsDisposed);
+            Assert.That(disposeTrackingContent.IsDisposed, Is.False);
         }
 
         [Test]
@@ -64,11 +64,11 @@ namespace Azure.Core.Tests
             request.Method = RequestMethod.Get;
             request.Uri.Reset(expectedUri);
 
-            Assert.AreEqual(expectedUri.ToString(), request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUri.ToString()));
 
             await ExecuteRequest(request, transport);
 
-            Assert.AreEqual(expectedUri, requestUri);
+            Assert.That(requestUri, Is.EqualTo(expectedUri));
         }
 
         public static object[] HeadersWithValuesAndType =>
@@ -103,7 +103,7 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(request, transport);
 
-            Assert.Null(httpMessageContent);
+            Assert.That(httpMessageContent, Is.Null);
         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
@@ -117,11 +117,11 @@ namespace Azure.Core.Tests
                     if (contentHeader)
                     {
                         responseMessage.Content = new StreamContent(new MemoryStream());
-                        Assert.True(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, headerValue));
+                        Assert.That(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, headerValue), Is.True);
                     }
                     else
                     {
-                        Assert.True(responseMessage.Headers.TryAddWithoutValidation(headerName, headerValue));
+                        Assert.That(responseMessage.Headers.TryAddWithoutValidation(headerName, headerValue), Is.True);
                     }
 
                     return Task.FromResult(responseMessage);
@@ -135,15 +135,15 @@ namespace Azure.Core.Tests
             Response response = await ExecuteRequest(request, transport);
             response.ContentStream = new MemoryStream();
 
-            Assert.True(response.Headers.Contains(headerName));
+            Assert.That(response.Headers.Contains(headerName), Is.True);
 
-            Assert.True(response.Headers.TryGetValue(headerName, out var value));
-            Assert.AreEqual(headerValue, value);
+            Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(headerValue));
 
-            Assert.True(response.Headers.TryGetValues(headerName, out IEnumerable<string> values));
-            CollectionAssert.AreEqual(new[] { headerValue }, values);
+            Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
+            Assert.That(values, Is.EqualTo(new[] { headerValue }).AsCollection);
 
-            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
+            Assert.That(response.Headers, Has.Member(new HttpHeader(headerName, headerValue)));
         }
 
         private static Request CreateRequest(HttpClientTransport transport, byte[] bytes = null)

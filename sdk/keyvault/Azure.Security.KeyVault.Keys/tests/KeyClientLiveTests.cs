@@ -91,9 +91,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             await JsonSerializer.SerializeAsync(ms, keyReturned.Key);
             string json = Encoding.UTF8.GetString(ms.ToArray());
 
-            StringAssert.Contains($@"""kid"":""{keyReturned.Id}""", json);
-            StringAssert.Contains(@"""kty"":""EC-HSM""", json);
-            StringAssert.Contains(@"""crv"":""P-256""", json);
+            Assert.That(json, Does.Contain($@"""kid"":""{keyReturned.Id}"""));
+            Assert.That(json, Does.Contain(@"""kty"":""EC-HSM"""));
+            Assert.That(json, Does.Contain(@"""crv"":""P-256"""));
         }
 
         [RecordedTest]
@@ -157,8 +157,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             await JsonSerializer.SerializeAsync(ms, keyReturned.Key);
             string json = Encoding.UTF8.GetString(ms.ToArray());
 
-            StringAssert.Contains($@"""kid"":""{keyReturned.Id}""", json);
-            StringAssert.Contains(@"""kty"":""RSA-HSM""", json);
+            Assert.That(json, Does.Contain($@"""kid"":""{keyReturned.Id}"""));
+            Assert.That(json, Does.Contain(@"""kty"":""RSA-HSM"""));
         }
 
         [RecordedTest]
@@ -597,9 +597,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
-            Assert.NotNull(deletedKey.DeletedOn);
-            Assert.NotNull(deletedKey.RecoveryId);
-            Assert.NotNull(deletedKey.ScheduledPurgeDate);
+            Assert.That(deletedKey.DeletedOn, Is.Not.Null);
+            Assert.That(deletedKey.RecoveryId, Is.Not.Null);
+            Assert.That(deletedKey.ScheduledPurgeDate, Is.Not.Null);
             AssertKeyVaultKeysEqual(key, deletedKey);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
@@ -619,9 +619,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeletedKey deletedKey = await operation.WaitForCompletionAsync();
 
-            Assert.NotNull(deletedKey.DeletedOn);
-            Assert.NotNull(deletedKey.RecoveryId);
-            Assert.NotNull(deletedKey.ScheduledPurgeDate);
+            Assert.That(deletedKey.DeletedOn, Is.Not.Null);
+            Assert.That(deletedKey.RecoveryId, Is.Not.Null);
+            Assert.That(deletedKey.ScheduledPurgeDate, Is.Not.Null);
             AssertKeyVaultKeysEqual(ecHsmKey, deletedKey);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
@@ -641,9 +641,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeletedKey deletedKey = await operation.WaitForCompletionAsync();
 
-            Assert.NotNull(deletedKey.DeletedOn);
-            Assert.NotNull(deletedKey.RecoveryId);
-            Assert.NotNull(deletedKey.ScheduledPurgeDate);
+            Assert.That(deletedKey.DeletedOn, Is.Not.Null);
+            Assert.That(deletedKey.RecoveryId, Is.Not.Null);
+            Assert.That(deletedKey.ScheduledPurgeDate, Is.Not.Null);
             AssertKeyVaultKeysEqual(rsaHsmKey, deletedKey);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
@@ -671,9 +671,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
-            Assert.NotNull(deletedKey.DeletedOn);
-            Assert.NotNull(deletedKey.RecoveryId);
-            Assert.NotNull(deletedKey.ScheduledPurgeDate);
+            Assert.That(deletedKey.DeletedOn, Is.Not.Null);
+            Assert.That(deletedKey.RecoveryId, Is.Not.Null);
+            Assert.That(deletedKey.ScheduledPurgeDate, Is.Not.Null);
 
             AssertKeyVaultKeysEqual(deletedKey, polledSecret);
             AssertKeyVaultKeysEqual(key, polledSecret);
@@ -697,9 +697,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
-            Assert.NotNull(deletedKey.DeletedOn);
-            Assert.NotNull(deletedKey.RecoveryId);
-            Assert.NotNull(deletedKey.ScheduledPurgeDate);
+            Assert.That(deletedKey.DeletedOn, Is.Not.Null);
+            Assert.That(deletedKey.RecoveryId, Is.Not.Null);
+            Assert.That(deletedKey.ScheduledPurgeDate, Is.Not.Null);
 
             AssertKeyVaultKeysEqual(deletedKey, polledSecret);
             AssertKeyVaultKeysEqual(ecHsmKey, polledSecret);
@@ -723,9 +723,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
-            Assert.NotNull(deletedKey.DeletedOn);
-            Assert.NotNull(deletedKey.RecoveryId);
-            Assert.NotNull(deletedKey.ScheduledPurgeDate);
+            Assert.That(deletedKey.DeletedOn, Is.Not.Null);
+            Assert.That(deletedKey.RecoveryId, Is.Not.Null);
+            Assert.That(deletedKey.ScheduledPurgeDate, Is.Not.Null);
 
             AssertKeyVaultKeysEqual(deletedKey, polledSecret);
             AssertKeyVaultKeysEqual(rsaHsmKey, polledSecret);
@@ -846,7 +846,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] backup = await Client.BackupKeyAsync(keyName);
 
-            Assert.NotNull(backup);
+            Assert.That(backup, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -966,7 +966,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task GetPropertiesOfKeyVersionsNonExisting()
         {
             List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            Assert.AreEqual(0, allKeys.Count);
+            Assert.That(allKeys.Count, Is.EqualTo(0));
         }
     }
 }

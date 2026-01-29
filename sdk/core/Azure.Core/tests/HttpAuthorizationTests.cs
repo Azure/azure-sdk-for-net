@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
 
             // Assert
 
-            Assert.AreEqual($"{scheme} {parameter}", s);
+            Assert.That(s, Is.EqualTo($"{scheme} {parameter}"));
         }
     }
 }

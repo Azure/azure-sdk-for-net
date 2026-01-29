@@ -128,7 +128,7 @@ namespace Azure.Storage.Blobs.Tests
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
         #endregion

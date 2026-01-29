@@ -216,11 +216,11 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsNotNull(ex.InnerException);
+            Assert.That(ex.InnerException, Is.Not.Null);
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
-            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+            Assert.That(ex.InnerException.Message, Is.EqualTo(expectedInnerExMessage));
         }
 
         [Test]
@@ -249,7 +249,7 @@ namespace Azure.Identity.Tests
 
             var token = await credential.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -283,7 +283,7 @@ namespace Azure.Identity.Tests
 
             var token = await credential.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -300,7 +300,7 @@ namespace Azure.Identity.Tests
                     var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 
                     var cred = new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath);
-                    Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                    Assert.That(cred.Client.RegionalAuthority, Is.EqualTo(regionalAuthority));
                 }
             }
         }

@@ -29,7 +29,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
 
         protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {
-            Assert.AreEqual(model.GetType(), model2.GetType());
+            Assert.That(model2.GetType(), Is.EqualTo(model.GetType()));
             if (model is ModelX modelX)
             {
                 ModelInstances.CompareModelX(modelX, (ModelX)model2, format);

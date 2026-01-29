@@ -26,8 +26,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 b.AddAzureStorageBlobs();
             }, values);
 
-            Assert.AreEqual(2, options.MaxDegreeOfParallelism);
-            Assert.AreEqual(3, options.PoisonBlobThreshold);
+            Assert.That(options.MaxDegreeOfParallelism, Is.EqualTo(2));
+            Assert.That(options.PoisonBlobThreshold, Is.EqualTo(3));
         }
     }
 }

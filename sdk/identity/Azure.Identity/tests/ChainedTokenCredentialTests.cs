@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
-using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity.Tests.Mock;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
-using Azure.Core.Pipeline;
+using Azure.Identity.Tests.Mock;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void Setup()
         {
-            _pipeline = new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions() { AuthorityHost = new Uri("https://a.b.com")}));
+            _pipeline = new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions() { AuthorityHost = new Uri("https://a.b.com") }));
         }
 
         public class SimpleMockTokenCredential : TokenCredential
@@ -143,14 +143,14 @@ namespace Azure.Identity.Tests
 
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
 
-                Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
-            Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeB" }))).Token);
-            Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeC" }))).Token);
+                Assert.That((await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token, Is.EqualTo("tokenA"));
+            Assert.That((await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeB" }))).Token, Is.EqualTo("tokenB"));
+            Assert.That((await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeC" }))).Token, Is.EqualTo("tokenC"));
             var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeD" })));
 
-            Assert.IsInstanceOf(typeof(AggregateException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(AggregateException)));
 
-            CollectionAssert.AllItemsAreInstancesOfType(((AggregateException)ex.InnerException).InnerExceptions, typeof(CredentialUnavailableException));
+            Assert.That(((AggregateException)ex.InnerException).InnerExceptions, Is.All.InstanceOf(typeof(CredentialUnavailableException)));
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace Azure.Identity.Tests
             var cred3 = new SimpleMockTokenCredential("scopeB", "tokenB", _pipeline);
             var provider = InstrumentClient(new ChainedTokenCredential(cred1, cred2, cred3));
 
-            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
+            Assert.That((await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token, Is.EqualTo("tokenA"));
             Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeB" })));
             Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeC" })));
         }
@@ -176,9 +176,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await chain.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsInstanceOf(typeof(AggregateException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(AggregateException)));
 
-            CollectionAssert.AllItemsAreInstancesOfType(((AggregateException)ex.InnerException).InnerExceptions, typeof(CredentialUnavailableException));
+            Assert.That(((AggregateException)ex.InnerException).InnerExceptions, Is.All.InstanceOf(typeof(CredentialUnavailableException)));
 
             await Task.CompletedTask;
         }

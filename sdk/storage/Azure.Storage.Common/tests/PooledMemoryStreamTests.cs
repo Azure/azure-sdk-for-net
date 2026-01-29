@@ -32,12 +32,12 @@ namespace Azure.Storage.Tests
 #pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
             predictableStream.Read(buffer, 0, dataSize);
 #pragma warning restore CA2022
-            Assert.AreEqual(dataSize, predictableStream.Position);
+            Assert.That(predictableStream.Position, Is.EqualTo(dataSize));
 
             var expected = Enumerable.Range(0, dataSize).Select(val => (byte)(val % byte.MaxValue)).ToArray();
             for (int i = 0; i < dataSize; i++)
             {
-                Assert.AreEqual(buffer[i], expected[i]);
+                Assert.That(expected[i], Is.EqualTo(buffer[i]));
             }
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Storage.Tests
             arrayPoolStream.Read(poolStreamData, 0, dataSize);
 #pragma warning restore CA2022
 
-            CollectionAssert.AreEqual(originalStreamData, poolStreamData);
+            Assert.That(poolStreamData, Is.EqualTo(originalStreamData).AsCollection);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace Azure.Storage.Tests
                 totalRead += read;
             } while (read != 0);
 
-            Assert.AreEqual(dataSize, totalRead);
+            Assert.That(totalRead, Is.EqualTo(dataSize));
         }
 
         [TestCase(Constants.KB, 256)] // buffer split size smaller than data
@@ -111,7 +111,7 @@ namespace Azure.Storage.Tests
 
             // Assert
             AssertSequenceEqual(originalData, readData);
-            Assert.AreEqual(0, pooledMemoryStream.Position);
+            Assert.That(pooledMemoryStream.Position, Is.EqualTo(0));
         }
 
         [TestCase(1, 0, 1)]
@@ -139,8 +139,8 @@ namespace Azure.Storage.Tests
             byte result = Convert.ToByte(pooledMemoryStream.ReadByte());
 
             // Assert
-            Assert.AreEqual(initialReadSize + 1, pooledMemoryStream.Position);
-            Assert.AreEqual(originalData[initialReadSize], result);
+            Assert.That(pooledMemoryStream.Position, Is.EqualTo(initialReadSize + 1));
+            Assert.That(result, Is.EqualTo(originalData[initialReadSize]));
         }
 
         [TestCase(Constants.KB, 2 * Constants.KB)]
@@ -162,7 +162,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual(originalData.Length, pooledMemoryStream.Position);
+            Assert.That(pooledMemoryStream.Position, Is.EqualTo(originalData.Length));
             AssertSequenceEqual(originalData, result);
         }
 
@@ -176,9 +176,9 @@ namespace Azure.Storage.Tests
 
         public static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
-            Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
+            Assert.That(actual.Count(), Is.EqualTo(expected.Count()), "Actual sequence length does not match expected sequence length");
             (int Index, T Expected, T Actual)[] firstErrors = expected.Zip(actual, (e, a) => (Expected: e, Actual: a)).Select((x, i) => (Index: i, x.Expected, x.Actual)).Where(x => !x.Expected.Equals(x.Actual)).Take(5).ToArray();
-            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.Index} => expected = {e.Expected}, actual = {e.Actual}"))}");
+            Assert.That(firstErrors.Any(), Is.False, $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.Index} => expected = {e.Expected}, actual = {e.Actual}"))}");
         }
     }
 }

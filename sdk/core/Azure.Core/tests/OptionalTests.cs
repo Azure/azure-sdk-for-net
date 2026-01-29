@@ -14,43 +14,43 @@ namespace Azure.Core.Tests
         [TestCase(float.MinValue)]
         [TestCase(false)]
         [TestCase('a')]
-        public void DefaultPrimitiveValueType<T>(T value) where T: struct
+        public void DefaultPrimitiveValueType<T>(T value) where T : struct
         {
             Optional<T> optional = default;
-            Assert.False(Optional.ToNullable(optional).HasValue);
+            Assert.That(Optional.ToNullable(optional).HasValue, Is.False);
 
             optional = value;
-            Assert.True(Optional.ToNullable(optional).HasValue);
+            Assert.That(Optional.ToNullable(optional).HasValue, Is.True);
         }
 
         [Test]
         public void DefaultStructValueType()
         {
             Optional<DateTimeOffset> optional = default;
-            Assert.False(Optional.ToNullable(optional).HasValue);
+            Assert.That(Optional.ToNullable(optional).HasValue, Is.False);
 
             optional = DateTimeOffset.Now;
-            Assert.True(Optional.ToNullable(optional).HasValue);
+            Assert.That(Optional.ToNullable(optional).HasValue, Is.True);
         }
 
         [Test]
         public void DefaultEnumValueType()
         {
             Optional<HttpStatusCode> optional = default;
-            Assert.False(Optional.ToNullable(optional).HasValue);
+            Assert.That(Optional.ToNullable(optional).HasValue, Is.False);
 
             optional = HttpStatusCode.Accepted;
-            Assert.True(Optional.ToNullable(optional).HasValue);
+            Assert.That(Optional.ToNullable(optional).HasValue, Is.True);
         }
 
         [TestCase("")]
         public void DefaultReferenceType<T>(T value)
         {
             Optional<T> optional = default;
-            Assert.False(optional.HasValue);
+            Assert.That(optional.HasValue, Is.False);
 
             optional = value;
-            Assert.True(optional.HasValue);
+            Assert.That(optional.HasValue, Is.True);
         }
     }
 }

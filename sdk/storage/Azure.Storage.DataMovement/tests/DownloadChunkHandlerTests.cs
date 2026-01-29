@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Moq;
-using NUnit.Framework;
 using System.IO;
 using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Tests.Shared;
-using System.Threading.Channels;
+using Moq;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -53,13 +53,13 @@ namespace Azure.Storage.DataMovement.Tests
                     Thread.Sleep(TimeSpan.FromSeconds(_maxDelayInSec));
 
                     currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
-                    Assert.LessOrEqual(currentFailedEventCount, expectedFailureCount, _failedEventMsg);
+                    Assert.That(currentFailedEventCount, Is.LessThanOrEqualTo(expectedFailureCount), _failedEventMsg);
                     currentCopyDestinationCount = behaviors.CopyToDestinationFileTask.Invocations.Count;
-                    Assert.LessOrEqual(currentCopyDestinationCount, expectedCopyDestinationCount, _copyToDestinationMsg);
+                    Assert.That(currentCopyDestinationCount, Is.LessThanOrEqualTo(expectedCopyDestinationCount), _copyToDestinationMsg);
                     currentProgressReportedCount = behaviors.ReportProgressInBytesTask.Invocations.Count;
-                    Assert.LessOrEqual(currentProgressReportedCount, expectedReportProgressCount, _reportProgressInBytesMsg);
+                    Assert.That(currentProgressReportedCount, Is.LessThanOrEqualTo(expectedReportProgressCount), _reportProgressInBytesMsg);
                     currentCompleteDownloadCount = behaviors.QueueCompleteFileDownloadTask.Invocations.Count;
-                    Assert.LessOrEqual(currentCompleteDownloadCount, expectedCompleteFileCount, _completeFileDownloadMsg);
+                    Assert.That(currentCompleteDownloadCount, Is.LessThanOrEqualTo(expectedCompleteFileCount), _completeFileDownloadMsg);
                 }
             }
             catch (TaskCanceledException)

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
-            Assert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
+            Assert.That(assemblyName.EndsWith(TestAssemblySuffix), Is.True, $"The test assembly should end with {TestAssemblySuffix}");
             var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
 
             if (rpNamespace == TestFrameworkAssembly)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TestFramework
 
             var sdkAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == rpNamespace) ?? Assembly.Load(rpNamespace);
 
-            Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
+            Assert.That(sdkAssembly, Is.Not.Null, $"The SDK assembly {rpNamespace} not found");
 
             // Verify all class end with `Resource` & `Collection`
             HashSet<string> exceptionList = ExceptionList == null ? new HashSet<string>() : new HashSet<string>(ExceptionList);
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.TestFramework
                 }
             }
 
-            Assert.IsEmpty(exceptionList, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
-            Assert.IsEmpty(errorList, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
+            Assert.That(exceptionList, Is.Empty, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
+            Assert.That(errorList, Is.Empty, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
         }
     }
 }

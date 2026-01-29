@@ -13,11 +13,11 @@ namespace System.ClientModel.Tests.Options
         public void NonCollectionPropertiesDefaultToNull()
         {
             ClientLoggingOptions options = new();
-            Assert.AreEqual(null, options.EnableLogging);
-            Assert.AreEqual(null, options.EnableMessageLogging);
-            Assert.AreEqual(null, options.EnableMessageContentLogging);
-            Assert.AreEqual(null, options.MessageContentSizeLimit);
-            Assert.AreEqual(null, options.LoggerFactory);
+            Assert.That(options.EnableLogging, Is.EqualTo(null));
+            Assert.That(options.EnableMessageLogging, Is.EqualTo(null));
+            Assert.That(options.EnableMessageContentLogging, Is.EqualTo(null));
+            Assert.That(options.MessageContentSizeLimit, Is.EqualTo(null));
+            Assert.That(options.LoggerFactory, Is.EqualTo(null));
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace System.ClientModel.Tests.Options
             string[] expectedDefaultAllowedQueryParameters = ["api-version"];
 
             ClientLoggingOptions options = new();
-            CollectionAssert.AreEquivalent(expectedDefaultAllowedHeaderNames, options.AllowedHeaderNames);
-            CollectionAssert.AreEquivalent(expectedDefaultAllowedQueryParameters, options.AllowedQueryParameters);
+            Assert.That(options.AllowedHeaderNames, Is.EquivalentTo(expectedDefaultAllowedHeaderNames));
+            Assert.That(options.AllowedQueryParameters, Is.EquivalentTo(expectedDefaultAllowedQueryParameters));
         }
 
         [Test]
@@ -64,13 +64,13 @@ namespace System.ClientModel.Tests.Options
             options.AllowedHeaderNames.Add("Hello");
             options.AllowedQueryParameters.Add("Hello");
 
-            Assert.AreEqual(5, options.MessageContentSizeLimit);
-            Assert.AreEqual(NullLoggerFactory.Instance, options.LoggerFactory);
-            Assert.AreEqual(false, options.EnableLogging);
-            Assert.AreEqual(false, options.EnableMessageLogging);
-            Assert.AreEqual(false, options.EnableMessageContentLogging);
-            CollectionAssert.Contains(options.AllowedHeaderNames, "Hello");
-            CollectionAssert.Contains(options.AllowedQueryParameters, "Hello");
+            Assert.That(options.MessageContentSizeLimit, Is.EqualTo(5));
+            Assert.That(options.LoggerFactory, Is.EqualTo(NullLoggerFactory.Instance));
+            Assert.That(options.EnableLogging, Is.EqualTo(false));
+            Assert.That(options.EnableMessageLogging, Is.EqualTo(false));
+            Assert.That(options.EnableMessageContentLogging, Is.EqualTo(false));
+            Assert.That(options.AllowedHeaderNames, Has.Member("Hello"));
+            Assert.That(options.AllowedQueryParameters, Has.Member("Hello"));
         }
 
         [Test]

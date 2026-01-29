@@ -70,7 +70,7 @@ namespace Azure.Core.TestFramework.Tests
         {
             // this is allowed when in Live mode since we are not going to look at any record sessions anyway
             var test = new RecordedVariableMisuse(true, mode);
-            Assert.AreEqual("1", test.Value);
+            Assert.That(test.Value, Is.EqualTo("1"));
         }
 
         [TestCase(RecordedTestMode.Live)]
@@ -80,7 +80,7 @@ namespace Azure.Core.TestFramework.Tests
         public void ReadingNonRecordedValueInCtorWorks(RecordedTestMode mode)
         {
             var test = new RecordedVariableMisuse(false, mode);
-            Assert.AreEqual("2", test.Value);
+            Assert.That(test.Value, Is.EqualTo("2"));
         }
 
         [TestCase(RecordedTestMode.Live)]
@@ -90,7 +90,7 @@ namespace Azure.Core.TestFramework.Tests
         public void ReadingRecordedValueInCtorWorksForSamples(RecordedTestMode mode)
         {
             var test = new SampleTestClass();
-            Assert.AreEqual("1", test.Value);
+            Assert.That(test.Value, Is.EqualTo("1"));
         }
 
         [TestCase(RecordedTestMode.Live)]
@@ -100,19 +100,19 @@ namespace Azure.Core.TestFramework.Tests
         public void ReadingRecordedValueInCtorWorksForLiveTests(RecordedTestMode mode)
         {
             var test = new LiveTestClass();
-            Assert.AreEqual("1", test.Value);
+            Assert.That(test.Value, Is.EqualTo("1"));
         }
 
         [Test]
         public void ReadingRecordedValueOutsideRecordedTestWorks()
         {
-            Assert.AreEqual("1", MockTestEnvironment.Instance.RecordedValue);
+            Assert.That(MockTestEnvironment.Instance.RecordedValue, Is.EqualTo("1"));
         }
 
         [Test]
         public void ReadingNonRecordedValueOutsideRecordedTestWorks()
         {
-            Assert.AreEqual("2", MockTestEnvironment.Instance.NotRecordedValue);
+            Assert.That(MockTestEnvironment.Instance.NotRecordedValue, Is.EqualTo("2"));
         }
 
         [Test]
@@ -125,19 +125,19 @@ namespace Azure.Core.TestFramework.Tests
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
-            Assert.AreEqual("1", env.Base64Secret);
-            Assert.AreEqual("1", env.CustomSecret);
-            Assert.AreEqual("1", env.DefaultSecret);
-            Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
+            Assert.That(env.Base64Secret, Is.EqualTo("1"));
+            Assert.That(env.CustomSecret, Is.EqualTo("1"));
+            Assert.That(env.DefaultSecret, Is.EqualTo("1"));
+            Assert.That(env.ConnectionStringWithSecret, Is.EqualTo("endpoint=1;key=2"));
 
             await testRecording.DisposeAsync();
 
             testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true));
 
-            Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
-            Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
-            Assert.AreEqual("Sanitized", testRecording.GetVariable("DefaultSecret", ""));
-            Assert.AreEqual("endpoint=1;key=Sanitized", testRecording.GetVariable("ConnectionStringWithSecret", ""));
+            Assert.That(testRecording.GetVariable("Base64Secret", ""), Is.EqualTo("Kg=="));
+            Assert.That(testRecording.GetVariable("CustomSecret", ""), Is.EqualTo("Custom"));
+            Assert.That(testRecording.GetVariable("DefaultSecret", ""), Is.EqualTo("Sanitized"));
+            Assert.That(testRecording.GetVariable("ConnectionStringWithSecret", ""), Is.EqualTo("endpoint=1;key=Sanitized"));
         }
 
         [Test]
@@ -150,28 +150,28 @@ namespace Azure.Core.TestFramework.Tests
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
-            Assert.IsNull(env.MissingOptionalSecret);
+            Assert.That(env.MissingOptionalSecret, Is.Null);
 
             await testRecording.DisposeAsync();
             testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true));
 
-            Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
+            Assert.That(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null), Is.Null);
         }
 
         [Test]
         public void RecordedOptionalVariablePrefersPrefix()
         {
             var env = new MockTestEnvironment();
-            Assert.AreEqual("1", env.RecordedValue);
+            Assert.That(env.RecordedValue, Is.EqualTo("1"));
             if (_envFilePath != null)
             {
-                Assert.AreEqual("7", env.TenantId);
+                Assert.That(env.TenantId, Is.EqualTo("7"));
             }
             else
             {
-                Assert.AreEqual("4", env.TenantId);
+                Assert.That(env.TenantId, Is.EqualTo("4"));
             }
-            Assert.AreEqual("5", env.AzureEnvironment);
+            Assert.That(env.AzureEnvironment, Is.EqualTo("5"));
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace Azure.Core.TestFramework.Tests
                 }
                 catch (InvalidOperationException e)
                 {
-                    StringAssert.Contains("kaboom", e.Message);
+                    Assert.That(e.Message, Does.Contain("kaboom"));
                 }
 
                 try
@@ -198,10 +198,10 @@ namespace Azure.Core.TestFramework.Tests
                 }
                 catch (InvalidOperationException e)
                 {
-                    StringAssert.Contains("kaboom", e.Message);
+                    Assert.That(e.Message, Does.Contain("kaboom"));
                 }
 
-                Assert.AreEqual(1, WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount);
+                Assert.That(WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount, Is.EqualTo(1));
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.Core.TestFramework.Tests
             {
                 if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
                 {
-                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentOne.InvocationCount);
+                    Assert.That(WaitForEnvironmentTestEnvironmentOne.InvocationCount, Is.EqualTo(2));
                 }
             }
         }
@@ -287,7 +287,7 @@ namespace Azure.Core.TestFramework.Tests
             {
                 if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
                 {
-                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                    Assert.That(WaitForEnvironmentTestEnvironmentTwo.InvocationCount, Is.EqualTo(2));
                 }
             }
         }
@@ -304,7 +304,7 @@ namespace Azure.Core.TestFramework.Tests
             {
                 if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
                 {
-                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                    Assert.That(WaitForEnvironmentTestEnvironmentTwo.InvocationCount, Is.EqualTo(2));
                 }
             }
         }

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.Security.KeyVault.Secrets;
-using Azure.Core;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Security.KeyVault.Secrets;
 
 namespace Azure.Identity.Tests.samples
 {

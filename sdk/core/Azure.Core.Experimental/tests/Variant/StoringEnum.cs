@@ -23,8 +23,8 @@ namespace Azure.Core.Experimental.Tests
                 outDay = value.As<DayOfWeek>();
             }
 
-            Assert.AreEqual(day, outDay);
-            Assert.AreEqual(typeof(DayOfWeek), value.Type);
+            Assert.That(outDay, Is.EqualTo(day));
+            Assert.That(value.Type, Is.EqualTo(typeof(DayOfWeek)));
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace Azure.Core.Experimental.Tests
             Variant value = Variant.Create(day);
             DayOfWeek outDay = value.As<DayOfWeek>();
 
-            Assert.AreEqual(day.Value, outDay);
-            Assert.AreEqual(typeof(DayOfWeek), value.Type);
+            Assert.That(outDay, Is.EqualTo(day.Value));
+            Assert.That(value.Type, Is.EqualTo(typeof(DayOfWeek)));
         }
 
         [Test]
@@ -44,12 +44,12 @@ namespace Azure.Core.Experimental.Tests
         {
             DayOfWeek day = DayOfWeek.Monday;
             Variant value = Variant.Create(day);
-            Assert.True(value.TryGetValue(out DayOfWeek? nullDay));
-            Assert.AreEqual(day, nullDay);
+            Assert.That(value.TryGetValue(out DayOfWeek? nullDay), Is.True);
+            Assert.That(nullDay, Is.EqualTo(day));
 
             value = Variant.Create((DayOfWeek?)day);
-            Assert.True(value.TryGetValue(out DayOfWeek outDay));
-            Assert.AreEqual(day, outDay);
+            Assert.That(value.TryGetValue(out DayOfWeek outDay), Is.True);
+            Assert.That(outDay, Is.EqualTo(day));
         }
 
         [Test]
@@ -57,12 +57,12 @@ namespace Azure.Core.Experimental.Tests
         {
             DayOfWeek day = DayOfWeek.Monday;
             Variant value = new(day);
-            Assert.True(value.TryGetValue(out DayOfWeek? nullDay));
-            Assert.AreEqual(day, nullDay);
+            Assert.That(value.TryGetValue(out DayOfWeek? nullDay), Is.True);
+            Assert.That(nullDay, Is.EqualTo(day));
 
             value = new((DayOfWeek?)day);
-            Assert.True(value.TryGetValue(out DayOfWeek outDay));
-            Assert.AreEqual(day, outDay);
+            Assert.That(value.TryGetValue(out DayOfWeek outDay), Is.True);
+            Assert.That(outDay, Is.EqualTo(day));
         }
 
         [TestCase(ByteEnum.MinValue)]
@@ -70,27 +70,27 @@ namespace Azure.Core.Experimental.Tests
         public void ByteSize(ByteEnum testValue)
         {
             Variant value = Variant.Create(testValue);
-            Assert.True(value.TryGetValue(out ByteEnum result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out ByteEnum? nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out ByteEnum result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out ByteEnum? nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
             value = Variant.Create((ByteEnum?)testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
 
             // Create boxed
             value = new(testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
             value = new((ByteEnum?)testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
         }
 
         [TestCase(ShortEnum.MinValue)]
@@ -98,27 +98,27 @@ namespace Azure.Core.Experimental.Tests
         public void ShortSize(ShortEnum testValue)
         {
             Variant value = Variant.Create(testValue);
-            Assert.True(value.TryGetValue(out ShortEnum result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out ShortEnum? nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out ShortEnum result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out ShortEnum? nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
             value = Variant.Create((ShortEnum?)testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
 
             // Create boxed
             value = new(testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
             value = new((ShortEnum?)testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
         }
 
         [TestCase(LongEnum.MinValue)]
@@ -126,27 +126,27 @@ namespace Azure.Core.Experimental.Tests
         public void LongSize(LongEnum testValue)
         {
             Variant value = Variant.Create(testValue);
-            Assert.True(value.TryGetValue(out LongEnum result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out LongEnum? nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out LongEnum result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out LongEnum? nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
             value = Variant.Create((LongEnum?)testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
 
             // Create boxed
             value = new(testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
             value = new((LongEnum?)testValue);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(testValue, nullResult!.Value);
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
         }
 
         [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]

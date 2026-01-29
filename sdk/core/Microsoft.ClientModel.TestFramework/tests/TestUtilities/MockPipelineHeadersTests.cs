@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ClientModel.TestFramework.Mocks;
-using NUnit.Framework;
 using System;
 using System.Linq;
+using Microsoft.ClientModel.TestFramework.Mocks;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 
@@ -30,7 +30,7 @@ public class MockPipelineHeadersTests
     public void SettingMultipleValuesResponseHeaders()
     {
         MockPipelineResponseHeaders headers = new();
-        string[] setValues = [ "Value1", "Value2", "Value3" ];
+        string[] setValues = ["Value1", "Value2", "Value3"];
 
         headers.SetHeader("X-Multiple-Values", setValues[0]);
         headers.SetHeader("X-Multiple-Values", setValues[1]);

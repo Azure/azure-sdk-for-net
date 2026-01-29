@@ -12,11 +12,11 @@ namespace Azure.Core.Amqp.Tests
         public void CanCreateFromString()
         {
             var address = new AmqpAddress("address");
-            Assert.AreEqual("address", address.ToString());
-            Assert.AreEqual("address".GetHashCode(), address.GetHashCode());
-            Assert.True(address.Equals(new AmqpAddress("address")));
-            Assert.True(address.Equals((object)new AmqpAddress("address")));
-            Assert.False(address.Equals(new AmqpMessageId("messageId2")));
+            Assert.That(address.ToString(), Is.EqualTo("address"));
+            Assert.That(address.GetHashCode(), Is.EqualTo("address".GetHashCode()));
+            Assert.That(address, Is.EqualTo(new AmqpAddress("address")));
+            Assert.That(address, Is.EqualTo((object)new AmqpAddress("address")));
+            Assert.That(address.Equals(new AmqpMessageId("messageId2")), Is.False);
         }
 
         [Test]

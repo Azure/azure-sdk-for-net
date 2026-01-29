@@ -160,7 +160,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             RequestFailedException ex =
                 Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateFileSystemAsync(Randomize("sample-filesystem")));
-            Assert.AreEqual(403, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(403));
         }
 
         /// <summary>

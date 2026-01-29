@@ -23,40 +23,40 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 var dupedArrayArrayModel = ValidateBuilder("TestProject1", expectation, dict, out var dupedArrayModel);
             }
 
-            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
-            Assert.AreEqual(itemModel!.Type, arrayModel!.Type.ItemType);
+            Assert.That(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel), Is.True);
+            Assert.That(arrayModel!.Type.ItemType, Is.EqualTo(itemModel!.Type));
             expectation.ModelValidation(itemModel);
         }
 
         private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict, out TypeBuilderSpec? innerArray)
         {
-            Assert.IsTrue(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[][]", out var arrayArrayModel));
-            Assert.AreEqual($"{expectation.TypeName}[][]", arrayArrayModel!.Type.Name);
-            Assert.AreEqual(lookupName, arrayArrayModel.Type.Namespace);
-            Assert.IsNotNull(arrayArrayModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.Array, arrayArrayModel.Kind);
-            Assert.AreEqual(1, arrayArrayModel.Type.ArrayRank);
-            Assert.AreEqual($"{expectation.TypeName}_Array_Array_", arrayArrayModel.Type.TypeCaseName);
-            Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_Array_", arrayArrayModel.Type.CamelCaseName);
-            Assert.AreEqual(expectation.Context, arrayArrayModel.ContextType);
+            Assert.That(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[][]", out var arrayArrayModel), Is.True);
+            Assert.That(arrayArrayModel!.Type.Name, Is.EqualTo($"{expectation.TypeName}[][]"));
+            Assert.That(arrayArrayModel.Type.Namespace, Is.EqualTo(lookupName));
+            Assert.That(arrayArrayModel.Type.ItemType, Is.Not.Null);
+            Assert.That(arrayArrayModel.Kind, Is.EqualTo(TypeBuilderKind.Array));
+            Assert.That(arrayArrayModel.Type.ArrayRank, Is.EqualTo(1));
+            Assert.That(arrayArrayModel.Type.TypeCaseName, Is.EqualTo($"{expectation.TypeName}_Array_Array_"));
+            Assert.That(arrayArrayModel.Type.CamelCaseName, Is.EqualTo($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_Array_"));
+            Assert.That(arrayArrayModel.ContextType, Is.EqualTo(expectation.Context));
 
             var genericArgument = arrayArrayModel.Type.ItemType!;
-            Assert.AreEqual($"{expectation.TypeName}[]", genericArgument.Name);
-            Assert.AreEqual(lookupName, genericArgument.Namespace);
-            Assert.IsNotNull(genericArgument.ItemType);
-            Assert.AreEqual(1, genericArgument.ArrayRank);
-            Assert.AreEqual($"{expectation.TypeName}_Array_", genericArgument.TypeCaseName);
-            Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_", genericArgument.CamelCaseName);
+            Assert.That(genericArgument.Name, Is.EqualTo($"{expectation.TypeName}[]"));
+            Assert.That(genericArgument.Namespace, Is.EqualTo(lookupName));
+            Assert.That(genericArgument.ItemType, Is.Not.Null);
+            Assert.That(genericArgument.ArrayRank, Is.EqualTo(1));
+            Assert.That(genericArgument.TypeCaseName, Is.EqualTo($"{expectation.TypeName}_Array_"));
+            Assert.That(genericArgument.CamelCaseName, Is.EqualTo($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_"));
 
-            Assert.IsTrue(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[]", out innerArray));
-            Assert.AreEqual($"{expectation.TypeName}[]", innerArray!.Type.Name);
-            Assert.AreEqual(lookupName, innerArray.Type.Namespace);
-            Assert.IsNotNull(innerArray.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.Array, innerArray.Kind);
-            Assert.AreEqual(1, innerArray.Type.ArrayRank);
-            Assert.AreEqual($"{expectation.TypeName}_Array_", innerArray.Type.TypeCaseName);
-            Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_", innerArray.Type.CamelCaseName);
-            Assert.AreEqual(expectation.Context, innerArray.ContextType);
+            Assert.That(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[]", out innerArray), Is.True);
+            Assert.That(innerArray!.Type.Name, Is.EqualTo($"{expectation.TypeName}[]"));
+            Assert.That(innerArray.Type.Namespace, Is.EqualTo(lookupName));
+            Assert.That(innerArray.Type.ItemType, Is.Not.Null);
+            Assert.That(innerArray.Kind, Is.EqualTo(TypeBuilderKind.Array));
+            Assert.That(innerArray.Type.ArrayRank, Is.EqualTo(1));
+            Assert.That(innerArray.Type.TypeCaseName, Is.EqualTo($"{expectation.TypeName}_Array_"));
+            Assert.That(innerArray.Type.CamelCaseName, Is.EqualTo($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_"));
+            Assert.That(innerArray.ContextType, Is.EqualTo(expectation.Context));
             return arrayArrayModel;
         }
     }

@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.ResourceManager.StorageMover.Models;
-using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageMover.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
                 counter++;
             }
 
-            Assert.IsTrue((await jobRuns.ExistsAsync(JobName)).Value);
+            Assert.That((await jobRuns.ExistsAsync(JobName)).Value, Is.True);
 
             JobRunResource jobRun2 = (await jobRun.GetAsync()).Value;
         }

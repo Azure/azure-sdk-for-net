@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await serviceClient.GetFileSystemsAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(uri, serviceClient.Uri);
+            Assert.That(serviceClient.Uri, Is.EqualTo(uri));
         }
 
         [RecordedTest]
@@ -53,8 +53,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await serviceClient.GetFileSystemsAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(uri, serviceClient.Uri);
-            Assert.IsNotNull(serviceClient.ClientConfiguration.SharedKeyCredential);
+            Assert.That(serviceClient.Uri, Is.EqualTo(uri));
+            Assert.That(serviceClient.ClientConfiguration.SharedKeyCredential, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -69,8 +69,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await serviceClient.GetFileSystemsAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(uri, serviceClient.Uri);
-            Assert.IsNotNull(serviceClient.ClientConfiguration.TokenCredential);
+            Assert.That(serviceClient.Uri, Is.EqualTo(uri));
+            Assert.That(serviceClient.ClientConfiguration.TokenCredential, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -85,7 +85,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             try
             {
                 await fileSystem.CreateAsync();
-                Assert.IsNotNull(fileSystem.ClientConfiguration.SharedKeyCredential);
+                Assert.That(fileSystem.ClientConfiguration.SharedKeyCredential, Is.Not.Null);
             }
 
             // Cleanup
@@ -141,7 +141,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeServiceClient service = new DataLakeServiceClient(connectionString.ToString(true));
 
-            Assert.AreEqual(accountName, service.AccountName);
+            Assert.That(service.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -172,7 +172,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeServiceClient service = new DataLakeServiceClient(blobEndpoint, credentials);
 
-            Assert.AreEqual(accountName, service.AccountName);
+            Assert.That(service.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -187,8 +187,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var fileSystems = await sasClient.GetFileSystemsAsync().ToListAsync();
 
             // Assert
-            Assert.IsNotNull(fileSystems);
-            Assert.IsNotNull(sasClient.ClientConfiguration.SasCredential);
+            Assert.That(fileSystems, Is.Not.Null);
+            Assert.That(sasClient.ClientConfiguration.SasCredential, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -238,7 +238,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -257,7 +257,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -276,7 +276,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
+            Assert.That(properties, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -296,7 +296,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadServiceClient.GetPropertiesAsync(),
-                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidAuthenticationInfo")));
         }
 
         [RecordedTest]
@@ -311,7 +311,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: getUserDelegationKeyOptions);
 
             // Assert
-            Assert.IsNotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -324,7 +324,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetUserDelegationKeyAsync(options: getUserDelegationKeyOptions),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -339,7 +339,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
 
                 // Assert
-                Assert.IsTrue(fileSystems.Count >= 1);
+                Assert.That(fileSystems.Count >= 1, Is.True);
                 var accountName = new DataLakeUriBuilder(service.Uri).AccountName;
                 TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
             }
@@ -369,7 +369,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             FileSystemItem fileSystemItem = fileSystems.Single(r => r.Name == fileSystemName);
 
             // Assert
-            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, fileSystemItem.Properties.DefaultEncryptionScope);
+            Assert.That(fileSystemItem.Properties.DefaultEncryptionScope, Is.EqualTo(TestConfigHierarchicalNamespace.EncryptionScope));
 
             // Cleanup
             await fileSystemClient.DeleteIfExistsAsync();
@@ -390,9 +390,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 fileSystems.AddRange(page.Values);
             }
 
-            Assert.AreNotEqual(0, fileSystems.Count);
-            Assert.AreEqual(fileSystems.Count, fileSystems.Select(c => c.Name).Distinct().Count());
-            Assert.IsTrue(fileSystems.Any(c => test.FileSystem.Uri == InstrumentClient(service.GetFileSystemClient(c.Name)).Uri));
+            Assert.That(fileSystems.Count, Is.Not.EqualTo(0));
+            Assert.That(fileSystems.Select(c => c.Name).Distinct().Count(), Is.EqualTo(fileSystems.Count));
+            Assert.That(fileSystems.Any(c => test.FileSystem.Uri == InstrumentClient(service.GetFileSystemClient(c.Name)).Uri), Is.True);
         }
 
         [RecordedTest]
@@ -411,7 +411,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .FirstAsync();
 
             // Assert
-            Assert.AreEqual(1, page.Values.Count());
+            Assert.That(page.Values.Count(), Is.EqualTo(1));
         }
 
         [RecordedTest]
@@ -427,9 +427,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             AsyncPageable<FileSystemItem> fileSystems = service.GetFileSystemsAsync(prefix: prefix);
             IList<FileSystemItem> items = await fileSystems.ToListAsync();
             // Assert
-            Assert.AreNotEqual(0, items.Count());
-            Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
-            Assert.IsNotNull(items.Single(c => c.Name == fileSystemName));
+            Assert.That(items.Count(), Is.Not.EqualTo(0));
+            Assert.That(items.All(c => c.Name.StartsWith(prefix)), Is.True);
+            Assert.That(items.Single(c => c.Name == fileSystemName), Is.Not.Null);
         }
 
         [RecordedTest]
@@ -468,10 +468,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             FileSystemItem fileSystemItem = fileSystems.Where(c => c.Name == fileSystemName).FirstOrDefault();
 
             // Assert
-            Assert.IsTrue(fileSystemItem.IsDeleted);
-            Assert.IsNotNull(fileSystemItem.VersionId);
-            Assert.IsNotNull(fileSystemItem.Properties.DeletedOn);
-            Assert.IsNotNull(fileSystemItem.Properties.RemainingRetentionDays);
+            Assert.That(fileSystemItem.IsDeleted, Is.True);
+            Assert.That(fileSystemItem.VersionId, Is.Not.Null);
+            Assert.That(fileSystemItem.Properties.DeletedOn, Is.Not.Null);
+            Assert.That(fileSystemItem.Properties.RemainingRetentionDays, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -502,8 +502,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             FileSystemItem webFileSystemItem = fileSystems.Where(r => r.Name == "$web").FirstOrDefault();
 
             // Assert
-            Assert.IsTrue(fileSystems.Count > 0);
-            Assert.IsNotNull(webFileSystemItem);
+            Assert.That(fileSystems.Count > 0, Is.True);
+            Assert.That(webFileSystemItem, Is.Not.Null);
 
             // Cleanup
             properties = await service.GetPropertiesAsync();
@@ -523,8 +523,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 service.GetFileSystemsAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e =>
                 {
-                    Assert.AreEqual("OutOfRangeInput", e.ErrorCode);
-                    Assert.AreEqual("One of the request inputs is out of range.", e.Message.Split('\n')[0]);
+                    Assert.That(e.ErrorCode, Is.EqualTo("OutOfRangeInput"));
+                    Assert.That(e.Message.Split('\n')[0], Is.EqualTo("One of the request inputs is out of range."));
                 });
         }
 
@@ -537,7 +537,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
                 Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
-                Assert.IsNotNull(properties.Value);
+                Assert.That(properties.Value, Is.Not.Null);
             }
             finally
             {
@@ -562,7 +562,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name, options: options)).Value);
                 Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
-                Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, properties.Value.DefaultEncryptionScope);
+                Assert.That(properties.Value.DefaultEncryptionScope, Is.EqualTo(TestConfigHierarchicalNamespace.EncryptionScope));
             }
             finally
             {
@@ -622,7 +622,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.UndeleteFileSystemAsync(GetNewFileSystemName(), "01D60F8BB59A4652"),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [Test]
@@ -635,7 +635,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<DataLakeServiceProperties> response = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.DeleteRetentionPolicy);
+            Assert.That(response.Value.DeleteRetentionPolicy, Is.Not.Null);
         }
 
         [Test]
@@ -673,15 +673,15 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             properties = await service.GetPropertiesAsync();
-            Assert.IsTrue(properties.DeleteRetentionPolicy.Enabled);
-            Assert.AreEqual(3, properties.DeleteRetentionPolicy.Days);
+            Assert.That(properties.DeleteRetentionPolicy.Enabled, Is.True);
+            Assert.That(properties.DeleteRetentionPolicy.Days, Is.EqualTo(3));
 
             // Cleanup
             properties.DeleteRetentionPolicy = originalRetentionPolicy;
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(originalRetentionPolicy.Enabled, properties.DeleteRetentionPolicy.Enabled);
-            Assert.AreEqual(originalRetentionPolicy.Days, properties.DeleteRetentionPolicy.Days);
+            Assert.That(properties.DeleteRetentionPolicy.Enabled, Is.EqualTo(originalRetentionPolicy.Enabled));
+            Assert.That(properties.DeleteRetentionPolicy.Days, Is.EqualTo(originalRetentionPolicy.Days));
         }
 
         [Test]
@@ -710,18 +710,18 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual("1.0", properties.Logging.Version);
-            Assert.IsTrue(properties.Logging.Delete);
-            Assert.IsTrue(properties.Logging.Read);
-            Assert.IsTrue(properties.Logging.Write);
-            Assert.IsTrue(properties.Logging.RetentionPolicy.Enabled);
-            Assert.AreEqual(1, properties.Logging.RetentionPolicy.Days);
+            Assert.That(properties.Logging.Version, Is.EqualTo("1.0"));
+            Assert.That(properties.Logging.Delete, Is.True);
+            Assert.That(properties.Logging.Read, Is.True);
+            Assert.That(properties.Logging.Write, Is.True);
+            Assert.That(properties.Logging.RetentionPolicy.Enabled, Is.True);
+            Assert.That(properties.Logging.RetentionPolicy.Days, Is.EqualTo(1));
 
             // Cleanup
             properties.Logging = originalLogging;
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(originalLogging.RetentionPolicy.Days, properties.Logging.RetentionPolicy.Days);
+            Assert.That(properties.Logging.RetentionPolicy.Days, Is.EqualTo(originalLogging.RetentionPolicy.Days));
         }
 
         [Test]
@@ -763,24 +763,24 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual("1.0", properties.HourMetrics.Version);
-            Assert.IsTrue(properties.HourMetrics.Enabled);
-            Assert.IsTrue(properties.HourMetrics.RetentionPolicy.Enabled);
-            Assert.AreEqual(1, properties.HourMetrics.RetentionPolicy.Days);
-            Assert.IsFalse(properties.HourMetrics.IncludeApis);
-            Assert.AreEqual("1.0", properties.MinuteMetrics.Version);
-            Assert.IsTrue(properties.MinuteMetrics.Enabled);
-            Assert.IsTrue(properties.MinuteMetrics.RetentionPolicy.Enabled);
-            Assert.AreEqual(2, properties.MinuteMetrics.RetentionPolicy.Days);
-            Assert.IsFalse(properties.MinuteMetrics.IncludeApis);
+            Assert.That(properties.HourMetrics.Version, Is.EqualTo("1.0"));
+            Assert.That(properties.HourMetrics.Enabled, Is.True);
+            Assert.That(properties.HourMetrics.RetentionPolicy.Enabled, Is.True);
+            Assert.That(properties.HourMetrics.RetentionPolicy.Days, Is.EqualTo(1));
+            Assert.That(properties.HourMetrics.IncludeApis, Is.False);
+            Assert.That(properties.MinuteMetrics.Version, Is.EqualTo("1.0"));
+            Assert.That(properties.MinuteMetrics.Enabled, Is.True);
+            Assert.That(properties.MinuteMetrics.RetentionPolicy.Enabled, Is.True);
+            Assert.That(properties.MinuteMetrics.RetentionPolicy.Days, Is.EqualTo(2));
+            Assert.That(properties.MinuteMetrics.IncludeApis, Is.False);
 
             // Cleanup
             properties.HourMetrics = originalHourMetrics;
             properties.MinuteMetrics = originalMinuteMetrics;
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(originalHourMetrics.RetentionPolicy.Days, properties.HourMetrics.RetentionPolicy.Days);
-            Assert.AreEqual(originalMinuteMetrics.RetentionPolicy.Days, properties.MinuteMetrics.RetentionPolicy.Days);
+            Assert.That(properties.HourMetrics.RetentionPolicy.Days, Is.EqualTo(originalHourMetrics.RetentionPolicy.Days));
+            Assert.That(properties.MinuteMetrics.RetentionPolicy.Days, Is.EqualTo(originalMinuteMetrics.RetentionPolicy.Days));
         }
 
         [Test]
@@ -809,14 +809,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(1, properties.Cors.Count());
-            Assert.IsTrue(properties.Cors[0].MaxAgeInSeconds == 1000);
+            Assert.That(properties.Cors.Count(), Is.EqualTo(1));
+            Assert.That(properties.Cors[0].MaxAgeInSeconds, Is.EqualTo(1000));
 
             // Cleanup
             properties.Cors = originalCors;
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
+            Assert.That(properties.Cors.Count(), Is.EqualTo(originalCors.Count()));
         }
 
         [Test]
@@ -843,18 +843,18 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             properties = await service.GetPropertiesAsync();
-            Assert.IsTrue(properties.StaticWebsite.Enabled);
-            Assert.AreEqual(errorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
-            Assert.AreEqual(defaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
+            Assert.That(properties.StaticWebsite.Enabled, Is.True);
+            Assert.That(properties.StaticWebsite.ErrorDocument404Path, Is.EqualTo(errorDocument404Path));
+            Assert.That(properties.StaticWebsite.DefaultIndexDocumentPath, Is.EqualTo(defaultIndexDocumentPath));
 
             // Cleanup
             properties.StaticWebsite = originalStaticWebsite;
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(originalStaticWebsite.Enabled, properties.StaticWebsite.Enabled);
-            Assert.AreEqual(originalStaticWebsite.IndexDocument, properties.StaticWebsite.IndexDocument);
-            Assert.AreEqual(originalStaticWebsite.ErrorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
-            Assert.AreEqual(originalStaticWebsite.DefaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
+            Assert.That(properties.StaticWebsite.Enabled, Is.EqualTo(originalStaticWebsite.Enabled));
+            Assert.That(properties.StaticWebsite.IndexDocument, Is.EqualTo(originalStaticWebsite.IndexDocument));
+            Assert.That(properties.StaticWebsite.ErrorDocument404Path, Is.EqualTo(originalStaticWebsite.ErrorDocument404Path));
+            Assert.That(properties.StaticWebsite.DefaultIndexDocumentPath, Is.EqualTo(originalStaticWebsite.DefaultIndexDocumentPath));
         }
 
         [Test]
@@ -1015,14 +1015,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(
                 uriEndpoint,
                 GetOptions()));
-            Assert.IsFalse(serviceClient.CanGenerateAccountSasUri);
+            Assert.That(serviceClient.CanGenerateAccountSasUri, Is.False);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             DataLakeServiceClient serviceClient2 = InstrumentClient(new DataLakeServiceClient(
                 uriEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            Assert.IsTrue(serviceClient2.CanGenerateAccountSasUri);
+            Assert.That(serviceClient2.CanGenerateAccountSasUri, Is.True);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -1030,7 +1030,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 uriEndpoint,
                 tokenCredentials,
                 GetOptions()));
-            Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
+            Assert.That(serviceClient3.CanGenerateAccountSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -1047,7 +1047,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 uriEndpoint,
                 GetOptions()));
             DataLakeFileSystemClient fileSystemClient = serviceClient.GetFileSystemClient(GetNewFileSystemName());
-            Assert.IsFalse(fileSystemClient.CanGenerateSasUri);
+            Assert.That(fileSystemClient.CanGenerateSasUri, Is.False);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             DataLakeServiceClient serviceClient2 = InstrumentClient(new DataLakeServiceClient(
@@ -1055,7 +1055,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             DataLakeFileSystemClient fileSystemClient2 = serviceClient2.GetFileSystemClient(GetNewFileSystemName());
-            Assert.IsTrue(fileSystemClient2.CanGenerateSasUri);
+            Assert.That(fileSystemClient2.CanGenerateSasUri, Is.True);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 tokenCredentials,
                 GetOptions()));
             DataLakeFileSystemClient fileSystemClient3 = serviceClient3.GetFileSystemClient(GetNewFileSystemName());
-            Assert.IsFalse(fileSystemClient3.CanGenerateSasUri);
+            Assert.That(fileSystemClient3.CanGenerateSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -1075,13 +1075,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
 
             // Assert
-            Assert.IsFalse(serviceClient.Object.CanGenerateAccountSasUri);
+            Assert.That(serviceClient.Object.CanGenerateAccountSasUri, Is.False);
 
             // Act
             serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(serviceClient.Object.CanGenerateAccountSasUri);
+            Assert.That(serviceClient.Object.CanGenerateAccountSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -1115,8 +1115,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
             };
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri.ToString(), Is.EqualTo(expectedUri.Uri.ToString()));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1152,8 +1152,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
-            Assert.AreEqual(expectedUri.Uri, sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.Uri));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]

@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
         {
             var source = (ManagedIdentitySource)miSource;
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await source.AuthenticateAsync(IsAsync, new TokenRequestContext(MockScopes.Default), new CancellationToken(true)));
-            Assert.IsInstanceOf(typeof(TaskCanceledException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(TaskCanceledException)));
             Assert.That(ex.Message, Does.Not.Contain("secret"));
             Assert.That(ex.Message, Does.Contain("Response from Managed Identity was successful, but the operation timed out prior to completion."));
         }
@@ -53,7 +53,7 @@ namespace Azure.Identity.Tests
         {
             var source = (ManagedIdentitySource)miSource;
             var token = await source.AuthenticateAsync(IsAsync, new TokenRequestContext(MockScopes.Default), CancellationToken.None);
-            Assert.IsNotNull(token.RefreshOn);
+            Assert.That(token.RefreshOn, Is.Not.Null);
         }
 
         private static MockResponse CreateMockResponse(int responseCode, string token, int expiresInSeconds = 3600)

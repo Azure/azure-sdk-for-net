@@ -20,8 +20,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = parser.TryParseLogEntry(line);
 
-            Assert.NotNull(entry);
-            Assert.AreEqual(blobPath, entry.RequestedObjectKey);
+            Assert.That(entry, Is.Not.Null);
+            Assert.That(entry.RequestedObjectKey, Is.EqualTo(blobPath));
         }
 
         [TestCase(@"1.0;2014-09-08T18:49:25.5834856Z;CopyBlob;Success;202;13;13;authenticated;storagesample;storagesample;blob;""https://storagesample.blob.core.windows.net/sample-container/Copy-sample-blob.txt"";""/storagesample/sample-container/Copy-sample-blob.txt"";4;5;6;7;8;9;0;1;2;3;4;5;6;7;8;9;0;1")]
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             StorageAnalyticsLogEntry entry = parser.TryParseLogEntry(line);
 
-            Assert.Null(entry);
+            Assert.That(entry, Is.Null);
         }
 
         [TestCase(@"1.0;<REMINDER>", 1, 0)]
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             Version version = StorageAnalyticsLogParser.TryParseVersion(line);
 
-            Assert.NotNull(version);
-            Assert.AreEqual(new Version(major, minor), version);
+            Assert.That(version, Is.Not.Null);
+            Assert.That(version, Is.EqualTo(new Version(major, minor)));
         }
 
         [TestCase(null)]
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             Version version = StorageAnalyticsLogParser.TryParseVersion(line);
 
-            Assert.Null(version);
+            Assert.That(version, Is.Null);
         }
 
         [TestCase(@";2014-09-08T18:49:25.5834856Z;CopyBlob;Success;202;13;13;authenticated;storagesample;storagesample;blob;""https://storagesample.blob.core.windows.net/sample-container/Copy-sample-blob.txt"";""/storagesample/sample-container/Copy-sample-blob.txt"";4;5;6;7;8;9;0;1;2;3;4;5;6;7;8;9;0")]
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             Version version = StorageAnalyticsLogParser.TryParseVersion(line);
 
-            Assert.Null(version);
+            Assert.That(version, Is.Null);
         }
     }
 }

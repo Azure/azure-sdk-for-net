@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             if (success == false)
             {
                 var ex = Assert.Throws<ValidationException>(() => Validator.ValidateObject(dummyObj, new ValidationContext(dummyObj), true));
-                Assert.AreEqual(exceptionMessage, ex.Message);
+                Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
             }
             else
             {
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
         private static IEnumerable<object[]> TestScenarios()
         {
-#region Invalid
+            #region Invalid
             yield return new TestCaseStructure()
             {
                 Test = null,
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             }.ToArray;
             #endregion
 
-#region Valid
+            #region Valid
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { new(), new() },
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Message = "Testing empty array",
                 Success = true,
             }.ToArray;
-#endregion
+            #endregion
         }
     }
 }

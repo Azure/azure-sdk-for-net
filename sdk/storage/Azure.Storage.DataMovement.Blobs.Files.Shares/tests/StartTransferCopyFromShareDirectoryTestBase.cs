@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseShares;
 extern alias DMBlob;
 extern alias DMShare;
-extern alias BaseShares;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,13 +16,13 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
-using BaseShares::Azure.Storage.Files.Shares;
-using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -149,7 +148,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 Prefix = destinationPrefix,
             };
             IList<BlobItem> items = await destinationContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).ToListAsync();
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         protected override async Task VerifyResultsAsync(
@@ -190,20 +189,20 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
 
             // Assert file and file contents
-            Assert.AreEqual(sourceFileNames.Count, destinationFileNames.Count);
+            Assert.That(destinationFileNames.Count, Is.EqualTo(sourceFileNames.Count));
             sourceFileNames.Sort();
             destinationFileNames.Sort();
             for (int i = 0; i < sourceFileNames.Count; i++)
             {
-                Assert.AreEqual(
-                    sourceFileNames[i],
-                    destinationFileNames[i]);
+                Assert.That(
+                    destinationFileNames[i],
+                    Is.EqualTo(sourceFileNames[i]));
 
                 // Verify contents
                 string destinationFullName = string.Join("/", destinationPrefix, destinationFileNames[i]);
                 using Stream sourceStream = await sourceDirectory.GetFileClient(sourceFileNames[i]).OpenReadAsync(cancellationToken: cancellationToken);
                 using Stream destinationStream = await destinationContainer.GetBlobClient(destinationFullName).OpenReadAsync(cancellationToken: cancellationToken);
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.That(destinationStream, Is.EqualTo(sourceStream));
             }
         }
 

@@ -239,7 +239,7 @@ public class TransferManagerTests
         [Values(333, 500, 1024)] int itemSize,
         [Values(333, 1024)] int chunkSize)
     {
-        static int GetItemCountFromContainerIndex(int i) => i*i + 1;
+        static int GetItemCountFromContainerIndex(int i) => i * i + 1;
 
         int totalJobParts = Enumerable.Range(1, numJobs).Select(GetItemCountFromContainerIndex).Sum();
         int chunksPerPart = (int)Math.Ceiling((float)itemSize / chunkSize);

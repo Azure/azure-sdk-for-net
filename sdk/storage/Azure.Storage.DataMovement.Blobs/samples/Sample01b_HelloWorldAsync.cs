@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using Azure.Core;
-using Azure.Identity;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs;
-using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -289,7 +289,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.StartTransferAsync(
                     sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, new BlockBlobStorageResourceOptions()
                     {
-                        DestinationConditions = new BlobRequestConditions(){ LeaseId = "xyz" }
+                        DestinationConditions = new BlobRequestConditions() { LeaseId = "xyz" }
                     }),
                     destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath2));
             }
@@ -731,8 +731,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferOperation.WaitForCompletionAsync();
                 #endregion
 
-                Assert.IsTrue(await destinationAppendBlobClient.ExistsAsync());
-                Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
+                Assert.That((bool)await destinationAppendBlobClient.ExistsAsync(), Is.True);
+                Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             }
             finally
             {

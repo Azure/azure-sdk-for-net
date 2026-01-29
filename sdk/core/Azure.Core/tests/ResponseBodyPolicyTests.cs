@@ -32,16 +32,16 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, NoTimeoutPolicy);
 
-            Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
+            Assert.That(response.ContentStream, Is.InstanceOf<MemoryStream>());
             var ms = (MemoryStream)response.ContentStream;
 
-            Assert.AreEqual(128, ms.Length);
+            Assert.That(ms.Length, Is.EqualTo(128));
             foreach (var b in ms.ToArray())
             {
-                Assert.AreEqual(ReadTrackingStream.ContentByteValue, b);
+                Assert.That(b, Is.EqualTo(ReadTrackingStream.ContentByteValue));
             }
-            Assert.AreEqual(128, readTrackingStream.BytesRead);
-            Assert.AreEqual(0, ms.Position);
+            Assert.That(readTrackingStream.BytesRead, Is.EqualTo(128));
+            Assert.That(ms.Position, Is.EqualTo(0));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, NoTimeoutPolicy);
-            Assert.Null(response.ContentStream);
+            Assert.That(response.ContentStream, Is.Null);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             await SendGetRequest(mockTransport, NoTimeoutPolicy);
 
-            Assert.True(readTrackingStream.IsClosed);
+            Assert.That(readTrackingStream.IsClosed, Is.True);
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, NoTimeoutPolicy, bufferResponse: false);
 
-            Assert.IsNotInstanceOf<MemoryStream>(response.ContentStream);
+            Assert.That(response.ContentStream, Is.Not.InstanceOf<MemoryStream>());
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests
 #pragma warning disable CA2022 // The return value of ReadAsync is not needed for this test
             Assert.ThrowsAsync<TaskCanceledException>(async () => await response.ContentStream.ReadAsync(buffer, 0, 100));
 #pragma warning restore CA2022
-            Assert.AreEqual(50, hangingStream.ReadTimeout);
+            Assert.That(hangingStream.ReadTimeout, Is.EqualTo(50));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.Core.Tests
 
             var memoryStream = new MemoryStream();
             Assert.ThrowsAsync<TaskCanceledException>(async () => await response.ContentStream.CopyToAsync(memoryStream));
-            Assert.AreEqual(50, hangingStream.ReadTimeout);
+            Assert.That(hangingStream.ReadTimeout, Is.EqualTo(50));
         }
 
         [Test]
@@ -147,8 +147,8 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = new MockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, new ResponseBodyPolicy(TimeSpan.FromMilliseconds(1234567)), bufferResponse: false);
 
-            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
-            Assert.AreEqual(1234567, hangingStream.ReadTimeout);
+            Assert.That(response.ContentStream, Is.InstanceOf<ReadTimeoutStream>());
+            Assert.That(hangingStream.ReadTimeout, Is.EqualTo(1234567));
         }
 
         [Test]
@@ -188,8 +188,8 @@ namespace Azure.Core.Tests
             {
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false));
-            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.03. " +
-                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("The operation was cancelled because it exceeded the configured timeout of 0:00:00.03. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout."));
         }
 
         [Test]
@@ -208,20 +208,20 @@ namespace Azure.Core.Tests
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false);
 
-            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
-            Assert.AreEqual(30, hangingStream.ReadTimeout);
+            Assert.That(response.ContentStream, Is.InstanceOf<ReadTimeoutStream>());
+            Assert.That(hangingStream.ReadTimeout, Is.EqualTo(30));
         }
 
         private static IEnumerable<object[]> GetExceptionCases()
         {
-            yield return new object[] { new IOException(), TimeoutPolicy};
-            yield return new object[] { new IOException(), NoTimeoutPolicy};
-            yield return new object[] { new ObjectDisposedException("test"), TimeoutPolicy};
-            yield return new object[] { new ObjectDisposedException("test"), NoTimeoutPolicy};
-            yield return new object[] { new OperationCanceledException(), TimeoutPolicy};
-            yield return new object[] { new OperationCanceledException(), NoTimeoutPolicy};
-            yield return new object[] { new NotSupportedException(), TimeoutPolicy};
-            yield return new object[] { new NotSupportedException(), NoTimeoutPolicy};
+            yield return new object[] { new IOException(), TimeoutPolicy };
+            yield return new object[] { new IOException(), NoTimeoutPolicy };
+            yield return new object[] { new ObjectDisposedException("test"), TimeoutPolicy };
+            yield return new object[] { new ObjectDisposedException("test"), NoTimeoutPolicy };
+            yield return new object[] { new OperationCanceledException(), TimeoutPolicy };
+            yield return new object[] { new OperationCanceledException(), NoTimeoutPolicy };
+            yield return new object[] { new NotSupportedException(), TimeoutPolicy };
+            yield return new object[] { new NotSupportedException(), NoTimeoutPolicy };
         }
 
         [TestCaseSource(nameof(GetExceptionCases))]
@@ -236,7 +236,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequest(mockTransport, policy, cancellationToken: cts.Token));
-            Assert.IsTrue(stream.IsClosed);
+            Assert.That(stream.IsClosed, Is.True);
         }
 
         [TestCaseSource(nameof(GetExceptionCases))]
@@ -251,8 +251,8 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(mockResponse);
             var thrown = Assert.CatchAsync(async () => await SendGetRequest(mockTransport, policy, cancellationToken: cts.Token));
-            Assert.AreSame(exception, thrown);
-            Assert.IsFalse(stream.IsClosed);
+            Assert.That(thrown, Is.SameAs(exception));
+            Assert.That(stream.IsClosed, Is.False);
         }
 
         private class SlowReadStream : TestReadStream
@@ -370,7 +370,7 @@ namespace Azure.Core.Tests
             public bool IsClosed { get; set; }
         }
 
-        private abstract class TestReadStream: Stream
+        private abstract class TestReadStream : Stream
         {
             public override bool CanRead { get; } = true;
             public override bool CanSeek { get; }

@@ -15,14 +15,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     {
         [Test]
         [TestCaseSource(nameof(TestScenarios))]
-       public void OneOrMoreRequiredIsValidWithTestCase(object testObject, string message, bool success, string exceptionMessage)
+        public void OneOrMoreRequiredIsValidWithTestCase(object testObject, string message, bool success, string exceptionMessage)
         {
             DummyClass dummyObj = new() { Obj = testObject };
 
             if (success == false)
             {
                 var ex = Assert.Throws<ValidationException>(() => Validator.ValidateObject(dummyObj, new ValidationContext(dummyObj), true));
-                Assert.AreEqual(exceptionMessage, ex.Message);
+                Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
             }
             else
             {
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
         private static IEnumerable<object[]> TestScenarios()
         {
-#region Invalid
+            #region Invalid
             yield return new TestCaseStructure()
             {
                 Test = null,
@@ -66,9 +66,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Message = "Testing empty array",
                 ExceptionMessage = AuthenticationEventResource.Ex_No_Action,
             }.ToArray;
-#endregion
+            #endregion
 
-#region Valid
+            #region Valid
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { new(), new() },
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Message = "Testing single item array",
                 Success = true,
             }.ToArray;
-#endregion
+            #endregion
         }
     }
 }

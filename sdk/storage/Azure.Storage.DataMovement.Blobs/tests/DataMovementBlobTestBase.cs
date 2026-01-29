@@ -14,8 +14,8 @@ using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
-using Azure.Storage.Test.Shared;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
@@ -451,10 +451,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             public void Handle(BlobQueryError blobQueryError)
             {
-                Assert.AreEqual(_expectedBlobQueryError.IsFatal, blobQueryError.IsFatal);
-                Assert.AreEqual(_expectedBlobQueryError.Name, blobQueryError.Name);
-                Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
-                Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
+                Assert.That(blobQueryError.IsFatal, Is.EqualTo(_expectedBlobQueryError.IsFatal));
+                Assert.That(blobQueryError.Name, Is.EqualTo(_expectedBlobQueryError.Name));
+                Assert.That(blobQueryError.Description, Is.EqualTo(_expectedBlobQueryError.Description));
+                Assert.That(blobQueryError.Position, Is.EqualTo(_expectedBlobQueryError.Position));
             }
         }
 
@@ -472,7 +472,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             FileInfo sourceFileInfo = new FileInfo(sourceFile);
             FileInfo destFileInfo = new FileInfo(destinationFile);
-            Assert.AreEqual(sourceFileInfo.Length, destFileInfo.Length);
+            Assert.That(destFileInfo.Length, Is.EqualTo(sourceFileInfo.Length));
             using (FileStream sourceStream = File.OpenRead(sourceFile))
             {
                 using (FileStream resultStream = File.OpenRead(destinationFile))
@@ -605,7 +605,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 Response<BlobDownloadInfo> sourceDownload = await sourceBlob.DownloadAsync(new HttpRange(startIndex, count));
                 Response<BlobDownloadInfo> destinationDownload = await destinationBlob.DownloadAsync(new HttpRange(startIndex, count));
-                Assert.AreEqual(sourceDownload.Value.BlobType, destinationDownload.Value.BlobType);
+                Assert.That(destinationDownload.Value.BlobType, Is.EqualTo(sourceDownload.Value.BlobType));
 
                 sourceStream.Seek(0, SeekOrigin.Begin);
                 await sourceDownload.Value.Content.CopyToAsync(sourceStream);
@@ -684,7 +684,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             long size,
             PageBlobCreateOptions options = default)
         {
-            Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (Constants.KB / 2), Is.EqualTo(0), "Cannot create page blob that's not a multiple of 512");
 
             PageBlobClient blobClient = containerClient.GetPageBlobClient(blobName);
             await blobClient.CreateIfNotExistsAsync(size, options).ConfigureAwait(false);

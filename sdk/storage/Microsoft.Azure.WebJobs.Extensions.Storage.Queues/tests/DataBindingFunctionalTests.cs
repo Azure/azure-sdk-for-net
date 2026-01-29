@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var host = builder.Build().GetJobHost<TestFunctions>();
 
             MethodInfo method = typeof(TestFunctions).GetMethod("BindStringableParameter");
-            Assert.NotNull(method); // Guard
+            Assert.That(method, Is.Not.Null); // Guard
             Guid guid = Guid.NewGuid();
             string expectedGuidValue = guid.ToString("D");
             string message = JsonConvert.SerializeObject(new MessageWithStringableProperty { GuidValue = guid });
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 await host.CallAsync(method, new { message = message });
 
                 // Assert
-                Assert.AreEqual(expectedGuidValue, TestFunctions.Result);
+                Assert.That(TestFunctions.Result, Is.EqualTo(expectedGuidValue));
             }
             finally
             {

@@ -107,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private void AssertOwnerEqual(Guid expectedOwner, string message)
         {
             Guid? owner = GetOwner(message);
-            Assert.AreEqual(expectedOwner, owner);
+            Assert.That(owner, Is.EqualTo(expectedOwner));
         }
 
         private void TestOwnerEqual(Guid expectedOwner, string message)
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Guid? owner = GetOwner(message);
 
             // Assert
-            Assert.AreEqual(expectedOwner, owner);
+            Assert.That(owner, Is.EqualTo(expectedOwner));
         }
 
         private void TestOwnerIsNull(string message)
@@ -130,13 +130,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Guid? owner = queueCausalityManager.GetOwner(message);
 
             // Assert
-            Assert.Null(owner);
+            Assert.That(owner, Is.Null);
         }
 
         private void AssertOwnerIsNull(string message)
         {
             Guid? owner = GetOwner(message);
-            Assert.Null(owner);
+            Assert.That(owner, Is.Null);
         }
 
         private Guid? GetOwner(string message)

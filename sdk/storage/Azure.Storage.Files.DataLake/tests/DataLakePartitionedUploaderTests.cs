@@ -14,7 +14,6 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
@@ -76,10 +75,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(1, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(sink.Appended.Count, Is.EqualTo(1));
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.TotalRents, Is.EqualTo(1));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
             AssertAppended(sink, content);
         }
 
@@ -103,8 +102,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(2, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
+            Assert.That(sink.Appended.Count, Is.EqualTo(2));
+            Assert.That(info, Is.EqualTo(s_response));
         }
 
         [Test]
@@ -130,12 +129,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(2, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
+            Assert.That(sink.Appended.Count, Is.EqualTo(2));
+            Assert.That(info, Is.EqualTo(s_response));
             AssertAppended(sink, content);
 
-            Assert.AreEqual(2, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(testPool.TotalRents, Is.EqualTo(2));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -161,10 +160,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(1, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(sink.Appended.Count, Is.EqualTo(1));
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.TotalRents, Is.EqualTo(1));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
             AssertAppended(sink, content);
         }
 
@@ -191,15 +190,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(0, testPool.CurrentCount);
-            Assert.AreEqual(20, testPool.TotalRents);
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
+            Assert.That(testPool.TotalRents, Is.EqualTo(20));
             AssertAppended(sink, content);
 
             foreach ((byte[] bytes, _) in sink.Appended.Values)
             {
-                Assert.LessOrEqual(bytes.Length, 100);
-                Assert.GreaterOrEqual(bytes.Length, 50);
+                Assert.That(bytes.Length, Is.LessThanOrEqualTo(100));
+                Assert.That(bytes.Length, Is.GreaterThanOrEqualTo(50));
             }
         }
 
@@ -226,12 +225,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(2, sink.Appended.Count);
+            Assert.That(sink.Appended.Count, Is.EqualTo(2));
             // First two should be merged
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Appended[0].Data);
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(sink.Appended[0].Data, Is.EqualTo(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }).AsCollection);
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.TotalRents, Is.EqualTo(2));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
             AssertAppended(sink, content);
         }
 
@@ -264,10 +263,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(s_response, info);
+            Assert.That(info, Is.EqualTo(s_response));
             foreach (var block in sink.Appended.Values)
             {
-                Assert.AreEqual(blockSize, block.Length);
+                Assert.That(block.Length, Is.EqualTo(blockSize));
             }
         }
 
@@ -296,7 +295,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             clientMock.Setup(
                 c => c.CreateInternal(
-                    IsAny<PathResourceType>(),
+                    It.IsAny<PathResourceType>(),
                     s_pathHttpHeaders,
                     default,
                     s_permissions,
@@ -316,29 +315,29 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             clientMock.Setup(
                 c => c.AppendInternal(
-                    IsAny<Stream>(),
-                    IsAny<long>(),
-                    IsAny<UploadTransferValidationOptions>(),
-                    IsAny<string>(),
-                    IsAny<DataLakeLeaseAction?>(),
-                    IsAny<TimeSpan?>(),
-                    IsAny<string>(),
-                    IsAny<IProgress<long>>(),
-                    IsAny<bool?>(),
+                    It.IsAny<Stream>(),
+                    It.IsAny<long>(),
+                    It.IsAny<UploadTransferValidationOptions>(),
+                    It.IsAny<string>(),
+                    It.IsAny<DataLakeLeaseAction?>(),
+                    It.IsAny<TimeSpan?>(),
+                    It.IsAny<string>(),
+                    It.IsAny<IProgress<long>>(),
+                    It.IsAny<bool?>(),
                     _async,
                     cts.Token
                 )).Returns<Stream, long, UploadTransferValidationOptions, string, DataLakeLeaseAction?, TimeSpan?, string, IProgress<long>, bool?, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
-                    IsAny<long>(),
-                    IsAny<bool?>(),
-                    IsAny<bool?>(),
+                    It.IsAny<long>(),
+                    It.IsAny<bool?>(),
+                    It.IsAny<bool?>(),
                     s_pathHttpHeaders,
-                    IsAny<DataLakeRequestConditions>(),
-                    IsAny<DataLakeLeaseAction?>(),
-                    IsAny<TimeSpan?>(),
-                    IsAny<string>(),
+                    It.IsAny<DataLakeRequestConditions>(),
+                    It.IsAny<DataLakeLeaseAction?>(),
+                    It.IsAny<TimeSpan?>(),
+                    It.IsAny<string>(),
                     _async,
                     cts.Token
                 )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, DataLakeLeaseAction?, TimeSpan?, string, bool, CancellationToken>(sink.FlushInternal);
@@ -346,11 +345,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private static void AssertAppended(AppendSink sink, TestStream stream)
         {
-            Assert.AreEqual(sink.Appended.Count, sink.Appended.Count);
+            Assert.That(sink.Appended.Count, Is.EqualTo(sink.Appended.Count));
 
-            CollectionAssert.AreEqual(
-                stream.AllBytes,
-                sink.Appended.OrderBy(kv => kv.Key).SelectMany(kv => kv.Value.Data));
+            Assert.That(
+                sink.Appended.OrderBy(kv => kv.Key).SelectMany(kv => kv.Value.Data),
+                Is.EqualTo(stream.AllBytes).AsCollection);
         }
 
         private class AppendSink

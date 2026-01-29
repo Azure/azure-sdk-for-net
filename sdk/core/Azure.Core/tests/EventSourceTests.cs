@@ -65,10 +65,10 @@ namespace Azure.Core.Tests
             Type eventSourceType = typeof(AzureCoreEventSource);
 
             // Assert
-            Assert.NotNull(eventSourceType);
-            Assert.AreEqual("Azure-Core", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("44cbc7c6-6776-5f3c-36c1-75cd3ef19ea9"), EventSource.GetGuid(eventSourceType));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.That(eventSourceType, Is.Not.Null);
+            Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Core"));
+            Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("44cbc7c6-6776-5f3c-36c1-75cd3ef19ea9")));
+            Assert.That(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"), Is.Not.Empty);
         }
 
         [Test]
@@ -94,33 +94,33 @@ namespace Azure.Core.Tests
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("Request", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://contoso.a.io/api-version=5", e.GetProperty<string>("uri"));
-            Assert.AreEqual("GET", e.GetProperty<string>("method"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("Request"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<string>("uri"), Is.EqualTo("https://contoso.a.io/api-version=5"));
+            Assert.That(e.GetProperty<string>("method"), Is.EqualTo("GET"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Date:3/26/2019{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Header:Value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("clientAssembly"), Is.EqualTo("Test-SDK"));
 
             e = _listener.SingleEventById(RequestContentEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("RequestContent", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual(new byte[] { 1, 2, 3, 4, 5 }, e.GetProperty<byte[]>("content"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("RequestContent"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 1, 2, 3, 4, 5 }).AsCollection);
 
             e = _listener.SingleEventById(ResponseEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("Response", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual(e.GetProperty<int>("status"), 200);
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("Response"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<int>("status"), Is.EqualTo(200));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
 
             e = _listener.SingleEventById(ResponseContentEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("ResponseContent", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("ResponseContent"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 6, 7, 8, 9, 0 }).AsCollection);
         }
 
         [Test]
@@ -144,10 +144,10 @@ namespace Azure.Core.Tests
             }));
 
             EventWrittenEventArgs e = _listener.SingleEventById(ExceptionResponseEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0],
-                e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0],
+                Is.EqualTo(exception.ToString().Split(Environment.NewLine.ToCharArray())[0]));
         }
 
         [Test]
@@ -194,9 +194,9 @@ namespace Azure.Core.Tests
             await Task.Delay(1_000);
 
             EventWrittenEventArgs e = _listener.SingleEventById(BackgroundRefreshFailedEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0], e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0], Is.EqualTo(exception.ToString().Split(Environment.NewLine.ToCharArray())[0]));
         }
 
         [Test]
@@ -222,17 +222,17 @@ namespace Azure.Core.Tests
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(ErrorResponseEvent);
-            Assert.AreEqual(EventLevel.Warning, e.Level);
-            Assert.AreEqual("ErrorResponse", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual(e.GetProperty<int>("status"), 500);
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Warning));
+            Assert.That(e.EventName, Is.EqualTo("ErrorResponse"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<int>("status"), Is.EqualTo(500));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
 
             e = _listener.SingleEventById(ErrorResponseContentEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("ErrorResponseContent", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("ErrorResponseContent"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 6, 7, 8, 9, 0 }));
         }
 
         [Test]
@@ -254,12 +254,12 @@ namespace Azure.Core.Tests
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("RequestContentText", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("Hello world", e.GetProperty<string>("content"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("RequestContentText"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<string>("content"), Is.EqualTo("Hello world"));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -326,16 +326,16 @@ namespace Azure.Core.Tests
 
         private void AssertNoContentLogged()
         {
-            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentTextEvent));
+            Assert.That(_listener.EventsById(RequestContentEvent), Is.Empty);
+            Assert.That(_listener.EventsById(RequestContentTextEvent), Is.Empty);
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentBlockEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentTextBlockEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ResponseContentBlockEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ResponseContentTextBlockEvent), Is.Empty);
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextBlockEvent));
+            Assert.That(_listener.EventsById(ErrorResponseContentEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ErrorResponseContentTextEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ErrorResponseContentTextBlockEvent), Is.Empty);
         }
 
         [Test]
@@ -345,21 +345,21 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
 
-            Assert.AreEqual(2, contentEvents.Length);
+            Assert.That(contentEvents.Length, Is.EqualTo(2));
 
-            Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
-            Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[0].GetProperty<string>("requestId"));
-            Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
-            CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
+            Assert.That(contentEvents[0].Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentEvents[0].EventName, Is.EqualTo("ResponseContentBlock"));
+            Assert.That(contentEvents[0].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+            Assert.That(contentEvents[0].GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 72, 101, 108, 108, 111, 32 }));
 
-            Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
-            Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[1].GetProperty<string>("requestId"));
-            Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
-            CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetProperty<byte[]>("content"));
+            Assert.That(contentEvents[1].Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentEvents[1].EventName, Is.EqualTo("ResponseContentBlock"));
+            Assert.That(contentEvents[1].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(contentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+            Assert.That(contentEvents[1].GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 119, 111, 114, 108, 100 }));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -369,21 +369,21 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentBlockEvent).ToArray();
 
-            Assert.AreEqual(2, errorContentEvents.Length);
+            Assert.That(errorContentEvents.Length, Is.EqualTo(2));
 
-            Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
-            Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[0].GetProperty<string>("requestId"));
-            Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
-            CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
+            Assert.That(errorContentEvents[0].Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(errorContentEvents[0].EventName, Is.EqualTo("ErrorResponseContentBlock"));
+            Assert.That(errorContentEvents[0].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(errorContentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+            Assert.That(errorContentEvents[0].GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 72, 101, 108, 108, 111, 32 }));
 
-            Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
-            Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[1].GetProperty<string>("requestId"));
-            Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
-            CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetProperty<byte[]>("content"));
+            Assert.That(errorContentEvents[1].Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(errorContentEvents[1].EventName, Is.EqualTo("ErrorResponseContentBlock"));
+            Assert.That(errorContentEvents[1].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(errorContentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+            Assert.That(errorContentEvents[1].GetProperty<byte[]>("content"), Is.EqualTo(new byte[] { 119, 111, 114, 108, 100 }));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
+            Assert.That(_listener.EventsById(ErrorResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -397,21 +397,21 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentTextBlockEvent).ToArray();
 
-            Assert.AreEqual(2, contentEvents.Length);
+            Assert.That(contentEvents.Length, Is.EqualTo(2));
 
-            Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
-            Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[0].GetProperty<string>("requestId"));
-            Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
-            Assert.AreEqual("Hello ", contentEvents[0].GetProperty<string>("content"));
+            Assert.That(contentEvents[0].Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentEvents[0].EventName, Is.EqualTo("ResponseContentTextBlock"));
+            Assert.That(contentEvents[0].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+            Assert.That(contentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello "));
 
-            Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
-            Assert.AreEqual("ResponseContentTextBlock", contentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[1].GetProperty<string>("requestId"));
-            Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
-            Assert.AreEqual("world", contentEvents[1].GetProperty<string>("content"));
+            Assert.That(contentEvents[1].Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentEvents[1].EventName, Is.EqualTo("ResponseContentTextBlock"));
+            Assert.That(contentEvents[1].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(contentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+            Assert.That(contentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -425,21 +425,21 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
 
-            Assert.AreEqual(2, errorContentEvents.Length);
+            Assert.That(errorContentEvents.Length, Is.EqualTo(2));
 
-            Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
-            Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[0].GetProperty<string>("requestId"));
-            Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
-            Assert.AreEqual("Hello ", errorContentEvents[0].GetProperty<string>("content"));
+            Assert.That(errorContentEvents[0].Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(errorContentEvents[0].EventName, Is.EqualTo("ErrorResponseContentTextBlock"));
+            Assert.That(errorContentEvents[0].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(errorContentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+            Assert.That(errorContentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello "));
 
-            Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
-            Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[1].GetProperty<string>("requestId"));
-            Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
-            Assert.AreEqual("world", errorContentEvents[1].GetProperty<string>("content"));
+            Assert.That(errorContentEvents[1].Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(errorContentEvents[1].EventName, Is.EqualTo("ErrorResponseContentTextBlock"));
+            Assert.That(errorContentEvents[1].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(errorContentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+            Assert.That(errorContentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
+            Assert.That(_listener.EventsById(ErrorResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -453,10 +453,10 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
 
-            Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
-            Assert.AreEqual("ResponseContentText", contentEvent.EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvent.GetProperty<string>("requestId"));
-            Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
+            Assert.That(contentEvent.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentEvent.EventName, Is.EqualTo("ResponseContentText"));
+            Assert.That(contentEvent.GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(contentEvent.GetProperty<string>("content"), Is.EqualTo("Hello world"));
         }
 
         [Test]
@@ -471,10 +471,10 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs errorContentEvent = _listener.SingleEventById(ErrorResponseContentTextEvent);
 
-            Assert.AreEqual(EventLevel.Informational, errorContentEvent.Level);
-            Assert.AreEqual("ErrorResponseContentText", errorContentEvent.EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvent.GetProperty<string>("requestId"));
-            Assert.AreEqual("Hello", errorContentEvent.GetProperty<string>("content"));
+            Assert.That(errorContentEvent.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(errorContentEvent.EventName, Is.EqualTo("ErrorResponseContentText"));
+            Assert.That(errorContentEvent.GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(errorContentEvent.GetProperty<string>("content"), Is.EqualTo("Hello"));
         }
 
         [Test]
@@ -489,10 +489,10 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
 
-            Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
-            Assert.AreEqual("ResponseContentText", contentEvent.EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvent.GetProperty<string>("requestId"));
-            Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
+            Assert.That(contentEvent.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentEvent.EventName, Is.EqualTo("ResponseContentText"));
+            Assert.That(contentEvent.GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(contentEvent.GetProperty<string>("content"), Is.EqualTo("Hello"));
         }
 
         [Test]
@@ -514,12 +514,12 @@ namespace Azure.Core.Tests
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("RequestContentText", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("Hello", e.GetProperty<string>("content"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("RequestContentText"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<string>("content"), Is.EqualTo("Hello"));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -534,15 +534,15 @@ namespace Azure.Core.Tests
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentTextBlockEvent).ToArray();
 
-            Assert.AreEqual(1, contentEvents.Length);
+            Assert.That(contentEvents.Length, Is.EqualTo(1));
 
-            Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
-            Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[0].GetProperty<string>("requestId"));
-            Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
-            Assert.AreEqual("Hello", contentEvents[0].GetProperty<string>("content"));
+            Assert.That(contentEvents[0].Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentEvents[0].EventName, Is.EqualTo("ResponseContentTextBlock"));
+            Assert.That(contentEvents[0].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
+            Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+            Assert.That(contentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello"));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -570,23 +570,23 @@ namespace Azure.Core.Tests
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("Request", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", e.GetProperty<string>("uri"));
-            Assert.AreEqual("GET", e.GetProperty<string>("method"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("Request"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<string>("uri"), Is.EqualTo("https://contoso.a.io/?api-version=5&secret=REDACTED"));
+            Assert.That(e.GetProperty<string>("method"), Is.EqualTo("GET"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Date:3/26/2019{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Header:Value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Custom-Header:REDACTED{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("clientAssembly"), Is.EqualTo("Test-SDK"));
 
             e = _listener.SingleEventById(ResponseEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("Response", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual(e.GetProperty<int>("status"), 200);
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("Response"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<int>("status"), Is.EqualTo(200));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Response-Header:REDACTED{Environment.NewLine}"));
         }
 
         [Test]
@@ -614,23 +614,23 @@ namespace Azure.Core.Tests
             });
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("Request", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", e.GetProperty<string>("uri"));
-            Assert.AreEqual("GET", e.GetProperty<string>("method"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("Request"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<string>("uri"), Is.EqualTo("https://contoso.a.io/?api-version=5&secret=123"));
+            Assert.That(e.GetProperty<string>("method"), Is.EqualTo("GET"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Date:3/26/2019{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Header:Value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Custom-Header:Value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("clientAssembly"), Is.EqualTo("Test-SDK"));
 
             e = _listener.SingleEventById(ResponseEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("Response", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual(e.GetProperty<int>("status"), 200);
-            StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("Response"));
+            Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
+            Assert.That(e.GetProperty<int>("status"), Is.EqualTo(200));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Custom-Response-Header:Improved value{Environment.NewLine}"));
+            Assert.That(e.GetProperty<string>("headers"), Does.Contain($"Secret-Response-Header:Very secret{Environment.NewLine}"));
         }
 
         private async Task<Response> SendRequest(bool isSeekable, bool isError, Action<MockResponse> setupRequest = null, int maxLength = int.MaxValue)
@@ -665,15 +665,15 @@ namespace Azure.Core.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
-                Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
-                Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+                Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
+                Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
+                Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
             }
             else
             {
-                Assert.AreEqual(6, response.ContentStream.Read(buffer, 5, 6));
-                Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
-                Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
+                Assert.That(response.ContentStream.Read(buffer, 5, 6), Is.EqualTo(6));
+                Assert.That(response.ContentStream.Read(buffer, 6, 5), Is.EqualTo(5));
+                Assert.That(response.ContentStream.Read(buffer, 0, 5), Is.EqualTo(0));
             }
 
             return mockResponse;

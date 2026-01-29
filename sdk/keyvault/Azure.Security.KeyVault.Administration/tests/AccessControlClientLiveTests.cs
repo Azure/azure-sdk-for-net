@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-using System.Linq;
-using System;
 using Azure.Security.KeyVault.Administration.Models;
-using System.Text.Json;
 using Azure.Security.KeyVault.Keys;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
@@ -253,11 +253,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Guid name = Recording.Random.NewGuid();
 
             Response response = await Client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, name.ToString());
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
 
             JsonDocument json = JsonDocument.Parse(response.Content);
             KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
-            Assert.AreEqual("RoleAssignmentNotFound", error.Code);
+            Assert.That(error.Code, Is.EqualTo("RoleAssignmentNotFound"));
         }
 
         [RecordedTest]
@@ -266,11 +266,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Guid name = Recording.Random.NewGuid();
 
             Response response = await Client.DeleteRoleDefinitionAsync(KeyVaultRoleScope.Global, name);
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
 
             JsonDocument json = JsonDocument.Parse(response.Content);
             KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
-            Assert.AreEqual("RoleDefinitionNotFound", error.Code);
+            Assert.That(error.Code, Is.EqualTo("RoleDefinitionNotFound"));
         }
     }
 }

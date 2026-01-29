@@ -46,14 +46,14 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
 
             Response rawResponse = exception.GetRawResponse();
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
-            Assert.AreEqual("Value", value);
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
-            Assert.AreEqual("123", requestId);
-            Assert.IsNull(rawResponse.ContentStream);
+            Assert.That(rawResponse.Headers.TryGetValue("Custom-Header", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("Value"));
+            Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
+            Assert.That(requestId, Is.EqualTo("123"));
+            Assert.That(rawResponse.ContentStream, Is.Null);
         }
 
         [Test]
@@ -80,14 +80,14 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
 
             Response rawResponse = exception.GetRawResponse();
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
-            Assert.AreEqual("Value", value);
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
-            Assert.AreEqual("123", requestId);
-            Assert.IsNull(rawResponse.ContentStream);
+            Assert.That(rawResponse.Headers.TryGetValue("Custom-Header", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("Value"));
+            Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
+            Assert.That(requestId, Is.EqualTo("123"));
+            Assert.That(rawResponse.ContentStream, Is.Null);
         }
 
         [Test]
@@ -113,14 +113,14 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
 
             Response rawResponse = exception.GetRawResponse();
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("Custom-Header", out var value));
-            Assert.AreEqual("Value", value);
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
-            Assert.AreEqual("123", requestId);
-            Assert.IsNull(rawResponse.ContentStream);
+            Assert.That(rawResponse.Headers.TryGetValue("Custom-Header", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("Value"));
+            Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
+            Assert.That(requestId, Is.EqualTo("123"));
+            Assert.That(rawResponse.ContentStream, Is.Null);
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId-2", "123"));
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
         }
 
         [Test]
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId-2", "123"));
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
         }
 
         [Test]
@@ -203,16 +203,16 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
 
             Response rawResponse = exception.GetRawResponse();
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("Content-Type", out var value));
-            Assert.AreEqual("text/json", value);
-            Assert.IsTrue(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId));
-            Assert.AreEqual("123", requestId);
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
-            Assert.AreEqual("{\"errorCode\": 1}", rawResponse.Content.ToString());
+            Assert.That(rawResponse.Headers.TryGetValue("Content-Type", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("text/json"));
+            Assert.That(rawResponse.Headers.TryGetValue("x-ms-requestId", out var requestId), Is.True);
+            Assert.That(requestId, Is.EqualTo("123"));
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
+            Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            Assert.That(rawResponse.Content.ToString(), Is.EqualTo("{\"errorCode\": 1}"));
         }
 
         [Test]
@@ -238,12 +238,12 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
             Response rawResponse = exception.GetRawResponse();
 
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
-            Assert.AreEqual("{\"errorCode\": 1}", rawResponse.Content.ToString());
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
+            Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            Assert.That(rawResponse.Content.ToString(), Is.EqualTo("{\"errorCode\": 1}"));
         }
 
         [Test]
@@ -273,7 +273,7 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
         }
 
         [Test]
@@ -311,9 +311,9 @@ namespace Azure.Core.Tests
 
             RequestFailedException exception = new RequestFailedException(response);
 
-            Assert.AreEqual(formattedResponse, exception.Message);
-            Assert.AreEqual("a-value", exception.Data["a"]);
-            Assert.AreEqual("b-value", exception.Data["b"]);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
+            Assert.That(exception.Data["a"], Is.EqualTo("a-value"));
+            Assert.That(exception.Data["b"], Is.EqualTo("b-value"));
         }
 
         [Test]
@@ -341,8 +341,8 @@ namespace Azure.Core.Tests
 
             var innerException = new Exception();
             RequestFailedException exception = new RequestFailedException(response, innerException: innerException);
-            Assert.AreEqual(formattedResponse, exception.Message);
-            Assert.AreEqual(innerException, exception.InnerException);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
+            Assert.That(exception.InnerException, Is.EqualTo(innerException));
         }
 
         [Test]
@@ -357,9 +357,9 @@ namespace Azure.Core.Tests
             memoryStream.Position = 0;
             deserialized = (RequestFailedException)dataContractSerializer.ReadObject(memoryStream);
 
-            Assert.AreEqual(exception.Message, deserialized.Message);
-            Assert.AreEqual(exception.Status, deserialized.Status);
-            Assert.AreEqual(exception.ErrorCode, deserialized.ErrorCode);
+            Assert.That(deserialized.Message, Is.EqualTo(exception.Message));
+            Assert.That(deserialized.Status, Is.EqualTo(exception.Status));
+            Assert.That(deserialized.ErrorCode, Is.EqualTo(exception.ErrorCode));
         }
 
         [Test]
@@ -394,8 +394,8 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
-            Assert.AreEqual("StatusCode", exception.ErrorCode);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
+            Assert.That(exception.ErrorCode, Is.EqualTo("StatusCode"));
         }
 
         [Test]
@@ -430,8 +430,8 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
-            Assert.AreEqual("StatusCode", exception.ErrorCode);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
+            Assert.That(exception.ErrorCode, Is.EqualTo("StatusCode"));
         }
 
         [Test]
@@ -467,13 +467,13 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
-            Assert.AreEqual("StatusCode", exception.ErrorCode);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
+            Assert.That(exception.ErrorCode, Is.EqualTo("StatusCode"));
             Response rawResponse = exception.GetRawResponse();
 
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
-            Assert.AreEqual(errorContent, rawResponse.Content.ToString());
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
+            Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            Assert.That(rawResponse.Content.ToString(), Is.EqualTo(errorContent));
         }
 
         [Test]
@@ -510,13 +510,13 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
-            Assert.AreEqual("StatusCode", exception.ErrorCode);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
+            Assert.That(exception.ErrorCode, Is.EqualTo("StatusCode"));
 
             Response rawResponse = exception.GetRawResponse();
-            Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
-            Assert.AreEqual(errorContent, rawResponse.Content.ToString());
+            Assert.That(rawResponse.ContentStream, Is.InstanceOf<MemoryStream>());
+            Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            Assert.That(rawResponse.Content.ToString(), Is.EqualTo(errorContent));
         }
 
         [Test]
@@ -545,7 +545,7 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
         }
 
         [Test]
@@ -574,7 +574,7 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
         }
 
         [Test]
@@ -603,7 +603,7 @@ namespace Azure.Core.Tests
             response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = new RequestFailedException(response);
-            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(formattedResponse));
         }
 
         private class TestClientOption : ClientOptions

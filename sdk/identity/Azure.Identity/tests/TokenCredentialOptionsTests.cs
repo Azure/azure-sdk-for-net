@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests
                 TokenCredentialOptions option = new TokenCredentialOptions();
                 Uri authHost = option.AuthorityHost;
 
-                Assert.AreEqual(authHost, new Uri(envHostValue));
+                Assert.That(new Uri(envHostValue), Is.EqualTo(authHost));
             }
         }
 
@@ -61,8 +61,8 @@ namespace Azure.Identity.Tests
                 TokenCredentialOptions option = new TokenCredentialOptions() { AuthorityHost = customUri };
                 Uri authHost = option.AuthorityHost;
 
-                Assert.AreNotEqual(authHost, new Uri(envHostValue));
-                Assert.AreEqual(authHost, customUri);
+                Assert.That(new Uri(envHostValue), Is.Not.EqualTo(authHost));
+                Assert.That(customUri, Is.EqualTo(authHost));
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
             {
                 TokenCredentialOptions option = new TokenCredentialOptions();
 
-                Assert.AreEqual(option.AuthorityHost, AzureAuthorityHosts.AzurePublicCloud);
+                Assert.That(AzureAuthorityHosts.AzurePublicCloud, Is.EqualTo(option.AuthorityHost));
             }
         }
 
@@ -161,36 +161,36 @@ namespace Azure.Identity.Tests
         {
             if (original is ISupportsAdditionallyAllowedTenants && clone is ISupportsAdditionallyAllowedTenants)
             {
-                CollectionAssert.AreEqual(original.AdditionallyAllowedTenants, clone.AdditionallyAllowedTenants);
+                Assert.That(clone.AdditionallyAllowedTenants, Is.EqualTo(original.AdditionallyAllowedTenants).AsCollection);
             }
             else
             {
-                CollectionAssert.AreNotEqual(original.AdditionallyAllowedTenants, clone.AdditionallyAllowedTenants);
+                Assert.That(clone.AdditionallyAllowedTenants, Is.Not.EqualTo(original.AdditionallyAllowedTenants).AsCollection);
             }
 
             if (original is ISupportsDisableInstanceDiscovery && clone is ISupportsDisableInstanceDiscovery)
             {
-                Assert.AreEqual(original.DisableInstanceDiscovery, clone.DisableInstanceDiscovery);
+                Assert.That(clone.DisableInstanceDiscovery, Is.EqualTo(original.DisableInstanceDiscovery));
             }
             else
             {
-                Assert.AreNotEqual(original.DisableInstanceDiscovery, clone.DisableInstanceDiscovery);
+                Assert.That(clone.DisableInstanceDiscovery, Is.Not.EqualTo(original.DisableInstanceDiscovery));
             }
 
             if (original is ISupportsTokenCachePersistenceOptions && clone is ISupportsTokenCachePersistenceOptions)
             {
-                Assert.AreEqual(original.TokenCachePersistenceOptions, clone.TokenCachePersistenceOptions);
+                Assert.That(clone.TokenCachePersistenceOptions, Is.EqualTo(original.TokenCachePersistenceOptions));
             }
             else
             {
-                Assert.AreNotEqual(original.TokenCachePersistenceOptions, clone.TokenCachePersistenceOptions);
+                Assert.That(clone.TokenCachePersistenceOptions, Is.Not.EqualTo(original.TokenCachePersistenceOptions));
             }
 
-            Assert.AreEqual(original.Transport, clone.Transport);
+            Assert.That(clone.Transport, Is.EqualTo(original.Transport));
 
             var isCustomTransportTestProp = typeof(ClientOptions).GetProperty("IsCustomTransportSet", BindingFlags.Instance | BindingFlags.NonPublic);
 
-            Assert.AreEqual(isCustomTransportTestProp.GetValue(original), isCustomTransportTestProp.GetValue(clone));
+            Assert.That(isCustomTransportTestProp.GetValue(clone), Is.EqualTo(isCustomTransportTestProp.GetValue(original)));
 
             AssertPublicPropertiesCloned(original.Retry, clone.Retry);
 
@@ -203,11 +203,11 @@ namespace Azure.Identity.Tests
             {
                 if (propInfo.PropertyType is IEnumerable)
                 {
-                    CollectionAssert.AreEqual((IEnumerable)propInfo.GetValue(original), (IEnumerable)propInfo.GetValue(clone));
+                    Assert.That((IEnumerable)propInfo.GetValue(clone), Is.EqualTo((IEnumerable)propInfo.GetValue(original)).AsCollection);
                 }
                 else
                 {
-                    Assert.AreEqual(propInfo.GetValue(original), propInfo.GetValue(clone));
+                    Assert.That(propInfo.GetValue(clone), Is.EqualTo(propInfo.GetValue(original)));
                 }
             }
         }
@@ -305,7 +305,7 @@ namespace Azure.Identity.Tests
             // assert that all ISupports* intefaces on the source in the in known interfaces
             var iSupportsInterfaces = sourceType.GetInterfaces().Where(i => i.Name.StartsWith("ISupports"));
 
-            CollectionAssert.IsSubsetOf(iSupportsInterfaces, s_KnownISupportsInterfaces);
+            Assert.That(iSupportsInterfaces, Is.SubsetOf(s_KnownISupportsInterfaces));
 
             // create source instance and set values for all the supported intefaces
             var source = Activator.CreateInstance(sourceType, true);
@@ -333,29 +333,29 @@ namespace Azure.Identity.Tests
             // clone the source and assert that the correct types is returned and all ISupports* interfaces the cloned type supports have been copied
             var destination = sourceType.GetMethod("Clone", BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(destinationType).Invoke(source, null);
 
-            Assert.NotNull(destination);
+            Assert.That(destination, Is.Not.Null);
 
-            Assert.IsInstanceOf(destinationType, destination);
+            Assert.That(destination, Is.InstanceOf(destinationType));
 
             if (source is ISupportsAdditionallyAllowedTenants aatSource && destination is ISupportsAdditionallyAllowedTenants aatDestination)
             {
-                CollectionAssert.AreEqual(aatSource.AdditionallyAllowedTenants, aatDestination.AdditionallyAllowedTenants);
+                Assert.That(aatDestination.AdditionallyAllowedTenants, Is.EqualTo(aatSource.AdditionallyAllowedTenants).AsCollection);
             }
 
             if (source is ISupportsDisableInstanceDiscovery didSource && destination is ISupportsDisableInstanceDiscovery didDestination)
             {
-                Assert.AreEqual(didSource.DisableInstanceDiscovery, didDestination.DisableInstanceDiscovery);
+                Assert.That(didDestination.DisableInstanceDiscovery, Is.EqualTo(didSource.DisableInstanceDiscovery));
             }
 
             if (source is ISupportsTokenCachePersistenceOptions tcpoSource && destination is ISupportsTokenCachePersistenceOptions tcpoDestination)
             {
-                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.Name, tcpoDestination.TokenCachePersistenceOptions.Name);
-                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage, tcpoDestination.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage);
+                Assert.That(tcpoDestination.TokenCachePersistenceOptions.Name, Is.EqualTo(tcpoSource.TokenCachePersistenceOptions.Name));
+                Assert.That(tcpoDestination.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage, Is.EqualTo(tcpoSource.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage));
             }
 
             if (source is ISupportsTenantId stiSource && destination is ISupportsTenantId stiDestination)
             {
-                Assert.AreEqual(stiSource.TenantId, stiDestination.TenantId);
+                Assert.That(stiDestination.TenantId, Is.EqualTo(stiSource.TenantId));
             }
         }
     }

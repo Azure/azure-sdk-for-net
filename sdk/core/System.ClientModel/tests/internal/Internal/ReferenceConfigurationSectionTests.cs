@@ -24,7 +24,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Section");
 
-        Assert.AreEqual("Value", section["Key"]);
+        Assert.That(section["Key"], Is.EqualTo("Value"));
     }
 
     [Test]
@@ -39,7 +39,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Section");
 
-        Assert.AreEqual("DirectValue", section.Value);
+        Assert.That(section.Value, Is.EqualTo("DirectValue"));
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Reference");
 
-        Assert.AreEqual("RealValue", section.Value);
+        Assert.That(section.Value, Is.EqualTo("RealValue"));
     }
 
     [Test]
@@ -71,7 +71,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Reference");
 
-        Assert.AreEqual("NestedValue", section.Value);
+        Assert.That(section.Value, Is.EqualTo("NestedValue"));
     }
 
     [Test]
@@ -88,7 +88,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Reference");
 
-        Assert.AreEqual("FinalValue", section.Value);
+        Assert.That(section.Value, Is.EqualTo("FinalValue"));
     }
 
     [Test]
@@ -103,7 +103,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Reference");
 
-        Assert.AreEqual("$NonExistent", section.Value);
+        Assert.That(section.Value, Is.EqualTo("$NonExistent"));
     }
 
     [Test]
@@ -118,7 +118,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Section");
 
-        Assert.AreEqual("NormalValue", section.Value);
+        Assert.That(section.Value, Is.EqualTo("NormalValue"));
     }
 
     [Test]
@@ -133,7 +133,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Section");
 
-        Assert.AreEqual("$", section.Value);
+        Assert.That(section.Value, Is.EqualTo("$"));
     }
 
     [Test]
@@ -145,7 +145,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "NonExistent");
 
-        Assert.IsNull(section.Value);
+        Assert.That(section.Value, Is.Null);
     }
 
     [Test]
@@ -160,7 +160,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "Section");
 
-        Assert.IsNull(section.Value);
+        Assert.That(section.Value, Is.Null);
     }
 
     [Test]
@@ -177,7 +177,7 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         IConfigurationSection child = section.GetSection("Child");
 
-        Assert.AreEqual("SubValue", child["SubKey"]);
+        Assert.That(child["SubKey"], Is.EqualTo("SubValue"));
     }
 
     [Test]
@@ -193,7 +193,7 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         IConfigurationSection child = section.GetSection("Child");
 
-        Assert.AreEqual("$NonExistent", child.Value);
+        Assert.That(child.Value, Is.EqualTo("$NonExistent"));
     }
 
     [Test]
@@ -211,10 +211,10 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         List<IConfigurationSection> children = section.GetChildren().ToList();
 
-        Assert.AreEqual(3, children.Count);
-        Assert.IsTrue(children.Any(c => c.Key == "Child1" && c.Value == "Value1"));
-        Assert.IsTrue(children.Any(c => c.Key == "Child2" && c.Value == "Value2"));
-        Assert.IsTrue(children.Any(c => c.Key == "Child3" && c.Value == "Value3"));
+        Assert.That(children.Count, Is.EqualTo(3));
+        Assert.That(children.Any(c => c.Key == "Child1" && c.Value == "Value1"), Is.True);
+        Assert.That(children.Any(c => c.Key == "Child2" && c.Value == "Value2"), Is.True);
+        Assert.That(children.Any(c => c.Key == "Child3" && c.Value == "Value3"), Is.True);
     }
 
     [Test]
@@ -232,12 +232,12 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         List<IConfigurationSection> children = section.GetChildren().ToList();
 
-        Assert.AreEqual(3, children.Count);
+        Assert.That(children.Count, Is.EqualTo(3));
         IConfigurationSection child1 = children.First(c => c.Key == "Child1");
         IConfigurationSection child2 = children.First(c => c.Key == "Child2");
 
-        Assert.AreEqual("NormalValue", child1.Value);
-        Assert.AreEqual("ReferencedValue", child2.Value);
+        Assert.That(child1.Value, Is.EqualTo("NormalValue"));
+        Assert.That(child2.Value, Is.EqualTo("ReferencedValue"));
     }
 
     [Test]
@@ -255,12 +255,12 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         List<IConfigurationSection> children = section.GetChildren().ToList();
 
-        Assert.AreEqual(2, children.Count);
+        Assert.That(children.Count, Is.EqualTo(2));
         IConfigurationSection child1 = children.First(c => c.Key == "Child1");
         IConfigurationSection child2 = children.First(c => c.Key == "Child2");
 
-        Assert.AreEqual("NormalValue", child1.Value);
-        Assert.AreEqual("ValueFromRoot", child2.Value);
+        Assert.That(child1.Value, Is.EqualTo("NormalValue"));
+        Assert.That(child2.Value, Is.EqualTo("ValueFromRoot"));
     }
 
     [Test]
@@ -279,7 +279,7 @@ public class ReferenceConfigurationSectionTests
         IConfigurationSection level2 = level1.GetSection("Level2");
         IConfigurationSection reference = level2.GetSection("Reference");
 
-        Assert.AreEqual("root-api-key", reference.Value);
+        Assert.That(reference.Value, Is.EqualTo("root-api-key"));
     }
 
     [Test]
@@ -295,7 +295,7 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "MySection");
         IConfigurationSection subsection = section.GetSection("MyKey");
 
-        Assert.AreEqual("MyKey", subsection.Key);
+        Assert.That(subsection.Key, Is.EqualTo("MyKey"));
     }
 
     [Test]
@@ -310,7 +310,7 @@ public class ReferenceConfigurationSectionTests
 
         ReferenceConfigurationSection section = new(config, "MySection");
 
-        Assert.AreEqual("MySection", section.Path);
+        Assert.That(section.Path, Is.EqualTo("MySection"));
     }
 
     [Test]
@@ -326,7 +326,7 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         section["Key"] = "NewValue";
 
-        Assert.AreEqual("NewValue", section["Key"]);
+        Assert.That(section["Key"], Is.EqualTo("NewValue"));
     }
 
     [Test]
@@ -342,7 +342,7 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         section.Value = "NewValue";
 
-        Assert.AreEqual("NewValue", section.Value);
+        Assert.That(section.Value, Is.EqualTo("NewValue"));
     }
 
     [Test]
@@ -363,8 +363,8 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection serviceA = new(config, "ServiceA");
         IConfigurationSection credentialSection = serviceA.GetSection("Credential");
 
-        Assert.AreEqual("secret-key", credentialSection["ApiKey"]);
-        Assert.AreEqual("ApiKey", credentialSection["Type"]);
+        Assert.That(credentialSection["ApiKey"], Is.EqualTo("secret-key"));
+        Assert.That(credentialSection["Type"], Is.EqualTo("ApiKey"));
     }
 
     [Test]
@@ -380,7 +380,7 @@ public class ReferenceConfigurationSectionTests
         ReferenceConfigurationSection section = new(config, "Section");
         IChangeToken token = section.GetReloadToken();
 
-        Assert.IsNotNull(token);
+        Assert.That(token, Is.Not.Null);
     }
 
     [Test]

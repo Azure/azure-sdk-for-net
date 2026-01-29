@@ -7,9 +7,9 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Rest.Azure;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.KeyVault.Samples

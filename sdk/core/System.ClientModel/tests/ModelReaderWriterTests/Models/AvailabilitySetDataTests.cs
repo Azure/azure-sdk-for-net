@@ -32,21 +32,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
             expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}";
-            return expectedSerializedString; ;
+            return expectedSerializedString;
+            ;
         }
 
         protected override void VerifyModel(AvailabilitySetData model, string format)
         {
             Dictionary<string, string> expectedTags = new Dictionary<string, string>() { { "key", "value" } };
 
-            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375", model.Id!.ToString());
-            CollectionAssert.AreEquivalent(expectedTags, model.Tags);
-            Assert.AreEqual("eastus", model.Location);
-            Assert.AreEqual("testAS-3375", model.Name);
-            Assert.AreEqual("Microsoft.Compute/availabilitySets", model.ResourceType!.ToString());
-            Assert.AreEqual(5, model.PlatformUpdateDomainCount);
-            Assert.AreEqual(3, model.PlatformFaultDomainCount);
-            Assert.AreEqual("Classic", model.Sku.Name);
+            Assert.That(model.Id!.ToString(), Is.EqualTo("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375"));
+            Assert.That(model.Tags, Is.EquivalentTo(expectedTags));
+            Assert.That(model.Location, Is.EqualTo("eastus"));
+            Assert.That(model.Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model.ResourceType!.ToString(), Is.EqualTo("Microsoft.Compute/availabilitySets"));
+            Assert.That(model.PlatformUpdateDomainCount, Is.EqualTo(5));
+            Assert.That(model.PlatformFaultDomainCount, Is.EqualTo(3));
+            Assert.That(model.Sku.Name, Is.EqualTo("Classic"));
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
@@ -56,42 +57,42 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             if (model is null)
             {
-                Assert.IsNull(model2);
+                Assert.That(model2, Is.Null);
                 return;
             }
 
             HashSet<string> skips = new HashSet<string>(propertySkips);
             if (!skips.Contains("id"))
             {
-                Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
+                Assert.That(model2.Id, Is.EqualTo(format == "W" ? null : model.Id));
             }
             if (!skips.Contains("name"))
             {
-                Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
+                Assert.That(model2.Name, Is.EqualTo(format == "W" ? null : model.Name));
             }
             if (format == "J" && !skips.Contains("resourceType"))
             {
-                Assert.AreEqual(model.ResourceType, model2.ResourceType);
+                Assert.That(model2.ResourceType, Is.EqualTo(model.ResourceType));
             }
             if (!skips.Contains("location"))
             {
-                Assert.AreEqual(model.Location, model2.Location);
+                Assert.That(model2.Location, Is.EqualTo(model.Location));
             }
             if (!skips.Contains("platformFaultDomainCount"))
             {
-                Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
+                Assert.That(model2.PlatformFaultDomainCount, Is.EqualTo(model.PlatformFaultDomainCount));
             }
             if (!skips.Contains("platformUpdateDomainCount"))
             {
-                Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
+                Assert.That(model2.PlatformUpdateDomainCount, Is.EqualTo(model.PlatformUpdateDomainCount));
             }
             if (!skips.Contains("sku"))
             {
-                Assert.AreEqual(model.Sku.Name, model2.Sku.Name);
+                Assert.That(model2.Sku.Name, Is.EqualTo(model.Sku.Name));
             }
             if (!skips.Contains("tags"))
             {
-                CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
+                Assert.That(model2.Tags, Is.EquivalentTo(model.Tags));
             }
         }
     }

@@ -179,7 +179,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
-            Assert.AreEqual(data.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, dataResult);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
@@ -213,7 +213,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
-            Assert.AreEqual(new string('A', 100) + new string('B', 50) + new string('C', 25), Encoding.ASCII.GetString(dataResult));
+            Assert.That(Encoding.ASCII.GetString(dataResult), Is.EqualTo(new string('A', 100) + new string('B', 50) + new string('C', 25)));
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -241,7 +241,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             // Assert
-            CollectionAssert.AreEqual(metadata, await GetMetadataAsync(client));
+            Assert.That(await GetMetadataAsync(client), Is.EqualTo(metadata).AsCollection);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -268,7 +268,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             // Assert
-            CollectionAssert.AreEqual(metadata, await GetMetadataAsync(client));
+            Assert.That(await GetMetadataAsync(client), Is.EqualTo(metadata).AsCollection);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -302,10 +302,10 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             Response response = await GetPropertiesAsync(client);
-            Assert.IsTrue(response.Headers.TryGetValue("Content-Type", out string downloadedContentType));
-            Assert.AreEqual(headers.ContentType, downloadedContentType);
-            Assert.IsTrue(response.Headers.TryGetValue("Content-Language", out string downloadedContentLanguage));
-            Assert.AreEqual(headers.ContentLanguage, downloadedContentLanguage);
+            Assert.That(response.Headers.TryGetValue("Content-Type", out string downloadedContentType), Is.True);
+            Assert.That(downloadedContentType, Is.EqualTo(headers.ContentType));
+            Assert.That(response.Headers.TryGetValue("Content-Language", out string downloadedContentLanguage), Is.True);
+            Assert.That(downloadedContentLanguage, Is.EqualTo(headers.ContentLanguage));
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -337,10 +337,10 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             Response response = await GetPropertiesAsync(client);
-            Assert.IsTrue(response.Headers.TryGetValue("Content-Type", out string downloadedContentType));
-            Assert.AreEqual(headers.ContentType, downloadedContentType);
-            Assert.IsTrue(response.Headers.TryGetValue("Content-Language", out string downloadedContentLanguage));
-            Assert.AreEqual(headers.ContentLanguage, downloadedContentLanguage);
+            Assert.That(response.Headers.TryGetValue("Content-Type", out string downloadedContentType), Is.True);
+            Assert.That(downloadedContentType, Is.EqualTo(headers.ContentType));
+            Assert.That(response.Headers.TryGetValue("Content-Language", out string downloadedContentLanguage), Is.True);
+            Assert.That(downloadedContentLanguage, Is.EqualTo(headers.ContentLanguage));
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -374,7 +374,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
-            Assert.AreEqual(data.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, dataResult);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
@@ -414,7 +414,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
-            Assert.AreEqual(newData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(newData.Length));
             TestHelper.AssertSequenceEqual(newData, dataResult);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
@@ -451,7 +451,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             byte[] dataResult = (await DownloadAsync(client)).ToArray();
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, dataResult);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
@@ -466,7 +466,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 OpenWriteAsync(client, overwrite: true, maxDataSize: Constants.KB),
-                e => Assert.AreEqual(ContainerNotFoundErrorCode, e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ContainerNotFoundErrorCode)));
         }
 
         [RecordedTest]
@@ -498,7 +498,7 @@ namespace Azure.Storage.Test.Shared
 
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 CloseStream(),
-                e => Assert.AreEqual(ConditionNotMetErrorCode, e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ConditionNotMetErrorCode)));
         }
 
         [RecordedTest]
@@ -529,8 +529,8 @@ namespace Azure.Storage.Test.Shared
             }
 
             // Assert
-            Assert.IsTrue(progress.List.Count > 0);
-            Assert.AreEqual(GetExpectedDataLength(dataSize), progress.List[progress.List.Count - 1]);
+            Assert.That(progress.List.Count > 0, Is.True);
+            Assert.That(progress.List[progress.List.Count - 1], Is.EqualTo(GetExpectedDataLength(dataSize)));
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -575,7 +575,7 @@ namespace Azure.Storage.Test.Shared
 
                 // Assert
                 byte[] dataResult = (await DownloadAsync(client)).ToArray();
-                Assert.AreEqual(data.Length, dataResult.Length);
+                Assert.That(dataResult.Length, Is.EqualTo(data.Length));
                 TestHelper.AssertSequenceEqual(data, dataResult);
 
                 await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
@@ -613,7 +613,7 @@ namespace Azure.Storage.Test.Shared
                         overwrite: true,
                         maxDataSize: Constants.KB,
                         conditions: accessConditions),
-                    e => Assert.AreEqual(ConditionNotMetErrorCode, e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo(ConditionNotMetErrorCode)));
             }
         }
         #endregion

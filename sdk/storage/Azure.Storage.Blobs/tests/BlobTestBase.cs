@@ -183,7 +183,7 @@ namespace Azure.Storage.Test.Shared
                 new Uri(config.VaultEndpoint),
                 GetKeyClientTokenCredential(config));
 
-        private  TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+        private TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
             => TestEnvironment.Credential;
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
@@ -601,10 +601,10 @@ namespace Azure.Storage.Test.Shared
 
             public void Handle(BlobQueryError blobQueryError)
             {
-                Assert.AreEqual(_expectedBlobQueryError.IsFatal, blobQueryError.IsFatal);
-                Assert.AreEqual(_expectedBlobQueryError.Name, blobQueryError.Name);
-                Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
-                Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
+                Assert.That(blobQueryError.IsFatal, Is.EqualTo(_expectedBlobQueryError.IsFatal));
+                Assert.That(blobQueryError.Name, Is.EqualTo(_expectedBlobQueryError.Name));
+                Assert.That(blobQueryError.Description, Is.EqualTo(_expectedBlobQueryError.Description));
+                Assert.That(blobQueryError.Position, Is.EqualTo(_expectedBlobQueryError.Position));
             }
         }
 
@@ -634,12 +634,12 @@ namespace Azure.Storage.Test.Shared
         public void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
         {
             BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
-            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
-            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
-            Assert.AreEqual(key.SignedService, sas.KeyService);
-            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
-            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
-            Assert.AreEqual(key.SignedDelegatedUserTenantId, sas.KeyDelegatedUserTenantId);
+            Assert.That(sas.KeyObjectId, Is.EqualTo(key.SignedObjectId));
+            Assert.That(sas.KeyExpiresOn, Is.EqualTo(key.SignedExpiresOn));
+            Assert.That(sas.KeyService, Is.EqualTo(key.SignedService));
+            Assert.That(sas.KeyStartsOn, Is.EqualTo(key.SignedStartsOn));
+            Assert.That(sas.KeyTenantId, Is.EqualTo(key.SignedTenantId));
+            Assert.That(sas.KeyDelegatedUserTenantId, Is.EqualTo(key.SignedDelegatedUserTenantId));
             //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
     }

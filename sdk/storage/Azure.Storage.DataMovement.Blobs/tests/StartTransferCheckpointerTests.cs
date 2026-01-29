@@ -8,11 +8,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.DataMovement.Blobs.Tests;
+using Azure.Storage.DataMovement.JobPlan;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.JobPlan;
-using Azure.Storage.DataMovement.Blobs.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement.Tests
                 containerClient: test.Container,
                 localSourceFile: Path.Combine(disposingLocalDirectory.DirectoryPath, destinationBlobName),
                 blobName: destinationBlobName,
-                size: Constants.KB*4);
+                size: Constants.KB * 4);
             BlockBlobClient sasDestinationBlob = InstrumentClient(
                 GetServiceClient_BlobServiceSas_Blob(
                     containerName: containerName,
@@ -98,17 +98,17 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointerPath: disposingLocalDirectory.DirectoryPath,
                 id: transfer.Id,
                 jobPartNumber: 0);
-            Assert.IsTrue(File.Exists(checkpointerFileName.FullPath));
+            Assert.That(File.Exists(checkpointerFileName.FullPath), Is.True);
 
             // Check contents for checkpointer file without the SAS
             using (FileStream stream = File.OpenRead(checkpointerFileName.FullPath))
             {
                 JobPartPlanHeader deserializedHeader = JobPartPlanHeader.Deserialize(stream);
 
-                Assert.IsNotNull(deserializedHeader);
+                Assert.That(deserializedHeader, Is.Not.Null);
 
-                Assert.AreEqual(sourceBlob.Uri.AbsoluteUri, deserializedHeader.SourcePath);
-                Assert.AreEqual(destinationBlob.Uri.AbsoluteUri, deserializedHeader.DestinationPath);
+                Assert.That(deserializedHeader.SourcePath, Is.EqualTo(sourceBlob.Uri.AbsoluteUri));
+                Assert.That(deserializedHeader.DestinationPath, Is.EqualTo(destinationBlob.Uri.AbsoluteUri));
             }
         }
     }

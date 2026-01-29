@@ -15,18 +15,18 @@ namespace Azure.Core.Tests
         {
             var enumerable = PageResponseEnumerator.CreateEnumerable(s =>
                 s == null ?
-                    Page<int>.FromValues(new[]{1, 2, 3}, "next", new MockResponse(200)):
-                    Page<int>.FromValues(new[]{4, 5, 6}, null, new MockResponse(200)));
+                    Page<int>.FromValues(new[] { 1, 2, 3 }, "next", new MockResponse(200)) :
+                    Page<int>.FromValues(new[] { 4, 5, 6 }, null, new MockResponse(200)));
 
-            Assert.AreEqual(new[]{1,2,3,4,5,6}, enumerable.ToArray());
+            Assert.That(enumerable.ToArray(), Is.EqualTo(new[] { 1, 2, 3, 4, 5, 6 }));
 
             int pageCount = 0;
             foreach (var page in enumerable.AsPages())
             {
-                Assert.AreEqual(3, page.Values.Count);
+                Assert.That(page.Values.Count, Is.EqualTo(3));
                 pageCount++;
             }
-            Assert.AreEqual(2, pageCount);
+            Assert.That(pageCount, Is.EqualTo(2));
         }
 
         [Test]
@@ -35,18 +35,18 @@ namespace Azure.Core.Tests
             var enumerable = PageResponseEnumerator.CreateAsyncEnumerable(async s =>
             {
                 await Task.CompletedTask;
-                return s == null ? Page<int>.FromValues(new[] {1, 2, 3}, "next", new MockResponse(200)) : Page<int>.FromValues(new[] {4, 5, 6}, null, new MockResponse(200));
+                return s == null ? Page<int>.FromValues(new[] { 1, 2, 3 }, "next", new MockResponse(200)) : Page<int>.FromValues(new[] { 4, 5, 6 }, null, new MockResponse(200));
             });
 
-            Assert.AreEqual(new[]{1,2,3,4,5,6}, await enumerable.ToEnumerableAsync());
+            Assert.That(await enumerable.ToEnumerableAsync(), Is.EqualTo(new[] { 1, 2, 3, 4, 5, 6 }));
 
             int pageCount = 0;
             await foreach (var page in enumerable.AsPages())
             {
-                Assert.AreEqual(3, page.Values.Count);
+                Assert.That(page.Values.Count, Is.EqualTo(3));
                 pageCount++;
             }
-            Assert.AreEqual(2, pageCount);
+            Assert.That(pageCount, Is.EqualTo(2));
         }
     }
 }

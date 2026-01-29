@@ -217,7 +217,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         return await Client.GetDeletedCertificateAsync(name).ConfigureAwait(false);

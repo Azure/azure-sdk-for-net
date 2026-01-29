@@ -22,12 +22,13 @@ public class AzuriteNUnitFixture
     private AzuriteFixture InitializeAzuriteWithRetry(int numberOfTries)
     {
         List<Exception> exceptions = null;
-        for (int i = 0; i<numberOfTries; i++)
+        for (int i = 0; i < numberOfTries; i++)
         {
             try
             {
                 return new AzuriteFixture();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 exceptions ??= new List<Exception>();
                 exceptions.Add(e);

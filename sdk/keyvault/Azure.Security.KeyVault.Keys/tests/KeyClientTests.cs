@@ -144,9 +144,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                             .WithContent(@"{""error"":{""code"":""Unauthorized"",""message"":""Error validating token: IDX10223""}}");
 
                     case 2:
-                        Assert.IsNotNull(request.Content);
-                        Assert.IsTrue(request.Content.TryComputeLength(out long length));
-                        Assert.AreNotEqual(0, length);
+                        Assert.That(request.Content, Is.Not.Null);
+                        Assert.That(request.Content.TryComputeLength(out long length), Is.True);
+                        Assert.That(length, Is.Not.EqualTo(0));
 
                         return new MockResponse(200)
                             // Copied from SessionRecords/KeyClientLiveTests/CreateRsaKey.json
@@ -194,36 +194,36 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeySize = 2048,
             });
 
-            Assert.IsNotNull(key.Key);
+            Assert.That(key.Key, Is.Not.Null);
         }
 
         [Test]
         public void GetRandomBytesValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.GetRandomBytesAsync(-1));
-            Assert.AreEqual("count", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("count"));
 
             ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.GetRandomBytesAsync(0));
-            Assert.AreEqual("count", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("count"));
         }
 
         [Test]
         public void ReleaseKeyParameterValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync(null, null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync(string.Empty, null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync("test", null));
-            Assert.AreEqual("targetAttestationToken", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("targetAttestationToken"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync("test", string.Empty));
-            Assert.AreEqual("targetAttestationToken", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("targetAttestationToken"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync(null));
-            Assert.AreEqual("options", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("options"));
         }
 
         [Test]
@@ -231,10 +231,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void GetCryptographyClientValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetCryptographyClient(null));
-            Assert.AreEqual("keyName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("keyName"));
 
             ex = Assert.Throws<ArgumentException>(() => Client.GetCryptographyClient(string.Empty));
-            Assert.AreEqual("keyName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("keyName"));
         }
 
         [Test]
@@ -257,45 +257,45 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyClient keyClient = new(new Uri("https://localhost"), new MockCredential(), options);
             KeyVaultKey key = await keyClient.CreateEcKeyAsync(new CreateEcKeyOptions("test"));
-            Assert.AreEqual("test", key.Name);
-            Assert.AreEqual("abcd1234", key.Properties.Version);
+            Assert.That(key.Name, Is.EqualTo("test"));
+            Assert.That(key.Properties.Version, Is.EqualTo("abcd1234"));
 
             CryptographyClient cryptographyClient = keyClient.GetCryptographyClient(key.Name, key.Properties.Version);
             WrapResult result = await cryptographyClient.WrapKeyAsync(KeyWrapAlgorithm.A128KW, new byte[] { 0x74, 0x65, 0x73, 0x74 });
-            Assert.AreEqual(Convert.FromBase64String("dGVzdA=="), result.EncryptedKey);
+            Assert.That(result.EncryptedKey, Is.EqualTo(Convert.FromBase64String("dGVzdA==")));
         }
 
         [Test]
         public void GetKeyRotationPolicyValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetKeyRotationPolicyAsync(null));
-            Assert.AreEqual("keyName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("keyName"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetKeyRotationPolicyAsync(string.Empty));
-            Assert.AreEqual("keyName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("keyName"));
         }
 
         [Test]
         public void RotateKeyValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.RotateKeyAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.RotateKeyAsync(string.Empty));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
         }
 
         [Test]
         public void UpdateKeyRotationPolicyValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync(null, null));
-            Assert.AreEqual("keyName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("keyName"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.UpdateKeyRotationPolicyAsync(string.Empty, null));
-            Assert.AreEqual("keyName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("keyName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync("test", null));
-            Assert.AreEqual("policy", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("policy"));
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyClient client = InstrumentClient(new KeyClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var keys = await client.GetPropertiesOfKeysAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, keys.Count);
+            Assert.That(keys.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -355,7 +355,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyClient client = InstrumentClient(new KeyClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var versions = await client.GetPropertiesOfKeyVersionsAsync("1").ToEnumerableAsync();
-            Assert.AreEqual(3, versions.Count);
+            Assert.That(versions.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -385,7 +385,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyClient client = InstrumentClient(new KeyClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var keys = await client.GetDeletedKeysAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, keys.Count);
+            Assert.That(keys.Count, Is.EqualTo(3));
         }
 
         private class MockCredential : TokenCredential

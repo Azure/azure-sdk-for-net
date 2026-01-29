@@ -58,7 +58,7 @@ namespace Azure.Core
 
         public static byte[]? GetBytesFromBase64(in this JsonElement element, string format)
         {
-            if (element.ValueKind== JsonValueKind.Null)
+            if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
@@ -69,7 +69,7 @@ namespace Azure.Core
                 "D" => element.GetBytesFromBase64(),
                 _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
             };
-         }
+        }
 
         public static DateTimeOffset GetDateTimeOffset(in this JsonElement element, string format) => format switch
         {

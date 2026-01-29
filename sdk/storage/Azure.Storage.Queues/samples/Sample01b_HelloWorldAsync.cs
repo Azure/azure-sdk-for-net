@@ -150,7 +150,7 @@ namespace Azure.Storage.Queues.Samples
             // Wait until the original 1 second visiblity window times out and
             // check to make sure the messages aren't showing up yet
             await Task.Delay(TimeSpan.FromSeconds(1.5));
-            Assert.AreEqual(0, (await queue.ReceiveMessagesAsync(10)).Value.Length);
+            Assert.That((await queue.ReceiveMessagesAsync(10)).Value.Length, Is.EqualTo(0));
 
             // Finish processing the messages
             foreach (QueueMessage message in messages)

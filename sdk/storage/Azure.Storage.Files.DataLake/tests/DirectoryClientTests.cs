@@ -49,10 +49,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(directoryName, directoryClient.Name);
-            Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
-            Assert.AreEqual($"{parentDirectoryName}/{directoryName}", directoryClient.Path);
-            Assert.AreEqual(uri, directoryClient.Uri);
+            Assert.That(directoryClient.Name, Is.EqualTo(directoryName));
+            Assert.That(directoryClient.FileSystemName, Is.EqualTo(fileSystemName));
+            Assert.That(directoryClient.Path, Is.EqualTo($"{parentDirectoryName}/{directoryName}"));
+            Assert.That(directoryClient.Uri, Is.EqualTo(uri));
         }
 
         [RecordedTest]
@@ -78,11 +78,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(directoryName, directoryClient.Name);
-            Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
-            Assert.AreEqual($"{parentDirectoryName}/{directoryName}", directoryClient.Path);
-            Assert.AreEqual(uri, directoryClient.Uri);
-            Assert.IsNotNull(directoryClient.ClientConfiguration.SharedKeyCredential);
+            Assert.That(directoryClient.Name, Is.EqualTo(directoryName));
+            Assert.That(directoryClient.FileSystemName, Is.EqualTo(fileSystemName));
+            Assert.That(directoryClient.Path, Is.EqualTo($"{parentDirectoryName}/{directoryName}"));
+            Assert.That(directoryClient.Uri, Is.EqualTo(uri));
+            Assert.That(directoryClient.ClientConfiguration.SharedKeyCredential, Is.Not.Null);
         }
 
         [Test]
@@ -98,9 +98,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeDirectoryClient datalakeDirectoryClient = new DataLakeDirectoryClient(blobEndpoint, credentials);
 
-            Assert.AreEqual(accountName, datalakeDirectoryClient.AccountName);
-            Assert.AreEqual(fileSystemName, datalakeDirectoryClient.FileSystemName);
-            Assert.AreEqual(directoryName, datalakeDirectoryClient.Path);
+            Assert.That(datalakeDirectoryClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(datalakeDirectoryClient.FileSystemName, Is.EqualTo(fileSystemName));
+            Assert.That(datalakeDirectoryClient.Path, Is.EqualTo(directoryName));
         }
 
         [RecordedTest]
@@ -124,11 +124,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(directoryName, directoryClient.Name);
-            Assert.AreEqual(fileSystemName, directoryClient.FileSystemName);
-            Assert.AreEqual($"{parentDirectoryName}/{directoryName}", directoryClient.Path);
-            Assert.AreEqual(uri, directoryClient.Uri);
-            Assert.IsNotNull(directoryClient.ClientConfiguration.TokenCredential);
+            Assert.That(directoryClient.Name, Is.EqualTo(directoryName));
+            Assert.That(directoryClient.FileSystemName, Is.EqualTo(fileSystemName));
+            Assert.That(directoryClient.Path, Is.EqualTo($"{parentDirectoryName}/{directoryName}"));
+            Assert.That(directoryClient.Uri, Is.EqualTo(uri));
+            Assert.That(directoryClient.ClientConfiguration.TokenCredential, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -148,7 +148,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await connStringDirectory.GetPropertiesAsync();
             await connStringDirectory.GetAccessControlAsync();
-            Assert.IsNotNull(connStringDirectory.ClientConfiguration.SharedKeyCredential);
+            Assert.That(connStringDirectory.ClientConfiguration.SharedKeyCredential, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -204,8 +204,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathProperties properties = await sasClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(properties);
-            Assert.IsNotNull(sasClient.ClientConfiguration.SasCredential);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(sasClient.ClientConfiguration.SasCredential, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -265,7 +265,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             bool exists = await aadPathClient.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -293,7 +293,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             bool exists = await aadDirClient.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -321,7 +321,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             bool exists = await aadDirClient.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -350,7 +350,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadDirClient.ExistsAsync(),
-                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidAuthenticationInfo")));
         }
 
         [RecordedTest]
@@ -377,8 +377,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             bool exists = await freshDirectoryClient.ExistsAsync();
-            Assert.True(exists);
-            Assert.AreEqual(directoryName, freshDirectoryClient.Name);
+            Assert.That(exists, Is.True);
+            Assert.That(freshDirectoryClient.Name, Is.EqualTo(directoryName));
         }
 
         [RecordedTest]
@@ -404,7 +404,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             var accountName = new DataLakeUriBuilder(directory.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
             var fileSystemName = new DataLakeUriBuilder(directory.Uri).FileSystemName;
@@ -423,7 +423,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.CreateDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("FilesystemNotFound")));
         }
 
         [RecordedTest]
@@ -462,11 +462,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await directory.GetPropertiesAsync();
-            Assert.AreEqual(ContentType, response.Value.ContentType);
-            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
-            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
-            Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(CacheControl, response.Value.CacheControl);
+            Assert.That(response.Value.ContentType, Is.EqualTo(ContentType));
+            Assert.That(response.Value.ContentEncoding, Is.EqualTo(ContentEncoding));
+            Assert.That(response.Value.ContentLanguage, Is.EqualTo(ContentLanguage));
+            Assert.That(response.Value.ContentDisposition, Is.EqualTo(ContentDisposition));
+            Assert.That(response.Value.CacheControl, Is.EqualTo(CacheControl));
         }
 
         [RecordedTest]
@@ -566,7 +566,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await directory.GetAccessControlAsync();
-            Assert.AreEqual(owner, response.Value.Owner);
+            Assert.That(response.Value.Owner, Is.EqualTo(owner));
         }
 
         [RecordedTest]
@@ -599,7 +599,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await directory.GetAccessControlAsync();
-            Assert.AreEqual(group, response.Value.Group);
+            Assert.That(response.Value.Group, Is.EqualTo(group));
         }
 
         [RecordedTest]
@@ -653,17 +653,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateIfNotExistsAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseId)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseId)} does not apply to directories.")));
             }
             else
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseId)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseId)} does not apply to directories.")));
             }
         }
 
@@ -686,17 +686,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateIfNotExistsAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseDuration)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseDuration)} does not apply to directories.")));
             }
             else
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseDuration)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseDuration)} does not apply to directories.")));
             }
         }
 
@@ -719,17 +719,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateIfNotExistsAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} does not apply to directories.")));
             }
             else
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} does not apply to directories.")));
             }
         }
 
@@ -752,17 +752,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateIfNotExistsAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} does not apply to directories.")));
             }
             else
             {
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     directory.CreateAsync(options: options),
-                    e => Assert.AreEqual(
-                        $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} does not apply to directories.",
-                        e.Message));
+                    e => Assert.That(
+                        e.Message,
+                        Is.EqualTo($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} does not apply to directories.")));
             }
         }
 
@@ -795,7 +795,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -844,8 +844,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await directory.GetPropertiesAsync();
-            Assert.IsTrue(response.Value.IsServerEncrypted);
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.That(response.Value.IsServerEncrypted, Is.True);
+            Assert.That(response.Value.EncryptionKeySha256, Is.EqualTo(customerProvidedKey.EncryptionKeyHash));
         }
 
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
@@ -950,7 +950,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathInfo> response = await directory.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
+            Assert.That(response.Value.ETag, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -965,7 +965,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathInfo> response = await directory.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.That(response, Is.Null);
         }
 
         [RecordedTest]
@@ -979,7 +979,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirecotry.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("NoAuthenticationInformation")));
         }
 
         [RecordedTest]
@@ -994,7 +994,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<bool> response = await directory.ExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
         }
 
         [RecordedTest]
@@ -1008,7 +1008,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<bool> response = await directory.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1023,7 +1023,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<bool> response = await directory.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1037,11 +1037,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirectory.ExistsAsync(),
-                e => Assert.AreEqual(
-                    _serviceVersion >= DataLakeClientOptions.ServiceVersion.V2019_12_12 ?
+                e => Assert.That(
+                    e.ErrorCode,
+                    Is.EqualTo(_serviceVersion >= DataLakeClientOptions.ServiceVersion.V2019_12_12 ?
                         "NoAuthenticationInformation" :
-                        "ResourceNotFound",
-                    e.ErrorCode));
+                        "ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -1060,7 +1060,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<bool> response = await directory.ExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
         }
 
         [RecordedTest]
@@ -1075,7 +1075,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<bool> response = await directory.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
 
             // Act
             response = await directory.DeleteIfExistsAsync();
@@ -1092,7 +1092,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<bool> response = await directory.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1107,7 +1107,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<bool> response = await directory.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1121,7 +1121,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirectory.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("NoAuthenticationInformation")));
         }
 
         [RecordedTest]
@@ -1204,7 +1204,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DataLakeFileClient fileClient = directory.GetFileClient(GetNewFileName());
                 await fileClient.CreateIfNotExistsAsync();
-            };
+            }
+            ;
 
             DataLakeDirectoryClient rootDirectory = InstrumentClient(test.FileSystem.GetDirectoryClient("/"));
 
@@ -1287,7 +1288,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await destDirectory.GetPropertiesAsync();
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(destDirectory.Uri);
-            Assert.AreEqual(destSasQueryParameters.ToString(), uriBuilder.Sas.ToString());
+            Assert.That(uriBuilder.Sas.ToString(), Is.EqualTo(destSasQueryParameters.ToString()));
         }
 
         [RecordedTest]
@@ -1322,7 +1323,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sourceDirectory.RenameAsync(destinationPath: destPath),
-                e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("SourcePathNotFound")));
         }
 
         [RecordedTest]
@@ -1453,9 +1454,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
-            Assert.AreEqual(destDirectoryName, destDirectory.Name);
-            Assert.AreEqual(destDirectoryName, destDirectory.Path);
-            Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
+            Assert.That(destDirectory.Name, Is.EqualTo(destDirectoryName));
+            Assert.That(destDirectory.Path, Is.EqualTo(destDirectoryName));
+            Assert.That(destDirectory.Uri, Is.EqualTo(expectedDestDirectoryUri));
         }
 
         [RecordedTest]
@@ -1477,9 +1478,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
-            Assert.AreEqual(destDirectoryName, destDirectory.Name);
-            Assert.AreEqual(destDirectoryName, destDirectory.Path);
-            Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
+            Assert.That(destDirectory.Name, Is.EqualTo(destDirectoryName));
+            Assert.That(destDirectory.Path, Is.EqualTo(destDirectoryName));
+            Assert.That(destDirectory.Uri, Is.EqualTo(expectedDestDirectoryUri));
         }
 
         [RecordedTest]
@@ -1501,8 +1502,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
-            Assert.IsTrue(response.Value.IsServerEncrypted);
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.That(response.Value.IsServerEncrypted, Is.True);
+            Assert.That(response.Value.EncryptionKeySha256, Is.EqualTo(customerProvidedKey.EncryptionKeyHash));
         }
 
         [RecordedTest]
@@ -1676,10 +1677,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await directory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1692,10 +1693,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await directory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1717,10 +1718,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await oauthDirectory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1744,10 +1745,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await sasDirectory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1777,10 +1778,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await identitySasDirectory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1805,10 +1806,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await sasDirectory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1839,10 +1840,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await identitySasDirectory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1856,7 +1857,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetAccessControlAsync(),
-                e => Assert.AreEqual("PathNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("PathNotFound")));
         }
 
         [RecordedTest]
@@ -1920,10 +1921,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await directory.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            Assert.That(accessControl.Owner, Is.Not.Null);
+            Assert.That(accessControl.Group, Is.Not.Null);
+            Assert.That(accessControl.Permissions, Is.Not.Null);
+            Assert.That(accessControl.AccessControlList, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1976,7 +1977,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -2039,11 +2040,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2070,11 +2071,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [Test]
@@ -2119,7 +2120,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip Task Cancelled Exception
             }
 
-            Assert.IsTrue(intermediateResult.HasValue);
+            Assert.That(intermediateResult.HasValue, Is.True);
             Assert.That(intermediateResult.Value.ContinuationToken, Is.Not.Null.Or.Empty, "Make sure it stopped in the middle");
 
             options.ProgressHandler = null;
@@ -2130,11 +2131,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2164,21 +2165,21 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
-            Assert.AreEqual(4, progress.BatchCounters.Count);
-            Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
-            Assert.AreEqual(2, progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount);
-            Assert.AreEqual(2, progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount);
-            Assert.AreEqual(1, progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount);
-            Assert.AreEqual(4, progress.CummulativeCounters.Count);
-            Assert.AreEqual(2, progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount);
-            Assert.AreEqual(4, progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount);
-            Assert.AreEqual(6, progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount);
-            Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
+            Assert.That(progress.BatchCounters.Count, Is.EqualTo(4));
+            Assert.That(progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount, Is.EqualTo(1));
+            Assert.That(progress.CummulativeCounters.Count, Is.EqualTo(4));
+            Assert.That(progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount, Is.EqualTo(6));
+            Assert.That(progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount, Is.EqualTo(7));
         }
 
         [RecordedTest]
@@ -2220,11 +2221,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, changedDirectoriesCount);
-            Assert.AreEqual(4, changedFilesCount);
-            Assert.AreEqual(0, failedChangesCount);
-            Assert.AreEqual(2, iterationCount);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(changedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(changedFilesCount, Is.EqualTo(4));
+            Assert.That(failedChangesCount, Is.EqualTo(0));
+            Assert.That(iterationCount, Is.EqualTo(2));
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2278,16 +2279,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: new AccessControlChangeOptions() { ProgressHandler = progress });
 
             // Assert
-            Assert.AreEqual(1, result.Counters.FailedChangesCount);
-            Assert.AreEqual(1, progress.Failures.Count);
-            Assert.AreEqual(1, result.BatchFailures.Length);
-            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
-            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(1));
+            Assert.That(progress.Failures.Count, Is.EqualTo(1));
+            Assert.That(result.BatchFailures.Length, Is.EqualTo(1));
+            Assert.That(result.BatchFailures.First().Name, Is.EqualTo(file4.Path));
+            Assert.That(result.BatchFailures.First().IsDirectory, Is.EqualTo(false));
             Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             AccessControlChangeFailure failure = progress.Failures[0];
-            StringAssert.Contains(file4.Name, failure.Name);
-            Assert.IsFalse(failure.IsDirectory);
+            Assert.That(failure.Name, Does.Contain(file4.Name));
+            Assert.That(failure.IsDirectory, Is.False);
             Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
         }
 
@@ -2350,15 +2351,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.AreEqual(4, result.BatchFailures.Length);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(4));
+            Assert.That(result.BatchFailures.Length, Is.EqualTo(4));
             foreach (AccessControlChangeFailure failure in result.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [Test]
@@ -2451,8 +2452,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Assert
-            Assert.IsTrue(intermediateResult.HasValue);
-            Assert.IsNotNull(intermediateResult.Value.ContinuationToken);
+            Assert.That(intermediateResult.HasValue, Is.True);
+            Assert.That(intermediateResult.Value.ContinuationToken, Is.Not.Null);
 
             // Arrange
             options.ProgressHandler = null;
@@ -2464,18 +2465,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 continuationToken: intermediateResult.Value.ContinuationToken);
 
             // Assert
-            Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount);
-            Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.FailedChangesCount);
+            Assert.That(result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(6));
+            Assert.That(result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.FailedChangesCount, Is.EqualTo(4));
             foreach (AccessControlChangeFailure failure in result.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
             foreach (AccessControlChangeFailure failure in intermediateResult.Value.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2553,20 +2554,20 @@ namespace Azure.Storage.Files.DataLake.Tests
                 failedChangesCount += result.Counters.FailedChangesCount;
                 if (result.Counters.FailedChangesCount > 0)
                 {
-                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    Assert.That(result.BatchFailures, Is.EqualTo(progress.BatchFailures.First()));
                     foreach (AccessControlChangeFailure failure in result.BatchFailures)
                     {
-                        Assert.Contains(failure.Name, failedPathNames);
+                        Assert.That(failedPathNames, Does.Contain(failure.Name));
                     }
                 }
                 iterationCount++;
             } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, changedDirectoriesCount);
-            Assert.AreEqual(3, changedFilesCount);
-            Assert.AreEqual(4, failedChangesCount);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(changedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(changedFilesCount, Is.EqualTo(3));
+            Assert.That(failedChangesCount, Is.EqualTo(4));
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2631,12 +2632,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.Greater(result.BatchFailures.Length, 0);
-            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(4));
+            Assert.That(result.BatchFailures.Length, Is.GreaterThan(0));
+            Assert.That(result.BatchFailures, Is.EqualTo(progress.BatchFailures.First()));
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2665,7 +2666,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 directory.SetAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
                     continuationToken: sampleToken),
-                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+                    e => Assert.That(sampleToken, Is.EqualTo(e.ContinuationToken)));
         }
 
         [RecordedTest]
@@ -2696,7 +2697,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     accessControlList: AccessControlList,
                     continuationToken: sampleToken,
                     cancellationToken: cancellationTokenSource.Token),
-                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+                    e => Assert.That(sampleToken, Is.EqualTo(e.ContinuationToken)));
         }
 
         [RecordedTest]
@@ -2738,11 +2739,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2769,11 +2770,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [Test]
@@ -2819,7 +2820,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip Task Canceled Exception
             }
 
-            Assert.IsTrue(intermediateResult.HasValue);
+            Assert.That(intermediateResult.HasValue, Is.True);
             Assert.That(intermediateResult.Value.ContinuationToken, Is.Not.Null.Or.Empty, "Make sure it stopped in the middle");
 
             options.ProgressHandler = null;
@@ -2829,11 +2830,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2863,21 +2864,21 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
-            Assert.AreEqual(4, progress.BatchCounters.Count);
-            Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
-            Assert.AreEqual(2, progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount);
-            Assert.AreEqual(2, progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount);
-            Assert.AreEqual(1, progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount);
-            Assert.AreEqual(4, progress.CummulativeCounters.Count);
-            Assert.AreEqual(2, progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount);
-            Assert.AreEqual(4, progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount);
-            Assert.AreEqual(6, progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount);
-            Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
+            Assert.That(progress.BatchCounters.Count, Is.EqualTo(4));
+            Assert.That(progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount, Is.EqualTo(1));
+            Assert.That(progress.CummulativeCounters.Count, Is.EqualTo(4));
+            Assert.That(progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount, Is.EqualTo(6));
+            Assert.That(progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount, Is.EqualTo(7));
         }
 
         [RecordedTest]
@@ -2919,12 +2920,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, changedDirectoriesCount);
-            Assert.AreEqual(4, changedFilesCount);
-            Assert.AreEqual(0, failedChangesCount);
-            Assert.AreEqual(2, iterationCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(changedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(changedFilesCount, Is.EqualTo(4));
+            Assert.That(failedChangesCount, Is.EqualTo(0));
+            Assert.That(iterationCount, Is.EqualTo(2));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -2986,16 +2987,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(1, result.Counters.FailedChangesCount);
-            Assert.AreEqual(1, progress.Failures.Count);
-            Assert.AreEqual(1, result.BatchFailures.Length);
-            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
-            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(1));
+            Assert.That(progress.Failures.Count, Is.EqualTo(1));
+            Assert.That(result.BatchFailures.Length, Is.EqualTo(1));
+            Assert.That(result.BatchFailures.First().Name, Is.EqualTo(file4.Path));
+            Assert.That(result.BatchFailures.First().IsDirectory, Is.EqualTo(false));
             Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             AccessControlChangeFailure failure = progress.Failures[0];
-            StringAssert.Contains(file4.Name, failure.Name);
-            Assert.IsFalse(failure.IsDirectory);
+            Assert.That(failure.Name, Does.Contain(file4.Name));
+            Assert.That(failure.IsDirectory, Is.False);
             Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
         }
 
@@ -3058,15 +3059,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.AreEqual(4, result.BatchFailures.Length);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(4));
+            Assert.That(result.BatchFailures.Length, Is.EqualTo(4));
             foreach (AccessControlChangeFailure failure in result.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [Test]
@@ -3159,8 +3160,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Assert
-            Assert.IsTrue(intermediateResult.HasValue);
-            Assert.IsNotNull(intermediateResult.Value.ContinuationToken);
+            Assert.That(intermediateResult.HasValue, Is.True);
+            Assert.That(intermediateResult.Value.ContinuationToken, Is.Not.Null);
 
             // Arrange
             options.ProgressHandler = null;
@@ -3172,18 +3173,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 continuationToken: intermediateResult.Value.ContinuationToken);
 
             // Assert
-            Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount);
-            Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.FailedChangesCount);
+            Assert.That(result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(6));
+            Assert.That(result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.FailedChangesCount, Is.EqualTo(4));
             foreach (AccessControlChangeFailure failure in result.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
             foreach (AccessControlChangeFailure failure in intermediateResult.Value.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -3261,20 +3262,20 @@ namespace Azure.Storage.Files.DataLake.Tests
                 failedChangesCount += result.Counters.FailedChangesCount;
                 if (result.Counters.FailedChangesCount > 0)
                 {
-                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    Assert.That(result.BatchFailures, Is.EqualTo(progress.BatchFailures.First()));
                     foreach (AccessControlChangeFailure failure in result.BatchFailures)
                     {
-                        Assert.Contains(failure.Name, failedPathNames);
+                        Assert.That(failedPathNames, Does.Contain(failure.Name));
                     }
                 }
                 iterationCount++;
             } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, changedDirectoriesCount);
-            Assert.AreEqual(3, changedFilesCount);
-            Assert.AreEqual(4, failedChangesCount);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(changedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(changedFilesCount, Is.EqualTo(3));
+            Assert.That(failedChangesCount, Is.EqualTo(4));
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -3339,12 +3340,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.Greater(result.BatchFailures.Length, 0);
-            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(4));
+            Assert.That(result.BatchFailures.Length, Is.GreaterThan(0));
+            Assert.That(result.BatchFailures, Is.EqualTo(progress.BatchFailures.First()));
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -3373,7 +3374,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 directory.UpdateAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
                     continuationToken: sampleToken),
-                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+                    e => Assert.That(sampleToken, Is.EqualTo(e.ContinuationToken)));
         }
 
         [RecordedTest]
@@ -3404,7 +3405,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     accessControlList: AccessControlList,
                     continuationToken: sampleToken,
                     cancellationToken: cancellationTokenSource.Token),
-                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+                    e => Assert.That(sampleToken, Is.EqualTo(e.ContinuationToken)));
         }
 
         [RecordedTest]
@@ -3447,11 +3448,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -3478,11 +3479,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [Test]
@@ -3528,7 +3529,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip Task Canceled Exception
             }
 
-            Assert.IsTrue(intermediateResult.HasValue);
+            Assert.That(intermediateResult.HasValue, Is.True);
             Assert.That(intermediateResult.Value.ContinuationToken, Is.Not.Null.Or.Empty, "Make sure it stopped in the middle");
 
             options.ProgressHandler = null;
@@ -3539,11 +3540,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -3573,21 +3574,21 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
-            Assert.AreEqual(4, progress.BatchCounters.Count);
-            Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
-            Assert.AreEqual(2, progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount);
-            Assert.AreEqual(2, progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount);
-            Assert.AreEqual(1, progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount);
-            Assert.AreEqual(4, progress.CummulativeCounters.Count);
-            Assert.AreEqual(2, progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount);
-            Assert.AreEqual(4, progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount);
-            Assert.AreEqual(6, progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount);
-            Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(0));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
+            Assert.That(progress.BatchCounters.Count, Is.EqualTo(4));
+            Assert.That(progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount, Is.EqualTo(1));
+            Assert.That(progress.CummulativeCounters.Count, Is.EqualTo(4));
+            Assert.That(progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount, Is.EqualTo(2));
+            Assert.That(progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount, Is.EqualTo(4));
+            Assert.That(progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount, Is.EqualTo(6));
+            Assert.That(progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount, Is.EqualTo(7));
         }
 
         [RecordedTest]
@@ -3629,12 +3630,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, changedDirectoriesCount);
-            Assert.AreEqual(4, changedFilesCount);
-            Assert.AreEqual(0, failedChangesCount);
-            Assert.AreEqual(2, iterationCount);
-            Assert.IsNull(result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(changedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(changedFilesCount, Is.EqualTo(4));
+            Assert.That(failedChangesCount, Is.EqualTo(0));
+            Assert.That(iterationCount, Is.EqualTo(2));
+            Assert.That(result.BatchFailures, Is.Null);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -3690,16 +3691,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: new AccessControlChangeOptions() { ProgressHandler = progress });
 
             // Assert
-            Assert.AreEqual(1, result.Counters.FailedChangesCount);
-            Assert.AreEqual(1, progress.Failures.Count);
-            Assert.AreEqual(1, result.BatchFailures.Length);
-            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
-            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(1));
+            Assert.That(progress.Failures.Count, Is.EqualTo(1));
+            Assert.That(result.BatchFailures.Length, Is.EqualTo(1));
+            Assert.That(result.BatchFailures.First().Name, Is.EqualTo(file4.Path));
+            Assert.That(result.BatchFailures.First().IsDirectory, Is.EqualTo(false));
             Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             AccessControlChangeFailure failure = progress.Failures[0];
-            StringAssert.Contains(file4.Name, failure.Name);
-            Assert.IsFalse(failure.IsDirectory);
+            Assert.That(failure.Name, Does.Contain(file4.Name));
+            Assert.That(failure.IsDirectory, Is.False);
             Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
         }
 
@@ -3762,15 +3763,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.AreEqual(4, result.BatchFailures.Length);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(4));
+            Assert.That(result.BatchFailures.Length, Is.EqualTo(4));
             foreach (AccessControlChangeFailure failure in result.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [Test]
@@ -3862,8 +3863,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Assert
-            Assert.IsTrue(intermediateResult.HasValue);
-            Assert.IsNotNull(intermediateResult.Value.ContinuationToken);
+            Assert.That(intermediateResult.HasValue, Is.True);
+            Assert.That(intermediateResult.Value.ContinuationToken, Is.Not.Null);
 
             // Arrange
             options.ProgressHandler = null;
@@ -3875,18 +3876,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 continuationToken: intermediateResult.Value.ContinuationToken);
 
             // Assert
-            Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount);
-            Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.FailedChangesCount);
+            Assert.That(result.Counters.ChangedDirectoriesCount + intermediateResult.Value.BatchCounters.ChangedDirectoriesCount, Is.EqualTo(4));
+            Assert.That(result.Counters.ChangedFilesCount + intermediateResult.Value.BatchCounters.ChangedFilesCount, Is.EqualTo(6));
+            Assert.That(result.Counters.FailedChangesCount + intermediateResult.Value.BatchCounters.FailedChangesCount, Is.EqualTo(4));
             foreach (AccessControlChangeFailure failure in result.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
             foreach (AccessControlChangeFailure failure in intermediateResult.Value.BatchFailures)
             {
-                Assert.Contains(failure.Name, failedPathNames);
+                Assert.That(failedPathNames, Does.Contain(failure.Name));
             }
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -3964,20 +3965,20 @@ namespace Azure.Storage.Files.DataLake.Tests
                 failedChangesCount += result.Counters.FailedChangesCount;
                 if (result.Counters.FailedChangesCount > 0)
                 {
-                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    Assert.That(result.BatchFailures, Is.EqualTo(progress.BatchFailures.First()));
                     foreach (AccessControlChangeFailure failure in result.BatchFailures)
                     {
-                        Assert.Contains(failure.Name, failedPathNames);
+                        Assert.That(failedPathNames, Does.Contain(failure.Name));
                     }
                 }
                 iterationCount++;
             } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, changedDirectoriesCount);
-            Assert.AreEqual(3, changedFilesCount);
-            Assert.AreEqual(4, failedChangesCount);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(changedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(changedFilesCount, Is.EqualTo(3));
+            Assert.That(failedChangesCount, Is.EqualTo(4));
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -4042,12 +4043,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.Greater(result.BatchFailures.Length, 0);
-            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
-            Assert.IsNull(result.ContinuationToken);
+            Assert.That(result.Counters.ChangedDirectoriesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.ChangedFilesCount, Is.EqualTo(3));
+            Assert.That(result.Counters.FailedChangesCount, Is.EqualTo(4));
+            Assert.That(result.BatchFailures.Length, Is.GreaterThan(0));
+            Assert.That(result.BatchFailures, Is.EqualTo(progress.BatchFailures.First()));
+            Assert.That(result.ContinuationToken, Is.Null);
         }
 
         [RecordedTest]
@@ -4076,7 +4077,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 directory.RemoveAccessControlRecursiveAsync(
                     accessControlList: RemoveAccessControlList,
                     continuationToken: sampleToken),
-                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+                    e => Assert.That(sampleToken, Is.EqualTo(e.ContinuationToken)));
         }
 
         [RecordedTest]
@@ -4107,7 +4108,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     accessControlList: RemoveAccessControlList,
                     continuationToken: sampleToken,
                     cancellationToken: cancellationTokenSource.Token),
-                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+                    e => Assert.That(sampleToken, Is.EqualTo(e.ContinuationToken)));
         }
 
         [RecordedTest]
@@ -4207,7 +4208,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -4262,11 +4263,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await directory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            Assert.IsTrue(response.Value.IsDirectory);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
+            Assert.That(response.Value.IsDirectory, Is.True);
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -4286,7 +4287,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await directoryClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.EncryptionScope);
+            Assert.That(response.Value.EncryptionScope, Is.EqualTo(TestConfigHierarchicalNamespace.EncryptionScope));
         }
 
         [RecordedTest]
@@ -4308,7 +4309,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await directory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4332,7 +4333,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await sasDirectory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             var accountName = new DataLakeUriBuilder(test.FileSystem.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
             TestHelper.AssertCacheableProperty(fileSystemName, () => directory.FileSystemName);
@@ -4366,7 +4367,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await identitySasDirectory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4391,7 +4392,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await sasDirectory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4439,7 +4440,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await RetryAsync(async () => await sasDirectoryClient.GetPropertiesAsync(), e => e.Status == 403);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4470,7 +4471,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await identitySasDirectory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4493,7 +4494,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<PathProperties> response = await directory.GetPropertiesAsync(conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -4531,7 +4532,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetPropertiesAsync(),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -4562,8 +4563,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await directory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsTrue(response.Value.IsServerEncrypted);
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            Assert.That(response.Value.IsServerEncrypted, Is.True);
+            Assert.That(response.Value.EncryptionKeySha256, Is.EqualTo(customerProvidedKey.EncryptionKeyHash));
         }
 
         [RecordedTest]
@@ -4578,9 +4579,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await directory.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.Owner);
-            Assert.IsNotNull(response.Value.Group);
-            Assert.IsNotNull(response.Value.Permissions);
+            Assert.That(response.Value.Owner, Is.Not.Null);
+            Assert.That(response.Value.Group, Is.Not.Null);
+            Assert.That(response.Value.Permissions, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -4604,12 +4605,12 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await directory.GetPropertiesAsync();
-            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+            Assert.That(response.Value.ContentType, Is.EqualTo(constants.ContentType));
             TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
-            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
-            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
-            Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+            Assert.That(response.Value.ContentEncoding, Is.EqualTo(constants.ContentEncoding));
+            Assert.That(response.Value.ContentLanguage, Is.EqualTo(constants.ContentLanguage));
+            Assert.That(response.Value.ContentDisposition, Is.EqualTo(constants.ContentDisposition));
+            Assert.That(response.Value.CacheControl, Is.EqualTo(constants.CacheControl));
         }
 
         [RecordedTest]
@@ -4633,7 +4634,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     ContentHash = constants.ContentMD5,
                     ContentType = constants.ContentType
                 }),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -4668,7 +4669,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -4733,7 +4734,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -4760,7 +4761,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -4819,7 +4820,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<DataLakeFileClient> response = await directory.CreateFileAsync(fileName);
 
             // Assert
-            Assert.AreEqual(fileName, response.Value.Name);
+            Assert.That(response.Value.Name, Is.EqualTo(fileName));
         }
 
         [RecordedTest]
@@ -4848,11 +4849,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();
-            Assert.AreEqual(ContentType, response.Value.ContentType);
-            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
-            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
-            Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(CacheControl, response.Value.CacheControl);
+            Assert.That(response.Value.ContentType, Is.EqualTo(ContentType));
+            Assert.That(response.Value.ContentEncoding, Is.EqualTo(ContentEncoding));
+            Assert.That(response.Value.ContentLanguage, Is.EqualTo(ContentLanguage));
+            Assert.That(response.Value.ContentDisposition, Is.EqualTo(ContentDisposition));
+            Assert.That(response.Value.CacheControl, Is.EqualTo(CacheControl));
         }
 
         [RecordedTest]
@@ -4917,7 +4918,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.CreateFileAsync(GetNewFileName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("FilesystemNotFound")));
         }
 
         [RecordedTest]
@@ -4946,7 +4947,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.DeleteFileAsync(GetNewFileName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("FilesystemNotFound")));
         }
 
         [RecordedTest]
@@ -4962,7 +4963,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<DataLakeDirectoryClient> response = await directory.CreateSubDirectoryAsync(directoryName);
 
             // Assert
-            Assert.AreEqual(directoryName, response.Value.Name);
+            Assert.That(response.Value.Name, Is.EqualTo(directoryName));
         }
 
         [RecordedTest]
@@ -4976,7 +4977,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.CreateSubDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("FilesystemNotFound")));
         }
 
         [RecordedTest]
@@ -5007,11 +5008,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await subDirectory.GetPropertiesAsync();
-            Assert.AreEqual(ContentType, response.Value.ContentType);
-            Assert.AreEqual(ContentEncoding, response.Value.ContentEncoding);
-            Assert.AreEqual(ContentLanguage, response.Value.ContentLanguage);
-            Assert.AreEqual(ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(CacheControl, response.Value.CacheControl);
+            Assert.That(response.Value.ContentType, Is.EqualTo(ContentType));
+            Assert.That(response.Value.ContentEncoding, Is.EqualTo(ContentEncoding));
+            Assert.That(response.Value.ContentLanguage, Is.EqualTo(ContentLanguage));
+            Assert.That(response.Value.ContentDisposition, Is.EqualTo(ContentDisposition));
+            Assert.That(response.Value.CacheControl, Is.EqualTo(CacheControl));
         }
 
         [RecordedTest]
@@ -5097,7 +5098,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -5208,7 +5209,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<DataLakeLease> response = await InstrumentClient(directory.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -5228,8 +5229,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 leaseClient.AcquireAsync(duration),
                 e =>
                 {
-                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"));
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidHeaderValue"));
+                    Assert.That(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"), Is.True);
                 });
         }
 
@@ -5256,7 +5257,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -5298,7 +5299,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(directory.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -5319,7 +5320,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<DataLakeLease> response = await lease.RenewAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -5346,7 +5347,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<DataLakeLease> response = await lease.RenewAsync(conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -5388,7 +5389,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(directory.GetDataLakeLeaseClient(leaseId)).ReleaseAsync(),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -5409,7 +5410,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<ReleasedObjectInfo> response = await lease.ReleaseAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -5436,7 +5437,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<ReleasedObjectInfo> response = await lease.ReleaseAsync(conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -5478,7 +5479,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(directory.GetDataLakeLeaseClient(leaseId)).RenewAsync(),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -5500,7 +5501,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<DataLakeLease> response = await lease.ChangeAsync(newLeaseId);
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -5530,7 +5531,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -5576,7 +5577,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(directory.GetDataLakeLeaseClient(leaseId)).ChangeAsync(proposedId: newLeaseId),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -5597,7 +5598,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<DataLakeLease> response = await lease.BreakAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -5624,7 +5625,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<DataLakeLease> response = await lease.BreakAsync(conditions: conditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
             }
         }
 
@@ -5665,7 +5666,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(directory.GetDataLakeLeaseClient()).BreakAsync(),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -5690,8 +5691,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Verify the file name exists in the filesystem
-            Assert.AreEqual(1, names.Count);
-            Assert.Contains(directoryName, names);
+            Assert.That(names.Count, Is.EqualTo(1));
+            Assert.That(names, Does.Contain(directoryName));
         }
 
         [RecordedTest]
@@ -5715,8 +5716,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Verify the file name exists in the filesystem
-            Assert.AreEqual(1, names.Count);
-            Assert.Contains(directoryName, names);
+            Assert.That(names.Count, Is.EqualTo(1));
+            Assert.That(names, Does.Contain(directoryName));
         }
 
         [RecordedTest]
@@ -5744,8 +5745,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Verify the file name exists in the filesystem
-            Assert.AreEqual(2, names.Count);
-            Assert.Contains(fullPathName, names);
+            Assert.That(names.Count, Is.EqualTo(2));
+            Assert.That(names, Does.Contain(fullPathName));
         }
 
         [RecordedTest]
@@ -5773,8 +5774,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             // Verify the file name exists in the filesystem
-            Assert.AreEqual(2, names.Count);
-            Assert.Contains(fullPathName, names);
+            Assert.That(names.Count, Is.EqualTo(2));
+            Assert.That(names, Does.Contain(fullPathName));
         }
 
         [RecordedTest]
@@ -5816,17 +5817,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subDirectory.Uri);
 
             // Assert
-            Assert.IsNotNull(filePathItem);
-            Assert.AreEqual(subDirectoryName, subDirectory.Name);
-            Assert.AreEqual(expectedPath, subDirectory.Path);
+            Assert.That(filePathItem, Is.Not.Null);
+            Assert.That(subDirectory.Name, Is.EqualTo(subDirectoryName));
+            Assert.That(subDirectory.Path, Is.EqualTo(expectedPath));
 
-            Assert.AreEqual(blobUri, subDirectory.Uri);
-            Assert.AreEqual(blobUri, subDirectory.BlobUri);
-            Assert.AreEqual(dfsUri, subDirectory.DfsUri);
+            Assert.That(subDirectory.Uri, Is.EqualTo(blobUri));
+            Assert.That(subDirectory.BlobUri, Is.EqualTo(blobUri));
+            Assert.That(subDirectory.DfsUri, Is.EqualTo(dfsUri));
 
-            Assert.AreEqual(subDirectoryName, dataLakeUriBuilder.LastDirectoryOrFileName);
-            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
+            Assert.That(dataLakeUriBuilder.LastDirectoryOrFileName, Is.EqualTo(subDirectoryName));
+            Assert.That(dataLakeUriBuilder.DirectoryOrFilePath, Is.EqualTo(expectedPath));
+            Assert.That(dataLakeUriBuilder.ToUri(), Is.EqualTo(blobUri));
         }
 
         [RecordedTest]
@@ -5867,17 +5868,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri);
 
             // Assert
-            Assert.IsNotNull(filePathItem);
-            Assert.AreEqual(fileName, file.Name);
-            Assert.AreEqual(expectedPath, file.Path);
+            Assert.That(filePathItem, Is.Not.Null);
+            Assert.That(file.Name, Is.EqualTo(fileName));
+            Assert.That(file.Path, Is.EqualTo(expectedPath));
 
-            Assert.AreEqual(blobUri, file.Uri);
-            Assert.AreEqual(blobUri, file.BlobUri);
-            Assert.AreEqual(dfsUri, file.DfsUri);
+            Assert.That(file.Uri, Is.EqualTo(blobUri));
+            Assert.That(file.BlobUri, Is.EqualTo(blobUri));
+            Assert.That(file.DfsUri, Is.EqualTo(dfsUri));
 
-            Assert.AreEqual(fileName, dataLakeUriBuilder.LastDirectoryOrFileName);
-            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
+            Assert.That(dataLakeUriBuilder.LastDirectoryOrFileName, Is.EqualTo(fileName));
+            Assert.That(dataLakeUriBuilder.DirectoryOrFilePath, Is.EqualTo(expectedPath));
+            Assert.That(dataLakeUriBuilder.ToUri(), Is.EqualTo(blobUri));
         }
 
         [RecordedTest]
@@ -5895,9 +5896,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await subdirectory.CreateFileAsync(fileName);
 
             // Assert
-            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{fileName}", file.DfsUri.AbsoluteUri);
-            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{fileName}", file.BlobUri.AbsoluteUri);
-            Assert.AreEqual($"{subdirectory.Path}/{fileName}", file.Path);
+            Assert.That(file.DfsUri.AbsoluteUri, Is.EqualTo($"{subdirectory.DfsUri.AbsoluteUri}/{fileName}"));
+            Assert.That(file.BlobUri.AbsoluteUri, Is.EqualTo($"{subdirectory.BlobUri.AbsoluteUri}/{fileName}"));
+            Assert.That(file.Path, Is.EqualTo($"{subdirectory.Path}/{fileName}"));
         }
 
         [RecordedTest]
@@ -5915,9 +5916,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient lowerSubDirectory = await subdirectory.CreateSubDirectoryAsync(lowerSubDirectoryName);
 
             // Assert
-            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.DfsUri.AbsoluteUri);
-            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.BlobUri.AbsoluteUri);
-            Assert.AreEqual($"{subdirectory.Path}/{lowerSubDirectoryName}", lowerSubDirectory.Path);
+            Assert.That(lowerSubDirectory.DfsUri.AbsoluteUri, Is.EqualTo($"{subdirectory.DfsUri.AbsoluteUri}/{lowerSubDirectoryName}"));
+            Assert.That(lowerSubDirectory.BlobUri.AbsoluteUri, Is.EqualTo($"{subdirectory.BlobUri.AbsoluteUri}/{lowerSubDirectoryName}"));
+            Assert.That(lowerSubDirectory.Path, Is.EqualTo($"{subdirectory.Path}/{lowerSubDirectoryName}"));
         }
 
         [RecordedTest]
@@ -5934,10 +5935,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
-            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
-            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+            Assert.That(paths.Count, Is.EqualTo(3));
+            Assert.That(paths[0].Name, Is.EqualTo($"{directoryName}/bar"));
+            Assert.That(paths[1].Name, Is.EqualTo($"{directoryName}/baz"));
+            Assert.That(paths[2].Name, Is.EqualTo($"{directoryName}/foo"));
         }
 
         [RecordedTest]
@@ -5959,10 +5960,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
-            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
-            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+            Assert.That(paths.Count, Is.EqualTo(3));
+            Assert.That(paths[0].Name, Is.EqualTo($"{directoryName}/bar"));
+            Assert.That(paths[1].Name, Is.EqualTo($"{directoryName}/baz"));
+            Assert.That(paths[2].Name, Is.EqualTo($"{directoryName}/foo"));
         }
 
         [RecordedTest]
@@ -5984,16 +5985,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(PathNames.Length, paths.Count);
-            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
-            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
-            Assert.AreEqual($"{directoryName}/baz/bar", paths[2].Name);
-            Assert.AreEqual($"{directoryName}/baz/bar/foo", paths[3].Name);
-            Assert.AreEqual($"{directoryName}/baz/foo", paths[4].Name);
-            Assert.AreEqual($"{directoryName}/baz/foo/bar", paths[5].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[6].Name);
-            Assert.AreEqual($"{directoryName}/foo/bar", paths[7].Name);
-            Assert.AreEqual($"{directoryName}/foo/foo", paths[8].Name);
+            Assert.That(paths.Count, Is.EqualTo(PathNames.Length));
+            Assert.That(paths[0].Name, Is.EqualTo($"{directoryName}/bar"));
+            Assert.That(paths[1].Name, Is.EqualTo($"{directoryName}/baz"));
+            Assert.That(paths[2].Name, Is.EqualTo($"{directoryName}/baz/bar"));
+            Assert.That(paths[3].Name, Is.EqualTo($"{directoryName}/baz/bar/foo"));
+            Assert.That(paths[4].Name, Is.EqualTo($"{directoryName}/baz/foo"));
+            Assert.That(paths[5].Name, Is.EqualTo($"{directoryName}/baz/foo/bar"));
+            Assert.That(paths[6].Name, Is.EqualTo($"{directoryName}/foo"));
+            Assert.That(paths[7].Name, Is.EqualTo($"{directoryName}/foo/bar"));
+            Assert.That(paths[8].Name, Is.EqualTo($"{directoryName}/foo/foo"));
         }
 
         [RecordedTest]
@@ -6015,13 +6016,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
-            Assert.IsNotNull(paths[0].Group);
-            Assert.IsNotNull(paths[0].Owner);
+            Assert.That(paths.Count, Is.EqualTo(3));
+            Assert.That(paths[0].Group, Is.Not.Null);
+            Assert.That(paths[0].Owner, Is.Not.Null);
 
-            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
-            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+            Assert.That(paths[0].Name, Is.EqualTo($"{directoryName}/bar"));
+            Assert.That(paths[1].Name, Is.EqualTo($"{directoryName}/baz"));
+            Assert.That(paths[2].Name, Is.EqualTo($"{directoryName}/foo"));
         }
 
         [RecordedTest]
@@ -6038,9 +6039,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             Page<PathItem> page = await directory.GetPathsAsync().AsPages(pageSizeHint: 2).FirstAsync();
 
             // Assert
-            Assert.AreEqual(2, page.Values.Count);
-            Assert.AreEqual($"{directoryName}/bar", page.Values[0].Name);
-            Assert.AreEqual($"{directoryName}/baz", page.Values[1].Name);
+            Assert.That(page.Values.Count, Is.EqualTo(2));
+            Assert.That(page.Values[0].Name, Is.EqualTo($"{directoryName}/bar"));
+            Assert.That(page.Values[1].Name, Is.EqualTo($"{directoryName}/baz"));
         }
 
         [RecordedTest]
@@ -6054,7 +6055,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetPathsAsync().ToListAsync(),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("FilesystemNotFound")));
         }
 
         [RecordedTest]
@@ -6072,13 +6073,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
-            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
-            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
-            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
-            Assert.NotNull(paths[0].CreatedOn);
-            Assert.NotNull(paths[1].CreatedOn);
-            Assert.NotNull(paths[2].CreatedOn);
+            Assert.That(paths.Count, Is.EqualTo(3));
+            Assert.That(paths[0].Name, Is.EqualTo($"{directoryName}/bar"));
+            Assert.That(paths[1].Name, Is.EqualTo($"{directoryName}/baz"));
+            Assert.That(paths[2].Name, Is.EqualTo($"{directoryName}/foo"));
+            Assert.That(paths[0].CreatedOn, Is.Not.Null);
+            Assert.That(paths[1].CreatedOn, Is.Not.Null);
+            Assert.That(paths[2].CreatedOn, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -6164,7 +6165,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetTagsAsync(conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithBlobOperation")));
         }
 
         [RecordedTest]
@@ -6187,7 +6188,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.SetTagsAsync(tags, conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithBlobOperation")));
         }
 
         [RecordedTest]
@@ -6326,7 +6327,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetTagsAsync(),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -6342,7 +6343,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.SetTagsAsync(tags),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -6445,7 +6446,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
+            Assert.That(paths.Count, Is.EqualTo(3));
         }
 
         private async Task SetUpDirectoryForListing(DataLakeDirectoryClient directoryClient)
@@ -6474,14 +6475,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(
                 blobEndpoint,
                 GetOptions()));
-            Assert.IsFalse(directory.CanGenerateSasUri);
+            Assert.That(directory.CanGenerateSasUri, Is.False);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, fileClientOptions options = default)
             DataLakeDirectoryClient directory2 = InstrumentClient(new DataLakeDirectoryClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            Assert.IsTrue(directory2.CanGenerateSasUri);
+            Assert.That(directory2.CanGenerateSasUri, Is.True);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, TokenCredential credential, fileClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -6489,7 +6490,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 blobEndpoint,
                 tokenCredentials,
                 GetOptions()));
-            Assert.IsFalse(directory3.CanGenerateSasUri);
+            Assert.That(directory3.CanGenerateSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -6504,7 +6505,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 blobEndpoint,
                 GetOptions()));
             DataLakeFileClient file = directory.GetFileClient(GetNewFileName());
-            Assert.IsFalse(file.CanGenerateSasUri);
+            Assert.That(file.CanGenerateSasUri, Is.False);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, fileClientOptions options = default)
             DataLakeDirectoryClient directory2 = InstrumentClient(new DataLakeDirectoryClient(
@@ -6512,7 +6513,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             DataLakeFileClient file2 = directory2.GetFileClient(GetNewFileName());
-            Assert.IsTrue(file2.CanGenerateSasUri);
+            Assert.That(file2.CanGenerateSasUri, Is.True);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, TokenCredential credential, fileClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -6521,7 +6522,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 tokenCredentials,
                 GetOptions()));
             DataLakeFileClient file3 = directory3.GetFileClient(GetNewFileName());
-            Assert.IsFalse(file3.CanGenerateSasUri);
+            Assert.That(file3.CanGenerateSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -6536,7 +6537,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 blobEndpoint,
                 GetOptions()));
             DataLakeDirectoryClient subdirectory = directory.GetSubDirectoryClient(GetNewDirectoryName());
-            Assert.IsFalse(subdirectory.CanGenerateSasUri);
+            Assert.That(subdirectory.CanGenerateSasUri, Is.False);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, StorageSharedKeyCredential credential, fileClientOptions options = default)
             DataLakeDirectoryClient directory2 = InstrumentClient(new DataLakeDirectoryClient(
@@ -6544,7 +6545,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             DataLakeDirectoryClient subdirectory2 = directory2.GetSubDirectoryClient(GetNewDirectoryName());
-            Assert.IsTrue(subdirectory2.CanGenerateSasUri);
+            Assert.That(subdirectory2.CanGenerateSasUri, Is.True);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, TokenCredential credential, fileClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -6553,7 +6554,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 tokenCredentials,
                 GetOptions()));
             DataLakeDirectoryClient subdirectory3 = directory3.GetSubDirectoryClient(GetNewDirectoryName());
-            Assert.IsFalse(subdirectory3.CanGenerateSasUri);
+            Assert.That(subdirectory3.CanGenerateSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -6564,13 +6565,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             directory.Setup(x => x.CanGenerateSasUri).Returns(false);
 
             // Assert
-            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.False);
 
             // Act
             directory.Setup(x => x.CanGenerateSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -6612,8 +6613,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
 
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -6660,8 +6661,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -6706,7 +6707,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -6784,7 +6785,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -6862,7 +6863,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -6941,8 +6942,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder.ToSasQueryParameters(userDelegationKey, directoryClient.AccountName)
             };
 
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -6992,8 +6993,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, directoryClient.AccountName);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
-            Assert.IsNotNull(stringToSign);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
+            Assert.That(stringToSign, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -7103,7 +7104,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, directoryClient.AccountName);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -7189,7 +7190,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, directoryClient.AccountName);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -7275,7 +7276,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, directoryClient.AccountName);
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]

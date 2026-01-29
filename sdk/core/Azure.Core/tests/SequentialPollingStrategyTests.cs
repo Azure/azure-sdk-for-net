@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.DelayStrategies
             {
                 actual += strategy.GetNextDelay(_mockResponse, i + 1);
             }
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

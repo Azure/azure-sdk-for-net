@@ -90,9 +90,9 @@ namespace Azure.Storage.Blobs.Tests
         [Test]
         public override void TestAutoResolve()
         {
-            Assert.AreEqual(
-                StorageChecksumAlgorithm.StorageCrc64,
-                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
+            Assert.That(
+                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto),
+                Is.EqualTo(StorageChecksumAlgorithm.StorageCrc64));
         }
 
         #region Added Tests

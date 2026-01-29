@@ -14,13 +14,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void CompareModels(ModelAsStruct model, ModelAsStruct model2, string format)
         {
-            Assert.AreEqual(model.Id, model2.Id);
+            Assert.That(model.Id, Is.EqualTo(model2.Id));
             var rawData1 = GetRawData(model);
             var rawData2 = GetRawData(model2);
-            Assert.IsNotNull(rawData1);
-            Assert.IsNotNull(rawData2);
+            Assert.That(rawData1, Is.Not.Null);
+            Assert.That(rawData2, Is.Not.Null);
             if (format == "J")
-                Assert.AreEqual(rawData1["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData1["extra"].ToObjectFromJson<string>(), Is.EqualTo(rawData2["extra"].ToObjectFromJson<string>()));
         }
 
         protected override string GetExpectedResult(string format)
@@ -34,11 +34,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void VerifyModel(ModelAsStruct model, string format)
         {
-            Assert.AreEqual(5, model.Id);
+            Assert.That(model.Id, Is.EqualTo(5));
             var rawData = GetRawData(model);
-            Assert.IsNotNull(rawData);
+            Assert.That(rawData, Is.Not.Null);
             if (format == "J")
-                Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
+                Assert.That(rawData["extra"].ToObjectFromJson<string>(), Is.EqualTo("stuff"));
         }
     }
 }

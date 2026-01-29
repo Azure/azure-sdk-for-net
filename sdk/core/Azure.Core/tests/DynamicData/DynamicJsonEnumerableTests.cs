@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
             int expected = 0;
             foreach (int i in enumerable)
             {
-                Assert.AreEqual(expected++, i);
+                Assert.That(i, Is.EqualTo(expected++));
             }
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
             int expected = 1;
             foreach (int i in enumerable)
             {
-                Assert.AreEqual(expected++, i);
+                Assert.That(i, Is.EqualTo(expected++));
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
             int expected = 1;
             foreach (int i in enumerable)
             {
-                Assert.AreEqual(expected++, i);
+                Assert.That(i, Is.EqualTo(expected++));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests
             int expected = 0;
             foreach (int i in jsonData)
             {
-                Assert.AreEqual(expected++, i);
+                Assert.That(i, Is.EqualTo(expected++));
             }
         }
 
@@ -89,8 +89,8 @@ namespace Azure.Core.Tests
             int expected = 0;
             foreach (dynamic property in json)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.IsTrue(expected == property.Value);
+                Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
+                Assert.That(property.Value, Is.EqualTo(expected));
                 expected++;
             }
         }
@@ -117,8 +117,8 @@ namespace Azure.Core.Tests
             int index = 0;
             foreach (dynamic property in json)
             {
-                Assert.AreEqual(expectedNames[index], property.Name);
-                Assert.IsTrue(index + 1 == property.Value);
+                Assert.That(property.Name, Is.EqualTo(expectedNames[index]));
+                Assert.That(property.Value, Is.EqualTo(index + 1));
                 index++;
             }
         }
@@ -163,7 +163,7 @@ namespace Azure.Core.Tests
             int expected = 0;
             foreach (dynamic value in json.Array)
             {
-                Assert.IsTrue(expected++ == value);
+                Assert.That(expected++ == value, Is.True);
             }
 
             expected = 0;
@@ -171,8 +171,8 @@ namespace Azure.Core.Tests
 
             foreach (dynamic property in json.Object)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.IsTrue(expected == property.Value);
+                Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
+                Assert.That(expected == property.Value, Is.True);
                 expected++;
             }
         }
@@ -196,8 +196,8 @@ namespace Azure.Core.Tests
 
             foreach (dynamic property in json.Object)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.IsTrue(expected == property.Value);
+                Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
+                Assert.That(expected == property.Value, Is.True);
                 expected++;
             }
         }
@@ -222,17 +222,17 @@ namespace Azure.Core.Tests
             json.Object.Three = new[] { 31, 32, 33 };
 
             int expected = 21;
-            Assert.AreEqual(3, json.Object.Two.Length);
+            Assert.That(json.Object.Two.Length, Is.EqualTo(3));
             foreach (dynamic value in json.Object.Two)
             {
-                Assert.AreEqual(expected++, (int)value);
+                Assert.That((int)value, Is.EqualTo(expected++));
             }
 
             expected = 31;
-            Assert.AreEqual(3, json.Object.Three.Length);
+            Assert.That(json.Object.Three.Length, Is.EqualTo(3));
             foreach (dynamic value in json.Object.Three)
             {
-                Assert.AreEqual(expected++, (int)value);
+                Assert.That((int)value, Is.EqualTo(expected++));
             }
 
             // Verify changes over the change are recognized
@@ -240,10 +240,10 @@ namespace Azure.Core.Tests
             json.Object.Two[2] = 25;
 
             expected = 21;
-            Assert.AreEqual(3, json.Object.Two.Length);
+            Assert.That(json.Object.Two.Length, Is.EqualTo(3));
             foreach (dynamic value in json.Object.Two)
             {
-                Assert.AreEqual(expected, (int)value);
+                Assert.That((int)value, Is.EqualTo(expected));
                 expected += 2;
             }
         }
@@ -278,16 +278,16 @@ namespace Azure.Core.Tests
 
             foreach (dynamic property in json.foo)
             {
-                Assert.AreEqual(expected[i], property.Name);
-                Assert.AreEqual(expected[i], (string)property.Value);
+                Assert.That(property.Name, Is.EqualTo(expected[i]));
+                Assert.That((string)property.Value, Is.EqualTo(expected[i]));
                 i++;
             }
 
             i = 0;
             foreach (dynamic property in json.bar)
             {
-                Assert.AreEqual(expected[i], property.Name);
-                Assert.AreEqual(expected[i], (string)property.Value);
+                Assert.That(property.Name, Is.EqualTo(expected[i]));
+                Assert.That((string)property.Value, Is.EqualTo(expected[i]));
                 i++;
             }
 
@@ -299,16 +299,16 @@ namespace Azure.Core.Tests
             expected = new string[] { "a", "b", "c" };
             foreach (dynamic property in json.foo)
             {
-                Assert.AreEqual(expected[i], property.Name);
-                Assert.AreEqual(expected[i], (string)property.Value);
+                Assert.That(property.Name, Is.EqualTo(expected[i]));
+                Assert.That((string)property.Value, Is.EqualTo(expected[i]));
                 i++;
             }
 
             i = 0;
             foreach (dynamic property in json.bar)
             {
-                Assert.AreEqual(expected[i], property.Name);
-                Assert.AreEqual(expected[i], (string)property.Value);
+                Assert.That(property.Name, Is.EqualTo(expected[i]));
+                Assert.That((string)property.Value, Is.EqualTo(expected[i]));
                 i++;
             }
         }
@@ -332,8 +332,8 @@ namespace Azure.Core.Tests
 
             foreach (dynamic property in json.Object)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.IsTrue(++expected == property.Value);
+                Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
+                Assert.That(property.Value, Is.EqualTo(++expected));
             }
         }
     }

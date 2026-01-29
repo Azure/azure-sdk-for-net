@@ -32,13 +32,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
         protected override void CompareCollections(ImmutableHashSet<AvailabilitySetData> expected, ImmutableHashSet<AvailabilitySetData> actual, string format)
         {
-            Assert.IsNotNull(expected);
-            Assert.IsNotNull(actual);
+            Assert.That(expected, Is.Not.Null);
+            Assert.That(actual, Is.Not.Null);
 
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
             foreach (var actualItem in actual)
             {
-                Assert.IsTrue(expected.TryGetValue(actualItem, out AvailabilitySetData? expectedItem));
+                Assert.That(expected.TryGetValue(actualItem, out AvailabilitySetData? expectedItem), Is.True);
                 CompareModels(expectedItem, actualItem, format);
             }
         }

@@ -53,13 +53,13 @@ namespace Azure.Storage.Blobs.Test
                 contentType: contentType
                 );
 
-            Assert.AreEqual(signature, sasQueryParameters.Signature);
+            Assert.That(sasQueryParameters.Signature, Is.EqualTo(signature));
 
             var sasString = sasQueryParameters.ToString();
 
             var roundTripSas = SasQueryParametersInternals.Create(new UriQueryParamsCollection(sasString));
 
-            Assert.AreEqual(sasQueryParameters.ToString(), roundTripSas.ToString());
+            Assert.That(roundTripSas.ToString(), Is.EqualTo(sasQueryParameters.ToString()));
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Azure.Storage.Blobs.Test
 
             var sasQueryParameters = SasQueryParametersInternals.Create(new Dictionary<string, string>(original));
 
-            Assert.AreEqual(signature, sasQueryParameters.Signature);
+            Assert.That(sasQueryParameters.Signature, Is.EqualTo(signature));
 
             Dictionary<string, string> roundtrip = sasQueryParameters.ToString().Trim('?').Split('&')
                 .ToDictionary(

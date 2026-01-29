@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -22,7 +22,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://management.azure.com//.default" }));
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://management.azure.com//.default" }));
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
     }
 }

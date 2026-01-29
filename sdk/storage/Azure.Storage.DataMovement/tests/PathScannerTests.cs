@@ -60,13 +60,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.Multiple(() =>
             {
-                CollectionAssert.Contains(pathNames, folder, "Missing entry for the working folder.");
-                CollectionAssert.Contains(pathNames, openSubfolder, "Missing entry for the readable subfolder.");
-                CollectionAssert.Contains(pathNames, lockedSubfolder, "Missing entry for the unreadable subfolder.");
-                CollectionAssert.Contains(pathNames, openChild, "Missing entry for the readable child.");
-                CollectionAssert.Contains(pathNames, openSubchild, "Missing entry for the readable subchild.");
-                CollectionAssert.Contains(pathNames, lockedChild, "Missing entry for the unreadable child."); // No permissions on file, but that should be dealt with by caller
-                CollectionAssert.DoesNotContain(pathNames, lockedSubchild); // No permissions to enumerate folder, children not returned
+                Assert.That(pathNames, Has.Member(folder), "Missing entry for the working folder.");
+                Assert.That(pathNames, Has.Member(openSubfolder), "Missing entry for the readable subfolder.");
+                Assert.That(pathNames, Has.Member(lockedSubfolder), "Missing entry for the unreadable subfolder.");
+                Assert.That(pathNames, Has.Member(openChild), "Missing entry for the readable child.");
+                Assert.That(pathNames, Has.Member(openSubchild), "Missing entry for the readable subchild.");
+                Assert.That(pathNames, Has.Member(lockedChild), "Missing entry for the unreadable child."); // No permissions on file, but that should be dealt with by caller
+                Assert.That(pathNames, Has.No.Member(lockedSubchild)); // No permissions to enumerate folder, children not returned
             });
 
             // Cleanup
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> pathNames = result.Select(p => p.FullName).ToList();
 
             // Assert
-            CollectionAssert.Contains(pathNames, file);
+            Assert.That(pathNames, Has.Member(file));
 
             // Cleanup
             File.Delete(file);
@@ -133,7 +133,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> pathNames = result.Select(p => p.FullName).ToList();
 
             // Assert
-            CollectionAssert.Contains(pathNames, file);
+            Assert.That(pathNames, Has.Member(file));
 
             // Cleanup
             AllowReadData(file, true, true);
@@ -148,8 +148,9 @@ namespace Azure.Storage.DataMovement.Tests
             string file = Path.Combine(_temp, Path.GetRandomFileName());
 
             // Act/Assert
-            Assert.IsFalse(File.Exists(file));
-            Assert.Throws<ArgumentException>(() => {
+            Assert.That(File.Exists(file), Is.False);
+            Assert.Throws<ArgumentException>(() =>
+            {
                 PathScannerFactory scannerFactory = new PathScannerFactory(file);
                 PathScanner scanner = scannerFactory.BuildPathScanner();
             });

@@ -1,25 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.DataMovement.Tests;
-using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using System.IO;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Storage.Shared;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -177,7 +176,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             CancellationToken cancellationToken)
         {
             long size = contents.Length;
-            Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (KB / 2), Is.EqualTo(0), "Cannot create page blob that's not a multiple of 512");
             await blobClient.CreateIfNotExistsAsync(size).ConfigureAwait(false);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
@@ -231,37 +230,37 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             CancellationToken cancellationToken)
         {
             // Verify completion
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer, Is.Not.Null);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
             using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.That(destinationStream, Is.EqualTo(sourceStream));
 
             if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
             {
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
-                Assert.IsEmpty(destinationProperties.Metadata);
-                Assert.IsNull(destinationProperties.ContentDisposition);
-                Assert.IsNull(destinationProperties.ContentLanguage);
-                Assert.IsNull(destinationProperties.CacheControl);
+                Assert.That(destinationProperties.Metadata, Is.Empty);
+                Assert.That(destinationProperties.ContentDisposition, Is.Null);
+                Assert.That(destinationProperties.ContentLanguage, Is.Null);
+                Assert.That(destinationProperties.CacheControl, Is.Null);
                 Assert.That(destinationProperties.ContentType, Is.Not.EqualTo(_defaultContentType));
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync(cancellationToken: cancellationToken);
-                Assert.IsEmpty(destinationTags.Tags);
+                Assert.That(destinationTags.Tags, Is.Empty);
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
             {
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(_defaultContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(_defaultContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(_defaultCacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(_defaultContentType));
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
@@ -270,10 +269,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
             }
         }
 

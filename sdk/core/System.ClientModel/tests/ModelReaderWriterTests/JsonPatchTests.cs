@@ -20,11 +20,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.property"u8, "value");
             jp.Set("$.property2"u8, 10);
 
-            Assert.IsTrue(jp.Contains("$.property"u8));
-            Assert.AreEqual("value", jp.GetString("$.property"u8));
-            Assert.AreEqual(10, jp.GetInt32("$.property2"u8));
+            Assert.That(jp.Contains("$.property"u8), Is.True);
+            Assert.That(jp.GetString("$.property"u8), Is.EqualTo("value"));
+            Assert.That(jp.GetInt32("$.property2"u8), Is.EqualTo(10));
 
-            Assert.AreEqual("{\"property\":\"value\",\"property2\":10}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"property\":\"value\",\"property2\":10}"));
         }
 
         [Test]
@@ -34,10 +34,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$"u8, "value");
 
-            Assert.AreEqual("[\"value\"]", jp.GetJson("$"u8).ToString());
-            Assert.AreEqual("value", jp.GetString("$[0]"u8));
+            Assert.That(jp.GetJson("$"u8).ToString(), Is.EqualTo("[\"value\"]"));
+            Assert.That(jp.GetString("$[0]"u8), Is.EqualTo("value"));
 
-            Assert.AreEqual("[\"value\"]", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("[\"value\"]"));
         }
 
         [Test]
@@ -47,11 +47,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$[0].property"u8, "value");
 
-            Assert.AreEqual("[{\"property\":\"value\"}]", jp.GetJson("$"u8).ToString());
-            Assert.AreEqual("{\"property\":\"value\"}", jp.GetJson("$[0]"u8).ToString());
-            Assert.AreEqual("value", jp.GetString("$[0].property"u8));
+            Assert.That(jp.GetJson("$"u8).ToString(), Is.EqualTo("[{\"property\":\"value\"}]"));
+            Assert.That(jp.GetJson("$[0]"u8).ToString(), Is.EqualTo("{\"property\":\"value\"}"));
+            Assert.That(jp.GetString("$[0].property"u8), Is.EqualTo("value"));
 
-            Assert.AreEqual("[{\"property\":\"value\"}]", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("[{\"property\":\"value\"}]"));
         }
 
         [Test]
@@ -62,22 +62,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$[0].property1"u8, "value1");
             jp.Set("$[0].property2"u8, "value2");
 
-            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
-            Assert.AreEqual("{\"property1\":\"value1\",\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
-            Assert.AreEqual("value1", jp.GetString("$[0].property1"u8));
-            Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
+            Assert.That(jp.GetJson("$"u8).ToString(), Is.EqualTo("[{\"property1\":\"value1\",\"property2\":\"value2\"}]"));
+            Assert.That(jp.GetJson("$[0]"u8).ToString(), Is.EqualTo("{\"property1\":\"value1\",\"property2\":\"value2\"}"));
+            Assert.That(jp.GetString("$[0].property1"u8), Is.EqualTo("value1"));
+            Assert.That(jp.GetString("$[0].property2"u8), Is.EqualTo("value2"));
 
-            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("[{\"property1\":\"value1\",\"property2\":\"value2\"}]"));
 
             jp.Remove("$[0].property1"u8);
 
-            Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
-            Assert.AreEqual("{\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
+            Assert.That(jp.GetJson("$"u8).ToString(), Is.EqualTo("[{\"property2\":\"value2\"}]"));
+            Assert.That(jp.GetJson("$[0]"u8).ToString(), Is.EqualTo("{\"property2\":\"value2\"}"));
             var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetString("$[0].property1"u8));
-            Assert.AreEqual("No value found at JSON path '$[0].property1'.", ex!.Message);
-            Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
+            Assert.That(ex!.Message, Is.EqualTo("No value found at JSON path '$[0].property1'."));
+            Assert.That(jp.GetString("$[0].property2"u8), Is.EqualTo("value2"));
 
-            Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("[{\"property2\":\"value2\"}]"));
         }
 
         [Test]
@@ -87,15 +87,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$[0].property1"u8, "value1");
             jp.Set("$[0].property2"u8, "value2");
 
-            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
-            Assert.AreEqual("{\"property1\":\"value1\",\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
-            Assert.AreEqual("value1", jp.GetString("$[0].property1"u8));
-            Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
+            Assert.That(jp.GetJson("$"u8).ToString(), Is.EqualTo("[{\"property1\":\"value1\",\"property2\":\"value2\"}]"));
+            Assert.That(jp.GetJson("$[0]"u8).ToString(), Is.EqualTo("{\"property1\":\"value1\",\"property2\":\"value2\"}"));
+            Assert.That(jp.GetString("$[0].property1"u8), Is.EqualTo("value1"));
+            Assert.That(jp.GetString("$[0].property2"u8), Is.EqualTo("value2"));
 
-            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("[{\"property1\":\"value1\",\"property2\":\"value2\"}]"));
 
             var ex = Assert.Throws<InvalidOperationException>(() => jp.Remove("$[0].property3"u8));
-            Assert.AreEqual("$[0].property3 was not found in the JSON structure.", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("$[0].property3 was not found in the JSON structure."));
         }
 
         [Test]
@@ -104,29 +104,29 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Set("$.x.y[2]['z']"u8, 5);
 
-            Assert.AreEqual("{\"y\":[null,null,{\"z\":5}]}", jp.GetJson("$.x"u8).ToString());
-            Assert.AreEqual("[null,null,{\"z\":5}]", jp.GetJson("$.x.y"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.x.y[0]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.x.y[1]"u8).ToString());
-            Assert.AreEqual("{\"z\":5}", jp.GetJson("$.x.y[2]"u8).ToString());
-            Assert.AreEqual(5, jp.GetInt32("$.x.y[2]['z']"u8));
+            Assert.That(jp.GetJson("$.x"u8).ToString(), Is.EqualTo("{\"y\":[null,null,{\"z\":5}]}"));
+            Assert.That(jp.GetJson("$.x.y"u8).ToString(), Is.EqualTo("[null,null,{\"z\":5}]"));
+            Assert.That(jp.GetJson("$.x.y[0]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.x.y[1]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.x.y[2]"u8).ToString(), Is.EqualTo("{\"z\":5}"));
+            Assert.That(jp.GetInt32("$.x.y[2]['z']"u8), Is.EqualTo(5));
 
-            Assert.AreEqual("{\"x\":{\"y\":[null,null,{\"z\":5}]}}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"x\":{\"y\":[null,null,{\"z\":5}]}}"));
 
             jp.Set("$.x.z.a[0].b"u8, 10);
 
-            Assert.AreEqual("{\"y\":[null,null,{\"z\":5}],\"z\":{\"a\":[{\"b\":10}]}}", jp.GetJson("$.x"u8).ToString());
-            Assert.AreEqual("[null,null,{\"z\":5}]", jp.GetJson("$.x.y"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.x.y[0]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.x.y[1]"u8).ToString());
-            Assert.AreEqual("{\"z\":5}", jp.GetJson("$.x.y[2]"u8).ToString());
-            Assert.AreEqual(5, jp.GetInt32("$.x.y[2]['z']"u8));
-            Assert.AreEqual("{\"a\":[{\"b\":10}]}", jp.GetJson("$.x.z"u8).ToString());
-            Assert.AreEqual("[{\"b\":10}]", jp.GetJson("$.x.z.a"u8).ToString());
-            Assert.AreEqual("{\"b\":10}", jp.GetJson("$.x.z.a[0]"u8).ToString());
-            Assert.AreEqual(10, jp.GetInt32("$.x.z.a[0].b"u8));
+            Assert.That(jp.GetJson("$.x"u8).ToString(), Is.EqualTo("{\"y\":[null,null,{\"z\":5}],\"z\":{\"a\":[{\"b\":10}]}}"));
+            Assert.That(jp.GetJson("$.x.y"u8).ToString(), Is.EqualTo("[null,null,{\"z\":5}]"));
+            Assert.That(jp.GetJson("$.x.y[0]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.x.y[1]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.x.y[2]"u8).ToString(), Is.EqualTo("{\"z\":5}"));
+            Assert.That(jp.GetInt32("$.x.y[2]['z']"u8), Is.EqualTo(5));
+            Assert.That(jp.GetJson("$.x.z"u8).ToString(), Is.EqualTo("{\"a\":[{\"b\":10}]}"));
+            Assert.That(jp.GetJson("$.x.z.a"u8).ToString(), Is.EqualTo("[{\"b\":10}]"));
+            Assert.That(jp.GetJson("$.x.z.a[0]"u8).ToString(), Is.EqualTo("{\"b\":10}"));
+            Assert.That(jp.GetInt32("$.x.z.a[0].b"u8), Is.EqualTo(10));
 
-            Assert.AreEqual("{\"x\":{\"y\":[null,null,{\"z\":5}],\"z\":{\"a\":[{\"b\":10}]}}}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"x\":{\"y\":[null,null,{\"z\":5}],\"z\":{\"a\":[{\"b\":10}]}}}"));
         }
 
         [Test]
@@ -134,10 +134,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             jp.Set("$['pro.perty']"u8, "value");
-            Assert.IsTrue(jp.Contains("$['pro.perty']"u8));
-            Assert.AreEqual("value", jp.GetString("$['pro.perty']"u8));
+            Assert.That(jp.Contains("$['pro.perty']"u8), Is.True);
+            Assert.That(jp.GetString("$['pro.perty']"u8), Is.EqualTo("value"));
 
-            Assert.AreEqual("{\"pro.perty\":\"value\"}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"pro.perty\":\"value\"}"));
         }
 
         [Test]
@@ -145,9 +145,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             jp.Append("$.items"u8, "value1");
-            Assert.IsFalse(jp.Contains("$.items"u8), "Append should not cause Contains(path) to report true for the array container path.");
+            Assert.That(jp.Contains("$.items"u8), Is.False, "Append should not cause Contains(path) to report true for the array container path.");
 
-            Assert.AreEqual("value1", jp.GetString("$.items[0]"u8));
+            Assert.That(jp.GetString("$.items[0]"u8), Is.EqualTo("value1"));
         }
 
         [Test]
@@ -156,11 +156,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"parent\":{\"child\":1}}"u8.ToArray());
             jp.Set("$.parent.child"u8, 10);
 
-            Assert.IsTrue(jp.Contains("$.parent.child"u8));
-            Assert.IsTrue(jp.Contains("$.parent"u8, "child"u8));
+            Assert.That(jp.Contains("$.parent.child"u8), Is.True);
+            Assert.That(jp.Contains("$.parent"u8, "child"u8), Is.True);
 
-            Assert.IsFalse(jp.Contains("$.parent"u8, "missing"u8));
-            Assert.IsFalse(jp.Contains("$.parent.child"u8, "grand"u8));
+            Assert.That(jp.Contains("$.parent"u8, "missing"u8), Is.False);
+            Assert.That(jp.Contains("$.parent.child"u8, "grand"u8), Is.False);
         }
 
         [Test]
@@ -169,9 +169,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Append("$.arr"u8, 5);
 
-            Assert.IsFalse(jp.Contains("$.arr"u8), "Array container path should not be considered 'contained' after only an append.");
+            Assert.That(jp.Contains("$.arr"u8), Is.False, "Array container path should not be considered 'contained' after only an append.");
 
-            Assert.IsTrue(jp.Contains("$"u8, "arr"u8), "Prefix/property Contains currently ignores ArrayItemAppend and reports true.");
+            Assert.That(jp.Contains("$"u8, "arr"u8), Is.True, "Prefix/property Contains currently ignores ArrayItemAppend and reports true.");
         }
 
         [Test]
@@ -182,16 +182,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.obj.a"u8, 1);
             jp.Set("$.obj.b"u8, 2);
 
-            Assert.IsFalse(jp.IsRemoved("$.obj.a"u8));
-            Assert.IsFalse(jp.IsRemoved("$.obj.b"u8));
+            Assert.That(jp.IsRemoved("$.obj.a"u8), Is.False);
+            Assert.That(jp.IsRemoved("$.obj.b"u8), Is.False);
 
             jp.Remove("$.obj.a"u8);
 
-            Assert.IsTrue(jp.IsRemoved("$.obj.a"u8));
-            Assert.IsFalse(jp.IsRemoved("$.obj.b"u8));
+            Assert.That(jp.IsRemoved("$.obj.a"u8), Is.True);
+            Assert.That(jp.IsRemoved("$.obj.b"u8), Is.False);
 
             var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetInt32("$.obj.a"u8));
-            Assert.AreEqual("No value found at JSON path '$.obj.a'.", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("No value found at JSON path '$.obj.a'."));
         }
 
         [Test]
@@ -201,8 +201,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.p"u8, 5);
             jp.Remove("$.p"u8);
             jp.Set("$.p"u8, 10);
-            Assert.IsFalse(jp.IsRemoved("$.p"u8));
-            Assert.AreEqual(10, jp.GetInt32("$.p"u8));
+            Assert.That(jp.IsRemoved("$.p"u8), Is.False);
+            Assert.That(jp.GetInt32("$.p"u8), Is.EqualTo(10));
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Set("$.c"u8, 1); // store as int
             var ex = Assert.Throws<NotSupportedException>(() => jp.GetNullableValue<char>("$.c"u8));
-            Assert.AreEqual("Type 'System.Char' is not supported by GetNullableValue.", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("Type 'System.Char' is not supported by GetNullableValue."));
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Set("$.x"u8, 1);
             var ex = Assert.Throws<NotSupportedException>(() => jp.ToString("INVALID"));
-            Assert.AreEqual("The format 'INVALID' is not supported.", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("The format 'INVALID' is not supported."));
         }
 
         [Test]
@@ -228,9 +228,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             jp.Set("$.v"u8, 10);
-            Assert.AreEqual(10, jp.GetInt32("$.v"u8));
+            Assert.That(jp.GetInt32("$.v"u8), Is.EqualTo(10));
             jp.Set("$.v"u8, "str");
-            Assert.AreEqual("str", jp.GetString("$.v"u8));
+            Assert.That(jp.GetString("$.v"u8), Is.EqualTo("str"));
         }
 
         [Test]
@@ -238,9 +238,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             jp.Set("$.x"u8, 5);
-            Assert.IsTrue(jp.TryGetValue("$.x"u8, out int v) && v == 5);
+            Assert.That(jp.TryGetValue("$.x"u8, out int v) && v == 5, Is.True);
             jp.Remove("$.x"u8);
-            Assert.IsFalse(jp.TryGetValue("$.x"u8, out int _));
+            Assert.That(jp.TryGetValue("$.x"u8, out int _), Is.False);
         }
 
         [Test]
@@ -249,8 +249,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Set("$.a"u8, 1);
             bool found = jp.TryGetNullableValue("$.a"u8, out char? c);
-            Assert.IsFalse(found);
-            Assert.False(c.HasValue);
+            Assert.That(found, Is.False);
+            Assert.That(c.HasValue, Is.False);
         }
 
         [Test]
@@ -259,10 +259,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Append("$.arr"u8, 1);
             jp.Append("$.arr"u8, 2);
-            Assert.IsFalse(jp.Contains("$.arr"u8));
+            Assert.That(jp.Contains("$.arr"u8), Is.False);
             jp.Set("$.arr[0]"u8, 10);
-            Assert.AreEqual(10, jp.GetInt32("$.arr[0]"u8));
-            Assert.AreEqual(2, jp.GetInt32("$.arr[1]"u8));
+            Assert.That(jp.GetInt32("$.arr[0]"u8), Is.EqualTo(10));
+            Assert.That(jp.GetInt32("$.arr[1]"u8), Is.EqualTo(2));
         }
 
         [Test]
@@ -270,8 +270,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             jp.SetNull("$.n"u8);
-            Assert.IsTrue(jp.TryGetJson("$.n"u8, out var mem));
-            Assert.AreEqual("null", Encoding.UTF8.GetString(mem.Span.ToArray()));
+            Assert.That(jp.TryGetJson("$.n"u8, out var mem), Is.True);
+            Assert.That(Encoding.UTF8.GetString(mem.Span.ToArray()), Is.EqualTo("null"));
         }
 
         [Test]
@@ -281,20 +281,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.a.b[3].c.d[2].e"u8, 1);
 
-            Assert.AreEqual("{\"b\":[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]}", jp.GetJson("$.a"u8).ToString());
-            Assert.AreEqual("[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]", jp.GetJson("$.a.b"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a.b[0]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a.b[1]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a.b[2]"u8).ToString());
-            Assert.AreEqual("{\"c\":{\"d\":[null,null,{\"e\":1}]}}", jp.GetJson("$.a.b[3]"u8).ToString());
-            Assert.AreEqual("{\"d\":[null,null,{\"e\":1}]}", jp.GetJson("$.a.b[3].c"u8).ToString());
-            Assert.AreEqual("[null,null,{\"e\":1}]", jp.GetJson("$.a.b[3].c.d"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a.b[3].c.d[0]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a.b[3].c.d[1]"u8).ToString());
-            Assert.AreEqual("{\"e\":1}", jp.GetJson("$.a.b[3].c.d[2]"u8).ToString());
-            Assert.AreEqual(1, jp.GetInt32("$.a.b[3].c.d[2].e"u8));
+            Assert.That(jp.GetJson("$.a"u8).ToString(), Is.EqualTo("{\"b\":[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]}"));
+            Assert.That(jp.GetJson("$.a.b"u8).ToString(), Is.EqualTo("[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]"));
+            Assert.That(jp.GetJson("$.a.b[0]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a.b[1]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a.b[2]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a.b[3]"u8).ToString(), Is.EqualTo("{\"c\":{\"d\":[null,null,{\"e\":1}]}}"));
+            Assert.That(jp.GetJson("$.a.b[3].c"u8).ToString(), Is.EqualTo("{\"d\":[null,null,{\"e\":1}]}"));
+            Assert.That(jp.GetJson("$.a.b[3].c.d"u8).ToString(), Is.EqualTo("[null,null,{\"e\":1}]"));
+            Assert.That(jp.GetJson("$.a.b[3].c.d[0]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a.b[3].c.d[1]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a.b[3].c.d[2]"u8).ToString(), Is.EqualTo("{\"e\":1}"));
+            Assert.That(jp.GetInt32("$.a.b[3].c.d[2].e"u8), Is.EqualTo(1));
 
-            Assert.AreEqual("{\"a\":{\"b\":[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]}}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"a\":{\"b\":[null,null,null,{\"c\":{\"d\":[null,null,{\"e\":1}]}}]}}"));
         }
 
         [Test]
@@ -304,14 +304,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$.a[3]"u8, 5);
 
-            Assert.AreEqual("[null,null,null,[5]]", jp.GetJson("$.a"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a[0]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a[1]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.a[2]"u8).ToString());
-            Assert.AreEqual("[5]", jp.GetJson("$.a[3]"u8).ToString());
-            Assert.AreEqual(5, jp.GetInt32("$.a[3][0]"u8));
+            Assert.That(jp.GetJson("$.a"u8).ToString(), Is.EqualTo("[null,null,null,[5]]"));
+            Assert.That(jp.GetJson("$.a[0]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a[1]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a[2]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.a[3]"u8).ToString(), Is.EqualTo("[5]"));
+            Assert.That(jp.GetInt32("$.a[3][0]"u8), Is.EqualTo(5));
 
-            Assert.AreEqual("{\"a\":[null,null,null,[5]]}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"a\":[null,null,null,[5]]}"));
         }
 
         [Test]
@@ -321,10 +321,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$.a"u8, 5);
 
-            Assert.AreEqual("[5]", jp.GetJson("$.a"u8).ToString());
-            Assert.AreEqual(5, jp.GetInt32("$.a[0]"u8));
+            Assert.That(jp.GetJson("$.a"u8).ToString(), Is.EqualTo("[5]"));
+            Assert.That(jp.GetInt32("$.a[0]"u8), Is.EqualTo(5));
 
-            Assert.AreEqual("{\"a\":[5]}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"a\":[5]}"));
         }
 
         [Test]
@@ -334,14 +334,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$.arr[2].items"u8, "x");
 
-            Assert.AreEqual("[null,null,{\"items\":[\"x\"]}]", jp.GetJson("$.arr"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.arr[0]"u8).ToString());
-            Assert.AreEqual("null", jp.GetJson("$.arr[1]"u8).ToString());
-            Assert.AreEqual("{\"items\":[\"x\"]}", jp.GetJson("$.arr[2]"u8).ToString());
-            Assert.AreEqual("[\"x\"]", jp.GetJson("$.arr[2].items"u8).ToString());
-            Assert.AreEqual("x", jp.GetString("$.arr[2].items[0]"u8));
+            Assert.That(jp.GetJson("$.arr"u8).ToString(), Is.EqualTo("[null,null,{\"items\":[\"x\"]}]"));
+            Assert.That(jp.GetJson("$.arr[0]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.arr[1]"u8).ToString(), Is.EqualTo("null"));
+            Assert.That(jp.GetJson("$.arr[2]"u8).ToString(), Is.EqualTo("{\"items\":[\"x\"]}"));
+            Assert.That(jp.GetJson("$.arr[2].items"u8).ToString(), Is.EqualTo("[\"x\"]"));
+            Assert.That(jp.GetString("$.arr[2].items[0]"u8), Is.EqualTo("x"));
 
-            Assert.AreEqual("{\"arr\":[null,null,{\"items\":[\"x\"]}]}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"arr\":[null,null,{\"items\":[\"x\"]}]}"));
         }
 
         [Test]
@@ -351,9 +351,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$.arr[2]"u8, 10);
 
-            Assert.AreEqual("[null,null,[10]]", jp.GetJson("$.arr"u8).ToString());
+            Assert.That(jp.GetJson("$.arr"u8).ToString(), Is.EqualTo("[null,null,[10]]"));
 
-            Assert.AreEqual("{\"arr\":[null,null,[10]]}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"arr\":[null,null,[10]]}"));
         }
 
         [Test]
@@ -363,9 +363,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.arr[3]"u8, 11);
 
-            Assert.AreEqual("[null,null,null,11]", jp.GetJson("$.arr"u8).ToString());
+            Assert.That(jp.GetJson("$.arr"u8).ToString(), Is.EqualTo("[null,null,null,11]"));
 
-            Assert.AreEqual("{\"arr\":[null,null,null,11]}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"arr\":[null,null,null,11]}"));
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
             var ex = Assert.Throws<InvalidOperationException>(() => jp.Set("$.trailing."u8, 5));
-            StringAssert.Contains("property", ex!.Message.ToLowerInvariant());
+            Assert.That(ex!.Message.ToLowerInvariant(), Does.Contain("property"));
         }
 
         [Test]
@@ -383,9 +383,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$"u8, "{\"x\":1}"u8);
 
-            Assert.AreEqual("{\"x\":1}", jp.GetJson("$"u8).ToString());
+            Assert.That(jp.GetJson("$"u8).ToString(), Is.EqualTo("{\"x\":1}"));
 
-            Assert.AreEqual("{\"x\":1}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"x\":1}"));
         }
 
         [Test]
@@ -406,7 +406,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             writer.Flush();
 
             using var reader = buffer.ExtractReader();
-            Assert.AreEqual("{\"a\":{}}", reader.ToBinaryData().ToString());
+            Assert.That(reader.ToBinaryData().ToString(), Is.EqualTo("{\"a\":{}}"));
         }
 
         [Test]
@@ -414,8 +414,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new();
 
-            Assert.AreEqual("[]", jp.ToString());
-            Assert.AreEqual("{}", jp.ToString("J"));
+            Assert.That(jp.ToString(), Is.EqualTo("[]"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{}"));
         }
 
         [Test]
@@ -426,7 +426,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.a"u8, ""u8);
 
             var ex = Assert.Throws<ArgumentException>(() => jp.ToString("J"));
-            Assert.AreEqual("Empty encoded value", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("Empty encoded value"));
         }
 
         [Test]
@@ -434,8 +434,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new("{\"x\":1}"u8.ToArray());
 
-            Assert.AreEqual("[]", jp.ToString());
-            Assert.AreEqual("{\"x\":1}", jp.ToString("J"));
+            Assert.That(jp.ToString(), Is.EqualTo("[]"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"x\":1}"));
         }
 
         [Test]
@@ -447,7 +447,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.b"u8, 2);
             jp.Set("$.c"u8, 3);
 
-            Assert.AreEqual("{\"z\":100,\"a\":1,\"b\":2,\"c\":3}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"z\":100,\"a\":1,\"b\":2,\"c\":3}"));
         }
 
         [Test]
@@ -456,9 +456,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             var ex = Assert.Throws<ArgumentNullException>(() => jp.ToString(null!));
 #if NETFRAMEWORK
-            Assert.AreEqual("Value cannot be null.\r\nParameter name: format", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: format"));
 #else
-            Assert.AreEqual("Value cannot be null. (Parameter 'format')", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("Value cannot be null. (Parameter 'format')"));
 #endif
         }
 
@@ -467,7 +467,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true}}}"u8.ToArray());
             jp.Set("$.a.new"u8, "newValue");
-            Assert.AreEqual("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true},\"new\":\"newValue\"}}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true},\"new\":\"newValue\"}}"));
         }
 
         [Test]
@@ -475,7 +475,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             JsonPatch jp = new("{\"a\":[\"one\",\"two\",\"three\"]}"u8.ToArray());
             jp.Set("$.a[1]"u8, "newTwo");
-            Assert.AreEqual("{\"a\":[\"one\",\"newTwo\",\"three\"]}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"a\":[\"one\",\"newTwo\",\"three\"]}"));
         }
 
         [Test]
@@ -486,21 +486,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.text"u8, "Line1\nLine2\tTabbed\"Quote\"");
 
             // GetString should return single escape
-            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
-            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
-            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
-            Assert.IsTrue(value!.Contains("\n"));
-            Assert.IsFalse(value.Contains("\\n"));
+            Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(value!.Contains("\n"), Is.True);
+            Assert.That(value.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
-            CollectionAssert.AreEqual("Line1\nLine2\tTabbed\"Quote\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+            Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""u8.ToArray()).AsCollection);
 
             // EncodedValue should have the exact byte array we passed in
-            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
-            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\""u8.ToArray(), encodedValue.Value.ToArray());
+            Assert.That(jp.TryGetEncodedValue("$.text"u8, out var encodedValue), Is.True);
+            Assert.That(encodedValue.Value.ToArray(), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""u8.ToArray()));
 
             // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
-            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\u0022Quote\\u0022\"}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"text\":\"Line1\\nLine2\\tTabbed\\u0022Quote\\u0022\"}"));
         }
 
         [Test]
@@ -511,21 +511,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.text"u8, "\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8);
 
             // GetString should return single escape
-            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
-            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
-            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
-            Assert.IsTrue(value!.Contains("\n"));
-            Assert.IsFalse(value.Contains("\\n"));
+            Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(value!.Contains("\n"), Is.True);
+            Assert.That(value.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
-            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+            Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()).AsCollection);
 
             // EncodedValue should have the exact byte array we passed in
-            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
-            Assert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), encodedValue.Value.ToArray());
+            Assert.That(jp.TryGetEncodedValue("$.text"u8, out var encodedValue), Is.True);
+            Assert.That(encodedValue.Value.ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()));
 
             // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
-            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}"));
         }
 
         [Test]
@@ -535,21 +535,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}"u8.ToArray());
 
             // GetString should return single escape
-            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
-            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
-            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
-            Assert.IsTrue(value!.Contains("\n"));
-            Assert.IsFalse(value.Contains("\\n"));
+            Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(value!.Contains("\n"), Is.True);
+            Assert.That(value.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
-            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+            Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()).AsCollection);
 
             // EncodedValue should have the exact byte array we passed in
-            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
-            Assert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), encodedValue.Value.ToArray());
+            Assert.That(jp.TryGetEncodedValue("$.text"u8, out var encodedValue), Is.True);
+            Assert.That(encodedValue.Value.ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()));
 
             // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
-            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}", jp.ToString("J"));
+            Assert.That(jp.ToString("J"), Is.EqualTo("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}"));
         }
 
         [Test]
@@ -657,7 +657,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 ++index;
             }
 
-            Assert.AreEqual(expected, patch.ToString("J"));
+            Assert.That(patch.ToString("J"), Is.EqualTo(expected));
         }
 
         [Test]
@@ -677,11 +677,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
             {
                 var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
-                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                Assert.That(patch.GetString(namePath), Is.EqualTo($"Item{id}"));
                 ++index;
             }
 
-            Assert.AreEqual(3, index);
+            Assert.That(index, Is.EqualTo(3));
         }
 
         [Test]
@@ -704,16 +704,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
                 if (index == 1)
                 {
-                    Assert.AreEqual("UpdatedItem2", patch.GetString(namePath));
+                    Assert.That(patch.GetString(namePath), Is.EqualTo("UpdatedItem2"));
                 }
                 else
                 {
-                    Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                    Assert.That(patch.GetString(namePath), Is.EqualTo($"Item{id}"));
                 }
                 ++index;
             }
 
-            Assert.AreEqual(3, index);
+            Assert.That(index, Is.EqualTo(3));
         }
 
         [Test]
@@ -734,33 +734,33 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             while (patch.TryGetJson(Encoding.UTF8.GetBytes($"$.items[{index}]"), out var itemJson))
             {
                 var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
-                Assert.AreEqual($"Item{index + 1}", patch.GetString(namePath));
+                Assert.That(patch.GetString(namePath), Is.EqualTo($"Item{index + 1}"));
                 ++index;
             }
 
-            Assert.AreEqual(3, index);
+            Assert.That(index, Is.EqualTo(3));
 
             // if we look for id it will stop after 1 item because the 2nd item id was removed
             index = 0;
             while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
             {
                 var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
-                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                Assert.That(patch.GetString(namePath), Is.EqualTo($"Item{id}"));
                 ++index;
             }
 
-            Assert.AreEqual(1, index);
+            Assert.That(index, Is.EqualTo(1));
 
             // if we get by json it will iterate over all 3 since the id property removal can still be returned as empty json
             index = 0;
             while (patch.TryGetJson(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out var idJson))
             {
                 var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
-                Assert.AreEqual($"Item{index + 1}", patch.GetString(namePath));
+                Assert.That(patch.GetString(namePath), Is.EqualTo($"Item{index + 1}"));
                 ++index;
             }
 
-            Assert.AreEqual(3, index);
+            Assert.That(index, Is.EqualTo(3));
         }
 
         [Test]
@@ -781,15 +781,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
             {
                 var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
-                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                Assert.That(patch.GetString(namePath), Is.EqualTo($"Item{id}"));
                 ++index;
             }
 
             // iteration will stop after 1 item because item 2 was removed and therefore it won't have an id
-            Assert.AreEqual(1, index);
-            Assert.AreEqual("{ \"id\": 3, \"name\": \"Item3\" }", patch.GetJson("$.items[2]"u8).ToString());
-            Assert.AreEqual(3, patch.GetInt32("$.items[2].id"u8));
-            Assert.AreEqual("Item3", patch.GetString("$.items[2].name"u8));
+            Assert.That(index, Is.EqualTo(1));
+            Assert.That(patch.GetJson("$.items[2]"u8).ToString(), Is.EqualTo("{ \"id\": 3, \"name\": \"Item3\" }"));
+            Assert.That(patch.GetInt32("$.items[2].id"u8), Is.EqualTo(3));
+            Assert.That(patch.GetString("$.items[2].name"u8), Is.EqualTo("Item3"));
         }
 
         [Test]
@@ -810,11 +810,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
             {
                 var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
-                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                Assert.That(patch.GetString(namePath), Is.EqualTo($"Item{id}"));
                 ++index;
             }
 
-            Assert.AreEqual(4, index);
+            Assert.That(index, Is.EqualTo(4));
         }
     }
 }

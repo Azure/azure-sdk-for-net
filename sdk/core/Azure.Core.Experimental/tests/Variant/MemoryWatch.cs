@@ -89,7 +89,7 @@ namespace Azure
         public void Validate()
         {
             var allocated = GetAllocatedBytesPortable();
-            Assert.AreEqual(0, allocated - _allocations);
+            Assert.That(allocated - _allocations, Is.EqualTo(0));
 
             // Assert.AreEqual allocates
             _allocations = GetAllocatedBytesPortable();

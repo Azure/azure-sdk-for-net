@@ -73,16 +73,16 @@ namespace Azure.Core.Tests
 
             foreach (var expHeader in request.Headers)
             {
-                Assert.IsTrue(result.Headers.TryGetValues(expHeader.Key, out IEnumerable<string> actValues));
+                Assert.That(result.Headers.TryGetValues(expHeader.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(expHeader.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(expHeader.Value));
             }
 
             foreach (var expHeader in request.Content.Headers)
             {
-                Assert.IsTrue(result.Headers.TryGetValues(expHeader.Key, out IEnumerable<string> actValues));
+                Assert.That(result.Headers.TryGetValues(expHeader.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(expHeader.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(expHeader.Value));
             }
 
             // assert no additional headers have been added
@@ -90,11 +90,11 @@ namespace Azure.Core.Tests
             {
                 if (s_testHeaders.Any(h => h.Item1 == header.Name))
                 {
-                    Assert.IsTrue(request.Headers.Contains(header.Name));
+                    Assert.That(request.Headers.Contains(header.Name), Is.True);
                 }
                 else
                 {
-                    Assert.IsTrue(request.Content.Headers.Contains(header.Name));
+                    Assert.That(request.Content.Headers.Contains(header.Name), Is.True);
                 }
             }
         }
@@ -116,19 +116,19 @@ namespace Azure.Core.Tests
 
             var httpResponseMessage = await client.GetAsync("http://foo.com/");
 
-            Assert.AreEqual((int)httpResponseMessage.StatusCode, 200);
+            Assert.That((int)httpResponseMessage.StatusCode, Is.EqualTo(200));
             foreach (var header in httpResponseMessage.Headers)
             {
-                Assert.IsTrue(response.Headers.TryGetValues(header.Key, out IEnumerable<string> actValues));
+                Assert.That(response.Headers.TryGetValues(header.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(header.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(header.Value));
             }
 
             foreach (var header in httpResponseMessage.Content.Headers)
             {
-                Assert.IsTrue(response.Headers.TryGetValues(header.Key, out IEnumerable<string> actValues));
+                Assert.That(response.Headers.TryGetValues(header.Key, out IEnumerable<string> actValues), Is.True);
 
-                CollectionAssert.AreEquivalent(header.Value, actValues);
+                Assert.That(actValues, Is.EquivalentTo(header.Value));
             }
 
             // assert all headers have been accounted for
@@ -136,11 +136,11 @@ namespace Azure.Core.Tests
             {
                 if (s_testHeaders.Any(h => h.Item1 == header.Name))
                 {
-                    Assert.IsTrue(httpResponseMessage.Headers.Contains(header.Name));
+                    Assert.That(httpResponseMessage.Headers.Contains(header.Name), Is.True);
                 }
                 else
                 {
-                    Assert.IsTrue(httpResponseMessage.Content.Headers.Contains(header.Name));
+                    Assert.That(httpResponseMessage.Content.Headers.Contains(header.Name), Is.True);
                 }
             }
         }

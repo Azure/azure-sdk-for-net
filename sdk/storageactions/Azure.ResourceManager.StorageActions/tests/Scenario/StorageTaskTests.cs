@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 storageTaskExist = false;
             }
-            Assert.IsFalse(storageTaskExist, "StorageTask should not exist after delete.");
+            Assert.That(storageTaskExist, Is.False, "StorageTask should not exist after delete.");
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [Test]
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
                             Key = "mContainerKey1",
                             Value = "mContainerValue1",
                         }},
-                    },
+                },
                     new StorageTaskPreviewBlobProperties[]
                     {
                         new StorageTaskPreviewBlobProperties
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
                         Condition = "[[equals(AccessTier, 'Hot')]]",
                     }, true)));
             StorageTaskPreviewAction result = await DefaultSubscription.PreviewActionsAsync("eastus2", storageTaskPreviewAction);
-            Assert.AreEqual(storageTaskPreviewAction.Properties.Container.Name, result.Properties.Container.Name);
+            Assert.That(result.Properties.Container.Name, Is.EqualTo(storageTaskPreviewAction.Properties.Container.Name));
         }
 
         [Test]
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -305,13 +305,13 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         internal void CompareStorageTaskData(StorageTaskData expected, StorageTaskData actual)
         {
-            Assert.AreEqual(expected.Location, actual.Location);
-            Assert.AreEqual(expected.Identity.ManagedServiceIdentityType, actual.Identity.ManagedServiceIdentityType);
+            Assert.That(actual.Location, Is.EqualTo(expected.Location));
+            Assert.That(actual.Identity.ManagedServiceIdentityType, Is.EqualTo(expected.Identity.ManagedServiceIdentityType));
             // skip for server issue
             // Assert.AreEqual(expected.Tags, actual.Tags);
             CompareStorageTaskProperties(expected.Properties, actual.Properties);
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
         internal void CompareStorageTaskPatch(StorageTaskData expected, StorageTaskPatch actual)
         {
-            Assert.AreEqual(expected.Identity.ManagedServiceIdentityType, actual.Identity.ManagedServiceIdentityType);
+            Assert.That(actual.Identity.ManagedServiceIdentityType, Is.EqualTo(expected.Identity.ManagedServiceIdentityType));
             // skip for server issue
             // Assert.AreEqual(expected.Tags, actual.Tags);
             CompareStorageTaskProperties(expected.Properties, actual.Properties);
@@ -327,10 +327,10 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
         internal void CompareStorageTaskProperties(StorageTaskProperties expected, StorageTaskProperties actual)
         {
-            Assert.AreEqual(expected.IsEnabled, actual.IsEnabled);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.Action.If.Condition, actual.Action.If.Condition);
-            Assert.AreEqual(expected.Action.If.Operations.Count, actual.Action.If.Operations.Count);
+            Assert.That(actual.IsEnabled, Is.EqualTo(expected.IsEnabled));
+            Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            Assert.That(actual.Action.If.Condition, Is.EqualTo(expected.Action.If.Condition));
+            Assert.That(actual.Action.If.Operations.Count, Is.EqualTo(expected.Action.If.Operations.Count));
             for (int i = 0; i < expected.Action.If.Operations.Count; i++)
             {
                 CompareStorageTaskOperation(expected.Action.If.Operations[i], actual.Action.If.Operations[i]);
@@ -338,11 +338,11 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
             if (expected.Action.Else == null)
             {
-                Assert.IsNull(actual.Action.Else);
+                Assert.That(actual.Action.Else, Is.Null);
             }
             else
             {
-                Assert.AreEqual(expected.Action.Else.Operations.Count, actual.Action.Else.Operations.Count);
+                Assert.That(actual.Action.Else.Operations.Count, Is.EqualTo(expected.Action.Else.Operations.Count));
                 for (int i = 0; i < expected.Action.Else.Operations.Count; i++)
                 {
                     CompareStorageTaskOperation(expected.Action.Else.Operations[i], actual.Action.Else.Operations[i]);
@@ -352,10 +352,10 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
         internal void CompareStorageTaskProperties(StorageTaskProperties expected, StorageTaskUpdateProperties actual)
         {
-            Assert.AreEqual(expected.IsEnabled, actual.Enabled);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.Action.If.Condition, actual.Action.If.Condition);
-            Assert.AreEqual(expected.Action.If.Operations.Count, actual.Action.If.Operations.Count);
+            Assert.That(actual.Enabled, Is.EqualTo(expected.IsEnabled));
+            Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            Assert.That(actual.Action.If.Condition, Is.EqualTo(expected.Action.If.Condition));
+            Assert.That(actual.Action.If.Operations.Count, Is.EqualTo(expected.Action.If.Operations.Count));
             for (int i = 0; i < expected.Action.If.Operations.Count; i++)
             {
                 CompareStorageTaskOperation(expected.Action.If.Operations[i], actual.Action.If.Operations[i]);
@@ -363,11 +363,11 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
             if (expected.Action.Else == null)
             {
-                Assert.IsNull(actual.Action.Else);
+                Assert.That(actual.Action.Else, Is.Null);
             }
             else
             {
-                Assert.AreEqual(expected.Action.Else.Operations.Count, actual.Action.Else.Operations.Count);
+                Assert.That(actual.Action.Else.Operations.Count, Is.EqualTo(expected.Action.Else.Operations.Count));
                 for (int i = 0; i < expected.Action.Else.Operations.Count; i++)
                 {
                     CompareStorageTaskOperation(expected.Action.Else.Operations[i], actual.Action.Else.Operations[i]);
@@ -377,14 +377,14 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
         internal void CompareStorageTaskOperation(StorageTaskOperationInfo expected, StorageTaskOperationInfo actual)
         {
-            Assert.AreEqual(expected.OnSuccess, actual.OnSuccess);
-            Assert.AreEqual(expected.OnFailure, actual.OnFailure);
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Parameters.Count, actual.Parameters.Count);
+            Assert.That(actual.OnSuccess, Is.EqualTo(expected.OnSuccess));
+            Assert.That(actual.OnFailure, Is.EqualTo(expected.OnFailure));
+            Assert.That(actual.Name, Is.EqualTo(expected.Name));
+            Assert.That(actual.Parameters.Count, Is.EqualTo(expected.Parameters.Count));
             foreach (var parameter in actual.Parameters)
             {
                 {
-                    Assert.AreEqual(parameter.Value, actual.Parameters[parameter.Key]);
+                    Assert.That(actual.Parameters[parameter.Key], Is.EqualTo(parameter.Value));
                 }
             }
         }

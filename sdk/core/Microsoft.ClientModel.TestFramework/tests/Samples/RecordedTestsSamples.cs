@@ -97,7 +97,7 @@ public class RecordedTestsSamples
             return Task.CompletedTask;
         }
     }
-#endregion
+    #endregion
 
     #region Snippet:BasicRecordedTest
     public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>

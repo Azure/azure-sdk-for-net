@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure;
-using Azure.Core.Serialization;
 using System;
 using System.ClientModel.Primitives;
+using Azure;
+using Azure.Core.Serialization;
 
 namespace ClientModel.Tests.Mocks;
 

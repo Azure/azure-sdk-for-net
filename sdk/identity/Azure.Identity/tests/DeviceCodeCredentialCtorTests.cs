@@ -116,17 +116,17 @@ namespace Azure.Identity.Tests
 
         public void AssertOptionsHonored(DeviceCodeCredentialOptions options, DeviceCodeCredential credential)
         {
-            Assert.AreEqual(options.ClientId, credential.ClientId);
-            Assert.AreEqual(options.TenantId, credential.Client.TenantId);
-            Assert.AreEqual(options.DisableAutomaticAuthentication, credential.DisableAutomaticAuthentication);
-            Assert.AreEqual(options.AuthenticationRecord, credential.Record);
+            Assert.That(credential.ClientId, Is.EqualTo(options.ClientId));
+            Assert.That(credential.Client.TenantId, Is.EqualTo(options.TenantId));
+            Assert.That(credential.DisableAutomaticAuthentication, Is.EqualTo(options.DisableAutomaticAuthentication));
+            Assert.That(credential.Record, Is.EqualTo(options.AuthenticationRecord));
 
             AssertCallbacksEqual(options.DeviceCodeCallback ?? DeviceCodeCredential.DefaultDeviceCodeHandler, credential.DeviceCodeCallback);
         }
 
         public void AssertCallbacksEqual(Func<DeviceCodeInfo, CancellationToken, Task> expected, Func<DeviceCodeInfo, CancellationToken, Task> actual)
         {
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

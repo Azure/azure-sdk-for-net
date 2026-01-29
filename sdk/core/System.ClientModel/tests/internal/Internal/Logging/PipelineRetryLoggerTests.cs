@@ -56,7 +56,7 @@ public class PipelineRetryLoggerTests : SyncAsyncPolicyTestBase
         TestLogger logger = factory.GetLogger(RetryPolicyCategoryName);
         logger.SingleEventById(10); // RequestRetrying
 
-        CollectionAssert.IsEmpty(listener.EventData);
+        Assert.That(listener.EventData, Is.Empty);
     }
 
     [Test]
@@ -68,8 +68,8 @@ public class PipelineRetryLoggerTests : SyncAsyncPolicyTestBase
         PipelineRetryLogger retryLogger = new(factory);
         retryLogger.LogRequestRetrying("requestId", 1, 1);
 
-        CollectionAssert.IsEmpty(listener.EventData);
-        CollectionAssert.IsEmpty(factory.GetLogger(RetryPolicyCategoryName).Logs);
+        Assert.That(listener.EventData, Is.Empty);
+        Assert.That(factory.GetLogger(RetryPolicyCategoryName).Logs, Is.Empty);
     }
 
     #endregion
@@ -99,17 +99,17 @@ public class PipelineRetryLoggerTests : SyncAsyncPolicyTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         EventWrittenEventArgs args = listener.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetProperty<int>("retryNumber") == 1));
-        Assert.AreEqual("RequestRetrying", args.EventName);
-        Assert.AreEqual(EventLevel.Informational, args.Level);
-        Assert.Less(args.GetProperty<double>("seconds"), 1);
+        Assert.That(args.EventName, Is.EqualTo("RequestRetrying"));
+        Assert.That(args.Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(args.GetProperty<double>("seconds"), Is.LessThan(1));
 
         args = listener.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetProperty<int>("retryNumber") == 2));
-        Assert.AreEqual("RequestRetrying", args.EventName);
-        Assert.AreEqual(EventLevel.Informational, args.Level);
-        Assert.Less(args.GetProperty<double>("seconds"), 1);
+        Assert.That(args.EventName, Is.EqualTo("RequestRetrying"));
+        Assert.That(args.Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(args.GetProperty<double>("seconds"), Is.LessThan(1));
 
         // 2 retry logs + 3 request logs + 3 response logs
-        Assert.AreEqual(8, listener.EventData.Count());
+        Assert.That(listener.EventData.Count(), Is.EqualTo(8));
     }
 
     [Test]
@@ -139,17 +139,17 @@ public class PipelineRetryLoggerTests : SyncAsyncPolicyTestBase
         TestLogger logger = factory.GetLogger(RetryPolicyCategoryName);
 
         LoggerEvent log = logger.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetValueFromArguments<int>("retryNumber") == 1));
-        Assert.AreEqual("RequestRetrying", log.EventId.Name);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.Less(log.GetValueFromArguments<double>("seconds"), 1);
+        Assert.That(log.EventId.Name, Is.EqualTo("RequestRetrying"));
+        Assert.That(log.LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(log.GetValueFromArguments<double>("seconds"), Is.LessThan(1));
 
         log = logger.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetValueFromArguments<int>("retryNumber") == 2));
-        Assert.AreEqual("RequestRetrying", log.EventId.Name);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.Less(log.GetValueFromArguments<double>("seconds"), 1);
+        Assert.That(log.EventId.Name, Is.EqualTo("RequestRetrying"));
+        Assert.That(log.LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(log.GetValueFromArguments<double>("seconds"), Is.LessThan(1));
 
         // No other logs should have been written to the retry logger
-        Assert.AreEqual(2, logger.Logs.Count());
+        Assert.That(logger.Logs.Count(), Is.EqualTo(2));
     }
 
     #endregion

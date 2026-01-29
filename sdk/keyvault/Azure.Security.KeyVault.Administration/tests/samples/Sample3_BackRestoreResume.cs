@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -75,8 +75,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);
-            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
-            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default(DateTimeOffset)));
+            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default(DateTimeOffset)));
 
             await WaitForOperationAsync();
         }

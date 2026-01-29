@@ -44,10 +44,10 @@ namespace Azure.Storage.Blobs.Test
             string s = await streamReader.ReadToEndAsync();
 
             // Assert
-            Assert.AreEqual("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n", s);
+            Assert.That(s, Is.EqualTo("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n"));
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.Details.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag.ToString()}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag.ToString()}\"", Is.EqualTo(response.Value.Details.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.Test
             string s = await streamReader.ReadToEndAsync();
 
             // Assert
-            Assert.AreEqual("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n", s);
+            Assert.That(s, Is.EqualTo("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n"));
         }
 
         [RecordedTest]
@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blockBlobClient.QueryAsync(
                     query),
-                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound")));
         }
 
         [RecordedTest]
@@ -123,15 +123,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             // Check we got back the same content that we uploaded.
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
 
             // Check progress reporter
-            Assert.AreEqual(5, progressReporter.List.Count);
-            Assert.AreEqual(4 * Constants.MB, progressReporter.List[0]);
-            Assert.AreEqual(8 * Constants.MB, progressReporter.List[1]);
-            Assert.AreEqual(12 * Constants.MB, progressReporter.List[2]);
-            Assert.AreEqual(16 * Constants.MB, progressReporter.List[3]);
-            Assert.AreEqual(16 * Constants.MB, progressReporter.List[4]);
+            Assert.That(progressReporter.List.Count, Is.EqualTo(5));
+            Assert.That(progressReporter.List[0], Is.EqualTo(4 * Constants.MB));
+            Assert.That(progressReporter.List[1], Is.EqualTo(8 * Constants.MB));
+            Assert.That(progressReporter.List[2], Is.EqualTo(12 * Constants.MB));
+            Assert.That(progressReporter.List[3], Is.EqualTo(16 * Constants.MB));
+            Assert.That(progressReporter.List[4], Is.EqualTo(16 * Constants.MB));
         }
 
         [RecordedTest]
@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             // Check we got back the same content that we uploaded.
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [RecordedTest]
@@ -195,9 +195,9 @@ namespace Azure.Storage.Blobs.Test
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             await streamReader.ReadToEndAsync();
 
-            Assert.AreEqual(2, progressReporter.List.Count);
-            Assert.AreEqual(Constants.KB, progressReporter.List[0]);
-            Assert.AreEqual(Constants.KB, progressReporter.List[1]);
+            Assert.That(progressReporter.List.Count, Is.EqualTo(2));
+            Assert.That(progressReporter.List[0], Is.EqualTo(Constants.KB));
+            Assert.That(progressReporter.List[1], Is.EqualTo(Constants.KB));
         }
 
         [RecordedTest]
@@ -243,7 +243,7 @@ namespace Azure.Storage.Blobs.Test
             string s = await streamReader.ReadToEndAsync();
 
             // Assert
-            Assert.AreEqual("{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n", s);
+            Assert.That(s, Is.EqualTo("{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n{\"_1\":\"400\"}\n"));
         }
 
         [RecordedTest]
@@ -370,7 +370,7 @@ namespace Azure.Storage.Blobs.Test
                     options);
 
                 // Assert
-                Assert.IsNotNull(response.Value.Details.ETag);
+                Assert.That(response.Value.Details.ETag, Is.Not.Null);
             }
         }
 
@@ -441,7 +441,7 @@ namespace Azure.Storage.Blobs.Test
             string s = await streamReader.ReadToEndAsync();
 
             // Assert
-            Assert.AreEqual("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n", s);
+            Assert.That(s, Is.EqualTo("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n"));
         }
 
         [RecordedTest]
@@ -470,7 +470,7 @@ namespace Azure.Storage.Blobs.Test
                 blockBlobClient.QueryAsync(
                     querySqlExpression: query,
                     options: blobQueryOptions),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.ConditionNotMet.ToString())));
         }
 
         [RecordedTest]
@@ -536,7 +536,7 @@ namespace Azure.Storage.Blobs.Test
             string s = await streamReader.ReadToEndAsync();
 
             // Assert
-            Assert.AreEqual("0,mdifjt55.ea3,mdifjt55.ea3\n", s);
+            Assert.That(s, Is.EqualTo("0,mdifjt55.ea3,mdifjt55.ea3\n"));
         }
 
         [Test]
@@ -558,7 +558,7 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 blockBlobClient.QueryAsync(
                     query, options),
-                e => Assert.AreEqual($"{nameof(BlobQueryParquetTextOptions)} can only be used for input serialization.", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo($"{nameof(BlobQueryParquetTextOptions)} can only be used for input serialization.")));
         }
 
         [RecordedTest]
@@ -595,7 +595,7 @@ namespace Azure.Storage.Blobs.Test
                 blockBlobClient.QueryAsync(
                 query,
                 options: options),
-                e => Assert.AreEqual($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.")));
         }
 
         private Stream CreateDataStream(long size)

@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Tests
             Response<bool> response = await blob.ExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
         }
     }
 }

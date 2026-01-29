@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void KeyVaultKeyIdentifierNullThrows()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new KeyVaultKeyIdentifier(null));
-            Assert.AreEqual("id", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("id"));
         }
 
         [TestCaseSource(nameof(Data))]
@@ -23,10 +23,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 KeyVaultKeyIdentifier identifier = new KeyVaultKeyIdentifier(id);
 
-                Assert.AreEqual(id, identifier.SourceId);
-                Assert.AreEqual(vaultUri, identifier.VaultUri);
-                Assert.AreEqual(name, identifier.Name);
-                Assert.AreEqual(version, identifier.Version);
+                Assert.That(identifier.SourceId, Is.EqualTo(id));
+                Assert.That(identifier.VaultUri, Is.EqualTo(vaultUri));
+                Assert.That(identifier.Name, Is.EqualTo(name));
+                Assert.That(identifier.Version, Is.EqualTo(version));
 
                 return true;
             }
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKeyIdentifier a = new KeyVaultKeyIdentifier(new Uri("https://test.vault.azure.net/keys/test-name/test-version"));
             KeyVaultKeyIdentifier b = new KeyVaultKeyIdentifier(new Uri("https://test.vault.azure.net/keys/test-name/test-version"));
 
-            Assert.AreEqual(a, b);
+            Assert.That(b, Is.EqualTo(a));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKeyIdentifier a = new KeyVaultKeyIdentifier(new Uri("https://test.vault.azure.net/keys/test-name/test-version?api-version=7.0"));
             KeyVaultKeyIdentifier b = new KeyVaultKeyIdentifier(new Uri("https://test.vault.azure.net/keys/test-name/test-version?api-version=7.1"));
 
-            Assert.AreNotEqual(a, b);
+            Assert.That(b, Is.Not.EqualTo(a));
         }
 
         [Test]
@@ -60,13 +60,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Uri uri = new Uri("https://test.vault.azure.net/keys/test-name/test-version");
             KeyVaultKeyIdentifier keyId = new KeyVaultKeyIdentifier(uri);
 
-            Assert.AreEqual(uri.GetHashCode(), keyId.GetHashCode());
+            Assert.That(keyId.GetHashCode(), Is.EqualTo(uri.GetHashCode()));
         }
 
         [Test]
         public void TryCreateFromNull()
         {
-            Assert.IsFalse(KeyVaultKeyIdentifier.TryCreate(null, out KeyVaultKeyIdentifier identifier));
+            Assert.That(KeyVaultKeyIdentifier.TryCreate(null, out KeyVaultKeyIdentifier identifier), Is.False);
             Assert.That(() => default(KeyVaultKeyIdentifier).Equals(identifier));
         }
 
@@ -77,10 +77,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             if (result)
             {
-                Assert.AreEqual(id, identifier.SourceId);
-                Assert.AreEqual(vaultUri, identifier.VaultUri);
-                Assert.AreEqual(name, identifier.Name);
-                Assert.AreEqual(version, identifier.Version);
+                Assert.That(identifier.SourceId, Is.EqualTo(id));
+                Assert.That(identifier.VaultUri, Is.EqualTo(vaultUri));
+                Assert.That(identifier.Name, Is.EqualTo(name));
+                Assert.That(identifier.Version, Is.EqualTo(version));
             }
 
             return result;

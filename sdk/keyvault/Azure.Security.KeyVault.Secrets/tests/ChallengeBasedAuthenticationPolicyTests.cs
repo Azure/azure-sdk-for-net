@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClient client = new SecretClient(VaultUri, new MockCredential(transport), options);
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
-            Assert.AreEqual("secret-value", secret.Value);
+            Assert.That(secret.Value, Is.EqualTo("secret-value"));
         }
 
         // Test concurrent authentication requests with immediate, fast, and slow network simulations.
@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             foreach (KeyVaultSecret secret in await Task.WhenAll(tasks))
             {
-                Assert.AreEqual("secret-value", secret.Value);
+                Assert.That(secret.Value, Is.EqualTo("secret-value"));
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClient client = new SecretClient(VaultUri, credential, options);
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
-            Assert.AreEqual("secret-value", secret.Value);
+            Assert.That(secret.Value, Is.EqualTo("secret-value"));
 
             builder.TenantId = "de763a21-49f7-4b08-a8e1-52c8fbc103b4";
 
@@ -190,13 +190,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 options);
 
             Response<KeyVaultSecret> response = await client.GetSecretAsync("test-secret");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("secret-value", response.Value.Value);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Value, Is.EqualTo("secret-value"));
 
             // Try it again now that the vault should have moved tenants.
             response = await client.GetSecretAsync("test-secret");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("secret-value", response.Value.Value);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.Value, Is.EqualTo("secret-value"));
         }
 
         [Test]
@@ -204,11 +204,11 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             MockResponse response401WithClaims = new MockResponse(401)
                 .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsiYWNycyI6eyJlc3NlbnRpYWwiOnRydWUsInZhbHVlIjoiY3AxIn19fQ==""");
-            Assert.AreEqual(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter("insufficient_claims", response401WithClaims), @"{""access_token"":{""acrs"":{""essential"":true,""value"":""cp1""}}}");
+            Assert.That(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter("insufficient_claims", response401WithClaims), Is.EqualTo(@"{""access_token"":{""acrs"":{""essential"":true,""value"":""cp1""}}}"));
 
             MockResponse response401 = new MockResponse(401)
                     .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net""");
-            Assert.IsNull(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401));
+            Assert.That(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401), Is.Null);
         }
 
         private class MockTransportBuilder

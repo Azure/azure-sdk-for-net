@@ -23,22 +23,22 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 var dupedArrayModel = ValidateBuilder("TestProject1", expectation, dict);
             }
 
-            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
-            Assert.AreEqual(itemModel!.Type, arrayModel.Type.ItemType);
+            Assert.That(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel), Is.True);
+            Assert.That(arrayModel.Type.ItemType, Is.EqualTo(itemModel!.Type));
             expectation.ModelValidation(itemModel);
         }
 
         private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[,]", out var arrayModel));
-            Assert.AreEqual($"{expectation.TypeName}[,]", arrayModel!.Type.Name);
-            Assert.AreEqual(lookupName, arrayModel.Type.Namespace);
-            Assert.IsNotNull(arrayModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayModel.Kind);
-            Assert.AreEqual(2, arrayModel.Type.ArrayRank);
-            Assert.AreEqual($"{expectation.TypeName}_Array_d1_", arrayModel.Type.TypeCaseName);
-            Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_d1_", arrayModel.Type.CamelCaseName);
-            Assert.AreEqual(expectation.Context, arrayModel.ContextType);
+            Assert.That(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[,]", out var arrayModel), Is.True);
+            Assert.That(arrayModel!.Type.Name, Is.EqualTo($"{expectation.TypeName}[,]"));
+            Assert.That(arrayModel.Type.Namespace, Is.EqualTo(lookupName));
+            Assert.That(arrayModel.Type.ItemType, Is.Not.Null);
+            Assert.That(arrayModel.Kind, Is.EqualTo(TypeBuilderKind.MultiDimensionalArray));
+            Assert.That(arrayModel.Type.ArrayRank, Is.EqualTo(2));
+            Assert.That(arrayModel.Type.TypeCaseName, Is.EqualTo($"{expectation.TypeName}_Array_d1_"));
+            Assert.That(arrayModel.Type.CamelCaseName, Is.EqualTo($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_d1_"));
+            Assert.That(arrayModel.ContextType, Is.EqualTo(expectation.Context));
             return arrayModel;
         }
     }

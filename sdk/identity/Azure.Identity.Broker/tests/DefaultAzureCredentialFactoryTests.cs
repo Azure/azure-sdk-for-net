@@ -49,53 +49,53 @@ namespace Azure.Identity.Broker.Tests
                 //check the factory created the correct credentials
                 if (credSelection == Constants.DevCredentials)
                 {
-                    Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is ManagedIdentityCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.False);
 #pragma warning disable CS0618 // Type or member is obsolete
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
 #pragma warning restore CS0618 // Type or member is obsolete
-                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True);
                 }
                 else if (credSelection == Constants.ProdCredentials)
                 {
                     //check the factory created the credentials
-                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
 #pragma warning disable CS0618 // Type or member is obsolete
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
 #pragma warning restore CS0618 // Type or member is obsolete
-                    Assert.IsFalse(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is BrokerCredential));
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is InteractiveBrowserCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is BrokerCredential), Is.False);
                 }
                 else if (credSelection == null)
                 {
                     //check the factory created the credentials
                     Assert.Multiple(() =>
                     {
-                        Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential), "EnvironmentCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential), "WorkloadIdentityCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential), "ManagedIdentityCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True, "EnvironmentCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True, "WorkloadIdentityCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True, "ManagedIdentityCredential should be in the chain");
 #pragma warning disable CS0618 // Type or member is obsolete
-                        Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential), "SharedTokenCacheCredential should not be in the chain");
+                        Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False, "SharedTokenCacheCredential should not be in the chain");
 #pragma warning restore CS0618 // Type or member is obsolete
-                        Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential), "AzureCliCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential), "AzurePowerShellCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential), "VisualStudioCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential), "AzureDeveloperCliCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential), "VisualStudioCodeCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is BrokerCredential), "BrokerCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True, "AzureCliCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True, "AzurePowerShellCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True, "VisualStudioCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True, "AzureDeveloperCliCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True, "VisualStudioCodeCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True, "BrokerCredential should be in the chain");
                     });
                 }
                 else
@@ -124,53 +124,53 @@ namespace Azure.Identity.Broker.Tests
                 //check the factory created the correct credentials
                 if (credSelection == Constants.DevCredentials)
                 {
-                    Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is ManagedIdentityCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.False);
 #pragma warning disable CS0618 // Type or member is obsolete
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
 #pragma warning restore CS0618 // Type or member is obsolete
-                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True);
                 }
                 else if (credSelection == Constants.ProdCredentials)
                 {
                     //check the factory created the credentials
-                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
-                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
+                    Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True);
+                    Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True);
 #pragma warning disable CS0618 // Type or member is obsolete
-                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
+                    Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False);
 #pragma warning restore CS0618 // Type or member is obsolete
-                    Assert.IsFalse(chain.Any(cred => cred is AzureCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzurePowerShellCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is BrokerCredential));
+                    Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is InteractiveBrowserCredential), Is.False);
+                    Assert.That(chain.Any(cred => cred is BrokerCredential), Is.False);
                 }
                 else if (credSelection == null)
                 {
                     //check the factory created the credentials
                     Assert.Multiple(() =>
                     {
-                        Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential), "EnvironmentCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential), "WorkloadIdentityCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential), "ManagedIdentityCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is EnvironmentCredential), Is.True, "EnvironmentCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is WorkloadIdentityCredential), Is.True, "WorkloadIdentityCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is ManagedIdentityCredential), Is.True, "ManagedIdentityCredential should be in the chain");
 #pragma warning disable CS0618 // Type or member is obsolete
-                        Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential), "SharedTokenCacheCredential should not be in the chain");
+                        Assert.That(chain.Any(cred => cred is SharedTokenCacheCredential), Is.False, "SharedTokenCacheCredential should not be in the chain");
 #pragma warning restore CS0618 // Type or member is obsolete
-                        Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential), "AzureCliCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential), "AzurePowerShellCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential), "VisualStudioCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential), "AzureDeveloperCliCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential), "VisualStudioCodeCredential should be in the chain");
-                        Assert.IsTrue(chain.Any(cred => cred is BrokerCredential), "BrokerCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is AzureCliCredential), Is.True, "AzureCliCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is AzurePowerShellCredential), Is.True, "AzurePowerShellCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is VisualStudioCredential), Is.True, "VisualStudioCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is AzureDeveloperCliCredential), Is.True, "AzureDeveloperCliCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is VisualStudioCodeCredential), Is.True, "VisualStudioCodeCredential should be in the chain");
+                        Assert.That(chain.Any(cred => cred is BrokerCredential), Is.True, "BrokerCredential should be in the chain");
                     });
                 }
                 else
@@ -182,9 +182,9 @@ namespace Azure.Identity.Broker.Tests
 
         private void ValidateSingleCredSelection(Type expectedType, IReadOnlyList<TokenCredential> chain)
         {
-            Assert.IsNotNull(chain);
-            Assert.IsTrue(chain.Single(cred => cred.GetType() == expectedType).GetType() == expectedType, $"Chain does not contain expected credential type: {expectedType}");
-            Assert.IsTrue(chain.Count == 1, $"Chain contains unexpected number of credentials: {chain.Count}");
+            Assert.That(chain, Is.Not.Null);
+            Assert.That(chain.Single(cred => cred.GetType() == expectedType).GetType(), Is.EqualTo(expectedType), $"Chain does not contain expected credential type: {expectedType}");
+            Assert.That(chain.Count, Is.EqualTo(1), $"Chain contains unexpected number of credentials: {chain.Count}");
         }
     }
 }

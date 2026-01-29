@@ -23,7 +23,7 @@ public class CustomPipelineProcessorTests
             beforeTransportIndex: 0);
 
         IEnumerator<PipelinePolicy> enumerator = processor.GetEnumerator();
-        Assert.IsFalse(enumerator.MoveNext());
+        Assert.That(enumerator.MoveNext(), Is.False);
     }
 
     [Test]
@@ -50,11 +50,11 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(4, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(4));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -81,11 +81,11 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(4, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(4));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -112,11 +112,11 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(4, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(4));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -150,17 +150,17 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(10, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(10));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -193,19 +193,19 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(12, observations.Count);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(12));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
     }
 
     [Test]
@@ -238,19 +238,19 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(12, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(12));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -283,19 +283,19 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(12, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(12));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -328,19 +328,19 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(12, observations.Count);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(12));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
     }
 
     [Test]
@@ -373,19 +373,19 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(12, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(12));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -418,19 +418,19 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(12, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(12));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -466,21 +466,21 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(14, observations.Count);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:F", observations[index++]);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
-        Assert.AreEqual("Response:F", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(14));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:F"));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
+        Assert.That(observations[index++], Is.EqualTo("Response:F"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
     }
 
     [Test]
@@ -516,21 +516,21 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(14, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:F", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:F", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(14));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:F"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:F"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 
     [Test]
@@ -568,25 +568,25 @@ public class CustomPipelineProcessorTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(18, observations.Count);
-        Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:E", observations[index++]);
-        Assert.AreEqual("Request:F", observations[index++]);
-        Assert.AreEqual("Request:B", observations[index++]);
-        Assert.AreEqual("Request:G", observations[index++]);
-        Assert.AreEqual("Request:H", observations[index++]);
-        Assert.AreEqual("Request:C", observations[index++]);
-        Assert.AreEqual("Request:D", observations[index++]);
-        Assert.AreEqual("Request:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:LastPolicy", observations[index++]);
-        Assert.AreEqual("Response:D", observations[index++]);
-        Assert.AreEqual("Response:C", observations[index++]);
-        Assert.AreEqual("Response:H", observations[index++]);
-        Assert.AreEqual("Response:G", observations[index++]);
-        Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:F", observations[index++]);
-        Assert.AreEqual("Response:E", observations[index++]);
-        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.That(observations.Count, Is.EqualTo(18));
+        Assert.That(observations[index++], Is.EqualTo("Request:A"));
+        Assert.That(observations[index++], Is.EqualTo("Request:E"));
+        Assert.That(observations[index++], Is.EqualTo("Request:F"));
+        Assert.That(observations[index++], Is.EqualTo("Request:B"));
+        Assert.That(observations[index++], Is.EqualTo("Request:G"));
+        Assert.That(observations[index++], Is.EqualTo("Request:H"));
+        Assert.That(observations[index++], Is.EqualTo("Request:C"));
+        Assert.That(observations[index++], Is.EqualTo("Request:D"));
+        Assert.That(observations[index++], Is.EqualTo("Request:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:LastPolicy"));
+        Assert.That(observations[index++], Is.EqualTo("Response:D"));
+        Assert.That(observations[index++], Is.EqualTo("Response:C"));
+        Assert.That(observations[index++], Is.EqualTo("Response:H"));
+        Assert.That(observations[index++], Is.EqualTo("Response:G"));
+        Assert.That(observations[index++], Is.EqualTo("Response:B"));
+        Assert.That(observations[index++], Is.EqualTo("Response:F"));
+        Assert.That(observations[index++], Is.EqualTo("Response:E"));
+        Assert.That(observations[index++], Is.EqualTo("Response:A"));
     }
 }
 

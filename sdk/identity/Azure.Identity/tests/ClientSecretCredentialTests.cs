@@ -70,7 +70,7 @@ namespace Azure.Identity.Tests
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -101,9 +101,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsNotNull(ex.InnerException);
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
-            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+            Assert.That(ex.InnerException, Is.Not.Null);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
+            Assert.That(ex.InnerException.Message, Is.EqualTo(expectedInnerExMessage));
 
             await Task.CompletedTask;
         }

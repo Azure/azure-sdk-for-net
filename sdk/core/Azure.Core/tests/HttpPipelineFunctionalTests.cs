@@ -61,8 +61,8 @@ namespace Azure.Core.Tests
 
                 using Response response = await ExecuteRequest(request, httpPipeline);
 
-                Assert.AreEqual(response.ContentStream.Length, 1000);
-                Assert.AreEqual(response.Content.ToMemory().Length, 1000);
+                Assert.That(response.ContentStream.Length, Is.EqualTo(1000));
+                Assert.That(response.Content.ToMemory().Length, Is.EqualTo(1000));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Core.Tests
 
                     await ExecuteRequest(message, httpPipeline);
 
-                    Assert.False(message.Response.ContentStream.CanSeek);
+                    Assert.That(message.Response.ContentStream.CanSeek, Is.False);
                     Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     extractedStream = message.ExtractResponseContent();
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests
 
                 var memoryStream = new MemoryStream();
                 await extractedStream.CopyToAsync(memoryStream);
-                Assert.AreEqual(1000, memoryStream.Length);
+                Assert.That(memoryStream.Length, Is.EqualTo(1000));
                 extractedStream.Dispose();
             }
         }
@@ -148,7 +148,7 @@ namespace Azure.Core.Tests
 
                     await ExecuteRequest(message, httpPipeline);
 
-                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
+                    Assert.That(message.Response.ContentStream.CanSeek, Is.EqualTo(false));
                     Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     extractedStream = message.ExtractResponseContent();
@@ -156,11 +156,11 @@ namespace Azure.Core.Tests
 
                 var memoryStream = new MemoryStream();
                 await extractedStream.CopyToAsync(memoryStream);
-                Assert.AreEqual(memoryStream.Length, bodySize);
+                Assert.That(bodySize, Is.EqualTo(memoryStream.Length));
                 extractedStream.Dispose();
             }
 
-            Assert.Greater(reqNum, requestCount);
+            Assert.That(reqNum, Is.GreaterThan(requestCount));
         }
 
         [Test]
@@ -274,7 +274,7 @@ namespace Azure.Core.Tests
 
                 var memoryStream = new MemoryStream();
                 await response.ContentStream.CopyToAsync(memoryStream);
-                Assert.AreEqual(memoryStream.Length, bodySize);
+                Assert.That(bodySize, Is.EqualTo(memoryStream.Length));
             }
         }
 
@@ -348,8 +348,8 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(message, httpPipeline);
 
-            Assert.AreEqual(message.Response.Status, 201);
-            Assert.AreEqual(2, i);
+            Assert.That(message.Response.Status, Is.EqualTo(201));
+            Assert.That(i, Is.EqualTo(2));
         }
 
         [Test]
@@ -384,8 +384,8 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(message, httpPipeline);
 
-            Assert.AreEqual(message.Response.Status, 201);
-            Assert.AreEqual(2, i);
+            Assert.That(message.Response.Status, Is.EqualTo(201));
+            Assert.That(i, Is.EqualTo(2));
 
             testDoneTcs.Cancel();
         }
@@ -419,8 +419,8 @@ namespace Azure.Core.Tests
             cts.Cancel();
 
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await task);
-            Assert.AreEqual("The operation was canceled.", exception.Message);
-            Assert.AreEqual(1, i);
+            Assert.That(exception.Message, Is.EqualTo("The operation was canceled."));
+            Assert.That(i, Is.EqualTo(1));
 
             testDoneTcs.Cancel();
         }
@@ -463,10 +463,10 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(message, httpPipeline);
 
-            Assert.AreEqual(message.Response.Status, 201);
-            Assert.AreEqual("Hello world!", await new StreamReader(message.Response.ContentStream).ReadToEndAsync());
-            Assert.AreEqual("Hello world!", message.Response.Content.ToString());
-            Assert.AreEqual(2, i);
+            Assert.That(message.Response.Status, Is.EqualTo(201));
+            Assert.That(await new StreamReader(message.Response.ContentStream).ReadToEndAsync(), Is.EqualTo("Hello world!"));
+            Assert.That(message.Response.Content.ToString(), Is.EqualTo("Hello world!"));
+            Assert.That(i, Is.EqualTo(2));
 
             testDoneTcs.Cancel();
         }
@@ -495,8 +495,8 @@ namespace Azure.Core.Tests
             message.BufferResponse = true;
 
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
-            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
-                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout."));
 
             testDoneTcs.Cancel();
         }
@@ -530,8 +530,8 @@ namespace Azure.Core.Tests
             message.BufferResponse = true;
 
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
-            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
-                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout."));
 
             testDoneTcs.Cancel();
         }
@@ -566,17 +566,17 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(message, httpPipeline);
 
-            Assert.AreEqual(message.Response.Status, 200);
+            Assert.That(message.Response.Status, Is.EqualTo(200));
             var responseContentStream = message.Response.ContentStream;
             Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
             var buffer = new byte[10];
-            Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
+            Assert.That(await responseContentStream.ReadAsync(buffer, 0, 1), Is.EqualTo(1));
 
 #pragma warning disable CA2022 // The return value of ReadAsync is not needed for this test
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
 #pragma warning restore CA2022
-            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
-                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout."));
 
             testDoneTcs.Cancel();
         }
@@ -611,23 +611,23 @@ namespace Azure.Core.Tests
             content.ApplyToRequest(request);
 
             using Response response = await ExecuteRequest(request, httpPipeline);
-            Assert.AreEqual(response.Status, 200);
-            Assert.AreEqual(formCollection.Files.Count, 2);
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(formCollection.Files.Count, Is.EqualTo(2));
 
             var formData = formCollection.Files.GetEnumerator();
             formData.MoveNext();
-            Assert.AreEqual(formData.Current.Name, "FirstName");
-            Assert.AreEqual(formData.Current.FileName, "file_name.txt");
-            Assert.AreEqual(formData.Current.Headers.Count, 2);
-            Assert.AreEqual(formData.Current.ContentType, "text/plain; charset=utf-8");
-            Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=FirstName; filename=file_name.txt");
+            Assert.That(formData.Current.Name, Is.EqualTo("FirstName"));
+            Assert.That(formData.Current.FileName, Is.EqualTo("file_name.txt"));
+            Assert.That(formData.Current.Headers.Count, Is.EqualTo(2));
+            Assert.That(formData.Current.ContentType, Is.EqualTo("text/plain; charset=utf-8"));
+            Assert.That(formData.Current.ContentDisposition, Is.EqualTo("form-data; name=FirstName; filename=file_name.txt"));
 
             formData.MoveNext();
-            Assert.AreEqual(formData.Current.Name, "LastName");
-            Assert.AreEqual(formData.Current.FileName, "file_name.txt");
-            Assert.AreEqual(formData.Current.Headers.Count, 2);
-            Assert.AreEqual(formData.Current.ContentType, "text/plain; charset=utf-8");
-            Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=LastName; filename=file_name.txt");
+            Assert.That(formData.Current.Name, Is.EqualTo("LastName"));
+            Assert.That(formData.Current.FileName, Is.EqualTo("file_name.txt"));
+            Assert.That(formData.Current.Headers.Count, Is.EqualTo(2));
+            Assert.That(formData.Current.ContentType, Is.EqualTo("text/plain; charset=utf-8"));
+            Assert.That(formData.Current.ContentDisposition, Is.EqualTo("form-data; name=LastName; filename=file_name.txt"));
         }
 
         [Test]
@@ -664,11 +664,11 @@ namespace Azure.Core.Tests
             using Response response = await ExecuteRequest(message, httpPipeline);
             if (allowRedirects)
             {
-                Assert.AreEqual(response.Status, 200);
+                Assert.That(response.Status, Is.EqualTo(200));
             }
             else
             {
-                Assert.AreEqual(response.Status, 300);
+                Assert.That(response.Status, Is.EqualTo(300));
             }
         }
 
@@ -703,11 +703,11 @@ namespace Azure.Core.Tests
             using Response response = await ExecuteRequest(message, httpPipeline);
             if (allowRedirects)
             {
-                Assert.AreEqual(response.Status, 200);
+                Assert.That(response.Status, Is.EqualTo(200));
             }
             else
             {
-                Assert.AreEqual(response.Status, 300);
+                Assert.That(response.Status, Is.EqualTo(300));
             }
         }
 
@@ -749,13 +749,13 @@ namespace Azure.Core.Tests
             using Response response = await ExecuteRequest(message, httpPipeline);
             if (allowRedirects)
             {
-                Assert.AreEqual(response.Status, 200);
-                Assert.AreEqual(2, uris.Count);
-                Assert.AreEqual(1, uris.Count(u => u.Contains("/redirected")));
+                Assert.That(response.Status, Is.EqualTo(200));
+                Assert.That(uris.Count, Is.EqualTo(2));
+                Assert.That(uris.Count(u => u.Contains("/redirected")), Is.EqualTo(1));
             }
             else
             {
-                Assert.AreEqual(response.Status, 300);
+                Assert.That(response.Status, Is.EqualTo(300));
             }
         }
 
@@ -782,8 +782,8 @@ namespace Azure.Core.Tests
             request.Uri.Reset(testServer.Address);
 
             using Response response = await ExecuteRequest(message, httpPipeline);
-            Assert.AreEqual(300, response.Status);
-            Assert.AreEqual(51, count);
+            Assert.That(response.Status, Is.EqualTo(300));
+            Assert.That(count, Is.EqualTo(51));
         }
 
         private class CallbackPolicy : HttpPipelineSynchronousPolicy

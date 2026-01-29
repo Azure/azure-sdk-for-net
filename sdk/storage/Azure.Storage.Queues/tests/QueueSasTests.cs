@@ -94,7 +94,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient sasQueueClient = InstrumentClient(new QueueClient(blobUriBuilder.Uri, GetOptions()));
             await sasQueueClient.GetPropertiesAsync();
 
-            Assert.AreEqual("?" + sasQueryParams, sasQueueClient.Uri.Query);
+            Assert.That(sasQueueClient.Uri.Query, Is.EqualTo("?" + sasQueryParams));
         }
 
         [RecordedTest]
@@ -149,7 +149,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -183,7 +183,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -212,8 +212,8 @@ namespace Azure.Storage.Queues.Test
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -236,7 +236,7 @@ namespace Azure.Storage.Queues.Test
             Response<QueueProperties> response = await identityQueueClient.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.That(response.GetRawResponse().Headers.RequestId, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -265,8 +265,8 @@ namespace Azure.Storage.Queues.Test
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -288,7 +288,7 @@ namespace Azure.Storage.Queues.Test
             // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identityQueueClient.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -317,8 +317,8 @@ namespace Azure.Storage.Queues.Test
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
                 options: options);
 
-            Assert.IsNotNull(userDelegationKey.Value);
-            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+            Assert.That(userDelegationKey.Value, Is.Not.Null);
+            Assert.That(userDelegationKey.Value.SignedDelegatedUserTenantId, Is.EqualTo(options.DelegatedUserTenantId));
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
@@ -337,8 +337,8 @@ namespace Azure.Storage.Queues.Test
 
             QueueUriBuilder roundtripUriBuilder = new QueueUriBuilder(originalUriBuilder.ToUri());
 
-            Assert.AreEqual(originalUriBuilder.ToUri(), roundtripUriBuilder.ToUri());
-            Assert.AreEqual(originalUriBuilder.Sas.ToString(), roundtripUriBuilder.Sas.ToString());
+            Assert.That(roundtripUriBuilder.ToUri(), Is.EqualTo(originalUriBuilder.ToUri()));
+            Assert.That(roundtripUriBuilder.Sas.ToString(), Is.EqualTo(originalUriBuilder.Sas.ToString()));
         }
 
         [RecordedTest]
@@ -387,7 +387,7 @@ namespace Azure.Storage.Queues.Test
                 timeToLive: new TimeSpan(1, 0, 0));
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.That(response.Value, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -435,7 +435,7 @@ namespace Azure.Storage.Queues.Test
                     messageText: GetNewString(),
                     visibilityTimeout: new TimeSpan(0, 0, 1),
                     timeToLive: new TimeSpan(1, 0, 0)),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         // Creating Client from GetStorageClient
@@ -455,7 +455,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queueClient = serviceClient.GetQueueClient(GetNewQueueName());
 
             // Assert
-            Assert.AreEqual(serviceClient.Uri.Query, queueClient.Uri.Query);
+            Assert.That(queueClient.Uri.Query, Is.EqualTo(serviceClient.Uri.Query));
             await queueClient.CreateAsync();
             await queueClient.DeleteIfExistsAsync();
         }
@@ -499,7 +499,7 @@ namespace Azure.Storage.Queues.Test
                 QueueServiceClient serviceClient = queueClient.GetParentQueueServiceClient();
 
                 // Assert
-                Assert.AreEqual(queueClient.Uri.Query, serviceClient.Uri.Query);
+                Assert.That(serviceClient.Uri.Query, Is.EqualTo(queueClient.Uri.Query));
                 await serviceClient.GetPropertiesAsync();
             }
             finally

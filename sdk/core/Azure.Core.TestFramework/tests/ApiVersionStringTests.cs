@@ -17,8 +17,8 @@ namespace Azure.Core.Tests
         {
             var leftAvs = new ApiVersionString(left);
             var rightAvs = new ApiVersionString(right);
-            Assert.Greater(leftAvs.CompareTo(rightAvs), 0);
-            Assert.Less(rightAvs.CompareTo(leftAvs), 0);
+            Assert.That(leftAvs.CompareTo(rightAvs), Is.GreaterThan(0));
+            Assert.That(rightAvs.CompareTo(leftAvs), Is.LessThan(0));
         }
 
         [TestCase("2020-01-01", "2020-01-01")]
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
         {
             var leftAvs = new ApiVersionString(left);
             var rightAvs = new ApiVersionString(right);
-            Assert.AreEqual(0, left.CompareTo(right));
+            Assert.That(left.CompareTo(right), Is.EqualTo(0));
         }
     }
 }
