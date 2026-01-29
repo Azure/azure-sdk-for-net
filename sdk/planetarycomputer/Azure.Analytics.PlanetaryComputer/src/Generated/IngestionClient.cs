@@ -272,18 +272,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperations(int? top, int? skip, string collectionId, string status, RequestContext context)
+        public virtual Pageable<BinaryData> GetOperations(int? maxCount, int? skip, string collectionId, string status, RequestContext context)
         {
             return new IngestionClientGetOperationsCollectionResult(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status,
@@ -298,18 +298,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationsAsync(int? top, int? skip, string collectionId, string status, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetOperationsAsync(int? maxCount, int? skip, string collectionId, string status, RequestContext context)
         {
             return new IngestionClientGetOperationsAsyncCollectionResult(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status,
@@ -317,17 +317,17 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<LongRunningOperation> GetOperations(int? top = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongRunningOperation> GetOperations(int? maxCount = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
         {
             return new IngestionClientGetOperationsCollectionResultOfT(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status?.ToString(),
@@ -335,17 +335,17 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<LongRunningOperation> GetOperationsAsync(int? top = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongRunningOperation> GetOperationsAsync(int? maxCount = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
         {
             return new IngestionClientGetOperationsAsyncCollectionResultOfT(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status?.ToString(),
@@ -558,14 +558,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRuns(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
+        public virtual Pageable<BinaryData> GetRuns(string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -573,7 +573,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
                 context);
         }
@@ -588,14 +588,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -603,7 +603,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
                 context);
         }
@@ -611,13 +611,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Get the runs of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionRun> GetRuns(string collectionId, Guid ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionRun> GetRuns(string collectionId, Guid ingestionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -625,7 +625,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
                 cancellationToken.ToRequestContext());
         }
@@ -633,13 +633,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Get the runs of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionRun> GetRunsAsync(string collectionId, Guid ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionRun> GetRunsAsync(string collectionId, Guid ingestionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -647,7 +647,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
                 cancellationToken.ToRequestContext());
         }
@@ -937,18 +937,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAll(string collectionId, int? top, int? skip, RequestContext context)
+        public virtual Pageable<BinaryData> GetAll(string collectionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResult(this, collectionId, top, skip, context);
+            return new IngestionClientGetAllCollectionResult(this, collectionId, maxCount, skip, context);
         }
 
         /// <summary>
@@ -960,48 +960,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAllAsync(string collectionId, int? top, int? skip, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllAsync(string collectionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResult(this, collectionId, top, skip, context);
+            return new IngestionClientGetAllAsyncCollectionResult(this, collectionId, maxCount, skip, context);
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionInformation> GetAll(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionInformation> GetAll(string collectionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResultOfT(this, collectionId, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetAllCollectionResultOfT(this, collectionId, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionInformation> GetAllAsync(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionInformation> GetAllAsync(string collectionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResultOfT(this, collectionId, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetAllAsyncCollectionResultOfT(this, collectionId, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1412,14 +1412,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSources(int? top, int? skip, RequestContext context)
+        public virtual Pageable<BinaryData> GetSources(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesCollectionResult(this, top, skip, context);
+            return new IngestionClientGetSourcesCollectionResult(this, maxCount, skip, context);
         }
 
         /// <summary>
@@ -1430,34 +1430,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(int? top, int? skip, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSourcesAsync(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResult(this, top, skip, context);
+            return new IngestionClientGetSourcesAsyncCollectionResult(this, maxCount, skip, context);
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionSourceSummary> GetSources(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionSourceSummary> GetSources(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesCollectionResultOfT(this, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetSourcesCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionSourceSummary> GetSourcesAsync(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionSourceSummary> GetSourcesAsync(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary>

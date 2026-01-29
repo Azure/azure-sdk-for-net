@@ -16,7 +16,7 @@ namespace Azure.Analytics.PlanetaryComputer
     internal partial class IngestionClientGetOperationsCollectionResultOfT : Pageable<LongRunningOperation>
     {
         private readonly IngestionClient _client;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly string _collectionId;
         private readonly string _status;
@@ -24,15 +24,15 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of IngestionClientGetOperationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The IngestionClient client used to send requests. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public IngestionClientGetOperationsCollectionResultOfT(IngestionClient client, int? top, int? skip, string collectionId, string status, RequestContext context) : base(context?.CancellationToken ?? default)
+        public IngestionClientGetOperationsCollectionResultOfT(IngestionClient client, int? maxCount, int? skip, string collectionId, string status, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _top = top;
+            _maxCount = maxCount;
             _skip = skip;
             _collectionId = collectionId;
             _status = status;
@@ -68,7 +68,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetOperationsRequest(nextLink, _top, _skip, _collectionId, _status, _context) : _client.CreateGetOperationsRequest(_top, _skip, _collectionId, _status, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetOperationsRequest(nextLink, _maxCount, _skip, _collectionId, _status, _context) : _client.CreateGetOperationsRequest(_maxCount, _skip, _collectionId, _status, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IngestionClient.GetOperations");
             scope.Start();
             try
