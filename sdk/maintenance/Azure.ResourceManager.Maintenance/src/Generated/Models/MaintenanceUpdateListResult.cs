@@ -7,60 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Response for Updates list. </summary>
     internal partial class MaintenanceUpdateListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceUpdateListResult"/>. </summary>
         internal MaintenanceUpdateListResult()
         {
-            Value = new ChangeTrackingList<MaintenanceUpdate>();
+            Value = new ChangeTrackingList<Update>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceUpdateListResult"/>. </summary>
         /// <param name="value"> The pending updates. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceUpdateListResult(IReadOnlyList<MaintenanceUpdate> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceUpdateListResult(IList<Update> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The pending updates. </summary>
-        public IReadOnlyList<MaintenanceUpdate> Value { get; }
+        public IList<Update> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
