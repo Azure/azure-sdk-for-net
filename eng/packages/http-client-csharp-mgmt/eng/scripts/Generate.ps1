@@ -14,27 +14,27 @@ $mgmtSolutionDir = Join-Path $mgmtPackageRoot 'generator'
 
 if (-not $LaunchOnly) {
     Refresh-Mgmt-Build
+}
 
-    if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
-        Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-        $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
+if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
+    Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
+    $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
 
-        $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
+    $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
 
-        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -debug:$Debug)
+    Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -debug:$Debug)
 
-        # exit if the generation failed
-        if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-        }
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
 
-        Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-        Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/Azure.Generator.MgmtTypeSpec.Tests.csproj"
+    Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
+    Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/Azure.Generator.MgmtTypeSpec.Tests.csproj"
 
-        # exit if the generation failed
-        if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-        }
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
     }
 }
 
