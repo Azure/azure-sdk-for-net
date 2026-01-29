@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Validation status summary for a database. </summary>
+    /// <summary>
+    /// Validation status summary for a database.
+    /// Serialized Name: DbLevelValidationStatus
+    /// </summary>
     public partial class DbLevelValidationStatus
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbLevelValidationStatus"/>. </summary>
-        /// <param name="databaseName"> Name of database. </param>
-        /// <param name="startedOn"> Start time of a database level validation. </param>
-        /// <param name="endedOn"> End time of a database level validation. </param>
-        /// <param name="summary"> Summary of database level validations. </param>
+        /// <param name="databaseName">
+        /// Name of database.
+        /// Serialized Name: DbLevelValidationStatus.databaseName
+        /// </param>
+        /// <param name="startedOn">
+        /// Start time of a database level validation.
+        /// Serialized Name: DbLevelValidationStatus.startedOn
+        /// </param>
+        /// <param name="endedOn">
+        /// End time of a database level validation.
+        /// Serialized Name: DbLevelValidationStatus.endedOn
+        /// </param>
+        /// <param name="summary">
+        /// Summary of database level validations.
+        /// Serialized Name: DbLevelValidationStatus.summary
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IReadOnlyList<ValidationSummaryItem> summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of database. </summary>
+        /// <summary>
+        /// Name of database.
+        /// Serialized Name: DbLevelValidationStatus.databaseName
+        /// </summary>
         [WirePath("databaseName")]
         public string DatabaseName { get; }
-        /// <summary> Start time of a database level validation. </summary>
+        /// <summary>
+        /// Start time of a database level validation.
+        /// Serialized Name: DbLevelValidationStatus.startedOn
+        /// </summary>
         [WirePath("startedOn")]
         public DateTimeOffset? StartedOn { get; }
-        /// <summary> End time of a database level validation. </summary>
+        /// <summary>
+        /// End time of a database level validation.
+        /// Serialized Name: DbLevelValidationStatus.endedOn
+        /// </summary>
         [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
-        /// <summary> Summary of database level validations. </summary>
+        /// <summary>
+        /// Summary of database level validations.
+        /// Serialized Name: DbLevelValidationStatus.summary
+        /// </summary>
         [WirePath("summary")]
         public IReadOnlyList<ValidationSummaryItem> Summary { get; }
     }

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation locationName = new AzureLocation("eastus");
-            await foreach (QuotaUsage item in subscriptionResource.GetQuotaUsagesAsync(locationName))
+            await foreach (PostgreSqlFlexibleServerQuotaUsage item in subscriptionResource.GetQuotaUsagesAsync(locationName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

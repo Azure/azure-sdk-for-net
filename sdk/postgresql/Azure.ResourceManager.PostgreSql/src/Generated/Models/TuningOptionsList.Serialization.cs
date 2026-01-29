@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<TuningOptionData> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerTuningOptionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<TuningOptionData> array = new List<TuningOptionData>();
+                    List<PostgreSqlFlexibleServerTuningOptionData> array = new List<PostgreSqlFlexibleServerTuningOptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TuningOptionData.DeserializeTuningOptionData(item, options));
+                        array.Add(PostgreSqlFlexibleServerTuningOptionData.DeserializePostgreSqlFlexibleServerTuningOptionData(item, options));
                     }
                     value = array;
                     continue;

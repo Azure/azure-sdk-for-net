@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Implementation details for the recommended action. </summary>
-    public partial class ObjectRecommendationPropertiesImplementationDetails
+    /// <summary>
+    /// Features supported.
+    /// Serialized Name: SupportedFeature
+    /// </summary>
+    public partial class PostgreSqlFlexibleServerSupportedFeature
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +48,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ObjectRecommendationPropertiesImplementationDetails"/>. </summary>
-        public ObjectRecommendationPropertiesImplementationDetails()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSupportedFeature"/>. </summary>
+        internal PostgreSqlFlexibleServerSupportedFeature()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObjectRecommendationPropertiesImplementationDetails"/>. </summary>
-        /// <param name="method"> Method of implementation for recommended action. </param>
-        /// <param name="script"> Implementation script for the recommended action. </param>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSupportedFeature"/>. </summary>
+        /// <param name="name">
+        /// Name of the feature.
+        /// Serialized Name: SupportedFeature.name
+        /// </param>
+        /// <param name="status">
+        /// Status of the feature. Indicates if the feature is enabled or not.
+        /// Serialized Name: SupportedFeature.status
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendationPropertiesImplementationDetails(string method, string script, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerSupportedFeature(string name, PostgreSqlFlexibleServerFeatureStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Method = method;
-            Script = script;
+            Name = name;
+            Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Method of implementation for recommended action. </summary>
-        [WirePath("method")]
-        public string Method { get; set; }
-        /// <summary> Implementation script for the recommended action. </summary>
-        [WirePath("script")]
-        public string Script { get; set; }
+        /// <summary>
+        /// Name of the feature.
+        /// Serialized Name: SupportedFeature.name
+        /// </summary>
+        [WirePath("name")]
+        public string Name { get; }
+        /// <summary>
+        /// Status of the feature. Indicates if the feature is enabled or not.
+        /// Serialized Name: SupportedFeature.status
+        /// </summary>
+        [WirePath("status")]
+        public PostgreSqlFlexibleServerFeatureStatus? Status { get; }
     }
 }

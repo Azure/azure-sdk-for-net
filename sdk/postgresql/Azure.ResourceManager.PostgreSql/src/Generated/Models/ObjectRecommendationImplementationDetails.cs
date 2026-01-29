@@ -7,16 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.PostgreSql.FlexibleServers
+namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary>
-    /// A class representing the TuningOption data model.
-    /// Impact on some metric if this recommended action is applied.
+    /// Implementation details for the recommended action.
+    /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails
     /// </summary>
-    public partial class TuningOptionData : ResourceData
+    public partial class ObjectRecommendationImplementationDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,20 +48,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TuningOptionData"/>. </summary>
-        public TuningOptionData()
+        /// <summary> Initializes a new instance of <see cref="ObjectRecommendationImplementationDetails"/>. </summary>
+        public ObjectRecommendationImplementationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TuningOptionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="ObjectRecommendationImplementationDetails"/>. </summary>
+        /// <param name="method">
+        /// Method of implementation for recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.method
+        /// </param>
+        /// <param name="script">
+        /// Implementation script for the recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.script
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TuningOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ObjectRecommendationImplementationDetails(string method, string script, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Method = method;
+            Script = script;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary>
+        /// Method of implementation for recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.method
+        /// </summary>
+        [WirePath("method")]
+        public string Method { get; set; }
+        /// <summary>
+        /// Implementation script for the recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.script
+        /// </summary>
+        [WirePath("script")]
+        public string Script { get; set; }
     }
 }

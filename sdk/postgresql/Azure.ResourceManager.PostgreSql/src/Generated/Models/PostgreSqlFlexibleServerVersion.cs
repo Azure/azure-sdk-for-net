@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Major version of PostgreSQL database engine. </summary>
+    /// <summary>
+    /// Major version of PostgreSQL database engine.
+    /// Serialized Name: PostgresMajorVersion
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
         private readonly string _value;
@@ -31,11 +34,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string Ver12Value = "12";
         private const string Ver11Value = "11";
 
-        /// <summary> 18. </summary>
+        /// <summary>
+        /// 18
+        /// Serialized Name: PostgresMajorVersion.18
+        /// </summary>
         public static PostgreSqlFlexibleServerVersion Eighteen { get; } = new PostgreSqlFlexibleServerVersion(EighteenValue);
-        /// <summary> 17. </summary>
+        /// <summary>
+        /// 17
+        /// Serialized Name: PostgresMajorVersion.17
+        /// </summary>
         public static PostgreSqlFlexibleServerVersion Seventeen { get; } = new PostgreSqlFlexibleServerVersion(SeventeenValue);
-        /// <summary> 16. </summary>
+        /// <summary>
+        /// 16
+        /// Serialized Name: PostgresMajorVersion.16
+        /// </summary>
         public static PostgreSqlFlexibleServerVersion Sixteen { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerVersion left, PostgreSqlFlexibleServerVersion right) => left.Equals(right);

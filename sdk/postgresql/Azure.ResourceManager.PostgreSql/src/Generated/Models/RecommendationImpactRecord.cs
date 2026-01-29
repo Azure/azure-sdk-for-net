@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary>
-    /// State of migration.
-    /// Serialized Name: MigrationStatus
+    /// Impact on some metric if this recommended action is applied.
+    /// Serialized Name: ImpactRecord
     /// </summary>
-    public partial class PostgreSqlMigrationStatus
+    public partial class RecommendationImpactRecord
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,50 +48,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStatus"/>. </summary>
-        internal PostgreSqlMigrationStatus()
+        /// <summary> Initializes a new instance of <see cref="RecommendationImpactRecord"/>. </summary>
+        internal RecommendationImpactRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStatus"/>. </summary>
-        /// <param name="state">
-        /// State of migration.
-        /// Serialized Name: MigrationStatus.state
+        /// <summary> Initializes a new instance of <see cref="RecommendationImpactRecord"/>. </summary>
+        /// <param name="dimensionName">
+        /// Dimension name.
+        /// Serialized Name: ImpactRecord.dimensionName
         /// </param>
-        /// <param name="error">
-        /// Error message, if any, for the migration state.
-        /// Serialized Name: MigrationStatus.error
+        /// <param name="unit">
+        /// Dimension unit.
+        /// Serialized Name: ImpactRecord.unit
         /// </param>
-        /// <param name="currentSubStateDetails">
-        /// Current migration sub state details.
-        /// Serialized Name: MigrationStatus.currentSubStateDetails
+        /// <param name="queryId">
+        /// Optional property that can be used to store the identifier of the query, if the metric is for a specific query.
+        /// Serialized Name: ImpactRecord.queryId
+        /// </param>
+        /// <param name="absoluteValue">
+        /// Absolute value.
+        /// Serialized Name: ImpactRecord.absoluteValue
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, PostgreSqlMigrationSubStateDetails currentSubStateDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecommendationImpactRecord(string dimensionName, string unit, long? queryId, double? absoluteValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            State = state;
-            Error = error;
-            CurrentSubStateDetails = currentSubStateDetails;
+            DimensionName = dimensionName;
+            Unit = unit;
+            QueryId = queryId;
+            AbsoluteValue = absoluteValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// State of migration.
-        /// Serialized Name: MigrationStatus.state
+        /// Dimension name.
+        /// Serialized Name: ImpactRecord.dimensionName
         /// </summary>
-        [WirePath("state")]
-        public PostgreSqlMigrationState? State { get; }
+        [WirePath("dimensionName")]
+        public string DimensionName { get; }
         /// <summary>
-        /// Error message, if any, for the migration state.
-        /// Serialized Name: MigrationStatus.error
+        /// Dimension unit.
+        /// Serialized Name: ImpactRecord.unit
         /// </summary>
-        [WirePath("error")]
-        public string Error { get; }
+        [WirePath("unit")]
+        public string Unit { get; }
         /// <summary>
-        /// Current migration sub state details.
-        /// Serialized Name: MigrationStatus.currentSubStateDetails
+        /// Optional property that can be used to store the identifier of the query, if the metric is for a specific query.
+        /// Serialized Name: ImpactRecord.queryId
         /// </summary>
-        [WirePath("currentSubStateDetails")]
-        public PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
+        [WirePath("queryId")]
+        public long? QueryId { get; }
+        /// <summary>
+        /// Absolute value.
+        /// Serialized Name: ImpactRecord.absoluteValue
+        /// </summary>
+        [WirePath("absoluteValue")]
+        public double? AbsoluteValue { get; }
     }
 }

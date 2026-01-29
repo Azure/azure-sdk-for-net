@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled,
                 },
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
-                Cluster = new Cluster
+                Cluster = new PostgreSqlFlexibleServerClusterProperties
                 {
                     ClusterSize = 2,
                     DefaultDatabaseName = "clusterdb",

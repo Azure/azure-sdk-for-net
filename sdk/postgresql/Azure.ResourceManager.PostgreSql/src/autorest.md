@@ -21,8 +21,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-# mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -86,6 +86,7 @@ prepend-rp-prefix:
   - ValidationState
 
 rename-mapping:
+  Cluster: PostgreSqlFlexibleServerClusterProperties
   Configuration: PostgreSqlFlexibleServerConfiguration
   ConfigurationDataType: PostgreSqlFlexibleServerConfigurationDataType
   CreateModeForPatch: PostgreSqlFlexibleServerCreateModeForUpdate
@@ -190,6 +191,17 @@ rename-mapping:
   DatabaseMigrationState: DbMigrationStatus
   UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
   HighAvailabilityMode: PostgreSqlFlexibleServerHAMode
+  TuningOptions: PostgreSqlFlexibleServerTuningOption
+  FeatureStatus: PostgreSqlFlexibleServerFeatureStatus
+  ImpactRecord: RecommendationImpactRecord
+  NameProperty: QuotaUsageNameProperty
+  ObjectRecommendationPropertiesAnalyzedWorkload: ObjectRecommendationAnalyzedWorkload
+  ObjectRecommendationPropertiesImplementationDetails: ObjectRecommendationImplementationDetails
+  QuotaUsage: PostgreSqlFlexibleServerQuotaUsage
+  RecommendationTypeEnum: PostgreSqlFlexibleServerRecommendationType
+  RecommendationTypeParameterEnum: PostgreSqlFlexibleServerRecommendationFilterType
+  SupportedFeature: PostgreSqlFlexibleServerSupportedFeature
+  TuningOptionParameterEnum: PostgreSqlFlexibleServerTuningOptionType
 
 override-operation-name:
   PrivateDnsZoneSuffix_Get: ExecuteGetPrivateDnsZoneSuffix

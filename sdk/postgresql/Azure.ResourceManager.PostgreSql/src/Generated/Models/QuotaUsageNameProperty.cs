@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Cluster properties of a server. </summary>
-    public partial class Cluster
+    /// <summary>
+    /// Name property for quota usage
+    /// Serialized Name: NameProperty
+    /// </summary>
+    public partial class QuotaUsageNameProperty
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +48,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Cluster"/>. </summary>
-        public Cluster()
+        /// <summary> Initializes a new instance of <see cref="QuotaUsageNameProperty"/>. </summary>
+        internal QuotaUsageNameProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Cluster"/>. </summary>
-        /// <param name="clusterSize"> Number of nodes assigned to the elastic cluster. </param>
-        /// <param name="defaultDatabaseName"> Default database name for the elastic cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsageNameProperty"/>. </summary>
+        /// <param name="value">
+        /// Name value
+        /// Serialized Name: NameProperty.value
+        /// </param>
+        /// <param name="localizedValue">
+        /// Localized name
+        /// Serialized Name: NameProperty.localizedValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Cluster(int? clusterSize, string defaultDatabaseName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaUsageNameProperty(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ClusterSize = clusterSize;
-            DefaultDatabaseName = defaultDatabaseName;
+            Value = value;
+            LocalizedValue = localizedValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Number of nodes assigned to the elastic cluster. </summary>
-        [WirePath("clusterSize")]
-        public int? ClusterSize { get; set; }
-        /// <summary> Default database name for the elastic cluster. </summary>
-        [WirePath("defaultDatabaseName")]
-        public string DefaultDatabaseName { get; set; }
+        /// <summary>
+        /// Name value
+        /// Serialized Name: NameProperty.value
+        /// </summary>
+        [WirePath("value")]
+        public string Value { get; }
+        /// <summary>
+        /// Localized name
+        /// Serialized Name: NameProperty.localizedValue
+        /// </summary>
+        [WirePath("localizedValue")]
+        public string LocalizedValue { get; }
     }
 }

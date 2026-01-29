@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </summary>
+    /// <summary>
+    /// Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server.
+    /// Serialized Name: ThreatProtectionState
+    /// </summary>
     public enum ThreatProtectionState
     {
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ThreatProtectionState.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ThreatProtectionState.Disabled
+        /// </summary>
         Disabled
     }
 }

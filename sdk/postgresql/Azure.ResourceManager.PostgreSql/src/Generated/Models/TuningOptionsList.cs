@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of server tuning options. </summary>
+    /// <summary>
+    /// List of server tuning options.
+    /// Serialized Name: TuningOptionsList
+    /// </summary>
     internal partial class TuningOptionsList
     {
         /// <summary>
@@ -47,9 +50,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TuningOptionsList"/>. </summary>
-        /// <param name="value"> The TuningOptions items on this page. </param>
+        /// <param name="value">
+        /// The TuningOptions items on this page
+        /// Serialized Name: TuningOptionsList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TuningOptionsList(IEnumerable<TuningOptionData> value)
+        internal TuningOptionsList(IEnumerable<PostgreSqlFlexibleServerTuningOptionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -57,10 +63,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TuningOptionsList"/>. </summary>
-        /// <param name="value"> The TuningOptions items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The TuningOptions items on this page
+        /// Serialized Name: TuningOptionsList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: TuningOptionsList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TuningOptionsList(IReadOnlyList<TuningOptionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TuningOptionsList(IReadOnlyList<PostgreSqlFlexibleServerTuningOptionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary> The TuningOptions items on this page. </summary>
-        public IReadOnlyList<TuningOptionData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The TuningOptions items on this page
+        /// Serialized Name: TuningOptionsList.value
+        /// </summary>
+        public IReadOnlyList<PostgreSqlFlexibleServerTuningOptionData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: TuningOptionsList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

@@ -17,53 +17,53 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a TuningOption along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TuningOptionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetTuningOptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetTuningOption method.
+    /// A Class representing a PostgreSqlFlexibleServerTuningOption along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlFlexibleServerTuningOptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlFlexibleServerTuningOptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlFlexibleServerTuningOption method.
     /// </summary>
-    public partial class TuningOptionResource : ArmResource
+    public partial class PostgreSqlFlexibleServerTuningOptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TuningOptionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serverName"> The serverName. </param>
         /// <param name="tuningOption"> The tuningOption. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _tuningOptionClientDiagnostics;
-        private readonly TuningOptionsRestOperations _tuningOptionRestClient;
-        private readonly TuningOptionData _data;
+        private readonly ClientDiagnostics _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics;
+        private readonly TuningOptionsRestOperations _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient;
+        private readonly PostgreSqlFlexibleServerTuningOptionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/tuningOptions";
 
-        /// <summary> Initializes a new instance of the <see cref="TuningOptionResource"/> class for mocking. </summary>
-        protected TuningOptionResource()
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> class for mocking. </summary>
+        protected PostgreSqlFlexibleServerTuningOptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TuningOptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TuningOptionResource(ArmClient client, TuningOptionData data) : this(client, data.Id)
+        internal PostgreSqlFlexibleServerTuningOptionResource(ArmClient client, PostgreSqlFlexibleServerTuningOptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TuningOptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TuningOptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PostgreSqlFlexibleServerTuningOptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tuningOptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string tuningOptionApiVersion);
-            _tuningOptionRestClient = new TuningOptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tuningOptionApiVersion);
+            _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerTuningOptionTuningOptionsApiVersion);
+            _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient = new TuningOptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerTuningOptionTuningOptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual TuningOptionData Data
+        public virtual PostgreSqlFlexibleServerTuningOptionData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TuningOptionResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TuningOptionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerTuningOptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tuningOptionClientDiagnostics.CreateScope("TuningOptionResource.Get");
+            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _tuningOptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TuningOptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerTuningOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TuningOptionResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TuningOptionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerTuningOptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _tuningOptionClientDiagnostics.CreateScope("TuningOptionResource.Get");
+            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionResource.Get");
             scope.Start();
             try
             {
-                var response = _tuningOptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TuningOptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerTuningOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,18 +187,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TuningOptionResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationType"> Recommendations list filter. Retrieves recommendations based on type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ObjectRecommendation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ObjectRecommendation> GetRecommendationsAsync(RecommendationTypeParameterEnum? recommendationType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ObjectRecommendation> GetRecommendationsAsync(PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tuningOptionRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tuningOptionRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ObjectRecommendation.DeserializeObjectRecommendation(e), _tuningOptionClientDiagnostics, Pipeline, "TuningOptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ObjectRecommendation.DeserializeObjectRecommendation(e), _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerTuningOptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,18 +218,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TuningOptionResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationType"> Recommendations list filter. Retrieves recommendations based on type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ObjectRecommendation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ObjectRecommendation> GetRecommendations(RecommendationTypeParameterEnum? recommendationType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ObjectRecommendation> GetRecommendations(PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tuningOptionRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tuningOptionRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ObjectRecommendation.DeserializeObjectRecommendation(e), _tuningOptionClientDiagnostics, Pipeline, "TuningOptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendationType);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ObjectRecommendation.DeserializeObjectRecommendation(e), _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerTuningOptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
         }
     }
 }

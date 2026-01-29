@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
-    public partial class Sample_TuningOptionResource
+    public partial class Sample_PostgreSqlFlexibleServerTuningOptionResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TuningOptionResource created on azure
-            // for more information of creating TuningOptionResource, please refer to the document of TuningOptionResource
+            // this example assumes you already have this PostgreSqlFlexibleServerTuningOptionResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerTuningOptionResource, please refer to the document of PostgreSqlFlexibleServerTuningOptionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Index;
-            ResourceIdentifier tuningOptionResourceId = TuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            TuningOptionResource tuningOption0 = client.GetTuningOptionResource(tuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
+            ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation
-            TuningOptionResource result = await tuningOption0.GetAsync();
+            PostgreSqlFlexibleServerTuningOptionResource result = await postgreSqlFlexibleServerTuningOption.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TuningOptionData resourceData = result.Data;
+            PostgreSqlFlexibleServerTuningOptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,18 +59,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TuningOptionResource created on azure
-            // for more information of creating TuningOptionResource, please refer to the document of TuningOptionResource
+            // this example assumes you already have this PostgreSqlFlexibleServerTuningOptionResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerTuningOptionResource, please refer to the document of PostgreSqlFlexibleServerTuningOptionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Index;
-            ResourceIdentifier tuningOptionResourceId = TuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            TuningOptionResource tuningOption0 = client.GetTuningOptionResource(tuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
+            ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
-            RecommendationTypeParameterEnum? recommendationType = RecommendationTypeParameterEnum.CreateIndex;
-            await foreach (ObjectRecommendation item in tuningOption0.GetRecommendationsAsync(recommendationType: recommendationType))
+            PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = PostgreSqlFlexibleServerRecommendationFilterType.CreateIndex;
+            await foreach (ObjectRecommendation item in postgreSqlFlexibleServerTuningOption.GetRecommendationsAsync(recommendationType: recommendationType))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TuningOptionResource created on azure
-            // for more information of creating TuningOptionResource, please refer to the document of TuningOptionResource
+            // this example assumes you already have this PostgreSqlFlexibleServerTuningOptionResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerTuningOptionResource, please refer to the document of PostgreSqlFlexibleServerTuningOptionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Index;
-            ResourceIdentifier tuningOptionResourceId = TuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            TuningOptionResource tuningOption0 = client.GetTuningOptionResource(tuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
+            ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ObjectRecommendation item in tuningOption0.GetRecommendationsAsync())
+            await foreach (ObjectRecommendation item in postgreSqlFlexibleServerTuningOption.GetRecommendationsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -120,18 +120,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TuningOptionResource created on azure
-            // for more information of creating TuningOptionResource, please refer to the document of TuningOptionResource
+            // this example assumes you already have this PostgreSqlFlexibleServerTuningOptionResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerTuningOptionResource, please refer to the document of PostgreSqlFlexibleServerTuningOptionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Table;
-            ResourceIdentifier tuningOptionResourceId = TuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            TuningOptionResource tuningOption0 = client.GetTuningOptionResource(tuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Table;
+            ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
-            RecommendationTypeParameterEnum? recommendationType = RecommendationTypeParameterEnum.AnalyzeTable;
-            await foreach (ObjectRecommendation item in tuningOption0.GetRecommendationsAsync(recommendationType: recommendationType))
+            PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = PostgreSqlFlexibleServerRecommendationFilterType.AnalyzeTable;
+            await foreach (ObjectRecommendation item in postgreSqlFlexibleServerTuningOption.GetRecommendationsAsync(recommendationType: recommendationType))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TuningOptionResource created on azure
-            // for more information of creating TuningOptionResource, please refer to the document of TuningOptionResource
+            // this example assumes you already have this PostgreSqlFlexibleServerTuningOptionResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerTuningOptionResource, please refer to the document of PostgreSqlFlexibleServerTuningOptionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Table;
-            ResourceIdentifier tuningOptionResourceId = TuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            TuningOptionResource tuningOption0 = client.GetTuningOptionResource(tuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Table;
+            ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ObjectRecommendation item in tuningOption0.GetRecommendationsAsync())
+            await foreach (ObjectRecommendation item in postgreSqlFlexibleServerTuningOption.GetRecommendationsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

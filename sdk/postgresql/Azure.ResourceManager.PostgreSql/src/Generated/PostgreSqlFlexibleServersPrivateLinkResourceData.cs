@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServersPrivateLinkResource data model.
     /// A private link resource.
+    /// Serialized Name: PrivateLinkResource
     /// </summary>
     public partial class PostgreSqlFlexibleServersPrivateLinkResourceData : ResourceData
     {
@@ -62,9 +63,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <param name="groupId">
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
+        /// </param>
+        /// <param name="requiredZoneNames">
+        /// The private link resource private link DNS zone name.
+        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServersPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,13 +84,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The private link resource group id. </summary>
+        /// <summary>
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties.groupId
+        /// </summary>
         [WirePath("properties.groupId")]
         public string GroupId { get; }
-        /// <summary> The private link resource required member names. </summary>
+        /// <summary>
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
+        /// </summary>
         [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The private link resource private link DNS zone name. </summary>
+        /// <summary>
+        /// The private link resource private link DNS zone name.
+        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
+        /// </summary>
         [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; }
     }

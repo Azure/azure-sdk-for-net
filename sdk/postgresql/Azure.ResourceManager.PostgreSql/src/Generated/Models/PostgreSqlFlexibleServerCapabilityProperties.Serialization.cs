@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string name = default;
             IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = default;
             IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
-            IReadOnlyList<SupportedFeature> supportedFeatures = default;
+            IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures = default;
             PostgreSqlFlexibleServerFastProvisioningSupported? fastProvisioningSupported = default;
             IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = default;
             PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = default;
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<SupportedFeature> array = new List<SupportedFeature>();
+                    List<PostgreSqlFlexibleServerSupportedFeature> array = new List<PostgreSqlFlexibleServerSupportedFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedFeature.DeserializeSupportedFeature(item, options));
+                        array.Add(PostgreSqlFlexibleServerSupportedFeature.DeserializePostgreSqlFlexibleServerSupportedFeature(item, options));
                     }
                     supportedFeatures = array;
                     continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(),
                 supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(),
-                supportedFeatures ?? new ChangeTrackingList<SupportedFeature>(),
+                supportedFeatures ?? new ChangeTrackingList<PostgreSqlFlexibleServerSupportedFeature>(),
                 fastProvisioningSupported,
                 supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(),
                 geoBackupSupported,

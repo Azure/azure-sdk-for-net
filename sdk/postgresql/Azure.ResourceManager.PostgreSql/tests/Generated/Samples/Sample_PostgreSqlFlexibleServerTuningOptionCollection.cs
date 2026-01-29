@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
-    public partial class Sample_TuningOptionCollection
+    public partial class Sample_PostgreSqlFlexibleServerTuningOptionCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
-            // get the collection of this TuningOptionResource
-            TuningOptionCollection collection = postgreSqlFlexibleServer.GetTuningOptions();
+            // get the collection of this PostgreSqlFlexibleServerTuningOptionResource
+            PostgreSqlFlexibleServerTuningOptionCollection collection = postgreSqlFlexibleServer.GetPostgreSqlFlexibleServerTuningOptions();
 
             // invoke the operation
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Index;
-            TuningOptionResource result = await collection.GetAsync(tuningOption);
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
+            PostgreSqlFlexibleServerTuningOptionResource result = await collection.GetAsync(tuningOption);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TuningOptionData resourceData = result.Data;
+            PostgreSqlFlexibleServerTuningOptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
-            // get the collection of this TuningOptionResource
-            TuningOptionCollection collection = postgreSqlFlexibleServer.GetTuningOptions();
+            // get the collection of this PostgreSqlFlexibleServerTuningOptionResource
+            PostgreSqlFlexibleServerTuningOptionCollection collection = postgreSqlFlexibleServer.GetPostgreSqlFlexibleServerTuningOptions();
 
             // invoke the operation and iterate over the result
-            await foreach (TuningOptionResource item in collection.GetAllAsync())
+            await foreach (PostgreSqlFlexibleServerTuningOptionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                TuningOptionData resourceData = item.Data;
+                PostgreSqlFlexibleServerTuningOptionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
-            // get the collection of this TuningOptionResource
-            TuningOptionCollection collection = postgreSqlFlexibleServer.GetTuningOptions();
+            // get the collection of this PostgreSqlFlexibleServerTuningOptionResource
+            PostgreSqlFlexibleServerTuningOptionCollection collection = postgreSqlFlexibleServer.GetPostgreSqlFlexibleServerTuningOptions();
 
             // invoke the operation
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Index;
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
             bool result = await collection.ExistsAsync(tuningOption);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
-            // get the collection of this TuningOptionResource
-            TuningOptionCollection collection = postgreSqlFlexibleServer.GetTuningOptions();
+            // get the collection of this PostgreSqlFlexibleServerTuningOptionResource
+            PostgreSqlFlexibleServerTuningOptionCollection collection = postgreSqlFlexibleServer.GetPostgreSqlFlexibleServerTuningOptions();
 
             // invoke the operation
-            TuningOptionParameterEnum tuningOption = TuningOptionParameterEnum.Index;
-            NullableResponse<TuningOptionResource> response = await collection.GetIfExistsAsync(tuningOption);
-            TuningOptionResource result = response.HasValue ? response.Value : null;
+            PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
+            NullableResponse<PostgreSqlFlexibleServerTuningOptionResource> response = await collection.GetIfExistsAsync(tuningOption);
+            PostgreSqlFlexibleServerTuningOptionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                TuningOptionData resourceData = result.Data;
+                PostgreSqlFlexibleServerTuningOptionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

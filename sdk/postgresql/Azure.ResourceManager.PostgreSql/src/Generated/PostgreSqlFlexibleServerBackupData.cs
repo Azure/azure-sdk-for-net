@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServerBackup data model.
     /// Properties of a backup.
+    /// Serialized Name: BackupAutomaticAndOnDemand
     /// </summary>
     public partial class PostgreSqlFlexibleServerBackupData : ResourceData
     {
@@ -61,9 +62,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupType"> Type of backup. </param>
-        /// <param name="completedOn"> Time(ISO8601 format) at which the backup was completed. </param>
-        /// <param name="source"> Source of the backup. </param>
+        /// <param name="backupType">
+        /// Type of backup.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.backupType
+        /// </param>
+        /// <param name="completedOn">
+        /// Time(ISO8601 format) at which the backup was completed.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.completedTime
+        /// </param>
+        /// <param name="source">
+        /// Source of the backup.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.source
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerBackupOrigin? backupType, DateTimeOffset? completedOn, string source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,13 +83,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of backup. </summary>
+        /// <summary>
+        /// Type of backup.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.backupType
+        /// </summary>
         [WirePath("properties.backupType")]
         public PostgreSqlFlexibleServerBackupOrigin? BackupType { get; set; }
-        /// <summary> Time(ISO8601 format) at which the backup was completed. </summary>
+        /// <summary>
+        /// Time(ISO8601 format) at which the backup was completed.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.completedTime
+        /// </summary>
         [WirePath("properties.completedTime")]
         public DateTimeOffset? CompletedOn { get; set; }
-        /// <summary> Source of the backup. </summary>
+        /// <summary>
+        /// Source of the backup.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.source
+        /// </summary>
         [WirePath("properties.source")]
         public string Source { get; set; }
     }

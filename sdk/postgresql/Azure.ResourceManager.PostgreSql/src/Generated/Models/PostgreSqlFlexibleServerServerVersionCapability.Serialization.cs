@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string name = default;
             IReadOnlyList<string> supportedVersionsToUpgrade = default;
-            IReadOnlyList<SupportedFeature> supportedFeatures = default;
+            IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<SupportedFeature> array = new List<SupportedFeature>();
+                    List<PostgreSqlFlexibleServerSupportedFeature> array = new List<PostgreSqlFlexibleServerSupportedFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedFeature.DeserializeSupportedFeature(item, options));
+                        array.Add(PostgreSqlFlexibleServerSupportedFeature.DeserializePostgreSqlFlexibleServerSupportedFeature(item, options));
                     }
                     supportedFeatures = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData,
                 name,
                 supportedVersionsToUpgrade ?? new ChangeTrackingList<string>(),
-                supportedFeatures ?? new ChangeTrackingList<SupportedFeature>());
+                supportedFeatures ?? new ChangeTrackingList<PostgreSqlFlexibleServerSupportedFeature>());
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

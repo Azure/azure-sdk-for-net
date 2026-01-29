@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             long? supportedMemoryPerVcoreMb = default;
             IReadOnlyList<string> supportedZones = default;
             IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode = default;
-            IReadOnlyList<SupportedFeature> supportedFeatures = default;
+            IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures = default;
             string securityProfile = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
             string reason = default;
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<SupportedFeature> array = new List<SupportedFeature>();
+                    List<PostgreSqlFlexibleServerSupportedFeature> array = new List<PostgreSqlFlexibleServerSupportedFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedFeature.DeserializeSupportedFeature(item, options));
+                        array.Add(PostgreSqlFlexibleServerSupportedFeature.DeserializePostgreSqlFlexibleServerSupportedFeature(item, options));
                     }
                     supportedFeatures = array;
                     continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 supportedMemoryPerVcoreMb,
                 supportedZones ?? new ChangeTrackingList<string>(),
                 supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>(),
-                supportedFeatures ?? new ChangeTrackingList<SupportedFeature>(),
+                supportedFeatures ?? new ChangeTrackingList<PostgreSqlFlexibleServerSupportedFeature>(),
                 securityProfile);
         }
 

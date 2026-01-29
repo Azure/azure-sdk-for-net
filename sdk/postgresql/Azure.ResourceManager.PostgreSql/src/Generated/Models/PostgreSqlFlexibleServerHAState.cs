@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
+    /// <summary>
+    /// Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant.
+    /// Serialized Name: HighAvailabilityState
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerHAState : IEquatable<PostgreSqlFlexibleServerHAState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string HealthyValue = "Healthy";
         private const string RemovingStandbyValue = "RemovingStandby";
 
-        /// <summary> NotEnabled. </summary>
+        /// <summary>
+        /// NotEnabled
+        /// Serialized Name: HighAvailabilityState.NotEnabled
+        /// </summary>
         public static PostgreSqlFlexibleServerHAState NotEnabled { get; } = new PostgreSqlFlexibleServerHAState(NotEnabledValue);
-        /// <summary> CreatingStandby. </summary>
+        /// <summary>
+        /// CreatingStandby
+        /// Serialized Name: HighAvailabilityState.CreatingStandby
+        /// </summary>
         public static PostgreSqlFlexibleServerHAState CreatingStandby { get; } = new PostgreSqlFlexibleServerHAState(CreatingStandbyValue);
-        /// <summary> ReplicatingData. </summary>
+        /// <summary>
+        /// ReplicatingData
+        /// Serialized Name: HighAvailabilityState.ReplicatingData
+        /// </summary>
         public static PostgreSqlFlexibleServerHAState ReplicatingData { get; } = new PostgreSqlFlexibleServerHAState(ReplicatingDataValue);
-        /// <summary> FailingOver. </summary>
+        /// <summary>
+        /// FailingOver
+        /// Serialized Name: HighAvailabilityState.FailingOver
+        /// </summary>
         public static PostgreSqlFlexibleServerHAState FailingOver { get; } = new PostgreSqlFlexibleServerHAState(FailingOverValue);
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: HighAvailabilityState.Healthy
+        /// </summary>
         public static PostgreSqlFlexibleServerHAState Healthy { get; } = new PostgreSqlFlexibleServerHAState(HealthyValue);
-        /// <summary> RemovingStandby. </summary>
+        /// <summary>
+        /// RemovingStandby
+        /// Serialized Name: HighAvailabilityState.RemovingStandby
+        /// </summary>
         public static PostgreSqlFlexibleServerHAState RemovingStandby { get; } = new PostgreSqlFlexibleServerHAState(RemovingStandbyValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerHAState left, PostgreSqlFlexibleServerHAState right) => left.Equals(right);

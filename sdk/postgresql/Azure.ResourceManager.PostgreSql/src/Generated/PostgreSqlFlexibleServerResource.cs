@@ -795,11 +795,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetPostgreSqlFlexibleServersPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TuningOptionResources in the PostgreSqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of TuningOptionResources and their operations over a TuningOptionResource. </returns>
-        public virtual TuningOptionCollection GetTuningOptions()
+        /// <summary> Gets a collection of PostgreSqlFlexibleServerTuningOptionResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of PostgreSqlFlexibleServerTuningOptionResources and their operations over a PostgreSqlFlexibleServerTuningOptionResource. </returns>
+        public virtual PostgreSqlFlexibleServerTuningOptionCollection GetPostgreSqlFlexibleServerTuningOptions()
         {
-            return GetCachedClient(client => new TuningOptionCollection(client, Id));
+            return GetCachedClient(client => new PostgreSqlFlexibleServerTuningOptionCollection(client, Id));
         }
 
         /// <summary>
@@ -819,16 +819,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TuningOptionResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tuningOption"> The name of the tuning option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TuningOptionResource>> GetTuningOptionAsync(TuningOptionParameterEnum tuningOption, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerTuningOptionResource>> GetPostgreSqlFlexibleServerTuningOptionAsync(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            return await GetTuningOptions().GetAsync(tuningOption, cancellationToken).ConfigureAwait(false);
+            return await GetPostgreSqlFlexibleServerTuningOptions().GetAsync(tuningOption, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -848,16 +848,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TuningOptionResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tuningOption"> The name of the tuning option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<TuningOptionResource> GetTuningOption(TuningOptionParameterEnum tuningOption, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerTuningOptionResource> GetPostgreSqlFlexibleServerTuningOption(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            return GetTuningOptions().Get(tuningOption, cancellationToken);
+            return GetPostgreSqlFlexibleServerTuningOptions().Get(tuningOption, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualEndpointResources in the PostgreSqlFlexibleServer. </summary>

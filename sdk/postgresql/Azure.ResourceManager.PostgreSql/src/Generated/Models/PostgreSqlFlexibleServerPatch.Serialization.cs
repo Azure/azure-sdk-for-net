@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
-            Cluster cluster = default;
+            PostgreSqlFlexibleServerClusterProperties cluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            cluster = Cluster.DeserializeCluster(property0.Value, options);
+                            cluster = PostgreSqlFlexibleServerClusterProperties.DeserializePostgreSqlFlexibleServerClusterProperties(property0.Value, options);
                             continue;
                         }
                     }

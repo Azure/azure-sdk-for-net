@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class SupportedFeature : IUtf8JsonSerializable, IJsonModel<SupportedFeature>
+    public partial class PostgreSqlFlexibleServerSupportedFeature : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerSupportedFeature>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportedFeature>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerSupportedFeature>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SupportedFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerSupportedFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedFeature)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSupportedFeature)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Name))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        SupportedFeature IJsonModel<SupportedFeature>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerSupportedFeature IJsonModel<PostgreSqlFlexibleServerSupportedFeature>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedFeature)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSupportedFeature)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSupportedFeature(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerSupportedFeature(document.RootElement, options);
         }
 
-        internal static SupportedFeature DeserializeSupportedFeature(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerSupportedFeature DeserializePostgreSqlFlexibleServerSupportedFeature(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             string name = default;
-            FeatureStatus? status = default;
+            PostgreSqlFlexibleServerFeatureStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    status = new FeatureStatus(property.Value.GetString());
+                    status = new PostgreSqlFlexibleServerFeatureStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SupportedFeature(name, status, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerSupportedFeature(name, status, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SupportedFeature>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerSupportedFeature>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -175,26 +175,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportedFeature)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSupportedFeature)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SupportedFeature IPersistableModel<SupportedFeature>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerSupportedFeature IPersistableModel<PostgreSqlFlexibleServerSupportedFeature>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSupportedFeature>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSupportedFeature(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerSupportedFeature(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportedFeature)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSupportedFeature)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SupportedFeature>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerSupportedFeature>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

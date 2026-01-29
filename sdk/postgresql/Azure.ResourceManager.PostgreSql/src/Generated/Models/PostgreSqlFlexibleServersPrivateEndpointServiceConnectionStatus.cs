@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The private endpoint connection status. </summary>
+    /// <summary>
+    /// The private endpoint connection status.
+    /// Serialized Name: PrivateEndpointServiceConnectionStatus
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus : IEquatable<PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Pending
+        /// </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus Pending { get; } = new PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Approved
+        /// </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus Approved { get; } = new PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Rejected
+        /// </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus Rejected { get; } = new PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus left, PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

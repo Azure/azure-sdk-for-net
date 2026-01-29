@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if geographically redundant backups are supported in this location. 'Enabled' means geographically redundant backups are supported. 'Disabled' stands for geographically redundant backup is not supported. Will be deprecated in the future. Look to Supported Features for 'GeoBackup'. </summary>
+    /// <summary>
+    /// Indicates if geographically redundant backups are supported in this location. 'Enabled' means geographically redundant backups are supported. 'Disabled' stands for geographically redundant backup is not supported. Will be deprecated in the future. Look to Supported Features for 'GeoBackup'.
+    /// Serialized Name: GeographicallyRedundantBackupSupport
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerGeoBackupSupported : IEquatable<PostgreSqlFlexibleServerGeoBackupSupported>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: GeographicallyRedundantBackupSupport.Enabled
+        /// </summary>
         public static PostgreSqlFlexibleServerGeoBackupSupported Enabled { get; } = new PostgreSqlFlexibleServerGeoBackupSupported(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: GeographicallyRedundantBackupSupport.Disabled
+        /// </summary>
         public static PostgreSqlFlexibleServerGeoBackupSupported Disabled { get; } = new PostgreSqlFlexibleServerGeoBackupSupported(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerGeoBackupSupported"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerGeoBackupSupported left, PostgreSqlFlexibleServerGeoBackupSupported right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The check availability result. </summary>
+    /// <summary>
+    /// The check availability result.
+    /// Serialized Name: CheckNameAvailabilityResponse
+    /// </summary>
     public partial class PostgreSqlFlexibleServerNameAvailabilityResponse
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityResponse"/>. </summary>
-        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <param name="isNameAvailable">
+        /// Indicates if the resource name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the given name is not available.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </param>
+        /// <param name="message">
+        /// Detailed reason why the given name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates if the resource name is available. </summary>
+        /// <summary>
+        /// Indicates if the resource name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </summary>
         [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
-        /// <summary> The reason why the given name is not available. </summary>
+        /// <summary>
+        /// The reason why the given name is not available.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </summary>
         [WirePath("reason")]
         public PostgreSqlFlexibleServerNameUnavailableReason? Reason { get; }
-        /// <summary> Detailed reason why the given name is available. </summary>
+        /// <summary>
+        /// Detailed reason why the given name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </summary>
         [WirePath("message")]
         public string Message { get; }
     }

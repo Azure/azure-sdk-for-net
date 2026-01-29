@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Features supported. </summary>
-    public partial class SupportedFeature
+    /// <summary>
+    /// Cluster properties of a server.
+    /// Serialized Name: Cluster
+    /// </summary>
+    public partial class PostgreSqlFlexibleServerClusterProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +48,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SupportedFeature"/>. </summary>
-        internal SupportedFeature()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerClusterProperties"/>. </summary>
+        public PostgreSqlFlexibleServerClusterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SupportedFeature"/>. </summary>
-        /// <param name="name"> Name of the feature. </param>
-        /// <param name="status"> Status of the feature. Indicates if the feature is enabled or not. </param>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerClusterProperties"/>. </summary>
+        /// <param name="clusterSize">
+        /// Number of nodes assigned to the elastic cluster.
+        /// Serialized Name: Cluster.clusterSize
+        /// </param>
+        /// <param name="defaultDatabaseName">
+        /// Default database name for the elastic cluster.
+        /// Serialized Name: Cluster.defaultDatabaseName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedFeature(string name, FeatureStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerClusterProperties(int? clusterSize, string defaultDatabaseName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Status = status;
+            ClusterSize = clusterSize;
+            DefaultDatabaseName = defaultDatabaseName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the feature. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-        /// <summary> Status of the feature. Indicates if the feature is enabled or not. </summary>
-        [WirePath("status")]
-        public FeatureStatus? Status { get; }
+        /// <summary>
+        /// Number of nodes assigned to the elastic cluster.
+        /// Serialized Name: Cluster.clusterSize
+        /// </summary>
+        [WirePath("clusterSize")]
+        public int? ClusterSize { get; set; }
+        /// <summary>
+        /// Default database name for the elastic cluster.
+        /// Serialized Name: Cluster.defaultDatabaseName
+        /// </summary>
+        [WirePath("defaultDatabaseName")]
+        public string DefaultDatabaseName { get; set; }
     }
 }

@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class TuningOptionData : IUtf8JsonSerializable, IJsonModel<TuningOptionData>
+    public partial class PostgreSqlFlexibleServerTuningOptionData : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerTuningOptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TuningOptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerTuningOptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TuningOptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerTuningOptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerTuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TuningOptionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerTuningOptionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        TuningOptionData IJsonModel<TuningOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerTuningOptionData IJsonModel<PostgreSqlFlexibleServerTuningOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerTuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TuningOptionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerTuningOptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTuningOptionData(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerTuningOptionData(document.RootElement, options);
         }
 
-        internal static TuningOptionData DeserializeTuningOptionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerTuningOptionData DeserializePostgreSqlFlexibleServerTuningOptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TuningOptionData(id, name, type, systemData, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerTuningOptionData(id, name, type, systemData, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<TuningOptionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerTuningOptionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerTuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -179,26 +179,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TuningOptionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerTuningOptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TuningOptionData IPersistableModel<TuningOptionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerTuningOptionData IPersistableModel<PostgreSqlFlexibleServerTuningOptionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerTuningOptionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTuningOptionData(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerTuningOptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TuningOptionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerTuningOptionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TuningOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerTuningOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

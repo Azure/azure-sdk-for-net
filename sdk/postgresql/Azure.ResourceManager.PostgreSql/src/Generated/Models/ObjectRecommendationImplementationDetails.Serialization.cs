@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class ObjectRecommendationPropertiesImplementationDetails : IUtf8JsonSerializable, IJsonModel<ObjectRecommendationPropertiesImplementationDetails>
+    public partial class ObjectRecommendationImplementationDetails : IUtf8JsonSerializable, IJsonModel<ObjectRecommendationImplementationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectRecommendationPropertiesImplementationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectRecommendationImplementationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ObjectRecommendationPropertiesImplementationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ObjectRecommendationImplementationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationPropertiesImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectRecommendationPropertiesImplementationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectRecommendationImplementationDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Method))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        ObjectRecommendationPropertiesImplementationDetails IJsonModel<ObjectRecommendationPropertiesImplementationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ObjectRecommendationImplementationDetails IJsonModel<ObjectRecommendationImplementationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationPropertiesImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectRecommendationPropertiesImplementationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectRecommendationImplementationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeObjectRecommendationPropertiesImplementationDetails(document.RootElement, options);
+            return DeserializeObjectRecommendationImplementationDetails(document.RootElement, options);
         }
 
-        internal static ObjectRecommendationPropertiesImplementationDetails DeserializeObjectRecommendationPropertiesImplementationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ObjectRecommendationImplementationDetails DeserializeObjectRecommendationImplementationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ObjectRecommendationPropertiesImplementationDetails(method, script, serializedAdditionalRawData);
+            return new ObjectRecommendationImplementationDetails(method, script, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ObjectRecommendationPropertiesImplementationDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ObjectRecommendationImplementationDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationPropertiesImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -179,26 +179,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ObjectRecommendationPropertiesImplementationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectRecommendationImplementationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ObjectRecommendationPropertiesImplementationDetails IPersistableModel<ObjectRecommendationPropertiesImplementationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ObjectRecommendationImplementationDetails IPersistableModel<ObjectRecommendationImplementationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationPropertiesImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectRecommendationImplementationDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeObjectRecommendationPropertiesImplementationDetails(document.RootElement, options);
+                        return DeserializeObjectRecommendationImplementationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ObjectRecommendationPropertiesImplementationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectRecommendationImplementationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ObjectRecommendationPropertiesImplementationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ObjectRecommendationImplementationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

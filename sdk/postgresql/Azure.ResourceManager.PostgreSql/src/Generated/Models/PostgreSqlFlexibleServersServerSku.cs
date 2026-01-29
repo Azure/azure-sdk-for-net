@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Compute information of a server. </summary>
+    /// <summary>
+    /// Compute information of a server.
+    /// Serialized Name: ServerSku
+    /// </summary>
     public partial class PostgreSqlFlexibleServersServerSku
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersServerSku"/>. </summary>
-        /// <param name="name"> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <param name="name">
+        /// Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server.
+        /// Serialized Name: ServerSku.name
+        /// </param>
+        /// <param name="tier">
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: ServerSku.tier
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServersServerSku(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </summary>
+        /// <summary>
+        /// Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server.
+        /// Serialized Name: ServerSku.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Tier of the compute assigned to a server. </summary>
+        /// <summary>
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: ServerSku.tier
+        /// </summary>
         [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier? Tier { get; }
     }

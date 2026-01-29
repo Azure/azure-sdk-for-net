@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class NameProperty : IUtf8JsonSerializable, IJsonModel<NameProperty>
+    public partial class QuotaUsageNameProperty : IUtf8JsonSerializable, IJsonModel<QuotaUsageNameProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NameProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaUsageNameProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NameProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuotaUsageNameProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaUsageNameProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NameProperty)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaUsageNameProperty)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Value))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        NameProperty IJsonModel<NameProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuotaUsageNameProperty IJsonModel<QuotaUsageNameProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaUsageNameProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NameProperty)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaUsageNameProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNameProperty(document.RootElement, options);
+            return DeserializeQuotaUsageNameProperty(document.RootElement, options);
         }
 
-        internal static NameProperty DeserializeNameProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuotaUsageNameProperty DeserializeQuotaUsageNameProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NameProperty(value, localizedValue, serializedAdditionalRawData);
+            return new QuotaUsageNameProperty(value, localizedValue, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NameProperty>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuotaUsageNameProperty>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaUsageNameProperty>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -179,26 +179,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NameProperty)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaUsageNameProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NameProperty IPersistableModel<NameProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuotaUsageNameProperty IPersistableModel<QuotaUsageNameProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaUsageNameProperty>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNameProperty(document.RootElement, options);
+                        return DeserializeQuotaUsageNameProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NameProperty)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaUsageNameProperty)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NameProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuotaUsageNameProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Storage tier of a server. </summary>
+    /// <summary>
+    /// Storage tier of a server.
+    /// Serialized Name: AzureManagedDiskPerformanceTier
+    /// </summary>
     public readonly partial struct PostgreSqlManagedDiskPerformanceTier : IEquatable<PostgreSqlManagedDiskPerformanceTier>
     {
         private readonly string _value;
@@ -37,33 +40,75 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string P70Value = "P70";
         private const string P80Value = "P80";
 
-        /// <summary> P1. </summary>
+        /// <summary>
+        /// P1
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P1
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P1 { get; } = new PostgreSqlManagedDiskPerformanceTier(P1Value);
-        /// <summary> P2. </summary>
+        /// <summary>
+        /// P2
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P2
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P2 { get; } = new PostgreSqlManagedDiskPerformanceTier(P2Value);
-        /// <summary> P3. </summary>
+        /// <summary>
+        /// P3
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P3
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P3 { get; } = new PostgreSqlManagedDiskPerformanceTier(P3Value);
-        /// <summary> P4. </summary>
+        /// <summary>
+        /// P4
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P4
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P4 { get; } = new PostgreSqlManagedDiskPerformanceTier(P4Value);
-        /// <summary> P6. </summary>
+        /// <summary>
+        /// P6
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P6
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P6 { get; } = new PostgreSqlManagedDiskPerformanceTier(P6Value);
-        /// <summary> P10. </summary>
+        /// <summary>
+        /// P10
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P10
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P10 { get; } = new PostgreSqlManagedDiskPerformanceTier(P10Value);
-        /// <summary> P15. </summary>
+        /// <summary>
+        /// P15
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P15
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P15 { get; } = new PostgreSqlManagedDiskPerformanceTier(P15Value);
-        /// <summary> P20. </summary>
+        /// <summary>
+        /// P20
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P20
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P20 { get; } = new PostgreSqlManagedDiskPerformanceTier(P20Value);
-        /// <summary> P30. </summary>
+        /// <summary>
+        /// P30
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P30
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P30 { get; } = new PostgreSqlManagedDiskPerformanceTier(P30Value);
-        /// <summary> P40. </summary>
+        /// <summary>
+        /// P40
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P40
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P40 { get; } = new PostgreSqlManagedDiskPerformanceTier(P40Value);
-        /// <summary> P50. </summary>
+        /// <summary>
+        /// P50
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P50
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P50 { get; } = new PostgreSqlManagedDiskPerformanceTier(P50Value);
-        /// <summary> P60. </summary>
+        /// <summary>
+        /// P60
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P60
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P60 { get; } = new PostgreSqlManagedDiskPerformanceTier(P60Value);
-        /// <summary> P70. </summary>
+        /// <summary>
+        /// P70
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P70
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P70 { get; } = new PostgreSqlManagedDiskPerformanceTier(P70Value);
-        /// <summary> P80. </summary>
+        /// <summary>
+        /// P80
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P80
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P80 { get; } = new PostgreSqlManagedDiskPerformanceTier(P80Value);
         /// <summary> Determines if two <see cref="PostgreSqlManagedDiskPerformanceTier"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlManagedDiskPerformanceTier left, PostgreSqlManagedDiskPerformanceTier right) => left.Equals(right);

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TuningOptionData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServerTuningOptionData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        TuningOptionData value = default;
+                        PostgreSqlFlexibleServerTuningOptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TuningOptionData.DeserializeTuningOptionData(document.RootElement);
+                        value = PostgreSqlFlexibleServerTuningOptionData.DeserializePostgreSqlFlexibleServerTuningOptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TuningOptionData)null, message.Response);
+                    return Response.FromValue((PostgreSqlFlexibleServerTuningOptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TuningOptionData> Get(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServerTuningOptionData> Get(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,19 +220,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        TuningOptionData value = default;
+                        PostgreSqlFlexibleServerTuningOptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TuningOptionData.DeserializeTuningOptionData(document.RootElement);
+                        value = PostgreSqlFlexibleServerTuningOptionData.DeserializePostgreSqlFlexibleServerTuningOptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TuningOptionData)null, message.Response);
+                    return Response.FromValue((PostgreSqlFlexibleServerTuningOptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateListRecommendationsRequestUri(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType)
+        internal RequestUriBuilder CreateListRecommendationsRequestUri(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateListRecommendationsRequest(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType)
+        internal HttpMessage CreateListRecommendationsRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ObjectRecommendationList>> ListRecommendationsAsync(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ObjectRecommendationList>> ListRecommendationsAsync(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ObjectRecommendationList> ListRecommendations(string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType = null, CancellationToken cancellationToken = default)
+        public Response<ObjectRecommendationList> ListRecommendations(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        internal RequestUriBuilder CreateListRecommendationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType)
+        internal RequestUriBuilder CreateListRecommendationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateListRecommendationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType)
+        internal HttpMessage CreateListRecommendationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ObjectRecommendationList>> ListRecommendationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ObjectRecommendationList>> ListRecommendationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ObjectRecommendationList> ListRecommendationsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, TuningOptionParameterEnum tuningOption, RecommendationTypeParameterEnum? recommendationType = null, CancellationToken cancellationToken = default)
+        public Response<ObjectRecommendationList> ListRecommendationsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerTuningOptionType tuningOption, PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

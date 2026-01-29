@@ -167,15 +167,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TuningOptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TuningOptionResource.CreateResourceIdentifier" /> to create a <see cref="TuningOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TuningOptionResource"/> object. </returns>
-        public virtual TuningOptionResource GetTuningOptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServerTuningOptionResource GetPostgreSqlFlexibleServerTuningOptionResource(ResourceIdentifier id)
         {
-            TuningOptionResource.ValidateResourceId(id);
-            return new TuningOptionResource(Client, id);
+            PostgreSqlFlexibleServerTuningOptionResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServerTuningOptionResource(Client, id);
         }
 
         /// <summary>

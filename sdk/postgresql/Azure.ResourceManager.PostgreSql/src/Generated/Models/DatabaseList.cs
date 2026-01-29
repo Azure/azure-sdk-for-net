@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of all databases in a server. </summary>
+    /// <summary>
+    /// List of all databases in a server.
+    /// Serialized Name: DatabaseList
+    /// </summary>
     internal partial class DatabaseList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseList"/>. </summary>
-        /// <param name="value"> The Database items on this page. </param>
+        /// <param name="value">
+        /// The Database items on this page
+        /// Serialized Name: DatabaseList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DatabaseList(IEnumerable<PostgreSqlFlexibleServerDatabaseData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseList"/>. </summary>
-        /// <param name="value"> The Database items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The Database items on this page
+        /// Serialized Name: DatabaseList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: DatabaseList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DatabaseList(IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary> The Database items on this page. </summary>
+        /// <summary>
+        /// The Database items on this page
+        /// Serialized Name: DatabaseList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: DatabaseList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

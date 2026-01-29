@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IList<long> improvedQueryIds = default;
             string recommendationReason = default;
             string currentState = default;
-            RecommendationTypeEnum? recommendationType = default;
-            ObjectRecommendationPropertiesImplementationDetails implementationDetails = default;
-            ObjectRecommendationPropertiesAnalyzedWorkload analyzedWorkload = default;
-            IReadOnlyList<ImpactRecord> estimatedImpact = default;
+            PostgreSqlFlexibleServerRecommendationType? recommendationType = default;
+            ObjectRecommendationImplementationDetails implementationDetails = default;
+            ObjectRecommendationAnalyzedWorkload analyzedWorkload = default;
+            IReadOnlyList<RecommendationImpactRecord> estimatedImpact = default;
             ObjectRecommendationDetails details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            recommendationType = new RecommendationTypeEnum(property0.Value.GetString());
+                            recommendationType = new PostgreSqlFlexibleServerRecommendationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("implementationDetails"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            implementationDetails = ObjectRecommendationPropertiesImplementationDetails.DeserializeObjectRecommendationPropertiesImplementationDetails(property0.Value, options);
+                            implementationDetails = ObjectRecommendationImplementationDetails.DeserializeObjectRecommendationImplementationDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("analyzedWorkload"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            analyzedWorkload = ObjectRecommendationPropertiesAnalyzedWorkload.DeserializeObjectRecommendationPropertiesAnalyzedWorkload(property0.Value, options);
+                            analyzedWorkload = ObjectRecommendationAnalyzedWorkload.DeserializeObjectRecommendationAnalyzedWorkload(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("estimatedImpact"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            List<ImpactRecord> array = new List<ImpactRecord>();
+                            List<RecommendationImpactRecord> array = new List<RecommendationImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ImpactRecord.DeserializeImpactRecord(item, options));
+                                array.Add(RecommendationImpactRecord.DeserializeRecommendationImpactRecord(item, options));
                             }
                             estimatedImpact = array;
                             continue;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 recommendationType,
                 implementationDetails,
                 analyzedWorkload,
-                estimatedImpact ?? new ChangeTrackingList<ImpactRecord>(),
+                estimatedImpact ?? new ChangeTrackingList<RecommendationImpactRecord>(),
                 details,
                 serializedAdditionalRawData);
         }

@@ -423,12 +423,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaUsage> GetQuotaUsagesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerQuotaUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsagesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaUsagesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaUsage.DeserializeQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerQuotaUsage.DeserializePostgreSqlFlexibleServerQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -450,12 +450,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuotaUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaUsage> GetQuotaUsages(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerQuotaUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsages(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaUsagesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaUsage.DeserializeQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerQuotaUsage.DeserializePostgreSqlFlexibleServerQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

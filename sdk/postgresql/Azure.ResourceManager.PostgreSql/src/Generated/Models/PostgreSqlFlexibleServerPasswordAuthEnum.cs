@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if the server supports password based authentication. </summary>
+    /// <summary>
+    /// Indicates if the server supports password based authentication.
+    /// Serialized Name: PasswordBasedAuth
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerPasswordAuthEnum : IEquatable<PostgreSqlFlexibleServerPasswordAuthEnum>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: PasswordBasedAuth.Enabled
+        /// </summary>
         public static PostgreSqlFlexibleServerPasswordAuthEnum Enabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: PasswordBasedAuth.Disabled
+        /// </summary>
         public static PostgreSqlFlexibleServerPasswordAuthEnum Disabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPasswordAuthEnum left, PostgreSqlFlexibleServerPasswordAuthEnum right) => left.Equals(right);

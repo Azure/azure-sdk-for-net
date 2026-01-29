@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class ImpactRecord : IUtf8JsonSerializable, IJsonModel<ImpactRecord>
+    public partial class RecommendationImpactRecord : IUtf8JsonSerializable, IJsonModel<RecommendationImpactRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImpactRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendationImpactRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImpactRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecommendationImpactRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImpactRecord)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DimensionName))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        ImpactRecord IJsonModel<ImpactRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RecommendationImpactRecord IJsonModel<RecommendationImpactRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImpactRecord)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImpactRecord(document.RootElement, options);
+            return DeserializeRecommendationImpactRecord(document.RootElement, options);
         }
 
-        internal static ImpactRecord DeserializeImpactRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RecommendationImpactRecord DeserializeRecommendationImpactRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImpactRecord(dimensionName, unit, queryId, absoluteValue, serializedAdditionalRawData);
+            return new RecommendationImpactRecord(dimensionName, unit, queryId, absoluteValue, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ImpactRecord>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RecommendationImpactRecord>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -239,26 +239,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ImpactRecord)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImpactRecord IPersistableModel<ImpactRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RecommendationImpactRecord IPersistableModel<RecommendationImpactRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeImpactRecord(document.RootElement, options);
+                        return DeserializeRecommendationImpactRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImpactRecord)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImpactRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecommendationImpactRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

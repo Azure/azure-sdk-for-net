@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
+namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> Impact on some metric if this recommended action is applied. </summary>
-    public partial class ImpactRecord
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServerTuningOption data model.
+    /// Impact on some metric if this recommended action is applied.
+    /// Serialized Name: TuningOptions
+    /// </summary>
+    public partial class PostgreSqlFlexibleServerTuningOptionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +51,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImpactRecord"/>. </summary>
-        internal ImpactRecord()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerTuningOptionData"/>. </summary>
+        public PostgreSqlFlexibleServerTuningOptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImpactRecord"/>. </summary>
-        /// <param name="dimensionName"> Dimension name. </param>
-        /// <param name="unit"> Dimension unit. </param>
-        /// <param name="queryId"> Optional property that can be used to store the identifier of the query, if the metric is for a specific query. </param>
-        /// <param name="absoluteValue"> Absolute value. </param>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerTuningOptionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactRecord(string dimensionName, string unit, long? queryId, double? absoluteValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerTuningOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            DimensionName = dimensionName;
-            Unit = unit;
-            QueryId = queryId;
-            AbsoluteValue = absoluteValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Dimension name. </summary>
-        [WirePath("dimensionName")]
-        public string DimensionName { get; }
-        /// <summary> Dimension unit. </summary>
-        [WirePath("unit")]
-        public string Unit { get; }
-        /// <summary> Optional property that can be used to store the identifier of the query, if the metric is for a specific query. </summary>
-        [WirePath("queryId")]
-        public long? QueryId { get; }
-        /// <summary> Absolute value. </summary>
-        [WirePath("absoluteValue")]
-        public double? AbsoluteValue { get; }
     }
 }
