@@ -451,7 +451,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.operation",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming"
           },
           "parameters": [],
           "response": {},
@@ -509,7 +510,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.parameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming"
           },
           "parameters": [
             {
@@ -608,7 +610,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Property.client",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Property"
           },
           "parameters": [
             {
@@ -721,7 +724,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Property.language",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Property"
           },
           "parameters": [
             {
@@ -834,7 +838,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Property.compatibleWithEncodedName",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Property"
           },
           "parameters": [
             {
@@ -928,7 +933,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Header.request",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Header"
           },
           "parameters": [
             {
@@ -999,7 +1005,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Header.response",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Header"
           },
           "parameters": [],
           "response": {},
@@ -1120,7 +1127,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.Model.client",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.Model"
               },
               "parameters": [
                 {
@@ -1233,7 +1241,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.Model.language",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.Model"
               },
               "parameters": [
                 {
@@ -1393,7 +1402,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumName",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.UnionEnum"
               },
               "parameters": [
                 {
@@ -1504,7 +1514,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumMemberName",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.UnionEnum"
               },
               "parameters": [
                 {

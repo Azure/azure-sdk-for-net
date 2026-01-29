@@ -15,7 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-    /// 
     /// Represents the STAC API landing page with links to available resources.
     /// </summary>
     public partial class StacLandingPage : IJsonModel<StacLandingPage>

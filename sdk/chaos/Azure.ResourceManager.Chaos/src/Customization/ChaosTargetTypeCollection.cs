@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Chaos
     public partial class ChaosTargetTypeCollection : ArmCollection, IEnumerable<ChaosTargetTypeResource>, IAsyncEnumerable<ChaosTargetTypeResource>
     {
         private readonly ClientDiagnostics _chaosTargetTypeTargetTypesClientDiagnostics;
-        private readonly TargetTypesRestOperations _chaosTargetTypeTargetTypesRestClient;
+        private readonly TargetTypes _chaosTargetTypeTargetTypesRestClient;
         private readonly string _locationName;
 
         /// <summary> Initializes a new instance of the <see cref="ChaosTargetTypeCollection"/> class for mocking. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos
             _locationName = locationName;
             _chaosTargetTypeTargetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetTypeResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ChaosTargetTypeResource.ResourceType, out string chaosTargetTypeTargetTypesApiVersion);
-            _chaosTargetTypeTargetTypesRestClient = new TargetTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosTargetTypeTargetTypesApiVersion);
+            _chaosTargetTypeTargetTypesRestClient = new TargetTypes(_chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, Endpoint, chaosTargetTypeTargetTypesApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -82,25 +82,9 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<Response<ChaosTargetTypeResource>> GetAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<ChaosTargetTypeResource>> GetAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
-
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _chaosTargetTypeTargetTypesRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                var targetTypeResponse = CustomizationHelper.GetTargetTypeData(response.Value);
-                return Response.FromValue(new ChaosTargetTypeResource(Client, targetTypeResponse), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -130,23 +114,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Response<ChaosTargetTypeResource> Get(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
-
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _chaosTargetTypeTargetTypesRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                var targetTypeResponse = CustomizationHelper.GetTargetTypeData(response.Value);
-                return Response.FromValue(new ChaosTargetTypeResource(Client, targetTypeResponse), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -175,9 +143,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ChaosTargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ChaosTargetTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetTypeTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetTypeTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetTypeResource(Client, ChaosTargetTypeData.DeserializeChaosTargetTypeData(e)), _chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, "ChaosTargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -206,9 +172,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ChaosTargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ChaosTargetTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetTypeTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetTypeTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetTypeResource(Client, ChaosTargetTypeData.DeserializeChaosTargetTypeData(e)), _chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, "ChaosTargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -236,22 +200,9 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<bool>> ExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
-
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await _chaosTargetTypeTargetTypesRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -281,20 +232,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
-
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = _chaosTargetTypeTargetTypesRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -322,25 +260,9 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ChaosTargetTypeResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual Task<NullableResponse<ChaosTargetTypeResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
-
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _chaosTargetTypeTargetTypesRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<ChaosTargetTypeResource>(response.GetRawResponse());
-                var targetTypeResponse = CustomizationHelper.GetTargetTypeData(response.Value);
-                return Response.FromValue(new ChaosTargetTypeResource(Client, targetTypeResponse), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -370,23 +292,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual NullableResponse<ChaosTargetTypeResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
-
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _chaosTargetTypeTargetTypesRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<ChaosTargetTypeResource>(response.GetRawResponse());
-                var targetTypeResponse = CustomizationHelper.GetTargetTypeData(response.Value);
-                return Response.FromValue(new ChaosTargetTypeResource(Client, targetTypeResponse), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
 
         IEnumerator<ChaosTargetTypeResource> IEnumerable<ChaosTargetTypeResource>.GetEnumerator()

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeSku"/>. </summary>
         /// <param name="name"> The sku name. Name is internally generated and is used in auto-scale scenarios. Property does not allow to be changed to other values than generated. To avoid deployment errors please omit the property. </param>
-        /// <param name="tier"> Specifies the tier of the node type. Possible Values: **Standard**. </param>
+        /// <param name="tier"> Specifies the tier of the node type. Possible Values: <b>Standard</b>. </param>
         /// <param name="capacity"> The number of nodes in the node type. If present in request it will override properties.vmInstanceCount. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NodeTypeSku(string name, string tier, int capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> The sku name. Name is internally generated and is used in auto-scale scenarios. Property does not allow to be changed to other values than generated. To avoid deployment errors please omit the property. </summary>
         public string Name { get; set; }
 
-        /// <summary> Specifies the tier of the node type. Possible Values: **Standard**. </summary>
+        /// <summary> Specifies the tier of the node type. Possible Values: <b>Standard</b>. </summary>
         public string Tier { get; set; }
 
         /// <summary> The number of nodes in the node type. If present in request it will override properties.vmInstanceCount. </summary>

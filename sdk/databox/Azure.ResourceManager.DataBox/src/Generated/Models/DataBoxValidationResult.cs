@@ -13,66 +13,42 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Response of pre job creation validations. </summary>
     public partial class DataBoxValidationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxValidationResult"/>. </summary>
         internal DataBoxValidationResult()
         {
-            IndividualResponseDetails = new ChangeTrackingList<DataBoxValidationInputResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxValidationResult"/>. </summary>
-        /// <param name="status"> Overall validation status. </param>
-        /// <param name="individualResponseDetails">
-        /// List of response details contain validationType and its response as key and value respectively.
-        /// Please note <see cref="DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddressValidationResult"/>, <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxValidationResult(OverallValidationStatus? status, IReadOnlyList<DataBoxValidationInputResult> individualResponseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of pre job creation validation response. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxValidationResult(ValidationResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Status = status;
-            IndividualResponseDetails = individualResponseDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of pre job creation validation response. </summary>
+        internal ValidationResponseProperties Properties { get; }
+
         /// <summary> Overall validation status. </summary>
-        public OverallValidationStatus? Status { get; }
-        /// <summary>
-        /// List of response details contain validationType and its response as key and value respectively.
-        /// Please note <see cref="DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddressValidationResult"/>, <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/>.
-        /// </summary>
-        public IReadOnlyList<DataBoxValidationInputResult> IndividualResponseDetails { get; }
+        public OverallValidationStatus? Status
+        {
+            get
+            {
+                return Properties.Status;
+            }
+        }
+
+        /// <summary> List of response details contain validationType and its response as key and value respectively. </summary>
+        public IReadOnlyList<DataBoxValidationInputResult> IndividualResponseDetails
+        {
+            get
+            {
+                return Properties.IndividualResponseDetails;
+            }
+        }
     }
 }

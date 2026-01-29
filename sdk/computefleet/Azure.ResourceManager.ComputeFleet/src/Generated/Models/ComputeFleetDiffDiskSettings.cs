@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
     /// Describes the parameters of ephemeral disk settings that can be specified for
-    /// operating system disk. **Note:** The ephemeral disk settings can only be
+    /// operating system disk. <b>Note:</b> The ephemeral disk settings can only be
     /// specified for managed disk.
     /// </summary>
     public partial class ComputeFleetDiffDiskSettings
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement">
         /// Specifies the ephemeral disk placement for operating system disk. Possible
-        /// values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is:
-        /// **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk**
+        /// values are: <b>CacheDisk,</b> <b>ResourceDisk.</b> The defaulting behavior is:
+        /// <b>CacheDisk</b> if one is configured for the VM size otherwise <b>ResourceDisk</b>
         /// is used. Refer to the VM size documentation for Windows VM at
         /// https://learn.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
         /// https://learn.microsoft.com/azure/virtual-machines/linux/sizes to check which VM
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary>
         /// Specifies the ephemeral disk placement for operating system disk. Possible
-        /// values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is:
-        /// **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk**
+        /// values are: <b>CacheDisk,</b> <b>ResourceDisk.</b> The defaulting behavior is:
+        /// <b>CacheDisk</b> if one is configured for the VM size otherwise <b>ResourceDisk</b>
         /// is used. Refer to the VM size documentation for Windows VM at
         /// https://learn.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
         /// https://learn.microsoft.com/azure/virtual-machines/linux/sizes to check which VM

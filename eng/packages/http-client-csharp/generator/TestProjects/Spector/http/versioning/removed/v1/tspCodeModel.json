@@ -691,7 +691,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.v1",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
@@ -869,7 +870,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.v2",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
@@ -1050,7 +1052,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.modelV3",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
@@ -1273,7 +1276,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.Removed"
               },
               "parameters": [
                 {

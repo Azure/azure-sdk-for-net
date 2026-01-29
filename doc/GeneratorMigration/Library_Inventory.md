@@ -13,11 +13,11 @@
 
 ## Summary
 
-- Total libraries: 401
-- Management Plane (MPG): 227
+- Total libraries: 403
+- Management Plane (MPG): 229
   - Autorest/Swagger: 150
-  - New Emitter (TypeSpec): 67
-  - Old TypeSpec: 10
+  - New Emitter (TypeSpec): 76
+  - Old TypeSpec: 3
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
   - New Emitter (TypeSpec): 27
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 67 / 77 (87%)
+**Migration Status**: 76 / 79 (96.2%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -157,16 +157,16 @@ Libraries that provide resource management APIs for Azure services and have been
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
-| chaos | Azure.ResourceManager.Chaos |  |
+| chaos | Azure.ResourceManager.Chaos | ✅ |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
-| computefleet | Azure.ResourceManager.ComputeFleet |  |
+| computefleet | Azure.ResourceManager.ComputeFleet | ✅ |
 | computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
 | computerecommender | Azure.ResourceManager.Compute.Recommender | ✅ |
 | computeschedule | Azure.ResourceManager.ComputeSchedule | ✅ |
 | connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
-| databox | Azure.ResourceManager.DataBox |  |
+| databox | Azure.ResourceManager.DataBox | ✅ |
 | dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
 | dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices |  |
@@ -176,9 +176,10 @@ Libraries that provide resource management APIs for Azure services and have been
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
+| edgeorder | Azure.ResourceManager.EdgeOrder | ✅ |
 | edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | elastic | Azure.ResourceManager.Elastic | ✅ |
-| elasticsan | Azure.ResourceManager.ElasticSan |  |
+| elasticsan | Azure.ResourceManager.ElasticSan | ✅ |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
@@ -190,11 +191,12 @@ Libraries that provide resource management APIs for Azure services and have been
 | impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
+| keyvault | Azure.ResourceManager.KeyVault | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
-| mysql | Azure.ResourceManager.MySql |  |
-| neonpostgres | Azure.ResourceManager.NeonPostgres |  |
+| mysql | Azure.ResourceManager.MySql | ✅ |
+| neonpostgres | Azure.ResourceManager.NeonPostgres | ✅ |
 | nginx | Azure.ResourceManager.Nginx | ✅ |
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | ✅ |
 | oracle | Azure.ResourceManager.OracleDatabase | ✅ |
@@ -211,7 +213,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
-| selfhelp | Azure.ResourceManager.SelfHelp |  |
+| selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager |  |
@@ -237,6 +239,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | agrifood | Azure.ResourceManager.AgFoodPlatform |
 | alertsmanagement | Azure.ResourceManager.AlertsManagement |
 | analysisservices | Azure.ResourceManager.Analysis |
+| anyscale | Azure.ResourceManager.Anyscale |
 | apicenter | Azure.ResourceManager.ApiCenter |
 | apimanagement | Azure.ResourceManager.ApiManagement |
 | appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation |
@@ -288,7 +291,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
-| edgeorder | Azure.ResourceManager.EdgeOrder |
 | eventgrid | Azure.ResourceManager.EventGrid |
 | eventhub | Azure.ResourceManager.EventHubs |
 | extendedlocation | Azure.ResourceManager.ExtendedLocations |
@@ -298,6 +300,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
+| hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | hybridcompute | Azure.ResourceManager.HybridCompute |
@@ -305,7 +308,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
 | iothub | Azure.ResourceManager.IotHub |
-| keyvault | Azure.ResourceManager.KeyVault |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | kusto | Azure.ResourceManager.Kusto |
 | labservices | Azure.ResourceManager.LabServices |

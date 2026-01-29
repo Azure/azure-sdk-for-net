@@ -126,7 +126,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.Service.one",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.Service"
           },
           "parameters": [],
           "response": {},
@@ -163,7 +164,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.Service.two",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.Service"
           },
           "parameters": [],
           "response": {},
@@ -308,7 +310,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.seven",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Client.Structure.Service.Baz"
                   },
                   "parameters": [],
                   "response": {},
@@ -405,7 +408,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Qux.eight",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service.Qux"
               },
               "parameters": [],
               "response": {},
@@ -498,7 +502,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.nine",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Client.Structure.Service.Qux"
                   },
                   "parameters": [],
                   "response": {},
@@ -595,7 +600,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Foo.three",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},
@@ -632,7 +638,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Foo.four",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},
@@ -726,7 +733,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Bar.five",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},
@@ -763,7 +771,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Bar.six",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},

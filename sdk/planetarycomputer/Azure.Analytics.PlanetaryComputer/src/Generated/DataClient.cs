@@ -215,23 +215,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -281,23 +276,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -340,23 +330,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -402,23 +387,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1017,23 +997,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1086,23 +1061,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1148,23 +1118,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1199,23 +1164,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2573,23 +2533,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2639,23 +2594,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2698,23 +2648,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2746,23 +2691,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2806,7 +2746,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -2868,7 +2808,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -2923,7 +2863,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -2967,7 +2907,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3025,7 +2965,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3097,7 +3037,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3162,7 +3102,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3216,7 +3156,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3267,7 +3207,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3326,7 +3266,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3378,7 +3318,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3419,7 +3359,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -3572,15 +3512,10 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
-        /// 
         /// Returns a color map for intervals, where each interval is defined by:
-        /// - A numeric range `[min, max]` representing the interval boundaries.
-        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
-        /// 
+        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// - The first element is an array of two numbers `[min, max]` defining the interval.
-        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
-        /// 
+        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
         /// Example:
         /// ```json
         /// [
@@ -3593,8 +3528,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// ]
         /// ```
         /// This example defines two intervals:
-        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
-        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
+        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3629,15 +3563,10 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
-        /// 
         /// Returns a color map for intervals, where each interval is defined by:
-        /// - A numeric range `[min, max]` representing the interval boundaries.
-        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
-        /// 
+        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// - The first element is an array of two numbers `[min, max]` defining the interval.
-        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
-        /// 
+        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
         /// Example:
         /// ```json
         /// [
@@ -3650,8 +3579,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// ]
         /// ```
         /// This example defines two intervals:
-        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
-        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
+        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3686,15 +3614,10 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate values and color swatches mapping for a given interval classmap.
-        /// 
         /// Returns a color map for intervals, where each interval is defined by:
-        /// - A numeric range `[min, max]` representing the interval boundaries.
-        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
-        /// 
+        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// - The first element is an array of two numbers `[min, max]` defining the interval.
-        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
-        /// 
+        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
         /// Example:
         /// ```json
         /// [
@@ -3707,8 +3630,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// ]
         /// ```
         /// This example defines two intervals:
-        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
-        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
+        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
         /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
@@ -3741,15 +3663,10 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate values and color swatches mapping for a given interval classmap.
-        /// 
         /// Returns a color map for intervals, where each interval is defined by:
-        /// - A numeric range `[min, max]` representing the interval boundaries.
-        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
-        /// 
+        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// - The first element is an array of two numbers `[min, max]` defining the interval.
-        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
-        /// 
+        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
         /// Example:
         /// ```json
         /// [
@@ -3762,8 +3679,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// ]
         /// ```
         /// This example defines two intervals:
-        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
-        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
+        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
         /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
@@ -3796,7 +3712,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate a legend image for a given colormap.
-        /// 
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
@@ -3836,7 +3751,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate a legend image for a given colormap.
-        /// 
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
@@ -3876,7 +3790,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate a legend image for a given colormap.
-        /// 
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
@@ -3900,7 +3813,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate a legend image for a given colormap.
-        /// 
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
@@ -4477,7 +4389,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4547,7 +4459,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4610,7 +4522,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4662,7 +4574,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4728,7 +4640,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4806,7 +4718,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4877,7 +4789,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4937,7 +4849,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -4986,7 +4898,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -5043,7 +4955,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -5093,7 +5005,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
@@ -5132,7 +5044,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxZoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
         /// 1.0 = 258x258).
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>

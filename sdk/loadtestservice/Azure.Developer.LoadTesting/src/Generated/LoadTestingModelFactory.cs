@@ -100,7 +100,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="clientMetric"> The client metric on which the criteria should be applied. </param>
         /// <param name="aggregate">
         /// The aggregation function to be applied on the client metric. Allowed functions
-        /// - ‘percentage’ - for error metric , ‘avg’, percentiles like ‘p50’, ‘p90’, &amp; so on, ‘min’,
+        /// <list type="bullet"><item><description>‘percentage’ - for error metric , ‘avg’, percentiles like ‘p50’, ‘p90’, &amp; so on, ‘min’,</description></item></list>
         /// ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec,
         /// ‘count’ - for requests
         /// </param>
