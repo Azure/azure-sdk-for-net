@@ -37,6 +37,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private readonly List<DerivedMetric<Trace>> traceTelemetryMetrics = new List<DerivedMetric<Trace>>();
 
+        private readonly List<DerivedMetric<Event>> eventTelemetryMetrics = new List<DerivedMetric<Event>>();
+
         private readonly List<DocumentStream> documentStreams = new List<DocumentStream>();
         #endregion
 
@@ -106,6 +108,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         public IEnumerable<DerivedMetric<ExceptionDocument>> ExceptionMetrics => exceptionTelemetryMetrics;
 
         public IEnumerable<DerivedMetric<Trace>> TraceMetrics => traceTelemetryMetrics;
+
+        public IEnumerable<DerivedMetric<Event>> EventMetrics => eventTelemetryMetrics;
 
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.
@@ -267,6 +271,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     case TelemetryType.Trace:
                         AddMetric(metricInfo, traceTelemetryMetrics, out localErrors);
                         break;
+                    case TelemetryType.Event:
+                        AddMetric(metricInfo, eventTelemetryMetrics, out localErrors);
+                        break;
                     default:
                         errorList.Add(
                             CollectionConfigurationError.CreateError(
@@ -295,7 +302,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                 requestDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))
                 .Concat(dependencyTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
                 .Concat(exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-                .Concat(traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
+                .Concat(traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(eventTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
             {
                 telemetryMetadata.Add(metricIds);
             }
