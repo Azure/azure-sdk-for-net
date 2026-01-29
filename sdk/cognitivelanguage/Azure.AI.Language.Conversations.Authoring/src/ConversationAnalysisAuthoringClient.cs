@@ -1,18 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using Azure.Core;
-using System.Threading.Tasks;
-using System;
-using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    [CodeGenSuppress("GetConversationAuthoringProjectClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringDeploymentClient", typeof(string), typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringExportedModelClient", typeof(string), typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringTrainedModelClient", typeof(string), typeof(string))]
+    // [CodeGenSuppress("GetConversationAuthoringProjectClient", typeof(string))]
+    // [CodeGenSuppress("GetConversationAuthoringDeploymentClient", typeof(string), typeof(string))]
+    // [CodeGenSuppress("GetConversationAuthoringExportedModelClient", typeof(string), typeof(string))]
+    // [CodeGenSuppress("GetConversationAuthoringTrainedModelClient", typeof(string), typeof(string))]
+    [CodeGenType("AuthoringClient")]
     public partial class ConversationAnalysisAuthoringClient
     {
         /// <summary> Initializes a new instance of ConversationAuthoringProject. </summary>
@@ -21,7 +18,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new ConversationAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, _apiVersion);
+            return new ConversationAuthoringProject(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, projectName);
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringDeployment. </summary>
@@ -32,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return new ConversationAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, deploymentName, _apiVersion);
+            return new ConversationAuthoringDeployment(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, projectName, deploymentName);
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
@@ -43,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            return new ConversationAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, exportedModelName, _apiVersion);
+            return new ConversationAuthoringExportedModel(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, projectName, exportedModelName);
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
@@ -54,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return new ConversationAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, trainedModelLabel, _apiVersion);
+            return new ConversationAuthoringTrainedModel(ClientDiagnostics, Pipeline, _apiVersion, _endpoint, projectName, trainedModelLabel);
         }
     }
 }

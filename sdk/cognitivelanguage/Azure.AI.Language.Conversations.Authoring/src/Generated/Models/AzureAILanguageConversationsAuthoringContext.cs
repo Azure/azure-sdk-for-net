@@ -6,30 +6,35 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringConfusionMatrixCell))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringConfusionMatrixRow))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringDataGenerationConnectionInfo))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringDataGenerationSettings))]
+    [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringEntityEvaluationSummary))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult))]
+    [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceEntityEvaluationResult))]
+    [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult))]
+    [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignDeploymentResourcesDetails))]
+    [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignedDeploymentResource))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignedProjectDeploymentMetadata))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignedProjectDeploymentsMetadata))]
-    [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignedProjectResource))]
-    [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignProjectResourcesDetails))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringCopyProjectDetails))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringCopyProjectState))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringCreateDeploymentDetails))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringCreateProjectDetails))]
+    [ModelReaderWriterBuildable(typeof(ConversationAuthoringDeleteDeploymentDetails))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringDeploymentDeleteFromResourcesState))]
+    [ModelReaderWriterBuildable(typeof(ConversationAuthoringDeploymentResource))]
+    [ModelReaderWriterBuildable(typeof(ConversationAuthoringDeploymentResourcesState))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringDeploymentState))]
-    [ModelReaderWriterBuildable(typeof(ConversationAuthoringEntityEvalSummary))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringEvalSummary))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringEvaluationDetails))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringEvaluationJobResult))]
@@ -50,8 +55,6 @@ namespace Azure.AI.Language.Conversations.Authoring
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringProjectDeletionState))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringProjectDeployment))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringProjectMetadata))]
-    [ModelReaderWriterBuildable(typeof(ConversationAuthoringProjectResourceIds))]
-    [ModelReaderWriterBuildable(typeof(ConversationAuthoringProjectResourcesState))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringProjectSettings))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringProjectTrainedModel))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringResourceMetadata))]
@@ -85,11 +88,20 @@ namespace Azure.AI.Language.Conversations.Authoring
     [ModelReaderWriterBuildable(typeof(OrchestrationExportedIntent))]
     [ModelReaderWriterBuildable(typeof(OrchestrationExportedProjectAsset))]
     [ModelReaderWriterBuildable(typeof(OrchestrationExportedUtterance))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringAssignedProjectDeploymentsMetadata))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringExportedTrainedModel))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringPrebuiltEntity))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringProjectDeployment))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringProjectMetadata))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringProjectResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringProjectTrainedModel))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringSupportedLanguage))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringTrainingConfigVersion))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringTrainingJobState))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeConversationAuthoringUtteranceEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(UnknownConversationAuthoringExportedProjectAsset))]
     [ModelReaderWriterBuildable(typeof(UnknownExportedOrchestrationDetails))]
-    [ModelReaderWriterBuildable(typeof(UtteranceEntityEvaluationResult))]
-    [ModelReaderWriterBuildable(typeof(UtteranceEvaluationResult))]
     public partial class AzureAILanguageConversationsAuthoringContext : ModelReaderWriterContext
     {
     }
