@@ -174,17 +174,6 @@ Console.WriteLine($"Sources: {sources}");
 
 > Additional operations (update QnAs, export, delete) follow similar patterns using `Operation<T>` or direct `Response` objects.
 
-## Type forwarding & migration
-
-As of the 2.0.0 preview split (use `--prerelease` to opt in):
-- The main package (`Azure.AI.Language.QuestionAnswering`) focuses on authoring but continues to expose inference types via type forwarding.
-- The runtime implementation is provided by `Azure.AI.Language.QuestionAnswering.Inference`.
-- Existing source code using inference or authoring APIs should compile without change after upgrading, because public inference types remain in the reference surface (source + binary compatibility).
-- If you only need runtime querying, you can depend solely on the inference package for a reduced dependency surface.
-- Future previews may de-emphasize inference APIs in the main package—follow the CHANGELOG for updates.
-
-No code changes are required for upgrading typical projects. Use `dotnet add package <package>` for stable; add `--prerelease` only if you need preview features or the newer service version.
-
 ## Troubleshooting
 
 | Issue | Possible Cause | Mitigation |
@@ -218,4 +207,3 @@ See the root repository contributing guide for how to build, test, and submit ch
 [authoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/samples/
 [questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
 [authoring_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering-authoring/operation-groups?view=rest-language-question-answering-authoring-2025-05-15-preview
-
