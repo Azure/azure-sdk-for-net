@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct ContainerServiceFleetTargetType : IEquatable<ContainerServiceFleetTargetType>
     {
         private readonly string _value;
+        /// <summary> Skip the update of a member. </summary>
+        private const string MemberValue = "Member";
+        /// <summary> Skip the update of a group. </summary>
+        private const string GroupValue = "Group";
+        /// <summary> Skip the update of an entire stage including the after stage wait. </summary>
+        private const string StageValue = "Stage";
+        /// <summary> Skip the update of the after stage wait of a certain stage. </summary>
+        private const string AfterStageWaitValue = "AfterStageWait";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceFleetTargetType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MemberValue = "Member";
-        private const string GroupValue = "Group";
-        private const string StageValue = "Stage";
-        private const string AfterStageWaitValue = "AfterStageWait";
+            _value = value;
+        }
 
         /// <summary> Skip the update of a member. </summary>
         public static ContainerServiceFleetTargetType Member { get; } = new ContainerServiceFleetTargetType(MemberValue);
+
         /// <summary> Skip the update of a group. </summary>
         public static ContainerServiceFleetTargetType Group { get; } = new ContainerServiceFleetTargetType(GroupValue);
+
         /// <summary> Skip the update of an entire stage including the after stage wait. </summary>
         public static ContainerServiceFleetTargetType Stage { get; } = new ContainerServiceFleetTargetType(StageValue);
+
         /// <summary> Skip the update of the after stage wait of a certain stage. </summary>
         public static ContainerServiceFleetTargetType AfterStageWait { get; } = new ContainerServiceFleetTargetType(AfterStageWaitValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetTargetType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceFleetTargetType left, ContainerServiceFleetTargetType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetTargetType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceFleetTargetType left, ContainerServiceFleetTargetType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetTargetType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceFleetTargetType(string value) => new ContainerServiceFleetTargetType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceFleetTargetType?(string value) => value == null ? null : new ContainerServiceFleetTargetType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceFleetTargetType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceFleetTargetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
