@@ -579,13 +579,67 @@ namespace Azure.Generator.Tests.Visitors
                 // Verify that the WireInfo does not contain an incorrect SerializedName
                 // The matchConditions parameter is synthetic and should not have a SerializedName
                 // from the original conditional headers like "If-Match" or "If-None-Match"
-                // It should use a special serialized name with angle brackets to avoid conflicts
+                // It should have empty string as SerializedName since it's not directly serialized
                 Assert.AreNotEqual("If-Match", matchConditionsParam.WireInfo.SerializedName,
                     "MatchConditions parameter should not have 'If-Match' as SerializedName");
                 Assert.AreNotEqual("If-None-Match", matchConditionsParam.WireInfo.SerializedName,
                     "MatchConditions parameter should not have 'If-None-Match' as SerializedName");
-                Assert.AreEqual("<matchConditions>", matchConditionsParam.WireInfo.SerializedName,
-                    "MatchConditions parameter should have a special SerializedName with angle brackets");
+                Assert.AreEqual(string.Empty, matchConditionsParam.WireInfo.SerializedName,
+                    "MatchConditions parameter should have empty SerializedName since it's not directly serialized");
+            }
+        }
+
+        [Test]
+        public void TestRequestConditionsParameterDoesNotHaveIncorrectWireInfo()
+        {
+            var visitor = new TestMatchConditionsHeaderVisitor();
+            var parameters = new List<InputParameter>
+            {
+                CreateTestParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header)
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header)
+            };
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
+
+            foreach (var method in methodCollection)
+            {
+                visitor.VisitScmMethod(method);
+                // Verify that the RequestConditions parameter is added
+                Assert.AreEqual(2, method.Signature.Parameters.Count);
+                var requestConditionsParam = method.Signature.Parameters[0];
+                Assert.AreEqual("requestConditions", requestConditionsParam.Name);
+                Assert.IsTrue(requestConditionsParam.Type.Equals(RequestConditionsType));
+
+                // Verify that the WireInfo does not contain an incorrect SerializedName
+                // The requestConditions parameter is synthetic and should not have a SerializedName
+                // from the original conditional headers like "If-Modified-Since" or "If-Unmodified-Since"
+                // It should have empty string as SerializedName since it's not directly serialized
+                Assert.AreNotEqual("If-Modified-Since", requestConditionsParam.WireInfo.SerializedName,
+                    "RequestConditions parameter should not have 'If-Modified-Since' as SerializedName");
+                Assert.AreNotEqual("If-Unmodified-Since", requestConditionsParam.WireInfo.SerializedName,
+                    "RequestConditions parameter should not have 'If-Unmodified-Since' as SerializedName");
+                Assert.AreEqual(string.Empty, requestConditionsParam.WireInfo.SerializedName,
+                    "RequestConditions parameter should have empty SerializedName since it's not directly serialized");
             }
         }
 

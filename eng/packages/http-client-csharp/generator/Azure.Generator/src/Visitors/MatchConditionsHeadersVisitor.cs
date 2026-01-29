@@ -191,12 +191,11 @@ namespace Azure.Generator.Visitors
                 originalMatchConditionsParameter,
                 headerFlags);
 
-            // Set a special serialized name to avoid conflicts with real parameters
-            // Use angle brackets to make it clear this is a synthetic parameter
-            var specialSerializedName = $"<{updatedConditionsParameter.Name}>";
+            // Set serialized name to empty string since this is a synthetic parameter
+            // The actual headers are added via extension methods with fixed header names
             var customWireInfo = new WireInformation(
                 originalMatchConditionsParameter.WireInfo.SerializationFormat,
-                specialSerializedName);
+                string.Empty);
             updatedConditionsParameter.Update(wireInfo: customWireInfo);
 
             var updatedParams = new List<ParameterProvider>();
