@@ -7,49 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    /// <summary>
-    /// A class representing the FleetUpdateStrategy data model.
-    /// Defines a multi-stage process to perform update operations across members of a Fleet.
-    /// </summary>
+    /// <summary> Defines a multi-stage process to perform update operations across members of a Fleet. </summary>
     public partial class FleetUpdateStrategyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FleetUpdateStrategyData"/>. </summary>
         public FleetUpdateStrategyData()
@@ -57,33 +26,42 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetUpdateStrategyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="provisioningState"> The provisioning state of the UpdateStrategy resource. </param>
-        /// <param name="strategy"> Defines the update sequence of the clusters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FleetUpdateStrategyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, FleetUpdateStrategyProvisioningState? provisioningState, ContainerServiceFleetUpdateRunStrategy strategy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FleetUpdateStrategyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FleetUpdateStrategyProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             ETag = eTag;
-            ProvisioningState = provisioningState;
-            Strategy = strategy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FleetUpdateStrategyProperties Properties { get; set; }
 
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? ETag { get; }
+
         /// <summary> The provisioning state of the UpdateStrategy resource. </summary>
-        public FleetUpdateStrategyProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the update sequence of the clusters. </summary>
-        internal ContainerServiceFleetUpdateRunStrategy Strategy { get; set; }
+        public FleetUpdateStrategyProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The list of stages that compose this update run. Min size: 1. </summary>
         public IList<ContainerServiceFleetUpdateStage> StrategyStages
         {
-            get => Strategy is null ? default : Strategy.Stages;
-            set => Strategy = new ContainerServiceFleetUpdateRunStrategy(value);
+            get
+            {
+                return Properties is null ? default : Properties.StrategyStages;
+            }
         }
     }
 }

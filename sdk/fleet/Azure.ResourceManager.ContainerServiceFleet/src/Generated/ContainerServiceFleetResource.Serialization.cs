@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
+    /// <summary></summary>
     public partial class ContainerServiceFleetResource : IJsonModel<ContainerServiceFleetData>
     {
-        private static ContainerServiceFleetData s_dataDeserializationInstance;
-        private static ContainerServiceFleetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ContainerServiceFleetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ContainerServiceFleetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerServiceFleetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServiceFleetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceFleetData>)Data).Write(writer, options);
 
-        ContainerServiceFleetData IJsonModel<ContainerServiceFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceFleetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceFleetData IJsonModel<ContainerServiceFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerServiceFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceFleetData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerServiceFleetData IPersistableModel<ContainerServiceFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceFleetData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        string IPersistableModel<ContainerServiceFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceFleetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServiceFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,90 +7,104 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    /// <summary>
-    /// A class representing the ContainerServiceFleetMember data model.
-    /// A member of the Fleet. It contains a reference to an existing Kubernetes cluster on Azure.
-    /// </summary>
+    /// <summary> A member of the Fleet. It contains a reference to an existing Kubernetes cluster on Azure. </summary>
     public partial class ContainerServiceFleetMemberData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
         public ContainerServiceFleetMemberData()
         {
-            Labels = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
-        /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="labels"> The labels for the fleet member. </param>
-        /// <param name="status"> Status information of the last operation for fleet member. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string group, FleetMemberProvisioningState? provisioningState, IDictionary<string, string> labels, ContainerServiceFleetMemberStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FleetMemberProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             ETag = eTag;
-            ClusterResourceId = clusterResourceId;
-            Group = group;
-            ProvisioningState = provisioningState;
-            Labels = labels;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FleetMemberProperties Properties { get; set; }
 
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? ETag { get; }
+
         /// <summary> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </summary>
-        public ResourceIdentifier ClusterResourceId { get; set; }
+        public ResourceIdentifier ClusterResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetMemberProperties();
+                }
+                Properties.ClusterResourceId = value;
+            }
+        }
+
         /// <summary> The group this member belongs to for multi-cluster update management. </summary>
-        public string Group { get; set; }
+        public string Group
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Group;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetMemberProperties();
+                }
+                Properties.Group = value;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
-        public FleetMemberProvisioningState? ProvisioningState { get; }
+        public FleetMemberProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The labels for the fleet member. </summary>
-        public IDictionary<string, string> Labels { get; }
+        public IDictionary<string, string> Labels
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Labels;
+            }
+        }
+
         /// <summary> Status information of the last operation for fleet member. </summary>
-        public ContainerServiceFleetMemberStatus Status { get; }
+        public ContainerServiceFleetMemberStatus Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
     }
 }

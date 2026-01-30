@@ -13,58 +13,54 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The type used for update operations of the FleetMember. </summary>
     public partial class ContainerServiceFleetMemberPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
         public ContainerServiceFleetMemberPatch()
         {
-            Labels = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
-        /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
-        /// <param name="labels"> The labels for the fleet member. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetMemberPatch(string group, IDictionary<string, string> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetMemberPatch(FleetMemberUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Group = group;
-            Labels = labels;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FleetMemberUpdateProperties Properties { get; set; }
+
         /// <summary> The group this member belongs to for multi-cluster update management. </summary>
-        public string Group { get; set; }
+        public string Group
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Group;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetMemberUpdateProperties();
+                }
+                Properties.Group = value;
+            }
+        }
+
         /// <summary> The labels for the fleet member. </summary>
-        public IDictionary<string, string> Labels { get; }
+        public IDictionary<string, string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetMemberUpdateProperties();
+                }
+                return Properties.Labels;
+            }
+        }
     }
 }
