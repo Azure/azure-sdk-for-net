@@ -145,7 +145,7 @@ interface Employees2 {
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(metadata.resourceName, "Employee");
-    strictEqual(metadata.methods.length, 5);
+    strictEqual(metadata.methods.length, 6);
 
     // Validate method kinds are present (Read, Create, Update, Delete, List operations)
     const methodKinds = metadata.methods.map((m: any) => m.kind);
@@ -224,14 +224,30 @@ interface Employees2 {
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
 
-    // Note: listBySubscription is not matched to this resource because prefix matching fails
-    // (the subscription-scoped operation path doesn't share the resourceGroup prefix with the resource path)
+    // Validate ListBySubscription
+    const listBySubEntry = metadata.methods.find(
+      (m: any) =>
+        m.kind === "List" && m.operationScope === ResourceScope.Subscription
+    );
+    ok(listBySubEntry);
+    strictEqual(listBySubEntry.kind, "List");
+    strictEqual(
+      listBySubEntry.operationPath,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
+    );
+    strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
+    strictEqual(listBySubEntry.resourceScope, undefined);
 
-    // Note: buildArmProviderSchema and resolveArmResources handle unmatched list operations differently.
-    // buildArmProviderSchema may add them to nonResourceMethods in some edge cases during post-processing.
-    // For now, we verify individual schema correctness rather than full equality.
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    // Note: Methods should now be populated by the converter with the name-based fallback lookup
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
   });
 
   it("singleton resource", async () => {
@@ -1051,13 +1067,9 @@ interface Employees {
     strictEqual(metadata.resourceScope, "ResourceGroup");
     strictEqual(metadata.parentResourceId, undefined);
     strictEqual(metadata.resourceName, "EmployeeParent");
-    // Get and ListByParent - the list operation from the Employee child resource
-    // is merged to the parent via post-processing based on @parentResource decorator
-    strictEqual(metadata.methods.length, 2);
+    strictEqual(metadata.methods.length, 2); // Get and ListByParent
 
-    // Validate EmployeeParent has both get and listByParent methods
-    const getEntry = metadata.methods.find((m: any) => m.kind === "Read");
-    ok(getEntry);
+    // Validate EmployeeParent has listByParent method
     const listByParentEntry = metadata.methods.find(
       (m: any) => m.kind === "List"
     );

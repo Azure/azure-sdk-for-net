@@ -233,14 +233,24 @@ interface Employees {
     const root = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    // listBySubscription fails prefix matching (subscription-scoped path doesn't match
-    // the resource-group-scoped resource path). It is handled by post-processing.
+    // Should not have non-resource methods since all methods are standard ARM operations
     ok(armProviderSchemaResult, "Should have ARM provider schema");
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      0,
+      "Should have no non-resource methods for standard ARM operations"
+    );
 
-    // Note: buildArmProviderSchema and resolveArmResources handle unmatched list operations differently.
-    // For now, we verify individual schema correctness rather than full equality.
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should detect mixed resource and non-resource methods", async () => {

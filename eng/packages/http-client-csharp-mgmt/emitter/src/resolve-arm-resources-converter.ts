@@ -71,10 +71,6 @@ export function resolveArmResources(
     ResolvedResource
   >();
 
-  // Non-resource methods will be populated during resource conversion
-  // (list operations that fail prefix matching are added here)
-  const nonResourceMethods: NonResourceMethod[] = [];
-
   if (provider.resources) {
     for (const resolvedResource of provider.resources) {
       // Get the model from SDK context
@@ -107,6 +103,9 @@ export function resolveArmResources(
       schemaToResolvedResource.set(resource, resolvedResource);
     }
   }
+
+  // Convert non-resource methods
+  const nonResourceMethods: NonResourceMethod[] = [];
 
   // Create parent lookup context for resolveArmResources
   // In this case, parent information comes from ResolvedResource objects
@@ -300,39 +299,20 @@ function convertResolvedResourceToMetadata(
   }
 
   // Convert list operations
-  // Only include list operations that pass prefix matching - the resource parent path
-  // (resource path without the last segment) should be a prefix of the list operation path.
-  // List operations that fail prefix matching are skipped entirely (not added anywhere).
-  // This matches the behavior in buildArmProviderSchema.
   if (resolvedResource.operations.lists) {
-    const resourcePath = resolvedResource.resourceInstancePath;
-    const resourceParentPath = resourcePath.substring(
-      0,
-      resourcePath.lastIndexOf("/")
-    );
-
     for (const listOp of resolvedResource.operations.lists) {
       const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
-      if (!methodId) {
-        continue;
+      if (methodId) {
+        methods.push({
+          methodId,
+          kind: ResourceOperationKind.List,
+          operationPath: listOp.path,
+          // TODO: resolveArmResources is not returning the operation scope for list operations, so we calculate it from the path.
+          operationScope: getOperationScopeFromPath(listOp.path),
+          // TODO: resolveArmResources is not returning the resource scope for list operations, so this should be populated later.
+          resourceScope: undefined
+        });
       }
-
-      // Only include if the resource parent path is a prefix of the list operation path
-      if (!isPrefix(resourceParentPath, listOp.path)) {
-        // List operations that fail prefix matching are skipped entirely
-        // (not added to non-resource methods). This matches buildArmProviderSchema behavior.
-        continue;
-      }
-
-      methods.push({
-        methodId,
-        kind: ResourceOperationKind.List,
-        operationPath: listOp.path,
-        // TODO: resolveArmResources is not returning the operation scope for list operations, so we calculate it from the path.
-        operationScope: getOperationScopeFromPath(listOp.path),
-        // TODO: resolveArmResources is not returning the resource scope for list operations, so this should be populated later.
-        resourceScope: undefined
-      });
     }
   }
 

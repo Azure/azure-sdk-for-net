@@ -144,7 +144,11 @@ export function buildArmProviderSchema(
       } else {
         // For non-CRUD operations like List or Action, try to match with existing resource paths for the same model
         const operationPath = method.operation.path;
-        // Collect candidates with prefix match (scored by prefix length)
+        // Collect all matching candidates with resource type match
+        const typeMatchCandidates: Array<{
+          existingPath: string;
+        }> = [];
+        // Collect candidates with both resource type and prefix match (scored by prefix length)
         const prefixMatchCandidates: Array<{
           existingPath: string;
           matchScore: number;
@@ -154,7 +158,28 @@ export function buildArmProviderSchema(
           const [existingModelId, existingPath] = existingKey.split("|");
           // Check if this is for the same model
           if (existingModelId === modelId && existingPath) {
-            // Check for prefix match
+            // Try to match based on resource type segments
+            // Extract the resource type part (after "/providers/")
+            const existingResourceType =
+              calculateResourceTypeFromPath(existingPath);
+            let operationResourceType = "";
+            try {
+              operationResourceType =
+                calculateResourceTypeFromPath(operationPath);
+            } catch {
+              // If we can't calculate resource type, try string matching
+            }
+
+            // If resource types match exactly, this is a potential candidate
+            if (
+              existingResourceType &&
+              operationResourceType === existingResourceType
+            ) {
+              // Add to type match candidates
+              typeMatchCandidates.push({ existingPath });
+            }
+
+            // Also check for prefix match as a fallback
             // The resource path without the last segment (resource name parameter) should be a prefix of the operation path
             const existingParentPath = existingPath.substring(
               0,
@@ -171,27 +196,44 @@ export function buildArmProviderSchema(
         }
 
         // Selection strategy:
-        // If there are prefix matches, use the best one (handles multi-scope resources correctly)
+        // 1. If there are prefix matches, use the best one (handles multi-scope resources correctly)
+        // 2. If there's only ONE type match candidate and no prefix matches, use it
+        //    (handles listBySubscription on a single resource group-scoped resource)
+        // 3. Otherwise, no match found - will be handled by post-processing
         if (prefixMatchCandidates.length > 0) {
           prefixMatchCandidates.sort((a, b) => b.matchScore - a.matchScore);
           resourcePath = prefixMatchCandidates[0].existingPath;
           foundMatchingResource = true;
+        } else if (typeMatchCandidates.length === 1) {
+          // Only one resource with matching type - safe to use it even without prefix match
+          // This handles cases like listBySubscription on a resource group-scoped resource
+          resourcePath = typeMatchCandidates[0].existingPath;
+          foundMatchingResource = true;
         }
-        // If no match found for Action operations, treat them as non-resource methods.
-        // This ensures actions are not lost when their resource has no CRUD operations
-        // to establish a resource path for prefix matching.
+        // If no match found for Action operations that don't have a resource instance in their path,
+        // treat them as non-resource methods (provider operations).
+        // List operations are kept because they'll be handled later when moved to parent resources.
         if (!foundMatchingResource && kind === ResourceOperationKind.Action) {
-          nonResourceMethods.set(method.crossLanguageDefinitionId, {
-            methodId: method.crossLanguageDefinitionId,
-            operationPath: method.operation.path,
-            operationScope: getOperationScopeFromPath(method.operation.path)
-          });
-          return;
+          // Check if the operation path contains the resource type segment
+          // by looking for the resource model name in the path
+          const model = resourceModelMap.get(modelId);
+          const resourceTypeName = model?.name?.toLowerCase();
+          const pathLower = operationPath.toLowerCase();
+
+          // If the path doesn't include the resource type segment (e.g., "scheduledactions"),
+          // it's a provider operation, not a resource action
+          if (resourceTypeName && !pathLower.includes(resourceTypeName)) {
+            nonResourceMethods.set(method.crossLanguageDefinitionId, {
+              methodId: method.crossLanguageDefinitionId,
+              operationPath: method.operation.path,
+              operationScope: getOperationScopeFromPath(method.operation.path)
+            });
+            return;
+          }
         }
-        // If no match found for List operations, use the operation path to create an incomplete
-        // resource entry. This will be handled by post-processing, which can merge the operation
-        // to the parent resource based on the @parentResource decorator.
-        // This allows list operations like listByParent on child resources to be placed on their parent.
+        // If no match found, use the operation path
+        // This is used for List operations on resources without CRUD ops,
+        // which will be handled later during post-processing
         if (!resourcePath) {
           resourcePath = operationPath;
         }
