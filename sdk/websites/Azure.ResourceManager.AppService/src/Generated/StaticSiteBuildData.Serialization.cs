@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
             DateTimeOffset? createdTimeUtc = default;
             DateTimeOffset? lastUpdatedOn = default;
             StaticSiteBuildStatus? status = default;
-            IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
             IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends = default;
             IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<StaticSiteUserProvidedFunctionAppProperties> array = new List<StaticSiteUserProvidedFunctionAppProperties>();
+                            List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteUserProvidedFunctionAppProperties.DeserializeStaticSiteUserProvidedFunctionAppProperties(item, options));
+                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item, options));
                             }
                             userProvidedFunctionApps = array;
                             continue;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppService
                 createdTimeUtc,
                 lastUpdatedOn,
                 status,
-                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppProperties>(),
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
                 linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackendInfo>(),
                 databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>(),
                 serializedAdditionalRawData);

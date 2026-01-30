@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string deletedSiteId = default;
+            ResourceIdentifier deletedSiteId = default;
             bool? recoverConfiguration = default;
             string snapshotTime = default;
             bool? useDRSecondary = default;
@@ -140,7 +140,11 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("deletedSiteId"u8))
                         {
-                            deletedSiteId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deletedSiteId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recoverConfiguration"u8))
@@ -288,15 +292,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Optional.IsDefined(DeletedSiteId))
                 {
                     builder.Append("    deletedSiteId: ");
-                    if (DeletedSiteId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeletedSiteId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeletedSiteId}'");
-                    }
+                    builder.AppendLine($"'{DeletedSiteId.ToString()}'");
                 }
             }
 

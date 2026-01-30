@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             StaticSiteUserProvidedFunctionAppData data = new StaticSiteUserProvidedFunctionAppData
             {
-                FunctionAppResourceId = "/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/functionRG/providers/Microsoft.Web/sites/testFunctionApp",
+                FunctionAppResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/functionRG/providers/Microsoft.Web/sites/testFunctionApp"),
                 FunctionAppRegion = "West US 2",
             };
             bool? isForced = true;

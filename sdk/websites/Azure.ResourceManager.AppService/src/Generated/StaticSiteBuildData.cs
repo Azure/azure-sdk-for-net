@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="StaticSiteBuildData"/>. </summary>
         public StaticSiteBuildData()
         {
-            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppProperties>();
+            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
             LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
             DatabaseConnections = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linkedBackends"> Backends linked to the static side build. </param>
         /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             BuildId = buildId;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
         public StaticSiteBuildStatus? Status { get; }
         /// <summary> User provided function apps registered with the static site build. </summary>
         [WirePath("properties.userProvidedFunctionApps")]
-        public IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> UserProvidedFunctionApps { get; }
+        public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
         /// <summary> Backends linked to the static side build. </summary>
         [WirePath("properties.linkedBackends")]
         public IReadOnlyList<StaticSiteLinkedBackendInfo> LinkedBackends { get; }

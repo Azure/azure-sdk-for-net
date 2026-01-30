@@ -790,16 +790,16 @@ directive:
   - remove-operation: Global_GetSubscriptionOperationWithAsyncResponse
 # ResourceId
   - from: openapi.json
-    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
+    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResourceProperties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
   - from: openapi.json
     where: $.definitions.VnetInfo.properties.vnetResourceId
     transform: $["x-ms-format"] = "arm-id"
   - from: openapi.json
-    where: $.definitions.Recommendation.properties.properties.properties.resourceId
+    where: $.definitions.RecommendationProperties.properties.resourceId
     transform: $["x-ms-format"] = "arm-id"
   - from: openapi.json
-    where: $.definitions.BillingMeter.properties.properties.properties.meterId
+    where: $.definitions.BillingMeterProperties.properties.meterId
     transform: $["x-ms-format"] = "uuid"
   - from: openapi.json
     where: $.definitions.CloningInfo.properties.sourceWebAppId
@@ -832,7 +832,7 @@ directive:
     where: $.definitions.KubeEnvironmentProfile.properties.type
     transform: $["x-ms-format"] = "resource-type"
   - from: openapi.json
-    where: $.definitions.DeletedAppRestoreRequest.properties.properties.properties.deletedSiteId
+    where: $.definitions.DeletedAppRestoreRequestProperties.properties.deletedSiteId
     transform: $["x-ms-format"] = "arm-id"
   - from: openapi.json
     where: $.definitions.SkuInfos.properties.resourceType
@@ -844,14 +844,14 @@ directive:
 #     where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
 #     transform: $["x-ms-format"] = "arm-id"
   - from: openapi.json
-    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
+    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResourceProperties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
 # StaticSiteUserProvidedFunctionAppARMResource and StaticSiteUserProvidedFunctionApp are two models with exactly same properties but different names. Here we manually replace the references so that these two models are combined
   - from: openapi.json
     where: $.definitions.StaticSite.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
   - from: openapi.json
-    where: $.definitions.StaticSiteBuildARMResource.properties.properties.properties.userProvidedFunctionApps.items
+    where: $.definitions.StaticSiteBuildARMResourceProperties.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
 # Enum rename
   - from: swagger-document
@@ -899,19 +899,19 @@ directive:
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
   - from: swagger-document
-    where: $.definitions.AppServicePlan.properties.properties.properties.hostingEnvironmentProfile
+    where: $.definitions.AppServicePlanProperties.properties.hostingEnvironmentProfile
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.AppServicePlan.properties.properties.properties.spotExpirationTime
+    where: $.definitions.AppServicePlanProperties.properties.spotExpirationTime
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.AppServicePlan.properties.properties.properties.freeOfferExpirationTime
+    where: $.definitions.AppServicePlanProperties.properties.freeOfferExpirationTime
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.AppServicePlan.properties.properties.properties.kubeEnvironmentProfile
+    where: $.definitions.AppServicePlanProperties.properties.kubeEnvironmentProfile
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
@@ -935,35 +935,35 @@ directive:
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Site.properties.properties.properties.trafficManagerHostNames
+    where: $.definitions.SiteProperties.properties.trafficManagerHostNames
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Site.properties.properties.properties.hostingEnvironmentProfile
+    where: $.definitions.SiteProperties.properties.hostingEnvironmentProfile
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Site.properties.properties.properties.suspendedTill
+    where: $.definitions.SiteProperties.properties.suspendedTill
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Site.properties.properties.properties.maxNumberOfWorkers
+    where: $.definitions.SiteProperties.properties.maxNumberOfWorkers
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Site.properties.properties.properties.cloningInfo
+    where: $.definitions.SiteProperties.properties.cloningInfo
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Site.properties.properties.properties.slotSwapStatus
+    where: $.definitions.SiteProperties.properties.slotSwapStatus
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Site.properties.properties.properties.inProgressOperationId
+    where: $.definitions.SiteProperties.properties.inProgressOperationId
     transform: >
         $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.SiteSourceControl.properties.properties.properties.gitHubActionConfiguration
+    where: $.definitions.SiteSourceControlProperties.properties.gitHubActionConfiguration
     transform: >
         $["x-nullable"] = true;
   - from: openapi.json
@@ -1118,6 +1118,10 @@ directive:
         $.properties.threads.items = {
             "$ref": "#/definitions/ProcessThreadProperties"
           };
+  - from: openapi.json
+    where: $.definitions.DetectorInfo.properties.supportTopicList
+    transform: >
+        $.xml = { "wrapped": true };
   # Fix for issue: https://github.com/Azure/azure-sdk-for-net/issues/46854
   # TODO: Remove this workaround after the issue is resolved. Issue link: https://github.com/Azure/azure-rest-api-specs/issues/19022
   - from: openapi.json

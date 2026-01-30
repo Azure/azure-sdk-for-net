@@ -524,7 +524,6 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(StaticSiteUserInvitationResult))]
     [ModelReaderWriterBuildable(typeof(StaticSiteUserListResult))]
     [ModelReaderWriterBuildable(typeof(StaticSiteUserProvidedFunctionAppData))]
-    [ModelReaderWriterBuildable(typeof(StaticSiteUserProvidedFunctionAppProperties))]
     [ModelReaderWriterBuildable(typeof(StaticSiteUserProvidedFunctionAppResource))]
     [ModelReaderWriterBuildable(typeof(StaticSiteUserProvidedFunctionAppsListResult))]
     [ModelReaderWriterBuildable(typeof(StaticSiteZipDeployment))]

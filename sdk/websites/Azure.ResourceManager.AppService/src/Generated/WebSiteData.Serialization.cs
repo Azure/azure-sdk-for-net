@@ -174,13 +174,20 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
-                writer.WritePropertyName("trafficManagerHostNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrafficManagerHostNames)
+                if (TrafficManagerHostNames != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("trafficManagerHostNames"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in TrafficManagerHostNames)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("trafficManagerHostNames");
+                }
             }
             if (Optional.IsDefined(IsScmSiteAlsoStopped))
             {
@@ -194,8 +201,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
-                writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue(HostingEnvironmentProfile, options);
+                if (HostingEnvironmentProfile != null)
+                {
+                    writer.WritePropertyName("hostingEnvironmentProfile"u8);
+                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
+                }
+                else
+                {
+                    writer.WriteNull("hostingEnvironmentProfile");
+                }
             }
             if (Optional.IsDefined(IsClientAffinityEnabled))
             {
@@ -274,18 +288,39 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsDefined(SuspendOn))
             {
-                writer.WritePropertyName("suspendedTill"u8);
-                writer.WriteStringValue(SuspendOn.Value, "O");
+                if (SuspendOn != null)
+                {
+                    writer.WritePropertyName("suspendedTill"u8);
+                    writer.WriteStringValue(SuspendOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("suspendedTill");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(MaxNumberOfWorkers))
             {
-                writer.WritePropertyName("maxNumberOfWorkers"u8);
-                writer.WriteNumberValue(MaxNumberOfWorkers.Value);
+                if (MaxNumberOfWorkers != null)
+                {
+                    writer.WritePropertyName("maxNumberOfWorkers"u8);
+                    writer.WriteNumberValue(MaxNumberOfWorkers.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxNumberOfWorkers");
+                }
             }
             if (Optional.IsDefined(CloningInfo))
             {
-                writer.WritePropertyName("cloningInfo"u8);
-                writer.WriteObjectValue(CloningInfo, options);
+                if (CloningInfo != null)
+                {
+                    writer.WritePropertyName("cloningInfo"u8);
+                    writer.WriteObjectValue(CloningInfo, options);
+                }
+                else
+                {
+                    writer.WriteNull("cloningInfo");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -304,8 +339,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsDefined(SlotSwapStatus))
             {
-                writer.WritePropertyName("slotSwapStatus"u8);
-                writer.WriteObjectValue(SlotSwapStatus, options);
+                if (SlotSwapStatus != null)
+                {
+                    writer.WritePropertyName("slotSwapStatus"u8);
+                    writer.WriteObjectValue(SlotSwapStatus, options);
+                }
+                else
+                {
+                    writer.WriteNull("slotSwapStatus");
+                }
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
@@ -319,8 +361,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsDefined(InProgressOperationId))
             {
-                writer.WritePropertyName("inProgressOperationId"u8);
-                writer.WriteStringValue(InProgressOperationId.Value);
+                if (InProgressOperationId != null)
+                {
+                    writer.WritePropertyName("inProgressOperationId"u8);
+                    writer.WriteStringValue(InProgressOperationId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("inProgressOperationId");
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -711,6 +760,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                trafficManagerHostNames = null;
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -739,6 +789,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                hostingEnvironmentProfile = null;
                                 continue;
                             }
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
@@ -867,6 +918,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                suspendedTill = null;
                                 continue;
                             }
                             suspendedTill = property0.Value.GetDateTimeOffset("O");
@@ -876,6 +928,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                maxNumberOfWorkers = null;
                                 continue;
                             }
                             maxNumberOfWorkers = property0.Value.GetInt32();
@@ -885,6 +938,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                cloningInfo = null;
                                 continue;
                             }
                             cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value, options);
@@ -913,6 +967,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                slotSwapStatus = null;
                                 continue;
                             }
                             slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value, options);
@@ -940,6 +995,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                inProgressOperationId = null;
                                 continue;
                             }
                             inProgressOperationId = property0.Value.GetGuid();

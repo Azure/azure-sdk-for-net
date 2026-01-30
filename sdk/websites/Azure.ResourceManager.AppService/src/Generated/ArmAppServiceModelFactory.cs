@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceRecommendation"/> instance for mocking. </returns>
-        public static AppServiceRecommendation AppServiceRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, Guid? recommendationId = null, string resourceId = null, ResourceScopeType? resourceScope = null, string ruleName = null, string displayName = null, string message = null, NotificationLevel? level = null, RecommendationChannel? channels = null, IEnumerable<string> categoryTags = null, string actionName = null, int? enabled = null, IEnumerable<string> states = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? nextNotificationOn = null, DateTimeOffset? notificationExpirationOn = null, DateTimeOffset? notifiedOn = null, double? score = null, bool? isDynamic = null, string extensionName = null, string bladeName = null, string forwardLink = null, string kind = null)
+        public static AppServiceRecommendation AppServiceRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, Guid? recommendationId = null, ResourceIdentifier resourceId = null, ResourceScopeType? resourceScope = null, string ruleName = null, string displayName = null, string message = null, NotificationLevel? level = null, RecommendationChannel? channels = null, IEnumerable<string> categoryTags = null, string actionName = null, int? enabled = null, IEnumerable<string> states = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? nextNotificationOn = null, DateTimeOffset? notificationExpirationOn = null, DateTimeOffset? notifiedOn = null, double? score = null, bool? isDynamic = null, string extensionName = null, string bladeName = null, string forwardLink = null, string kind = null)
         {
             categoryTags ??= new List<string>();
             states ??= new List<string>();
@@ -2038,7 +2038,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <returns> A new <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/> instance for mocking. </returns>
-        public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null)
+        public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ResourceIdentifier functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null)
         {
             return new StaticSiteUserProvidedFunctionAppData(
                 id,
@@ -5725,7 +5725,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.DeletedAppRestoreContent"/> instance for mocking. </returns>
-        public static DeletedAppRestoreContent DeletedAppRestoreContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deletedSiteId = null, bool? recoverConfiguration = null, string snapshotTime = null, bool? useDRSecondary = null, string kind = null)
+        public static DeletedAppRestoreContent DeletedAppRestoreContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier deletedSiteId = null, bool? recoverConfiguration = null, string snapshotTime = null, bool? useDRSecondary = null, string kind = null)
         {
             return new DeletedAppRestoreContent(
                 id,
@@ -6154,9 +6154,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linkedBackends"> Backends linked to the static side build. </param>
         /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <returns> A new <see cref="AppService.StaticSiteBuildData"/> instance for mocking. </returns>
-        public static StaticSiteBuildData StaticSiteBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, StaticSiteBuildStatus? status = null, IEnumerable<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null)
+        public static StaticSiteBuildData StaticSiteBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, StaticSiteBuildStatus? status = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = null, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = null)
         {
-            userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppProperties>();
+            userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppData>();
             linkedBackends ??= new List<StaticSiteLinkedBackendInfo>();
             databaseConnections ??= new List<StaticSiteDatabaseConnectionOverview>();
 
@@ -6176,30 +6176,6 @@ namespace Azure.ResourceManager.AppService.Models
                 userProvidedFunctionApps?.ToList(),
                 linkedBackends?.ToList(),
                 databaseConnections?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUserProvidedFunctionAppProperties"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionAppResourceId"> The resource id of the function app registered with the static site. </param>
-        /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
-        /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.StaticSiteUserProvidedFunctionAppProperties"/> instance for mocking. </returns>
-        public static StaticSiteUserProvidedFunctionAppProperties StaticSiteUserProvidedFunctionAppProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null, string kind = null)
-        {
-            return new StaticSiteUserProvidedFunctionAppProperties(
-                id,
-                name,
-                resourceType,
-                systemData,
-                functionAppResourceId,
-                functionAppRegion,
-                createdOn,
-                kind,
                 serializedAdditionalRawData: null);
         }
 

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ResourceIdentifier functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             FunctionAppResourceId = functionAppResourceId;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
         public string Kind { get; set; }
         /// <summary> The resource id of the function app registered with the static site. </summary>
         [WirePath("properties.functionAppResourceId")]
-        public string FunctionAppResourceId { get; set; }
+        public ResourceIdentifier FunctionAppResourceId { get; set; }
         /// <summary> The region of the function app registered with the static site. </summary>
         [WirePath("properties.functionAppRegion")]
         public string FunctionAppRegion { get; set; }

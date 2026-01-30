@@ -79,8 +79,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
-                writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue(HostingEnvironmentProfile, options);
+                if (HostingEnvironmentProfile != null)
+                {
+                    writer.WritePropertyName("hostingEnvironmentProfile"u8);
+                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
+                }
+                else
+                {
+                    writer.WriteNull("hostingEnvironmentProfile");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
             {
@@ -124,13 +131,27 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(SpotExpireOn))
             {
-                writer.WritePropertyName("spotExpirationTime"u8);
-                writer.WriteStringValue(SpotExpireOn.Value, "O");
+                if (SpotExpireOn != null)
+                {
+                    writer.WritePropertyName("spotExpirationTime"u8);
+                    writer.WriteStringValue(SpotExpireOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("spotExpirationTime");
+                }
             }
             if (Optional.IsDefined(FreeOfferExpireOn))
             {
-                writer.WritePropertyName("freeOfferExpirationTime"u8);
-                writer.WriteStringValue(FreeOfferExpireOn.Value, "O");
+                if (FreeOfferExpireOn != null)
+                {
+                    writer.WritePropertyName("freeOfferExpirationTime"u8);
+                    writer.WriteStringValue(FreeOfferExpireOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("freeOfferExpirationTime");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -169,8 +190,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
-                writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                writer.WriteObjectValue(KubeEnvironmentProfile, options);
+                if (KubeEnvironmentProfile != null)
+                {
+                    writer.WritePropertyName("kubeEnvironmentProfile"u8);
+                    writer.WriteObjectValue(KubeEnvironmentProfile, options);
+                }
+                else
+                {
+                    writer.WriteNull("kubeEnvironmentProfile");
+                }
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -407,6 +435,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                hostingEnvironmentProfile = null;
                                 continue;
                             }
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
@@ -484,6 +513,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                spotExpirationTime = null;
                                 continue;
                             }
                             spotExpirationTime = property0.Value.GetDateTimeOffset("O");
@@ -493,6 +523,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                freeOfferExpirationTime = null;
                                 continue;
                             }
                             freeOfferExpirationTime = property0.Value.GetDateTimeOffset("O");
@@ -561,6 +592,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                kubeEnvironmentProfile = null;
                                 continue;
                             }
                             kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);
