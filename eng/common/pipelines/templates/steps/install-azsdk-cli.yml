@@ -1,0 +1,16 @@
+parameters:
+  InstallDirectory: $(Agent.TempDirectory)
+  SourceRootPath: '$(System.DefaultWorkingDirectory)'
+
+steps:
+  - task: Powershell@2
+    displayName: 'Install Azure SDK Tools CLI'
+    inputs:
+      targetType: 'inline'
+      script: |
+        & "${{ parameters.SourceRootPath }}/eng/common/mcp/azure-sdk-mcp.ps1" -InstallDirectory ${{ parameters.InstallDirectory }}
+        $azsdkPath = Join-Path "${{ parameters.InstallDirectory }}" "azsdk$(if ($IsWindows) { '.exe' } else { '' })"
+        Write-Host "##vso[task.setvariable variable=AZSDK]$azsdkPath"
+        Write-Host "Set AZSDK variable to: $azsdkPath"
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
