@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PureStorageBlock.Mocking;
+using Azure.ResourceManager.PureStorageBlock.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PureStorageBlock
@@ -253,6 +254,378 @@ namespace Azure.ResourceManager.PureStorageBlock
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetPureStoragePool(storagePoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Limits constraining certain resource properties.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetResourceLimitsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<PureStorageResourceLimitDetails>> GetResourceLimitsAsync(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetResourceLimitsAsync(reservationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Limits constraining certain resource properties.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetResourceLimits(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<PureStorageResourceLimitDetails> GetResourceLimits(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetResourceLimits(reservationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Provides various statistics about resources billed via given reservation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetBillingStatusAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ReservationBillingStatus>> GetBillingStatusAsync(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetBillingStatusAsync(reservationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Provides various statistics about resources billed via given reservation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetBillingStatus(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ReservationBillingStatus> GetBillingStatus(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetBillingStatus(reservationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetBillingReportAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ReservationBillingUsageReport>> GetBillingReportAsync(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetBillingReportAsync(reservationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetBillingReport(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ReservationBillingUsageReport> GetBillingReport(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetBillingReport(reservationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve health metrics of a storage pool
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetHealthStatusAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<StoragePoolHealthInfo>> GetHealthStatusAsync(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetHealthStatusAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve health metrics of a storage pool
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetHealthStatus(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<StoragePoolHealthInfo> GetHealthStatus(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetHealthStatus(storagePoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns current information about an on-going connection to an AVS instance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetAvsConnectionAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<PureStorageAvsConnection>> GetAvsConnectionAsync(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetAvsConnectionAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns current information about an on-going connection to an AVS instance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetAvsConnection(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<PureStorageAvsConnection> GetAvsConnection(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetAvsConnection(storagePoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the status of the storage pool connection to AVS
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetAvsStatusAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<PureStorageAvsStatus>> GetAvsStatusAsync(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetAvsStatusAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the status of the storage pool connection to AVS
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetAvsStatus(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<PureStorageAvsStatus> GetAvsStatus(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetAvsStatus(storagePoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.EnableAvsConnectionAsync(WaitUntil, string, StoragePoolEnableAvsConnectionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> EnableAvsConnectionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).EnableAvsConnectionAsync(waitUntil, storagePoolName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.EnableAvsConnection(WaitUntil, string, StoragePoolEnableAvsConnectionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation EnableAvsConnection(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).EnableAvsConnection(waitUntil, storagePoolName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Disable the existing AVS connection
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.DisableAvsConnectionAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> DisableAvsConnectionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).DisableAvsConnectionAsync(waitUntil, storagePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Disable the existing AVS connection
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.DisableAvsConnection(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation DisableAvsConnection(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).DisableAvsConnection(waitUntil, storagePoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Finalize an already started AVS connection to a specific AVS SDDC
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.FinalizeAvsConnectionAsync(WaitUntil, string, StoragePoolFinalizeAvsConnectionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> FinalizeAvsConnectionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).FinalizeAvsConnectionAsync(waitUntil, storagePoolName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Finalize an already started AVS connection to a specific AVS SDDC
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.FinalizeAvsConnection(WaitUntil, string, StoragePoolFinalizeAvsConnectionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation FinalizeAvsConnection(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).FinalizeAvsConnection(waitUntil, storagePoolName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Test and repair, if needed, all configuration elements of the storage pool connection to the AVS instance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.RepairAvsConnectionAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RepairAvsConnectionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).RepairAvsConnectionAsync(waitUntil, storagePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Test and repair, if needed, all configuration elements of the storage pool connection to the AVS instance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.RepairAvsConnection(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RepairAvsConnection(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).RepairAvsConnection(waitUntil, storagePoolName, cancellationToken);
         }
 
         /// <summary>

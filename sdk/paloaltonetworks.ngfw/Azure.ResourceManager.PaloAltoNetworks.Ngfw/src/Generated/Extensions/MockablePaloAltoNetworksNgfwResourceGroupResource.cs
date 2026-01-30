@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
@@ -19,6 +21,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePaloAltoNetworksNgfwResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _firewallsClientDiagnostics;
+        private Firewalls _firewallsRestClient;
+        private ClientDiagnostics _localRulesClientDiagnostics;
+        private LocalRules _localRulesRestClient;
+
         /// <summary> Initializes a new instance of MockablePaloAltoNetworksNgfwResourceGroupResource for mocking. </summary>
         protected MockablePaloAltoNetworksNgfwResourceGroupResource()
         {
@@ -30,6 +37,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         internal MockablePaloAltoNetworksNgfwResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics FirewallsClientDiagnostics => _firewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+
+        private ClientDiagnostics LocalRulesClientDiagnostics => _localRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private LocalRules LocalRulesRestClient => _localRulesRestClient ??= new LocalRules(LocalRulesClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
 
         /// <summary> Gets a collection of PaloAltoNetworksFirewalls in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of PaloAltoNetworksFirewalls and their operations over a PaloAltoNetworksFirewallResource. </returns>
@@ -159,6 +174,694 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
 
             return GetLocalRulestacks().Get(localRulestackName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Global Rulestack associated with the Firewall
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getGlobalRulestack. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_GetGlobalRulestack. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<GlobalRulestackInfo>> GetGlobalRulestackAsync(string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetGlobalRulestack");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateGetGlobalRulestackRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GlobalRulestackInfo> response = Response.FromValue(GlobalRulestackInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Global Rulestack associated with the Firewall
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getGlobalRulestack. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_GetGlobalRulestack. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<GlobalRulestackInfo> GetGlobalRulestack(string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetGlobalRulestack");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateGetGlobalRulestackRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GlobalRulestackInfo> response = Response.FromValue(GlobalRulestackInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_GetLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallLogSettings>> GetLogProfileAsync(string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetLogProfile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateGetLogProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallLogSettings> response = Response.FromValue(FirewallLogSettings.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_GetLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallLogSettings> GetLogProfile(string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetLogProfile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateGetLogProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallLogSettings> response = Response.FromValue(FirewallLogSettings.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// support info for firewall.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getSupportInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_GetSupportInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="email"> email address on behalf of which this API called. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallSupportInfo>> GetSupportInfoAsync(string firewallName, string email = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetSupportInfo");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, email, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallSupportInfo> response = Response.FromValue(FirewallSupportInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// support info for firewall.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getSupportInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_GetSupportInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="email"> email address on behalf of which this API called. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallSupportInfo> GetSupportInfo(string firewallName, string email = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetSupportInfo");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, email, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallSupportInfo> response = Response.FromValue(FirewallSupportInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/saveLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_SaveLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="logSettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> SaveLogProfileAsync(string firewallName, FirewallLogSettings logSettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.SaveLogProfile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateSaveLogProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, FirewallLogSettings.ToRequestContent(logSettings), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/saveLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_SaveLogProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="logSettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response SaveLogProfile(string firewallName, FirewallLogSettings logSettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using DiagnosticScope scope = FirewallsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.SaveLogProfile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FirewallsRestClient.CreateSaveLogProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, FirewallLogSettings.ToRequestContent(logSettings), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = LocalRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LocalRulesRestClient.CreateGetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, priority, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallRuleCounter> GetCounters(string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = LocalRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LocalRulesRestClient.CreateGetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, priority, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RefreshCountersAsync(string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = LocalRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LocalRulesRestClient.CreateRefreshCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, priority, firewallName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RefreshCounters(string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = LocalRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LocalRulesRestClient.CreateRefreshCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, priority, firewallName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = LocalRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LocalRulesRestClient.CreateResetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, priority, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallRuleResetConter> ResetCounters(string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = LocalRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwResourceGroupResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LocalRulesRestClient.CreateResetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, priority, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         private readonly Report _client;
         private readonly string _skipToken;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly string _select;
         private readonly string _filter;
         private readonly string _orderby;
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <summary> Initializes a new instance of ReportGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Report client used to send requests. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="maxCount"> Number of elements to return when retrieving results. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="orderby"> OData order by query option. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReportGetAllAsyncCollectionResultOfT(Report client, string skipToken, int? top, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ReportGetAllAsyncCollectionResultOfT(Report client, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _skipToken = skipToken;
-            _top = top;
+            _maxCount = maxCount;
             _select = @select;
             _filter = filter;
             _orderby = @orderby;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _skipToken, _top, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context) : _client.CreateGetAllRequest(_skipToken, _top, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context) : _client.CreateGetAllRequest(_skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppComplianceReportCollection.GetAll");
             scope.Start();
             try

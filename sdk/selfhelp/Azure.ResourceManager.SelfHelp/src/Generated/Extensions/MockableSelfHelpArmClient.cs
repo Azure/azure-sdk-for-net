@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSelfHelpArmClient : ArmResource
     {
+        private ClientDiagnostics _solutionResourcesClientDiagnostics;
+        private SolutionResources _solutionResourcesRestClient;
+        private ClientDiagnostics _troubleshooterResourcesClientDiagnostics;
+        private TroubleshooterResources _troubleshooterResourcesRestClient;
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
         private CheckNameAvailability _checkNameAvailabilityRestClient;
 
@@ -34,6 +38,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         internal MockableSelfHelpArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics SolutionResourcesClientDiagnostics => _solutionResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SolutionResources SolutionResourcesRestClient => _solutionResourcesRestClient ??= new SolutionResources(SolutionResourcesClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
+
+        private ClientDiagnostics TroubleshooterResourcesClientDiagnostics => _troubleshooterResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private TroubleshooterResources TroubleshooterResourcesRestClient => _troubleshooterResourcesRestClient ??= new TroubleshooterResources(TroubleshooterResourcesClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
 
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -226,6 +238,388 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         {
             SelfHelpSolutionResultResource.ValidateResourceId(id);
             return new SelfHelpSolutionResultResource(Client, id);
+        }
+
+        /// <summary>
+        /// Warm up the solution resource by preloading asynchronous diagnostics results into cache
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}/warmup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_WarmUp. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WarmUpAsync(ResourceIdentifier scope, string solutionResourceName, SolutionWarmUpContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            using DiagnosticScope scope0 = SolutionResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.WarmUp");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SolutionResourcesRestClient.CreateWarmUpRequest(scope.ToString(), solutionResourceName, SolutionWarmUpContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Warm up the solution resource by preloading asynchronous diagnostics results into cache
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}/warmup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_WarmUp. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WarmUp(ResourceIdentifier scope, string solutionResourceName, SolutionWarmUpContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            using DiagnosticScope scope0 = SolutionResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.WarmUp");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SolutionResourcesRestClient.CreateWarmUpRequest(scope.ToString(), solutionResourceName, SolutionWarmUpContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/continue. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Continue. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> ContinueAsync(ResourceIdentifier scope, string troubleshooterName, TroubleshooterContinueContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using DiagnosticScope scope0 = TroubleshooterResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.Continue");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TroubleshooterResourcesRestClient.CreateContinueRequest(scope.ToString(), troubleshooterName, TroubleshooterContinueContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/continue. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Continue. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Continue(ResourceIdentifier scope, string troubleshooterName, TroubleshooterContinueContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using DiagnosticScope scope0 = TroubleshooterResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.Continue");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TroubleshooterResourcesRestClient.CreateContinueRequest(scope.ToString(), troubleshooterName, TroubleshooterContinueContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Ends the troubleshooter action
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/end. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_End. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> EndAsync(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using DiagnosticScope scope0 = TroubleshooterResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.End");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TroubleshooterResourcesRestClient.CreateEndRequest(scope.ToString(), troubleshooterName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Ends the troubleshooter action
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/end. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_End. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response End(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using DiagnosticScope scope0 = TroubleshooterResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.End");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TroubleshooterResourcesRestClient.CreateEndRequest(scope.ToString(), troubleshooterName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restarts the troubleshooter API using applicable troubleshooter resource name as the input.&lt;br/&gt; It returns new resource name which should be used in subsequent request. The old resource name is obsolete after this API is invoked.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RestartTroubleshooterResult>> RestartAsync(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using DiagnosticScope scope0 = TroubleshooterResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.Restart");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TroubleshooterResourcesRestClient.CreateRestartRequest(scope.ToString(), troubleshooterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RestartTroubleshooterResult> response = Response.FromValue(RestartTroubleshooterResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restarts the troubleshooter API using applicable troubleshooter resource name as the input.&lt;br/&gt; It returns new resource name which should be used in subsequent request. The old resource name is obsolete after this API is invoked.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TroubleshooterResources_Restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RestartTroubleshooterResult> Restart(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using DiagnosticScope scope0 = TroubleshooterResourcesClientDiagnostics.CreateScope("MockableSelfHelpArmClient.Restart");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TroubleshooterResourcesRestClient.CreateRestartRequest(scope.ToString(), troubleshooterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RestartTroubleshooterResult> response = Response.FromValue(RestartTroubleshooterResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

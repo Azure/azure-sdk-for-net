@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private readonly Evidence _client;
         private readonly string _reportName;
         private readonly string _skipToken;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly string _select;
         private readonly string _filter;
         private readonly string _orderby;
@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="client"> The Evidence client used to send requests. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="maxCount"> Number of elements to return when retrieving results. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="orderby"> OData order by query option. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EvidenceGetByReportCollectionResultOfT(Evidence client, string reportName, string skipToken, int? top, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EvidenceGetByReportCollectionResultOfT(Evidence client, string reportName, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _reportName = reportName;
             _skipToken = skipToken;
-            _top = top;
+            _maxCount = maxCount;
             _select = @select;
             _filter = filter;
             _orderby = @orderby;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByReportRequest(nextLink, _reportName, _skipToken, _top, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context) : _client.CreateGetByReportRequest(_reportName, _skipToken, _top, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByReportRequest(nextLink, _reportName, _skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context) : _client.CreateGetByReportRequest(_reportName, _skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppComplianceReportEvidenceCollection.GetAll");
             scope.Start();
             try

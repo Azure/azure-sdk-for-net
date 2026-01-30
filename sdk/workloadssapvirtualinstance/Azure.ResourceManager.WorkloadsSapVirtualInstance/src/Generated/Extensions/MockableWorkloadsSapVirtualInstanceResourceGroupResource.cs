@@ -10,15 +10,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableWorkloadsSapVirtualInstanceResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _sapCentralServerInstancesClientDiagnostics;
+        private SapCentralServerInstances _sapCentralServerInstancesRestClient;
+        private ClientDiagnostics _sapDatabaseInstancesClientDiagnostics;
+        private SapDatabaseInstances _sapDatabaseInstancesRestClient;
+        private ClientDiagnostics _sapApplicationServerInstancesClientDiagnostics;
+        private SapApplicationServerInstances _sapApplicationServerInstancesRestClient;
+
         /// <summary> Initializes a new instance of MockableWorkloadsSapVirtualInstanceResourceGroupResource for mocking. </summary>
         protected MockableWorkloadsSapVirtualInstanceResourceGroupResource()
         {
@@ -30,6 +40,18 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
         internal MockableWorkloadsSapVirtualInstanceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics SapCentralServerInstancesClientDiagnostics => _sapCentralServerInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SapCentralServerInstances SapCentralServerInstancesRestClient => _sapCentralServerInstancesRestClient ??= new SapCentralServerInstances(SapCentralServerInstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+
+        private ClientDiagnostics SapDatabaseInstancesClientDiagnostics => _sapDatabaseInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SapDatabaseInstances SapDatabaseInstancesRestClient => _sapDatabaseInstancesRestClient ??= new SapDatabaseInstances(SapDatabaseInstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+
+        private ClientDiagnostics SapApplicationServerInstancesClientDiagnostics => _sapApplicationServerInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SapApplicationServerInstances SapApplicationServerInstancesRestClient => _sapApplicationServerInstancesRestClient ??= new SapApplicationServerInstances(SapApplicationServerInstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
 
         /// <summary> Gets a collection of SapVirtualInstances in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of SapVirtualInstances and their operations over a SapVirtualInstanceResource. </returns>
@@ -94,6 +116,714 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             return GetSapVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts the SAP Central Services Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/centralInstances/{centralInstanceName}/start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPCentralServerInstances_Start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StartAsync(WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+
+            using DiagnosticScope scope = SapCentralServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapCentralServerInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, centralInstanceName, StartSapInstanceContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapCentralServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts the SAP Central Services Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/centralInstances/{centralInstanceName}/start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPCentralServerInstances_Start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatusResult> Start(WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+
+            using DiagnosticScope scope = SapCentralServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapCentralServerInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, centralInstanceName, StartSapInstanceContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapCentralServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the SAP Central Services Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/centralInstances/{centralInstanceName}/stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPCentralServerInstances_Stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StopAsync(WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+
+            using DiagnosticScope scope = SapCentralServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapCentralServerInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, centralInstanceName, StopSapInstanceContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapCentralServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the SAP Central Services Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/centralInstances/{centralInstanceName}/stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPCentralServerInstances_Stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatusResult> Stop(WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+
+            using DiagnosticScope scope = SapCentralServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapCentralServerInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, centralInstanceName, StopSapInstanceContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapCentralServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts the database instance of the SAP system.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}/start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDatabaseInstances_Start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Database server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StartAsync(WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using DiagnosticScope scope = SapDatabaseInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapDatabaseInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, databaseInstanceName, StartSapInstanceContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapDatabaseInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts the database instance of the SAP system.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}/start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDatabaseInstances_Start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Database server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatusResult> Start(WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using DiagnosticScope scope = SapDatabaseInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapDatabaseInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, databaseInstanceName, StartSapInstanceContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapDatabaseInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the database instance of the SAP system.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}/stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDatabaseInstances_Stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> Stop request for the database instance of the SAP system. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StopAsync(WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using DiagnosticScope scope = SapDatabaseInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapDatabaseInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, databaseInstanceName, StopSapInstanceContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapDatabaseInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the database instance of the SAP system.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/databaseInstances/{databaseInstanceName}/stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDatabaseInstances_Stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> Stop request for the database instance of the SAP system. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatusResult> Stop(WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+
+            using DiagnosticScope scope = SapDatabaseInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapDatabaseInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, databaseInstanceName, StopSapInstanceContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapDatabaseInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPApplicationServerInstances_Start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StartAsync(WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+
+            using DiagnosticScope scope = SapApplicationServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapApplicationServerInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, applicationInstanceName, StartSapInstanceContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapApplicationServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPApplicationServerInstances_Start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatusResult> Start(WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+
+            using DiagnosticScope scope = SapApplicationServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapApplicationServerInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, applicationInstanceName, StartSapInstanceContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapApplicationServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPApplicationServerInstances_Stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatusResult>> StopAsync(WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+
+            using DiagnosticScope scope = SapApplicationServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapApplicationServerInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, applicationInstanceName, StopSapInstanceContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapApplicationServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops the SAP Application Server Instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}/stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPApplicationServerInstances_Stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatusResult> Stop(WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+
+            using DiagnosticScope scope = SapApplicationServerInstancesClientDiagnostics.CreateScope("MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SapApplicationServerInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, applicationInstanceName, StopSapInstanceContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult> operation = new WorkloadsSapVirtualInstanceArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SapApplicationServerInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

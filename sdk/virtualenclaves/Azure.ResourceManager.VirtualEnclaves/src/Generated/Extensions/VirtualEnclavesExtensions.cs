@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.VirtualEnclaves.Mocking;
+using Azure.ResourceManager.VirtualEnclaves.Models;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
@@ -240,6 +241,48 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
+        /// Upon receiving approval or rejection from approver, this facilitates actions on approval resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.NotifyInitiatorAsync(WaitUntil, ResourceIdentifier, string, ApprovalActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="approvalName"> The name of the approvals resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<ArmOperation<ApprovalActionResult>> NotifyInitiatorAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string approvalName, ApprovalActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableVirtualEnclavesArmClient(client).NotifyInitiatorAsync(waitUntil, scope, approvalName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upon receiving approval or rejection from approver, this facilitates actions on approval resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.NotifyInitiator(WaitUntil, ResourceIdentifier, string, ApprovalActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="approvalName"> The name of the approvals resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static ArmOperation<ApprovalActionResult> NotifyInitiator(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string approvalName, ApprovalActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableVirtualEnclavesArmClient(client).NotifyInitiator(waitUntil, scope, approvalName, content, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of VirtualEnclaves in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -402,6 +445,292 @@ namespace Azure.ResourceManager.VirtualEnclaves
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).GetVirtualEnclaveConnection(enclaveConnectionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks that the IP Address Space to be allocated for this Community is available.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.CheckAddressSpaceAvailabilityAsync(string, CheckAddressSpaceAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="content"> Check IP Address Space request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<CheckAddressSpaceAvailabilityResult>> CheckAddressSpaceAvailabilityAsync(this ResourceGroupResource resourceGroupResource, string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).CheckAddressSpaceAvailabilityAsync(communityName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks that the IP Address Space to be allocated for this Community is available.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.CheckAddressSpaceAvailability(string, CheckAddressSpaceAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="content"> Check IP Address Space request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<CheckAddressSpaceAvailabilityResult> CheckAddressSpaceAvailability(this ResourceGroupResource resourceGroupResource, string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).CheckAddressSpaceAvailability(communityName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreationAsync(WaitUntil, string, ApprovalCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ApprovalActionResult>> HandleApprovalCreationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string enclaveConnectionName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalCreationAsync(waitUntil, enclaveConnectionName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation(WaitUntil, string, ApprovalCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ApprovalActionResult> HandleApprovalCreation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string enclaveConnectionName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalCreation(waitUntil, enclaveConnectionName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletionAsync(WaitUntil, string, ApprovalDeletionCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ApprovalActionResult>> HandleApprovalDeletionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string enclaveConnectionName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalDeletionAsync(waitUntil, enclaveConnectionName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion(WaitUntil, string, ApprovalDeletionCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ApprovalActionResult> HandleApprovalDeletion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string enclaveConnectionName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalDeletion(waitUntil, enclaveConnectionName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreationAsync(WaitUntil, string, string, ApprovalCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ApprovalActionResult>> HandleApprovalCreationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalCreationAsync(waitUntil, virtualEnclaveName, enclaveEndpointName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation(WaitUntil, string, string, ApprovalCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ApprovalActionResult> HandleApprovalCreation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalCreation(waitUntil, virtualEnclaveName, enclaveEndpointName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletionAsync(WaitUntil, string, string, ApprovalDeletionCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ApprovalActionResult>> HandleApprovalDeletionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalDeletionAsync(waitUntil, virtualEnclaveName, enclaveEndpointName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion(WaitUntil, string, string, ApprovalDeletionCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ApprovalActionResult> HandleApprovalDeletion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalDeletion(waitUntil, virtualEnclaveName, enclaveEndpointName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreationAsync(WaitUntil, string, string, ApprovalCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ApprovalActionResult>> HandleApprovalCreationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalCreationAsync(waitUntil, communityName, communityEndpointName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation(WaitUntil, string, string, ApprovalCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ApprovalActionResult> HandleApprovalCreation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalCreation(waitUntil, communityName, communityEndpointName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletionAsync(WaitUntil, string, string, ApprovalDeletionCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ApprovalActionResult>> HandleApprovalDeletionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalDeletionAsync(waitUntil, communityName, communityEndpointName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion(WaitUntil, string, string, ApprovalDeletionCallbackContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ApprovalActionResult> HandleApprovalDeletion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableVirtualEnclavesResourceGroupResource(resourceGroupResource).HandleApprovalDeletion(waitUntil, communityName, communityEndpointName, content, cancellationToken);
         }
 
         /// <summary>

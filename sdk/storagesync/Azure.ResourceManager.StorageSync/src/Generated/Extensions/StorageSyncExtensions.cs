@@ -220,6 +220,130 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary>
+        /// Recall a server endpoint.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSyncResourceGroupResource.RecallActionAsync(WaitUntil, string, string, string, RecallActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
+        /// <param name="content"> Body of Recall Action object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RecallActionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStorageSyncResourceGroupResource(resourceGroupResource).RecallActionAsync(waitUntil, storageSyncServiceName, syncGroupName, serverEndpointName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Recall a server endpoint.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSyncResourceGroupResource.RecallAction(WaitUntil, string, string, string, RecallActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
+        /// <param name="content"> Body of Recall Action object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RecallAction(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageSyncResourceGroupResource(resourceGroupResource).RecallAction(waitUntil, storageSyncServiceName, syncGroupName, serverEndpointName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Triggers Server certificate rollover.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSyncResourceGroupResource.TriggerRolloverAsync(WaitUntil, string, Guid, TriggerRolloverContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="content"> Body of Trigger Rollover request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> TriggerRolloverAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storageSyncServiceName, Guid serverId, TriggerRolloverContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStorageSyncResourceGroupResource(resourceGroupResource).TriggerRolloverAsync(waitUntil, storageSyncServiceName, serverId, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Triggers Server certificate rollover.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSyncResourceGroupResource.TriggerRollover(WaitUntil, string, Guid, TriggerRolloverContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="content"> Body of Trigger Rollover request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation TriggerRollover(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string storageSyncServiceName, Guid serverId, TriggerRolloverContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageSyncResourceGroupResource(resourceGroupResource).TriggerRollover(waitUntil, storageSyncServiceName, serverId, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Abort the given workflow.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSyncResourceGroupResource.AbortAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="workflowId"> workflow Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> AbortAsync(this ResourceGroupResource resourceGroupResource, string storageSyncServiceName, string workflowId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStorageSyncResourceGroupResource(resourceGroupResource).AbortAsync(storageSyncServiceName, workflowId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Abort the given workflow.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSyncResourceGroupResource.Abort(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="workflowId"> workflow Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response Abort(this ResourceGroupResource resourceGroupResource, string storageSyncServiceName, string workflowId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageSyncResourceGroupResource(resourceGroupResource).Abort(storageSyncServiceName, workflowId, cancellationToken);
+        }
+
+        /// <summary>
         /// Get a StorageSyncService list by subscription.
         /// <item>
         /// <term> Mocking. </term>

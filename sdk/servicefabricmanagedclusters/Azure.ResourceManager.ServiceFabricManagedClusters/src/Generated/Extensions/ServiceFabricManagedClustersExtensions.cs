@@ -202,6 +202,1018 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
+        /// Get the status of the latest application upgrade. It will query the cluster to find the status of the latest application upgrade.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.ReadUpgradeAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> ReadUpgradeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).ReadUpgradeAsync(waitUntil, clusterName, applicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of the latest application upgrade. It will query the cluster to find the status of the latest application upgrade.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.ReadUpgrade(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation ReadUpgrade(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).ReadUpgrade(waitUntil, clusterName, applicationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Send a request to resume the current application upgrade. This will resume the application upgrade from where it was paused.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.ResumeUpgradeAsync(WaitUntil, string, string, RuntimeResumeApplicationUpgradeContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for resuming an application upgrade. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> ResumeUpgradeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, RuntimeResumeApplicationUpgradeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).ResumeUpgradeAsync(waitUntil, clusterName, applicationName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Send a request to resume the current application upgrade. This will resume the application upgrade from where it was paused.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.ResumeUpgrade(WaitUntil, string, string, RuntimeResumeApplicationUpgradeContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for resuming an application upgrade. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation ResumeUpgrade(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, RuntimeResumeApplicationUpgradeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).ResumeUpgrade(waitUntil, clusterName, applicationName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Send a request to start a rollback of the current application upgrade. This will start rolling back the application to the previous version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StartRollbackAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> StartRollbackAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StartRollbackAsync(waitUntil, clusterName, applicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Send a request to start a rollback of the current application upgrade. This will start rolling back the application to the previous version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StartRollback(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation StartRollback(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StartRollback(waitUntil, clusterName, applicationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Send a request to update the current application upgrade.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.UpdateUpgradeAsync(WaitUntil, string, string, RuntimeUpdateApplicationUpgradeContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for updating an application upgrade. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> UpdateUpgradeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, RuntimeUpdateApplicationUpgradeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).UpdateUpgradeAsync(waitUntil, clusterName, applicationName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Send a request to update the current application upgrade.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.UpdateUpgrade(WaitUntil, string, string, RuntimeUpdateApplicationUpgradeContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for updating an application upgrade. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation UpdateUpgrade(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, RuntimeUpdateApplicationUpgradeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).UpdateUpgrade(waitUntil, clusterName, applicationName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the status of the deployed application health. It will query the cluster to find the health of the deployed application.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.FetchHealthAsync(WaitUntil, string, string, ApplicationFetchHealthContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for fetching the health of a deployed application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> FetchHealthAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, ApplicationFetchHealthContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).FetchHealthAsync(waitUntil, clusterName, applicationName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of the deployed application health. It will query the cluster to find the health of the deployed application.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.FetchHealth(WaitUntil, string, string, ApplicationFetchHealthContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for fetching the health of a deployed application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation FetchHealth(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, ApplicationFetchHealthContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).FetchHealth(waitUntil, clusterName, applicationName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Restart a code package instance of a service replica or instance. This is a potentially destabilizing operation that should be used with immense care.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.RestartDeployedCodePackageAsync(WaitUntil, string, string, RestartDeployedCodePackageContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for restarting a deployed code package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RestartDeployedCodePackageAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, RestartDeployedCodePackageContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).RestartDeployedCodePackageAsync(waitUntil, clusterName, applicationName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Restart a code package instance of a service replica or instance. This is a potentially destabilizing operation that should be used with immense care.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.RestartDeployedCodePackage(WaitUntil, string, string, RestartDeployedCodePackageContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="content"> The parameters for restarting a deployed code package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RestartDeployedCodePackage(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, RestartDeployedCodePackageContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).RestartDeployedCodePackage(waitUntil, clusterName, applicationName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.RestartReplicaAsync(WaitUntil, string, string, string, ManagedServiceRestartReplicaContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="serviceName"> The name of the service resource in the format of {applicationName}~{serviceName}. </param>
+        /// <param name="managedServiceRestartReplicaContent"> The parameters for restarting replicas. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RestartReplicaAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, string serviceName, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).RestartReplicaAsync(waitUntil, clusterName, applicationName, serviceName, managedServiceRestartReplicaContent, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.RestartReplica(WaitUntil, string, string, string, ManagedServiceRestartReplicaContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="serviceName"> The name of the service resource in the format of {applicationName}~{serviceName}. </param>
+        /// <param name="managedServiceRestartReplicaContent"> The parameters for restarting replicas. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RestartReplica(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string applicationName, string serviceName, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).RestartReplica(waitUntil, clusterName, applicationName, serviceName, managedServiceRestartReplicaContent, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a fault simulation by the simulationId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulationAsync(string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<FaultSimulation>> GetFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, string clusterName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulationAsync(clusterName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a fault simulation by the simulationId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulation(string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<FaultSimulation> GetFaultSimulation(this ResourceGroupResource resourceGroupResource, string clusterName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulation(clusterName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of recent fault simulations for the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulationAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FaultSimulation> GetFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulationAsync(clusterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of recent fault simulations for the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulation(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FaultSimulation> GetFaultSimulation(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulation(clusterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts a fault simulation on the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StartFaultSimulationAsync(WaitUntil, string, FaultSimulationContentWrapper, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="faultSimulationContentWrapper"> parameters describing the fault simulation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<FaultSimulation>> StartFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, FaultSimulationContentWrapper faultSimulationContentWrapper, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StartFaultSimulationAsync(waitUntil, clusterName, faultSimulationContentWrapper, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts a fault simulation on the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StartFaultSimulation(WaitUntil, string, FaultSimulationContentWrapper, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="faultSimulationContentWrapper"> parameters describing the fault simulation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<FaultSimulation> StartFaultSimulation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, FaultSimulationContentWrapper faultSimulationContentWrapper, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StartFaultSimulation(waitUntil, clusterName, faultSimulationContentWrapper, cancellationToken);
+        }
+
+        /// <summary>
+        /// Stops a fault simulation on the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StopFaultSimulationAsync(WaitUntil, string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<FaultSimulation>> StopFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StopFaultSimulationAsync(waitUntil, clusterName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Stops a fault simulation on the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StopFaultSimulation(WaitUntil, string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<FaultSimulation> StopFaultSimulation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StopFaultSimulation(waitUntil, clusterName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetManagedAzResiliencyStatusAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<Models.ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetManagedAzResiliencyStatusAsync(clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetManagedAzResiliencyStatus(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<Models.ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetManagedAzResiliencyStatus(clusterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.PostManagedApplyMaintenanceWindowAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> PostManagedApplyMaintenanceWindowAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).PostManagedApplyMaintenanceWindowAsync(clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.PostManagedApplyMaintenanceWindow(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response PostManagedApplyMaintenanceWindow(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).PostManagedApplyMaintenanceWindow(clusterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Action to get Maintenance Window Status of the Service Fabric Managed Clusters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetManagedMaintenanceWindowStatusAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<Models.ManagedMaintenanceWindowStatus>> GetManagedMaintenanceWindowStatusAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetManagedMaintenanceWindowStatusAsync(clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Action to get Maintenance Window Status of the Service Fabric Managed Clusters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetManagedMaintenanceWindowStatus(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<Models.ManagedMaintenanceWindowStatus> GetManagedMaintenanceWindowStatus(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetManagedMaintenanceWindowStatus(clusterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deallocates one or more nodes on the node type. It will disable the fabric nodes, trigger a shutdown on the VMs and release them from the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.DeallocateAsync(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for deallocate action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> DeallocateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).DeallocateAsync(waitUntil, clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deallocates one or more nodes on the node type. It will disable the fabric nodes, trigger a shutdown on the VMs and release them from the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.Deallocate(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for deallocate action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Deallocate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).Deallocate(waitUntil, clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes one or more nodes on the node type. It will disable the fabric nodes, trigger a delete on the VMs and removes the state from the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.DeleteNodeAsync(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for delete action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNodeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).DeleteNodeAsync(waitUntil, clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes one or more nodes on the node type. It will disable the fabric nodes, trigger a delete on the VMs and removes the state from the cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.DeleteNode(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for delete action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation DeleteNode(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).DeleteNode(waitUntil, clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Redeploys one or more nodes on the node type. It will disable the fabric nodes, trigger a shut down on the VMs, move them to a new node, and power them back on.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.RedeployAsync(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for redeploy action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RedeployAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).RedeployAsync(waitUntil, clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Redeploys one or more nodes on the node type. It will disable the fabric nodes, trigger a shut down on the VMs, move them to a new node, and power them back on.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.Redeploy(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for redeploy action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Redeploy(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).Redeploy(waitUntil, clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reimages one or more nodes on the node type. It will disable the fabric nodes, trigger a reimage on the VMs and activate the nodes back again.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.ReimageAsync(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for reimage action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> ReimageAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).ReimageAsync(waitUntil, clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reimages one or more nodes on the node type. It will disable the fabric nodes, trigger a reimage on the VMs and activate the nodes back again.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.Reimage(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for reimage action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Reimage(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).Reimage(waitUntil, clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Restarts one or more nodes on the node type. It will disable the fabric nodes, trigger a restart on the VMs and activate the nodes back again.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.RestartAsync(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for restart action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RestartAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).RestartAsync(waitUntil, clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Restarts one or more nodes on the node type. It will disable the fabric nodes, trigger a restart on the VMs and activate the nodes back again.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.Restart(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for restart action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Restart(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).Restart(waitUntil, clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts one or more nodes on the node type. It will trigger an allocation of the fabric node if needed and activate them.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StartAsync(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for start action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> StartAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StartAsync(waitUntil, clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts one or more nodes on the node type. It will trigger an allocation of the fabric node if needed and activate them.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.Start(WaitUntil, string, string, NodeTypeActionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameters for start action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Start(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, NodeTypeActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).Start(waitUntil, clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts a fault simulation on the node type.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StartFaultSimulationAsync(WaitUntil, string, string, FaultSimulationContentWrapper, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="faultSimulationContentWrapper"> parameters describing the fault simulation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<FaultSimulation>> StartFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, FaultSimulationContentWrapper faultSimulationContentWrapper, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StartFaultSimulationAsync(waitUntil, clusterName, nodeTypeName, faultSimulationContentWrapper, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts a fault simulation on the node type.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StartFaultSimulation(WaitUntil, string, string, FaultSimulationContentWrapper, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="faultSimulationContentWrapper"> parameters describing the fault simulation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<FaultSimulation> StartFaultSimulation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, FaultSimulationContentWrapper faultSimulationContentWrapper, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StartFaultSimulation(waitUntil, clusterName, nodeTypeName, faultSimulationContentWrapper, cancellationToken);
+        }
+
+        /// <summary>
+        /// Stops a fault simulation on the node type.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StopFaultSimulationAsync(WaitUntil, string, string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<FaultSimulation>> StopFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StopFaultSimulationAsync(waitUntil, clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Stops a fault simulation on the node type.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.StopFaultSimulation(WaitUntil, string, string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<FaultSimulation> StopFaultSimulation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string clusterName, string nodeTypeName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).StopFaultSimulation(waitUntil, clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a fault simulation by the simulationId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulationAsync(string, string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<FaultSimulation>> GetFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, string clusterName, string nodeTypeName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulationAsync(clusterName, nodeTypeName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a fault simulation by the simulationId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulation(string, string, FaultSimulationIdContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<FaultSimulation> GetFaultSimulation(this ResourceGroupResource resourceGroupResource, string clusterName, string nodeTypeName, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulation(clusterName, nodeTypeName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of recent fault simulations for the node type.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulationAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FaultSimulation> GetFaultSimulationAsync(this ResourceGroupResource resourceGroupResource, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulationAsync(clusterName, nodeTypeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of recent fault simulations for the node type.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulation(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FaultSimulation> GetFaultSimulation(this ResourceGroupResource resourceGroupResource, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetFaultSimulation(clusterName, nodeTypeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Service Fabric node type supported SKUs.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetAvailableSkusAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NodeTypeAvailableSku"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NodeTypeAvailableSku> GetAvailableSkusAsync(this ResourceGroupResource resourceGroupResource, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetAvailableSkusAsync(clusterName, nodeTypeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Service Fabric node type supported SKUs.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricManagedClustersResourceGroupResource.GetAvailableSkus(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NodeTypeAvailableSku"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NodeTypeAvailableSku> GetAvailableSkus(this ResourceGroupResource resourceGroupResource, string clusterName, string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetAvailableSkus(clusterName, nodeTypeName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
         /// <item>
         /// <term> Mocking. </term>

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetReplicasRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _context) : _client.CreateGetReplicasRequest(_subscriptionId, _resourceGroupName, _serverName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MySqlFlexibleServerResource.GetReplicas");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMySqlFlexibleServersResourceGroupResource.GetReplicas");
             scope.Start();
             try
             {

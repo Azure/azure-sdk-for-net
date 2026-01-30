@@ -178,6 +178,278 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
+        /// Synchronize attestation record from app compliance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.SyncCertRecordAsync(WaitUntil, string, SyncCertRecordContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> Parameters for synchronize certification record operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation<SyncCertRecordResult>> SyncCertRecordAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).SyncCertRecordAsync(waitUntil, reportName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Synchronize attestation record from app compliance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.SyncCertRecord(WaitUntil, string, SyncCertRecordContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> Parameters for synchronize certification record operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation<SyncCertRecordResult> SyncCertRecord(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).SyncCertRecord(waitUntil, reportName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks the report's nested resource name availability, e.g: Webhooks, Evidences, Snapshots.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNestedResourceNameAvailabilityAsync(string, AppComplianceReportNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> NameAvailabilityRequest object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<AppComplianceReportNameAvailabilityResult>> CheckAppComplianceReportNestedResourceNameAvailabilityAsync(this TenantResource tenantResource, string reportName, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).CheckAppComplianceReportNestedResourceNameAvailabilityAsync(reportName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks the report's nested resource name availability, e.g: Webhooks, Evidences, Snapshots.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNestedResourceNameAvailability(string, AppComplianceReportNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> NameAvailabilityRequest object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<AppComplianceReportNameAvailabilityResult> CheckAppComplianceReportNestedResourceNameAvailability(this TenantResource tenantResource, string reportName, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).CheckAppComplianceReportNestedResourceNameAvailability(reportName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.FixAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation<ReportFixResult>> FixAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).FixAsync(waitUntil, reportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.Fix(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation<ReportFixResult> Fix(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).Fix(waitUntil, reportName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetScopingQuestionsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<ScopingQuestions>> GetScopingQuestionsAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).GetScopingQuestionsAsync(reportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetScopingQuestions(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<ScopingQuestions> GetScopingQuestions(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetScopingQuestions(reportName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Verify the AppComplianceAutomation report health status.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.VerifyAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation<ReportVerificationResult>> VerifyAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).VerifyAsync(waitUntil, reportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Verify the AppComplianceAutomation report health status.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.Verify(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation<ReportVerificationResult> Verify(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).Verify(waitUntil, reportName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Download compliance needs from snapshot, like: Compliance Report, Resource List.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.DownloadAsync(WaitUntil, string, string, SnapshotDownloadRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="snapshotName"> Snapshot Name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation<AppComplianceDownloadResult>> DownloadAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, string snapshotName, SnapshotDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).DownloadAsync(waitUntil, reportName, snapshotName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Download compliance needs from snapshot, like: Compliance Report, Resource List.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.Download(WaitUntil, string, string, SnapshotDownloadRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="snapshotName"> Snapshot Name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation<AppComplianceDownloadResult> Download(this TenantResource tenantResource, WaitUntil waitUntil, string reportName, string snapshotName, SnapshotDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).Download(waitUntil, reportName, snapshotName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Download evidence file.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.DownloadAsync(string, string, EvidenceFileDownloadRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="evidenceName"> The evidence name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<EvidenceFileDownloadResult>> DownloadAsync(this TenantResource tenantResource, string reportName, string evidenceName, EvidenceFileDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).DownloadAsync(reportName, evidenceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Download evidence file.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.Download(string, string, EvidenceFileDownloadRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="evidenceName"> The evidence name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<EvidenceFileDownloadResult> Download(this TenantResource tenantResource, string reportName, string evidenceName, EvidenceFileDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).Download(reportName, evidenceName, content, cancellationToken);
+        }
+
+        /// <summary>
         /// Check if the given name is available for a report.
         /// <item>
         /// <term> Mocking. </term>

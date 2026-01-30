@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         private Vaults _vaultsRestClient;
         private ClientDiagnostics _recoveryServicesOperationGroupClientDiagnostics;
         private RecoveryServicesOperationGroup _recoveryServicesOperationGroupRestClient;
+        private ClientDiagnostics _deletedVaultsClientDiagnostics;
+        private DeletedVaults _deletedVaultsRestClient;
 
         /// <summary> Initializes a new instance of MockableRecoveryServicesSubscriptionResource for mocking. </summary>
         protected MockableRecoveryServicesSubscriptionResource()
@@ -45,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+
+        private ClientDiagnostics DeletedVaultsClientDiagnostics => _deletedVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedVaults DeletedVaultsRestClient => _deletedVaultsRestClient ??= new DeletedVaults(DeletedVaultsClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
 
         /// <summary> Gets a collection of RecoveryServicesDeletedVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -260,6 +266,114 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Start undelete of a deleted vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/undelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Undelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="deletedVaultName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> RestoreDeletedVaultAsync(WaitUntil waitUntil, string location, string deletedVaultName, DeletedVaultRestoreInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = DeletedVaultsClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.RestoreDeletedVault");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DeletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, location, deletedVaultName, DeletedVaultRestoreInput.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(DeletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Start undelete of a deleted vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/undelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Undelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="deletedVaultName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation RestoreDeletedVault(WaitUntil waitUntil, string location, string deletedVaultName, DeletedVaultRestoreInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = DeletedVaultsClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.RestoreDeletedVault");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DeletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, location, deletedVaultName, DeletedVaultRestoreInput.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(DeletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

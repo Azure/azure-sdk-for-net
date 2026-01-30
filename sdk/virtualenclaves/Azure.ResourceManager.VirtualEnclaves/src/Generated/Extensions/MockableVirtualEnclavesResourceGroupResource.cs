@@ -10,15 +10,26 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.VirtualEnclaves;
+using Azure.ResourceManager.VirtualEnclaves.Models;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableVirtualEnclavesResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _communityClientDiagnostics;
+        private Community _communityRestClient;
+        private ClientDiagnostics _enclaveConnectionClientDiagnostics;
+        private EnclaveConnection _enclaveConnectionRestClient;
+        private ClientDiagnostics _enclaveEndpointsClientDiagnostics;
+        private EnclaveEndpoints _enclaveEndpointsRestClient;
+        private ClientDiagnostics _communityEndpointsClientDiagnostics;
+        private CommunityEndpoints _communityEndpointsRestClient;
+
         /// <summary> Initializes a new instance of MockableVirtualEnclavesResourceGroupResource for mocking. </summary>
         protected MockableVirtualEnclavesResourceGroupResource()
         {
@@ -30,6 +41,22 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         internal MockableVirtualEnclavesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics CommunityClientDiagnostics => _communityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Community CommunityRestClient => _communityRestClient ??= new Community(CommunityClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics EnclaveConnectionClientDiagnostics => _enclaveConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EnclaveConnection EnclaveConnectionRestClient => _enclaveConnectionRestClient ??= new EnclaveConnection(EnclaveConnectionClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics EnclaveEndpointsClientDiagnostics => _enclaveEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EnclaveEndpoints EnclaveEndpointsRestClient => _enclaveEndpointsRestClient ??= new EnclaveEndpoints(EnclaveEndpointsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics CommunityEndpointsClientDiagnostics => _communityEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CommunityEndpoints CommunityEndpointsRestClient => _communityEndpointsRestClient ??= new CommunityEndpoints(CommunityEndpointsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
 
         /// <summary> Gets a collection of VirtualEnclaves in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of VirtualEnclaves and their operations over a VirtualEnclaveResource. </returns>
@@ -224,6 +251,820 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
             return GetVirtualEnclaveConnections().Get(enclaveConnectionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks that the IP Address Space to be allocated for this Community is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/checkAddressSpaceAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Community_CheckAddressSpaceAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="content"> Check IP Address Space request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CheckAddressSpaceAvailabilityResult>> CheckAddressSpaceAvailabilityAsync(string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CommunityClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.CheckAddressSpaceAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CommunityRestClient.CreateCheckAddressSpaceAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, CheckAddressSpaceAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CheckAddressSpaceAvailabilityResult> response = Response.FromValue(CheckAddressSpaceAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that the IP Address Space to be allocated for this Community is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/checkAddressSpaceAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Community_CheckAddressSpaceAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="content"> Check IP Address Space request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CheckAddressSpaceAvailabilityResult> CheckAddressSpaceAvailability(string communityName, CheckAddressSpaceAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CommunityClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.CheckAddressSpaceAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CommunityRestClient.CreateCheckAddressSpaceAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, CheckAddressSpaceAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CheckAddressSpaceAvailabilityResult> response = Response.FromValue(CheckAddressSpaceAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}/handleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveConnection_HandleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApprovalActionResult>> HandleApprovalCreationAsync(WaitUntil waitUntil, string enclaveConnectionName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveConnectionClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveConnectionRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, ApprovalCallbackContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveConnectionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}/handleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveConnection_HandleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApprovalActionResult> HandleApprovalCreation(WaitUntil waitUntil, string enclaveConnectionName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveConnectionClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveConnectionRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, ApprovalCallbackContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveConnectionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}/handleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveConnection_HandleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApprovalActionResult>> HandleApprovalDeletionAsync(WaitUntil waitUntil, string enclaveConnectionName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveConnectionClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveConnectionRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveConnectionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}/handleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveConnection_HandleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApprovalActionResult> HandleApprovalDeletion(WaitUntil waitUntil, string enclaveConnectionName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveConnectionClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveConnectionRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveConnectionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}/handleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_HandleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/>, <paramref name="enclaveEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> or <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApprovalActionResult>> HandleApprovalCreationAsync(WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
+            Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveEndpointsRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualEnclaveName, enclaveEndpointName, ApprovalCallbackContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}/handleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_HandleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/>, <paramref name="enclaveEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> or <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApprovalActionResult> HandleApprovalCreation(WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
+            Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveEndpointsRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualEnclaveName, enclaveEndpointName, ApprovalCallbackContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}/handleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_HandleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/>, <paramref name="enclaveEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> or <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApprovalActionResult>> HandleApprovalDeletionAsync(WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
+            Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveEndpointsRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualEnclaveName, enclaveEndpointName, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints/{enclaveEndpointName}/handleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveEndpoints_HandleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
+        /// <param name="enclaveEndpointName"> The name of the Enclave Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/>, <paramref name="enclaveEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> or <paramref name="enclaveEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApprovalActionResult> HandleApprovalDeletion(WaitUntil waitUntil, string virtualEnclaveName, string enclaveEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
+            Argument.AssertNotNullOrEmpty(enclaveEndpointName, nameof(enclaveEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EnclaveEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EnclaveEndpointsRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualEnclaveName, enclaveEndpointName, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    EnclaveEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/communityEndpoints/{communityEndpointName}/handleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommunityEndpoints_HandleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/>, <paramref name="communityEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> or <paramref name="communityEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApprovalActionResult>> HandleApprovalCreationAsync(WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+            Argument.AssertNotNullOrEmpty(communityEndpointName, nameof(communityEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CommunityEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CommunityEndpointsRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, communityEndpointName, ApprovalCallbackContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    CommunityEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/communityEndpoints/{communityEndpointName}/handleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommunityEndpoints_HandleApprovalCreation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/>, <paramref name="communityEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> or <paramref name="communityEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApprovalActionResult> HandleApprovalCreation(WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+            Argument.AssertNotNullOrEmpty(communityEndpointName, nameof(communityEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CommunityEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalCreation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CommunityEndpointsRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, communityEndpointName, ApprovalCallbackContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    CommunityEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/communityEndpoints/{communityEndpointName}/handleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommunityEndpoints_HandleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/>, <paramref name="communityEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> or <paramref name="communityEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApprovalActionResult>> HandleApprovalDeletionAsync(WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+            Argument.AssertNotNullOrEmpty(communityEndpointName, nameof(communityEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CommunityEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CommunityEndpointsRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, communityEndpointName, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    CommunityEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Callback that triggers on approval deletion state change.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/communityEndpoints/{communityEndpointName}/handleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommunityEndpoints_HandleApprovalDeletion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="communityEndpointName"> The name of the Community Endpoint Resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/>, <paramref name="communityEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> or <paramref name="communityEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApprovalActionResult> HandleApprovalDeletion(WaitUntil waitUntil, string communityName, string communityEndpointName, ApprovalDeletionCallbackContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+            Argument.AssertNotNullOrEmpty(communityEndpointName, nameof(communityEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CommunityEndpointsClientDiagnostics.CreateScope("MockableVirtualEnclavesResourceGroupResource.HandleApprovalDeletion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CommunityEndpointsRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, communityEndpointName, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    CommunityEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

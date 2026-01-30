@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetReplicationUsagesRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _context) : _client.CreateGetReplicationUsagesRequest(_subscriptionId, _resourceGroupName, _vaultName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RecoveryServicesVaultResource.GetReplicationUsages");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.GetReplicationUsages");
             scope.Start();
             try
             {

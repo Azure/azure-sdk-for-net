@@ -112,6 +112,118 @@ namespace Azure.ResourceManager.ResourceConnector
         }
 
         /// <summary>
+        /// Returns the cluster user credentials for the dedicated appliance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetClusterUserCredentialAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ApplianceListCredentialResult>> GetClusterUserCredentialAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetClusterUserCredentialAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the cluster user credentials for the dedicated appliance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetClusterUserCredential(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ApplianceListCredentialResult> GetClusterUserCredential(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetClusterUserCredential(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the cluster customer credentials for the dedicated appliance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetKeysAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="artifactType"> This sets the type of artifact being returned, when empty no artifact endpoint is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ApplianceListKeysResult>> GetKeysAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string artifactType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetKeysAsync(resourceName, artifactType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the cluster customer credentials for the dedicated appliance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetKeys(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="artifactType"> This sets the type of artifact being returned, when empty no artifact endpoint is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ApplianceListKeysResult> GetKeys(this ResourceGroupResource resourceGroupResource, string resourceName, string artifactType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetKeys(resourceName, artifactType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the upgrade graph of an Appliance with a specified resource group and name and specific release train.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetUpgradeGraphAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="upgradeGraph"> Upgrade graph version, ex - stable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ApplianceUpgradeGraph>> GetUpgradeGraphAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string upgradeGraph, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetUpgradeGraphAsync(resourceName, upgradeGraph, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the upgrade graph of an Appliance with a specified resource group and name and specific release train.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetUpgradeGraph(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="upgradeGraph"> Upgrade graph version, ex - stable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ApplianceUpgradeGraph> GetUpgradeGraph(this ResourceGroupResource resourceGroupResource, string resourceName, string upgradeGraph, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetUpgradeGraph(resourceName, upgradeGraph, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of Appliances in the specified subscription. The operation returns properties of each Appliance
         /// <item>
         /// <term> Mocking. </term>

@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         private readonly ClientDiagnostics _exadbVmClustersClientDiagnostics;
         private readonly ExadbVmClusters _exadbVmClustersRestClient;
+        private readonly ClientDiagnostics _exascaleDbNodesClientDiagnostics;
+        private readonly ExascaleDbNodes _exascaleDbNodesRestClient;
         private readonly ExadbVmClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Oracle.Database/exadbVmClusters";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(ResourceType, out string exadbVmClusterApiVersion);
             _exadbVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
             _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
+            _exascaleDbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
+            _exascaleDbNodesRestClient = new ExascaleDbNodes(_exascaleDbNodesClientDiagnostics, Pipeline, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -506,6 +510,130 @@ namespace Azure.ResourceManager.OracleDatabase
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
                     new ExadbVmClusterOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// VM actions on DbNode of ExadbVmCluster by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}/dbNodes/{exascaleDbNodeName}/action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbNodes_Action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExadbVmClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbNodeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ExascaleDBNodeActionResult>> ActionAsync(WaitUntil waitUntil, string exascaleDbNodeName, DBNodeAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExadbVmClusterResource.Action");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbNodesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, DBNodeAction.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OracleDatabaseArmOperation<ExascaleDBNodeActionResult> operation = new OracleDatabaseArmOperation<ExascaleDBNodeActionResult>(
+                    new ExascaleDBNodeActionResultOperationSource(),
+                    _exascaleDbNodesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// VM actions on DbNode of ExadbVmCluster by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}/dbNodes/{exascaleDbNodeName}/action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbNodes_Action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExadbVmClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbNodeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ExascaleDBNodeActionResult> Action(WaitUntil waitUntil, string exascaleDbNodeName, DBNodeAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExadbVmClusterResource.Action");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbNodesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, DBNodeAction.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OracleDatabaseArmOperation<ExascaleDBNodeActionResult> operation = new OracleDatabaseArmOperation<ExascaleDBNodeActionResult>(
+                    new ExascaleDBNodeActionResultOperationSource(),
+                    _exascaleDbNodesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

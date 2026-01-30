@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     {
         private readonly ClientDiagnostics _nodeTypesClientDiagnostics;
         private readonly NodeTypes _nodeTypesRestClient;
-        private readonly ClientDiagnostics _nodeTypeSkusClientDiagnostics;
-        private readonly NodeTypeSkus _nodeTypeSkusRestClient;
 
         /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeCollection for mocking. </summary>
         protected ServiceFabricManagedNodeTypeCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             TryGetApiVersion(ServiceFabricManagedNodeTypeResource.ResourceType, out string serviceFabricManagedNodeTypeApiVersion);
             _nodeTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedNodeTypeResource.ResourceType.Namespace, Diagnostics);
             _nodeTypesRestClient = new NodeTypes(_nodeTypesClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2025-10-01-preview");
-            _nodeTypeSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedNodeTypeResource.ResourceType.Namespace, Diagnostics);
-            _nodeTypeSkusRestClient = new NodeTypeSkus(_nodeTypeSkusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

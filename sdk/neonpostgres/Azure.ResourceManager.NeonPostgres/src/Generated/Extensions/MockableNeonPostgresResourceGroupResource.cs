@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
     {
         private ClientDiagnostics _organizationsClientDiagnostics;
         private Organizations _organizationsRestClient;
+        private ClientDiagnostics _projectsClientDiagnostics;
+        private Projects _projectsRestClient;
+        private ClientDiagnostics _branchesClientDiagnostics;
+        private Branches _branchesRestClient;
 
         /// <summary> Initializes a new instance of MockableNeonPostgresResourceGroupResource for mocking. </summary>
         protected MockableNeonPostgresResourceGroupResource()
@@ -39,6 +43,14 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
+
+        private ClientDiagnostics ProjectsClientDiagnostics => _projectsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Projects ProjectsRestClient => _projectsRestClient ??= new Projects(ProjectsClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
+
+        private ClientDiagnostics BranchesClientDiagnostics => _branchesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Branches BranchesRestClient => _branchesRestClient ??= new Branches(BranchesClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
 
         /// <summary> Gets a collection of NeonOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of NeonOrganizations and their operations over a NeonOrganizationResource. </returns>
@@ -182,6 +194,222 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
                 HttpMessage message = OrganizationsRestClient.CreateGetPostgresVersionsOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, PgVersion.ToRequestContent(pgVersion), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PgVersionsResult> response = Response.FromValue(PgVersionsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to retrieve the connection URI for the Neon Database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/getConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_GetConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="connectionUriParameters"> Additional parameters for retrieving the database connection URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="connectionUriParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConnectionUriProperties>> GetConnectionUriAsync(string organizationName, string projectName, ConnectionUriProperties connectionUriParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(connectionUriParameters, nameof(connectionUriParameters));
+
+            using DiagnosticScope scope = ProjectsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetConnectionUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProjectsRestClient.CreateGetConnectionUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, ConnectionUriProperties.ToRequestContent(connectionUriParameters), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectionUriProperties> response = Response.FromValue(ConnectionUriProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to retrieve the connection URI for the Neon Database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/getConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_GetConnectionUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="connectionUriParameters"> Additional parameters for retrieving the database connection URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="connectionUriParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConnectionUriProperties> GetConnectionUri(string organizationName, string projectName, ConnectionUriProperties connectionUriParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(connectionUriParameters, nameof(connectionUriParameters));
+
+            using DiagnosticScope scope = ProjectsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetConnectionUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProjectsRestClient.CreateGetConnectionUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, ConnectionUriProperties.ToRequestContent(connectionUriParameters), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectionUriProperties> response = Response.FromValue(ConnectionUriProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Branches_Preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="preflightCheckContent"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PreflightCheckResult>> PreflightAsync(string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
+
+            using DiagnosticScope scope = BranchesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Preflight");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BranchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Branches_Preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="preflightCheckContent"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PreflightCheckResult> Preflight(string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
+
+            using DiagnosticScope scope = BranchesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Preflight");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BranchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

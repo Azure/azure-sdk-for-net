@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string reportName, string skipToken, int? top, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string reportName, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@select != null)
             {
@@ -156,10 +156,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string reportName, string skipToken, int? top, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string reportName, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

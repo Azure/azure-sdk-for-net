@@ -130,6 +130,46 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
+        /// Revoke a certificate under a certificate profile.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.RevokeCertificateAsync(string, string, RevokeCertificateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="accountName"> Trusted Signing account name. </param>
+        /// <param name="profileName"> Certificate profile name. </param>
+        /// <param name="content"> Parameters to revoke the certificate profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> RevokeCertificateAsync(this ResourceGroupResource resourceGroupResource, string accountName, string profileName, RevokeCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).RevokeCertificateAsync(accountName, profileName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Revoke a certificate under a certificate profile.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.RevokeCertificate(string, string, RevokeCertificateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="accountName"> Trusted Signing account name. </param>
+        /// <param name="profileName"> Certificate profile name. </param>
+        /// <param name="content"> Parameters to revoke the certificate profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response RevokeCertificate(this ResourceGroupResource resourceGroupResource, string accountName, string profileName, RevokeCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).RevokeCertificate(accountName, profileName, content, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists trusted signing accounts within a subscription.
         /// <item>
         /// <term> Mocking. </term>
