@@ -13,86 +13,57 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
-    /// <summary>
-    /// A class representing the DatadogMonitor data model.
-    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
-    /// </summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class DatadogMonitorData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatadogMonitorData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DatadogMonitorData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DatadogMonitorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
         /// <param name="sku"></param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatadogMonitorProperties properties, DatadogSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"></param>
+        internal DatadogMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DatadogMonitorProperties properties, DatadogSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatadogMonitorData"/> for deserialization. </summary>
-        internal DatadogMonitorData()
-        {
         }
 
         /// <summary> Properties specific to the monitor resource. </summary>
         public DatadogMonitorProperties Properties { get; set; }
-        /// <summary> Gets or sets the sku. </summary>
+
+        /// <summary> Gets or sets the Sku. </summary>
         internal DatadogSku Sku { get; set; }
+
+        /// <summary> Gets or sets the Identity. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
         public string SkuName
         {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new DatadogSku(value);
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                Sku = new DatadogSku(value);
+            }
         }
-
-        /// <summary> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
     }
 }

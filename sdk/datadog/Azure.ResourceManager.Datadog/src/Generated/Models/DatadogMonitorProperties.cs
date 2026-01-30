@@ -7,47 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Properties specific to the monitor resource. </summary>
     public partial class DatadogMonitorProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatadogMonitorProperties"/>. </summary>
         public DatadogMonitorProperties()
         {
+            SreAgentConfiguration = new ChangeTrackingList<SreAgentConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatadogMonitorProperties"/>. </summary>
@@ -58,8 +31,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="userInfo"> Includes name, email and optionally, phone number. User Information can't be null. </param>
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sreAgentConfiguration"> SRE Agent configuration to connect to MCP server of Datadog for given organization. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, IList<SreAgentConfiguration> sreAgentConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             MonitoringStatus = monitoringStatus;
@@ -68,22 +42,32 @@ namespace Azure.ResourceManager.Datadog.Models
             UserInfo = userInfo;
             LiftrResourceCategory = liftrResourceCategory;
             LiftrResourcePreference = liftrResourcePreference;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SreAgentConfiguration = sreAgentConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> Gets the ProvisioningState. </summary>
         public DatadogProvisioningState? ProvisioningState { get; }
+
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
         public DatadogMonitoringStatus? MonitoringStatus { get; set; }
+
         /// <summary> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </summary>
         public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
+
         /// <summary> Specify the Datadog organization name. In the case of linking to existing organizations, Id, ApiKey, and Applicationkey is required as well. </summary>
         public DatadogOrganizationProperties DatadogOrganizationProperties { get; set; }
+
         /// <summary> Includes name, email and optionally, phone number. User Information can't be null. </summary>
         public DatadogUserInfo UserInfo { get; set; }
-        /// <summary> Gets the liftr resource category. </summary>
+
+        /// <summary> Gets the LiftrResourceCategory. </summary>
         public DatadogLiftrResourceCategory? LiftrResourceCategory { get; }
+
         /// <summary> The priority of the resource. </summary>
         public int? LiftrResourcePreference { get; }
+
+        /// <summary> SRE Agent configuration to connect to MCP server of Datadog for given organization. </summary>
+        public IList<SreAgentConfiguration> SreAgentConfiguration { get; }
     }
 }

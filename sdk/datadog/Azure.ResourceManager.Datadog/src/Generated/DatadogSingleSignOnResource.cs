@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
-    /// A Class representing a DatadogSingleSignOn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatadogSingleSignOnResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDatadogSingleSignOnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatadogMonitorResource"/> using the GetDatadogSingleSignOn method.
+    /// A class representing a DatadogSingleSignOn along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatadogSingleSignOnResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DatadogMonitorResource"/> using the GetDatadogSingleSignOns method.
     /// </summary>
     public partial class DatadogSingleSignOnResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DatadogSingleSignOnResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="monitorName"> The monitorName. </param>
-        /// <param name="configurationName"> The configurationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics;
-        private readonly SingleSignOnConfigurationsRestOperations _datadogSingleSignOnSingleSignOnConfigurationsRestClient;
+        private readonly ClientDiagnostics _singleSignOnConfigurationsClientDiagnostics;
+        private readonly SingleSignOnConfigurations _singleSignOnConfigurationsRestClient;
         private readonly DatadogSingleSignOnData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/singleSignOnConfigurations";
 
-        /// <summary> Initializes a new instance of the <see cref="DatadogSingleSignOnResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DatadogSingleSignOnResource for mocking. </summary>
         protected DatadogSingleSignOnResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatadogSingleSignOnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatadogSingleSignOnResource(ArmClient client, DatadogSingleSignOnData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Datadog
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatadogSingleSignOnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatadogSingleSignOnResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string datadogSingleSignOnSingleSignOnConfigurationsApiVersion);
-            _datadogSingleSignOnSingleSignOnConfigurationsRestClient = new SingleSignOnConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, datadogSingleSignOnSingleSignOnConfigurationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string datadogSingleSignOnApiVersion);
+            _singleSignOnConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
+            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Endpoint, datadogSingleSignOnApiVersion ?? "2025-11-03-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DatadogSingleSignOnData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the datadog single sign-on resource for the given Monitor.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SingleSignOnConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatadogSingleSignOnResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogSingleSignOnResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DatadogSingleSignOnResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Get");
+            using DiagnosticScope scope = _singleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Get");
             scope.Start();
             try
             {
-                var response = await _datadogSingleSignOnSingleSignOnConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _singleSignOnConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatadogSingleSignOnData> response = Response.FromValue(DatadogSingleSignOnData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Datadog
         /// Gets the datadog single sign-on resource for the given Monitor.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SingleSignOnConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatadogSingleSignOnResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogSingleSignOnResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatadogSingleSignOnResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Get");
+            using DiagnosticScope scope = _singleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Get");
             scope.Start();
             try
             {
-                var response = _datadogSingleSignOnSingleSignOnConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _singleSignOnConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatadogSingleSignOnData> response = Response.FromValue(DatadogSingleSignOnData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,42 +188,52 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Configures single-sign-on for this resource.
+        /// Update a DatadogSingleSignOn.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatadogSingleSignOnResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogSingleSignOnResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="DatadogSingleSignOnData"/> to use. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DatadogSingleSignOnResource>> UpdateAsync(WaitUntil waitUntil, DatadogSingleSignOnData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatadogSingleSignOnResource>> UpdateAsync(WaitUntil waitUntil, DatadogSingleSignOnData data = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Update");
+            using DiagnosticScope scope = _singleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Update");
             scope.Start();
             try
             {
-                var response = await _datadogSingleSignOnSingleSignOnConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnOperationSource(Client), _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _singleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatadogSingleSignOnData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DatadogArmOperation<DatadogSingleSignOnResource> operation = new DatadogArmOperation<DatadogSingleSignOnResource>(
+                    new DatadogSingleSignOnOperationSource(Client),
+                    _singleSignOnConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,42 +244,52 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Configures single-sign-on for this resource.
+        /// Update a DatadogSingleSignOn.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatadogSingleSignOnResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogSingleSignOnResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="DatadogSingleSignOnData"/> to use. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DatadogSingleSignOnResource> Update(WaitUntil waitUntil, DatadogSingleSignOnData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatadogSingleSignOnResource> Update(WaitUntil waitUntil, DatadogSingleSignOnData data = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Update");
+            using DiagnosticScope scope = _singleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Update");
             scope.Start();
             try
             {
-                var response = _datadogSingleSignOnSingleSignOnConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnOperationSource(Client), _datadogSingleSignOnSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _singleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatadogSingleSignOnData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DatadogArmOperation<DatadogSingleSignOnResource> operation = new DatadogArmOperation<DatadogSingleSignOnResource>(
+                    new DatadogSingleSignOnOperationSource(Client),
+                    _singleSignOnConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

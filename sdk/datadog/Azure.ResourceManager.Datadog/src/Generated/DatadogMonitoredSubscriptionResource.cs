@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
-    /// A Class representing a DatadogMonitoredSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatadogMonitoredSubscriptionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDatadogMonitoredSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatadogMonitorResource"/> using the GetDatadogMonitoredSubscription method.
+    /// A class representing a DatadogMonitoredSubscription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatadogMonitoredSubscriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DatadogMonitorResource"/> using the GetDatadogMonitoredSubscriptions method.
     /// </summary>
     public partial class DatadogMonitoredSubscriptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DatadogMonitoredSubscriptionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="monitorName"> The monitorName. </param>
-        /// <param name="configurationName"> The configurationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics;
-        private readonly MonitoredSubscriptionsRestOperations _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient;
+        private readonly ClientDiagnostics _monitoredSubscriptionsClientDiagnostics;
+        private readonly MonitoredSubscriptions _monitoredSubscriptionsRestClient;
         private readonly DatadogMonitoredSubscriptionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/monitoredSubscriptions";
 
-        /// <summary> Initializes a new instance of the <see cref="DatadogMonitoredSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DatadogMonitoredSubscriptionResource for mocking. </summary>
         protected DatadogMonitoredSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatadogMonitoredSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogMonitoredSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatadogMonitoredSubscriptionResource(ArmClient client, DatadogMonitoredSubscriptionData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Datadog
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatadogMonitoredSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogMonitoredSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatadogMonitoredSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string datadogMonitoredSubscriptionMonitoredSubscriptionsApiVersion);
-            _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient = new MonitoredSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitoredSubscriptionMonitoredSubscriptionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string datadogMonitoredSubscriptionApiVersion);
+            _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, datadogMonitoredSubscriptionApiVersion ?? "2025-11-03-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DatadogMonitoredSubscriptionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// List the subscriptions currently being monitored by the Datadog monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitoredSubscriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitoredSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogMonitoredSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DatadogMonitoredSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Get");
+            using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatadogMonitoredSubscriptionData> response = Response.FromValue(DatadogMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatadogMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Datadog
         /// List the subscriptions currently being monitored by the Datadog monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitoredSubscriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitoredSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogMonitoredSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatadogMonitoredSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Get");
+            using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatadogMonitoredSubscriptionData> response = Response.FromValue(DatadogMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatadogMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Datadog
         /// Updates the subscriptions that are being monitored by the Datadog monitor resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitoredSubscriptions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitoredSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogMonitoredSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Delete");
+            using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatadogArmOperation(_datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DatadogArmOperation operation = new DatadogArmOperation(_monitoredSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Datadog
         /// Updates the subscriptions that are being monitored by the Datadog monitor resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitoredSubscriptions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitoredSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogMonitoredSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Delete");
+            using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DatadogArmOperation(_datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DatadogArmOperation operation = new DatadogArmOperation(_monitoredSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,42 +286,52 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the Datadog monitor resource
+        /// Update a DatadogMonitoredSubscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitoredSubscriptions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitoredSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogMonitoredSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="DatadogMonitoredSubscriptionData"/> to use. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DatadogMonitoredSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, DatadogMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatadogMonitoredSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, DatadogMonitoredSubscriptionData data = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Update");
+            using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(new DatadogMonitoredSubscriptionOperationSource(Client), _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
+                    new DatadogMonitoredSubscriptionOperationSource(Client),
+                    _monitoredSubscriptionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,42 +342,52 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the Datadog monitor resource
+        /// Update a DatadogMonitoredSubscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/monitoredSubscriptions/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitoredSubscriptions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitoredSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatadogMonitoredSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="DatadogMonitoredSubscriptionData"/> to use. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DatadogMonitoredSubscriptionResource> Update(WaitUntil waitUntil, DatadogMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatadogMonitoredSubscriptionResource> Update(WaitUntil waitUntil, DatadogMonitoredSubscriptionData data = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Update");
+            using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("DatadogMonitoredSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(new DatadogMonitoredSubscriptionOperationSource(Client), _datadogMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _datadogMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
+                    new DatadogMonitoredSubscriptionOperationSource(Client),
+                    _monitoredSubscriptionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
