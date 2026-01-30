@@ -9,8 +9,11 @@ using System.Text.Json;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> The Speaker Diarization settings. Diarization settings must be specified to enable speaker diarization. </summary>
     public partial class TranscriptionDiarizationOptions : IJsonModel<TranscriptionDiarizationOptions>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranscriptionDiarizationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -18,8 +21,12 @@ namespace Azure.AI.Speech.Transcription
             writer.WriteEndObject();
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TranscriptionDiarizationOptions IJsonModel<TranscriptionDiarizationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscriptionDiarizationOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TranscriptionDiarizationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -31,6 +38,8 @@ namespace Azure.AI.Speech.Transcription
             return DeserializeTranscriptionDiarizationOptions(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static TranscriptionDiarizationOptions DeserializeTranscriptionDiarizationOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -68,8 +77,10 @@ namespace Azure.AI.Speech.Transcription
             return new TranscriptionDiarizationOptions(enabled, maxSpeakers, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TranscriptionDiarizationOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TranscriptionDiarizationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -82,8 +93,12 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TranscriptionDiarizationOptions IPersistableModel<TranscriptionDiarizationOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscriptionDiarizationOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TranscriptionDiarizationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -99,6 +114,7 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TranscriptionDiarizationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

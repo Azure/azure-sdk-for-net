@@ -10,12 +10,16 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> The TranscriptionClient. </summary>
     public partial class TranscriptionClient
     {
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
         private readonly ApiKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        /// <summary> A credential provider used to authenticate to the service. </summary>
         private readonly AuthenticationTokenProvider _tokenProvider;
+        /// <summary> The OAuth2 flows supported by the service. </summary>
         private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
         {
             new Dictionary<string, object>
@@ -27,18 +31,32 @@ namespace Azure.AI.Speech.Transcription
         };
         private readonly string _apiVersion;
 
+        /// <summary> Initializes a new instance of TranscriptionClient for mocking. </summary>
         protected TranscriptionClient()
         {
         }
 
+        /// <summary> Initializes a new instance of TranscriptionClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public TranscriptionClient(Uri endpoint, ApiKeyCredential credential) : this(endpoint, credential, new TranscriptionClientOptions())
         {
         }
 
+        /// <summary> Initializes a new instance of TranscriptionClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
         public TranscriptionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new TranscriptionClientOptions())
         {
         }
 
+        /// <summary> Initializes a new instance of TranscriptionClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public TranscriptionClient(Uri endpoint, ApiKeyCredential credential, TranscriptionClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -52,6 +70,11 @@ namespace Azure.AI.Speech.Transcription
             _apiVersion = options.Version;
         }
 
+        /// <summary> Initializes a new instance of TranscriptionClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
         public TranscriptionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, TranscriptionClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -65,14 +88,41 @@ namespace Azure.AI.Speech.Transcription
             _apiVersion = options.Version;
         }
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary>
+        /// [Protocol Method] Transcribes the provided audio stream.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Transcribe(BinaryContent content, string contentType, RequestOptions options = null)
         {
             using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
+        /// <summary>
+        /// [Protocol Method] Transcribes the provided audio stream.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> TranscribeAsync(BinaryContent content, string contentType, RequestOptions options = null)
         {
             using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);

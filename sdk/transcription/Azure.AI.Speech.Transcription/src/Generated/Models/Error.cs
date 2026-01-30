@@ -8,10 +8,15 @@ using Azure.AI.Speech.Transcription;
 
 namespace Azure.Core.Foundations
 {
+    /// <summary> The error object. </summary>
     public partial class Error
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
         internal Error(string code, string message)
         {
             Code = code;
@@ -19,6 +24,13 @@ namespace Azure.Core.Foundations
             Details = new ChangeTrackingList<Error>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal Error(string code, string message, string target, IList<Error> details, InnerError innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
@@ -29,14 +41,19 @@ namespace Azure.Core.Foundations
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> One of a server-defined set of error codes. </summary>
         public string Code { get; }
 
+        /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
 
+        /// <summary> The target of the error. </summary>
         public string Target { get; }
 
+        /// <summary> An array of details about specific errors that led to this reported error. </summary>
         public IList<Error> Details { get; }
 
+        /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerError Innererror { get; }
     }
 }

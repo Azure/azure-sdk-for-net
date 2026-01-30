@@ -18,6 +18,7 @@ namespace Azure.AI.Speech.Transcription
             _exception = exception;
         }
 
+        /// <summary> Gets the Value. </summary>
         public override T Value => throw _exception;
     }
 }

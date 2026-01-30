@@ -10,6 +10,8 @@ namespace Azure.AI.Speech.Transcription
 {
     internal static partial class Argument
     {
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T value, string name)
         {
             if (value is null)
@@ -18,6 +20,8 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T? value, string name)
             where T : struct
         {
@@ -27,6 +31,8 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty<T>(IEnumerable<T> value, string name)
         {
             if (value is null)
@@ -48,6 +54,8 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty(string value, string name)
         {
             if (value is null)

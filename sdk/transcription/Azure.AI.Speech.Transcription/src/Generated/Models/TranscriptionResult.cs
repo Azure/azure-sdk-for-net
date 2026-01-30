@@ -8,10 +8,16 @@ using System.Linq;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> The result of the transcribe operation. </summary>
     public partial class TranscriptionResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="TranscriptionResult"/>. </summary>
+        /// <param name="durationMilliseconds"> The duration of the audio in milliseconds. </param>
+        /// <param name="combinedPhrases"> The full transcript for each channel. </param>
+        /// <param name="phrases"> The transcription results segmented into phrases. </param>
         internal TranscriptionResult(int durationMilliseconds, IEnumerable<ChannelCombinedPhrases> combinedPhrases, IEnumerable<TranscribedPhrase> phrases)
         {
             DurationMilliseconds = durationMilliseconds;
@@ -19,6 +25,11 @@ namespace Azure.AI.Speech.Transcription
             Phrases = phrases.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="TranscriptionResult"/>. </summary>
+        /// <param name="durationMilliseconds"> The duration of the audio in milliseconds. </param>
+        /// <param name="combinedPhrases"> The full transcript for each channel. </param>
+        /// <param name="phrases"> The transcription results segmented into phrases. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal TranscriptionResult(int durationMilliseconds, IList<ChannelCombinedPhrases> combinedPhrases, IReadOnlyList<TranscribedPhrase> phrases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DurationMilliseconds = durationMilliseconds;
@@ -27,6 +38,7 @@ namespace Azure.AI.Speech.Transcription
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The full transcript for each channel. </summary>
         public IList<ChannelCombinedPhrases> CombinedPhrases { get; }
     }
 }

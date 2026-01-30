@@ -24,6 +24,7 @@ namespace Azure.AI.Speech.Transcription
             _multipartContent = new MultipartFormDataContent(CreateBoundary());
         }
 
+        /// <summary> Gets the ContentType. </summary>
         public string ContentType
         {
             get
@@ -32,6 +33,7 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <summary> Gets the HttpContent. </summary>
         internal HttpContent HttpContent => _multipartContent;
 
         private static string CreateBoundary()
@@ -48,6 +50,10 @@ namespace Azure.AI.Speech.Transcription
             return chars.ToString();
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(string content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -56,6 +62,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StringContent(content), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(int content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -65,6 +75,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StringContent(value), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(long content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -74,6 +88,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StringContent(value), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(float content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -83,6 +101,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StringContent(value), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(double content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -92,6 +114,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StringContent(value), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(decimal content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -101,6 +127,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StringContent(value), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(bool content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -110,6 +140,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StringContent(value), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(Stream content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -118,6 +152,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new StreamContent(content), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(byte[] content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -126,6 +164,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new ByteArrayContent(content), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         public void Add(BinaryData content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -134,6 +176,10 @@ namespace Azure.AI.Speech.Transcription
             Add(new ByteArrayContent(content.ToArray()), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         private void Add(HttpContent content, string name, string filename, string contentType)
         {
             if (contentType != null)
@@ -152,12 +198,15 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="content"></param>
+        /// <param name="contentType"></param>
         public static void AddContentTypeHeader(HttpContent content, string contentType)
         {
             MediaTypeHeaderValue header = new MediaTypeHeaderValue(contentType);
             content.Headers.ContentType = header;
         }
 
+        /// <param name="length"></param>
         public override bool TryComputeLength(out long length)
         {
             if (_multipartContent.Headers.ContentLength is long contentLength)
@@ -169,6 +218,8 @@ namespace Azure.AI.Speech.Transcription
             return false;
         }
 
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
         {
 #if NET6_0_OR_GREATER
@@ -178,6 +229,8 @@ namespace Azure.AI.Speech.Transcription
 #endif
         }
 
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
         {
 #if NET6_0_OR_GREATER

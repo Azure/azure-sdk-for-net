@@ -9,8 +9,11 @@ using System.Text.Json;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> Enhanced mode properties for transcription. </summary>
     public partial class EnhancedModeProperties : IJsonModel<EnhancedModeProperties>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnhancedModeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -18,8 +21,12 @@ namespace Azure.AI.Speech.Transcription
             writer.WriteEndObject();
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EnhancedModeProperties IJsonModel<EnhancedModeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EnhancedModeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EnhancedModeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -31,6 +38,8 @@ namespace Azure.AI.Speech.Transcription
             return DeserializeEnhancedModeProperties(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static EnhancedModeProperties DeserializeEnhancedModeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -92,8 +101,10 @@ namespace Azure.AI.Speech.Transcription
             return new EnhancedModeProperties(enabled, task, targetLanguage, prompt ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EnhancedModeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EnhancedModeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -106,8 +117,12 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EnhancedModeProperties IPersistableModel<EnhancedModeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EnhancedModeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EnhancedModeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +138,7 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EnhancedModeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,8 +11,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Temporary suppression of XML doc requirement for generated code -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <!-- Ignore Azure-Core-specific constructor rule -->
     <NoWarn>$(NoWarn);AZC0007</NoWarn>
     <!-- Ignore Azure-Core-specific single word type name rule -->

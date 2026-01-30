@@ -7,10 +7,13 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> Client options for <see cref="TranscriptionClient"/>. </summary>
     public partial class TranscriptionClientOptions : ClientPipelineOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V20251015;
 
+        /// <summary> Initializes a new instance of TranscriptionClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public TranscriptionClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -20,10 +23,13 @@ namespace Azure.AI.Speech.Transcription
             };
         }
 
+        /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
+        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
+            /// <summary> V20251015. </summary>
             V20251015 = 1
         }
     }

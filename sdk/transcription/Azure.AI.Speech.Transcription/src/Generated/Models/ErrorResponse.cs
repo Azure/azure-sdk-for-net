@@ -7,15 +7,23 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Foundations
 {
+    /// <summary> A response containing error details. </summary>
     public partial class ErrorResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <param name="error"> The error object. </param>
         internal ErrorResponse(Error error)
         {
             Error = error;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ErrorResponse(Error error, string errorCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
@@ -23,8 +31,10 @@ namespace Azure.Core.Foundations
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The error object. </summary>
         public Error Error { get; }
 
+        /// <summary> String error code indicating what went wrong. </summary>
         public string ErrorCode { get; }
     }
 }

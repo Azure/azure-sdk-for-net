@@ -7,10 +7,17 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> A transcribed phrase. </summary>
     public partial class TranscribedPhrase
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="TranscribedPhrase"/>. </summary>
+        /// <param name="offsetMilliseconds"> The start offset of the phrase in milliseconds. </param>
+        /// <param name="durationMilliseconds"> The duration of the phrase in milliseconds. </param>
+        /// <param name="text"> The transcribed text of the phrase. </param>
+        /// <param name="confidence"> The confidence value for the phrase. </param>
         internal TranscribedPhrase(int offsetMilliseconds, int durationMilliseconds, string text, float confidence)
         {
             OffsetMilliseconds = offsetMilliseconds;
@@ -20,6 +27,16 @@ namespace Azure.AI.Speech.Transcription
             Confidence = confidence;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TranscribedPhrase"/>. </summary>
+        /// <param name="channel"> The 0-based channel index. Only present if channel separation is enabled. </param>
+        /// <param name="speaker"> A unique integer number that is assigned to each speaker detected in the audio without particular order. Only present if speaker diarization is enabled. </param>
+        /// <param name="offsetMilliseconds"> The start offset of the phrase in milliseconds. </param>
+        /// <param name="durationMilliseconds"> The duration of the phrase in milliseconds. </param>
+        /// <param name="text"> The transcribed text of the phrase. </param>
+        /// <param name="words"> The words that make up the phrase. Only present if word-level timestamps are enabled. </param>
+        /// <param name="locale"> The locale of the phrase. </param>
+        /// <param name="confidence"> The confidence value for the phrase. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal TranscribedPhrase(int? channel, int? speaker, int offsetMilliseconds, int durationMilliseconds, string text, IList<TranscribedWord> words, string locale, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Channel = channel;
@@ -33,14 +50,19 @@ namespace Azure.AI.Speech.Transcription
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> A unique integer number that is assigned to each speaker detected in the audio without particular order. Only present if speaker diarization is enabled. </summary>
         public int? Speaker { get; }
 
+        /// <summary> The transcribed text of the phrase. </summary>
         public string Text { get; }
 
+        /// <summary> The words that make up the phrase. Only present if word-level timestamps are enabled. </summary>
         public IList<TranscribedWord> Words { get; }
 
+        /// <summary> The locale of the phrase. </summary>
         public string Locale { get; }
 
+        /// <summary> The confidence value for the phrase. </summary>
         public float Confidence { get; }
     }
 }

@@ -9,12 +9,16 @@ using System.Text.Json;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> A transcribed phrase. </summary>
     public partial class TranscribedPhrase : IJsonModel<TranscribedPhrase>
     {
+        /// <summary> Initializes a new instance of <see cref="TranscribedPhrase"/> for deserialization. </summary>
         internal TranscribedPhrase()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranscribedPhrase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -22,6 +26,8 @@ namespace Azure.AI.Speech.Transcription
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
@@ -79,8 +85,12 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TranscribedPhrase IJsonModel<TranscribedPhrase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscribedPhrase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
@@ -92,6 +102,8 @@ namespace Azure.AI.Speech.Transcription
             return DeserializeTranscribedPhrase(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static TranscribedPhrase DeserializeTranscribedPhrase(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -183,8 +195,10 @@ namespace Azure.AI.Speech.Transcription
                 additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TranscribedPhrase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,8 +211,12 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TranscribedPhrase IPersistableModel<TranscribedPhrase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscribedPhrase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TranscribedPhrase>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,6 +232,7 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TranscribedPhrase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

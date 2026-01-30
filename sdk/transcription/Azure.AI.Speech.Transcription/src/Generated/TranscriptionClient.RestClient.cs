@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary></summary>
     public partial class TranscriptionClient
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;

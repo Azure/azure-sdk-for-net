@@ -9,6 +9,7 @@ namespace Microsoft.TypeSpec.Generator.Customizations
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute
     {
+        /// <param name="originalName"> The original name of the member. </param>
         public CodeGenMemberAttribute(string originalName) : base(originalName)
         {
         }

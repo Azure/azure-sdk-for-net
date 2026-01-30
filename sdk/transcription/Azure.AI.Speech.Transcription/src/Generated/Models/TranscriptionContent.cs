@@ -9,13 +9,20 @@ namespace Azure.AI.Speech.Transcription
 {
     internal partial class TranscriptionContent
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
+        /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         public TranscriptionContent(TranscriptionOptions options)
         {
             Options = options;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
+        /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
+        /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal TranscriptionContent(TranscriptionOptions options, BinaryData audio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Options = options;
@@ -23,8 +30,25 @@ namespace Azure.AI.Speech.Transcription
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </summary>
         public TranscriptionOptions Options { get; }
 
+        /// <summary>
+        /// The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Audio { get; set; }
     }
 }

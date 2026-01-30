@@ -7,15 +7,22 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> Phrase list properties for transcription. </summary>
     public partial class PhraseListProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="PhraseListProperties"/>. </summary>
         public PhraseListProperties()
         {
             Phrases = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhraseListProperties"/>. </summary>
+        /// <param name="phrases"> List of phrases for recognition. </param>
+        /// <param name="biasingWeight"> Biasing weight for phrase list (0.0-2.0). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PhraseListProperties(IList<string> phrases, float? biasingWeight, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Phrases = phrases;
@@ -23,8 +30,10 @@ namespace Azure.AI.Speech.Transcription
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> List of phrases for recognition. </summary>
         public IList<string> Phrases { get; }
 
+        /// <summary> Biasing weight for phrase list (0.0-2.0). </summary>
         public float? BiasingWeight { get; set; }
     }
 }

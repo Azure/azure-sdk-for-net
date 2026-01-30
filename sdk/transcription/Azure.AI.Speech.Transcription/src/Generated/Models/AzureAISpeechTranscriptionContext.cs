@@ -7,6 +7,10 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Speech.Transcription
 {
+    /// <summary>
+    /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// </summary>
     [ModelReaderWriterBuildable(typeof(ChannelCombinedPhrases))]
     [ModelReaderWriterBuildable(typeof(EnhancedModeProperties))]
     [ModelReaderWriterBuildable(typeof(Error))]
