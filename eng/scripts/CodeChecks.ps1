@@ -102,14 +102,19 @@ try {
         }
     }
 
-    Write-Host "Re-generating snippets"
-    Invoke-Block {
-        & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
-    }
+    if ($ServiceDirectory -ne "tools") {
+        Write-Host "Re-generating snippets"
+        Invoke-Block {
+            & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
+        }
 
-    Write-Host "Re-generating listings"
-    Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
+        Write-Host "Re-generating listings"
+        Invoke-Block {
+            & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
+        }
+    }
+    else {
+        Write-Host "Skipping snippet and API listing generation for tools directory"
     }
 
     Write-Host "Validating installation instructions"
