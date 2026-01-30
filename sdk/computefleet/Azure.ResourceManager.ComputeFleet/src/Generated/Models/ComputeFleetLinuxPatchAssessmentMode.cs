@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
     /// Specifies the mode of VM Guest Patch Assessment for the IaaS virtual
-    /// machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - You
+    /// machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You
     /// control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt;
-    /// **AutomaticByPlatform** - The platform will trigger periodic patch assessments.
+    /// <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments.
     /// The property provisionVMAgent must be true.
     /// </summary>
     public readonly partial struct ComputeFleetLinuxPatchAssessmentMode : IEquatable<ComputeFleetLinuxPatchAssessmentMode>

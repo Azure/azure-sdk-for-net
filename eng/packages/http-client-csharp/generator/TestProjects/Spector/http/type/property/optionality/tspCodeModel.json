@@ -1307,6 +1307,11 @@
       "usage": "Input,Output,Json",
       "doc": "Template type for testing models with optional property. Pass in the type of the property you are looking for",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "StringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "156",
@@ -1345,6 +1350,11 @@
       "usage": "Input,Output,Json",
       "doc": "Template type for testing models with optional property. Pass in the type of the property you are looking for",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BytesProperty"
+        }
+      },
       "properties": [
         {
           "$id": "159",
@@ -1384,6 +1394,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a datetime property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "162",
@@ -1430,6 +1445,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a duration property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "166",
@@ -1476,6 +1496,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a plainDate property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PlainDateProperty"
+        }
+      },
       "properties": [
         {
           "$id": "170",
@@ -1514,6 +1539,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a plainTime property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PlainTimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "173",
@@ -1552,6 +1582,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with collection bytes properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsByteProperty"
+        }
+      },
       "properties": [
         {
           "$id": "176",
@@ -1598,6 +1633,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with collection models properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsModelProperty"
+        }
+      },
       "properties": [
         {
           "$id": "180",
@@ -1639,6 +1679,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with string literal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "StringLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "183",
@@ -1673,6 +1718,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with int literal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IntLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "185",
@@ -1707,6 +1757,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with float literal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "187",
@@ -1741,6 +1796,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with boolean literal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BooleanLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "189",
@@ -1775,6 +1835,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with union of string literal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnionStringLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "191",
@@ -1809,6 +1874,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with union of int literal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnionIntLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "193",
@@ -1843,6 +1913,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with union of float literal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnionFloatLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "195",
@@ -1877,6 +1952,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with required and optional properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "RequiredAndOptionalProperty"
+        }
+      },
       "properties": [
         {
           "$id": "197",

@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Quota
         /// <param name="filter">
         /// | Field | Supported operators
         /// |---------------------|------------------------
-        /// 
         /// location eq {location}
         /// Example: $filter=location eq eastus
         /// </param>
