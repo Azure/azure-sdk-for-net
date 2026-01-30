@@ -170,27 +170,28 @@ export function buildArmProviderSchema(
               // If we can't calculate resource type, try string matching
             }
 
-            // If resource types match exactly, this is a potential candidate
+            // If resource types match exactly, this is a strong candidate for matching
             if (
               existingResourceType &&
               operationResourceType === existingResourceType
             ) {
               // Add to type match candidates
               typeMatchCandidates.push({ existingPath });
+            }
 
-              // Also check for prefix match
-              // The resource path without the last segment (resource name parameter) should be a prefix of the operation path
-              const existingParentPath = existingPath.substring(
-                0,
-                existingPath.lastIndexOf("/")
-              );
-              if (isPrefix(existingParentPath, operationPath)) {
-                // Score based on how many segments match (longer prefix = better match)
-                const score = existingParentPath
-                  .split("/")
-                  .filter((s) => s.length > 0).length;
-                prefixMatchCandidates.push({ existingPath, matchScore: score });
-              }
+            // Check for prefix match (applies to both exact type matches and fallback cases)
+            // The resource path without the last segment (resource name parameter) should be a prefix of the operation path
+            // This also serves as a fallback when resource types don't match exactly
+            const existingParentPath = existingPath.substring(
+              0,
+              existingPath.lastIndexOf("/")
+            );
+            if (isPrefix(existingParentPath, operationPath)) {
+              // Score based on how many segments match (longer prefix = better match)
+              const score = existingParentPath
+                .split("/")
+                .filter((s) => s.length > 0).length;
+              prefixMatchCandidates.push({ existingPath, matchScore: score });
             }
           }
         }
