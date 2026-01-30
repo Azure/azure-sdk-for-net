@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added SKU support for DeidService resources with the following properties:
+  - `HealthDataAIServicesSku` model with `Name`, `Tier`, and `Capacity` properties
+  - `HealthDataAIServicesSkuTier` enum with `Free`, `Basic`, and `Standard` values
+  - `HealthDataAIServicesSkuPatch` model for update operations
+- Updated API version to 2026-02-01-preview
+
 ### Breaking Changes
 
 ### Bugs Fixed
