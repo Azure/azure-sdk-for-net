@@ -4,7 +4,7 @@
   CI, test runs, and package release.
 
   Based on the SDKType variable (msbuild property or env variable) this will filter
-  the set of projects to to match what type of SDK we are interested in building.
+  the set of projects to match what type of SDK we are interested in building.
 
   SDKType values
    - "all" will build all projects
