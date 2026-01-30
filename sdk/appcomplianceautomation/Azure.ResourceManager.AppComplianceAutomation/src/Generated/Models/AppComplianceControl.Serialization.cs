@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class AppComplianceControl : IUtf8JsonSerializable, IJsonModel<AppComplianceControl>
+    /// <summary> A class represent the control. </summary>
+    public partial class AppComplianceControl : IJsonModel<AppComplianceControl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppComplianceControl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceControl)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ControlId))
             {
                 writer.WritePropertyName("controlId"u8);
@@ -68,21 +68,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("responsibilities"u8);
                 writer.WriteStartArray();
-                foreach (var item in Responsibilities)
+                foreach (CustomerResponsibility item in Responsibilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +91,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceControl IJsonModel<AppComplianceControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceControl IJsonModel<AppComplianceControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceControl JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceControl)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppComplianceControl(document.RootElement, options);
         }
 
-        internal static AppComplianceControl DeserializeAppComplianceControl(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AppComplianceControl DeserializeAppComplianceControl(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -118,56 +123,55 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Uri controlDescriptionHyperLink = default;
             AppComplianceControlStatus? controlStatus = default;
             IReadOnlyList<CustomerResponsibility> responsibilities = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("controlId"u8))
+                if (prop.NameEquals("controlId"u8))
                 {
-                    controlId = property.Value.GetString();
+                    controlId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlName"u8))
+                if (prop.NameEquals("controlName"u8))
                 {
-                    controlName = property.Value.GetString();
+                    controlName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlFullName"u8))
+                if (prop.NameEquals("controlFullName"u8))
                 {
-                    controlFullName = property.Value.GetString();
+                    controlFullName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlDescription"u8))
+                if (prop.NameEquals("controlDescription"u8))
                 {
-                    controlDescription = property.Value.GetString();
+                    controlDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlDescriptionHyperLink"u8))
+                if (prop.NameEquals("controlDescriptionHyperLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    controlDescriptionHyperLink = new Uri(property.Value.GetString());
+                    controlDescriptionHyperLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controlStatus"u8))
+                if (prop.NameEquals("controlStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    controlStatus = new AppComplianceControlStatus(property.Value.GetString());
+                    controlStatus = new AppComplianceControlStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("responsibilities"u8))
+                if (prop.NameEquals("responsibilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CustomerResponsibility> array = new List<CustomerResponsibility>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CustomerResponsibility.DeserializeCustomerResponsibility(item, options));
                     }
@@ -176,10 +180,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AppComplianceControl(
                 controlId,
                 controlName,
@@ -188,13 +191,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 controlDescriptionHyperLink,
                 controlStatus,
                 responsibilities ?? new ChangeTrackingList<CustomerResponsibility>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AppComplianceControl>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppComplianceControl>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -204,15 +210,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceControl IPersistableModel<AppComplianceControl>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceControl IPersistableModel<AppComplianceControl>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceControl PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceControl>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppComplianceControl(document.RootElement, options);
                     }
                 default:
@@ -220,6 +231,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppComplianceControl>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

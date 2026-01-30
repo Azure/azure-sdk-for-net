@@ -70,8 +70,6 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(PostgreSqlVirtualNetworkRuleData))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlVirtualNetworkRuleListResult))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlVirtualNetworkRuleResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownServerPropertiesForCreate))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerPostgreSqlContext : ModelReaderWriterContext

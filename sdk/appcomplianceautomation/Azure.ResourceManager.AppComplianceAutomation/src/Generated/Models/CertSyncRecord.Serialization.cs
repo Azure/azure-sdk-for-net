@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class CertSyncRecord : IUtf8JsonSerializable, IJsonModel<CertSyncRecord>
+    /// <summary> A class represent the certification record synchronized from app compliance. </summary>
+    public partial class CertSyncRecord : IJsonModel<CertSyncRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertSyncRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CertSyncRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CertSyncRecord)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("controls"u8);
                 writer.WriteStartArray();
-                foreach (var item in Controls)
+                foreach (ControlSyncRecord item in Controls)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +76,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        CertSyncRecord IJsonModel<CertSyncRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertSyncRecord IJsonModel<CertSyncRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CertSyncRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CertSyncRecord)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCertSyncRecord(document.RootElement, options);
         }
 
-        internal static CertSyncRecord DeserializeCertSyncRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CertSyncRecord DeserializeCertSyncRecord(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,33 +105,32 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             string certificationStatus = default;
             string ingestionStatus = default;
             IList<ControlSyncRecord> controls = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("offerGuid"u8))
+                if (prop.NameEquals("offerGuid"u8))
                 {
-                    offerGuid = property.Value.GetString();
+                    offerGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificationStatus"u8))
+                if (prop.NameEquals("certificationStatus"u8))
                 {
-                    certificationStatus = property.Value.GetString();
+                    certificationStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ingestionStatus"u8))
+                if (prop.NameEquals("ingestionStatus"u8))
                 {
-                    ingestionStatus = property.Value.GetString();
+                    ingestionStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controls"u8))
+                if (prop.NameEquals("controls"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ControlSyncRecord> array = new List<ControlSyncRecord>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ControlSyncRecord.DeserializeControlSyncRecord(item, options));
                     }
@@ -135,17 +139,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CertSyncRecord(offerGuid, certificationStatus, ingestionStatus, controls ?? new ChangeTrackingList<ControlSyncRecord>(), serializedAdditionalRawData);
+            return new CertSyncRecord(offerGuid, certificationStatus, ingestionStatus, controls ?? new ChangeTrackingList<ControlSyncRecord>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CertSyncRecord>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CertSyncRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -155,15 +161,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        CertSyncRecord IPersistableModel<CertSyncRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertSyncRecord IPersistableModel<CertSyncRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CertSyncRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCertSyncRecord(document.RootElement, options);
                     }
                 default:
@@ -171,6 +182,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CertSyncRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

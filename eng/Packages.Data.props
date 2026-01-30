@@ -26,9 +26,9 @@
     <OpenTelemetryVersion>1.14.0</OpenTelemetryVersion>
 
     <!-- Internal tooling from the Azure Development Feed -->
-    <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260128.5</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20260127.1</AzureGeneratorVersion>
+    <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260130.3</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260129.3</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
     <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
@@ -158,7 +158,7 @@
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageReference Update="Azure.AI.Projects" Version="1.1.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.4.0" />
-    <PackageReference Update="Azure.Core" Version="1.50.0" />
+    <PackageReference Update="Azure.Core" Version="1.51.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />

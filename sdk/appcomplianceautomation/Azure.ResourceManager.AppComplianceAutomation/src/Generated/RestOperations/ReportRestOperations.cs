@@ -6,934 +6,240 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    internal partial class ReportRestOperations
+    internal partial class Report
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ReportRestOperations. </summary>
+        /// <summary> Initializes a new instance of Report for mocking. </summary>
+        protected Report()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Report. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ReportRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Report(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-27";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            if (offerGuid != null)
-            {
-                uri.AppendQuery("offerGuid", offerGuid, true);
-            }
-            if (reportCreatorTenantId != null)
-            {
-                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
-            }
-            return uri;
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        internal HttpMessage CreateListRequest(string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string reportName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            if (offerGuid != null)
-            {
-                uri.AppendQuery("offerGuid", offerGuid, true);
-            }
-            if (reportCreatorTenantId != null)
-            {
-                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReportResourceListResult>> ListAsync(string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string reportName, RequestContent content, RequestContext context)
         {
-            using var message = CreateListRequest(skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReportResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReportResourceListResult> List(string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReportResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string reportName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string reportName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the AppComplianceAutomation report and its properties. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppComplianceReportData>> GetAsync(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateGetRequest(reportName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AppComplianceReportData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AppComplianceReportData.DeserializeAppComplianceReportData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AppComplianceReportData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the AppComplianceAutomation report and its properties. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppComplianceReportData> Get(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateGetRequest(reportName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AppComplianceReportData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AppComplianceReportData.DeserializeAppComplianceReportData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AppComplianceReportData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string reportName, AppComplianceReportData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string reportName, AppComplianceReportData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create a new AppComplianceAutomation report or update an exiting AppComplianceAutomation report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="data"> Parameters for the create or update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string reportName, AppComplianceReportData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string reportName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(reportName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create a new AppComplianceAutomation report or update an exiting AppComplianceAutomation report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="data"> Parameters for the create or update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string reportName, AppComplianceReportData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(reportName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string reportName, AppComplianceReportPatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string reportName, AppComplianceReportPatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Update an exiting AppComplianceAutomation report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="patch"> Parameters for the create or update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string reportName, AppComplianceReportPatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string reportName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(reportName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update an exiting AppComplianceAutomation report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="patch"> Parameters for the create or update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string reportName, AppComplianceReportPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(reportName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string reportName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string reportName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete an AppComplianceAutomation report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string reportName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(string skipToken, int? top, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateDeleteRequest(reportName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete an AppComplianceAutomation report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateDeleteRequest(reportName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateNestedResourceCheckNameAvailabilityRequestUri(string reportName, AppComplianceReportNameAvailabilityContent content)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateNestedResourceCheckNameAvailabilityRequest(string reportName, AppComplianceReportNameAvailabilityContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/checkNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
+            if (@select != null)
+            {
+                uri.AppendQuery("$select", @select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (@orderby != null)
+            {
+                uri.AppendQuery("$orderby", @orderby, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Checks the report's nested resource name availability, e.g: Webhooks, Evidences, Snapshots. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="content"> NameAvailabilityRequest object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppComplianceReportNameAvailabilityResult>> NestedResourceCheckNameAvailabilityAsync(string reportName, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateNestedResourceCheckNameAvailabilityRequest(reportName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AppComplianceReportNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AppComplianceReportNameAvailabilityResult.DeserializeAppComplianceReportNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Checks the report's nested resource name availability, e.g: Webhooks, Evidences, Snapshots. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="content"> NameAvailabilityRequest object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppComplianceReportNameAvailabilityResult> NestedResourceCheckNameAvailability(string reportName, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateNestedResourceCheckNameAvailabilityRequest(reportName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AppComplianceReportNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AppComplianceReportNameAvailabilityResult.DeserializeAppComplianceReportNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateFixRequestUri(string reportName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/fix", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateFixRequest(string reportName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/fix", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> FixAsync(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateFixRequest(reportName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Fix(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateFixRequest(reportName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetScopingQuestionsRequestUri(string reportName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/getScopingQuestions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetScopingQuestionsRequest(string reportName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/getScopingQuestions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScopingQuestions>> GetScopingQuestionsAsync(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateGetScopingQuestionsRequest(reportName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScopingQuestions value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScopingQuestions.DeserializeScopingQuestions(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScopingQuestions> GetScopingQuestions(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateGetScopingQuestionsRequest(reportName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScopingQuestions value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScopingQuestions.DeserializeScopingQuestions(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateSyncCertRecordRequestUri(string reportName, SyncCertRecordContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/syncCertRecord", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateSyncCertRecordRequest(string reportName, SyncCertRecordContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/syncCertRecord", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Synchronize attestation record from app compliance. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="content"> Parameters for synchronize certification record operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SyncCertRecordAsync(string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateSyncCertRecordRequest(reportName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Synchronize attestation record from app compliance. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="content"> Parameters for synchronize certification record operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SyncCertRecord(string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateSyncCertRecordRequest(reportName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateVerifyRequestUri(string reportName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/verify", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateVerifyRequest(string reportName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/verify", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Verify the AppComplianceAutomation report health status. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> VerifyAsync(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateVerifyRequest(reportName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Verify the AppComplianceAutomation report health status. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Verify(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateVerifyRequest(reportName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ReportResourceListResult>> ListNextPageAsync(string nextLink, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string skipToken, int? top, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReportResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ReportResourceListResult> ListNextPage(string nextLink, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateSyncCertRecordRequest(string reportName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/syncCertRecord", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
 
-            using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReportResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+        internal HttpMessage CreateCheckAppComplianceReportNestedResourceNameAvailabilityRequest(string reportName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateFixRequest(string reportName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/fix", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetScopingQuestionsRequest(string reportName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/getScopingQuestions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateVerifyRequest(string reportName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/verify", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

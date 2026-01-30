@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableRecoveryServicesArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRecoveryServicesArmClient for mocking. </summary>
         protected MockableRecoveryServicesArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRecoveryServicesArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRecoveryServicesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableRecoveryServicesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="RecoveryServicesPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecoveryServicesPrivateLinkResource"/> object. </returns>
         public virtual RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             return new RecoveryServicesPrivateLinkResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesVaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesVaultResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="RecoveryServicesVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecoveryServicesVaultResource"/> object. </returns>
         public virtual RecoveryServicesVaultResource GetRecoveryServicesVaultResource(ResourceIdentifier id)
@@ -58,16 +44,22 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             return new RecoveryServicesVaultResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesVaultExtendedInfoResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesVaultExtendedInfoResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultExtendedInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="RecoveryServicesVaultExtendedInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource"/> object. </returns>
         public virtual RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(ResourceIdentifier id)
         {
             RecoveryServicesVaultExtendedInfoResource.ValidateResourceId(id);
             return new RecoveryServicesVaultExtendedInfoResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RecoveryServicesDeletedVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryServicesDeletedVaultResource"/> object. </returns>
+        public virtual RecoveryServicesDeletedVaultResource GetRecoveryServicesDeletedVaultResource(ResourceIdentifier id)
+        {
+            RecoveryServicesDeletedVaultResource.ValidateResourceId(id);
+            return new RecoveryServicesDeletedVaultResource(Client, id);
         }
     }
 }

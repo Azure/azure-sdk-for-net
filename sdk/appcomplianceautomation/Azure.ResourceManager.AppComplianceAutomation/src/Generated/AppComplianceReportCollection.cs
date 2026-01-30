@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -22,55 +22,53 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// <summary>
     /// A class representing a collection of <see cref="AppComplianceReportResource"/> and their operations.
     /// Each <see cref="AppComplianceReportResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get an <see cref="AppComplianceReportCollection"/> instance call the GetAppComplianceReports method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="AppComplianceReportCollection"/> instance call the GetAppComplianceReports method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class AppComplianceReportCollection : ArmCollection, IEnumerable<AppComplianceReportResource>, IAsyncEnumerable<AppComplianceReportResource>
     {
-        private readonly ClientDiagnostics _appComplianceReportReportClientDiagnostics;
-        private readonly ReportRestOperations _appComplianceReportReportRestClient;
+        private readonly ClientDiagnostics _reportClientDiagnostics;
+        private readonly Report _reportRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AppComplianceReportCollection for mocking. </summary>
         protected AppComplianceReportCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppComplianceReportCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appComplianceReportReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AppComplianceReportResource.ResourceType, out string appComplianceReportReportApiVersion);
-            _appComplianceReportReportRestClient = new ReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportReportApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AppComplianceReportResource.ResourceType, out string appComplianceReportApiVersion);
+            _reportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportResource.ResourceType.Namespace, Diagnostics);
+            _reportRestClient = new Report(_reportClientDiagnostics, Pipeline, Endpoint, appComplianceReportApiVersion ?? "2024-06-27");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a new AppComplianceAutomation report or update an exiting AppComplianceAutomation report.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,21 +76,34 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportName"> Report Name. </param>
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AppComplianceReportResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string reportName, AppComplianceReportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportReportRestClient.CreateOrUpdateAsync(reportName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(new AppComplianceReportOperationSource(Client), _appComplianceReportReportClientDiagnostics, Pipeline, _appComplianceReportReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateCreateOrUpdateRequest(reportName, AppComplianceReportData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
+                    new AppComplianceReportOperationSource(Client),
+                    _reportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +117,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Create a new AppComplianceAutomation report or update an exiting AppComplianceAutomation report.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,21 +134,34 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportName"> Report Name. </param>
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AppComplianceReportResource> CreateOrUpdate(WaitUntil waitUntil, string reportName, AppComplianceReportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appComplianceReportReportRestClient.CreateOrUpdate(reportName, data, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(new AppComplianceReportOperationSource(Client), _appComplianceReportReportClientDiagnostics, Pipeline, _appComplianceReportReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateCreateOrUpdateRequest(reportName, AppComplianceReportData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
+                    new AppComplianceReportOperationSource(Client),
+                    _reportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -155,38 +175,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation report and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AppComplianceReportResource>> GetAsync(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.Get");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportReportRestClient.GetAsync(reportName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateGetRequest(reportName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppComplianceReportData> response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,38 +224,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation report and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AppComplianceReportResource> Get(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.Get");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.Get");
             scope.Start();
             try
             {
-                var response = _appComplianceReportReportRestClient.Get(reportName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateGetRequest(reportName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppComplianceReportData> response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,102 +273,138 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation report list for the tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppComplianceReportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppComplianceReportResource> GetAllAsync(AppComplianceReportCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppComplianceReportResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppComplianceReportResource> GetAllAsync(string skipToken = default, int? top = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
         {
-            options ??= new AppComplianceReportCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportReportRestClient.CreateListRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportReportRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportResource(Client, AppComplianceReportData.DeserializeAppComplianceReportData(e)), _appComplianceReportReportClientDiagnostics, Pipeline, "AppComplianceReportCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new ReportGetAllAsyncCollectionResultOfT(
+                _reportRestClient,
+                skipToken,
+                top,
+                @select,
+                filter,
+                @orderby,
+                offerGuid,
+                reportCreatorTenantId,
+                context), data => new AppComplianceReportResource(Client, data));
         }
 
         /// <summary>
         /// Get the AppComplianceAutomation report list for the tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppComplianceReportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppComplianceReportResource> GetAll(AppComplianceReportCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<AppComplianceReportResource> GetAll(string skipToken = default, int? top = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
         {
-            options ??= new AppComplianceReportCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportReportRestClient.CreateListRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportReportRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportResource(Client, AppComplianceReportData.DeserializeAppComplianceReportData(e)), _appComplianceReportReportClientDiagnostics, Pipeline, "AppComplianceReportCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new ReportGetAllCollectionResultOfT(
+                _reportRestClient,
+                skipToken,
+                top,
+                @select,
+                filter,
+                @orderby,
+                offerGuid,
+                reportCreatorTenantId,
+                context), data => new AppComplianceReportResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.Exists");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportReportRestClient.GetAsync(reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateGetRequest(reportName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppComplianceReportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +418,50 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.Exists");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.Exists");
             scope.Start();
             try
             {
-                var response = _appComplianceReportReportRestClient.Get(reportName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateGetRequest(reportName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppComplianceReportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +475,54 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AppComplianceReportResource>> GetIfExistsAsync(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.GetIfExists");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportReportRestClient.GetAsync(reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateGetRequest(reportName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppComplianceReportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppComplianceReportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +536,54 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AppComplianceReportResource> GetIfExists(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _appComplianceReportReportClientDiagnostics.CreateScope("AppComplianceReportCollection.GetIfExists");
+            using DiagnosticScope scope = _reportClientDiagnostics.CreateScope("AppComplianceReportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _appComplianceReportReportRestClient.Get(reportName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reportRestClient.CreateGetRequest(reportName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppComplianceReportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppComplianceReportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,17 +595,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         IEnumerator<AppComplianceReportResource> IEnumerable<AppComplianceReportResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AppComplianceReportResource> IAsyncEnumerable<AppComplianceReportResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

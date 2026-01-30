@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> Patch Report's properties. </summary>
     public partial class AppComplianceReportPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportPatchProperties"/>. </summary>
         public AppComplianceReportPatchProperties()
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="storageInfo"> The information of 'bring your own storage' binding to the report. </param>
         /// <param name="certRecords"> List of synchronized certification records. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportPatchProperties(DateTimeOffset? triggerOn, string timeZone, IList<ReportResourceMetadata> resources, AppComplianceReportStatus? status, IReadOnlyList<string> errors, Guid? tenantId, string offerGuid, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, ReportComplianceStatus complianceStatus, ReportStorageInfo storageInfo, IReadOnlyList<CertSyncRecord> certRecords, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppComplianceReportPatchProperties(DateTimeOffset? triggerOn, string timeZone, IList<ReportResourceMetadata> resources, AppComplianceReportStatus? status, IReadOnlyList<string> errors, Guid? tenantId, string offerGuid, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, ReportComplianceStatus complianceStatus, ReportStorageInfo storageInfo, IReadOnlyList<CertSyncRecord> certRecords, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TriggerOn = triggerOn;
             TimeZone = timeZone;
@@ -89,45 +61,61 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             StorageInfo = storageInfo;
             CertRecords = certRecords;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Report collection trigger time. </summary>
         public DateTimeOffset? TriggerOn { get; set; }
+
         /// <summary>
         /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
         /// An example of valid timezone id is "Pacific Standard Time".
         /// </summary>
         public string TimeZone { get; set; }
+
         /// <summary> List of resource data. </summary>
         public IList<ReportResourceMetadata> Resources { get; }
+
         /// <summary> Report status. </summary>
         public AppComplianceReportStatus? Status { get; }
+
         /// <summary> List of report error codes. </summary>
         public IReadOnlyList<string> Errors { get; }
+
         /// <summary> Report's tenant id. </summary>
         public Guid? TenantId { get; }
+
         /// <summary> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </summary>
         public string OfferGuid { get; set; }
+
         /// <summary> Report next collection trigger time. </summary>
         public DateTimeOffset? NextTriggerOn { get; }
+
         /// <summary> Report last collection trigger time. </summary>
         public DateTimeOffset? LastTriggerOn { get; }
+
         /// <summary> List of subscription Ids. </summary>
         public IReadOnlyList<string> Subscriptions { get; }
+
         /// <summary> Report compliance status. </summary>
         internal ReportComplianceStatus ComplianceStatus { get; }
-        /// <summary> The Microsoft 365 certification name. </summary>
-        public ReportOverviewStatus ComplianceStatusM365
-        {
-            get => ComplianceStatus?.M365;
-        }
 
         /// <summary> The information of 'bring your own storage' binding to the report. </summary>
         public ReportStorageInfo StorageInfo { get; set; }
+
         /// <summary> List of synchronized certification records. </summary>
         public IReadOnlyList<CertSyncRecord> CertRecords { get; }
+
         /// <summary> Azure lifecycle management. </summary>
         public AppComplianceProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The Microsoft 365 certification name. </summary>
+        public ReportOverviewStatus ComplianceStatusM365
+        {
+            get
+            {
+                return ComplianceStatus.M365;
+            }
+        }
     }
 }

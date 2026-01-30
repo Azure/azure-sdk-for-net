@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct VaultSubResourceType : IEquatable<VaultSubResourceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VaultSubResourceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VaultSubResourceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AzureBackupValue = "AzureBackup";
         private const string AzureBackupSecondaryValue = "AzureBackup_secondary";
         private const string AzureSiteRecoveryValue = "AzureSiteRecovery";
 
-        /// <summary> AzureBackup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultSubResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VaultSubResourceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AzureBackup. </summary>
         public static VaultSubResourceType AzureBackup { get; } = new VaultSubResourceType(AzureBackupValue);
-        /// <summary> AzureBackup_secondary. </summary>
+
+        /// <summary> Gets the AzureBackupSecondary. </summary>
         public static VaultSubResourceType AzureBackupSecondary { get; } = new VaultSubResourceType(AzureBackupSecondaryValue);
-        /// <summary> AzureSiteRecovery. </summary>
+
+        /// <summary> Gets the AzureSiteRecovery. </summary>
         public static VaultSubResourceType AzureSiteRecovery { get; } = new VaultSubResourceType(AzureSiteRecoveryValue);
+
         /// <summary> Determines if two <see cref="VaultSubResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VaultSubResourceType left, VaultSubResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VaultSubResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VaultSubResourceType left, VaultSubResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultSubResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VaultSubResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VaultSubResourceType(string value) => new VaultSubResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VaultSubResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VaultSubResourceType?(string value) => value == null ? null : new VaultSubResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VaultSubResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VaultSubResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

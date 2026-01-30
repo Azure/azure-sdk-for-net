@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> Object that includes all the possible response for the download operation. </summary>
     public partial class AppComplianceDownloadResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceDownloadResult"/>. </summary>
         internal AppComplianceDownloadResult()
@@ -57,34 +29,44 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="complianceReport"> List of the compliance result. </param>
         /// <param name="compliancePdfReport"> Compliance pdf report. </param>
         /// <param name="complianceDetailedPdfReport"> The detailed compliance pdf report. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceDownloadResult(IReadOnlyList<ReportResourceItem> resourceList, IReadOnlyList<AppComplianceReportItem> complianceReport, AppCompliancePdfReport compliancePdfReport, AppComplianceDetailedPdfReport complianceDetailedPdfReport, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppComplianceDownloadResult(IReadOnlyList<ReportResourceItem> resourceList, IReadOnlyList<AppComplianceReportItem> complianceReport, AppCompliancePdfReport compliancePdfReport, AppComplianceDetailedPdfReport complianceDetailedPdfReport, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceList = resourceList;
             ComplianceReport = complianceReport;
             CompliancePdfReport = compliancePdfReport;
             ComplianceDetailedPdfReport = complianceDetailedPdfReport;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource list of the report. </summary>
         public IReadOnlyList<ReportResourceItem> ResourceList { get; }
+
         /// <summary> List of the compliance result. </summary>
         public IReadOnlyList<AppComplianceReportItem> ComplianceReport { get; }
+
         /// <summary> Compliance pdf report. </summary>
         internal AppCompliancePdfReport CompliancePdfReport { get; }
-        /// <summary> The uri of compliance pdf report. </summary>
-        public Uri CompliancePdfReportSasUri
-        {
-            get => CompliancePdfReport?.SasUri;
-        }
 
         /// <summary> The detailed compliance pdf report. </summary>
         internal AppComplianceDetailedPdfReport ComplianceDetailedPdfReport { get; }
+
+        /// <summary> The uri of compliance pdf report. </summary>
+        public Uri CompliancePdfReportSasUri
+        {
+            get
+            {
+                return CompliancePdfReport.SasUri;
+            }
+        }
+
         /// <summary> The uri of detailed compliance pdf report. </summary>
         public Uri ComplianceDetailedPdfReportSasUri
         {
-            get => ComplianceDetailedPdfReport?.SasUri;
+            get
+            {
+                return ComplianceDetailedPdfReport.SasUri;
+            }
         }
     }
 }

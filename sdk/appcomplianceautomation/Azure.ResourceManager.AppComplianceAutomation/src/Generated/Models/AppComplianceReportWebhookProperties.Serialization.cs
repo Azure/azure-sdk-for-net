@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class AppComplianceReportWebhookProperties : IUtf8JsonSerializable, IJsonModel<AppComplianceReportWebhookProperties>
+    /// <summary> Webhook properties. </summary>
+    public partial class AppComplianceReportWebhookProperties : IJsonModel<AppComplianceReportWebhookProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppComplianceReportWebhookProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceReportWebhookProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceReportWebhookProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(WebhookId))
             {
                 writer.WritePropertyName("webhookId"u8);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
-                foreach (var item in Events)
+                foreach (WebhookNotificationEvent item in Events)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,22 +121,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceReportWebhookProperties IJsonModel<AppComplianceReportWebhookProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceReportWebhookProperties IJsonModel<AppComplianceReportWebhookProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceReportWebhookProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceReportWebhookProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppComplianceReportWebhookProperties(document.RootElement, options);
         }
 
-        internal static AppComplianceReportWebhookProperties DeserializeAppComplianceReportWebhookProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AppComplianceReportWebhookProperties DeserializeAppComplianceReportWebhookProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Guid? tenantId = default;
             SendAllEvent? sendAllEvents = default;
             IList<WebhookNotificationEvent> events = default;
-            Uri payloadUrl = default;
+            Uri payloadUri = default;
             WebhookContentType? contentType = default;
             string webhookKey = default;
             UpdateWebhookKey? updateWebhookKey = default;
@@ -154,137 +159,135 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             EnableSslVerification? enableSslVerification = default;
             WebhookDeliveryStatus? deliveryStatus = default;
             AppComplianceProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("webhookId"u8))
+                if (prop.NameEquals("webhookId"u8))
                 {
-                    webhookId = property.Value.GetString();
+                    webhookId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new WebhookStatus(property.Value.GetString());
+                    status = new WebhookStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendAllEvents"u8))
+                if (prop.NameEquals("sendAllEvents"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sendAllEvents = new SendAllEvent(property.Value.GetString());
+                    sendAllEvents = new SendAllEvent(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("events"u8))
+                if (prop.NameEquals("events"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WebhookNotificationEvent> array = new List<WebhookNotificationEvent>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new WebhookNotificationEvent(item.GetString()));
                     }
                     events = array;
                     continue;
                 }
-                if (property.NameEquals("payloadUrl"u8))
+                if (prop.NameEquals("payloadUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    payloadUrl = new Uri(property.Value.GetString());
+                    payloadUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("contentType"u8))
+                if (prop.NameEquals("contentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    contentType = new WebhookContentType(property.Value.GetString());
+                    contentType = new WebhookContentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("webhookKey"u8))
+                if (prop.NameEquals("webhookKey"u8))
                 {
-                    webhookKey = property.Value.GetString();
+                    webhookKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updateWebhookKey"u8))
+                if (prop.NameEquals("updateWebhookKey"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updateWebhookKey = new UpdateWebhookKey(property.Value.GetString());
+                    updateWebhookKey = new UpdateWebhookKey(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("webhookKeyEnabled"u8))
+                if (prop.NameEquals("webhookKeyEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    webhookKeyEnabled = new WebhookKeyEnabled(property.Value.GetString());
+                    webhookKeyEnabled = new WebhookKeyEnabled(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enableSslVerification"u8))
+                if (prop.NameEquals("enableSslVerification"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableSslVerification = new EnableSslVerification(property.Value.GetString());
+                    enableSslVerification = new EnableSslVerification(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deliveryStatus"u8))
+                if (prop.NameEquals("deliveryStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deliveryStatus = new WebhookDeliveryStatus(property.Value.GetString());
+                    deliveryStatus = new WebhookDeliveryStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new AppComplianceProvisioningState(property.Value.GetString());
+                    provisioningState = new AppComplianceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AppComplianceReportWebhookProperties(
                 webhookId,
                 status,
                 tenantId,
                 sendAllEvents,
                 events ?? new ChangeTrackingList<WebhookNotificationEvent>(),
-                payloadUrl,
+                payloadUri,
                 contentType,
                 webhookKey,
                 updateWebhookKey,
@@ -292,13 +295,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 enableSslVerification,
                 deliveryStatus,
                 provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AppComplianceReportWebhookProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppComplianceReportWebhookProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -308,15 +314,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceReportWebhookProperties IPersistableModel<AppComplianceReportWebhookProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceReportWebhookProperties IPersistableModel<AppComplianceReportWebhookProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceReportWebhookProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportWebhookProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppComplianceReportWebhookProperties(document.RootElement, options);
                     }
                 default:
@@ -324,6 +335,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppComplianceReportWebhookProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
