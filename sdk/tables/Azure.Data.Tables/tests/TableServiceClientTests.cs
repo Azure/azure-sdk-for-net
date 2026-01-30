@@ -99,6 +99,12 @@ namespace Azure.Data.Tables.Tests
                 () => new TableServiceClient("UseDevelopmentStorage=true"),
                 Throws.Nothing,
                 "The constructor should accept a valid connection string");
+
+            // CosmosDB emulator endpoint without account name in path should not throw
+            Assert.That(
+                () => new TableServiceClient(new Uri("http://localhost:8902/"), new TableSharedKeyCredential("localhost", "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==")),
+                Throws.Nothing,
+                "The constructor should accept CosmosDB emulator endpoint without throwing IndexOutOfRangeException");
         }
 
         /// <summary>
