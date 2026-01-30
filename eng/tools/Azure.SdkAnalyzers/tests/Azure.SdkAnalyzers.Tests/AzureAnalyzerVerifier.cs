@@ -1,31 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Immutable;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.SdkAnalyzers.Tests
 {
     public static class AzureAnalyzerVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()
     {
-        private static readonly ReferenceAssemblies DefaultReferenceAssemblies =
-            ReferenceAssemblies.Default.AddPackages(ImmutableArray.Create(
-                new PackageIdentity("Azure.Core", "1.35.0"),
-                new PackageIdentity("Microsoft.Bcl.AsyncInterfaces", "1.1.1"),
-                new PackageIdentity("System.Text.Json", "4.7.2"),
-                new PackageIdentity("System.Threading.Tasks.Extensions", "4.5.4")));
-
         public static CSharpAnalyzerTest<TAnalyzer, DefaultVerifier> CreateAnalyzer(string source, LanguageVersion languageVersion = LanguageVersion.Latest, Type[]? additionalReferences = null)
         {
             CSharpAnalyzerTest<TAnalyzer, DefaultVerifier> test = new CSharpAnalyzerTest<TAnalyzer, DefaultVerifier>
             {
-                ReferenceAssemblies = DefaultReferenceAssemblies,
+                ReferenceAssemblies = AzureTestReferences.DefaultReferenceAssemblies,
                 SolutionTransforms = {(solution, projectId) =>
                 {
                     var project = solution.GetProject(projectId);

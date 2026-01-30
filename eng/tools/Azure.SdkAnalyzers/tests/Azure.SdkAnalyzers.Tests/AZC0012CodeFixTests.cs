@@ -222,11 +222,11 @@ namespace Azure.Data.Tables
 
             await Verifier.VerifyCodeFixCreatesMultipleFilesAsync(
                 code,
-                sourceFilePath: "Generated/Foo.cs",
+                sourceFilePath: "src/Generated/Foo.cs",
                 fixedGeneratedCode,
-                fixedGeneratedFilePath: "Generated/TablesFoo.cs",
+                fixedGeneratedFilePath: "src/Generated/TablesFoo.cs",
                 expectedCustomCode,
-                customFilePath: "Custom/TablesFoo.cs",
+                customFilePath: "src/Custom/TablesFoo.cs",
                 codeActionIndex: 0);
         }
     }

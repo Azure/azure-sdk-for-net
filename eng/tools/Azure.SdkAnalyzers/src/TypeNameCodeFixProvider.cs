@@ -24,7 +24,7 @@ namespace Azure.SdkAnalyzers
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create("AZC0012");
 
-        public sealed override FixAllProvider GetFixAllProvider() => WellKnownFixAllProviders.BatchFixer;
+        public sealed override FixAllProvider GetFixAllProvider() => null;
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -176,8 +176,9 @@ namespace Azure.SdkAnalyzers
             int afterGenerated = generatedInfo.GeneratedIndex + generatedInfo.GeneratedLength;
             string customFileName = newName + ".cs";
             string customFilePath = new StringBuilder(filePath.Length - generatedInfo.GeneratedLength + 6)
-                .Append(filePath, 0, generatedInfo.GeneratedIndex)
+                .Append(filePath, 0, generatedInfo.GeneratedIndex + 1)
                 .Append("Custom")
+                .Append(generatedInfo.PathSeparator)
                 .Append(filePath, afterGenerated, filePath.Length - afterGenerated)
                 .ToString();
 
