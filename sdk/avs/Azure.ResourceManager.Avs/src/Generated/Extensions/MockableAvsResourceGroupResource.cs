@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Avs.Mocking
@@ -19,6 +21,17 @@ namespace Azure.ResourceManager.Avs.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAvsResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _clustersClientDiagnostics;
+        private Clusters _clustersRestClient;
+        private ClientDiagnostics _licensesClientDiagnostics;
+        private Licenses _licensesRestClient;
+        private ClientDiagnostics _maintenancesClientDiagnostics;
+        private Maintenances _maintenancesRestClient;
+        private ClientDiagnostics _privateCloudsClientDiagnostics;
+        private PrivateClouds _privateCloudsRestClient;
+        private ClientDiagnostics _virtualMachinesClientDiagnostics;
+        private VirtualMachines _virtualMachinesRestClient;
+
         /// <summary> Initializes a new instance of MockableAvsResourceGroupResource for mocking. </summary>
         protected MockableAvsResourceGroupResource()
         {
@@ -30,6 +43,26 @@ namespace Azure.ResourceManager.Avs.Mocking
         internal MockableAvsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics LicensesClientDiagnostics => _licensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Licenses LicensesRestClient => _licensesRestClient ??= new Licenses(LicensesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics MaintenancesClientDiagnostics => _maintenancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Maintenances MaintenancesRestClient => _maintenancesRestClient ??= new Maintenances(MaintenancesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics PrivateCloudsClientDiagnostics => _privateCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateClouds PrivateCloudsRestClient => _privateCloudsRestClient ??= new PrivateClouds(PrivateCloudsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics VirtualMachinesClientDiagnostics => _virtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualMachines VirtualMachinesRestClient => _virtualMachinesRestClient ??= new VirtualMachines(VirtualMachinesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         /// <summary> Gets a collection of AvsPrivateClouds in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of AvsPrivateClouds and their operations over a AvsPrivateCloudResource. </returns>
@@ -94,6 +127,1030 @@ namespace Azure.ResourceManager.Avs.Mocking
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
             return GetAvsPrivateClouds().Get(privateCloudName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List hosts by zone in a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/listZones. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListZones. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AvsClusterZoneListResult>> GetClusterZonesAsync(string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetClusterZones");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateGetClusterZonesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, clusterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsClusterZoneListResult> response = Response.FromValue(AvsClusterZoneListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List hosts by zone in a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/listZones. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListZones. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AvsClusterZoneListResult> GetClusterZones(string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetClusterZones");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateGetClusterZonesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, clusterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsClusterZoneListResult> response = Response.FromValue(AvsClusterZoneListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Just like ArmResourceActionSync, but with no request body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/licenses/{licenseName}/getProperties. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_GetProperties. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="licenseName"> Name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AvsLicenseProperties>> GetPropertiesAsync(string privateCloudName, AvsLicenseName licenseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = LicensesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetProperties");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LicensesRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, licenseName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsLicenseProperties> response = Response.FromValue(AvsLicenseProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Just like ArmResourceActionSync, but with no request body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/licenses/{licenseName}/getProperties. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_GetProperties. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="licenseName"> Name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AvsLicenseProperties> GetProperties(string privateCloudName, AvsLicenseName licenseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = LicensesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetProperties");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LicensesRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, licenseName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsLicenseProperties> response = Response.FromValue(AvsLicenseProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reschedule a maintenance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}/reschedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maintenances_Reschedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/>, <paramref name="maintenanceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AvsMaintenanceResource>> RescheduleAsync(string privateCloudName, string maintenanceName, AvsMaintenanceReschedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = MaintenancesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.Reschedule");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenancesRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, maintenanceName, AvsMaintenanceReschedule.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AvsMaintenanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reschedule a maintenance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}/reschedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maintenances_Reschedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/>, <paramref name="maintenanceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AvsMaintenanceResource> Reschedule(string privateCloudName, string maintenanceName, AvsMaintenanceReschedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = MaintenancesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.Reschedule");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenancesRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, maintenanceName, AvsMaintenanceReschedule.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AvsMaintenanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Schedule a maintenance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}/schedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maintenances_Schedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/>, <paramref name="maintenanceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AvsMaintenanceResource>> ScheduleAsync(string privateCloudName, string maintenanceName, AvsMaintenanceSchedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = MaintenancesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.Schedule");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenancesRestClient.CreateScheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, maintenanceName, AvsMaintenanceSchedule.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AvsMaintenanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Schedule a maintenance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}/schedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maintenances_Schedule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/>, <paramref name="maintenanceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AvsMaintenanceResource> Schedule(string privateCloudName, string maintenanceName, AvsMaintenanceSchedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = MaintenancesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.Schedule");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenancesRestClient.CreateScheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, maintenanceName, AvsMaintenanceSchedule.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AvsMaintenanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate maintenance readiness checks
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}/initiateChecks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maintenances_InitiateChecks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AvsMaintenanceResource>> InitiateChecksAsync(string privateCloudName, string maintenanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
+
+            using DiagnosticScope scope = MaintenancesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.InitiateChecks");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenancesRestClient.CreateInitiateChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, maintenanceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AvsMaintenanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate maintenance readiness checks
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}/initiateChecks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maintenances_InitiateChecks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AvsMaintenanceResource> InitiateChecks(string privateCloudName, string maintenanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
+
+            using DiagnosticScope scope = MaintenancesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.InitiateChecks");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MaintenancesRestClient.CreateInitiateChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, maintenanceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AvsMaintenanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rotate the vCenter password
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_RotateVcenterPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> RotateVCenterPasswordAsync(WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.RotateVCenterPassword");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation operation = new AvsArmOperation(PrivateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rotate the vCenter password
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_RotateVcenterPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation RotateVCenterPassword(WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.RotateVCenterPassword");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation operation = new AvsArmOperation(PrivateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rotate the NSX-T Manager password
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateNsxtPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_RotateNsxtPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> RotateNsxtPasswordAsync(WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.RotateNsxtPassword");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation operation = new AvsArmOperation(PrivateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rotate the NSX-T Manager password
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateNsxtPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_RotateNsxtPassword. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation RotateNsxtPassword(WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.RotateNsxtPassword");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation operation = new AvsArmOperation(PrivateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the admin credentials for the private cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_ListAdminCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AdminCredentials>> GetAdminCredentialsAsync(string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetAdminCredentials");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdminCredentials> response = Response.FromValue(AdminCredentials.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the admin credentials for the private cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_ListAdminCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AdminCredentials> GetAdminCredentials(string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetAdminCredentials");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdminCredentials> response = Response.FromValue(AdminCredentials.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the license for the private cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/getVcfLicense. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_GetVcfLicense. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VcfLicense>> GetVcfLicenseAsync(string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetVcfLicense");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VcfLicense> response = Response.FromValue(VcfLicense.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the license for the private cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/getVcfLicense. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_GetVcfLicense. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VcfLicense> GetVcfLicense(string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using DiagnosticScope scope = PrivateCloudsClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.GetVcfLicense");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VcfLicense> response = Response.FromValue(VcfLicense.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enable or disable DRS-driven VM movement restriction
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}/restrictMovement. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_RestrictMovement. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="restrictMovement"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="virtualMachineId"/> or <paramref name="restrictMovement"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/>, <paramref name="clusterName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> RestrictMovementAsync(WaitUntil waitUntil, string privateCloudName, string clusterName, string virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
+
+            using DiagnosticScope scope = VirtualMachinesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.RestrictMovement");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualMachinesRestClient.CreateRestrictMovementRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, clusterName, virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement.ToRequestContent(restrictMovement), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation operation = new AvsArmOperation(VirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enable or disable DRS-driven VM movement restriction
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}/restrictMovement. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_RestrictMovement. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="restrictMovement"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="virtualMachineId"/> or <paramref name="restrictMovement"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/>, <paramref name="clusterName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation RestrictMovement(WaitUntil waitUntil, string privateCloudName, string clusterName, string virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
+
+            using DiagnosticScope scope = VirtualMachinesClientDiagnostics.CreateScope("MockableAvsResourceGroupResource.RestrictMovement");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualMachinesRestClient.CreateRestrictMovementRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, clusterName, virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement.ToRequestContent(restrictMovement), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation operation = new AvsArmOperation(VirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

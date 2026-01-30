@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AgriculturePlatform.Mocking;
+using Azure.ResourceManager.AgriculturePlatform.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AgriculturePlatform
@@ -108,6 +109,42 @@ namespace Azure.ResourceManager.AgriculturePlatform
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgricultureService(agriServiceResourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the list of available agri solutions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAvailableSolutionsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AvailableAgriSolutionListResult>> GetAvailableSolutionsAsync(this ResourceGroupResource resourceGroupResource, string agriServiceResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAvailableSolutionsAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the list of available agri solutions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAvailableSolutions(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AvailableAgriSolutionListResult> GetAvailableSolutions(this ResourceGroupResource resourceGroupResource, string agriServiceResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAvailableSolutions(agriServiceResourceName, cancellationToken);
         }
 
         /// <summary>

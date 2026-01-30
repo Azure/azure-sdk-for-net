@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Hci.Vm;
+using Azure.ResourceManager.Hci.Vm.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHciVmResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _virtualHardDisksClientDiagnostics;
+        private VirtualHardDisks _virtualHardDisksRestClient;
+
         /// <summary> Initializes a new instance of MockableHciVmResourceGroupResource for mocking. </summary>
         protected MockableHciVmResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         internal MockableHciVmResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics VirtualHardDisksClientDiagnostics => _virtualHardDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         /// <summary> Gets a collection of HciVmGalleryImages in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of HciVmGalleryImages and their operations over a HciVmGalleryImageResource. </returns>
@@ -744,6 +753,122 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 
             return GetHciVmLoadBalancers().Get(loadBalancerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to upload a virtual hard disk.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}/upload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Upload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<HciVmVirtualHardDiskUploadResult>> UploadAsync(WaitUntil waitUntil, string virtualHardDiskName, HciVmVirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VirtualHardDisksClientDiagnostics.CreateScope("MockableHciVmResourceGroupResource.Upload");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualHardDisksRestClient.CreateUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskUploadContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmVirtualHardDiskUploadResult> operation = new VmArmOperation<HciVmVirtualHardDiskUploadResult>(
+                    new HciVmVirtualHardDiskUploadResultOperationSource(),
+                    VirtualHardDisksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to upload a virtual hard disk.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}/upload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Upload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<HciVmVirtualHardDiskUploadResult> Upload(WaitUntil waitUntil, string virtualHardDiskName, HciVmVirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VirtualHardDisksClientDiagnostics.CreateScope("MockableHciVmResourceGroupResource.Upload");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualHardDisksRestClient.CreateUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskUploadContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmVirtualHardDiskUploadResult> operation = new VmArmOperation<HciVmVirtualHardDiskUploadResult>(
+                    new HciVmVirtualHardDiskUploadResultOperationSource(),
+                    VirtualHardDisksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
