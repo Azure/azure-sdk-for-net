@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Attestation;
-using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Attestation.Mocking
@@ -114,30 +113,14 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttestationProviderListResult>> GetDefaultAttestationProviderAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AttestationProviderResource> GetDefaultAttestationProviderAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProvider");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderRequest(Id.SubscriptionId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AttestationProviderListResult> response = Response.FromValue(AttestationProviderListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -158,30 +141,14 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttestationProviderListResult> GetDefaultAttestationProvider(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AttestationProviderResource> GetDefaultAttestationProvider(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProvider");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderRequest(Id.SubscriptionId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AttestationProviderListResult> response = Response.FromValue(AttestationProviderListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>

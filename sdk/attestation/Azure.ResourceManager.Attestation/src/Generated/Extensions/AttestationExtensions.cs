@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Attestation.Mocking;
-using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Attestation
@@ -175,11 +174,12 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AttestationProviderListResult>> GetDefaultAttestationProviderAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AttestationProviderResource> GetDefaultAttestationProviderAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviderAsync(cancellationToken).ConfigureAwait(false);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviderAsync(cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,8 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AttestationProviderListResult> GetDefaultAttestationProvider(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AttestationProviderResource> GetDefaultAttestationProvider(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

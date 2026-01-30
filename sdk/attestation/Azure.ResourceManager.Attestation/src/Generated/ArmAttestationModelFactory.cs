@@ -174,17 +174,6 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationProviderPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Attestation Providers List. </summary>
-        /// <param name="systemData"> The system metadata relating to this resource. </param>
-        /// <param name="value"> Attestation Provider array. </param>
-        /// <returns> A new <see cref="Models.AttestationProviderListResult"/> instance for mocking. </returns>
-        public static AttestationProviderListResult AttestationProviderListResult(SystemData systemData = default, IEnumerable<AttestationProviderData> value = default)
-        {
-            value ??= new ChangeTrackingList<AttestationProviderData>();
-
-            return new AttestationProviderListResult(systemData, value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

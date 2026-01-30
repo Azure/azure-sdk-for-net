@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> Attestation Providers List. </summary>
-    public partial class AttestationProviderListResult
+    internal partial class AttestationProviderListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

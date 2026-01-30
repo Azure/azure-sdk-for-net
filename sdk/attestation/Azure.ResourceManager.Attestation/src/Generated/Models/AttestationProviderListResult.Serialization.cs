@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> Attestation Providers List. </summary>
-    public partial class AttestationProviderListResult : IJsonModel<AttestationProviderListResult>
+    internal partial class AttestationProviderListResult : IJsonModel<AttestationProviderListResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
