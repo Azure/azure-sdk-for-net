@@ -74,20 +74,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void SampleRateE2ETest()
         {
+            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage");
+            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "0.1");
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems, options => options.SamplingRatio = 1.0F)
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
 
-            using (var activity = activitySource.StartActivity("SayHello"))
+            for (var i = 0; i < 10; i++)
             {
+                using (var activity = activitySource.StartActivity("SayHello"))
+                {
+                }
             }
 
             tracerProvider?.ForceFlush();
 
-            Assert.NotEmpty(telemetryItems);
-            Assert.Null(telemetryItems.Last()!.SampleRate);
+            // Filter to only dependency telemetry items.
+            var dependencyTelemetryItems = telemetryItems.Where(t => t.Name == "RemoteDependency").ToList();
+
+            Assert.NotEmpty(dependencyTelemetryItems);
+
+            // With 10 spans and 10% sampling, we should have about 2 RemoteDependency telemetry items.
+            // Actual count may vary due to randomness of sampling, but definitely below a certain threshold, for example, 5.
+            Assert.True(dependencyTelemetryItems.Count < 5);
+            Assert.Null(dependencyTelemetryItems.Last()!.SampleRate);
         }
 
         [Fact]
