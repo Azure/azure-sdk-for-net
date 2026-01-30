@@ -516,18 +516,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<TableItem> QueryAsync(FormattableString filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return QueryAsync(TableOdataFilter.Create(filter), maxPerPage, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                ValidateServiceUriDoesNotContainTableName(ex);
-                throw;
-            }
+            return QueryAsync(TableOdataFilter.Create(filter), maxPerPage, cancellationToken);
         }
 
         /// <summary>
@@ -547,15 +536,12 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<TableItem> Query(FormattableString filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
             try
             {
                 return Query(TableOdataFilter.Create(filter), maxPerPage, cancellationToken);
             }
             catch (Exception ex)
             {
-                scope.Failed(ex);
                 ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
@@ -580,15 +566,12 @@ namespace Azure.Data.Tables
             int? maxPerPage = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
             try
             {
                 return QueryAsync(TableClient.Bind(filter), maxPerPage, cancellationToken);
             }
             catch (Exception ex)
             {
-                scope.Failed(ex);
                 ValidateServiceUriDoesNotContainTableName(ex);
                 throw;
             }
@@ -610,18 +593,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<TableItem> Query(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return Query(TableClient.Bind(filter), maxPerPage, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                ValidateServiceUriDoesNotContainTableName(ex);
-                throw;
-            }
+            return Query(TableClient.Bind(filter), maxPerPage, cancellationToken);
         }
 
         /// <summary>
