@@ -78,6 +78,12 @@ public static class ResponseConverterExtensions
                         idGenerator.GenerateMessageId(),
                         createdBy);
                     break;
+                case McpServerToolApprovalRequestContent mcpServerToolApprovalRequestContent:
+                    // human-in-the-loop
+                    yield return mcpServerToolApprovalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
+                        idGenerator.GenerateMessageId(),
+                        createdBy);
+                    break;
                 default:
                     // message.Role == ChatRole.Assistant
                     var itemContent = ToItemContent(content);

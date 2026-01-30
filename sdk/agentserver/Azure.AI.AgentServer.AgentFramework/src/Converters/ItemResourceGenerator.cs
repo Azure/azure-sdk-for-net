@@ -89,6 +89,7 @@ public class ItemResourceGenerator
             FunctionCallContent => GenerateFunctionCallEvents(p.Source, onItemResource),
             FunctionResultContent => GenerateFunctionCallOutputEvents(p.Source, onItemResource),
             FunctionApprovalRequestContent => GenerateHumanInTheLoopEvents(p.Source, onItemResource),
+            McpServerToolApprovalRequestContent => GenerateHumanInTheLoopEvents(p.Source, onItemResource),
             TextContent => GenerateAssistantMessageEvents(p.Source, onItemResource),
             _ => null!
         };
@@ -176,7 +177,8 @@ public class ItemResourceGenerator
         string? authorName = null;
         await foreach (var (update, content) in source.WithCancellation(CancellationToken).ConfigureAwait(false))
         {
-            if (content is not FunctionApprovalRequestContent functionCallContent)
+            if (content is not FunctionApprovalRequestContent functionCallContent ||
+                content is not McpServerToolApprovalRequestContent mcpServerToolApprovalRequestContent)
             {
                 continue;
             }
@@ -186,9 +188,13 @@ public class ItemResourceGenerator
 
             var groupSeq = GroupSeq.Next();
             var createdBy = CreateCreatedBy(authorName);
-            var item = functionCallContent.ToHumanInTheLoopFunctionCallItemResource(
-                Context.IdGenerator.GenerateFunctionCallId(),
-                createdBy);
+            var item = functionCallContent != null
+                            ? functionCallContent.ToHumanInTheLoopFunctionCallItemResource(
+                                Context.IdGenerator.GenerateFunctionCallId(),
+                                createdBy)
+                            : mcpServerToolApprovalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
+                                Context.IdGenerator.GenerateFunctionCallId(),
+                                createdBy);
             onItemResource(item);
 
             yield return new ResponseOutputItemAddedEvent(
