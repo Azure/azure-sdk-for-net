@@ -1,0 +1,40 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <AssemblyName>Microsoft.Azure.PostgreSQL.Auth.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+
+    <!-- NUnit (repo standard) -->
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="NUnit.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!-- Assertions / testing helpers -->
+    <PackageReference Include="FluentAssertions" />
+
+    <!-- Mocking: keep only if allowed via central versioning; otherwise remove/replace -->
+    <PackageReference Include="Moq" />
+
+    <!-- Dependencies (no versions here; controlled centrally) -->
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="Testcontainers.PostgreSql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\src\Microsoft\Azure\PostgreSQL\Auth\Microsoft.Azure.PostgreSQL.Auth.csproj" />
+  </ItemGroup>
+
+</Project>
