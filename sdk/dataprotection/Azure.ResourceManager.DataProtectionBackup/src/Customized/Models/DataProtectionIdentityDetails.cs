@@ -5,7 +5,7 @@
 
 using System;
 using System.ComponentModel;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionIdentityDetails
@@ -22,3 +22,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
     }
 }
+*/

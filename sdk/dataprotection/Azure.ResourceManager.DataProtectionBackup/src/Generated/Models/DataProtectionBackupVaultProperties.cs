@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Vault. </summary>
     public partial class DataProtectionBackupVaultProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="storageSettings"> Storage Settings. </param>
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="bcdrSecurityLevel"> Security Level of Backup Vault. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -87,47 +59,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             BcdrSecurityLevel = bcdrSecurityLevel;
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
             ReplicatedRegions = replicatedRegions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/> for deserialization. </summary>
-        internal DataProtectionBackupVaultProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Monitoring Settings. </summary>
         internal MonitoringSettings MonitoringSettings { get; set; }
-        /// <summary> Gets or sets the alert settings for all job failures. </summary>
-        public AzureMonitorAlertsState? AlertSettingsForAllJobFailures
-        {
-            get => MonitoringSettings is null ? default : MonitoringSettings.AlertSettingsForAllJobFailures;
-            set
-            {
-                if (MonitoringSettings is null)
-                    MonitoringSettings = new MonitoringSettings();
-                MonitoringSettings.AlertSettingsForAllJobFailures = value;
-            }
-        }
 
         /// <summary> Provisioning state of the BackupVault resource. </summary>
         public DataProtectionBackupProvisioningState? ProvisioningState { get; }
+
         /// <summary> Resource move state for backup vault. </summary>
         public BackupVaultResourceMoveState? ResourceMoveState { get; }
+
         /// <summary> Resource move details for backup vault. </summary>
         public BackupVaultResourceMoveDetails ResourceMoveDetails { get; }
+
         /// <summary> Security Settings. </summary>
         public BackupVaultSecuritySettings SecuritySettings { get; set; }
+
         /// <summary> Storage Settings. </summary>
         public IList<DataProtectionBackupStorageSetting> StorageSettings { get; }
+
         /// <summary> Feature Settings. </summary>
         public BackupVaultFeatureSettings FeatureSettings { get; set; }
+
         /// <summary> Secure Score of Backup Vault. </summary>
         public BackupVaultSecureScoreLevel? SecureScore { get; }
+
         /// <summary> Security Level of Backup Vault. </summary>
         public BcdrSecurityLevel? BcdrSecurityLevel { get; }
+
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
+
         /// <summary> List of replicated regions for Backup Vault. </summary>
         public IList<AzureLocation> ReplicatedRegions { get; }
+
+        /// <summary> Gets or sets the AlertSettingsForAllJobFailures. </summary>
+        public AzureMonitorAlertsState? MonitoringAlertSettingsForAllJobFailures
+        {
+            get
+            {
+                return MonitoringSettings is null ? default : MonitoringSettings.AlertSettingsForAllJobFailures;
+            }
+            set
+            {
+                if (MonitoringSettings is null)
+                {
+                    MonitoringSettings = new MonitoringSettings();
+                }
+                MonitoringSettings.AlertSettingsForAllJobFailures = value;
+            }
+        }
     }
 }

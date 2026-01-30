@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupRecoveryTimeBasedRestoreContent : IUtf8JsonSerializable, IJsonModel<BackupRecoveryTimeBasedRestoreContent>
+    /// <summary> AzureBackup RecoveryPointTime Based Restore Request. </summary>
+    public partial class BackupRecoveryTimeBasedRestoreContent : BackupRestoreContent, IJsonModel<BackupRecoveryTimeBasedRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRecoveryTimeBasedRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryTimeBasedRestoreContent"/> for deserialization. </summary>
+        internal BackupRecoveryTimeBasedRestoreContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupRecoveryTimeBasedRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,106 +35,115 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupRecoveryTimeBasedRestoreContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("recoveryPointTime"u8);
-            writer.WriteStringValue(RecoverOn, "O");
+            writer.WriteStringValue(RecoveryPointOn, "O");
         }
 
-        BackupRecoveryTimeBasedRestoreContent IJsonModel<BackupRecoveryTimeBasedRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupRecoveryTimeBasedRestoreContent IJsonModel<BackupRecoveryTimeBasedRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BackupRecoveryTimeBasedRestoreContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupRestoreContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupRecoveryTimeBasedRestoreContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupRecoveryTimeBasedRestoreContent(document.RootElement, options);
         }
 
-        internal static BackupRecoveryTimeBasedRestoreContent DeserializeBackupRecoveryTimeBasedRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BackupRecoveryTimeBasedRestoreContent DeserializeBackupRecoveryTimeBasedRestoreContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset recoveryPointTime = default;
-            string objectType = default;
+            string objectType = "AzureBackupRecoveryTimeBasedRestoreRequest";
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
             ResourceIdentifier sourceResourceId = default;
             IList<string> resourceGuardOperationRequests = default;
             DataProtectionIdentityDetails identityDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DateTimeOffset recoveryPointOn = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointTime"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    recoveryPointTime = property.Value.GetDateTimeOffset("O");
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("restoreTargetInfo"u8))
                 {
-                    objectType = property.Value.GetString();
+                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("restoreTargetInfo"u8))
+                if (prop.NameEquals("sourceDataStoreType"u8))
                 {
-                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value, options);
+                    sourceDataStoreType = new SourceDataStoreType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceDataStoreType"u8))
+                if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    sourceDataStoreType = new SourceDataStoreType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sourceResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                if (prop.NameEquals("resourceGuardOperationRequests"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     resourceGuardOperationRequests = array;
                     continue;
                 }
-                if (property.NameEquals("identityDetails"u8))
+                if (prop.NameEquals("identityDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("recoveryPointTime"u8))
+                {
+                    recoveryPointOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BackupRecoveryTimeBasedRestoreContent(
                 objectType,
                 restoreTargetInfo,
@@ -135,14 +151,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 sourceResourceId,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 identityDetails,
-                serializedAdditionalRawData,
-                recoveryPointTime);
+                additionalBinaryDataProperties,
+                recoveryPointOn);
         }
 
-        BinaryData IPersistableModel<BackupRecoveryTimeBasedRestoreContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupRecoveryTimeBasedRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -152,15 +171,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        BackupRecoveryTimeBasedRestoreContent IPersistableModel<BackupRecoveryTimeBasedRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupRecoveryTimeBasedRestoreContent IPersistableModel<BackupRecoveryTimeBasedRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupRecoveryTimeBasedRestoreContent)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupRestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryTimeBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBackupRecoveryTimeBasedRestoreContent(document.RootElement, options);
                     }
                 default:
@@ -168,6 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BackupRecoveryTimeBasedRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,7 +5,7 @@
 
 using System;
 using System.ComponentModel;
-
+/*
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataSourceInfo
@@ -16,3 +16,4 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public System.Uri ResourceUri { get; set; }
     }
 }
+*/

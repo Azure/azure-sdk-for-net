@@ -12,68 +12,36 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Delete Option
-    /// Please note <see cref="DataProtectionBackupDeleteSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>.
     /// </summary>
     public abstract partial class DataProtectionBackupDeleteSetting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
-        protected DataProtectionBackupDeleteSetting(TimeSpan duration)
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        private protected DataProtectionBackupDeleteSetting(TimeSpan duration, string objectType)
         {
             Duration = duration;
+            ObjectType = objectType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupDeleteSetting(TimeSpan duration, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupDeleteSetting(TimeSpan duration, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Duration = duration;
             ObjectType = objectType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDeleteSetting"/> for deserialization. </summary>
-        internal DataProtectionBackupDeleteSetting()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Duration of deletion after given timespan. </summary>
         public TimeSpan Duration { get; set; }
+
         /// <summary> Type of the specific object - used for deserializing. </summary>
         internal string ObjectType { get; set; }
     }

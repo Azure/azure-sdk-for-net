@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupDiscreteRecoveryPointProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>
+    /// <summary> Azure backup discrete RecoveryPoint. </summary>
+    public partial class DataProtectionBackupDiscreteRecoveryPointProperties : DataProtectionBackupRecoveryPointProperties, IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupDiscreteRecoveryPointProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FriendlyName))
             {
@@ -44,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("recoveryPointDataStoresDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in RecoveryPointDataStoresDetails)
+                foreach (RecoveryPointDataStoreDetail item in RecoveryPointDataStoresDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -94,145 +99,151 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        DataProtectionBackupDiscreteRecoveryPointProperties IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupDiscreteRecoveryPointProperties IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataProtectionBackupDiscreteRecoveryPointProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataProtectionBackupRecoveryPointProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
         }
 
-        internal static DataProtectionBackupDiscreteRecoveryPointProperties DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataProtectionBackupDiscreteRecoveryPointProperties DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string objectType = "AzureBackupDiscreteRecoveryPoint";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string friendlyName = default;
             IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default;
-            DateTimeOffset recoveryPointTime = default;
+            DateTimeOffset recoverOn = default;
             string policyName = default;
             string policyVersion = default;
             string recoveryPointId = default;
             string recoveryPointType = default;
             string retentionTagName = default;
             string retentionTagVersion = default;
-            DateTimeOffset? expiryTime = default;
+            DateTimeOffset? expireOn = default;
             DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    friendlyName = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointDataStoresDetails"u8))
+                if (prop.NameEquals("friendlyName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    friendlyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryPointDataStoresDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RecoveryPointDataStoreDetail> array = new List<RecoveryPointDataStoreDetail>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RecoveryPointDataStoreDetail.DeserializeRecoveryPointDataStoreDetail(item, options));
                     }
                     recoveryPointDataStoresDetails = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTime"u8))
+                if (prop.NameEquals("recoveryPointTime"u8))
                 {
-                    recoveryPointTime = property.Value.GetDateTimeOffset("O");
+                    recoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("policyName"u8))
+                if (prop.NameEquals("policyName"u8))
                 {
-                    policyName = property.Value.GetString();
+                    policyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyVersion"u8))
+                if (prop.NameEquals("policyVersion"u8))
                 {
-                    policyVersion = property.Value.GetString();
+                    policyVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"u8))
+                if (prop.NameEquals("recoveryPointId"u8))
                 {
-                    recoveryPointId = property.Value.GetString();
+                    recoveryPointId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointType"u8))
+                if (prop.NameEquals("recoveryPointType"u8))
                 {
-                    recoveryPointType = property.Value.GetString();
+                    recoveryPointType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionTagName"u8))
+                if (prop.NameEquals("retentionTagName"u8))
                 {
-                    retentionTagName = property.Value.GetString();
+                    retentionTagName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionTagVersion"u8))
+                if (prop.NameEquals("retentionTagVersion"u8))
                 {
-                    retentionTagVersion = property.Value.GetString();
+                    retentionTagVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiryTime"u8))
+                if (prop.NameEquals("expiryTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiryTime = property.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointState"u8))
+                if (prop.NameEquals("recoveryPointState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryPointState = new DataProtectionBackupRecoveryPointCompletionState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
+                    recoveryPointState = new DataProtectionBackupRecoveryPointCompletionState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataProtectionBackupDiscreteRecoveryPointProperties(
                 objectType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 friendlyName,
                 recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>(),
-                recoveryPointTime,
+                recoverOn,
                 policyName,
                 policyVersion,
                 recoveryPointId,
                 recoveryPointType,
                 retentionTagName,
                 retentionTagVersion,
-                expiryTime,
+                expireOn,
                 recoveryPointState);
         }
 
-        BinaryData IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -242,15 +253,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        DataProtectionBackupDiscreteRecoveryPointProperties IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataProtectionBackupDiscreteRecoveryPointProperties IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionBackupDiscreteRecoveryPointProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataProtectionBackupRecoveryPointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
                     }
                 default:
@@ -258,6 +274,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

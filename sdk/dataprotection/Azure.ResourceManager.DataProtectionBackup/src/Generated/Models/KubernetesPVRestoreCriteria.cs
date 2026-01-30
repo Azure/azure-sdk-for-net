@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class KubernetesPVRestoreCriteria : ItemLevelRestoreCriteria
     {
         /// <summary> Initializes a new instance of <see cref="KubernetesPVRestoreCriteria"/>. </summary>
-        public KubernetesPVRestoreCriteria()
+        public KubernetesPVRestoreCriteria() : base("KubernetesPVRestoreCriteria")
         {
-            ObjectType = "KubernetesPVRestoreCriteria";
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesPVRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Selected persistent volume claim name. </param>
         /// <param name="storageClassName"> Selected storage class name for restore operation. </param>
-        internal KubernetesPVRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string storageClassName) : base(objectType, serializedAdditionalRawData)
+        internal KubernetesPVRestoreCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string storageClassName) : base(objectType, additionalBinaryDataProperties)
         {
             Name = name;
             StorageClassName = storageClassName;
-            ObjectType = objectType ?? "KubernetesPVRestoreCriteria";
         }
 
         /// <summary> Selected persistent volume claim name. </summary>
         public string Name { get; set; }
+
         /// <summary> Selected storage class name for restore operation. </summary>
         public string StorageClassName { get; set; }
     }

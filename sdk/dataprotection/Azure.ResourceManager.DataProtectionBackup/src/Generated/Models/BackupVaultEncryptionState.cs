@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupVaultEncryptionState : IEquatable<BackupVaultEncryptionState>
     {
         private readonly string _value;
+        /// <summary> CMK encryption is enabled on the Backup Vault. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> CMK encryption is disabled on the Backup Vault. User can not set this state once Encryption State is 'Enabled'. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> CMK encryption is in inconsistent state on the Backup Vault. This state indicates that user needs to retry the encryption settings operation immediately to correct the state. </summary>
+        private const string InconsistentValue = "Inconsistent";
 
         /// <summary> Initializes a new instance of <see cref="BackupVaultEncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BackupVaultEncryptionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string InconsistentValue = "Inconsistent";
+            _value = value;
+        }
 
         /// <summary> CMK encryption is enabled on the Backup Vault. </summary>
         public static BackupVaultEncryptionState Enabled { get; } = new BackupVaultEncryptionState(EnabledValue);
+
         /// <summary> CMK encryption is disabled on the Backup Vault. User can not set this state once Encryption State is 'Enabled'. </summary>
         public static BackupVaultEncryptionState Disabled { get; } = new BackupVaultEncryptionState(DisabledValue);
+
         /// <summary> CMK encryption is in inconsistent state on the Backup Vault. This state indicates that user needs to retry the encryption settings operation immediately to correct the state. </summary>
         public static BackupVaultEncryptionState Inconsistent { get; } = new BackupVaultEncryptionState(InconsistentValue);
+
         /// <summary> Determines if two <see cref="BackupVaultEncryptionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupVaultEncryptionState left, BackupVaultEncryptionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupVaultEncryptionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupVaultEncryptionState left, BackupVaultEncryptionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultEncryptionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupVaultEncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupVaultEncryptionState(string value) => new BackupVaultEncryptionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupVaultEncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupVaultEncryptionState?(string value) => value == null ? null : new BackupVaultEncryptionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupVaultEncryptionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupVaultEncryptionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

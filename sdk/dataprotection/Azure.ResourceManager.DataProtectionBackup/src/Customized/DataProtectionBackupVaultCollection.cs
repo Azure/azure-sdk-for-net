@@ -7,18 +7,11 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="DataProtectionBackupVaultResource"/> and their operations.
-    /// Each <see cref="DataProtectionBackupVaultResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DataProtectionBackupVaultCollection"/> instance call the GetDataProtectionBackupVaults method from an instance of <see cref="ResourceGroupResource"/>.
-    /// </summary>
-
     public partial class DataProtectionBackupVaultCollection
     {
         /// <summary>
@@ -50,9 +43,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateAsync(waitUntil, vaultName, data, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateOrUpdateAsync(waitUntil, vaultName, data, null, null,cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates or updates a BackupVault resource belonging to a resource group.
@@ -83,8 +74,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DataProtectionBackupVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, vaultName, data, null, cancellationToken);
-        }
+            => CreateOrUpdate(waitUntil, vaultName, data, null, null, cancellationToken);
     }
 }
