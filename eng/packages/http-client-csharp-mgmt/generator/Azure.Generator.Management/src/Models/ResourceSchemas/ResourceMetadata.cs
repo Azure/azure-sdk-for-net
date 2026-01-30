@@ -17,7 +17,8 @@ internal record ResourceMetadata(
     IReadOnlyList<ResourceMethod> Methods,
     string? SingletonResourceName,
     string? ParentResourceId,
-    IReadOnlyList<string> ChildResourceIds)
+    IReadOnlyList<string> ChildResourceIds,
+    string? SpecificExtensionScope)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
@@ -29,6 +30,7 @@ internal record ResourceMetadata(
         var methods = new List<ResourceMethod>();
         string? parentResource = null;
         string? resourceName = null;
+        string? specificExtensionScope = null;
 
         if (element.TryGetProperty("resourceIdPattern", out var resourceIdPatternElement))
         {
@@ -56,6 +58,10 @@ internal record ResourceMetadata(
                 resourceScope = ResourceScope.Extension;
             }
         }
+        if (element.TryGetProperty("specificExtensionScope", out var specificExtensionScopeElement))
+        {
+            specificExtensionScope = specificExtensionScopeElement.GetString();
+        }
         if (element.TryGetProperty("methods", out var methodsElement))
         {
             foreach (var item in methodsElement.EnumerateArray())
@@ -81,6 +87,7 @@ internal record ResourceMetadata(
             methods,
             singletonResourceName,
             parentResource,
-            childResourceIds);
+            childResourceIds,
+            specificExtensionScope);
     }
 }

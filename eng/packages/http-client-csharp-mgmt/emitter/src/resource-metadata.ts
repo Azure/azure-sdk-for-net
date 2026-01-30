@@ -49,6 +49,11 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /**
+   * For extension resources, this indicates the specific extension type (e.g., "ExternalResource", "Scope").
+   * This allows distinguishing between different kinds of extension resources beyond the generic "Extension" scope.
+   */
+  specificExtensionScope?: string;
 }
 
 export function convertResourceMetadataToArguments(
@@ -61,7 +66,8 @@ export function convertResourceMetadataToArguments(
     resourceScope: metadata.resourceScope,
     parentResourceId: metadata.parentResourceId,
     singletonResourceName: metadata.singletonResourceName,
-    resourceName: metadata.resourceName
+    resourceName: metadata.resourceName,
+    specificExtensionScope: metadata.specificExtensionScope
   };
 }
 
@@ -208,7 +214,8 @@ export function convertArmProviderSchemaToArguments(
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
       singletonResourceName: r.metadata.singletonResourceName,
-      resourceName: r.metadata.resourceName
+      resourceName: r.metadata.resourceName,
+      specificExtensionScope: r.metadata.specificExtensionScope
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
