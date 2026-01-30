@@ -34,6 +34,7 @@ Skills should define **what to do**, not **how to do it**:
 | [`sdkinternal-dotnet-sdk-compile`](sdkinternal-dotnet-sdk-compile/) | Compile SDK source code | P0 |
 | [`sdkinternal-dotnet-test-record`](sdkinternal-dotnet-test-record/) | Run tests in RECORD mode | P0 |
 | [`sdkinternal-dotnet-test-playback`](sdkinternal-dotnet-test-playback/) | Run tests in PLAYBACK mode | P0 |
+| [`sdkinternal-dotnet-test-coverage`](sdkinternal-dotnet-test-coverage/) | Run tests with code coverage collection | P1 |
 | [`sdkinternal-dotnet-test-push-recordings`](sdkinternal-dotnet-test-push-recordings/) | Push session recordings to assets repo | P1 |
 | [`sdkinternal-dotnet-sample-run`](sdkinternal-dotnet-sample-run/) | Run a single sample | P1 |
 | [`sdkinternal-dotnet-sample-run-all-samples`](sdkinternal-dotnet-sample-run-all-samples/) | Run all samples | P2 |
