@@ -83,6 +83,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
             Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
             Assert.AreEqual(443, blobUriBuilder.Port);
             Assert.AreEqual(originalUri, newUri);
         }
