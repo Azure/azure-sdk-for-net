@@ -177,20 +177,20 @@ export function buildArmProviderSchema(
             ) {
               // Add to type match candidates
               typeMatchCandidates.push({ existingPath });
+            }
 
-              // Also check for prefix match
-              // The resource path without the last segment (resource name parameter) should be a prefix of the operation path
-              const existingParentPath = existingPath.substring(
-                0,
-                existingPath.lastIndexOf("/")
-              );
-              if (isPrefix(existingParentPath, operationPath)) {
-                // Score based on how many segments match (longer prefix = better match)
-                const score = existingParentPath
-                  .split("/")
-                  .filter((s) => s.length > 0).length;
-                prefixMatchCandidates.push({ existingPath, matchScore: score });
-              }
+            // Also check for prefix match as a fallback
+            // The resource path without the last segment (resource name parameter) should be a prefix of the operation path
+            const existingParentPath = existingPath.substring(
+              0,
+              existingPath.lastIndexOf("/")
+            );
+            if (isPrefix(existingParentPath, operationPath)) {
+              // Score based on how many segments match (longer prefix = better match)
+              const score = existingParentPath
+                .split("/")
+                .filter((s) => s.length > 0).length;
+              prefixMatchCandidates.push({ existingPath, matchScore: score });
             }
           }
         }
