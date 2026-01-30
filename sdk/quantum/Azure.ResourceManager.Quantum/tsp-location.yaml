@@ -1,4 +1,4 @@
 directory: specification/quantum/Microsoft.Quantum.Management
-commit: 72410da64f6e945db1e1f1af220e077ba5bdb857
+commit: 0aff52cb5343fe4f6f7fdf3036939a05aaf48eb4
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
