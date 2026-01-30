@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             string latestSnapshotName = "";
             AppComplianceReportResource report = Client.GetAppComplianceReportResource(AppComplianceReportResource.CreateResourceIdentifier("sdk-test-report"));
             AppComplianceReportSnapshotCollection snapshots = report.GetAppComplianceReportSnapshots();
-            await foreach (AppComplianceReportSnapshotResource resource in snapshots.GetAllAsync(null))
+            await foreach (AppComplianceReportSnapshotResource resource in snapshots.GetAllAsync())
             {
                 count++;
                 if (latestSnapshotName == "")

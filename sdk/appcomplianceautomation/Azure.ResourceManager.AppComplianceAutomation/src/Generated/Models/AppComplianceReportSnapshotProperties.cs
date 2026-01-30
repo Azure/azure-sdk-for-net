@@ -14,43 +14,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Snapshot's properties. </summary>
     public partial class AppComplianceReportSnapshotProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="AppComplianceReportSnapshotProperties"/>. </summary>
-        public AppComplianceReportSnapshotProperties()
-        {
-            ComplianceResults = new ChangeTrackingList<AppComplianceResult>();
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportSnapshotProperties"/>. </summary>
         /// <param name="snapshotName"> Snapshot name. </param>
@@ -59,8 +24,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="reportProperties"> The report essential info. </param>
         /// <param name="reportSystemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="complianceResults"> List of compliance results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportSnapshotProperties(string snapshotName, DateTimeOffset? createdOn, AppComplianceProvisioningState? provisioningState, AppComplianceReportProperties reportProperties, SystemData reportSystemData, IReadOnlyList<AppComplianceResult> complianceResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppComplianceReportSnapshotProperties(string snapshotName, DateTimeOffset? createdOn, AppComplianceProvisioningState? provisioningState, AppComplianceReportProperties reportProperties, SystemData reportSystemData, IReadOnlyList<AppComplianceResult> complianceResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SnapshotName = snapshotName;
             CreatedOn = createdOn;
@@ -68,19 +33,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ReportProperties = reportProperties;
             ReportSystemData = reportSystemData;
             ComplianceResults = complianceResults;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Snapshot name. </summary>
         public string SnapshotName { get; }
+
         /// <summary> The timestamp of resource creation (UTC). </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Azure lifecycle management. </summary>
         public AppComplianceProvisioningState? ProvisioningState { get; }
+
         /// <summary> The report essential info. </summary>
         public AppComplianceReportProperties ReportProperties { get; }
+
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
         public SystemData ReportSystemData { get; }
+
         /// <summary> List of compliance results. </summary>
         public IReadOnlyList<AppComplianceResult> ComplianceResults { get; }
     }
