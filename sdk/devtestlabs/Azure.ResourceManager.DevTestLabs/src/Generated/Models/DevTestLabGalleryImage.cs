@@ -15,93 +15,159 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A gallery image. </summary>
     public partial class DevTestLabGalleryImage : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabGalleryImage(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="author"> The author of the gallery image. </param>
-        /// <param name="createdOn"> The creation date of the gallery image. </param>
-        /// <param name="description"> The description of the gallery image. </param>
-        /// <param name="imageReference"> The image reference of the gallery image. </param>
-        /// <param name="icon"> The icon of the gallery image. </param>
-        /// <param name="isEnabled"> Indicates whether this gallery image is enabled. </param>
-        /// <param name="planId"> The third party plan that applies to this image. </param>
-        /// <param name="isPlanAuthorized"> Indicates if the plan has been authorized for programmatic deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabGalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string author, DateTimeOffset? createdOn, string description, DevTestLabGalleryImageReference imageReference, string icon, bool? isEnabled, string planId, bool? isPlanAuthorized, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the gallery image. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabGalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, GalleryImageProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            Author = author;
-            CreatedOn = createdOn;
-            Description = description;
-            ImageReference = imageReference;
-            Icon = icon;
-            IsEnabled = isEnabled;
-            PlanId = planId;
-            IsPlanAuthorized = isPlanAuthorized;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/> for deserialization. </summary>
-        internal DevTestLabGalleryImage()
-        {
-        }
+        /// <summary> The properties of the gallery image. </summary>
+        internal GalleryImageProperties Properties { get; set; }
 
         /// <summary> The author of the gallery image. </summary>
-        public string Author { get; set; }
+        public string Author
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Author;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Author = value;
+            }
+        }
+
         /// <summary> The creation date of the gallery image. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The description of the gallery image. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The image reference of the gallery image. </summary>
-        public DevTestLabGalleryImageReference ImageReference { get; set; }
+        public DevTestLabGalleryImageReference ImageReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageReference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.ImageReference = value;
+            }
+        }
+
         /// <summary> The icon of the gallery image. </summary>
-        public string Icon { get; set; }
+        public string Icon
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Icon;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Icon = value;
+            }
+        }
+
         /// <summary> Indicates whether this gallery image is enabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.IsEnabled = value.Value;
+            }
+        }
+
         /// <summary> The third party plan that applies to this image. </summary>
-        public string PlanId { get; set; }
+        public string PlanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.PlanId = value;
+            }
+        }
+
         /// <summary> Indicates if the plan has been authorized for programmatic deployment. </summary>
-        public bool? IsPlanAuthorized { get; set; }
+        public bool? IsPlanAuthorized
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPlanAuthorized;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.IsPlanAuthorized = value.Value;
+            }
+        }
     }
 }

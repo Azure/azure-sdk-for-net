@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A Class representing a DevTestLabVm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabVmResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabVmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabVm method.
+    /// A class representing a DevTestLabVm along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabVmResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabVms method.
     /// </summary>
     public partial class DevTestLabVmResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DevTestLabVmResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="labName"> The labName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _devTestLabVmVirtualMachinesClientDiagnostics;
-        private readonly VirtualMachinesRestOperations _devTestLabVmVirtualMachinesRestClient;
+        private readonly ClientDiagnostics _virtualMachinesClientDiagnostics;
+        private readonly VirtualMachines _virtualMachinesRestClient;
         private readonly DevTestLabVmData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/virtualmachines";
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevTestLabVmResource for mocking. </summary>
         protected DevTestLabVmResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabVmResource(ArmClient client, DevTestLabVmData data) : this(client, data.Id)
@@ -56,143 +46,94 @@ namespace Azure.ResourceManager.DevTestLabs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevTestLabVmResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devTestLabVmVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string devTestLabVmVirtualMachinesApiVersion);
-            _devTestLabVmVirtualMachinesRestClient = new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVmVirtualMachinesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string devTestLabVmApiVersion);
+            _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
+            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, devTestLabVmApiVersion ?? "2018-09-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DevTestLabVmData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of DevTestLabVmScheduleResources in the DevTestLabVm. </summary>
-        /// <returns> An object representing collection of DevTestLabVmScheduleResources and their operations over a DevTestLabVmScheduleResource. </returns>
-        public virtual DevTestLabVmScheduleCollection GetDevTestLabVmSchedules()
-        {
-            return GetCachedClient(client => new DevTestLabVmScheduleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetDevTestLabVmSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetDevTestLabVmSchedules().Get(name, expand, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get virtual machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevTestLabVmResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabVmResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Get");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Get");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -206,119 +147,43 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get virtual machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevTestLabVmResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabVmResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Get");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Get");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete virtual machine. This operation can take a while to complete.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _devTestLabVmVirtualMachinesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete virtual machine. This operation can take a while to complete.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _devTestLabVmVirtualMachinesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -331,20 +196,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Allows modifying tags of virtual machines. All other properties will be ignored.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,11 +220,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Update");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Update");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,20 +248,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Allows modifying tags of virtual machines. All other properties will be ignored.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,12 +272,120 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Update");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Update");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete virtual machine. This operation can take a while to complete.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete virtual machine. This operation can take a while to complete.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -415,20 +398,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Attach a new or existing data disk to virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/addDataDisk</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/addDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_AddDataDisk</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_AddDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,14 +423,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(dataDiskProperties, nameof(dataDiskProperties));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddDataDisk");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddDataDisk");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.AddDataDiskAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataDiskProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataDiskProperties).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabDataDiskProperties.ToRequestContent(dataDiskProperties), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -461,20 +451,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Attach a new or existing data disk to virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/addDataDisk</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/addDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_AddDataDisk</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_AddDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,14 +476,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(dataDiskProperties, nameof(dataDiskProperties));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddDataDisk");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddDataDisk");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.AddDataDisk(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataDiskProperties, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataDiskProperties).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabDataDiskProperties.ToRequestContent(dataDiskProperties), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -507,20 +504,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Apply artifacts to virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/applyArtifacts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/applyArtifacts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ApplyArtifacts</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_ApplyArtifacts. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,14 +529,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.ApplyArtifacts");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.ApplyArtifacts");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.ApplyArtifactsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmApplyArtifactsContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -553,20 +557,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Apply artifacts to virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/applyArtifacts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/applyArtifacts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ApplyArtifacts</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_ApplyArtifacts. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -578,14 +582,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.ApplyArtifacts");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.ApplyArtifacts");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.ApplyArtifacts(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmApplyArtifactsContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -599,20 +610,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Take ownership of an existing virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/claim</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/claim. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Claim</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Claim. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -620,14 +631,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ClaimAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Claim");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Claim");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.ClaimAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -641,20 +659,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Take ownership of an existing virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/claim</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/claim. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Claim</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Claim. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -662,14 +680,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Claim(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Claim");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Claim");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Claim(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -683,20 +708,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Detach the specified disk from the virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/detachDataDisk</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/detachDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_DetachDataDisk</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_DetachDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -708,14 +733,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.DetachDataDiskAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmDetachDataDiskContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -729,20 +761,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Detach the specified disk from the virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/detachDataDisk</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/detachDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_DetachDataDisk</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_DetachDataDisk. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -754,14 +786,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.DetachDataDisk(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmDetachDataDiskContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -775,31 +814,41 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Gets a string that represents the contents of the RDP file for the virtual machine
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/getRdpFileContents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/getRdpFileContents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_GetRdpFileContents</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_GetRdpFileContents. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevTestLabRdpConnection>> GetRdpFileContentsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetRdpFileContents");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetRdpFileContents");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.GetRdpFileContentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRdpFileContentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabRdpConnection> response = Response.FromValue(DevTestLabRdpConnection.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -813,31 +862,41 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Gets a string that represents the contents of the RDP file for the virtual machine
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/getRdpFileContents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/getRdpFileContents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_GetRdpFileContents</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_GetRdpFileContents. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevTestLabRdpConnection> GetRdpFileContents(CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetRdpFileContents");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetRdpFileContents");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.GetRdpFileContents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRdpFileContentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabRdpConnection> response = Response.FromValue(DevTestLabRdpConnection.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -851,31 +910,41 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Lists the applicable start/stop schedules, if any.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/listApplicableSchedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/listApplicableSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ListApplicableSchedules</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_ListApplicableSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevTestLabApplicableSchedule>> GetApplicableSchedulesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetApplicableSchedules");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetApplicableSchedules");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.ListApplicableSchedulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetApplicableSchedulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabApplicableSchedule> response = Response.FromValue(DevTestLabApplicableSchedule.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -889,31 +958,41 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Lists the applicable start/stop schedules, if any.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/listApplicableSchedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/listApplicableSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ListApplicableSchedules</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_ListApplicableSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevTestLabApplicableSchedule> GetApplicableSchedules(CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetApplicableSchedules");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.GetApplicableSchedules");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.ListApplicableSchedules(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetApplicableSchedulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabApplicableSchedule> response = Response.FromValue(DevTestLabApplicableSchedule.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -927,20 +1006,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Redeploy a virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/redeploy</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/redeploy. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Redeploy</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Redeploy. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -948,14 +1027,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RedeployAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Redeploy");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Redeploy");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.RedeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -969,20 +1055,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Redeploy a virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/redeploy</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/redeploy. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Redeploy</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Redeploy. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -990,14 +1076,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Redeploy(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Redeploy");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Redeploy");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Redeploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1011,20 +1104,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Resize Virtual Machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/resize</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/resize. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Resize</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Resize. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1036,14 +1129,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.ResizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmResizeContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1057,20 +1157,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Resize Virtual Machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/resize</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/resize. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Resize</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Resize. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1082,14 +1182,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Resize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmResizeContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1103,20 +1210,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Restart a virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/restart. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Restart. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1124,14 +1231,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Restart");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Restart");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1145,20 +1259,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Restart a virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/restart. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Restart. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1166,14 +1280,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Restart");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Restart");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1187,20 +1308,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Start a virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1208,14 +1329,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Start");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Start");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1229,20 +1357,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Start a virtual machine. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1250,14 +1378,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Start");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Start");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1271,20 +1406,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Stop a virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Stop. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1292,14 +1427,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Stop");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Stop");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1313,20 +1455,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Stop a virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Stop. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1334,14 +1476,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Stop");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Stop");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1355,20 +1504,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Transfers all data disks attached to the virtual machine to be owned by the current user. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/transferDisks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/transferDisks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_TransferDisks</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_TransferDisks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1376,14 +1525,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> TransferDisksAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.TransferDisks");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.TransferDisks");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.TransferDisksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1397,20 +1553,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Transfers all data disks attached to the virtual machine to be owned by the current user. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/transferDisks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/transferDisks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_TransferDisks</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_TransferDisks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1418,14 +1574,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation TransferDisks(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.TransferDisks");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.TransferDisks");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.TransferDisks(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1439,20 +1602,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Release ownership of an existing virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/unClaim</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/unClaim. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_UnClaim</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_UnClaim. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1460,14 +1623,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> UnClaimAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.UnClaim");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.UnClaim");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmVirtualMachinesRestClient.UnClaimAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1481,20 +1651,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Release ownership of an existing virtual machine This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/unClaim</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}/unClaim. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_UnClaim</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_UnClaim. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabVmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1502,14 +1672,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation UnClaim(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.UnClaim");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.UnClaim");
             scope.Start();
             try
             {
-                var response = _devTestLabVmVirtualMachinesRestClient.UnClaim(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmVirtualMachinesClientDiagnostics, Pipeline, _devTestLabVmVirtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1519,27 +1696,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1549,29 +1706,35 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddTag");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devTestLabVmVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabVmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                    return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DevTestLabVmPatch();
-                    foreach (var tag in current.Tags)
+                    DevTestLabVmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DevTestLabVmPatch patch = new DevTestLabVmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DevTestLabVmResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1581,27 +1744,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1611,29 +1754,35 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddTag");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devTestLabVmVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabVmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                    return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DevTestLabVmPatch();
-                    foreach (var tag in current.Tags)
+                    DevTestLabVmData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DevTestLabVmPatch patch = new DevTestLabVmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DevTestLabVmResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1643,54 +1792,40 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DevTestLabVmResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.SetTags");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devTestLabVmVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabVmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                    return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DevTestLabVmPatch();
+                    DevTestLabVmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DevTestLabVmPatch patch = new DevTestLabVmPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DevTestLabVmResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1700,54 +1835,40 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DevTestLabVmResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.SetTags");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devTestLabVmVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabVmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                    return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DevTestLabVmPatch();
+                    DevTestLabVmData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DevTestLabVmPatch patch = new DevTestLabVmPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DevTestLabVmResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1757,27 +1878,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1785,29 +1886,35 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.RemoveTag");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devTestLabVmVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabVmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                    return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DevTestLabVmPatch();
-                    foreach (var tag in current.Tags)
+                    DevTestLabVmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DevTestLabVmPatch patch = new DevTestLabVmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DevTestLabVmResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1817,27 +1924,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1845,29 +1932,35 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.RemoveTag");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devTestLabVmVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabVmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
+                    return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DevTestLabVmPatch();
-                    foreach (var tag in current.Tags)
+                    DevTestLabVmData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DevTestLabVmPatch patch = new DevTestLabVmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DevTestLabVmResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

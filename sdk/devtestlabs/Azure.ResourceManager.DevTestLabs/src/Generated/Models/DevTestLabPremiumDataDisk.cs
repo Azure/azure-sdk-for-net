@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -18,38 +19,55 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public readonly partial struct DevTestLabPremiumDataDisk : IEquatable<DevTestLabPremiumDataDisk>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabPremiumDataDisk"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabPremiumDataDisk(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPremiumDataDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabPremiumDataDisk(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Disabled. </summary>
         public static DevTestLabPremiumDataDisk Disabled { get; } = new DevTestLabPremiumDataDisk(DisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static DevTestLabPremiumDataDisk Enabled { get; } = new DevTestLabPremiumDataDisk(EnabledValue);
+
         /// <summary> Determines if two <see cref="DevTestLabPremiumDataDisk"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevTestLabPremiumDataDisk left, DevTestLabPremiumDataDisk right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevTestLabPremiumDataDisk"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevTestLabPremiumDataDisk left, DevTestLabPremiumDataDisk right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabPremiumDataDisk"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevTestLabPremiumDataDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevTestLabPremiumDataDisk(string value) => new DevTestLabPremiumDataDisk(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevTestLabPremiumDataDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabPremiumDataDisk?(string value) => value == null ? null : new DevTestLabPremiumDataDisk(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevTestLabPremiumDataDisk other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevTestLabPremiumDataDisk other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

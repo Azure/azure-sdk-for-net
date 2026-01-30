@@ -13,111 +13,138 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabFormula data model.
-    /// A formula for creating a VM, specifying an image base and other parameters
-    /// </summary>
+    /// <summary> A formula for creating a VM, specifying an image base and other parameters. </summary>
     public partial class DevTestLabFormulaData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabFormulaData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabFormulaData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabFormulaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="description"> The description of the formula. </param>
-        /// <param name="author"> The author of the formula. </param>
-        /// <param name="osType"> The OS type of the formula. </param>
-        /// <param name="createdOn"> The creation date of the formula. </param>
-        /// <param name="formulaContent"> The content of the formula. </param>
-        /// <param name="vm"> Information about a VM from which a formula is to be created. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string author, string osType, DateTimeOffset? createdOn, DevTestLabVmCreationContent formulaContent, FormulaPropertiesFromVm vm, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the formula. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, FormulaProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            Description = description;
-            Author = author;
-            OSType = osType;
-            CreatedOn = createdOn;
-            FormulaContent = formulaContent;
-            Vm = vm;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabFormulaData"/> for deserialization. </summary>
-        internal DevTestLabFormulaData()
-        {
-        }
+        /// <summary> The properties of the formula. </summary>
+        internal FormulaProperties Properties { get; set; }
 
         /// <summary> The description of the formula. </summary>
-        public string Description { get; set; }
-        /// <summary> The author of the formula. </summary>
-        public string Author { get; }
-        /// <summary> The OS type of the formula. </summary>
-        public string OSType { get; set; }
-        /// <summary> The creation date of the formula. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The content of the formula. </summary>
-        public DevTestLabVmCreationContent FormulaContent { get; set; }
-        /// <summary> Information about a VM from which a formula is to be created. </summary>
-        internal FormulaPropertiesFromVm Vm { get; set; }
-        /// <summary> The identifier of the VM from which a formula is to be created. </summary>
-        public string LabVmId
+        public string Description
         {
-            get => Vm is null ? default : Vm.LabVmId;
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
             set
             {
-                if (Vm is null)
-                    Vm = new FormulaPropertiesFromVm();
-                Vm.LabVmId = value;
+                if (Properties is null)
+                {
+                    Properties = new FormulaProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The author of the formula. </summary>
+        public string Author
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Author;
+            }
+        }
+
+        /// <summary> The OS type of the formula. </summary>
+        public string OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FormulaProperties();
+                }
+                Properties.OSType = value;
+            }
+        }
+
+        /// <summary> The creation date of the formula. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> The content of the formula. </summary>
+        public DevTestLabVmCreationContent FormulaContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FormulaContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FormulaProperties();
+                }
+                Properties.FormulaContent = value;
             }
         }
 
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
+
+        /// <summary> The identifier of the VM from which a formula is to be created. </summary>
+        public string LabVmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LabVmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FormulaProperties();
+                }
+                Properties.LabVmId = value;
+            }
+        }
     }
 }

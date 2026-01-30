@@ -13,116 +13,210 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabCustomImage data model.
-    /// A custom image.
-    /// </summary>
+    /// <summary> A custom image. </summary>
     public partial class DevTestLabCustomImageData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabCustomImageData(AzureLocation location) : base(location)
         {
-            DataDiskStorageInfo = new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="vm"> The virtual machine from which the image is to be created. </param>
-        /// <param name="vhd"> The VHD from which the image is to be created. </param>
-        /// <param name="description"> The description of the custom image. </param>
-        /// <param name="author"> The author of the custom image. </param>
-        /// <param name="createdOn"> The creation date of the custom image. </param>
-        /// <param name="managedImageId"> The Managed Image Id backing the custom image. </param>
-        /// <param name="managedSnapshotId"> The Managed Snapshot Id backing the custom image. </param>
-        /// <param name="dataDiskStorageInfo"> Storage information about the data disks present in the custom image. </param>
-        /// <param name="customImagePlan"> Storage information about the plan related to this custom image. </param>
-        /// <param name="isPlanAuthorized"> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, CustomImageProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            Vm = vm;
-            Vhd = vhd;
-            Description = description;
-            Author = author;
-            CreatedOn = createdOn;
-            ManagedImageId = managedImageId;
-            ManagedSnapshotId = managedSnapshotId;
-            DataDiskStorageInfo = dataDiskStorageInfo;
-            CustomImagePlan = customImagePlan;
-            IsPlanAuthorized = isPlanAuthorized;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/> for deserialization. </summary>
-        internal DevTestLabCustomImageData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal CustomImageProperties Properties { get; set; }
 
         /// <summary> The virtual machine from which the image is to be created. </summary>
-        public DevTestLabCustomImageVm Vm { get; set; }
+        public DevTestLabCustomImageVm Vm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.Vm = value;
+            }
+        }
+
         /// <summary> The VHD from which the image is to be created. </summary>
-        public DevTestLabCustomImageVhd Vhd { get; set; }
+        public DevTestLabCustomImageVhd Vhd
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vhd;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.Vhd = value;
+            }
+        }
+
         /// <summary> The description of the custom image. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The author of the custom image. </summary>
-        public string Author { get; set; }
+        public string Author
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Author;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.Author = value;
+            }
+        }
+
         /// <summary> The creation date of the custom image. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The Managed Image Id backing the custom image. </summary>
-        public string ManagedImageId { get; set; }
+        public string ManagedImageId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedImageId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.ManagedImageId = value;
+            }
+        }
+
         /// <summary> The Managed Snapshot Id backing the custom image. </summary>
-        public string ManagedSnapshotId { get; set; }
+        public string ManagedSnapshotId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedSnapshotId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.ManagedSnapshotId = value;
+            }
+        }
+
         /// <summary> Storage information about the data disks present in the custom image. </summary>
-        public IList<DevTestLabDataDiskStorageTypeInfo> DataDiskStorageInfo { get; }
+        public IList<DevTestLabDataDiskStorageTypeInfo> DataDiskStorageInfo
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                return Properties.DataDiskStorageInfo;
+            }
+        }
+
         /// <summary> Storage information about the plan related to this custom image. </summary>
-        public DevTestLabCustomImagePlan CustomImagePlan { get; set; }
+        public DevTestLabCustomImagePlan CustomImagePlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomImagePlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.CustomImagePlan = value;
+            }
+        }
+
         /// <summary> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </summary>
-        public bool? IsPlanAuthorized { get; set; }
+        public bool? IsPlanAuthorized
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPlanAuthorized;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomImageProperties();
+                }
+                Properties.IsPlanAuthorized = value.Value;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
     }
 }

@@ -13,111 +13,197 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabDisk data model.
-    /// A Disk.
-    /// </summary>
+    /// <summary> A Disk. </summary>
     public partial class DevTestLabDiskData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabDiskData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabDiskData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabDiskData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>
-        /// <param name="diskSizeGiB"> The size of the disk in Gibibytes. </param>
-        /// <param name="leasedByLabVmId"> The resource ID of the VM to which this disk is leased. </param>
-        /// <param name="diskBlobName"> When backed by a blob, the name of the VHD blob without extension. </param>
-        /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
-        /// <param name="storageAccountId"> When backed by a blob, the storage account where the blob is. </param>
-        /// <param name="createdOn"> The creation date of the disk. </param>
-        /// <param name="hostCaching"> The host caching policy of the disk (i.e. None, ReadOnly, ReadWrite). </param>
-        /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabStorageType? diskType, int? diskSizeGiB, ResourceIdentifier leasedByLabVmId, string diskBlobName, Uri diskUri, string storageAccountId, DateTimeOffset? createdOn, string hostCaching, ResourceIdentifier managedDiskId, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the disk. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, DiskProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            DiskType = diskType;
-            DiskSizeGiB = diskSizeGiB;
-            LeasedByLabVmId = leasedByLabVmId;
-            DiskBlobName = diskBlobName;
-            DiskUri = diskUri;
-            StorageAccountId = storageAccountId;
-            CreatedOn = createdOn;
-            HostCaching = hostCaching;
-            ManagedDiskId = managedDiskId;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskData"/> for deserialization. </summary>
-        internal DevTestLabDiskData()
-        {
-        }
+        /// <summary> The properties of the disk. </summary>
+        internal DiskProperties Properties { get; set; }
 
         /// <summary> The storage type for the disk (i.e. Standard, Premium). </summary>
-        public DevTestLabStorageType? DiskType { get; set; }
+        public DevTestLabStorageType? DiskType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.DiskType = value.Value;
+            }
+        }
+
         /// <summary> The size of the disk in Gibibytes. </summary>
-        public int? DiskSizeGiB { get; set; }
+        public int? DiskSizeGiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskSizeGiB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.DiskSizeGiB = value.Value;
+            }
+        }
+
         /// <summary> The resource ID of the VM to which this disk is leased. </summary>
-        public ResourceIdentifier LeasedByLabVmId { get; set; }
+        public ResourceIdentifier LeasedByLabVmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LeasedByLabVmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.LeasedByLabVmId = value;
+            }
+        }
+
         /// <summary> When backed by a blob, the name of the VHD blob without extension. </summary>
-        public string DiskBlobName { get; set; }
+        public string DiskBlobName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskBlobName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.DiskBlobName = value;
+            }
+        }
+
         /// <summary> When backed by a blob, the URI of underlying blob. </summary>
-        public Uri DiskUri { get; set; }
+        public Uri DiskUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.DiskUri = value;
+            }
+        }
+
         /// <summary> When backed by a blob, the storage account where the blob is. </summary>
-        public string StorageAccountId { get; set; }
+        public string StorageAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.StorageAccountId = value;
+            }
+        }
+
         /// <summary> The creation date of the disk. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The host caching policy of the disk (i.e. None, ReadOnly, ReadWrite). </summary>
-        public string HostCaching { get; set; }
+        public string HostCaching
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostCaching;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.HostCaching = value;
+            }
+        }
+
         /// <summary> When backed by managed disk, this is the ID of the compute disk resource. </summary>
-        public ResourceIdentifier ManagedDiskId { get; set; }
+        public ResourceIdentifier ManagedDiskId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedDiskId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskProperties();
+                }
+                Properties.ManagedDiskId = value;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NotificationChannelsCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_CreateOrUpdate.json
-            // this example is just showing the usage of "NotificationChannels_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_CreateOrUpdate.json
+            // this example is just showing the usage of "NotificationChannel_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,17 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // invoke the operation
             string name = "{notificationChannelName}";
-            DevTestLabNotificationChannelData data = new DevTestLabNotificationChannelData(default)
-            {
-                WebHookUri = new Uri("{webhookUrl}"),
-                EmailRecipient = "{email}",
-                NotificationLocale = "en",
-                Description = "Integration configured for auto-shutdown",
-                Events = {new DevTestLabNotificationChannelEvent
-{
-EventName = DevTestLabNotificationChannelEventType.AutoShutdown,
-}},
-            };
+            DevTestLabNotificationChannelData data = new DevTestLabNotificationChannelData(default);
             ArmOperation<DevTestLabNotificationChannelResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             DevTestLabNotificationChannelResource result = lro.Value;
 
@@ -66,8 +55,8 @@ EventName = DevTestLabNotificationChannelEventType.AutoShutdown,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NotificationChannelsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Get.json
-            // this example is just showing the usage of "NotificationChannels_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_Get.json
+            // this example is just showing the usage of "NotificationChannel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,8 +89,8 @@ EventName = DevTestLabNotificationChannelEventType.AutoShutdown,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NotificationChannelsList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_List.json
-            // this example is just showing the usage of "NotificationChannels_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_List.json
+            // this example is just showing the usage of "NotificationChannel_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -136,8 +125,8 @@ EventName = DevTestLabNotificationChannelEventType.AutoShutdown,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_NotificationChannelsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Get.json
-            // this example is just showing the usage of "NotificationChannels_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_Get.json
+            // this example is just showing the usage of "NotificationChannel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -166,8 +155,8 @@ EventName = DevTestLabNotificationChannelEventType.AutoShutdown,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NotificationChannelsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Get.json
-            // this example is just showing the usage of "NotificationChannels_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_Get.json
+            // this example is just showing the usage of "NotificationChannel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

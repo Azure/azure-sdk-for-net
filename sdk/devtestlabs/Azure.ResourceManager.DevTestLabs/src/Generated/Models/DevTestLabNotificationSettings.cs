@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Notification settings for a schedule. </summary>
     public partial class DevTestLabNotificationSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationSettings"/>. </summary>
         public DevTestLabNotificationSettings()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="webhookUri"> The webhook URL to which the notification will be sent. </param>
         /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
         /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabNotificationSettings(DevTestLabEnableStatus? status, int? timeInMinutes, Uri webhookUri, string emailRecipient, string notificationLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabNotificationSettings(DevTestLabEnableStatus? status, int? timeInMinutes, Uri webhookUri, string emailRecipient, string notificationLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             TimeInMinutes = timeInMinutes;
             WebhookUri = webhookUri;
             EmailRecipient = emailRecipient;
             NotificationLocale = notificationLocale;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If notifications are enabled for this schedule (i.e. Enabled, Disabled). </summary>
         public DevTestLabEnableStatus? Status { get; set; }
+
         /// <summary> Time in minutes before event at which notification will be sent. </summary>
         public int? TimeInMinutes { get; set; }
+
         /// <summary> The webhook URL to which the notification will be sent. </summary>
         public Uri WebhookUri { get; set; }
+
         /// <summary> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </summary>
         public string EmailRecipient { get; set; }
+
         /// <summary> The locale to use when sending a notification (fallback for unsupported languages is EN). </summary>
         public string NotificationLocale { get; set; }
     }

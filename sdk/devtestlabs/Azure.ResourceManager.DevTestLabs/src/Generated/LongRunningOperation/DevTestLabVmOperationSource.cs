@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal class DevTestLabVmOperationSource : IOperationSource<DevTestLabVmResource>
+    /// <summary></summary>
+    internal partial class DevTestLabVmOperationSource : IOperationSource<DevTestLabVmResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DevTestLabVmOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DevTestLabVmResource IOperationSource<DevTestLabVmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DevTestLabVmData data = DevTestLabVmData.DeserializeDevTestLabVmData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DevTestLabVmResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DevTestLabVmResource> IOperationSource<DevTestLabVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
-            return await Task.FromResult(new DevTestLabVmResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DevTestLabVmData data = DevTestLabVmData.DeserializeDevTestLabVmData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevTestLabVmResource(_client, data);
         }
     }
 }

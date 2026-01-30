@@ -8,132 +8,105 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabArtifact data model.
-    /// An artifact.
-    /// </summary>
+    /// <summary> An artifact. </summary>
     public partial class DevTestLabArtifactData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public DevTestLabArtifactData(AzureLocation location) : base(location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ArtifactProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="title"> The artifact's title. </param>
-        /// <param name="description"> The artifact's description. </param>
-        /// <param name="publisher"> The artifact's publisher. </param>
-        /// <param name="filePath"> The file path to the artifact. </param>
-        /// <param name="icon"> The URI to the artifact icon. </param>
-        /// <param name="targetOSType"> The artifact's target OS. </param>
-        /// <param name="parameters"> The artifact's parameters. </param>
-        /// <param name="createdOn"> The artifact's creation date. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            Title = title;
-            Description = description;
-            Publisher = publisher;
-            FilePath = filePath;
-            Icon = icon;
-            TargetOSType = targetOSType;
-            Parameters = parameters;
-            CreatedOn = createdOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/> for deserialization. </summary>
-        internal DevTestLabArtifactData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal ArtifactProperties Properties { get; }
 
         /// <summary> The artifact's title. </summary>
-        public string Title { get; }
+        public string Title
+        {
+            get
+            {
+                return Properties.Title;
+            }
+        }
+
         /// <summary> The artifact's description. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> The artifact's publisher. </summary>
-        public string Publisher { get; }
+        public string Publisher
+        {
+            get
+            {
+                return Properties.Publisher;
+            }
+        }
+
         /// <summary> The file path to the artifact. </summary>
-        public string FilePath { get; }
+        public string FilePath
+        {
+            get
+            {
+                return Properties.FilePath;
+            }
+        }
+
         /// <summary> The URI to the artifact icon. </summary>
-        public string Icon { get; }
+        public string Icon
+        {
+            get
+            {
+                return Properties.Icon;
+            }
+        }
+
         /// <summary> The artifact's target OS. </summary>
-        public string TargetOSType { get; }
-        /// <summary>
-        /// The artifact's parameters.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Parameters { get; }
+        public string TargetOSType
+        {
+            get
+            {
+                return Properties.TargetOSType;
+            }
+        }
+
+        /// <summary> The artifact's parameters. </summary>
+        public BinaryData Parameters
+        {
+            get
+            {
+                return Properties.Parameters;
+            }
+        }
+
         /// <summary> The artifact's creation date. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties.CreatedOn;
+            }
+        }
     }
 }
