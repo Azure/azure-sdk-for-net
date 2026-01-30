@@ -361,6 +361,162 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
+        /// Warm up the solution resource by preloading asynchronous diagnostics results into cache
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.WarmUpAsync(ResourceIdentifier, string, SolutionWarmUpContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response> WarmUpAsync(this ArmClient client, ResourceIdentifier scope, string solutionResourceName, SolutionWarmUpContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).WarmUpAsync(scope, solutionResourceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Warm up the solution resource by preloading asynchronous diagnostics results into cache
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.WarmUp(ResourceIdentifier, string, SolutionWarmUpContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response WarmUp(this ArmClient client, ResourceIdentifier scope, string solutionResourceName, SolutionWarmUpContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).WarmUp(scope, solutionResourceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.ContinueAsync(ResourceIdentifier, string, TroubleshooterContinueContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response> ContinueAsync(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, TroubleshooterContinueContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).ContinueAsync(scope, troubleshooterName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.Continue(ResourceIdentifier, string, TroubleshooterContinueContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response Continue(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, TroubleshooterContinueContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).Continue(scope, troubleshooterName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Ends the troubleshooter action
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.EndAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response> EndAsync(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).EndAsync(scope, troubleshooterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Ends the troubleshooter action
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.End(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response End(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).End(scope, troubleshooterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Restarts the troubleshooter API using applicable troubleshooter resource name as the input.&lt;br/&gt; It returns new resource name which should be used in subsequent request. The old resource name is obsolete after this API is invoked.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.RestartAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<RestartTroubleshooterResult>> RestartAsync(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).RestartAsync(scope, troubleshooterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Restarts the troubleshooter API using applicable troubleshooter resource name as the input.&lt;br/&gt; It returns new resource name which should be used in subsequent request. The old resource name is obsolete after this API is invoked.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpArmClient.Restart(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<RestartTroubleshooterResult> Restart(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).Restart(scope, troubleshooterName, cancellationToken);
+        }
+
+        /// <summary>
         /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
         /// <item>
         /// <term> Mocking. </term>

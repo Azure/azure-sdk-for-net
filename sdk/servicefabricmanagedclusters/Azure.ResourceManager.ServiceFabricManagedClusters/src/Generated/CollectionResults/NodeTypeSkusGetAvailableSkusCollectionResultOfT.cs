@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAvailableSkusRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context) : _client.CreateGetAvailableSkusRequest(_subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersResourceGroupResource.GetAvailableSkus");
             scope.Start();
             try
             {

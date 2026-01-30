@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetFaultSimulationRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context) : _client.CreateGetFaultSimulationRequest(_subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetFaultSimulation");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersResourceGroupResource.GetFaultSimulation");
             scope.Start();
             try
             {

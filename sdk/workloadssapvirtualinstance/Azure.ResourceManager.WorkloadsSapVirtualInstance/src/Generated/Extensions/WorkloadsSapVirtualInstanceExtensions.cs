@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
@@ -163,6 +164,258 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).GetSapVirtualInstance(sapVirtualInstanceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts the SAP Central Services Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.StartAsync(WaitUntil, string, string, StartSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatusResult>> StartAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).StartAsync(waitUntil, sapVirtualInstanceName, centralInstanceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts the SAP Central Services Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start(WaitUntil, string, string, StartSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<OperationStatusResult> Start(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).Start(waitUntil, sapVirtualInstanceName, centralInstanceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Stops the SAP Central Services Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.StopAsync(WaitUntil, string, string, StopSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatusResult>> StopAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).StopAsync(waitUntil, sapVirtualInstanceName, centralInstanceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Stops the SAP Central Services Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop(WaitUntil, string, string, StopSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Central Services instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<OperationStatusResult> Stop(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string centralInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).Stop(waitUntil, sapVirtualInstanceName, centralInstanceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts the database instance of the SAP system.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.StartAsync(WaitUntil, string, string, StartSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Database server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatusResult>> StartAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).StartAsync(waitUntil, sapVirtualInstanceName, databaseInstanceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts the database instance of the SAP system.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start(WaitUntil, string, string, StartSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> SAP Database server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<OperationStatusResult> Start(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).Start(waitUntil, sapVirtualInstanceName, databaseInstanceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Stops the database instance of the SAP system.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.StopAsync(WaitUntil, string, string, StopSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> Stop request for the database instance of the SAP system. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatusResult>> StopAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).StopAsync(waitUntil, sapVirtualInstanceName, databaseInstanceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Stops the database instance of the SAP system.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop(WaitUntil, string, string, StopSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="content"> Stop request for the database instance of the SAP system. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<OperationStatusResult> Stop(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string databaseInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).Stop(waitUntil, sapVirtualInstanceName, databaseInstanceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts the SAP Application Server Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.StartAsync(WaitUntil, string, string, StartSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatusResult>> StartAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).StartAsync(waitUntil, sapVirtualInstanceName, applicationInstanceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts the SAP Application Server Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.Start(WaitUntil, string, string, StartSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<OperationStatusResult> Start(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StartSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).Start(waitUntil, sapVirtualInstanceName, applicationInstanceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Stops the SAP Application Server Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.StopAsync(WaitUntil, string, string, StopSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatusResult>> StopAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).StopAsync(waitUntil, sapVirtualInstanceName, applicationInstanceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Stops the SAP Application Server Instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadsSapVirtualInstanceResourceGroupResource.Stop(WaitUntil, string, string, StopSapInstanceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="content"> SAP Application server instance stop request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<OperationStatusResult> Stop(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string sapVirtualInstanceName, string applicationInstanceName, StopSapInstanceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadsSapVirtualInstanceResourceGroupResource(resourceGroupResource).Stop(waitUntil, sapVirtualInstanceName, applicationInstanceName, content, cancellationToken);
         }
 
         /// <summary>

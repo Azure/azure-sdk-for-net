@@ -10,14 +10,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.VirtualEnclaves;
+using Azure.ResourceManager.VirtualEnclaves.Models;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableVirtualEnclavesArmClient : ArmResource
     {
+        private ClientDiagnostics _approvalClientDiagnostics;
+        private Approval _approvalRestClient;
+
         /// <summary> Initializes a new instance of MockableVirtualEnclavesArmClient for mocking. </summary>
         protected MockableVirtualEnclavesArmClient()
         {
@@ -29,6 +34,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         internal MockableVirtualEnclavesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ApprovalClientDiagnostics => _approvalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Approval ApprovalRestClient => _approvalRestClient ??= new Approval(ApprovalClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
 
         /// <summary> Gets an object representing a <see cref="VirtualEnclaveWorkloadResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -136,6 +145,126 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
             return await GetVirtualEnclaveApprovals(scope).GetAsync(approvalName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upon receiving approval or rejection from approver, this facilitates actions on approval resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}/notifyInitiator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_NotifyInitiator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="approvalName"> The name of the approvals resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="approvalName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApprovalActionResult>> NotifyInitiatorAsync(WaitUntil waitUntil, ResourceIdentifier scope, string approvalName, ApprovalActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = ApprovalClientDiagnostics.CreateScope("MockableVirtualEnclavesArmClient.NotifyInitiator");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ApprovalRestClient.CreateNotifyInitiatorRequest(scope.ToString(), approvalName, ApprovalActionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    ApprovalClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upon receiving approval or rejection from approver, this facilitates actions on approval resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}/notifyInitiator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Approval_NotifyInitiator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="approvalName"> The name of the approvals resource. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="approvalName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApprovalActionResult> NotifyInitiator(WaitUntil waitUntil, ResourceIdentifier scope, string approvalName, ApprovalActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = ApprovalClientDiagnostics.CreateScope("MockableVirtualEnclavesArmClient.NotifyInitiator");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ApprovalRestClient.CreateNotifyInitiatorRequest(scope.ToString(), approvalName, ApprovalActionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
+                    new ApprovalActionResultOperationSource(),
+                    ApprovalClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }
