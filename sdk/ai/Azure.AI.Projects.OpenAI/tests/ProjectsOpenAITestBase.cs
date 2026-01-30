@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.OpenAI.Tests.Utils;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -41,6 +42,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
+        ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
@@ -156,7 +158,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         };
     }
 
-    private AuthenticationTokenProvider GetTestAuthenticationProvider()
+    protected AuthenticationTokenProvider GetTestAuthenticationProvider()
     {
         // For local testing if you are using non default account
         // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
