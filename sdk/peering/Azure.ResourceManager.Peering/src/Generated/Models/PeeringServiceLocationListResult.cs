@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of peering service locations. </summary>
+    /// <summary> The response of a PeeringServiceLocation list operation. </summary>
     internal partial class PeeringServiceLocationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Peering.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceLocationListResult"/>. </summary>
-        internal PeeringServiceLocationListResult()
+        /// <param name="value"> The PeeringServiceLocation items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PeeringServiceLocationListResult(IEnumerable<PeeringServiceLocation> value)
         {
-            Value = new ChangeTrackingList<PeeringServiceLocation>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceLocationListResult"/>. </summary>
-        /// <param name="value"> The list of peering service locations. </param>
-        /// <param name="nextLink"> The link to fetch the next page of peering service locations. </param>
+        /// <param name="value"> The PeeringServiceLocation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServiceLocationListResult(IReadOnlyList<PeeringServiceLocation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PeeringServiceLocationListResult(IReadOnlyList<PeeringServiceLocation> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of peering service locations. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceLocationListResult"/> for deserialization. </summary>
+        internal PeeringServiceLocationListResult()
+        {
+        }
+
+        /// <summary> The PeeringServiceLocation items on this page. </summary>
         public IReadOnlyList<PeeringServiceLocation> Value { get; }
-        /// <summary> The link to fetch the next page of peering service locations. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

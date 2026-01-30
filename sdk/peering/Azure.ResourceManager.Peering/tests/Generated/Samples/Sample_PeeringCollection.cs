@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateADirectPeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/CreateDirectPeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/CreateDirectPeering.json
             // this example is just showing the usage of "Peerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,6 +75,12 @@ ConnectionIdentifier = "8AB00818-D533-4504-A25A-03A17F61201C",
                     PeerAsnId = new ResourceIdentifier("/subscriptions/subId/providers/Microsoft.Peering/peerAsns/myAsn1"),
                     DirectPeeringType = DirectPeeringType.Edge,
                 },
+                ConnectivityProbes = {new PeeringConnectivityProbe
+{
+Endpoint = "192.168.0.1",
+AzureRegion = "eastus",
+Protocol = PeeringConnectivityProbeTrafficProtocol.Icmp,
+}},
                 PeeringLocation = "peeringLocation0",
             };
             ArmOperation<PeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data);
@@ -91,7 +97,7 @@ ConnectionIdentifier = "8AB00818-D533-4504-A25A-03A17F61201C",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPeeringWithExchangeRouteServer()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/CreatePeeringWithExchangeRouteServer.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/CreatePeeringWithExchangeRouteServer.json
             // this example is just showing the usage of "Peerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,6 +143,12 @@ ConnectionIdentifier = "5F4CB5C7-6B43-4444-9338-9ABC72606C16",
                     PeerAsnId = new ResourceIdentifier("/subscriptions/subId/providers/Microsoft.Peering/peerAsns/myAsn1"),
                     DirectPeeringType = DirectPeeringType.IxRs,
                 },
+                ConnectivityProbes = {new PeeringConnectivityProbe
+{
+Endpoint = "192.168.0.1",
+AzureRegion = "eastus",
+Protocol = PeeringConnectivityProbeTrafficProtocol.TCP,
+}},
                 PeeringLocation = "peeringLocation0",
             };
             ArmOperation<PeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data);
@@ -153,7 +165,7 @@ ConnectionIdentifier = "5F4CB5C7-6B43-4444-9338-9ABC72606C16",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnExchangePeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/CreateExchangePeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/CreateExchangePeering.json
             // this example is just showing the usage of "Peerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,6 +219,12 @@ ConnectionIdentifier = Guid.Parse("CDD8E673-CB07-47E6-84DE-3739F778762B"),
 }},
                     PeerAsnId = new ResourceIdentifier("/subscriptions/subId/providers/Microsoft.Peering/peerAsns/myAsn1"),
                 },
+                ConnectivityProbes = {new PeeringConnectivityProbe
+{
+Endpoint = "192.168.0.1",
+AzureRegion = "eastus",
+Protocol = PeeringConnectivityProbeTrafficProtocol.Icmp,
+}},
                 PeeringLocation = "peeringLocation0",
             };
             ArmOperation<PeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data);
@@ -223,7 +241,7 @@ ConnectionIdentifier = Guid.Parse("CDD8E673-CB07-47E6-84DE-3739F778762B"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeering.json
             // this example is just showing the usage of "Peerings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -256,7 +274,7 @@ ConnectionIdentifier = Guid.Parse("CDD8E673-CB07-47E6-84DE-3739F778762B"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPeeringsInAResourceGroup()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/ListPeeringsByResourceGroup.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/ListPeeringsByResourceGroup.json
             // this example is just showing the usage of "Peerings_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -291,7 +309,7 @@ ConnectionIdentifier = Guid.Parse("CDD8E673-CB07-47E6-84DE-3739F778762B"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeering.json
             // this example is just showing the usage of "Peerings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -320,7 +338,7 @@ ConnectionIdentifier = Guid.Parse("CDD8E673-CB07-47E6-84DE-3739F778762B"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeering.json
             // this example is just showing the usage of "Peerings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

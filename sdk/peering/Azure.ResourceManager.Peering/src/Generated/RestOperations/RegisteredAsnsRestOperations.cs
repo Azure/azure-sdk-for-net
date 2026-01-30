@@ -32,8 +32,102 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByPeeringRequestUri(string subscriptionId, string resourceGroupName, string peeringName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
+            uri.AppendPath(peeringName, true);
+            uri.AppendPath("/registeredAsns", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByPeeringRequest(string subscriptionId, string resourceGroupName, string peeringName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
+            uri.AppendPath(peeringName, true);
+            uri.AppendPath("/registeredAsns", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all registered ASNs under the given subscription, resource group and peering. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PeeringRegisteredAsnListResult>> ListByPeeringAsync(string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+
+            using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PeeringRegisteredAsnListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = PeeringRegisteredAsnListResult.DeserializePeeringRegisteredAsnListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all registered ASNs under the given subscription, resource group and peering. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PeeringRegisteredAsnListResult> ListByPeering(string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+
+            using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PeeringRegisteredAsnListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PeeringRegisteredAsnListResult.DeserializePeeringRegisteredAsnListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string peeringName, string registeredAsnName)
@@ -75,8 +169,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Gets an existing registered ASN with the specified name under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +202,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Gets an existing registered ASN with the specified name under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,10 +277,10 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Creates a new registered ASN with the specified name under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="registeredAsnName"> The name of the ASN. </param>
+        /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="data"> The properties needed to create a registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/>, <paramref name="registeredAsnName"/> or <paramref name="data"/> is null. </exception>
@@ -217,10 +311,10 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Creates a new registered ASN with the specified name under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="registeredAsnName"> The name of the ASN. </param>
+        /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="data"> The properties needed to create a registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringName"/>, <paramref name="registeredAsnName"/> or <paramref name="data"/> is null. </exception>
@@ -289,8 +383,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Deletes an existing registered ASN with the specified name under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,8 +410,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Deletes an existing registered ASN with the specified name under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -337,100 +431,6 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByPeeringRequestUri(string subscriptionId, string resourceGroupName, string peeringName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
-            uri.AppendPath(peeringName, true);
-            uri.AppendPath("/registeredAsns", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByPeeringRequest(string subscriptionId, string resourceGroupName, string peeringName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
-            uri.AppendPath(peeringName, true);
-            uri.AppendPath("/registeredAsns", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists all registered ASNs under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PeeringRegisteredAsnListResult>> ListByPeeringAsync(string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-
-            using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PeeringRegisteredAsnListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PeeringRegisteredAsnListResult.DeserializePeeringRegisteredAsnListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all registered ASNs under the given subscription, resource group and peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PeeringRegisteredAsnListResult> ListByPeering(string subscriptionId, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-
-            using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PeeringRegisteredAsnListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PeeringRegisteredAsnListResult.DeserializePeeringRegisteredAsnListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -460,8 +460,8 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all registered ASNs under the given subscription, resource group and peering. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>
@@ -491,8 +491,8 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all registered ASNs under the given subscription, resource group and peering. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is null. </exception>

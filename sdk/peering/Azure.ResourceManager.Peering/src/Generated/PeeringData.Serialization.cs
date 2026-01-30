@@ -54,6 +54,16 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange, options);
             }
+            if (Optional.IsCollectionDefined(ConnectivityProbes))
+            {
+                writer.WritePropertyName("connectivityProbes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConnectivityProbes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
@@ -97,6 +107,7 @@ namespace Azure.ResourceManager.Peering
             SystemData systemData = default;
             DirectPeeringProperties direct = default;
             ExchangePeeringProperties exchange = default;
+            IList<PeeringConnectivityProbe> connectivityProbes = default;
             string peeringLocation = default;
             PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -183,6 +194,20 @@ namespace Azure.ResourceManager.Peering
                             exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("connectivityProbes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PeeringConnectivityProbe> array = new List<PeeringConnectivityProbe>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PeeringConnectivityProbe.DeserializePeeringConnectivityProbe(item, options));
+                            }
+                            connectivityProbes = array;
+                            continue;
+                        }
                         if (property0.NameEquals("peeringLocation"u8))
                         {
                             peeringLocation = property0.Value.GetString();
@@ -217,6 +242,7 @@ namespace Azure.ResourceManager.Peering
                 kind,
                 direct,
                 exchange,
+                connectivityProbes ?? new ChangeTrackingList<PeeringConnectivityProbe>(),
                 peeringLocation,
                 provisioningState,
                 serializedAdditionalRawData);

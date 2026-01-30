@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -54,12 +55,14 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="direct"> The properties that define a direct peering. </param>
         /// <param name="exchange"> The properties that define an exchange peering. </param>
+        /// <param name="connectivityProbes"> The connectivity probes associated with the peering. </param>
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Peering.PeeringData"/> instance for mocking. </returns>
-        public static PeeringData PeeringData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PeeringSku sku = null, PeeringKind kind = default, DirectPeeringProperties direct = null, ExchangePeeringProperties exchange = null, string peeringLocation = null, PeeringProvisioningState? provisioningState = null)
+        public static PeeringData PeeringData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PeeringSku sku = null, PeeringKind kind = default, DirectPeeringProperties direct = null, ExchangePeeringProperties exchange = null, IEnumerable<PeeringConnectivityProbe> connectivityProbes = null, string peeringLocation = null, PeeringProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
+            connectivityProbes ??= new List<PeeringConnectivityProbe>();
 
             return new PeeringData(
                 id,
@@ -72,20 +75,10 @@ namespace Azure.ResourceManager.Peering.Models
                 kind,
                 direct,
                 exchange,
+                connectivityProbes?.ToList(),
                 peeringLocation,
                 provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PeeringSku"/>. </summary>
-        /// <param name="name"> The name of the peering SKU. </param>
-        /// <param name="tier"> The tier of the peering SKU. </param>
-        /// <param name="family"> The family of the peering SKU. </param>
-        /// <param name="size"> The size of the peering SKU. </param>
-        /// <returns> A new <see cref="Models.PeeringSku"/> instance for mocking. </returns>
-        public static PeeringSku PeeringSku(string name = null, PeeringTier? tier = null, PeeringFamily? family = null, PeeringSize? size = null)
-        {
-            return new PeeringSku(name, tier, family, size, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DirectPeeringProperties"/>. </summary>
@@ -177,6 +170,33 @@ namespace Azure.ResourceManager.Peering.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.PeeringConnectivityProbe"/>. </summary>
+        /// <param name="endpoint"> The endpoint IP address where traffic will be sent to from Azure for the connectivity probe. </param>
+        /// <param name="azureRegion"> The Azure region where traffic will originate from for the connectivity probe. </param>
+        /// <param name="protocol"> The protocol of the traffic that will be sent for the connectivity probe. </param>
+        /// <param name="prefixesToAccesslist">
+        /// Set to contain the prefixes that agents in Azure will send traffic from. For peers to allow into their
+        /// network the connectivity probe traffic can reach their endpoint for the connectivity probe.
+        /// </param>
+        /// <returns> A new <see cref="Models.PeeringConnectivityProbe"/> instance for mocking. </returns>
+        public static PeeringConnectivityProbe PeeringConnectivityProbe(string endpoint = null, string azureRegion = null, PeeringConnectivityProbeTrafficProtocol? protocol = null, IEnumerable<string> prefixesToAccesslist = null)
+        {
+            prefixesToAccesslist ??= new List<string>();
+
+            return new PeeringConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PeeringSku"/>. </summary>
+        /// <param name="name"> The name of the peering SKU. </param>
+        /// <param name="tier"> The tier of the peering SKU. </param>
+        /// <param name="family"> The family of the peering SKU. </param>
+        /// <param name="size"> The size of the peering SKU. </param>
+        /// <returns> A new <see cref="Models.PeeringSku"/> instance for mocking. </returns>
+        public static PeeringSku PeeringSku(string name = null, PeeringTier? tier = null, PeeringFamily? family = null, PeeringSize? size = null)
+        {
+            return new PeeringSku(name, tier, family, size, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.LookingGlassOutput"/>. </summary>
         /// <param name="command"> Invoked command. </param>
         /// <param name="output"> Output of the command. </param>
@@ -244,108 +264,6 @@ namespace Azure.ResourceManager.Peering.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Peering.PeeringRegisteredAsnData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="asn"> The customer's ASN from which traffic originates. </param>
-        /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Peering.PeeringRegisteredAsnData"/> instance for mocking. </returns>
-        public static PeeringRegisteredAsnData PeeringRegisteredAsnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? asn = null, string peeringServicePrefixKey = null, PeeringProvisioningState? provisioningState = null)
-        {
-            return new PeeringRegisteredAsnData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                asn,
-                peeringServicePrefixKey,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Peering.PeeringRegisteredPrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The customer's prefix from which traffic originates. </param>
-        /// <param name="prefixValidationState"> The prefix validation state. </param>
-        /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
-        /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Peering.PeeringRegisteredPrefixData"/> instance for mocking. </returns>
-        public static PeeringRegisteredPrefixData PeeringRegisteredPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string prefix = null, PeeringPrefixValidationState? prefixValidationState = null, string peeringServicePrefixKey = null, string errorMessage = null, PeeringProvisioningState? provisioningState = null)
-        {
-            return new PeeringRegisteredPrefixData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                prefix,
-                prefixValidationState,
-                peeringServicePrefixKey,
-                errorMessage,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PeeringReceivedRoute"/>. </summary>
-        /// <param name="prefix"> The prefix. </param>
-        /// <param name="nextHop"> The next hop for the prefix. </param>
-        /// <param name="asPath"> The AS path for the prefix. </param>
-        /// <param name="originAsValidationState"> The origin AS change information for the prefix. </param>
-        /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that's listed in the AS path. </param>
-        /// <param name="trustAnchor"> The authority which holds the Route Origin Authorization record for the prefix, if any. </param>
-        /// <param name="receivedTimestamp"> The received timestamp associated with the prefix. </param>
-        /// <returns> A new <see cref="Models.PeeringReceivedRoute"/> instance for mocking. </returns>
-        public static PeeringReceivedRoute PeeringReceivedRoute(string prefix = null, string nextHop = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string trustAnchor = null, string receivedTimestamp = null)
-        {
-            return new PeeringReceivedRoute(
-                prefix,
-                nextHop,
-                asPath,
-                originAsValidationState,
-                rpkiValidationState,
-                trustAnchor,
-                receivedTimestamp,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Peering.ConnectionMonitorTestData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sourceAgent"> The Connection Monitor test source agent. </param>
-        /// <param name="destination"> The Connection Monitor test destination. </param>
-        /// <param name="destinationPort"> The Connection Monitor test destination port. </param>
-        /// <param name="testFrequencyInSec"> The Connection Monitor test frequency in seconds. </param>
-        /// <param name="isTestSuccessful"> The flag that indicates if the Connection Monitor test is successful or not. </param>
-        /// <param name="path"> The path representing the Connection Monitor test. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Peering.ConnectionMonitorTestData"/> instance for mocking. </returns>
-        public static ConnectionMonitorTestData ConnectionMonitorTestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sourceAgent = null, string destination = null, int? destinationPort = null, int? testFrequencyInSec = null, bool? isTestSuccessful = null, IEnumerable<string> path = null, PeeringProvisioningState? provisioningState = null)
-        {
-            path ??= new List<string>();
-
-            return new ConnectionMonitorTestData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                sourceAgent,
-                destination,
-                destinationPort,
-                testFrequencyInSec,
-                isTestSuccessful,
-                path?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.PeeringServiceCountry"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -376,56 +294,6 @@ namespace Azure.ResourceManager.Peering.Models
                 country,
                 state,
                 azureRegion,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Peering.PeeringServicePrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The prefix from which your traffic originates. </param>
-        /// <param name="prefixValidationState"> The prefix validation state. </param>
-        /// <param name="learnedType"> The prefix learned type. </param>
-        /// <param name="errorMessage"> The error message for validation state. </param>
-        /// <param name="events"> The list of events for peering service prefix. </param>
-        /// <param name="peeringServicePrefixKey"> The peering service prefix key. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Peering.PeeringServicePrefixData"/> instance for mocking. </returns>
-        public static PeeringServicePrefixData PeeringServicePrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string prefix = null, PeeringPrefixValidationState? prefixValidationState = null, PeeringLearnedType? learnedType = null, string errorMessage = null, IEnumerable<PeeringServicePrefixEvent> events = null, string peeringServicePrefixKey = null, PeeringProvisioningState? provisioningState = null)
-        {
-            events ??= new List<PeeringServicePrefixEvent>();
-
-            return new PeeringServicePrefixData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                prefix,
-                prefixValidationState,
-                learnedType,
-                errorMessage,
-                events?.ToList(),
-                peeringServicePrefixKey,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PeeringServicePrefixEvent"/>. </summary>
-        /// <param name="eventTimestamp"> The timestamp of the event associated with a prefix. </param>
-        /// <param name="eventType"> The type of the event associated with a prefix. </param>
-        /// <param name="eventSummary"> The summary of the event associated with a prefix. </param>
-        /// <param name="eventLevel"> The level of the event associated with a prefix. </param>
-        /// <param name="eventDescription"> The description of the event associated with a prefix. </param>
-        /// <returns> A new <see cref="Models.PeeringServicePrefixEvent"/> instance for mocking. </returns>
-        public static PeeringServicePrefixEvent PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp = null, string eventType = null, string eventSummary = null, string eventLevel = null, string eventDescription = null)
-        {
-            return new PeeringServicePrefixEvent(
-                eventTimestamp,
-                eventType,
-                eventSummary,
-                eventLevel,
-                eventDescription,
                 serializedAdditionalRawData: null);
         }
 
@@ -499,6 +367,158 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Peering.ConnectionMonitorTestData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sourceAgent"> The Connection Monitor test source agent. </param>
+        /// <param name="destination"> The Connection Monitor test destination. </param>
+        /// <param name="destinationPort"> The Connection Monitor test destination port. </param>
+        /// <param name="testFrequencyInSec"> The Connection Monitor test frequency in seconds. </param>
+        /// <param name="isTestSuccessful"> The flag that indicates if the Connection Monitor test is successful or not. </param>
+        /// <param name="path"> The path representing the Connection Monitor test. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Peering.ConnectionMonitorTestData"/> instance for mocking. </returns>
+        public static ConnectionMonitorTestData ConnectionMonitorTestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sourceAgent = null, string destination = null, int? destinationPort = null, int? testFrequencyInSec = null, bool? isTestSuccessful = null, IEnumerable<string> path = null, PeeringProvisioningState? provisioningState = null)
+        {
+            path ??= new List<string>();
+
+            return new ConnectionMonitorTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sourceAgent,
+                destination,
+                destinationPort,
+                testFrequencyInSec,
+                isTestSuccessful,
+                path?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Peering.PeeringServicePrefixData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="prefix"> The prefix from which your traffic originates. </param>
+        /// <param name="prefixValidationState"> The prefix validation state. </param>
+        /// <param name="learnedType"> The prefix learned type. </param>
+        /// <param name="errorMessage"> The error message for validation state. </param>
+        /// <param name="events"> The list of events for peering service prefix. </param>
+        /// <param name="peeringServicePrefixKey"> The peering service prefix key. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Peering.PeeringServicePrefixData"/> instance for mocking. </returns>
+        public static PeeringServicePrefixData PeeringServicePrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string prefix = null, PeeringPrefixValidationState? prefixValidationState = null, PeeringLearnedType? learnedType = null, string errorMessage = null, IEnumerable<PeeringServicePrefixEvent> events = null, string peeringServicePrefixKey = null, PeeringProvisioningState? provisioningState = null)
+        {
+            events ??= new List<PeeringServicePrefixEvent>();
+
+            return new PeeringServicePrefixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                prefix,
+                prefixValidationState,
+                learnedType,
+                errorMessage,
+                events?.ToList(),
+                peeringServicePrefixKey,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PeeringServicePrefixEvent"/>. </summary>
+        /// <param name="eventTimestamp"> The timestamp of the event associated with a prefix. </param>
+        /// <param name="eventType"> The type of the event associated with a prefix. </param>
+        /// <param name="eventSummary"> The summary of the event associated with a prefix. </param>
+        /// <param name="eventLevel"> The level of the event associated with a prefix. </param>
+        /// <param name="eventDescription"> The description of the event associated with a prefix. </param>
+        /// <returns> A new <see cref="Models.PeeringServicePrefixEvent"/> instance for mocking. </returns>
+        public static PeeringServicePrefixEvent PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp = null, string eventType = null, string eventSummary = null, string eventLevel = null, string eventDescription = null)
+        {
+            return new PeeringServicePrefixEvent(
+                eventTimestamp,
+                eventType,
+                eventSummary,
+                eventLevel,
+                eventDescription,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PeeringReceivedRoute"/>. </summary>
+        /// <param name="prefix"> The prefix. </param>
+        /// <param name="nextHop"> The next hop for the prefix. </param>
+        /// <param name="asPath"> The AS path for the prefix. </param>
+        /// <param name="originAsValidationState"> The origin AS change information for the prefix. </param>
+        /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that's listed in the AS path. </param>
+        /// <param name="trustAnchor"> The authority which holds the Route Origin Authorization record for the prefix, if any. </param>
+        /// <param name="receivedTimestamp"> The received timestamp associated with the prefix. </param>
+        /// <returns> A new <see cref="Models.PeeringReceivedRoute"/> instance for mocking. </returns>
+        public static PeeringReceivedRoute PeeringReceivedRoute(string prefix = null, string nextHop = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string trustAnchor = null, string receivedTimestamp = null)
+        {
+            return new PeeringReceivedRoute(
+                prefix,
+                nextHop,
+                asPath,
+                originAsValidationState,
+                rpkiValidationState,
+                trustAnchor,
+                receivedTimestamp,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Peering.PeeringRegisteredAsnData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="asn"> The customer's ASN from which traffic originates. </param>
+        /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Peering.PeeringRegisteredAsnData"/> instance for mocking. </returns>
+        public static PeeringRegisteredAsnData PeeringRegisteredAsnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? asn = null, string peeringServicePrefixKey = null, PeeringProvisioningState? provisioningState = null)
+        {
+            return new PeeringRegisteredAsnData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                asn,
+                peeringServicePrefixKey,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Peering.PeeringRegisteredPrefixData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="prefix"> The customer's prefix from which traffic originates. </param>
+        /// <param name="prefixValidationState"> The prefix validation state. </param>
+        /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
+        /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Peering.PeeringRegisteredPrefixData"/> instance for mocking. </returns>
+        public static PeeringRegisteredPrefixData PeeringRegisteredPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string prefix = null, PeeringPrefixValidationState? prefixValidationState = null, string peeringServicePrefixKey = null, string errorMessage = null, PeeringProvisioningState? provisioningState = null)
+        {
+            return new PeeringRegisteredPrefixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                prefix,
+                prefixValidationState,
+                peeringServicePrefixKey,
+                errorMessage,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.RoutingPreferenceUnbilledPrefix"/>. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="azureRegion"> The Azure region. </param>
@@ -507,6 +527,26 @@ namespace Azure.ResourceManager.Peering.Models
         public static RoutingPreferenceUnbilledPrefix RoutingPreferenceUnbilledPrefix(string prefix = null, AzureLocation? azureRegion = null, int? peerAsn = null)
         {
             return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Peering.PeeringData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="direct"> The properties that define a direct peering. </param>
+        /// <param name="exchange"> The properties that define an exchange peering. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Peering.PeeringData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PeeringData PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, string peeringLocation, PeeringProvisioningState? provisioningState)
+        {
+            return PeeringData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, kind: kind, direct: direct, exchange: exchange, connectivityProbes: default, peeringLocation: peeringLocation, provisioningState: provisioningState);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The PeeringServiceProviderAvailability. </summary>
+    /// <summary> Response for checking service provider availability. </summary>
     public readonly partial struct PeeringServiceProviderAvailability : IEquatable<PeeringServiceProviderAvailability>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Peering.Models
         private const string AvailableValue = "Available";
         private const string UnavailableValue = "Unavailable";
 
-        /// <summary> Available. </summary>
+        /// <summary> available. </summary>
         public static PeeringServiceProviderAvailability Available { get; } = new PeeringServiceProviderAvailability(AvailableValue);
-        /// <summary> Unavailable. </summary>
+        /// <summary> unavailable. </summary>
         public static PeeringServiceProviderAvailability Unavailable { get; } = new PeeringServiceProviderAvailability(UnavailableValue);
         /// <summary> Determines if two <see cref="PeeringServiceProviderAvailability"/> values are the same. </summary>
         public static bool operator ==(PeeringServiceProviderAvailability left, PeeringServiceProviderAvailability right) => left.Equals(right);

@@ -34,6 +34,25 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PeeringServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringServiceResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PeeringServiceResource"/> object. </returns>
+        public static PeeringServiceResource GetPeeringServiceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePeeringArmClient(client).GetPeeringServiceResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="PeerAsnResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PeerAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeerAsnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -50,44 +69,6 @@ namespace Azure.ResourceManager.Peering
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePeeringArmClient(client).GetPeerAsnResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PeeringRegisteredAsnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringRegisteredAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredAsnResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringRegisteredAsnResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringRegisteredAsnResource"/> object. </returns>
-        public static PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePeeringArmClient(client).GetPeeringRegisteredAsnResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PeeringRegisteredPrefixResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringRegisteredPrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringRegisteredPrefixResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource"/> object. </returns>
-        public static PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePeeringArmClient(client).GetPeeringRegisteredPrefixResource(id);
         }
 
         /// <summary>
@@ -148,115 +129,41 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PeeringServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PeeringServiceResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PeeringRegisteredAsnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringRegisteredAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredAsnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringRegisteredAsnResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringServiceResource"/> object. </returns>
-        public static PeeringServiceResource GetPeeringServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PeeringRegisteredAsnResource"/> object. </returns>
+        public static PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePeeringArmClient(client).GetPeeringServiceResource(id);
+            return GetMockablePeeringArmClient(client).GetPeeringRegisteredAsnResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of PeeringResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="PeeringRegisteredPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeeringRegisteredPrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeerings()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringRegisteredPrefixResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PeeringResources and their operations over a PeeringResource. </returns>
-        public static PeeringCollection GetPeerings(this ResourceGroupResource resourceGroupResource)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource"/> object. </returns>
+        public static PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeerings();
-        }
-
-        /// <summary>
-        /// Gets an existing peering with the specified name under the given subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeeringAsync(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="peeringName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PeeringResource>> GetPeeringAsync(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeeringAsync(peeringName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing peering with the specified name under the given subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeering(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="peeringName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<PeeringResource> GetPeering(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeering(peeringName, cancellationToken);
+            return GetMockablePeeringArmClient(client).GetPeeringRegisteredPrefixResource(id);
         }
 
         /// <summary>
@@ -289,7 +196,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,7 +234,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,6 +257,99 @@ namespace Azure.ResourceManager.Peering
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeeringService(peeringServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of PeeringResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeerings()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of PeeringResources and their operations over a PeeringResource. </returns>
+        public static PeeringCollection GetPeerings(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeerings();
+        }
+
+        /// <summary>
+        /// Gets an existing peering with the specified name under the given subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeeringAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PeeringResource>> GetPeeringAsync(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeeringAsync(peeringName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing peering with the specified name under the given subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeering(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<PeeringResource> GetPeering(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeering(peeringName, cancellationToken);
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -576,479 +576,73 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
+        /// Initialize Peering Service for Connection Monitor functionality
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LegacyPeerings_List</description>
+        /// <description>PeeringServices_InitializeConnectionMonitor</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LegacyPeerings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Run looking glass functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LookingGlass_Invoke</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
-        public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Run looking glass functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LookingGlass_Invoke</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
-        public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringLocations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="directPeeringType"> The type of direct peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringLocation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringLocation> GetPeeringLocationsAsync(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringLocations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="directPeeringType"> The type of direct peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringLocation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringLocation> GetPeeringLocations(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PeeringResource"/></description>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerings(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringResource> GetPeeringsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response> InitializePeeringServiceConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsAsync(cancellationToken);
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Lists all of the peerings under the given subscription.
+        /// Initialize Peering Service for Connection Monitor functionality
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Peerings_ListBySubscription</description>
+        /// <description>PeeringServices_InitializeConnectionMonitor</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PeeringResource"/></description>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerings(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringResource> GetPeerings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response InitializePeeringServiceConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeerings(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available countries for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceCountries_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available countries for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceCountries_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available locations for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceLocations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available locations for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceLocations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering service locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceProviders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering service locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceProviders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
         }
 
         /// <summary>
@@ -1064,7 +658,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1100,7 +694,7 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1124,73 +718,479 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Initialize Peering Service for Connection Monitor functionality
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// <description>LegacyPeerings_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServiceResource"/></description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response> InitializePeeringServiceConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
         }
 
         /// <summary>
-        /// Initialize Peering Service for Connection Monitor functionality
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// <description>LegacyPeerings_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PeeringServiceResource"/></description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Run looking glass functionality
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
+        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
+        /// <param name="sourceLocation"> The location of the source. </param>
+        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
+        public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Run looking glass functionality
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
+        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
+        /// <param name="sourceLocation"> The location of the source. </param>
+        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
+        public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringLocations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="directPeeringType"> The type of direct peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PeeringLocation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringLocation> GetPeeringLocationsAsync(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringLocations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="directPeeringType"> The type of direct peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringLocation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringLocation> GetPeeringLocations(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available countries for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceCountries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response InitializePeeringServiceConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available countries for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceCountries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available locations for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceLocations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available locations for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceLocations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering service locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering service locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the peerings under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerings(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringResource> GetPeeringsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the peerings under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerings(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringResource> GetPeerings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeerings(cancellationToken);
         }
     }
 }

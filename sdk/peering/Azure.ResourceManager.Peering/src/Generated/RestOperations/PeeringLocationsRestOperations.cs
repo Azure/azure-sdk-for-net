@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/peeringLocations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("kind", kind.ToString(), true);
             if (directPeeringType != null)
             {
                 uri.AppendQuery("directPeeringType", directPeeringType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/peeringLocations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("kind", kind.ToString(), true);
             if (directPeeringType != null)
             {
                 uri.AppendQuery("directPeeringType", directPeeringType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists all of the available peering locations for the specified kind of peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists all of the available peering locations for the specified kind of peering. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all of the available peering locations for the specified kind of peering. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all of the available peering locations for the specified kind of peering. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

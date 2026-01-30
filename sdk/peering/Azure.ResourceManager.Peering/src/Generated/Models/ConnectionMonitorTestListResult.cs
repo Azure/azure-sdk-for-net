@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of Connection Monitor Tests. </summary>
+    /// <summary> The response of a ConnectionMonitorTest list operation. </summary>
     internal partial class ConnectionMonitorTestListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Peering.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestListResult"/>. </summary>
-        internal ConnectionMonitorTestListResult()
+        /// <param name="value"> The ConnectionMonitorTest items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ConnectionMonitorTestListResult(IEnumerable<ConnectionMonitorTestData> value)
         {
-            Value = new ChangeTrackingList<ConnectionMonitorTestData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestListResult"/>. </summary>
-        /// <param name="value"> The list of Connection Monitor Tests. </param>
-        /// <param name="nextLink"> The link to fetch the next page of Connection Monitor Tests. </param>
+        /// <param name="value"> The ConnectionMonitorTest items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorTestListResult(IReadOnlyList<ConnectionMonitorTestData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionMonitorTestListResult(IReadOnlyList<ConnectionMonitorTestData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of Connection Monitor Tests. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestListResult"/> for deserialization. </summary>
+        internal ConnectionMonitorTestListResult()
+        {
+        }
+
+        /// <summary> The ConnectionMonitorTest items on this page. </summary>
         public IReadOnlyList<ConnectionMonitorTestData> Value { get; }
-        /// <summary> The link to fetch the next page of Connection Monitor Tests. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

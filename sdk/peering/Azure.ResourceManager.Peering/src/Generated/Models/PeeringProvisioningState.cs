@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static PeeringProvisioningState Succeeded { get; } = new PeeringProvisioningState(SucceededValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringProvisioningState Deleting { get; } = new PeeringProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static PeeringProvisioningState Failed { get; } = new PeeringProvisioningState(FailedValue);
+        /// <summary> Canceled. </summary>
+        public static PeeringProvisioningState Canceled { get; } = new PeeringProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="PeeringProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PeeringProvisioningState left, PeeringProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringProvisioningState"/> values are not the same. </summary>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/lookingGlass", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("command", command.ToString(), true);
             uri.AppendQuery("sourceType", sourceType.ToString(), true);
             uri.AppendQuery("sourceLocation", sourceLocation, true);
             uri.AppendQuery("destinationIP", destinationIP, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/lookingGlass", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("command", command.ToString(), true);
             uri.AppendQuery("sourceType", sourceType.ToString(), true);
             uri.AppendQuery("sourceLocation", sourceLocation, true);
             uri.AppendQuery("destinationIP", destinationIP, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Run looking glass functionality. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
         /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
         /// <param name="sourceLocation"> The location of the source. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Run looking glass functionality. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
         /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
         /// <param name="sourceLocation"> The location of the source. </param>

@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Peering.Models
         private const string IxRsValue = "IxRs";
         private const string VoiceValue = "Voice";
         private const string EdgeZoneForOperatorsValue = "EdgeZoneForOperators";
+        private const string PeerPropValue = "PeerProp";
 
         /// <summary> Edge. </summary>
         public static PeeringLocationsDirectPeeringType Edge { get; } = new PeeringLocationsDirectPeeringType(EdgeValue);
@@ -47,6 +48,8 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringLocationsDirectPeeringType Voice { get; } = new PeeringLocationsDirectPeeringType(VoiceValue);
         /// <summary> EdgeZoneForOperators. </summary>
         public static PeeringLocationsDirectPeeringType EdgeZoneForOperators { get; } = new PeeringLocationsDirectPeeringType(EdgeZoneForOperatorsValue);
+        /// <summary> PeerProp. </summary>
+        public static PeeringLocationsDirectPeeringType PeerProp { get; } = new PeeringLocationsDirectPeeringType(PeerPropValue);
         /// <summary> Determines if two <see cref="PeeringLocationsDirectPeeringType"/> values are the same. </summary>
         public static bool operator ==(PeeringLocationsDirectPeeringType left, PeeringLocationsDirectPeeringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringLocationsDirectPeeringType"/> values are not the same. </summary>

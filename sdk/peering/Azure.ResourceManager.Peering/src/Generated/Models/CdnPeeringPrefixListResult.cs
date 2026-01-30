@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of CDN peering prefixes. </summary>
+    /// <summary> The response of a CdnPeeringPrefix list operation. </summary>
     internal partial class CdnPeeringPrefixListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Peering.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefixListResult"/>. </summary>
-        internal CdnPeeringPrefixListResult()
+        /// <param name="value"> The CdnPeeringPrefix items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CdnPeeringPrefixListResult(IEnumerable<CdnPeeringPrefix> value)
         {
-            Value = new ChangeTrackingList<CdnPeeringPrefix>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefixListResult"/>. </summary>
-        /// <param name="value"> The list of CDN peering prefixes. </param>
-        /// <param name="nextLink"> The link to fetch the next page of CDN peering prefixes. </param>
+        /// <param name="value"> The CdnPeeringPrefix items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnPeeringPrefixListResult(IReadOnlyList<CdnPeeringPrefix> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CdnPeeringPrefixListResult(IReadOnlyList<CdnPeeringPrefix> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of CDN peering prefixes. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefixListResult"/> for deserialization. </summary>
+        internal CdnPeeringPrefixListResult()
+        {
+        }
+
+        /// <summary> The CdnPeeringPrefix items on this page. </summary>
         public IReadOnlyList<CdnPeeringPrefix> Value { get; }
-        /// <summary> The link to fetch the next page of CDN peering prefixes. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
