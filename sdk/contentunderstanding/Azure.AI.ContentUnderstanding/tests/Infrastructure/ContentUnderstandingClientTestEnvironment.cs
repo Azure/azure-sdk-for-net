@@ -87,6 +87,42 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string? TargetKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_KEY", options => options.IsSecret());
 
         /// <summary>
+        /// Gets the training data SAS URL for analyzer training with labeled data (optional).
+        /// </summary>
+        /// <remarks>
+        /// This is the Azure Blob Storage SAS URL that contains training documents with their
+        /// corresponding .labels.json and .result.json files.
+        /// </remarks>
+        public string? TrainingDataSasUrl => GetRecordedOptionalVariable("TRAINING_DATA_SAS_URL", options => options.IsSecret("https://sanitizedstorage.blob.core.windows.net/sanitizedcontainer?sanitizedsas"));
+
+        /// <summary>
+        /// Gets the training data path prefix within the blob container (optional).
+        /// </summary>
+        /// <remarks>
+        /// This is the folder path within the container where training data files are stored.
+        /// Example: "training_data/" or "labeling-data/"
+        /// </remarks>
+        public string? TrainingDataPath => GetRecordedOptionalVariable("TRAINING_DATA_PATH") ?? "training_data/";
+
+        /// <summary>
+        /// Gets the storage account name for training data (optional).
+        /// </summary>
+        /// <remarks>
+        /// Used when TRAINING_DATA_SAS_URL is not provided. The system will generate a SAS URL
+        /// using this storage account name and the container name.
+        /// </remarks>
+        public string? TrainingDataStorageAccount => GetRecordedOptionalVariable("TRAINING_DATA_STORAGE_ACCOUNT", options => options.IsSecret("sanitizedstorage"));
+
+        /// <summary>
+        /// Gets the container name for training data (optional).
+        /// </summary>
+        /// <remarks>
+        /// Used when TRAINING_DATA_SAS_URL is not provided. The system will generate a SAS URL
+        /// using this container name and the storage account name.
+        /// </remarks>
+        public string? TrainingDataContainerName => GetRecordedOptionalVariable("TRAINING_DATA_CONTAINER_NAME") ?? "training-data";
+
+        /// <summary>
         /// Creates a file path for a test asset file.
         /// </summary>
         /// <param name="filename">The name of the test asset file.</param>
