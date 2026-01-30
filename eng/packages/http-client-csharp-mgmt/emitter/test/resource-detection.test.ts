@@ -227,8 +227,11 @@ interface Employees2 {
     // Note: listBySubscription is not matched to this resource because prefix matching fails
     // (the subscription-scoped operation path doesn't share the resourceGroup prefix with the resource path)
 
-    // Note: We no longer compare with resolveArmResources since our prefix-only matching
-    // produces different results than the ARM library's resource detection
+    // Note: buildArmProviderSchema and resolveArmResources handle unmatched list operations differently.
+    // buildArmProviderSchema may add them to nonResourceMethods in some edge cases during post-processing.
+    // For now, we verify individual schema correctness rather than full equality.
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
   });
 
   it("singleton resource", async () => {
@@ -1060,8 +1063,15 @@ interface Employees {
     );
     ok(listByParentEntry);
 
-    // Note: We no longer compare with resolveArmResources since our prefix-only matching
-    // produces different results than the ARM library's resource detection
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
   });
 
   it("resource scope as ManagementGroup", async () => {
@@ -1227,8 +1237,15 @@ interface ScheduledActionExtension {
       ResourceScope.ResourceGroup
     );
 
-    // Note: We no longer compare with resolveArmResources since our prefix-only matching
-    // produces different results than the ARM library's resource detection
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("multiple resources sharing same model", async () => {

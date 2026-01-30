@@ -275,6 +275,7 @@ export function postProcessArmResources(
   }
 
   // Step 3: Merge incomplete resources to their parents or siblings
+  // Only merge if the operation paths align via prefix matching with the parent/sibling resource path.
   for (const resource of incompleteResources) {
     const metadata = resource.metadata;
     let merged = false;
@@ -284,9 +285,43 @@ export function postProcessArmResources(
       const parent = validResources.find(
         (r) => r.resourceModelId === metadata.parentResourceModelId
       );
-      if (parent) {
-        parent.metadata.methods.push(...metadata.methods);
-        merged = true;
+      if (parent && parent.metadata.resourceIdPattern) {
+        // Only merge methods whose paths align with the parent resource path via prefix matching
+        const parentResourcePath = parent.metadata.resourceIdPattern;
+        const parentParentPath = parentResourcePath.substring(
+          0,
+          parentResourcePath.lastIndexOf("/")
+        );
+
+        const methodsToMerge: ResourceMethod[] = [];
+        const methodsToSkip: ResourceMethod[] = [];
+
+        for (const method of metadata.methods) {
+          if (isPrefix(parentParentPath, method.operationPath)) {
+            methodsToMerge.push(method);
+          } else {
+            // List operations that fail prefix matching should be skipped entirely
+            // (not placed on any resource). Action operations go to non-resource methods.
+            if (method.kind === ResourceOperationKind.Action) {
+              nonResourceMethods.push({
+                methodId: method.methodId,
+                operationPath: method.operationPath,
+                operationScope: method.operationScope
+              });
+            }
+            methodsToSkip.push(method);
+          }
+        }
+
+        if (methodsToMerge.length > 0) {
+          parent.metadata.methods.push(...methodsToMerge);
+          merged = true;
+        }
+
+        // Mark as merged if we handled any methods (including skipped ones)
+        if (methodsToSkip.length > 0) {
+          merged = true;
+        }
       }
     }
 
@@ -295,20 +330,58 @@ export function postProcessArmResources(
       const sibling = validResources.find(
         (r) => r.resourceModelId === resource.resourceModelId
       );
-      if (sibling) {
-        sibling.metadata.methods.push(...metadata.methods);
-        merged = true;
+      if (sibling && sibling.metadata.resourceIdPattern) {
+        // Only merge methods whose paths align with the sibling resource path via prefix matching
+        const siblingResourcePath = sibling.metadata.resourceIdPattern;
+        const siblingParentPath = siblingResourcePath.substring(
+          0,
+          siblingResourcePath.lastIndexOf("/")
+        );
+
+        const methodsToMerge: ResourceMethod[] = [];
+        const methodsToSkip: ResourceMethod[] = [];
+
+        for (const method of metadata.methods) {
+          if (isPrefix(siblingParentPath, method.operationPath)) {
+            methodsToMerge.push(method);
+          } else {
+            // List operations that fail prefix matching should be skipped entirely
+            // (not placed on any resource). Action operations go to non-resource methods.
+            if (method.kind === ResourceOperationKind.Action) {
+              nonResourceMethods.push({
+                methodId: method.methodId,
+                operationPath: method.operationPath,
+                operationScope: method.operationScope
+              });
+            }
+            methodsToSkip.push(method);
+          }
+        }
+
+        if (methodsToMerge.length > 0) {
+          sibling.metadata.methods.push(...methodsToMerge);
+          merged = true;
+        }
+
+        // Mark as merged if we handled any methods (including skipped ones)
+        if (methodsToSkip.length > 0) {
+          merged = true;
+        }
       }
     }
 
     // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
     if (!merged) {
       for (const method of metadata.methods) {
-        nonResourceMethods.push({
-          methodId: method.methodId,
-          operationPath: method.operationPath,
-          operationScope: method.operationScope
-        });
+        // Only add Action operations to non-resource methods
+        // List operations that can't be merged are skipped entirely
+        if (method.kind === ResourceOperationKind.Action) {
+          nonResourceMethods.push({
+            methodId: method.methodId,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope
+          });
+        }
       }
     }
   }
