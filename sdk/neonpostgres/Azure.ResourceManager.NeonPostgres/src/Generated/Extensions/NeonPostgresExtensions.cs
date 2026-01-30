@@ -184,6 +184,88 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
+        /// Action to retrieve the connection URI for the Neon Database.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetConnectionUriAsync(string, string, ConnectionUriProperties, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="connectionUriParameters"> Additional parameters for retrieving the database connection URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ConnectionUriProperties>> GetConnectionUriAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, ConnectionUriProperties connectionUriParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetConnectionUriAsync(organizationName, projectName, connectionUriParameters, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Action to retrieve the connection URI for the Neon Database.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetConnectionUri(string, string, ConnectionUriProperties, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="connectionUriParameters"> Additional parameters for retrieving the database connection URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ConnectionUriProperties> GetConnectionUri(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, ConnectionUriProperties connectionUriParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetConnectionUri(organizationName, projectName, connectionUriParameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.PreflightAsync(string, string, string, PreflightCheckContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<PreflightCheckResult>> PreflightAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).PreflightAsync(organizationName, projectName, branchName, preflightCheckContent, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.Preflight(string, string, string, PreflightCheckContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<PreflightCheckResult> Preflight(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).Preflight(organizationName, projectName, branchName, preflightCheckContent, cancellationToken);
+        }
+
+        /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>

@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
@@ -19,6 +21,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockablePaloAltoNetworksNgfwTenantResource : ArmResource
     {
+        private ClientDiagnostics _postRulesClientDiagnostics;
+        private PostRules _postRulesRestClient;
+        private ClientDiagnostics _preRulesClientDiagnostics;
+        private PreRules _preRulesRestClient;
+
         /// <summary> Initializes a new instance of MockablePaloAltoNetworksNgfwTenantResource for mocking. </summary>
         protected MockablePaloAltoNetworksNgfwTenantResource()
         {
@@ -30,6 +37,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         internal MockablePaloAltoNetworksNgfwTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics PostRulesClientDiagnostics => _postRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PostRules PostRulesRestClient => _postRulesRestClient ??= new PostRules(PostRulesClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+
+        private ClientDiagnostics PreRulesClientDiagnostics => _preRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PreRules PreRulesRestClient => _preRulesRestClient ??= new PreRules(PreRulesClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
 
         /// <summary> Gets a collection of GlobalRulestacks in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of GlobalRulestacks and their operations over a GlobalRulestackResource. </returns>
@@ -94,6 +109,610 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             return GetGlobalRulestacks().Get(globalRulestackName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PostRulesResources_GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PostRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PostRulesRestClient.CreateGetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PostRulesResources_GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallRuleCounter> GetCounters(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PostRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PostRulesRestClient.CreateGetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PostRulesResources_RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RefreshCountersAsync(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PostRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PostRulesRestClient.CreateRefreshCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PostRulesResources_RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RefreshCounters(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PostRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PostRulesRestClient.CreateRefreshCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PostRulesResources_ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PostRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PostRulesRestClient.CreateResetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PostRulesResources_ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallRuleResetConter> ResetCounters(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PostRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PostRulesRestClient.CreateResetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PreRulesResources_GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PreRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PreRulesRestClient.CreateGetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PreRulesResources_GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallRuleCounter> GetCounters(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PreRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PreRulesRestClient.CreateGetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PreRulesResources_RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RefreshCountersAsync(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PreRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PreRulesRestClient.CreateRefreshCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PreRulesResources_RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RefreshCounters(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PreRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PreRulesRestClient.CreateRefreshCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PreRulesResources_ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PreRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PreRulesRestClient.CreateResetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PreRulesResources_ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<FirewallRuleResetConter> ResetCounters(string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using DiagnosticScope scope = PreRulesClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwTenantResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PreRulesRestClient.CreateResetCountersRequest(globalRulestackName, priority, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

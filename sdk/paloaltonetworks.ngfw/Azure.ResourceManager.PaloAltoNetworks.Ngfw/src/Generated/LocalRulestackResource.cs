@@ -809,10 +809,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="appIdVersion"></param>
         /// <param name="appPrefix"></param>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAppIdsAsync(string appIdVersion = default, string appPrefix = default, string skip = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetAppIdsAsync(string appIdVersion = default, string appPrefix = default, string skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 appIdVersion,
                 appPrefix,
                 skip,
-                top,
+                maxCount,
                 context);
         }
 
@@ -854,10 +854,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="appIdVersion"></param>
         /// <param name="appPrefix"></param>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAppIds(string appIdVersion = default, string appPrefix = default, string skip = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetAppIds(string appIdVersion = default, string appPrefix = default, string skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 appIdVersion,
                 appPrefix,
                 skip,
-                top,
+                maxCount,
                 context);
         }
 
@@ -897,10 +897,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RulestackCountry"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
-                top,
+                maxCount,
                 context);
         }
 
@@ -938,10 +938,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RulestackCountry"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RulestackCountry> GetCountries(string skip = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RulestackCountry> GetCountries(string skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
-                top,
+                maxCount,
                 context);
         }
 
@@ -979,10 +979,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PredefinedUrlCategory"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
-                top,
+                maxCount,
                 context);
         }
 
@@ -1020,10 +1020,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PredefinedUrlCategory"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
-                top,
+                maxCount,
                 context);
         }
 

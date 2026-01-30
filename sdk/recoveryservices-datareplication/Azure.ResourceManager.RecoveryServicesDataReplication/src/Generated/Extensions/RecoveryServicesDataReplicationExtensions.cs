@@ -383,6 +383,88 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         }
 
         /// <summary>
+        /// Returns remote private endpoint connection information after validation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.ValidateAsync(string, string, DataReplicationPrivateEndpointConnectionProxyData, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
+        /// <param name="data"> The private endpoint connection proxy input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DataReplicationPrivateEndpointConnectionProxyResource>> ValidateAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).ValidateAsync(vaultName, privateEndpointConnectionProxyName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns remote private endpoint connection information after validation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.Validate(string, string, DataReplicationPrivateEndpointConnectionProxyData, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
+        /// <param name="data"> The private endpoint connection proxy input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DataReplicationPrivateEndpointConnectionProxyResource> Validate(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).Validate(vaultName, privateEndpointConnectionProxyName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs the planned failover on the protected item.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.PlannedFailoverAsync(WaitUntil, string, string, PlannedFailover, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
+        /// <param name="body"> Planned failover model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<PlannedFailover>> PlannedFailoverAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, string protectedItemName, PlannedFailover body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).PlannedFailoverAsync(waitUntil, vaultName, protectedItemName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs the planned failover on the protected item.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationResourceGroupResource.PlannedFailover(WaitUntil, string, string, PlannedFailover, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
+        /// <param name="body"> Planned failover model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<PlannedFailover> PlannedFailover(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, string protectedItemName, PlannedFailover body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).PlannedFailover(waitUntil, vaultName, protectedItemName, body, cancellationToken);
+        }
+
+        /// <summary>
         /// Performs resource deployment preflight validation.
         /// <item>
         /// <term> Mocking. </term>

@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Nginx;
+using Azure.ResourceManager.Nginx.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Nginx.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.Nginx.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableNginxResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _nginxConfigurationResponsesClientDiagnostics;
+        private NginxConfigurationResponses _nginxConfigurationResponsesRestClient;
+
         /// <summary> Initializes a new instance of MockableNginxResourceGroupResource for mocking. </summary>
         protected MockableNginxResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.Nginx.Mocking
         internal MockableNginxResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics NginxConfigurationResponsesClientDiagnostics => _nginxConfigurationResponsesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Nginx.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NginxConfigurationResponses NginxConfigurationResponsesRestClient => _nginxConfigurationResponsesRestClient ??= new NginxConfigurationResponses(NginxConfigurationResponsesClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
 
         /// <summary> Gets a collection of NginxDeployments in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of NginxDeployments and their operations over a NginxDeploymentResource. </returns>
@@ -94,6 +103,110 @@ namespace Azure.ResourceManager.Nginx.Mocking
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             return GetNginxDeployments().Get(deploymentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Analyze an NGINX configuration without applying it to the NGINXaaS deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}/analyze. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Analysis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
+        /// <param name="content"> The NGINX configuration to analyze. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<NginxAnalysisResult>> AnalysisAsync(string deploymentName, string configurationName, NginxAnalysisContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using DiagnosticScope scope = NginxConfigurationResponsesClientDiagnostics.CreateScope("MockableNginxResourceGroupResource.Analysis");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NginxConfigurationResponsesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentName, configurationName, NginxAnalysisContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NginxAnalysisResult> response = Response.FromValue(NginxAnalysisResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyze an NGINX configuration without applying it to the NGINXaaS deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}/analyze. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NginxConfigurationResponses_Analysis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
+        /// <param name="content"> The NGINX configuration to analyze. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<NginxAnalysisResult> Analysis(string deploymentName, string configurationName, NginxAnalysisContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using DiagnosticScope scope = NginxConfigurationResponsesClientDiagnostics.CreateScope("MockableNginxResourceGroupResource.Analysis");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NginxConfigurationResponsesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentName, configurationName, NginxAnalysisContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NginxAnalysisResult> response = Response.FromValue(NginxAnalysisResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.OracleDatabase;
+using Azure.ResourceManager.OracleDatabase.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableOracleDatabaseResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _dbNodesClientDiagnostics;
+        private DbNodes _dbNodesRestClient;
+
         /// <summary> Initializes a new instance of MockableOracleDatabaseResourceGroupResource for mocking. </summary>
         protected MockableOracleDatabaseResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         internal MockableOracleDatabaseResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics DbNodesClientDiagnostics => _dbNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DbNodes DbNodesRestClient => _dbNodesRestClient ??= new DbNodes(DbNodesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         /// <summary> Gets a collection of CloudExadataInfrastructures in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of CloudExadataInfrastructures and their operations over a CloudExadataInfrastructureResource. </returns>
@@ -549,6 +558,126 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
             return GetOracleDBSystems().Get(dbSystemName, cancellationToken);
+        }
+
+        /// <summary>
+        /// VM actions on DbNode of VM Cluster by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/dbNodes/{dbnodeocid}/action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DbNodes_Action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
+        /// <param name="dbnodeocid"> DbNode OCID. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/>, <paramref name="dbnodeocid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<CloudVmClusterDBNodeResource>> ActionAsync(WaitUntil waitUntil, string cloudvmclustername, string dbnodeocid, DBNodeAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
+            Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = DbNodesClientDiagnostics.CreateScope("MockableOracleDatabaseResourceGroupResource.Action");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DbNodesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, dbnodeocid, DBNodeAction.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OracleDatabaseArmOperation<CloudVmClusterDBNodeResource> operation = new OracleDatabaseArmOperation<CloudVmClusterDBNodeResource>(
+                    new CloudVmClusterDBNodeOperationSource(Client),
+                    DbNodesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// VM actions on DbNode of VM Cluster by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/dbNodes/{dbnodeocid}/action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DbNodes_Action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
+        /// <param name="dbnodeocid"> DbNode OCID. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/>, <paramref name="dbnodeocid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<CloudVmClusterDBNodeResource> Action(WaitUntil waitUntil, string cloudvmclustername, string dbnodeocid, DBNodeAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
+            Argument.AssertNotNullOrEmpty(dbnodeocid, nameof(dbnodeocid));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = DbNodesClientDiagnostics.CreateScope("MockableOracleDatabaseResourceGroupResource.Action");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DbNodesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, dbnodeocid, DBNodeAction.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OracleDatabaseArmOperation<CloudVmClusterDBNodeResource> operation = new OracleDatabaseArmOperation<CloudVmClusterDBNodeResource>(
+                    new CloudVmClusterDBNodeOperationSource(Client),
+                    DbNodesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
