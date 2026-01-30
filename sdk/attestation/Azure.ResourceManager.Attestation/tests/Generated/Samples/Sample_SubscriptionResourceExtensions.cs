@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Attestation.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation
-            Response<AttestationProviderListResult> response = await subscriptionResource.GetDefaultAttestationProviderAsync();
-            AttestationProviderListResult result = response.Value;
-
-            // iterate over the result
-            foreach (AttestationProviderData item in result.Value)
+            // invoke the operation and iterate over the result
+            await foreach (AttestationProviderResource item in subscriptionResource.GetDefaultAttestationProviderAsync())
             {
-                Console.WriteLine($"Succeeded on id: {item.Id}");
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AttestationProviderData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine("Succeeded");
