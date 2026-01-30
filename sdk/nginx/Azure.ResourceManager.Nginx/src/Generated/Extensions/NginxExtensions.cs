@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Nginx.Mocking;
+using Azure.ResourceManager.Nginx.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Nginx
@@ -180,6 +181,46 @@ namespace Azure.ResourceManager.Nginx
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNginxResourceGroupResource(resourceGroupResource).GetNginxDeployment(deploymentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Analyze an NGINX configuration without applying it to the NGINXaaS deployment
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNginxResourceGroupResource.AnalysisAsync(string, string, NginxAnalysisContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
+        /// <param name="content"> The NGINX configuration to analyze. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<NginxAnalysisResult>> AnalysisAsync(this ResourceGroupResource resourceGroupResource, string deploymentName, string configurationName, NginxAnalysisContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNginxResourceGroupResource(resourceGroupResource).AnalysisAsync(deploymentName, configurationName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Analyze an NGINX configuration without applying it to the NGINXaaS deployment
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNginxResourceGroupResource.Analysis(string, string, NginxAnalysisContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
+        /// <param name="content"> The NGINX configuration to analyze. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<NginxAnalysisResult> Analysis(this ResourceGroupResource resourceGroupResource, string deploymentName, string configurationName, NginxAnalysisContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNginxResourceGroupResource(resourceGroupResource).Analysis(deploymentName, configurationName, content, cancellationToken);
         }
 
         /// <summary>

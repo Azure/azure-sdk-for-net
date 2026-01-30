@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.OracleDatabase.Mocking;
+using Azure.ResourceManager.OracleDatabase.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -925,6 +926,48 @@ namespace Azure.ResourceManager.OracleDatabase
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).GetOracleDBSystem(dbSystemName, cancellationToken);
+        }
+
+        /// <summary>
+        /// VM actions on DbNode of VM Cluster by the provided filter
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.ActionAsync(WaitUntil, string, string, DBNodeAction, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
+        /// <param name="dbnodeocid"> DbNode OCID. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<CloudVmClusterDBNodeResource>> ActionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string cloudvmclustername, string dbnodeocid, DBNodeAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).ActionAsync(waitUntil, cloudvmclustername, dbnodeocid, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// VM actions on DbNode of VM Cluster by the provided filter
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOracleDatabaseResourceGroupResource.Action(WaitUntil, string, string, DBNodeAction, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
+        /// <param name="dbnodeocid"> DbNode OCID. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<CloudVmClusterDBNodeResource> Action(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string cloudvmclustername, string dbnodeocid, DBNodeAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOracleDatabaseResourceGroupResource(resourceGroupResource).Action(waitUntil, cloudvmclustername, dbnodeocid, body, cancellationToken);
         }
 
         /// <summary>

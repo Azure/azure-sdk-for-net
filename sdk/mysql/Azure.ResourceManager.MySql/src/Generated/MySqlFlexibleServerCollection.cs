@@ -28,16 +28,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     {
         private readonly ClientDiagnostics _serversClientDiagnostics;
         private readonly Servers _serversRestClient;
-        private readonly ClientDiagnostics _backupAndExportClientDiagnostics;
-        private readonly BackupAndExport _backupAndExportRestClient;
-        private readonly ClientDiagnostics _configurationsClientDiagnostics;
-        private readonly Configurations _configurationsRestClient;
-        private readonly ClientDiagnostics _logFilesClientDiagnostics;
-        private readonly LogFiles _logFilesRestClient;
-        private readonly ClientDiagnostics _replicasClientDiagnostics;
-        private readonly Replicas _replicasRestClient;
-        private readonly ClientDiagnostics _serversMigrationClientDiagnostics;
-        private readonly ServersMigration _serversMigrationRestClient;
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerCollection for mocking. </summary>
         protected MySqlFlexibleServerCollection()
@@ -52,16 +42,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             TryGetApiVersion(MySqlFlexibleServerResource.ResourceType, out string mySqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
             _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
-            _backupAndExportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _backupAndExportRestClient = new BackupAndExport(_backupAndExportClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
-            _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
-            _logFilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _logFilesRestClient = new LogFiles(_logFilesClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
-            _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
-            _serversMigrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _serversMigrationRestClient = new ServersMigration(_serversMigrationClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 

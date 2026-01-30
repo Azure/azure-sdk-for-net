@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetLogFilesRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _context) : _client.CreateGetLogFilesRequest(_subscriptionId, _resourceGroupName, _serverName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MySqlFlexibleServerResource.GetLogFiles");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMySqlFlexibleServersResourceGroupResource.GetLogFiles");
             scope.Start();
             try
             {

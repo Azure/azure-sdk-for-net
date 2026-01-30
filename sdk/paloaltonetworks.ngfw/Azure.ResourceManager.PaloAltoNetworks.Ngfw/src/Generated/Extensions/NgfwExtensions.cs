@@ -407,6 +407,274 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
+        /// Get Global Rulestack associated with the Firewall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetGlobalRulestackAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GlobalRulestackInfo>> GetGlobalRulestackAsync(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetGlobalRulestackAsync(firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Global Rulestack associated with the Firewall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetGlobalRulestack(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GlobalRulestackInfo> GetGlobalRulestack(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetGlobalRulestack(firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLogProfileAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<FirewallLogSettings>> GetLogProfileAsync(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetLogProfileAsync(firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLogProfile(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<FirewallLogSettings> GetLogProfile(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetLogProfile(firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// support info for firewall.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetSupportInfoAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="email"> email address on behalf of which this API called. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<FirewallSupportInfo>> GetSupportInfoAsync(this ResourceGroupResource resourceGroupResource, string firewallName, string email = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetSupportInfoAsync(firewallName, email, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// support info for firewall.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetSupportInfo(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="email"> email address on behalf of which this API called. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<FirewallSupportInfo> GetSupportInfo(this ResourceGroupResource resourceGroupResource, string firewallName, string email = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetSupportInfo(firewallName, email, cancellationToken);
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.SaveLogProfileAsync(string, FirewallLogSettings, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="logSettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> SaveLogProfileAsync(this ResourceGroupResource resourceGroupResource, string firewallName, FirewallLogSettings logSettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).SaveLogProfileAsync(firewallName, logSettings, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Log Profile for Firewall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.SaveLogProfile(string, FirewallLogSettings, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="logSettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response SaveLogProfile(this ResourceGroupResource resourceGroupResource, string firewallName, FirewallLogSettings logSettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).SaveLogProfile(firewallName, logSettings, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<FirewallRuleCounter>> GetCountersAsync(this ResourceGroupResource resourceGroupResource, string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetCountersAsync(localRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<FirewallRuleCounter> GetCounters(this ResourceGroupResource resourceGroupResource, string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetCounters(localRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.RefreshCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> RefreshCountersAsync(this ResourceGroupResource resourceGroupResource, string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).RefreshCountersAsync(localRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.RefreshCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response RefreshCounters(this ResourceGroupResource resourceGroupResource, string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).RefreshCounters(localRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.ResetCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(this ResourceGroupResource resourceGroupResource, string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).ResetCountersAsync(localRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.ResetCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="localRulestackName"> LocalRulestack resource name. </param>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<FirewallRuleResetConter> ResetCounters(this ResourceGroupResource resourceGroupResource, string localRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).ResetCounters(localRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
         /// List FirewallResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
@@ -667,6 +935,246 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetGlobalRulestack(globalRulestackName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<FirewallRuleCounter>> GetCountersAsync(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetCountersAsync(globalRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<FirewallRuleCounter> GetCounters(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetCounters(globalRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.RefreshCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response> RefreshCountersAsync(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).RefreshCountersAsync(globalRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.RefreshCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response RefreshCounters(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).RefreshCounters(globalRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.ResetCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).ResetCountersAsync(globalRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.ResetCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<FirewallRuleResetConter> ResetCounters(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).ResetCounters(globalRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<FirewallRuleCounter>> GetCountersAsync(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetCountersAsync(globalRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<FirewallRuleCounter> GetCounters(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetCounters(globalRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.RefreshCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response> RefreshCountersAsync(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).RefreshCountersAsync(globalRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.RefreshCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response RefreshCounters(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).RefreshCounters(globalRulestackName, priority, firewallName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.ResetCountersAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).ResetCountersAsync(globalRulestackName, priority, firewallName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.ResetCounters(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<FirewallRuleResetConter> ResetCounters(this TenantResource tenantResource, string globalRulestackName, string priority, string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).ResetCounters(globalRulestackName, priority, firewallName, cancellationToken);
         }
     }
 }

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Quota
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetGroupQuotaUsagesRequest(nextLink, _managementGroupId, _groupQuotaName, _resourceProviderName, _location, _context) : _client.CreateGetGroupQuotaUsagesRequest(_managementGroupId, _groupQuotaName, _resourceProviderName, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GroupQuotaEntityResource.GetGroupQuotaUsages");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableQuotaManagementGroupResource.GetGroupQuotaUsages");
             scope.Start();
             try
             {

@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PureStorageBlock;
+using Azure.ResourceManager.PureStorageBlock.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PureStorageBlock.Mocking
@@ -19,6 +21,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePureStorageBlockResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _reservationsClientDiagnostics;
+        private Reservations _reservationsRestClient;
+        private ClientDiagnostics _storagePoolsClientDiagnostics;
+        private StoragePools _storagePoolsRestClient;
+
         /// <summary> Initializes a new instance of MockablePureStorageBlockResourceGroupResource for mocking. </summary>
         protected MockablePureStorageBlockResourceGroupResource()
         {
@@ -30,6 +37,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         internal MockablePureStorageBlockResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ReservationsClientDiagnostics => _reservationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Reservations ReservationsRestClient => _reservationsRestClient ??= new Reservations(ReservationsClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+
+        private ClientDiagnostics StoragePoolsClientDiagnostics => _storagePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private StoragePools StoragePoolsRestClient => _storagePoolsRestClient ??= new StoragePools(StoragePoolsClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
 
         /// <summary> Gets a collection of PureStorageReservations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of PureStorageReservations and their operations over a PureStorageReservationResource. </returns>
@@ -159,6 +174,1002 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
             Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
 
             return GetPureStoragePools().Get(storagePoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Limits constraining certain resource properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_GetResourceLimits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PureStorageResourceLimitDetails>> GetResourceLimitsAsync(string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
+
+            using DiagnosticScope scope = ReservationsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetResourceLimits");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Limits constraining certain resource properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_GetResourceLimits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PureStorageResourceLimitDetails> GetResourceLimits(string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
+
+            using DiagnosticScope scope = ReservationsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetResourceLimits");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides various statistics about resources billed via given reservation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_GetBillingStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ReservationBillingStatus>> GetBillingStatusAsync(string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
+
+            using DiagnosticScope scope = ReservationsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetBillingStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationsRestClient.CreateGetBillingStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReservationBillingStatus> response = Response.FromValue(ReservationBillingStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides various statistics about resources billed via given reservation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_GetBillingStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ReservationBillingStatus> GetBillingStatus(string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
+
+            using DiagnosticScope scope = ReservationsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetBillingStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationsRestClient.CreateGetBillingStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReservationBillingStatus> response = Response.FromValue(ReservationBillingStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_GetBillingReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ReservationBillingUsageReport>> GetBillingReportAsync(string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
+
+            using DiagnosticScope scope = ReservationsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetBillingReport");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_GetBillingReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationName"> Name of the reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ReservationBillingUsageReport> GetBillingReport(string reservationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
+
+            using DiagnosticScope scope = ReservationsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetBillingReport");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve health metrics of a storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_GetHealthStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<StoragePoolHealthInfo>> GetHealthStatusAsync(string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetHealthStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve health metrics of a storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_GetHealthStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<StoragePoolHealthInfo> GetHealthStatus(string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetHealthStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns current information about an on-going connection to an AVS instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_GetAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PureStorageAvsConnection>> GetAvsConnectionAsync(string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateGetAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PureStorageAvsConnection> response = Response.FromValue(PureStorageAvsConnection.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns current information about an on-going connection to an AVS instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_GetAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PureStorageAvsConnection> GetAvsConnection(string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateGetAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PureStorageAvsConnection> response = Response.FromValue(PureStorageAvsConnection.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the status of the storage pool connection to AVS
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_GetAvsStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PureStorageAvsStatus>> GetAvsStatusAsync(string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetAvsStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateGetAvsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PureStorageAvsStatus> response = Response.FromValue(PureStorageAvsStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the status of the storage pool connection to AVS
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_GetAvsStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PureStorageAvsStatus> GetAvsStatus(string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.GetAvsStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateGetAvsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PureStorageAvsStatus> response = Response.FromValue(PureStorageAvsStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> EnableAvsConnectionAsync(WaitUntil waitUntil, string storagePoolName, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.EnableAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation EnableAvsConnection(WaitUntil waitUntil, string storagePoolName, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.EnableAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable the existing AVS connection
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_DisableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DisableAvsConnectionAsync(WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.DisableAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable the existing AVS connection
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_DisableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation DisableAvsConnection(WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.DisableAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Finalize an already started AVS connection to a specific AVS SDDC
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_FinalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> FinalizeAvsConnectionAsync(WaitUntil waitUntil, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.FinalizeAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Finalize an already started AVS connection to a specific AVS SDDC
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_FinalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation FinalizeAvsConnection(WaitUntil waitUntil, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.FinalizeAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Test and repair, if needed, all configuration elements of the storage pool connection to the AVS instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/repairAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_RepairAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> RepairAvsConnectionAsync(WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.RepairAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateRepairAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Test and repair, if needed, all configuration elements of the storage pool connection to the AVS instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/repairAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_RepairAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation RepairAvsConnection(WaitUntil waitUntil, string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
+
+            using DiagnosticScope scope = StoragePoolsClientDiagnostics.CreateScope("MockablePureStorageBlockResourceGroupResource.RepairAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StoragePoolsRestClient.CreateRepairAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(StoragePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

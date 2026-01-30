@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableRecoveryServicesDataReplicationResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _privateEndpointConnectionProxiesClientDiagnostics;
+        private PrivateEndpointConnectionProxies _privateEndpointConnectionProxiesRestClient;
+        private ClientDiagnostics _protectedItemClientDiagnostics;
+        private ProtectedItem _protectedItemRestClient;
         private ClientDiagnostics _deploymentPreflightOperationsClientDiagnostics;
         private DeploymentPreflightOperations _deploymentPreflightOperationsRestClient;
 
@@ -35,6 +39,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         internal MockableRecoveryServicesDataReplicationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics PrivateEndpointConnectionProxiesClientDiagnostics => _privateEndpointConnectionProxiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateEndpointConnectionProxies PrivateEndpointConnectionProxiesRestClient => _privateEndpointConnectionProxiesRestClient ??= new PrivateEndpointConnectionProxies(PrivateEndpointConnectionProxiesClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+
+        private ClientDiagnostics ProtectedItemClientDiagnostics => _protectedItemClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ProtectedItem ProtectedItemRestClient => _protectedItemRestClient ??= new ProtectedItem(ProtectedItemClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
 
         private ClientDiagnostics DeploymentPreflightOperationsClientDiagnostics => _deploymentPreflightOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -168,6 +180,232 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
             return GetDataReplicationFabrics().Get(fabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns remote private endpoint connection information after validation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}/validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionProxies_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
+        /// <param name="data"> The private endpoint connection proxy input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionProxyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataReplicationPrivateEndpointConnectionProxyResource>> ValidateAsync(string vaultName, string privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = PrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateEndpointConnectionProxiesRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationPrivateEndpointConnectionProxyData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns remote private endpoint connection information after validation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}/validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionProxies_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
+        /// <param name="data"> The private endpoint connection proxy input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionProxyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataReplicationPrivateEndpointConnectionProxyResource> Validate(string vaultName, string privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = PrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateEndpointConnectionProxiesRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationPrivateEndpointConnectionProxyData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs the planned failover on the protected item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/plannedFailover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectedItem_PlannedFailover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
+        /// <param name="body"> Planned failover model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<PlannedFailover>> PlannedFailoverAsync(WaitUntil waitUntil, string vaultName, string protectedItemName, PlannedFailover body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = ProtectedItemClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.PlannedFailover");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProtectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, protectedItemName, Models.PlannedFailover.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesDataReplicationArmOperation<PlannedFailover> operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(
+                    new PlannedFailoverOperationSource(),
+                    ProtectedItemClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs the planned failover on the protected item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/plannedFailover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectedItem_PlannedFailover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
+        /// <param name="body"> Planned failover model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<PlannedFailover> PlannedFailover(WaitUntil waitUntil, string vaultName, string protectedItemName, PlannedFailover body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = ProtectedItemClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.PlannedFailover");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProtectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, protectedItemName, Models.PlannedFailover.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesDataReplicationArmOperation<PlannedFailover> operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(
+                    new PlannedFailoverOperationSource(),
+                    ProtectedItemClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

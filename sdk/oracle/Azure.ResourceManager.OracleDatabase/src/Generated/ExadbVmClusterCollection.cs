@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         private readonly ClientDiagnostics _exadbVmClustersClientDiagnostics;
         private readonly ExadbVmClusters _exadbVmClustersRestClient;
+        private readonly ClientDiagnostics _exascaleDbNodesClientDiagnostics;
+        private readonly ExascaleDbNodes _exascaleDbNodesRestClient;
 
         /// <summary> Initializes a new instance of ExadbVmClusterCollection for mocking. </summary>
         protected ExadbVmClusterCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(ExadbVmClusterResource.ResourceType, out string exadbVmClusterApiVersion);
             _exadbVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExadbVmClusterResource.ResourceType.Namespace, Diagnostics);
             _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
+            _exascaleDbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExadbVmClusterResource.ResourceType.Namespace, Diagnostics);
+            _exascaleDbNodesRestClient = new ExascaleDbNodes(_exascaleDbNodesClientDiagnostics, Pipeline, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
