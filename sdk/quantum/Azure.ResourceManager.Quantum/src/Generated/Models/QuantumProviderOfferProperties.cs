@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Provider properties. </summary>
-    public partial class QuantumProviderProperties
+    public partial class QuantumProviderOfferProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuantumProviderProperties"/>. </summary>
-        internal QuantumProviderProperties()
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderOfferProperties"/>. </summary>
+        internal QuantumProviderOfferProperties()
         {
             Targets = new ChangeTrackingList<ProviderTargetDescription>();
             Skus = new ChangeTrackingList<ProviderSkuDescription>();
@@ -54,7 +26,7 @@ namespace Azure.ResourceManager.Quantum.Models
             PricingDimensions = new ChangeTrackingList<ProviderPricingDimension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuantumProviderProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderOfferProperties"/>. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="skus"> The list of skus available from this provider. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
         /// <param name="pricingDimensions"> The list of pricing dimensions from the provider. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuantumProviderProperties(string description, string providerType, string company, string defaultEndpoint, ProviderAadInfo aad, ProviderApplicationInfo managedApplication, IReadOnlyList<ProviderTargetDescription> targets, IReadOnlyList<ProviderSkuDescription> skus, IReadOnlyList<QuantumQuotaDimension> quotaDimensions, IReadOnlyList<ProviderPricingDimension> pricingDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuantumProviderOfferProperties(string description, string providerType, string company, string defaultEndpoint, ProviderAadInfo aad, ProviderApplicationInfo managedApplication, IList<ProviderTargetDescription> targets, IList<ProviderSkuDescription> skus, IList<QuantumQuotaDimension> quotaDimensions, IList<ProviderPricingDimension> pricingDimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProviderType = providerType;
@@ -78,28 +50,37 @@ namespace Azure.ResourceManager.Quantum.Models
             Skus = skus;
             QuotaDimensions = quotaDimensions;
             PricingDimensions = pricingDimensions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A description about this provider. </summary>
         public string Description { get; }
+
         /// <summary> Provider type. </summary>
         public string ProviderType { get; }
+
         /// <summary> Company name. </summary>
         public string Company { get; }
+
         /// <summary> Provider's default endpoint. </summary>
         public string DefaultEndpoint { get; }
+
         /// <summary> Azure Active Directory info. </summary>
         public ProviderAadInfo Aad { get; }
+
         /// <summary> Provider's Managed-Application info. </summary>
         public ProviderApplicationInfo ManagedApplication { get; }
+
         /// <summary> The list of targets available from this provider. </summary>
-        public IReadOnlyList<ProviderTargetDescription> Targets { get; }
+        public IList<ProviderTargetDescription> Targets { get; }
+
         /// <summary> The list of skus available from this provider. </summary>
-        public IReadOnlyList<ProviderSkuDescription> Skus { get; }
+        public IList<ProviderSkuDescription> Skus { get; }
+
         /// <summary> The list of quota dimensions from the provider. </summary>
-        public IReadOnlyList<QuantumQuotaDimension> QuotaDimensions { get; }
+        public IList<QuantumQuotaDimension> QuotaDimensions { get; }
+
         /// <summary> The list of pricing dimensions from the provider. </summary>
-        public IReadOnlyList<ProviderPricingDimension> PricingDimensions { get; }
+        public IList<ProviderPricingDimension> PricingDimensions { get; }
     }
 }

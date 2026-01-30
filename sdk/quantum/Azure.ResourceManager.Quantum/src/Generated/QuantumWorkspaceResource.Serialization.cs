@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Quantum
 {
+    /// <summary></summary>
     public partial class QuantumWorkspaceResource : IJsonModel<QuantumWorkspaceData>
     {
-        private static QuantumWorkspaceData s_dataDeserializationInstance;
-        private static QuantumWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<QuantumWorkspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<QuantumWorkspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new QuantumWorkspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuantumWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<QuantumWorkspaceData>)Data).Write(writer, options);
 
-        QuantumWorkspaceData IJsonModel<QuantumWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuantumWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuantumWorkspaceData IJsonModel<QuantumWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<QuantumWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QuantumWorkspaceData>(Data, options, AzureResourceManagerQuantumContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         QuantumWorkspaceData IPersistableModel<QuantumWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuantumWorkspaceData>(data, options, AzureResourceManagerQuantumContext.Default);
 
-        string IPersistableModel<QuantumWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuantumWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QuantumWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
