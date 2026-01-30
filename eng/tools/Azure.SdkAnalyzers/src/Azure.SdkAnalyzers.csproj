@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- This library is fixed to netstandard2.0. For context, please see:
+    https://github.com/Azure/azure-sdk-tools/pull/5048
+    -->
+    <Version>1.0.0-beta.1</Version>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- Prevent Azure.ClientSdk.Analyzers from running on this analyzer project -->
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="All" />
+    <PackageReference Update="NETStandard.Library" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

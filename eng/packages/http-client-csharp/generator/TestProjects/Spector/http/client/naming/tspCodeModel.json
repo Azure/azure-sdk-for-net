@@ -237,6 +237,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Property.ClientNameModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ClientNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "27",
@@ -274,6 +279,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Property.LanguageClientNameModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "LanguageClientNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "30",
@@ -311,6 +321,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Property.ClientNameAndJsonEncodedNameModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ClientNameAndJsonEncodedNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "33",
@@ -348,6 +363,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Model.ModelWithClientClientName",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithClientClientName"
+        }
+      },
       "properties": [
         {
           "$id": "36",
@@ -385,6 +405,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Model.ModelWithLanguageClientName",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithLanguageClientName"
+        }
+      },
       "properties": [
         {
           "$id": "39",

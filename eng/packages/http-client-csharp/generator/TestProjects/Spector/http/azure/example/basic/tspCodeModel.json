@@ -114,6 +114,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionRequest",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ActionRequest"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -153,6 +158,11 @@
             "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Model",
             "usage": "Input,Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "Model"
+              }
+            },
             "properties": [
               {
                 "$id": "16",
@@ -322,6 +332,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionResponse",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ActionResponse"
+        }
+      },
       "properties": [
         {
           "$id": "29",

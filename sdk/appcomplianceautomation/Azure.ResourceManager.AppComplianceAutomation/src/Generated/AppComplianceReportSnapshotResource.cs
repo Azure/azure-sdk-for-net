@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
-    /// A Class representing an AppComplianceReportSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppComplianceReportSnapshotResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAppComplianceReportSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppComplianceReportResource"/> using the GetAppComplianceReportSnapshot method.
+    /// A class representing a AppComplianceReportSnapshot along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AppComplianceReportSnapshotResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppComplianceReportResource"/> using the GetAppComplianceReportSnapshots method.
     /// </summary>
     public partial class AppComplianceReportSnapshotResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AppComplianceReportSnapshotResource"/> instance. </summary>
-        /// <param name="reportName"> The reportName. </param>
-        /// <param name="snapshotName"> The snapshotName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string reportName, string snapshotName)
-        {
-            var resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _appComplianceReportSnapshotSnapshotClientDiagnostics;
-        private readonly SnapshotRestOperations _appComplianceReportSnapshotSnapshotRestClient;
+        private readonly ClientDiagnostics _snapshotClientDiagnostics;
+        private readonly Snapshot _snapshotRestClient;
         private readonly AppComplianceReportSnapshotData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports/snapshots";
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportSnapshotResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AppComplianceReportSnapshotResource for mocking. </summary>
         protected AppComplianceReportSnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppComplianceReportSnapshotResource(ArmClient client, AppComplianceReportSnapshotData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppComplianceReportSnapshotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appComplianceReportSnapshotSnapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string appComplianceReportSnapshotSnapshotApiVersion);
-            _appComplianceReportSnapshotSnapshotRestClient = new SnapshotRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportSnapshotSnapshotApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string appComplianceReportSnapshotApiVersion);
+            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ResourceType.Namespace, Diagnostics);
+            _snapshotRestClient = new Snapshot(_snapshotClientDiagnostics, Pipeline, Endpoint, appComplianceReportSnapshotApiVersion ?? "2024-06-27");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppComplianceReportSnapshotData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="reportName"> The reportName. </param>
+        /// <param name="snapshotName"> The snapshotName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string reportName, string snapshotName)
+        {
+            string resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the AppComplianceAutomation snapshot and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshot_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshot_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppComplianceReportSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Get");
+            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportSnapshotSnapshotRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation snapshot and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshot_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshot_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppComplianceReportSnapshotResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Get");
+            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = _appComplianceReportSnapshotSnapshotRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Download compliance needs from snapshot, like: Compliance Report, Resource List.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshot_Download</description>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshot_Download. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,14 +215,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Download");
+            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Download");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportSnapshotSnapshotRestClient.DownloadAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(new AppComplianceDownloadResultOperationSource(), _appComplianceReportSnapshotSnapshotClientDiagnostics, Pipeline, _appComplianceReportSnapshotSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _snapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, SnapshotDownloadRequestContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppComplianceAutomationArmOperation<AppComplianceDownloadResult> operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(
+                    new AppComplianceDownloadResultOperationSource(),
+                    _snapshotClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +249,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Download compliance needs from snapshot, like: Compliance Report, Resource List.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshot_Download</description>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshot_Download. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,14 +274,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Download");
+            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotResource.Download");
             scope.Start();
             try
             {
-                var response = _appComplianceReportSnapshotSnapshotRestClient.Download(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(new AppComplianceDownloadResultOperationSource(), _appComplianceReportSnapshotSnapshotClientDiagnostics, Pipeline, _appComplianceReportSnapshotSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _snapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, SnapshotDownloadRequestContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppComplianceAutomationArmOperation<AppComplianceDownloadResult> operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(
+                    new AppComplianceDownloadResultOperationSource(),
+                    _snapshotClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

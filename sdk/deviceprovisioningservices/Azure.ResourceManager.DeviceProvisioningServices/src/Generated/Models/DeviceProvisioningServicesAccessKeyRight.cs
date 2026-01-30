@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     public readonly partial struct DeviceProvisioningServicesAccessKeyRight : IEquatable<DeviceProvisioningServicesAccessKeyRight>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeviceProvisioningServicesAccessKeyRight(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ServiceConfigValue = "ServiceConfig";
         private const string EnrollmentReadValue = "EnrollmentRead";
         private const string EnrollmentWriteValue = "EnrollmentWrite";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         private const string RegistrationStatusReadValue = "RegistrationStatusRead";
         private const string RegistrationStatusWriteValue = "RegistrationStatusWrite";
 
-        /// <summary> ServiceConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeviceProvisioningServicesAccessKeyRight(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ServiceConfig. </summary>
         public static DeviceProvisioningServicesAccessKeyRight ServiceConfig { get; } = new DeviceProvisioningServicesAccessKeyRight(ServiceConfigValue);
-        /// <summary> EnrollmentRead. </summary>
+
+        /// <summary> Gets the EnrollmentRead. </summary>
         public static DeviceProvisioningServicesAccessKeyRight EnrollmentRead { get; } = new DeviceProvisioningServicesAccessKeyRight(EnrollmentReadValue);
-        /// <summary> EnrollmentWrite. </summary>
+
+        /// <summary> Gets the EnrollmentWrite. </summary>
         public static DeviceProvisioningServicesAccessKeyRight EnrollmentWrite { get; } = new DeviceProvisioningServicesAccessKeyRight(EnrollmentWriteValue);
-        /// <summary> DeviceConnect. </summary>
+
+        /// <summary> Gets the DeviceConnect. </summary>
         public static DeviceProvisioningServicesAccessKeyRight DeviceConnect { get; } = new DeviceProvisioningServicesAccessKeyRight(DeviceConnectValue);
-        /// <summary> RegistrationStatusRead. </summary>
+
+        /// <summary> Gets the RegistrationStatusRead. </summary>
         public static DeviceProvisioningServicesAccessKeyRight RegistrationStatusRead { get; } = new DeviceProvisioningServicesAccessKeyRight(RegistrationStatusReadValue);
-        /// <summary> RegistrationStatusWrite. </summary>
+
+        /// <summary> Gets the RegistrationStatusWrite. </summary>
         public static DeviceProvisioningServicesAccessKeyRight RegistrationStatusWrite { get; } = new DeviceProvisioningServicesAccessKeyRight(RegistrationStatusWriteValue);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAccessKeyRight"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceProvisioningServicesAccessKeyRight left, DeviceProvisioningServicesAccessKeyRight right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAccessKeyRight"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceProvisioningServicesAccessKeyRight left, DeviceProvisioningServicesAccessKeyRight right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceProvisioningServicesAccessKeyRight(string value) => new DeviceProvisioningServicesAccessKeyRight(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceProvisioningServicesAccessKeyRight?(string value) => value == null ? null : new DeviceProvisioningServicesAccessKeyRight(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceProvisioningServicesAccessKeyRight other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceProvisioningServicesAccessKeyRight other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

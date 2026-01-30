@@ -109,6 +109,11 @@
       "crossLanguageDefinitionId": "Encode.Numeric.Property.SafeintAsStringProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SafeintAsStringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "14",
@@ -146,6 +151,11 @@
       "crossLanguageDefinitionId": "Encode.Numeric.Property.Uint32AsStringProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Uint32AsStringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "17",
@@ -183,6 +193,11 @@
       "crossLanguageDefinitionId": "Encode.Numeric.Property.Uint8AsStringProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Uint8AsStringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "20",

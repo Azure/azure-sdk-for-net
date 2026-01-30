@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<DeviceProvisioningServicesNameAvailabilityResult>
+    /// <summary> Description of name availability. </summary>
+    public partial class DeviceProvisioningServicesNameAvailabilityResult : IJsonModel<DeviceProvisioningServicesNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServicesNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceProvisioningServicesNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceProvisioningServicesNameAvailabilityResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
@@ -49,15 +50,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,69 +67,75 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
-        DeviceProvisioningServicesNameAvailabilityResult IJsonModel<DeviceProvisioningServicesNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceProvisioningServicesNameAvailabilityResult IJsonModel<DeviceProvisioningServicesNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceProvisioningServicesNameAvailabilityResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceProvisioningServicesNameAvailabilityResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeviceProvisioningServicesNameAvailabilityResult(document.RootElement, options);
         }
 
-        internal static DeviceProvisioningServicesNameAvailabilityResult DeserializeDeviceProvisioningServicesNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeviceProvisioningServicesNameAvailabilityResult DeserializeDeviceProvisioningServicesNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? nameAvailable = default;
+            bool? isNameAvailable = default;
             DeviceProvisioningServicesNameUnavailableReason? reason = default;
             string message = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nameAvailable"u8))
+                if (prop.NameEquals("nameAvailable"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nameAvailable = property.Value.GetBoolean();
+                    isNameAvailable = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reason"u8))
+                if (prop.NameEquals("reason"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reason = new DeviceProvisioningServicesNameUnavailableReason(property.Value.GetString());
+                    reason = new DeviceProvisioningServicesNameUnavailableReason(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    message = property.Value.GetString();
+                    message = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceProvisioningServicesNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new DeviceProvisioningServicesNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -138,15 +145,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
-        DeviceProvisioningServicesNameAvailabilityResult IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceProvisioningServicesNameAvailabilityResult IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceProvisioningServicesNameAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceProvisioningServicesNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
@@ -154,6 +166,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceProvisioningServicesNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceProvisioningServicesNameAvailabilityResult"/> from. </param>
+        internal static DeviceProvisioningServicesNameAvailabilityResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeviceProvisioningServicesNameAvailabilityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }
