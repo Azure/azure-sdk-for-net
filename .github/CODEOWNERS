@@ -888,10 +888,10 @@
 # ServiceOwners:                                                   @giakas
 
 # PRLabel: %Voice Live
-/sdk/ai/Azure.AI.VoiceLive/                                        @rhurey @xitzhang
+/sdk/ai/Azure.AI.VoiceLive/                                        @rhurey @xitzhang @emilyjiji @amber-yujueWang @pankopon
 
 # ServiceLabel: %Voice Live
-# ServiceOwners:                                                   @rhurey @xitzhang
+# ServiceOwners:                                                   @rhurey @xitzhang @yulin-li
 
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp

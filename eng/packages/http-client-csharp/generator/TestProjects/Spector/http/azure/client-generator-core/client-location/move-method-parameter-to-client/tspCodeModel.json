@@ -29,6 +29,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.Blob",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Blob"
+        }
+      },
       "properties": [
         {
           "$id": "4",

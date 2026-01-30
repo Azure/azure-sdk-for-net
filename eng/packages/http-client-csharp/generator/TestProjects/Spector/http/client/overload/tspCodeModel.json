@@ -45,6 +45,11 @@
       "crossLanguageDefinitionId": "Client.Overload.Resource",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Resource"
+        }
+      },
       "properties": [
         {
           "$id": "6",
