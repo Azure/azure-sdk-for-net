@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeActions;
+using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeActions.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableEdgeActionsResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _edgeActionVersionsClientDiagnostics;
+        private EdgeActionVersions _edgeActionVersionsRestClient;
+
         /// <summary> Initializes a new instance of MockableEdgeActionsResourceGroupResource for mocking. </summary>
         protected MockableEdgeActionsResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         internal MockableEdgeActionsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics EdgeActionVersionsClientDiagnostics => _edgeActionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EdgeActionVersions EdgeActionVersionsRestClient => _edgeActionVersionsRestClient ??= new EdgeActionVersions(EdgeActionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         /// <summary> Gets a collection of EdgeActions in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of EdgeActions and their operations over a EdgeActionResource. </returns>
@@ -94,6 +103,346 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
             Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
 
             return GetEdgeActions().Get(edgeActionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/deployVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_DeployVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeActionName"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<EdgeActionVersionProperties>> DeployVersionCodeAsync(WaitUntil waitUntil, string edgeActionName, string version, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EdgeActionVersionsClientDiagnostics.CreateScope("MockableEdgeActionsResourceGroupResource.DeployVersionCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EdgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, edgeActionName, version, EdgeActionVersionCode.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
+                    new EdgeActionVersionPropertiesOperationSource(),
+                    EdgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/deployVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_DeployVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeActionName"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<EdgeActionVersionProperties> DeployVersionCode(WaitUntil waitUntil, string edgeActionName, string version, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EdgeActionVersionsClientDiagnostics.CreateScope("MockableEdgeActionsResourceGroupResource.DeployVersionCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EdgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, edgeActionName, version, EdgeActionVersionCode.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
+                    new EdgeActionVersionPropertiesOperationSource(),
+                    EdgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/getVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_GetVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<EdgeActionVersionCode>> GetVersionCodeAsync(WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using DiagnosticScope scope = EdgeActionVersionsClientDiagnostics.CreateScope("MockableEdgeActionsResourceGroupResource.GetVersionCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EdgeActionVersionsRestClient.CreateGetVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, edgeActionName, version, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation<EdgeActionVersionCode> operation = new EdgeActionsArmOperation<EdgeActionVersionCode>(
+                    new EdgeActionVersionCodeOperationSource(),
+                    EdgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/getVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_GetVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<EdgeActionVersionCode> GetVersionCode(WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using DiagnosticScope scope = EdgeActionVersionsClientDiagnostics.CreateScope("MockableEdgeActionsResourceGroupResource.GetVersionCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EdgeActionVersionsRestClient.CreateGetVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, edgeActionName, version, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation<EdgeActionVersionCode> operation = new EdgeActionsArmOperation<EdgeActionVersionCode>(
+                    new EdgeActionVersionCodeOperationSource(),
+                    EdgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/swapDefault. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_SwapDefault. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> SwapDefaultAsync(WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using DiagnosticScope scope = EdgeActionVersionsClientDiagnostics.CreateScope("MockableEdgeActionsResourceGroupResource.SwapDefault");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EdgeActionVersionsRestClient.CreateSwapDefaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, edgeActionName, version, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation operation = new EdgeActionsArmOperation(EdgeActionVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/swapDefault. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_SwapDefault. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation SwapDefault(WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using DiagnosticScope scope = EdgeActionVersionsClientDiagnostics.CreateScope("MockableEdgeActionsResourceGroupResource.SwapDefault");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EdgeActionVersionsRestClient.CreateSwapDefaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, edgeActionName, version, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation operation = new EdgeActionsArmOperation(EdgeActionVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

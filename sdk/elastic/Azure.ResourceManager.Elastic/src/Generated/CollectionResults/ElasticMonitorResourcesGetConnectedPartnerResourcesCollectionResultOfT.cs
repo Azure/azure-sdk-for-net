@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Elastic
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetConnectedPartnerResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _context) : _client.CreateGetConnectedPartnerResourcesRequest(_subscriptionId, _resourceGroupName, _monitorName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ElasticMonitorResource.GetConnectedPartnerResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableElasticResourceGroupResource.GetConnectedPartnerResources");
             scope.Start();
             try
             {

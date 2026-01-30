@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeActions.Mocking;
+using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeActions
@@ -144,6 +145,128 @@ namespace Azure.ResourceManager.EdgeActions
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableEdgeActionsResourceGroupResource(resourceGroupResource).GetEdgeAction(edgeActionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.DeployVersionCodeAsync(WaitUntil, string, string, EdgeActionVersionCode, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeActionVersionProperties>> DeployVersionCodeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string edgeActionName, string version, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableEdgeActionsResourceGroupResource(resourceGroupResource).DeployVersionCodeAsync(waitUntil, edgeActionName, version, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.DeployVersionCode(WaitUntil, string, string, EdgeActionVersionCode, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeActionVersionProperties> DeployVersionCode(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string edgeActionName, string version, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEdgeActionsResourceGroupResource(resourceGroupResource).DeployVersionCode(waitUntil, edgeActionName, version, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetVersionCodeAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeActionVersionCode>> GetVersionCodeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableEdgeActionsResourceGroupResource(resourceGroupResource).GetVersionCodeAsync(waitUntil, edgeActionName, version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetVersionCode(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeActionVersionCode> GetVersionCode(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEdgeActionsResourceGroupResource(resourceGroupResource).GetVersionCode(waitUntil, edgeActionName, version, cancellationToken);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.SwapDefaultAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> SwapDefaultAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableEdgeActionsResourceGroupResource(resourceGroupResource).SwapDefaultAsync(waitUntil, edgeActionName, version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.SwapDefault(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="edgeActionName"> The name of the Edge Action. </param>
+        /// <param name="version"> The name of the Edge Action version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation SwapDefault(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string edgeActionName, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEdgeActionsResourceGroupResource(resourceGroupResource).SwapDefault(waitUntil, edgeActionName, version, cancellationToken);
         }
 
         /// <summary>

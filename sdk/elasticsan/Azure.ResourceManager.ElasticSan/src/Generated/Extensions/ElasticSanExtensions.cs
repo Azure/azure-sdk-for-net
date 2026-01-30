@@ -184,6 +184,90 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary>
+        /// Validate whether a disk snapshot backup can be taken for list of volumes.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticSanResourceGroupResource.PreBackupVolumeAsync(WaitUntil, string, string, ElasticSanVolumeNameListContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ElasticSanPreValidationResult>> PreBackupVolumeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticSanResourceGroupResource(resourceGroupResource).PreBackupVolumeAsync(waitUntil, elasticSanName, volumeGroupName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validate whether a disk snapshot backup can be taken for list of volumes.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticSanResourceGroupResource.PreBackupVolume(WaitUntil, string, string, ElasticSanVolumeNameListContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ElasticSanPreValidationResult> PreBackupVolume(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticSanResourceGroupResource(resourceGroupResource).PreBackupVolume(waitUntil, elasticSanName, volumeGroupName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validate whether a list of backed up disk snapshots can be restored into ElasticSan volumes.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticSanResourceGroupResource.PreRestoreVolumeAsync(WaitUntil, string, string, DiskSnapshotListContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ElasticSanPreValidationResult>> PreRestoreVolumeAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string elasticSanName, string volumeGroupName, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticSanResourceGroupResource(resourceGroupResource).PreRestoreVolumeAsync(waitUntil, elasticSanName, volumeGroupName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validate whether a list of backed up disk snapshots can be restored into ElasticSan volumes.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticSanResourceGroupResource.PreRestoreVolume(WaitUntil, string, string, DiskSnapshotListContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ElasticSanPreValidationResult> PreRestoreVolume(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string elasticSanName, string volumeGroupName, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticSanResourceGroupResource(resourceGroupResource).PreRestoreVolume(waitUntil, elasticSanName, volumeGroupName, content, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of ElasticSans in a subscription
         /// <item>
         /// <term> Mocking. </term>

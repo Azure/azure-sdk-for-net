@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Fabric
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSkusForCapacityRequest(nextLink, _subscriptionId, _resourceGroupName, _capacityName, _context) : _client.CreateGetSkusForCapacityRequest(_subscriptionId, _resourceGroupName, _capacityName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FabricCapacityResource.GetSkusForCapacity");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableFabricResourceGroupResource.GetSkusForCapacity");
             scope.Start();
             try
             {

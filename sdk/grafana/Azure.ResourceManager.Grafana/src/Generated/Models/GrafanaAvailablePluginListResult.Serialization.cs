@@ -15,7 +15,7 @@ using Azure.ResourceManager.Grafana;
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The GrafanaAvailablePluginListResult. </summary>
-    internal partial class GrafanaAvailablePluginListResult : IJsonModel<GrafanaAvailablePluginListResult>
+    public partial class GrafanaAvailablePluginListResult : IJsonModel<GrafanaAvailablePluginListResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

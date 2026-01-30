@@ -10,14 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridConnectivity;
+using Azure.ResourceManager.HybridConnectivity.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableHybridConnectivityArmClient : ArmResource
     {
+        private ClientDiagnostics _endpointResourcesClientDiagnostics;
+        private EndpointResources _endpointResourcesRestClient;
+        private ClientDiagnostics _solutionConfigurationsClientDiagnostics;
+        private SolutionConfigurations _solutionConfigurationsRestClient;
+
         /// <summary> Initializes a new instance of MockableHybridConnectivityArmClient for mocking. </summary>
         protected MockableHybridConnectivityArmClient()
         {
@@ -29,6 +37,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         internal MockableHybridConnectivityArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics EndpointResourcesClientDiagnostics => _endpointResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EndpointResources EndpointResourcesRestClient => _endpointResourcesRestClient ??= new EndpointResources(EndpointResourcesClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
+
+        private ClientDiagnostics SolutionConfigurationsClientDiagnostics => _solutionConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SolutionConfigurations SolutionConfigurationsRestClient => _solutionConfigurationsRestClient ??= new SolutionConfigurations(SolutionConfigurationsClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
 
         /// <summary> Gets an object representing a <see cref="HybridConnectivityEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -226,6 +242,440 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         {
             PublicCloudConnectorSolutionTypeResource.ValidateResourceId(id);
             return new PublicCloudConnectorSolutionTypeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets the endpoint access credentials to the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_ListCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(ResourceIdentifier scope, string endpointName, long? expiresin = default, ListCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope0 = EndpointResourcesClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.GetCredentials");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointResourcesRestClient.CreateGetCredentialsRequest(scope.ToString(), endpointName, ListCredentialsContent.ToRequestContent(content), expiresin, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TargetResourceEndpointAccess> response = Response.FromValue(TargetResourceEndpointAccess.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the endpoint access credentials to the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_ListCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TargetResourceEndpointAccess> GetCredentials(ResourceIdentifier scope, string endpointName, long? expiresin = default, ListCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope0 = EndpointResourcesClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.GetCredentials");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointResourcesRestClient.CreateGetCredentialsRequest(scope.ToString(), endpointName, ListCredentialsContent.ToRequestContent(content), expiresin, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TargetResourceEndpointAccess> response = Response.FromValue(TargetResourceEndpointAccess.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ingress gateway endpoint credentials 
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listIngressGatewayCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_ListIngressGatewayCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(ResourceIdentifier scope, string endpointName, long? expiresin = default, ListIngressGatewayCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope0 = EndpointResourcesClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.GetIngressGatewayCredentials");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointResourcesRestClient.CreateGetIngressGatewayCredentialsRequest(scope.ToString(), endpointName, ListIngressGatewayCredentialsContent.ToRequestContent(content), expiresin, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IngressGatewayAsset> response = Response.FromValue(IngressGatewayAsset.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ingress gateway endpoint credentials 
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listIngressGatewayCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_ListIngressGatewayCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(ResourceIdentifier scope, string endpointName, long? expiresin = default, ListIngressGatewayCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope0 = EndpointResourcesClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.GetIngressGatewayCredentials");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointResourcesRestClient.CreateGetIngressGatewayCredentialsRequest(scope.ToString(), endpointName, ListIngressGatewayCredentialsContent.ToRequestContent(content), expiresin, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IngressGatewayAsset> response = Response.FromValue(IngressGatewayAsset.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetches the managed proxy details 
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listManagedProxyDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_ListManagedProxyDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ManagedProxyAsset>> GetManagedProxyDetailsAsync(ResourceIdentifier scope, string endpointName, ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = EndpointResourcesClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.GetManagedProxyDetails");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointResourcesRestClient.CreateGetManagedProxyDetailsRequest(scope.ToString(), endpointName, ManagedProxyContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedProxyAsset> response = Response.FromValue(ManagedProxyAsset.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetches the managed proxy details 
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listManagedProxyDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_ListManagedProxyDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ManagedProxyAsset> GetManagedProxyDetails(ResourceIdentifier scope, string endpointName, ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = EndpointResourcesClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.GetManagedProxyDetails");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointResourcesRestClient.CreateGetManagedProxyDetailsRequest(scope.ToString(), endpointName, ManagedProxyContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedProxyAsset> response = Response.FromValue(ManagedProxyAsset.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger immediate sync with source cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/syncNow. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_SyncNow. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatusResult>> SyncNowAsync(WaitUntil waitUntil, ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
+
+            using DiagnosticScope scope0 = SolutionConfigurationsClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.SyncNow");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SolutionConfigurationsRestClient.CreateSyncNowRequest(scope.ToString(), solutionConfiguration, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridConnectivityArmOperation<OperationStatusResult> operation = new HybridConnectivityArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SolutionConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger immediate sync with source cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}/syncNow. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionConfigurations_SyncNow. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatusResult> SyncNow(WaitUntil waitUntil, ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
+
+            using DiagnosticScope scope0 = SolutionConfigurationsClientDiagnostics.CreateScope("MockableHybridConnectivityArmClient.SyncNow");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SolutionConfigurationsRestClient.CreateSyncNowRequest(scope.ToString(), solutionConfiguration, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridConnectivityArmOperation<OperationStatusResult> operation = new HybridConnectivityArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    SolutionConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

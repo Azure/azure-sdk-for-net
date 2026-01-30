@@ -201,6 +201,17 @@ namespace Azure.ResourceManager.Grafana.Models
             return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartOn, trialEndOn, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The GrafanaAvailablePluginListResult. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        /// <returns> A new <see cref="Models.GrafanaAvailablePluginListResult"/> instance for mocking. </returns>
+        public static GrafanaAvailablePluginListResult GrafanaAvailablePluginListResult(IEnumerable<GrafanaAvailablePlugin> value = default, string nextLink = default)
+        {
+            value ??= new ChangeTrackingList<GrafanaAvailablePlugin>();
+
+            return new GrafanaAvailablePluginListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Available plugins of grafana. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         /// <param name="name"> Grafana plugin display name. </param>

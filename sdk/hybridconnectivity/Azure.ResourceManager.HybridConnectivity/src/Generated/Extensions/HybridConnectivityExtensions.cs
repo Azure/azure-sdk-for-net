@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridConnectivity.Mocking;
 using Azure.ResourceManager.HybridConnectivity.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridConnectivity
@@ -376,6 +377,170 @@ namespace Azure.ResourceManager.HybridConnectivity
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridConnectivityArmClient(client).GetPublicCloudConnectorSolutionTypeResource(id);
+        }
+
+        /// <summary>
+        /// Gets the endpoint access credentials to the resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetCredentialsAsync(ResourceIdentifier, string, long?, ListCredentialsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, long? expiresin = default, ListCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableHybridConnectivityArmClient(client).GetCredentialsAsync(scope, endpointName, expiresin, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the endpoint access credentials to the resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetCredentials(ResourceIdentifier, string, long?, ListCredentialsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<TargetResourceEndpointAccess> GetCredentials(this ArmClient client, ResourceIdentifier scope, string endpointName, long? expiresin = default, ListCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridConnectivityArmClient(client).GetCredentials(scope, endpointName, expiresin, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the ingress gateway endpoint credentials 
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetIngressGatewayCredentialsAsync(ResourceIdentifier, string, long?, ListIngressGatewayCredentialsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, long? expiresin = default, ListIngressGatewayCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableHybridConnectivityArmClient(client).GetIngressGatewayCredentialsAsync(scope, endpointName, expiresin, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the ingress gateway endpoint credentials 
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetIngressGatewayCredentials(ResourceIdentifier, string, long?, ListIngressGatewayCredentialsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<IngressGatewayAsset> GetIngressGatewayCredentials(this ArmClient client, ResourceIdentifier scope, string endpointName, long? expiresin = default, ListIngressGatewayCredentialsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridConnectivityArmClient(client).GetIngressGatewayCredentials(scope, endpointName, expiresin, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Fetches the managed proxy details 
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetManagedProxyDetailsAsync(ResourceIdentifier, string, ManagedProxyContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<ManagedProxyAsset>> GetManagedProxyDetailsAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableHybridConnectivityArmClient(client).GetManagedProxyDetailsAsync(scope, endpointName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Fetches the managed proxy details 
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetManagedProxyDetails(ResourceIdentifier, string, ManagedProxyContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<ManagedProxyAsset> GetManagedProxyDetails(this ArmClient client, ResourceIdentifier scope, string endpointName, ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridConnectivityArmClient(client).GetManagedProxyDetails(scope, endpointName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Trigger immediate sync with source cloud
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.SyncNowAsync(WaitUntil, ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<ArmOperation<OperationStatusResult>> SyncNowAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableHybridConnectivityArmClient(client).SyncNowAsync(waitUntil, scope, solutionConfiguration, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Trigger immediate sync with source cloud
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.SyncNow(WaitUntil, ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static ArmOperation<OperationStatusResult> SyncNow(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridConnectivityArmClient(client).SyncNow(waitUntil, scope, solutionConfiguration, cancellationToken);
         }
 
         /// <summary>

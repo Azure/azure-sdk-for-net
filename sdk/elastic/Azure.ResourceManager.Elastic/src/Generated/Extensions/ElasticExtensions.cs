@@ -166,6 +166,772 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
+        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetMonitoredResourcesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MonitoredResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitoredResourceInfo> GetMonitoredResourcesAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetMonitoredResourcesAsync(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetMonitoredResources(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MonitoredResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitoredResourceInfo> GetMonitoredResources(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetMonitoredResources(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetDeploymentInfoAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ElasticDeploymentInfoResult>> GetDeploymentInfoAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetDeploymentInfoAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetDeploymentInfo(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ElasticDeploymentInfoResult> GetDeploymentInfo(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetDeploymentInfo(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.CreateOrUpdateExternalUserAsync(string, ElasticExternalUserContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> Elastic External User Creation Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ElasticExternalUserCreationResult>> CreateOrUpdateExternalUserAsync(this ResourceGroupResource resourceGroupResource, string monitorName, ElasticExternalUserContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).CreateOrUpdateExternalUserAsync(monitorName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.CreateOrUpdateExternalUser(string, ElasticExternalUserContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> Elastic External User Creation Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ElasticExternalUserCreationResult> CreateOrUpdateExternalUser(this ResourceGroupResource resourceGroupResource, string monitorName, ElasticExternalUserContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).CreateOrUpdateExternalUser(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve marketplace and organization billing information mapped to the given Elastic monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetBillingInfoAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ElasticBillingInfoResult>> GetBillingInfoAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetBillingInfoAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve marketplace and organization billing information mapped to the given Elastic monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetBillingInfo(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ElasticBillingInfoResult> GetBillingInfo(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetBillingInfo(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all active deployments associated with the marketplace subscription linked to the given Elastic monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetConnectedPartnerResourcesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConnectedPartnerResourceInfo> GetConnectedPartnerResourcesAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetConnectedPartnerResourcesAsync(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all active deployments associated with the marketplace subscription linked to the given Elastic monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetConnectedPartnerResources(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConnectedPartnerResourceInfo> GetConnectedPartnerResources(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetConnectedPartnerResources(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all VM resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetVmHostsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ElasticVmResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ElasticVmResourceInfo> GetVmHostsAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetVmHostsAsync(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all VM resources currently being monitored by the Elastic monitor resource, helping you manage observability.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetVmHosts(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ElasticVmResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ElasticVmResourceInfo> GetVmHosts(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetVmHosts(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetVmIngestionDetailsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<VmIngestionDetailsResult>> GetVmIngestionDetailsAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetVmIngestionDetailsAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetVmIngestionDetails(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<VmIngestionDetailsResult> GetVmIngestionDetails(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetVmIngestionDetails(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.UpdateVmCollectionAsync(string, VmCollectionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> VM resource Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> UpdateVmCollectionAsync(this ResourceGroupResource resourceGroupResource, string monitorName, VmCollectionContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).UpdateVmCollectionAsync(monitorName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.UpdateVmCollection(string, VmCollectionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> VM resource Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response UpdateVmCollection(this ResourceGroupResource resourceGroupResource, string monitorName, VmCollectionContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).UpdateVmCollection(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetUpgradableVersionDetailsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<UpgradableVersionListResult>> GetUpgradableVersionDetailsAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetUpgradableVersionDetailsAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetUpgradableVersionDetails(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<UpgradableVersionListResult> GetUpgradableVersionDetails(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetUpgradableVersionDetails(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.UpgradeMonitorAsync(WaitUntil, string, ElasticMonitorUpgrade, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="body"> Elastic Monitor Upgrade Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> UpgradeMonitorAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, ElasticMonitorUpgrade body = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).UpgradeMonitorAsync(waitUntil, monitorName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.UpgradeMonitor(WaitUntil, string, ElasticMonitorUpgrade, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="body"> Elastic Monitor Upgrade Parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation UpgradeMonitor(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, ElasticMonitorUpgrade body = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).UpgradeMonitor(waitUntil, monitorName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetAllTrafficFiltersAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ElasticTrafficFilterListResult>> GetAllTrafficFiltersAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetAllTrafficFiltersAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetAllTrafficFilters(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ElasticTrafficFilterListResult> GetAllTrafficFilters(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetAllTrafficFilters(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetAssociatedTrafficFiltersAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ElasticTrafficFilterListResult>> GetAssociatedTrafficFiltersAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetAssociatedTrafficFiltersAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetAssociatedTrafficFilters(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ElasticTrafficFilterListResult> GetAssociatedTrafficFilters(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetAssociatedTrafficFilters(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.CreateAndAssociateIPFilterAsync(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="ips"> List of ips. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> CreateAndAssociateIPFilterAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string ips = default, string name = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).CreateAndAssociateIPFilterAsync(waitUntil, monitorName, ips, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.CreateAndAssociateIPFilter(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="ips"> List of ips. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation CreateAndAssociateIPFilter(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string ips = default, string name = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).CreateAndAssociateIPFilter(waitUntil, monitorName, ips, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.CreateAndAssociatePrivateLinkFilterAsync(WaitUntil, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="privateEndpointGuid"> Guid of the private endpoint. </param>
+        /// <param name="privateEndpointName"> Name of the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> CreateAndAssociatePrivateLinkFilterAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string name = default, string privateEndpointGuid = default, string privateEndpointName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).CreateAndAssociatePrivateLinkFilterAsync(waitUntil, monitorName, name, privateEndpointGuid, privateEndpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.CreateAndAssociatePrivateLinkFilter(WaitUntil, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="name"> Name of the traffic filter. </param>
+        /// <param name="privateEndpointGuid"> Guid of the private endpoint. </param>
+        /// <param name="privateEndpointName"> Name of the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation CreateAndAssociatePrivateLinkFilter(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string name = default, string privateEndpointGuid = default, string privateEndpointName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).CreateAndAssociatePrivateLinkFilter(waitUntil, monitorName, name, privateEndpointGuid, privateEndpointName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.AssociateTrafficFilterAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> AssociateTrafficFilterAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).AssociateTrafficFilterAsync(waitUntil, monitorName, rulesetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.AssociateTrafficFilter(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation AssociateTrafficFilter(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).AssociateTrafficFilter(waitUntil, monitorName, rulesetId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.DetachAndDeleteTrafficFilterAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> DetachAndDeleteTrafficFilterAsync(this ResourceGroupResource resourceGroupResource, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).DetachAndDeleteTrafficFilterAsync(monitorName, rulesetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.DetachAndDeleteTrafficFilter(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response DetachAndDeleteTrafficFilter(this ResourceGroupResource resourceGroupResource, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).DetachAndDeleteTrafficFilter(monitorName, rulesetId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.DetachTrafficFilterAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> DetachTrafficFilterAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).DetachTrafficFilterAsync(waitUntil, monitorName, rulesetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.DetachTrafficFilter(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation DetachTrafficFilter(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).DetachTrafficFilter(waitUntil, monitorName, rulesetId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.DeleteTrafficFilterAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> DeleteTrafficFilterAsync(this ResourceGroupResource resourceGroupResource, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).DeleteTrafficFilterAsync(monitorName, rulesetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.DeleteTrafficFilter(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="rulesetId"> Ruleset Id of the filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response DeleteTrafficFilter(this ResourceGroupResource resourceGroupResource, string monitorName, string rulesetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).DeleteTrafficFilter(monitorName, rulesetId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Resubscribe the Elasticsearch Organization.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.ResubscribeOrganizationAsync(WaitUntil, string, ResubscribeProperties, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="body"> Resubscribe Properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ElasticMonitorResource>> ResubscribeOrganizationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, ResubscribeProperties body = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).ResubscribeOrganizationAsync(waitUntil, monitorName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Resubscribe the Elasticsearch Organization.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.ResubscribeOrganization(WaitUntil, string, ResubscribeProperties, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="body"> Resubscribe Properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ElasticMonitorResource> ResubscribeOrganization(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, ResubscribeProperties body = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).ResubscribeOrganization(waitUntil, monitorName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetStatusAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="integrationName"> OpenAI Integration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ElasticOpenAIIntegrationStatusResult>> GetStatusAsync(this ResourceGroupResource resourceGroupResource, string monitorName, string integrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableElasticResourceGroupResource(resourceGroupResource).GetStatusAsync(monitorName, integrationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableElasticResourceGroupResource.GetStatus(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="integrationName"> OpenAI Integration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ElasticOpenAIIntegrationStatusResult> GetStatus(this ResourceGroupResource resourceGroupResource, string monitorName, string integrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableElasticResourceGroupResource(resourceGroupResource).GetStatus(monitorName, integrationName, cancellationToken);
+        }
+
+        /// <summary>
         /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.
         /// <item>
         /// <term> Mocking. </term>

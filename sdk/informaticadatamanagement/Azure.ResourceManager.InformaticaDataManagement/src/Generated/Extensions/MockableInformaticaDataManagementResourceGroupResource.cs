@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.InformaticaDataManagement;
+using Azure.ResourceManager.InformaticaDataManagement.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
@@ -19,6 +21,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableInformaticaDataManagementResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _organizationsClientDiagnostics;
+        private Organizations _organizationsRestClient;
+        private ClientDiagnostics _serverlessRuntimesClientDiagnostics;
+        private ServerlessRuntimes _serverlessRuntimesRestClient;
+
         /// <summary> Initializes a new instance of MockableInformaticaDataManagementResourceGroupResource for mocking. </summary>
         protected MockableInformaticaDataManagementResourceGroupResource()
         {
@@ -30,6 +37,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         internal MockableInformaticaDataManagementResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-05-08");
+
+        private ClientDiagnostics ServerlessRuntimesClientDiagnostics => _serverlessRuntimesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ServerlessRuntimes ServerlessRuntimesRestClient => _serverlessRuntimesRestClient ??= new ServerlessRuntimes(ServerlessRuntimesClientDiagnostics, Pipeline, Endpoint, "2024-05-08");
 
         /// <summary> Gets a collection of InformaticaOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of InformaticaOrganizations and their operations over a InformaticaOrganizationResource. </returns>
@@ -94,6 +109,498 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             return GetInformaticaOrganizations().Get(organizationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets Metadata of the serverless runtime environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getServerlessMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_GetServerlessMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ServerlessMetadataResponse>> GetServerlessMetadataAsync(string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using DiagnosticScope scope = OrganizationsClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.GetServerlessMetadata");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrganizationsRestClient.CreateGetServerlessMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServerlessMetadataResponse> response = Response.FromValue(ServerlessMetadataResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Metadata of the serverless runtime environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getServerlessMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_GetServerlessMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ServerlessMetadataResponse> GetServerlessMetadata(string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using DiagnosticScope scope = OrganizationsClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.GetServerlessMetadata");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrganizationsRestClient.CreateGetServerlessMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServerlessMetadataResponse> response = Response.FromValue(ServerlessMetadataResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all serverless runtime resources in a given informatica organization resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getAllServerlessRuntimes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_GetAllServerlessRuntimes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<InformaticaServerlessRuntimeResourceList>> GetAllServerlessRuntimesAsync(string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using DiagnosticScope scope = OrganizationsClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.GetAllServerlessRuntimes");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrganizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all serverless runtime resources in a given informatica organization resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getAllServerlessRuntimes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_GetAllServerlessRuntimes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<InformaticaServerlessRuntimeResourceList> GetAllServerlessRuntimes(string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using DiagnosticScope scope = OrganizationsClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.GetAllServerlessRuntimes");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrganizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks all dependencies for a serverless runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/checkDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_CheckDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CheckDependenciesResult>> CheckDependenciesAsync(string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(serverlessRuntimeName, nameof(serverlessRuntimeName));
+
+            using DiagnosticScope scope = ServerlessRuntimesClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.CheckDependencies");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerlessRuntimesRestClient.CreateCheckDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, serverlessRuntimeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CheckDependenciesResult> response = Response.FromValue(CheckDependenciesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks all dependencies for a serverless runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/checkDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_CheckDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CheckDependenciesResult> CheckDependencies(string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(serverlessRuntimeName, nameof(serverlessRuntimeName));
+
+            using DiagnosticScope scope = ServerlessRuntimesClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.CheckDependencies");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerlessRuntimesRestClient.CreateCheckDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, serverlessRuntimeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CheckDependenciesResult> response = Response.FromValue(CheckDependenciesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/startFailedServerlessRuntime. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_StartFailedServerlessRuntime. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> StartFailedServerlessRuntimeAsync(string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(serverlessRuntimeName, nameof(serverlessRuntimeName));
+
+            using DiagnosticScope scope = ServerlessRuntimesClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.StartFailedServerlessRuntime");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, serverlessRuntimeName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/startFailedServerlessRuntime. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_StartFailedServerlessRuntime. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response StartFailedServerlessRuntime(string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(serverlessRuntimeName, nameof(serverlessRuntimeName));
+
+            using DiagnosticScope scope = ServerlessRuntimesClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.StartFailedServerlessRuntime");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, serverlessRuntimeName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a serverless runtime resource by ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/serverlessResourceById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_ServerlessResourceById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<InformaticaServerlessRuntimeResource>> GetServerlessResourceByIdAsync(string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(serverlessRuntimeName, nameof(serverlessRuntimeName));
+
+            using DiagnosticScope scope = ServerlessRuntimesClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.GetServerlessResourceById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, serverlessRuntimeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a serverless runtime resource by ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/serverlessResourceById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_ServerlessResourceById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> or <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<InformaticaServerlessRuntimeResource> GetServerlessResourceById(string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(serverlessRuntimeName, nameof(serverlessRuntimeName));
+
+            using DiagnosticScope scope = ServerlessRuntimesClientDiagnostics.CreateScope("MockableInformaticaDataManagementResourceGroupResource.GetServerlessResourceById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, serverlessRuntimeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

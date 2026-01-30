@@ -12,7 +12,7 @@ using Azure.ResourceManager.Grafana;
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The GrafanaAvailablePluginListResult. </summary>
-    internal partial class GrafanaAvailablePluginListResult
+    public partial class GrafanaAvailablePluginListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

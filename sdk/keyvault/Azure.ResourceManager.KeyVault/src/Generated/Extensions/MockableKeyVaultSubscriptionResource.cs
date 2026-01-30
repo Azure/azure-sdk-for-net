@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         private Vaults _vaultsRestClient;
         private ClientDiagnostics _managedHsmsClientDiagnostics;
         private ManagedHsms _managedHsmsRestClient;
+        private ClientDiagnostics _deletedVaultsClientDiagnostics;
+        private DeletedVaults _deletedVaultsRestClient;
         private ClientDiagnostics _vaultsOperationGroupClientDiagnostics;
         private VaultsOperationGroup _vaultsOperationGroupRestClient;
         private ClientDiagnostics _managedHsmsOperationGroupClientDiagnostics;
@@ -49,6 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         private ClientDiagnostics ManagedHsmsClientDiagnostics => _managedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ManagedHsms ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsms(ManagedHsmsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+
+        private ClientDiagnostics DeletedVaultsClientDiagnostics => _deletedVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedVaults DeletedVaultsRestClient => _deletedVaultsRestClient ??= new DeletedVaults(DeletedVaultsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         private ClientDiagnostics VaultsOperationGroupClientDiagnostics => _vaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -306,6 +312,108 @@ namespace Azure.ResourceManager.KeyVault.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetBySubscriptionCollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new ManagedHsmResource(Client, data));
+        }
+
+        /// <summary>
+        /// Permanently deletes the specified vault. aka Purges the deleted Azure key vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}/purge. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_PurgeDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> PurgeDeletedAsync(WaitUntil waitUntil, AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using DiagnosticScope scope = DeletedVaultsClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.PurgeDeleted");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DeletedVaultsRestClient.CreatePurgeDeletedRequest(Guid.Parse(Id.SubscriptionId), location, vaultName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KeyVaultArmOperation operation = new KeyVaultArmOperation(DeletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Permanently deletes the specified vault. aka Purges the deleted Azure key vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}/purge. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_PurgeDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation PurgeDeleted(WaitUntil waitUntil, AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using DiagnosticScope scope = DeletedVaultsClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.PurgeDeleted");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DeletedVaultsRestClient.CreatePurgeDeletedRequest(Guid.Parse(Id.SubscriptionId), location, vaultName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KeyVaultArmOperation operation = new KeyVaultArmOperation(DeletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Elastic
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetVmHostsRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _context) : _client.CreateGetVmHostsRequest(_subscriptionId, _resourceGroupName, _monitorName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ElasticMonitorResource.GetVmHosts");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableElasticResourceGroupResource.GetVmHosts");
             scope.Start();
             try
             {

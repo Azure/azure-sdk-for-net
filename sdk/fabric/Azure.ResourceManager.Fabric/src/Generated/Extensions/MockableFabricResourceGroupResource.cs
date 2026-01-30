@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Fabric;
+using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Fabric.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.Fabric.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableFabricResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _fabricCapacitiesClientDiagnostics;
+        private FabricCapacities _fabricCapacitiesRestClient;
+
         /// <summary> Initializes a new instance of MockableFabricResourceGroupResource for mocking. </summary>
         protected MockableFabricResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.Fabric.Mocking
         internal MockableFabricResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics FabricCapacitiesClientDiagnostics => _fabricCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Fabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FabricCapacities FabricCapacitiesRestClient => _fabricCapacitiesRestClient ??= new FabricCapacities(FabricCapacitiesClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
 
         /// <summary> Gets a collection of FabricCapacities in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of FabricCapacities and their operations over a FabricCapacityResource. </returns>
@@ -94,6 +103,272 @@ namespace Azure.ResourceManager.Fabric.Mocking
             Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
 
             return GetFabricCapacities().Get(capacityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Resume operation of the specified Fabric capacity instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/resume. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_Resume. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> ResumeAsync(WaitUntil waitUntil, string capacityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
+
+            using DiagnosticScope scope = FabricCapacitiesClientDiagnostics.CreateScope("MockableFabricResourceGroupResource.Resume");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FabricCapacitiesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FabricArmOperation operation = new FabricArmOperation(FabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resume operation of the specified Fabric capacity instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/resume. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_Resume. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Resume(WaitUntil waitUntil, string capacityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
+
+            using DiagnosticScope scope = FabricCapacitiesClientDiagnostics.CreateScope("MockableFabricResourceGroupResource.Resume");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FabricCapacitiesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FabricArmOperation operation = new FabricArmOperation(FabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspend operation of the specified Fabric capacity instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/suspend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_Suspend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> SuspendAsync(WaitUntil waitUntil, string capacityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
+
+            using DiagnosticScope scope = FabricCapacitiesClientDiagnostics.CreateScope("MockableFabricResourceGroupResource.Suspend");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FabricCapacitiesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FabricArmOperation operation = new FabricArmOperation(FabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspend operation of the specified Fabric capacity instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/suspend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_Suspend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Suspend(WaitUntil waitUntil, string capacityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
+
+            using DiagnosticScope scope = FabricCapacitiesClientDiagnostics.CreateScope("MockableFabricResourceGroupResource.Suspend");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FabricCapacitiesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FabricArmOperation operation = new FabricArmOperation(FabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List eligible SKUs for a Microsoft Fabric resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_ListSkusForCapacity. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacityAsync(string capacityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+        }
+
+        /// <summary>
+        /// List eligible SKUs for a Microsoft Fabric resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FabricCapacities_ListSkusForCapacity. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacity(string capacityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
         }
     }
 }

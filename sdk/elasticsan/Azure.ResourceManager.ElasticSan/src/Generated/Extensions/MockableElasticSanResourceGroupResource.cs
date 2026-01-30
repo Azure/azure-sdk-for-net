@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ElasticSan;
+using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ElasticSan.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableElasticSanResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _volumesClientDiagnostics;
+        private Volumes _volumesRestClient;
+
         /// <summary> Initializes a new instance of MockableElasticSanResourceGroupResource for mocking. </summary>
         protected MockableElasticSanResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         internal MockableElasticSanResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics VolumesClientDiagnostics => _volumesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Volumes VolumesRestClient => _volumesRestClient ??= new Volumes(VolumesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         /// <summary> Gets a collection of ElasticSans in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of ElasticSans and their operations over a ElasticSanResource. </returns>
@@ -94,6 +103,246 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
             return GetElasticSans().Get(elasticSanName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validate whether a disk snapshot backup can be taken for list of volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/preBackup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VolumeGroups_PreBackup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreBackupVolumeAsync(WaitUntil waitUntil, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VolumesClientDiagnostics.CreateScope("MockableElasticSanResourceGroupResource.PreBackupVolume");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VolumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, volumeGroupName, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
+                    new ElasticSanPreValidationResultOperationSource(),
+                    VolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate whether a disk snapshot backup can be taken for list of volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/preBackup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VolumeGroups_PreBackup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ElasticSanPreValidationResult> PreBackupVolume(WaitUntil waitUntil, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VolumesClientDiagnostics.CreateScope("MockableElasticSanResourceGroupResource.PreBackupVolume");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VolumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, volumeGroupName, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
+                    new ElasticSanPreValidationResultOperationSource(),
+                    VolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate whether a list of backed up disk snapshots can be restored into ElasticSan volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/preRestore. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VolumeGroups_PreRestore. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreRestoreVolumeAsync(WaitUntil waitUntil, string elasticSanName, string volumeGroupName, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VolumesClientDiagnostics.CreateScope("MockableElasticSanResourceGroupResource.PreRestoreVolume");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VolumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, volumeGroupName, DiskSnapshotListContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
+                    new ElasticSanPreValidationResultOperationSource(),
+                    VolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate whether a list of backed up disk snapshots can be restored into ElasticSan volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/preRestore. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VolumeGroups_PreRestore. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ElasticSanPreValidationResult> PreRestoreVolume(WaitUntil waitUntil, string elasticSanName, string volumeGroupName, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VolumesClientDiagnostics.CreateScope("MockableElasticSanResourceGroupResource.PreRestoreVolume");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VolumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, volumeGroupName, DiskSnapshotListContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
+                    new ElasticSanPreValidationResultOperationSource(),
+                    VolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

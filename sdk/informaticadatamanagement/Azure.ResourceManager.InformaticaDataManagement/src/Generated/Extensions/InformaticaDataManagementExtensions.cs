@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.InformaticaDataManagement.Mocking;
+using Azure.ResourceManager.InformaticaDataManagement.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
@@ -126,6 +127,192 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganization(organizationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets Metadata of the serverless runtime environment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetServerlessMetadataAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ServerlessMetadataResponse>> GetServerlessMetadataAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetServerlessMetadataAsync(organizationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets Metadata of the serverless runtime environment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetServerlessMetadata(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ServerlessMetadataResponse> GetServerlessMetadata(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetServerlessMetadata(organizationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all serverless runtime resources in a given informatica organization resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetAllServerlessRuntimesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<InformaticaServerlessRuntimeResourceList>> GetAllServerlessRuntimesAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetAllServerlessRuntimesAsync(organizationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets all serverless runtime resources in a given informatica organization resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetAllServerlessRuntimes(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<InformaticaServerlessRuntimeResourceList> GetAllServerlessRuntimes(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetAllServerlessRuntimes(organizationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks all dependencies for a serverless runtime resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.CheckDependenciesAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<CheckDependenciesResult>> CheckDependenciesAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).CheckDependenciesAsync(organizationName, serverlessRuntimeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks all dependencies for a serverless runtime resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.CheckDependencies(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<CheckDependenciesResult> CheckDependencies(this ResourceGroupResource resourceGroupResource, string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).CheckDependencies(organizationName, serverlessRuntimeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.StartFailedServerlessRuntimeAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> StartFailedServerlessRuntimeAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).StartFailedServerlessRuntimeAsync(organizationName, serverlessRuntimeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.StartFailedServerlessRuntime(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response StartFailedServerlessRuntime(this ResourceGroupResource resourceGroupResource, string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).StartFailedServerlessRuntime(organizationName, serverlessRuntimeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a serverless runtime resource by ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetServerlessResourceByIdAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<InformaticaServerlessRuntimeResource>> GetServerlessResourceByIdAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetServerlessResourceByIdAsync(organizationName, serverlessRuntimeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a serverless runtime resource by ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetServerlessResourceById(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Organizations resource. </param>
+        /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<InformaticaServerlessRuntimeResource> GetServerlessResourceById(this ResourceGroupResource resourceGroupResource, string organizationName, string serverlessRuntimeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetServerlessResourceById(organizationName, serverlessRuntimeName, cancellationToken);
         }
 
         /// <summary>

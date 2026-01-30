@@ -262,6 +262,84 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
+        /// Cancel order item.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.CancelAsync(string, EdgeOrderItemCancellationReason, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> CancelAsync(this ResourceGroupResource resourceGroupResource, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).CancelAsync(orderItemName, cancellationReason, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Cancel order item.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.Cancel(string, EdgeOrderItemCancellationReason, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response Cancel(this ResourceGroupResource resourceGroupResource, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).Cancel(orderItemName, cancellationReason, cancellationToken);
+        }
+
+        /// <summary>
+        /// Return order item.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.ReturnAsync(WaitUntil, string, EdgeOrderItemReturnContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="content"> Return order item details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> ReturnAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).ReturnAsync(waitUntil, orderItemName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Return order item.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.Return(WaitUntil, string, EdgeOrderItemReturnContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="content"> Return order item details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Return(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).Return(waitUntil, orderItemName, content, cancellationToken);
+        }
+
+        /// <summary>
         /// List orders at resource group level.
         /// <item>
         /// <term> Mocking. </term>

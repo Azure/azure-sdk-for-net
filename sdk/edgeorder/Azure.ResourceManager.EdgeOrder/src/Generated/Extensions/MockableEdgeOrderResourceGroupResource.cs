@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder;
+using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder.Mocking
@@ -20,6 +21,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableEdgeOrderResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _orderItemResourcesClientDiagnostics;
+        private OrderItemResources _orderItemResourcesRestClient;
         private ClientDiagnostics _ordersOperationGroupClientDiagnostics;
         private OrdersOperationGroup _ordersOperationGroupRestClient;
 
@@ -34,6 +37,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         internal MockableEdgeOrderResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics OrderItemResourcesClientDiagnostics => _orderItemResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OrderItemResources OrderItemResourcesRestClient => _orderItemResourcesRestClient ??= new OrderItemResources(OrderItemResourcesClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
         private ClientDiagnostics OrdersOperationGroupClientDiagnostics => _ordersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -236,6 +243,202 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
             return GetEdgeOrders().Get(location, orderName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancel order item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CancelAsync(string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
+
+            using DiagnosticScope scope = OrderItemResourcesClientDiagnostics.CreateScope("MockableEdgeOrderResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrderItemResourcesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemCancellationReason.ToRequestContent(cancellationReason), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel order item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Cancel(string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
+
+            using DiagnosticScope scope = OrderItemResourcesClientDiagnostics.CreateScope("MockableEdgeOrderResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrderItemResourcesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemCancellationReason.ToRequestContent(cancellationReason), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return order item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/return. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_ReturnOrderItem. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="content"> Return order item details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> ReturnAsync(WaitUntil waitUntil, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OrderItemResourcesClientDiagnostics.CreateScope("MockableEdgeOrderResourceGroupResource.Return");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrderItemResourcesRestClient.CreateReturnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemReturnContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeOrderArmOperation operation = new EdgeOrderArmOperation(OrderItemResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return order item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/return. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_ReturnOrderItem. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="content"> Return order item details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Return(WaitUntil waitUntil, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OrderItemResourcesClientDiagnostics.CreateScope("MockableEdgeOrderResourceGroupResource.Return");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrderItemResourcesRestClient.CreateReturnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemReturnContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeOrderArmOperation operation = new EdgeOrderArmOperation(OrderItemResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
