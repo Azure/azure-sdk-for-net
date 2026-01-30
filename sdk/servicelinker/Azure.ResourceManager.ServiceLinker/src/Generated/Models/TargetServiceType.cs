@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         private const string AzureResourceValue = "AzureResource";
         private const string ConfluentBootstrapServerValue = "ConfluentBootstrapServer";
         private const string ConfluentSchemaRegistryValue = "ConfluentSchemaRegistry";
+        private const string SelfHostedServerValue = "SelfHostedServer";
+        private const string FabricPlatformValue = "FabricPlatform";
 
         /// <summary> AzureResource. </summary>
         public static TargetServiceType AzureResource { get; } = new TargetServiceType(AzureResourceValue);
@@ -32,6 +34,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static TargetServiceType ConfluentBootstrapServer { get; } = new TargetServiceType(ConfluentBootstrapServerValue);
         /// <summary> ConfluentSchemaRegistry. </summary>
         public static TargetServiceType ConfluentSchemaRegistry { get; } = new TargetServiceType(ConfluentSchemaRegistryValue);
+        /// <summary> SelfHostedServer. </summary>
+        public static TargetServiceType SelfHostedServer { get; } = new TargetServiceType(SelfHostedServerValue);
+        /// <summary> FabricPlatform. </summary>
+        public static TargetServiceType FabricPlatform { get; } = new TargetServiceType(FabricPlatformValue);
         /// <summary> Determines if two <see cref="TargetServiceType"/> values are the same. </summary>
         public static bool operator ==(TargetServiceType left, TargetServiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetServiceType"/> values are not the same. </summary>

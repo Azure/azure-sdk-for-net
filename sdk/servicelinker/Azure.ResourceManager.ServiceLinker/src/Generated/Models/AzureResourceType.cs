@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         private const string KeyVaultValue = "KeyVault";
+        private const string AppConfigValue = "AppConfig";
 
         /// <summary> KeyVault. </summary>
         public static AzureResourceType KeyVault { get; } = new AzureResourceType(KeyVaultValue);
+        /// <summary> AppConfig. </summary>
+        public static AzureResourceType AppConfig { get; } = new AzureResourceType(AppConfigValue);
         /// <summary> Determines if two <see cref="AzureResourceType"/> values are the same. </summary>
         public static bool operator ==(AzureResourceType left, AzureResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureResourceType"/> values are not the same. </summary>

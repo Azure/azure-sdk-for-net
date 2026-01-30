@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AppConfig": return AzureAppConfigProperties.DeserializeAzureAppConfigProperties(element, options);
                     case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element, options);
                 }
             }

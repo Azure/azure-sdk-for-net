@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         private const string ServicePrincipalSecretValue = "servicePrincipalSecret";
         private const string ServicePrincipalCertificateValue = "servicePrincipalCertificate";
         private const string SecretValue = "secret";
+        private const string AccessKeyValue = "accessKey";
+        private const string UserAccountValue = "userAccount";
+        private const string EasyAuthMicrosoftEntraIdValue = "easyAuthMicrosoftEntraID";
 
         /// <summary> systemAssignedIdentity. </summary>
         public static LinkerAuthType SystemAssignedIdentity { get; } = new LinkerAuthType(SystemAssignedIdentityValue);
@@ -38,6 +41,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static LinkerAuthType ServicePrincipalCertificate { get; } = new LinkerAuthType(ServicePrincipalCertificateValue);
         /// <summary> secret. </summary>
         public static LinkerAuthType Secret { get; } = new LinkerAuthType(SecretValue);
+        /// <summary> accessKey. </summary>
+        public static LinkerAuthType AccessKey { get; } = new LinkerAuthType(AccessKeyValue);
+        /// <summary> userAccount. </summary>
+        public static LinkerAuthType UserAccount { get; } = new LinkerAuthType(UserAccountValue);
+        /// <summary> easyAuthMicrosoftEntraID. </summary>
+        public static LinkerAuthType EasyAuthMicrosoftEntraId { get; } = new LinkerAuthType(EasyAuthMicrosoftEntraIdValue);
         /// <summary> Determines if two <see cref="LinkerAuthType"/> values are the same. </summary>
         public static bool operator ==(LinkerAuthType left, LinkerAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkerAuthType"/> values are not the same. </summary>
