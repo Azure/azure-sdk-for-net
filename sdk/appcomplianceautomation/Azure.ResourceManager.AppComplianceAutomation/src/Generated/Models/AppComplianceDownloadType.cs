@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct AppComplianceDownloadType : IEquatable<AppComplianceDownloadType>
     {
         private readonly string _value;
+        /// <summary> Download the compliance report. </summary>
+        private const string ComplianceReportValue = "ComplianceReport";
+        /// <summary> Download the compliance pdf report. </summary>
+        private const string CompliancePdfReportValue = "CompliancePdfReport";
+        /// <summary> Download the detailed compliance pdf report. </summary>
+        private const string ComplianceDetailedPdfReportValue = "ComplianceDetailedPdfReport";
+        /// <summary> Download the resource list of the report. </summary>
+        private const string ResourceListValue = "ResourceList";
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceDownloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppComplianceDownloadType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ComplianceReportValue = "ComplianceReport";
-        private const string CompliancePdfReportValue = "CompliancePdfReport";
-        private const string ComplianceDetailedPdfReportValue = "ComplianceDetailedPdfReport";
-        private const string ResourceListValue = "ResourceList";
+            _value = value;
+        }
 
         /// <summary> Download the compliance report. </summary>
         public static AppComplianceDownloadType ComplianceReport { get; } = new AppComplianceDownloadType(ComplianceReportValue);
+
         /// <summary> Download the compliance pdf report. </summary>
         public static AppComplianceDownloadType CompliancePdfReport { get; } = new AppComplianceDownloadType(CompliancePdfReportValue);
+
         /// <summary> Download the detailed compliance pdf report. </summary>
         public static AppComplianceDownloadType ComplianceDetailedPdfReport { get; } = new AppComplianceDownloadType(ComplianceDetailedPdfReportValue);
+
         /// <summary> Download the resource list of the report. </summary>
         public static AppComplianceDownloadType ResourceList { get; } = new AppComplianceDownloadType(ResourceListValue);
+
         /// <summary> Determines if two <see cref="AppComplianceDownloadType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppComplianceDownloadType left, AppComplianceDownloadType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppComplianceDownloadType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppComplianceDownloadType left, AppComplianceDownloadType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppComplianceDownloadType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppComplianceDownloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppComplianceDownloadType(string value) => new AppComplianceDownloadType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppComplianceDownloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppComplianceDownloadType?(string value) => value == null ? null : new AppComplianceDownloadType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppComplianceDownloadType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppComplianceDownloadType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

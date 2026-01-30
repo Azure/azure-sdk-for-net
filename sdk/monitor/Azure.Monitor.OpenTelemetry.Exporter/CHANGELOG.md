@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.3 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-01-28)
+
+### Other Changes
+
+* The customer-facing SDK stats feature 
+  metric names have been updated to match the stable specification.
+  - **Metric names changed**: `preview.item.success.count` → `Item_Success_Count`,
+    `preview.item.dropped.count` → `Item_Dropped_Count`,
+    `preview.item.retry.count` → `Item_Retry_Count`.
+  - **New environment variable**: To enable, set environment variable
+    `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=false`.
+  - The old environment variable `APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW`
+    is no longer recognized.
 
 ## 1.6.0-beta.2 (2026-01-12)
 
@@ -44,7 +58,7 @@
 
 ## 1.6.0-beta.1 (2025-12-03)
 
-### Bugs Fixed
+### Features Added
 * Added Microsoft override attributes to preserve exact Application Insights
   semantics when exporting telemetry data.
   ([#54023](https://github.com/Azure/azure-sdk-for-net/pull/54023))

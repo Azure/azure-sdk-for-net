@@ -205,6 +205,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Animal",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Animal"
+        }
+      },
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
@@ -272,6 +277,11 @@
           "usage": "Input,Output,Json",
           "discriminatorValue": "pet",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Pet"
+            }
+          },
           "discriminatorProperty": {
             "$id": "31",
             "kind": "property",
@@ -337,6 +347,11 @@
               "usage": "Input,Output,Json",
               "discriminatorValue": "dog",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "Dog"
+                }
+              },
               "baseModel": {
                 "$ref": "30"
               },

@@ -94,6 +94,11 @@
       "usage": "Input,Output,Json",
       "doc": "Usage additive to roundtrip.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InputModel"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -131,6 +136,11 @@
       "usage": "Input,Output,Json",
       "doc": "Usage additive to roundtrip.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OutputModel"
+        }
+      },
       "properties": [
         {
           "$id": "15",
@@ -167,6 +177,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.RoundTripModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "RoundTripModel"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -181,6 +196,11 @@
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.ResultModel",
             "usage": "Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ResultModel"
+              }
+            },
             "properties": [
               {
                 "$id": "20",
@@ -237,6 +257,11 @@
       "usage": "Input,Json",
       "doc": "Not used anywhere, but access is override to public so still need to be generated and exported with serialization.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OrphanModel"
+        }
+      },
       "properties": [
         {
           "$id": "23",

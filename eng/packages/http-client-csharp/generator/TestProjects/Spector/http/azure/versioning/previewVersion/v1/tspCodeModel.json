@@ -162,6 +162,11 @@
       "usage": "Output,Json",
       "doc": "A simple model for testing.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Widget"
+        }
+      },
       "properties": [
         {
           "$id": "17",
@@ -252,6 +257,11 @@
       "usage": "Input,JsonMergePatch,Json",
       "doc": "Update widget color request.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UpdateWidgetColorRequest"
+        }
+      },
       "properties": [
         {
           "$id": "24",
@@ -289,6 +299,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "27",

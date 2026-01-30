@@ -942,7 +942,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.IsTrue(restore.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
         }
 
-        [TestCase]
+        // Update to Microsoft Entra TODO
+        /* [TestCase]
         [LiveOnly(alwaysRunLocally: false)]
         public async Task AAD()
         {
@@ -1266,7 +1267,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             // Delete targhet geo-restored server
             await targetPublicServer.DeleteAsync(WaitUntil.Completed);
             #endregion
-        }
+        } */
 
         /// <summary>
         /// - Create resource groups for source server and target server in geo-paired locations

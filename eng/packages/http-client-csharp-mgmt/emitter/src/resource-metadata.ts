@@ -233,10 +233,10 @@ export interface ParentResourceLookupContext {
 /**
  * Post-processes ARM resources to populate parent IDs, merge incomplete resources,
  * populate resource scopes, sort methods, and filter invalid resources.
- * 
+ *
  * This is a shared post-processing step used by both resolveArmResources
  * and buildArmProviderSchema to ensure consistent behavior.
- * 
+ *
  * @param resources - Initial list of resources to process
  * @param nonResourceMethods - Array to collect non-resource methods
  * @param parentLookup - Context for looking up parent resources
@@ -356,13 +356,13 @@ export function postProcessArmResources(
     const listOperationPathSegments = listOp.operationPath
       .split("/")
       .filter((s) => s.length > 0);
-    
+
     for (const candidatePath of resourceInstancePaths) {
       if (canBeListResourceScope(listOperationPathSegments, candidatePath)) {
         validCandidates.push(candidatePath);
       }
     }
-    
+
     // Take the longest matching path as the resourceScope
     if (validCandidates.length > 0) {
       validCandidates.sort((a, b) => b.length - a.length);
@@ -387,11 +387,11 @@ export function postProcessArmResources(
     if (!hasReadOperation && !resource.metadata.singletonResourceName) {
       // Try to move all methods to parent resource first, otherwise non-resource methods
       let movedToParent = false;
-      
-      if (resource.metadata.parentResourceModelId) {
+
+      if (resource.metadata.parentResourceId) {
         // Find parent resource
         const parent = validResources.find(
-          (r) => r.resourceModelId === resource.metadata.parentResourceModelId
+          (r) => r.metadata.resourceIdPattern === resource.metadata.parentResourceId
         );
         if (parent) {
           // When moving operations to parent resource, convert them to Action kind
@@ -406,7 +406,7 @@ export function postProcessArmResources(
           movedToParent = true;
         }
       }
-      
+
       // If no parent or parent not found, move to non-resource methods
       if (!movedToParent) {
         for (const method of resource.metadata.methods) {

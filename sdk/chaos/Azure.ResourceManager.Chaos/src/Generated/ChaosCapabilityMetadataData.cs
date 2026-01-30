@@ -13,111 +13,130 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary>
-    /// A class representing the ChaosCapabilityMetadata data model.
-    /// Model that represents a Capability Type resource.
-    /// </summary>
+    /// <summary> Model that represents a Capability Type resource. </summary>
     public partial class ChaosCapabilityMetadataData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataData"/>. </summary>
         internal ChaosCapabilityMetadataData()
         {
-            AzureRbacActions = new ChangeTrackingList<string>();
-            AzureRbacDataActions = new ChangeTrackingList<string>();
-            RequiredAzureRoleDefinitionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
-        /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
-        /// <param name="displayName"> Localized string of the display name. </param>
-        /// <param name="description"> Localized string of the description. </param>
-        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
-        /// <param name="urn"> String of the URN for this Capability Type. </param>
-        /// <param name="kind"> String of the kind of this Capability Type. </param>
-        /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
-        /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
-        /// <param name="requiredAzureRoleDefinitionIds"> Required Azure Role Definition Ids to execute capability type. </param>
-        /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IReadOnlyList<string> azureRbacActions, IReadOnlyList<string> azureRbacDataActions, IReadOnlyList<string> requiredAzureRoleDefinitionIds, ChaosCapabilityMetadataRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the capability type resource. </param>
+        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapabilityTypeProperties properties) : base(id, name, resourceType, systemData)
         {
-            Publisher = publisher;
-            TargetType = targetType;
-            DisplayName = displayName;
-            Description = description;
-            ParametersSchema = parametersSchema;
-            Urn = urn;
-            Kind = kind;
-            AzureRbacActions = azureRbacActions;
-            AzureRbacDataActions = azureRbacDataActions;
-            RequiredAzureRoleDefinitionIds = requiredAzureRoleDefinitionIds;
-            RuntimeProperties = runtimeProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of the capability type resource. </summary>
+        internal CapabilityTypeProperties Properties { get; }
+
         /// <summary> String of the Publisher that this Capability Type extends. </summary>
-        public string Publisher { get; }
+        public string Publisher
+        {
+            get
+            {
+                return Properties.Publisher;
+            }
+        }
+
         /// <summary> String of the Target Type that this Capability Type extends. </summary>
-        public string TargetType { get; }
+        public string TargetType
+        {
+            get
+            {
+                return Properties.TargetType;
+            }
+        }
+
         /// <summary> Localized string of the display name. </summary>
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties.DisplayName;
+            }
+        }
+
         /// <summary> Localized string of the description. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> URL to retrieve JSON schema of the Capability Type parameters. </summary>
-        public string ParametersSchema { get; }
+        public string ParametersSchema
+        {
+            get
+            {
+                return Properties.ParametersSchema;
+            }
+        }
+
         /// <summary> String of the URN for this Capability Type. </summary>
-        public string Urn { get; }
+        public string Urn
+        {
+            get
+            {
+                return Properties.Urn;
+            }
+        }
+
         /// <summary> String of the kind of this Capability Type. </summary>
-        public string Kind { get; }
+        public string Kind
+        {
+            get
+            {
+                return Properties.Kind;
+            }
+        }
+
         /// <summary> Control plane actions necessary to execute capability type. </summary>
-        public IReadOnlyList<string> AzureRbacActions { get; }
+        public IReadOnlyList<string> AzureRbacActions
+        {
+            get
+            {
+                return Properties.AzureRbacActions;
+            }
+        }
+
         /// <summary> Data plane actions necessary to execute capability type. </summary>
-        public IReadOnlyList<string> AzureRbacDataActions { get; }
+        public IReadOnlyList<string> AzureRbacDataActions
+        {
+            get
+            {
+                return Properties.AzureRbacDataActions;
+            }
+        }
+
         /// <summary> Required Azure Role Definition Ids to execute capability type. </summary>
-        public IReadOnlyList<string> RequiredAzureRoleDefinitionIds { get; }
-        /// <summary> Runtime properties of this Capability Type. </summary>
-        internal ChaosCapabilityMetadataRuntimeProperties RuntimeProperties { get; }
+        public IReadOnlyList<string> RequiredAzureRoleDefinitionIds
+        {
+            get
+            {
+                return Properties.RequiredAzureRoleDefinitionIds;
+            }
+        }
+
         /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string RuntimeKind
         {
-            get => RuntimeProperties?.Kind;
+            get
+            {
+                return Properties.RuntimeKind;
+            }
         }
     }
 }

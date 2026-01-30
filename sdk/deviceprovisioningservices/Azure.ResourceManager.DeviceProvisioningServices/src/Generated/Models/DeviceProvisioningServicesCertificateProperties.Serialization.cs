@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesCertificateProperties : IUtf8JsonSerializable, IJsonModel<DeviceProvisioningServicesCertificateProperties>
+    /// <summary> The description of an X509 CA Certificate. </summary>
+    public partial class DeviceProvisioningServicesCertificateProperties : IJsonModel<DeviceProvisioningServicesCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServicesCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceProvisioningServicesCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Thumbprint);
+                writer.WriteRawValue(Thumbprint);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Thumbprint, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Certificate);
+                writer.WriteRawValue(Certificate);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Certificate, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Certificate))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,117 +100,123 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
-        DeviceProvisioningServicesCertificateProperties IJsonModel<DeviceProvisioningServicesCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceProvisioningServicesCertificateProperties IJsonModel<DeviceProvisioningServicesCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceProvisioningServicesCertificateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeviceProvisioningServicesCertificateProperties(document.RootElement, options);
         }
 
-        internal static DeviceProvisioningServicesCertificateProperties DeserializeDeviceProvisioningServicesCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeviceProvisioningServicesCertificateProperties DeserializeDeviceProvisioningServicesCertificateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string subject = default;
-            DateTimeOffset? expiry = default;
+            DateTimeOffset? expireOn = default;
             BinaryData thumbprint = default;
             bool? isVerified = default;
             BinaryData certificate = default;
-            DateTimeOffset? created = default;
-            DateTimeOffset? updated = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subject"u8))
+                if (prop.NameEquals("subject"u8))
                 {
-                    subject = property.Value.GetString();
+                    subject = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiry"u8))
+                if (prop.NameEquals("expiry"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiry = property.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("thumbprint"u8))
+                if (prop.NameEquals("thumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("isVerified"u8))
+                if (prop.NameEquals("isVerified"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isVerified = property.Value.GetBoolean();
+                    isVerified = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("certificate"u8))
+                if (prop.NameEquals("certificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificate = BinaryData.FromString(property.Value.GetRawText());
+                    certificate = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("created"u8))
+                if (prop.NameEquals("created"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updated"u8))
+                if (prop.NameEquals("updated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceProvisioningServicesCertificateProperties(
                 subject,
-                expiry,
+                expireOn,
                 thumbprint,
                 isVerified,
                 certificate,
-                created,
-                updated,
-                serializedAdditionalRawData);
+                createdOn,
+                updatedOn,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DeviceProvisioningServicesCertificateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceProvisioningServicesCertificateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -220,15 +226,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
-        DeviceProvisioningServicesCertificateProperties IPersistableModel<DeviceProvisioningServicesCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceProvisioningServicesCertificateProperties IPersistableModel<DeviceProvisioningServicesCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceProvisioningServicesCertificateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceProvisioningServicesCertificateProperties(document.RootElement, options);
                     }
                 default:
@@ -236,6 +247,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceProvisioningServicesCertificateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

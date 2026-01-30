@@ -462,6 +462,11 @@
       "usage": "Input,Output,Json",
       "doc": "Array inner model",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InnerModel"
+        }
+      },
       "properties": [
         {
           "$id": "58",
