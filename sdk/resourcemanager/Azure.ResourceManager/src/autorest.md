@@ -23,7 +23,6 @@ batch:
   - tag: package-common-type
   - tag: package-resources
   - tag: package-management
-  - tag: package-service
 ```
 
 ### Tag: package-common-type
@@ -845,50 +844,4 @@ directive:
       $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
       $.CheckNameAvailabilityRequest.properties.type['x-ms-constant'] = true;
       $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
-```
-
-### Tag: package-service
-
-These settings apply only when `--tag=package-service` is specified on the command line.
-
-``` yaml $(tag) == 'package-service'
-output-folder: $(this-folder)/ServiceGroup/Generated
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
-namespace: Azure.ResourceManager.ServiceGroups
-title: ServiceGroupClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/8b0ad3e71102ad633f716845e5bc2d2d25d9f6a0/specification/management/resource-manager/Microsoft.Management/ServiceGroups/readme.md
-tag: package-2024-02-preview
-input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/8b0ad3e71102ad633f716845e5bc2d2d25d9f6a0/specification/management/resource-manager/Microsoft.Management/ServiceGroups/preview/2024-02-01-preview/serviceGroups.json
-
-format-by-name-rules:
-  'tenantId': 'uuid'
-  'etag': 'etag'
-  'location': 'azure-location'
-  '*Uri': 'Uri'
-  '*Uris': 'Uri'
-
-acronym-mapping:
-  CPU: Cpu
-  CPUs: Cpus
-  Os: OS
-  Ip: IP
-  Ips: IPs
-  ID: Id
-  IDs: Ids
-  VM: Vm
-  VMs: Vms
-  Vmos: VmOS
-  VMScaleSet: VmScaleSet
-  DNS: Dns
-  VPN: Vpn
-  NAT: Nat
-  WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
-  SSO: Sso
-  URI: Uri
 ```

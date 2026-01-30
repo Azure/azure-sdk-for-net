@@ -6,7 +6,7 @@
     <ApiCompatVersion>1.13.2</ApiCompatVersion>
     <PackageId>Azure.ResourceManager</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resources.</Description>
-    <PackageTags>azure;management;resource;servicegroups</PackageTags>
+    <PackageTags>azure;management;resource</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
