@@ -221,6 +221,11 @@
       "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PngImageAsJson"
+        }
+      },
       "properties": [
         {
           "$id": "28",

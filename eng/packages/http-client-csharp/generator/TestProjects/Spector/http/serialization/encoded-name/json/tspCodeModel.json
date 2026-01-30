@@ -45,6 +45,11 @@
       "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "JsonEncodedNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "6",

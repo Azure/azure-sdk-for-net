@@ -6,446 +6,119 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    internal partial class ScopingConfigurationRestOperations
+    internal partial class ScopingConfiguration
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ScopingConfigurationRestOperations. </summary>
+        /// <summary> Initializes a new instance of ScopingConfiguration for mocking. </summary>
+        protected ScopingConfiguration()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ScopingConfiguration. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ScopingConfigurationRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal ScopingConfiguration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-27";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string reportName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string reportName, string scopingConfigurationName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
-            uri.AppendPath("/scopingConfigurations", false);
+            uri.AppendPath("/scopingConfigurations/", false);
+            uri.AppendPath(scopingConfigurationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string reportName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/scopingConfigurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Returns a list format of the singleton scopingConfiguration for a specified report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScopingConfigurationResourceListResult>> ListAsync(string reportName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string reportName, string scopingConfigurationName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateListRequest(reportName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScopingConfigurationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScopingConfigurationResourceListResult.DeserializeScopingConfigurationResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns a list format of the singleton scopingConfiguration for a specified report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScopingConfigurationResourceListResult> List(string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateListRequest(reportName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScopingConfigurationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScopingConfigurationResourceListResult.DeserializeScopingConfigurationResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string reportName, string scopingConfigurationName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendPath("/scopingConfigurations/", false);
             uri.AppendPath(scopingConfigurationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string reportName, string scopingConfigurationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/scopingConfigurations/", false);
-            uri.AppendPath(scopingConfigurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the AppComplianceAutomation scoping configuration of the specific report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppComplianceReportScopingConfigurationData>> GetAsync(string reportName, string scopingConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
-
-            using var message = CreateGetRequest(reportName, scopingConfigurationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AppComplianceReportScopingConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AppComplianceReportScopingConfigurationData.DeserializeAppComplianceReportScopingConfigurationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AppComplianceReportScopingConfigurationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the AppComplianceAutomation scoping configuration of the specific report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppComplianceReportScopingConfigurationData> Get(string reportName, string scopingConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
-
-            using var message = CreateGetRequest(reportName, scopingConfigurationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AppComplianceReportScopingConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AppComplianceReportScopingConfigurationData.DeserializeAppComplianceReportScopingConfigurationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AppComplianceReportScopingConfigurationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string reportName, string scopingConfigurationName, AppComplianceReportScopingConfigurationData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/scopingConfigurations/", false);
-            uri.AppendPath(scopingConfigurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string reportName, string scopingConfigurationName, AppComplianceReportScopingConfigurationData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/scopingConfigurations/", false);
-            uri.AppendPath(scopingConfigurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Get the AppComplianceAutomation scoping configuration of the specific report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
-        /// <param name="data"> Parameters for the create or update operation, this is a singleton resource, so please make sure you're using 'default' as the name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="scopingConfigurationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppComplianceReportScopingConfigurationData>> CreateOrUpdateAsync(string reportName, string scopingConfigurationName, AppComplianceReportScopingConfigurationData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string reportName, string scopingConfigurationName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(reportName, scopingConfigurationName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        AppComplianceReportScopingConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AppComplianceReportScopingConfigurationData.DeserializeAppComplianceReportScopingConfigurationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the AppComplianceAutomation scoping configuration of the specific report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
-        /// <param name="data"> Parameters for the create or update operation, this is a singleton resource, so please make sure you're using 'default' as the name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="scopingConfigurationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppComplianceReportScopingConfigurationData> CreateOrUpdate(string reportName, string scopingConfigurationName, AppComplianceReportScopingConfigurationData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(reportName, scopingConfigurationName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        AppComplianceReportScopingConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AppComplianceReportScopingConfigurationData.DeserializeAppComplianceReportScopingConfigurationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string reportName, string scopingConfigurationName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
             uri.AppendPath("/scopingConfigurations/", false);
             uri.AppendPath(scopingConfigurationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string reportName, string scopingConfigurationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            return message;
+        }
+
+        internal HttpMessage CreateGetAllRequest(string reportName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
             uri.AppendPath(reportName, true);
-            uri.AppendPath("/scopingConfigurations/", false);
-            uri.AppendPath(scopingConfigurationName, true);
+            uri.AppendPath("/scopingConfigurations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Clean the AppComplianceAutomation scoping configuration of the specific report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string reportName, string scopingConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
-
-            using var message = CreateDeleteRequest(reportName, scopingConfigurationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Clean the AppComplianceAutomation scoping configuration of the specific report. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string reportName, string scopingConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
-
-            using var message = CreateDeleteRequest(reportName, scopingConfigurationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string reportName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string reportName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Returns a list format of the singleton scopingConfiguration for a specified report. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScopingConfigurationResourceListResult>> ListNextPageAsync(string nextLink, string reportName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string reportName, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateListNextPageRequest(nextLink, reportName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScopingConfigurationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScopingConfigurationResourceListResult.DeserializeScopingConfigurationResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns a list format of the singleton scopingConfiguration for a specified report. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScopingConfigurationResourceListResult> ListNextPage(string nextLink, string reportName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateListNextPageRequest(nextLink, reportName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScopingConfigurationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScopingConfigurationResourceListResult.DeserializeScopingConfigurationResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

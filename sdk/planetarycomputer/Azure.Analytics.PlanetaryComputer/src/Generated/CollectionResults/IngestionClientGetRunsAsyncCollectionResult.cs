@@ -20,7 +20,7 @@ namespace Azure.Analytics.PlanetaryComputer
         private readonly IngestionClient _client;
         private readonly string _collectionId;
         private readonly Guid _ingestionId;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly RequestContext _context;
 
@@ -28,15 +28,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="client"> The IngestionClient client used to send requests. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public IngestionClientGetRunsAsyncCollectionResult(IngestionClient client, string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
+        public IngestionClientGetRunsAsyncCollectionResult(IngestionClient client, string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _collectionId = collectionId;
             _ingestionId = ingestionId;
-            _top = top;
+            _maxCount = maxCount;
             _skip = skip;
             _context = context;
         }
@@ -75,7 +75,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRunsRequest(nextLink, _collectionId, _ingestionId, _top, _skip, _context) : _client.CreateGetRunsRequest(_collectionId, _ingestionId, _top, _skip, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRunsRequest(nextLink, _collectionId, _ingestionId, _maxCount, _skip, _context) : _client.CreateGetRunsRequest(_collectionId, _ingestionId, _maxCount, _skip, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IngestionClient.GetRuns");
             scope.Start();
             try

@@ -115,6 +115,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureEmbeddingModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "AzureEmbeddingModel"
+        }
+      },
       "properties": [
         {
           "$id": "13",

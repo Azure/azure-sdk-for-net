@@ -46,6 +46,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with client default values on properties.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithDefaultValues"
+        }
+      },
       "properties": [
         {
           "$id": "6",

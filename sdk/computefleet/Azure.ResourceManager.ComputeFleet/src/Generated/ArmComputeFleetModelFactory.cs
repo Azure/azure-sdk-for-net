@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="bootDiagnostics">
         /// Boot Diagnostics is a debugging feature which allows you to view Console Output
-        /// and Screenshot to diagnose VM status. **NOTE**: If storageUri is being
+        /// and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being
         /// specified then ensure that the storage account is in the same region and
         /// subscription as the VM. You can easily view the output of your console log.
         /// Azure also enables you to see a screenshot of the VM from the hypervisor.
@@ -265,22 +265,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="adminUsername">
         /// Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **Windows-only
-        /// restriction:** Cannot end in "." &lt;br&gt;&lt;br&gt; **Disallowed values:**
+        /// restriction:<b> Cannot end in "." &lt;br&gt;&lt;br&gt; </b>Disallowed values:**
         /// "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3",
         /// "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup",
         /// "console", "david", "guest", "john", "owner", "root", "server", "sql",
         /// "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
-        /// &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 1  character &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Linux):** 64 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 20 characters
+        /// &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 1  character &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):<b> 64 characters &lt;br&gt;&lt;br&gt; </b>Max-length (Windows):** 20 characters
         /// </param>
         /// <param name="adminPassword">
         /// Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length
-        /// (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters
-        /// &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 123 characters &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Linux):** 72 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4
+        /// (Windows):<b> 8 characters &lt;br&gt;&lt;br&gt; </b>Minimum-length (Linux):** 6 characters
+        /// &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 123 characters &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):<b> 72 characters &lt;br&gt;&lt;br&gt; </b>Complexity requirements:** 3 out of 4
         /// conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper
         /// characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_])
-        /// &lt;br&gt;&lt;br&gt; **Disallowed values:** "abc@123", "P@$$w0rd", "P@ssw0rd",
+        /// &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "abc@123", "P@$$w0rd", "P@ssw0rd",
         /// "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1",
         /// "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to
         /// reset the Remote Desktop service or its login password in a Windows
@@ -472,14 +472,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="name"> The disk name. </param>
         /// <param name="caching">
-        /// Specifies the caching requirements. Possible values are: **None,**
-        /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
+        /// Specifies the caching requirements. Possible values are: <b>None,</b>
+        /// <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </param>
         /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="createOption">
         /// Specifies how the virtual machines in the scale set should be created. The only
-        /// allowed value is: **FromImage.** This value is used when you are using an image
+        /// allowed value is: <b>FromImage.</b> This value is used when you are using an image
         /// to create the virtual machine. If you are using a platform image, you also use
         /// the imageReference element described above. If you are using a marketplace
         /// image, you  also use the plan element previously described.
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="osType">
         /// This property allows you to specify the type of the OS that is included in the
         /// disk if creating a VM from user-image or a specialized VHD. Possible values
-        /// are: **Windows,** **Linux.**
+        /// are: <b>Windows,</b> <b>Linux.</b>
         /// </param>
         /// <param name="imageUri"> Specifies the virtual hard disk's uri. </param>
         /// <param name="vhdContainers">
@@ -508,11 +508,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="deleteOption">
         /// Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion
         /// (This feature is available for VMSS with Flexible OrchestrationMode only).
-        /// &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS
-        /// disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value
+        /// &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS
+        /// disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value
         /// is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The
-        /// default value is set to **Delete**. For an Ephemeral OS Disk, the default value
-        /// is set to **Delete**. User cannot change the delete option for Ephemeral OS
+        /// default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value
+        /// is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS
         /// Disk.
         /// </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssOSDisk"/> instance for mocking. </returns>

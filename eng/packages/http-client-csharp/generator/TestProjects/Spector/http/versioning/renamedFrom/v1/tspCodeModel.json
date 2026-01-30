@@ -148,6 +148,11 @@
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OldModel"
+        }
+      },
       "properties": [
         {
           "$id": "16",
