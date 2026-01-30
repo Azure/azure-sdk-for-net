@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogMonitorLogRules : IUtf8JsonSerializable, IJsonModel<DatadogMonitorLogRules>
+    /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+    public partial class DatadogMonitorLogRules : IJsonModel<DatadogMonitorLogRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogMonitorLogRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatadogMonitorLogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatadogMonitorLogRules)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsAadLogsSent))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
-                foreach (var item in FilteringTags)
+                foreach (DatadogMonitorFilteringTag item in FilteringTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,69 +76,73 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogMonitorLogRules IJsonModel<DatadogMonitorLogRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogMonitorLogRules IJsonModel<DatadogMonitorLogRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatadogMonitorLogRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatadogMonitorLogRules)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatadogMonitorLogRules(document.RootElement, options);
         }
 
-        internal static DatadogMonitorLogRules DeserializeDatadogMonitorLogRules(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DatadogMonitorLogRules DeserializeDatadogMonitorLogRules(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? sendAadLogs = default;
-            bool? sendSubscriptionLogs = default;
-            bool? sendResourceLogs = default;
+            bool? isAadLogsSent = default;
+            bool? isSubscriptionLogsSent = default;
+            bool? isResourceLogsSent = default;
             IList<DatadogMonitorFilteringTag> filteringTags = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sendAadLogs"u8))
+                if (prop.NameEquals("sendAadLogs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sendAadLogs = property.Value.GetBoolean();
+                    isAadLogsSent = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sendSubscriptionLogs"u8))
+                if (prop.NameEquals("sendSubscriptionLogs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sendSubscriptionLogs = property.Value.GetBoolean();
+                    isSubscriptionLogsSent = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sendResourceLogs"u8))
+                if (prop.NameEquals("sendResourceLogs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sendResourceLogs = property.Value.GetBoolean();
+                    isResourceLogsSent = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("filteringTags"u8))
+                if (prop.NameEquals("filteringTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DatadogMonitorFilteringTag> array = new List<DatadogMonitorFilteringTag>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DatadogMonitorFilteringTag.DeserializeDatadogMonitorFilteringTag(item, options));
                     }
@@ -147,17 +151,19 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DatadogMonitorLogRules(sendAadLogs, sendSubscriptionLogs, sendResourceLogs, filteringTags ?? new ChangeTrackingList<DatadogMonitorFilteringTag>(), serializedAdditionalRawData);
+            return new DatadogMonitorLogRules(isAadLogsSent, isSubscriptionLogsSent, isResourceLogsSent, filteringTags ?? new ChangeTrackingList<DatadogMonitorFilteringTag>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DatadogMonitorLogRules>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatadogMonitorLogRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -167,15 +173,20 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogMonitorLogRules IPersistableModel<DatadogMonitorLogRules>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogMonitorLogRules IPersistableModel<DatadogMonitorLogRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatadogMonitorLogRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDatadogMonitorLogRules(document.RootElement, options);
                     }
                 default:
@@ -183,6 +194,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DatadogMonitorLogRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

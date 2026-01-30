@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> The DatadogLiftrResourceCategory. </summary>
+    /// <summary></summary>
     public readonly partial struct DatadogLiftrResourceCategory : IEquatable<DatadogLiftrResourceCategory>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DatadogLiftrResourceCategory"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DatadogLiftrResourceCategory(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string MonitorLogsValue = "MonitorLogs";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogLiftrResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DatadogLiftrResourceCategory(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static DatadogLiftrResourceCategory Unknown { get; } = new DatadogLiftrResourceCategory(UnknownValue);
-        /// <summary> MonitorLogs. </summary>
+
+        /// <summary> Gets the MonitorLogs. </summary>
         public static DatadogLiftrResourceCategory MonitorLogs { get; } = new DatadogLiftrResourceCategory(MonitorLogsValue);
+
         /// <summary> Determines if two <see cref="DatadogLiftrResourceCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatadogLiftrResourceCategory left, DatadogLiftrResourceCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatadogLiftrResourceCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatadogLiftrResourceCategory left, DatadogLiftrResourceCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatadogLiftrResourceCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatadogLiftrResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatadogLiftrResourceCategory(string value) => new DatadogLiftrResourceCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatadogLiftrResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatadogLiftrResourceCategory?(string value) => value == null ? null : new DatadogLiftrResourceCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatadogLiftrResourceCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatadogLiftrResourceCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

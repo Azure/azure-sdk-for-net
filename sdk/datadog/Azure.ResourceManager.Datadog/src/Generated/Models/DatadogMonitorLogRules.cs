@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
     public partial class DatadogMonitorLogRules
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatadogMonitorLogRules"/>. </summary>
         public DatadogMonitorLogRules()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="isSubscriptionLogsSent"> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </param>
         /// <param name="isResourceLogsSent"> Flag specifying if Azure resource logs should be sent for the Monitor resource. </param>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogMonitorLogRules(bool? isAadLogsSent, bool? isSubscriptionLogsSent, bool? isResourceLogsSent, IList<DatadogMonitorFilteringTag> filteringTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogMonitorLogRules(bool? isAadLogsSent, bool? isSubscriptionLogsSent, bool? isResourceLogsSent, IList<DatadogMonitorFilteringTag> filteringTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAadLogsSent = isAadLogsSent;
             IsSubscriptionLogsSent = isSubscriptionLogsSent;
             IsResourceLogsSent = isResourceLogsSent;
             FilteringTags = filteringTags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Flag specifying if AAD logs should be sent for the Monitor resource. </summary>
         public bool? IsAadLogsSent { get; set; }
+
         /// <summary> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </summary>
         public bool? IsSubscriptionLogsSent { get; set; }
+
         /// <summary> Flag specifying if Azure resource logs should be sent for the Monitor resource. </summary>
         public bool? IsResourceLogsSent { get; set; }
+
         /// <summary> List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
         public IList<DatadogMonitorFilteringTag> FilteringTags { get; }
     }

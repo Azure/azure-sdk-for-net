@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogMonitorProperties : IUtf8JsonSerializable, IJsonModel<DatadogMonitorProperties>
+    /// <summary> Properties specific to the monitor resource. </summary>
+    public partial class DatadogMonitorProperties : IJsonModel<DatadogMonitorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogMonitorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatadogMonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatadogMonitorProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -69,15 +69,25 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(SreAgentConfiguration))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("sreAgentConfiguration"u8);
+                writer.WriteStartArray();
+                foreach (SreAgentConfiguration item in SreAgentConfiguration)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +96,27 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogMonitorProperties IJsonModel<DatadogMonitorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogMonitorProperties IJsonModel<DatadogMonitorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatadogMonitorProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatadogMonitorProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatadogMonitorProperties(document.RootElement, options);
         }
 
-        internal static DatadogMonitorProperties DeserializeDatadogMonitorProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DatadogMonitorProperties DeserializeDatadogMonitorProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,79 +128,92 @@ namespace Azure.ResourceManager.Datadog.Models
             DatadogUserInfo userInfo = default;
             DatadogLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<SreAgentConfiguration> sreAgentConfiguration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DatadogProvisioningState(property.Value.GetString());
+                    provisioningState = new DatadogProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monitoringStatus"u8))
+                if (prop.NameEquals("monitoringStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitoringStatus = new DatadogMonitoringStatus(property.Value.GetString());
+                    monitoringStatus = new DatadogMonitoringStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("marketplaceSubscriptionStatus"u8))
+                if (prop.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());
+                    marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("datadogOrganizationProperties"u8))
+                if (prop.NameEquals("datadogOrganizationProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value, options);
+                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userInfo"u8))
+                if (prop.NameEquals("userInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userInfo = DatadogUserInfo.DeserializeDatadogUserInfo(property.Value, options);
+                    userInfo = DatadogUserInfo.DeserializeDatadogUserInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("liftrResourceCategory"u8))
+                if (prop.NameEquals("liftrResourceCategory"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    liftrResourceCategory = new DatadogLiftrResourceCategory(property.Value.GetString());
+                    liftrResourceCategory = new DatadogLiftrResourceCategory(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("liftrResourcePreference"u8))
+                if (prop.NameEquals("liftrResourcePreference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    liftrResourcePreference = property.Value.GetInt32();
+                    liftrResourcePreference = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("sreAgentConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SreAgentConfiguration> array = new List<SreAgentConfiguration>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(Models.SreAgentConfiguration.DeserializeSreAgentConfiguration(item, options));
+                    }
+                    sreAgentConfiguration = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DatadogMonitorProperties(
                 provisioningState,
                 monitoringStatus,
@@ -194,13 +222,17 @@ namespace Azure.ResourceManager.Datadog.Models
                 userInfo,
                 liftrResourceCategory,
                 liftrResourcePreference,
-                serializedAdditionalRawData);
+                sreAgentConfiguration ?? new ChangeTrackingList<SreAgentConfiguration>(),
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DatadogMonitorProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatadogMonitorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -210,15 +242,20 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        DatadogMonitorProperties IPersistableModel<DatadogMonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogMonitorProperties IPersistableModel<DatadogMonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatadogMonitorProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDatadogMonitorProperties(document.RootElement, options);
                     }
                 default:
@@ -226,6 +263,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DatadogMonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Datadog
 {
@@ -24,75 +25,80 @@ namespace Azure.ResourceManager.Datadog
     /// </summary>
     public partial class DataMonitoringTagRuleCollection : ArmCollection, IEnumerable<DataMonitoringTagRuleResource>, IAsyncEnumerable<DataMonitoringTagRuleResource>
     {
-        private readonly ClientDiagnostics _dataMonitoringTagRuleTagRulesClientDiagnostics;
-        private readonly TagRulesRestOperations _dataMonitoringTagRuleTagRulesRestClient;
+        private readonly ClientDiagnostics _tagRulesClientDiagnostics;
+        private readonly TagRules _tagRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataMonitoringTagRuleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataMonitoringTagRuleCollection for mocking. </summary>
         protected DataMonitoringTagRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataMonitoringTagRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMonitoringTagRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataMonitoringTagRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataMonitoringTagRuleTagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DataMonitoringTagRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataMonitoringTagRuleResource.ResourceType, out string dataMonitoringTagRuleTagRulesApiVersion);
-            _dataMonitoringTagRuleTagRulesRestClient = new TagRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataMonitoringTagRuleTagRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataMonitoringTagRuleResource.ResourceType, out string dataMonitoringTagRuleApiVersion);
+            _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DataMonitoringTagRuleResource.ResourceType.Namespace, Diagnostics);
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, dataMonitoringTagRuleApiVersion ?? "2025-11-03-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DatadogMonitorResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleSetName"> Rule set name. </param>
-        /// <param name="data"> The <see cref="DataMonitoringTagRuleData"/> to use. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataMonitoringTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataMonitoringTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataMonitoringTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _dataMonitoringTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DatadogArmOperation<DataMonitoringTagRuleResource>(Response.FromValue(new DataMonitoringTagRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, DataMonitoringTagRuleData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMonitoringTagRuleData> response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DatadogArmOperation<DataMonitoringTagRuleResource> operation = new DatadogArmOperation<DataMonitoringTagRuleResource>(Response.FromValue(new DataMonitoringTagRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,44 +112,47 @@ namespace Azure.ResourceManager.Datadog
         /// Create or update a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleSetName"> Rule set name. </param>
-        /// <param name="data"> The <see cref="DataMonitoringTagRuleData"/> to use. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataMonitoringTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataMonitoringTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataMonitoringTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
-                var uri = _dataMonitoringTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DatadogArmOperation<DataMonitoringTagRuleResource>(Response.FromValue(new DataMonitoringTagRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, DataMonitoringTagRuleData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMonitoringTagRuleData> response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DatadogArmOperation<DataMonitoringTagRuleResource> operation = new DatadogArmOperation<DataMonitoringTagRuleResource>(Response.FromValue(new DataMonitoringTagRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +166,42 @@ namespace Azure.ResourceManager.Datadog
         /// Get a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataMonitoringTagRuleResource>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Get");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataMonitoringTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMonitoringTagRuleData> response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMonitoringTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +215,42 @@ namespace Azure.ResourceManager.Datadog
         /// Get a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataMonitoringTagRuleResource> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Get");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataMonitoringTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMonitoringTagRuleData> response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMonitoringTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +264,44 @@ namespace Azure.ResourceManager.Datadog
         /// List the tag rules for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataMonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMonitoringTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMonitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMonitoringTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMonitoringTagRuleResource(Client, DataMonitoringTagRuleData.DeserializeDataMonitoringTagRuleData(e)), _dataMonitoringTagRuleTagRulesClientDiagnostics, Pipeline, "DataMonitoringTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(_tagRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataMonitoringTagRuleResource(Client, data));
         }
 
         /// <summary>
         /// List the tag rules for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +309,61 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> A collection of <see cref="DataMonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMonitoringTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMonitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMonitoringTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMonitoringTagRuleResource(Client, DataMonitoringTagRuleData.DeserializeDataMonitoringTagRuleData(e)), _dataMonitoringTagRuleTagRulesClientDiagnostics, Pipeline, "DataMonitoringTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllCollectionResultOfT(_tagRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataMonitoringTagRuleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Exists");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataMonitoringTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMonitoringTagRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMonitoringTagRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +377,50 @@ namespace Azure.ResourceManager.Datadog
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Exists");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataMonitoringTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMonitoringTagRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMonitoringTagRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +434,54 @@ namespace Azure.ResourceManager.Datadog
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataMonitoringTagRuleResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataMonitoringTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMonitoringTagRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMonitoringTagRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMonitoringTagRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMonitoringTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +495,54 @@ namespace Azure.ResourceManager.Datadog
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-11</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMonitoringTagRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataMonitoringTagRuleResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _dataMonitoringTagRuleTagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("DataMonitoringTagRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataMonitoringTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMonitoringTagRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMonitoringTagRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMonitoringTagRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMonitoringTagRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMonitoringTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +562,7 @@ namespace Azure.ResourceManager.Datadog
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataMonitoringTagRuleResource> IAsyncEnumerable<DataMonitoringTagRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

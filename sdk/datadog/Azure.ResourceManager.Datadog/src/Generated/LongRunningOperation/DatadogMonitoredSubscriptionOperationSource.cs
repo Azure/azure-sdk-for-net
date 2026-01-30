@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Datadog
 {
-    internal class DatadogMonitoredSubscriptionOperationSource : IOperationSource<DatadogMonitoredSubscriptionResource>
+    /// <summary></summary>
+    internal partial class DatadogMonitoredSubscriptionOperationSource : IOperationSource<DatadogMonitoredSubscriptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DatadogMonitoredSubscriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DatadogMonitoredSubscriptionResource IOperationSource<DatadogMonitoredSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatadogMonitoredSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatadogContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DatadogMonitoredSubscriptionData data = DatadogMonitoredSubscriptionData.DeserializeDatadogMonitoredSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DatadogMonitoredSubscriptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DatadogMonitoredSubscriptionResource> IOperationSource<DatadogMonitoredSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatadogMonitoredSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatadogContext.Default);
-            return await Task.FromResult(new DatadogMonitoredSubscriptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DatadogMonitoredSubscriptionData data = DatadogMonitoredSubscriptionData.DeserializeDatadogMonitoredSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DatadogMonitoredSubscriptionResource(_client, data);
         }
     }
 }

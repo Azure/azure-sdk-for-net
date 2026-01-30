@@ -7,59 +7,372 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDatadogModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogAgreement"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Represents the properties of the resource. </param>
-        /// <returns> A new <see cref="Models.DatadogAgreement"/> instance for mocking. </returns>
-        public static DatadogAgreement DatadogAgreement(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
-        {
-            return new DatadogAgreement(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
 
-        /// <summary> Initializes a new instance of <see cref="Datadog.DatadogMonitorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
-        /// <param name="skuName"></param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </param>
+        /// <param name="skuName"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
+        /// <param name="identity"></param>
         /// <returns> A new <see cref="Datadog.DatadogMonitorData"/> instance for mocking. </returns>
-        public static DatadogMonitorData DatadogMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DatadogMonitorProperties properties = null, string skuName = null, ManagedServiceIdentity identity = null)
+        public static DatadogMonitorData DatadogMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatadogMonitorProperties properties = default, string skuName = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DatadogMonitorData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                skuName != null ? new DatadogSku(skuName, serializedAdditionalRawData: null) : null,
-                identity,
-                serializedAdditionalRawData: null);
+                skuName is null ? default : new DatadogSku(skuName, null),
+                identity);
+        }
+
+        /// <summary> Properties specific to the monitor resource. </summary>
+        /// <param name="provisioningState"></param>
+        /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </param>
+        /// <param name="datadogOrganizationProperties"> Specify the Datadog organization name. In the case of linking to existing organizations, Id, ApiKey, and Applicationkey is required as well. </param>
+        /// <param name="userInfo"> Includes name, email and optionally, phone number. User Information can't be null. </param>
+        /// <param name="liftrResourceCategory"></param>
+        /// <param name="liftrResourcePreference"> The priority of the resource. </param>
+        /// <param name="sreAgentConfiguration"> SRE Agent configuration to connect to MCP server of Datadog for given organization. </param>
+        /// <returns> A new <see cref="Models.DatadogMonitorProperties"/> instance for mocking. </returns>
+        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitoringStatus? monitoringStatus = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, DatadogOrganizationProperties datadogOrganizationProperties = default, DatadogUserInfo userInfo = default, DatadogLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, IEnumerable<SreAgentConfiguration> sreAgentConfiguration = default)
+        {
+            sreAgentConfiguration ??= new ChangeTrackingList<SreAgentConfiguration>();
+
+            return new DatadogMonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                datadogOrganizationProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                sreAgentConfiguration.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Capture logs and metrics of Azure resources based on ARM tags. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Definition of the properties for a TagRules resource. </param>
+        /// <returns> A new <see cref="Datadog.DataMonitoringTagRuleData"/> instance for mocking. </returns>
+        public static DataMonitoringTagRuleData DataMonitoringTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitoringTagRuleProperties properties = default)
+        {
+            return new DataMonitoringTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <param name="provisioningState"></param>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRulesFilteringTags"> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
+        /// <param name="agentRules"> Set of rules for managing agents for the Monitor resource. </param>
+        /// <param name="isAutomutingEnabled"> Configuration to enable/disable auto-muting flag. </param>
+        /// <param name="isCustomMetricsEnabled"> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </param>
+        /// <returns> A new <see cref="Models.MonitoringTagRuleProperties"/> instance for mocking. </returns>
+        public static MonitoringTagRuleProperties MonitoringTagRuleProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitorLogRules logRules = default, IEnumerable<DatadogMonitorFilteringTag> metricRulesFilteringTags = default, DatadogMonitorAgentRules agentRules = default, bool? isAutomutingEnabled = default, bool? isCustomMetricsEnabled = default)
+        {
+            return new MonitoringTagRuleProperties(
+                provisioningState,
+                logRules,
+                metricRulesFilteringTags is null ? default : new DatadogMonitorMetricRules((metricRulesFilteringTags ?? new ChangeTrackingList<DatadogMonitorFilteringTag>()).ToList(), null),
+                agentRules,
+                isAutomutingEnabled,
+                isCustomMetricsEnabled,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        /// <param name="isAadLogsSent"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
+        /// <param name="isSubscriptionLogsSent"> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </param>
+        /// <param name="isResourceLogsSent"> Flag specifying if Azure resource logs should be sent for the Monitor resource. </param>
+        /// <param name="filteringTags"> List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
+        /// <returns> A new <see cref="Models.DatadogMonitorLogRules"/> instance for mocking. </returns>
+        public static DatadogMonitorLogRules DatadogMonitorLogRules(bool? isAadLogsSent = default, bool? isSubscriptionLogsSent = default, bool? isResourceLogsSent = default, IEnumerable<DatadogMonitorFilteringTag> filteringTags = default)
+        {
+            filteringTags ??= new ChangeTrackingList<DatadogMonitorFilteringTag>();
+
+            return new DatadogMonitorLogRules(isAadLogsSent, isSubscriptionLogsSent, isResourceLogsSent, filteringTags.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Set of rules for managing agents for the Monitor resource. </summary>
+        /// <param name="isAgentMonitoringEnabled"> Flag specifying if agent monitoring should be enabled for the Monitor resource. </param>
+        /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
+        /// <returns> A new <see cref="Models.DatadogMonitorAgentRules"/> instance for mocking. </returns>
+        public static DatadogMonitorAgentRules DatadogMonitorAgentRules(bool? isAgentMonitoringEnabled = default, IEnumerable<DatadogMonitorFilteringTag> filteringTags = default)
+        {
+            filteringTags ??= new ChangeTrackingList<DatadogMonitorFilteringTag>();
+
+            return new DatadogMonitorAgentRules(isAgentMonitoringEnabled, filteringTags.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </param>
+        /// <returns> A new <see cref="Datadog.DatadogMonitoredSubscriptionData"/> instance for mocking. </returns>
+        public static DatadogMonitoredSubscriptionData DatadogMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatadogSubscriptionProperties properties = default)
+        {
+            return new DatadogMonitoredSubscriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </summary>
+        /// <param name="operation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <returns> A new <see cref="Models.DatadogSubscriptionProperties"/> instance for mocking. </returns>
+        public static DatadogSubscriptionProperties DatadogSubscriptionProperties(DatadogOperation? operation = default, IEnumerable<DatadogMonitoredSubscriptionItem> monitoredSubscriptionList = default)
+        {
+            monitoredSubscriptionList ??= new ChangeTrackingList<DatadogMonitoredSubscriptionItem>();
+
+            return new DatadogSubscriptionProperties(operation, monitoredSubscriptionList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="properties"> The set of properties that can be update in a PATCH request to a monitor resource. </param>
+        /// <param name="tags"> The new tags of the monitor resource. </param>
+        /// <param name="skuName"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
+        /// <returns> A new <see cref="Models.DatadogMonitorPatch"/> instance for mocking. </returns>
+        public static DatadogMonitorPatch DatadogMonitorPatch(DatadogMonitorResourcePatchProperties properties = default, IDictionary<string, string> tags = default, string skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatadogMonitorPatch(properties, tags, skuName is null ? default : new DatadogSku(skuName, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request for adding/removing Datadog MCP connectors on SRE Agent resource. </summary>
+        /// <param name="mcpConnectorResourceIdList"> The list of ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
+        /// <param name="action"> Add/Remove action. </param>
+        /// <returns> A new <see cref="Models.DatadogSreAgentConnectorContent"/> instance for mocking. </returns>
+        public static DatadogSreAgentConnectorContent DatadogSreAgentConnectorContent(IEnumerable<SreAgentConfiguration> mcpConnectorResourceIdList = default, ConnectorAction action = default)
+        {
+            mcpConnectorResourceIdList ??= new ChangeTrackingList<SreAgentConfiguration>();
+
+            return new DatadogSreAgentConnectorContent(mcpConnectorResourceIdList.ToList(), action, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response of a list operation. </summary>
+        /// <param name="value"> The SreAgentConfiguration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.DatadogSreAgentConfigurationListResult"/> instance for mocking. </returns>
+        public static DatadogSreAgentConfigurationListResult DatadogSreAgentConfigurationListResult(IEnumerable<SreAgentConfiguration> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SreAgentConfiguration>();
+
+            return new DatadogSreAgentConfigurationListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a Datadog Application key and its associated properties. </summary>
+        /// <param name="createdBy"> The user that created the Application key. </param>
+        /// <param name="name"> The name of the Application key. </param>
+        /// <param name="key"> The value of the Application key. </param>
+        /// <returns> A new <see cref="Models.DatadogApplicationKey"/> instance for mocking. </returns>
+        public static DatadogApplicationKey DatadogApplicationKey(string createdBy = default, string name = default, string key = default)
+        {
+            return new DatadogApplicationKey(createdBy, name, key, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DatadogHost. </summary>
+        /// <param name="name"> The name of the host. </param>
+        /// <param name="aliases"> The aliases for the host installed via the Datadog agent. </param>
+        /// <param name="apps"> The Datadog integrations reporting metrics for the host. </param>
+        /// <param name="meta"></param>
+        /// <returns> A new <see cref="Models.DatadogHost"/> instance for mocking. </returns>
+        public static DatadogHost DatadogHost(string name = default, IEnumerable<string> aliases = default, IEnumerable<string> apps = default, DatadogHostMetadata meta = default)
+        {
+            aliases ??= new ChangeTrackingList<string>();
+            apps ??= new ChangeTrackingList<string>();
+
+            return new DatadogHost(name, aliases.ToList(), apps.ToList(), meta, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="installMethod"></param>
+        /// <param name="logsAgentTransport"> The transport. </param>
+        /// <returns> A new <see cref="Models.DatadogHostMetadata"/> instance for mocking. </returns>
+        public static DatadogHostMetadata DatadogHostMetadata(string agentVersion = default, DatadogInstallMethod installMethod = default, string logsAgentTransport = default)
+        {
+            return new DatadogHostMetadata(agentVersion, installMethod, logsAgentTransport is null ? default : new DatadogLogsAgent(logsAgentTransport, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DatadogInstallMethod. </summary>
+        /// <param name="tool"> The tool. </param>
+        /// <param name="toolVersion"> The tool version. </param>
+        /// <param name="installerVersion"> The installer version. </param>
+        /// <returns> A new <see cref="Models.DatadogInstallMethod"/> instance for mocking. </returns>
+        public static DatadogInstallMethod DatadogInstallMethod(string tool = default, string toolVersion = default, string installerVersion = default)
+        {
+            return new DatadogInstallMethod(tool, toolVersion, installerVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The definition of a linked resource. </summary>
+        /// <param name="id"> The ARM id of the linked resource. </param>
+        /// <param name="location"> The location of the linked resource. </param>
+        /// <returns> A new <see cref="Models.DatadogLinkedResourceResult"/> instance for mocking. </returns>
+        public static DatadogLinkedResourceResult DatadogLinkedResourceResult(ResourceIdentifier id = default, AzureLocation? location = default)
+        {
+            return new DatadogLinkedResourceResult(id, location, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The properties of a resource currently being monitored by the Datadog monitor resource. </summary>
+        /// <param name="id"> The ARM id of the resource. </param>
+        /// <param name="isSendingMetricsEnabled"> Flag indicating if resource is sending metrics to Datadog. </param>
+        /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
+        /// <param name="isSendingLogsEnabled"> Flag indicating if resource is sending logs to Datadog. </param>
+        /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
+        /// <returns> A new <see cref="Models.DatadogMonitoredResourceResult"/> instance for mocking. </returns>
+        public static DatadogMonitoredResourceResult DatadogMonitoredResourceResult(ResourceIdentifier id = default, bool? isSendingMetricsEnabled = default, string reasonForMetricsStatus = default, bool? isSendingLogsEnabled = default, string reasonForLogsStatus = default)
+        {
+            return new DatadogMonitoredResourceResult(
+                id,
+                isSendingMetricsEnabled,
+                reasonForMetricsStatus,
+                isSendingLogsEnabled,
+                reasonForLogsStatus,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DatadogSetPasswordLink. </summary>
+        /// <param name="setPasswordLink"></param>
+        /// <returns> A new <see cref="Models.DatadogSetPasswordLink"/> instance for mocking. </returns>
+        public static DatadogSetPasswordLink DatadogSetPasswordLink(string setPasswordLink = default)
+        {
+            return new DatadogSetPasswordLink(setPasswordLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Marketplace Subscription and Organization details to which resource gets billed into. </summary>
+        /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
+        /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
+        /// <returns> A new <see cref="Models.DatadogBillingInfoResult"/> instance for mocking. </returns>
+        public static DatadogBillingInfoResult DatadogBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = default, PartnerBillingEntity partnerBillingEntity = default)
+        {
+            return new DatadogBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Marketplace SAAS Info of the resource. </summary>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
+        /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
+        /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
+        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
+        /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = default, string marketplaceName = default, string marketplaceStatus = default, string billedAzureSubscriptionId = default, bool? isSubscribed = default)
+        {
+            return new MarketplaceSaaSInfo(
+                marketplaceSubscriptionId,
+                marketplaceName,
+                marketplaceStatus,
+                billedAzureSubscriptionId,
+                isSubscribed,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Partner Billing details associated with the resource. </summary>
+        /// <param name="id"> The Datadog Organization Id. </param>
+        /// <param name="name"> The Datadog Organization Name. </param>
+        /// <param name="partnerEntityUri"> Link to the datadog organization page. </param>
+        /// <returns> A new <see cref="Models.PartnerBillingEntity"/> instance for mocking. </returns>
+        public static PartnerBillingEntity PartnerBillingEntity(string id = default, string name = default, Uri partnerEntityUri = default)
+        {
+            return new PartnerBillingEntity(id, name, partnerEntityUri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Datadog.DatadogSingleSignOnData"/> instance for mocking. </returns>
+        public static DatadogSingleSignOnData DatadogSingleSignOnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatadogSingleSignOnProperties properties = default)
+        {
+            return new DatadogSingleSignOnData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The DatadogSingleSignOnProperties. </summary>
+        /// <param name="provisioningState"></param>
+        /// <param name="singleSignOnState"> Various states of the SSO resource. </param>
+        /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
+        /// <param name="singleSignOnUri"> The login URL specific to this Datadog Organization. </param>
+        /// <returns> A new <see cref="Models.DatadogSingleSignOnProperties"/> instance for mocking. </returns>
+        public static DatadogSingleSignOnProperties DatadogSingleSignOnProperties(DatadogProvisioningState? provisioningState = default, DatadogSingleSignOnState? singleSignOnState = default, string enterpriseAppId = default, Uri singleSignOnUri = default)
+        {
+            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DatadogAgreement. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Represents the properties of the resource. </param>
+        /// <returns> A new <see cref="Models.DatadogAgreement"/> instance for mocking. </returns>
+        public static DatadogAgreement DatadogAgreement(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatadogAgreementProperties properties = default)
+        {
+            return new DatadogAgreement(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Datadog resource can be created or not. </summary>
+        /// <param name="properties"> Represents the properties of the resource. </param>
+        /// <returns> A new <see cref="Models.DatadogSubscriptionStatusResult"/> instance for mocking. </returns>
+        public static DatadogSubscriptionStatusResult DatadogSubscriptionStatusResult(DatadogSubscriptionStatusProperties properties = default)
+        {
+            return new DatadogSubscriptionStatusResult(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Datadog resource can be created or not properties. </summary>
+        /// <param name="name"> The ARM id of the subscription. </param>
+        /// <param name="isCreationSupported"> Indicates if selected subscription supports Datadog resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </param>
+        /// <returns> A new <see cref="Models.DatadogSubscriptionStatusProperties"/> instance for mocking. </returns>
+        public static DatadogSubscriptionStatusProperties DatadogSubscriptionStatusProperties(string name = default, bool? isCreationSupported = default)
+        {
+            return new DatadogSubscriptionStatusProperties(name, isCreationSupported, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogMonitorProperties"/>. </summary>
@@ -71,227 +384,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <returns> A new <see cref="Models.DatadogMonitorProperties"/> instance for mocking. </returns>
-        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = null, DatadogMonitoringStatus? monitoringStatus = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, DatadogOrganizationProperties datadogOrganizationProperties = null, DatadogUserInfo userInfo = null, DatadogLiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference)
         {
-            return new DatadogMonitorProperties(
-                provisioningState,
-                monitoringStatus,
-                marketplaceSubscriptionStatus,
-                datadogOrganizationProperties,
-                userInfo,
-                liftrResourceCategory,
-                liftrResourcePreference,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogSubscriptionStatusResult"/>. </summary>
-        /// <param name="properties"> Represents the properties of the resource. </param>
-        /// <returns> A new <see cref="Models.DatadogSubscriptionStatusResult"/> instance for mocking. </returns>
-        public static DatadogSubscriptionStatusResult DatadogSubscriptionStatusResult(DatadogSubscriptionStatusProperties properties = null)
-        {
-            return new DatadogSubscriptionStatusResult(properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogSubscriptionStatusProperties"/>. </summary>
-        /// <param name="name"> The ARM id of the subscription. </param>
-        /// <param name="isCreationSupported"> Indicates if selected subscription supports Datadog resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </param>
-        /// <returns> A new <see cref="Models.DatadogSubscriptionStatusProperties"/> instance for mocking. </returns>
-        public static DatadogSubscriptionStatusProperties DatadogSubscriptionStatusProperties(string name = null, bool? isCreationSupported = null)
-        {
-            return new DatadogSubscriptionStatusProperties(name, isCreationSupported, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogBillingInfoResult"/>. </summary>
-        /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
-        /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
-        /// <returns> A new <see cref="Models.DatadogBillingInfoResult"/> instance for mocking. </returns>
-        public static DatadogBillingInfoResult DatadogBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = null, PartnerBillingEntity partnerBillingEntity = null)
-        {
-            return new DatadogBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
-        /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
-        /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
-        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
-        /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
-        /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = null)
-        {
-            return new MarketplaceSaaSInfo(
-                marketplaceSubscriptionId,
-                marketplaceName,
-                marketplaceStatus,
-                billedAzureSubscriptionId,
-                isSubscribed,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PartnerBillingEntity"/>. </summary>
-        /// <param name="id"> The Datadog Organization Id. </param>
-        /// <param name="name"> The Datadog Organization Name. </param>
-        /// <param name="partnerEntityUri"> Link to the datadog organization page. </param>
-        /// <returns> A new <see cref="Models.PartnerBillingEntity"/> instance for mocking. </returns>
-        public static PartnerBillingEntity PartnerBillingEntity(string id = null, string name = null, Uri partnerEntityUri = null)
-        {
-            return new PartnerBillingEntity(id, name, partnerEntityUri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogHost"/>. </summary>
-        /// <param name="name"> The name of the host. </param>
-        /// <param name="aliases"> The aliases for the host installed via the Datadog agent. </param>
-        /// <param name="apps"> The Datadog integrations reporting metrics for the host. </param>
-        /// <param name="meta"></param>
-        /// <returns> A new <see cref="Models.DatadogHost"/> instance for mocking. </returns>
-        public static DatadogHost DatadogHost(string name = null, IEnumerable<string> aliases = null, IEnumerable<string> apps = null, DatadogHostMetadata meta = null)
-        {
-            aliases ??= new List<string>();
-            apps ??= new List<string>();
-
-            return new DatadogHost(name, aliases?.ToList(), apps?.ToList(), meta, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogHostMetadata"/>. </summary>
-        /// <param name="agentVersion"> The agent version. </param>
-        /// <param name="installMethod"></param>
-        /// <param name="logsAgentTransport"></param>
-        /// <returns> A new <see cref="Models.DatadogHostMetadata"/> instance for mocking. </returns>
-        public static DatadogHostMetadata DatadogHostMetadata(string agentVersion = null, DatadogInstallMethod installMethod = null, string logsAgentTransport = null)
-        {
-            return new DatadogHostMetadata(agentVersion, installMethod, logsAgentTransport != null ? new DatadogLogsAgent(logsAgentTransport, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogInstallMethod"/>. </summary>
-        /// <param name="tool"> The tool. </param>
-        /// <param name="toolVersion"> The tool version. </param>
-        /// <param name="installerVersion"> The installer version. </param>
-        /// <returns> A new <see cref="Models.DatadogInstallMethod"/> instance for mocking. </returns>
-        public static DatadogInstallMethod DatadogInstallMethod(string tool = null, string toolVersion = null, string installerVersion = null)
-        {
-            return new DatadogInstallMethod(tool, toolVersion, installerVersion, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogLinkedResourceResult"/>. </summary>
-        /// <param name="id"> The ARM id of the linked resource. </param>
-        /// <param name="location"> The location of the linked resource. </param>
-        /// <returns> A new <see cref="Models.DatadogLinkedResourceResult"/> instance for mocking. </returns>
-        public static DatadogLinkedResourceResult DatadogLinkedResourceResult(ResourceIdentifier id = null, AzureLocation? location = null)
-        {
-            return new DatadogLinkedResourceResult(id, location, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogMonitoredResourceResult"/>. </summary>
-        /// <param name="id"> The ARM id of the resource. </param>
-        /// <param name="isSendingMetricsEnabled"> Flag indicating if resource is sending metrics to Datadog. </param>
-        /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
-        /// <param name="isSendingLogsEnabled"> Flag indicating if resource is sending logs to Datadog. </param>
-        /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        /// <returns> A new <see cref="Models.DatadogMonitoredResourceResult"/> instance for mocking. </returns>
-        public static DatadogMonitoredResourceResult DatadogMonitoredResourceResult(ResourceIdentifier id = null, bool? isSendingMetricsEnabled = null, string reasonForMetricsStatus = null, bool? isSendingLogsEnabled = null, string reasonForLogsStatus = null)
-        {
-            return new DatadogMonitoredResourceResult(
-                id,
-                isSendingMetricsEnabled,
-                reasonForMetricsStatus,
-                isSendingLogsEnabled,
-                reasonForLogsStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Datadog.DatadogMonitoredSubscriptionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </param>
-        /// <returns> A new <see cref="Datadog.DatadogMonitoredSubscriptionData"/> instance for mocking. </returns>
-        public static DatadogMonitoredSubscriptionData DatadogMonitoredSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogSubscriptionProperties properties = null)
-        {
-            return new DatadogMonitoredSubscriptionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRuleProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRulesFilteringTags"> Set of rules for sending metrics for the Monitor resource. </param>
-        /// <param name="agentRules"> Set of rules for managing agents for the Monitor resource. </param>
-        /// <param name="isAutomutingEnabled"> Configuration to enable/disable auto-muting flag. </param>
-        /// <param name="isCustomMetricsEnabled"> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </param>
-        /// <returns> A new <see cref="Models.MonitoringTagRuleProperties"/> instance for mocking. </returns>
-        public static MonitoringTagRuleProperties MonitoringTagRuleProperties(DatadogProvisioningState? provisioningState = null, DatadogMonitorLogRules logRules = null, IEnumerable<DatadogMonitorFilteringTag> metricRulesFilteringTags = null, DatadogMonitorAgentRules agentRules = null, bool? isAutomutingEnabled = null, bool? isCustomMetricsEnabled = null)
-        {
-            metricRulesFilteringTags ??= new List<DatadogMonitorFilteringTag>();
-
-            return new MonitoringTagRuleProperties(
-                provisioningState,
-                logRules,
-                metricRulesFilteringTags != null ? new DatadogMonitorMetricRules(metricRulesFilteringTags?.ToList(), serializedAdditionalRawData: null) : null,
-                agentRules,
-                isAutomutingEnabled,
-                isCustomMetricsEnabled,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogSetPasswordLink"/>. </summary>
-        /// <param name="setPasswordLink"></param>
-        /// <returns> A new <see cref="Models.DatadogSetPasswordLink"/> instance for mocking. </returns>
-        public static DatadogSetPasswordLink DatadogSetPasswordLink(string setPasswordLink = null)
-        {
-            return new DatadogSetPasswordLink(setPasswordLink, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Datadog.DatadogSingleSignOnData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Datadog.DatadogSingleSignOnData"/> instance for mocking. </returns>
-        public static DatadogSingleSignOnData DatadogSingleSignOnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogSingleSignOnProperties properties = null)
-        {
-            return new DatadogSingleSignOnData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogSingleSignOnProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="singleSignOnState"> Various states of the SSO resource. </param>
-        /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
-        /// <param name="singleSignOnUri"> The login URL specific to this Datadog Organization. </param>
-        /// <returns> A new <see cref="Models.DatadogSingleSignOnProperties"/> instance for mocking. </returns>
-        public static DatadogSingleSignOnProperties DatadogSingleSignOnProperties(DatadogProvisioningState? provisioningState = null, DatadogSingleSignOnState? singleSignOnState = null, string enterpriseAppId = null, Uri singleSignOnUri = null)
-        {
-            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Datadog.DataMonitoringTagRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Definition of the properties for a TagRules resource. </param>
-        /// <returns> A new <see cref="Datadog.DataMonitoringTagRuleData"/> instance for mocking. </returns>
-        public static DataMonitoringTagRuleData DataMonitoringTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoringTagRuleProperties properties = null)
-        {
-            return new DataMonitoringTagRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
+            return DatadogMonitorProperties(provisioningState, monitoringStatus, marketplaceSubscriptionStatus, datadogOrganizationProperties, userInfo, liftrResourceCategory, liftrResourcePreference, sreAgentConfiguration: default);
         }
     }
 }
