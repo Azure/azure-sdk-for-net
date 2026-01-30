@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SqlVirtualMachine.Mocking;
-using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
@@ -36,12 +35,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         private static MockableSqlVirtualMachineSubscriptionResource GetMockableSqlVirtualMachineSubscriptionResource(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient(client => new MockableSqlVirtualMachineSubscriptionResource(client, subscriptionResource.Id));
-        }
-
-        /// <param name="tenantResource"></param>
-        private static MockableSqlVirtualMachineTenantResource GetMockableSqlVirtualMachineTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableSqlVirtualMachineTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
@@ -280,42 +273,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSqlVirtualMachineSubscriptionResource(subscriptionResource).GetSqlVmGroups(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available SQL Virtual Machine Rest API operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlVirtualMachineTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Info"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Info> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSqlVirtualMachineTenantResource(tenantResource).GetAllAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available SQL Virtual Machine Rest API operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlVirtualMachineTenantResource.GetAll(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Info"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Info> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSqlVirtualMachineTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }
 }

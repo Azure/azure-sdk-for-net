@@ -21,30 +21,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public static partial class ArmSqlVirtualMachineModelFactory
     {
 
-        /// <summary> Result of the request to list SQL operations. </summary>
-        /// <param name="name"> The name of the operation being performed on this particular object.". </param>
-        /// <param name="display"> he localized display information for this particular operation / action. </param>
-        /// <param name="origin"> The intended executor of the operation.". </param>
-        /// <param name="properties"> Additional descriptions for the operation. </param>
-        /// <returns> A new <see cref="Models.Info"/> instance for mocking. </returns>
-        public static Info Info(string name = default, SqlVmOperationDisplay display = default, SqlVmOperationOrigin? origin = default, IReadOnlyDictionary<string, OperationProperty> properties = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, OperationProperty>();
-
-            return new Info(name, display, origin, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Display metadata associated with the operation. </summary>
-        /// <param name="provider"> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </param>
-        /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </param>
-        /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </param>
-        /// <param name="description"> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </param>
-        /// <returns> A new <see cref="Models.SqlVmOperationDisplay"/> instance for mocking. </returns>
-        public static SqlVmOperationDisplay SqlVmOperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
-        {
-            return new SqlVmOperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
