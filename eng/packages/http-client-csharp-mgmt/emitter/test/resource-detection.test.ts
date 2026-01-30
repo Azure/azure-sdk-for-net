@@ -1625,8 +1625,8 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Find ResourceGroup-scoped Site
     const rgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
-        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(rgSite, "Should have ResourceGroup-scoped Site");
     strictEqual(rgSite.metadata.resourceScope, ResourceScope.ResourceGroup);
@@ -1648,9 +1648,8 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Find Subscription-scoped Site
     const subSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern.startsWith("/subscriptions/") &&
-        !r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
-        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(subSite, "Should have Subscription-scoped Site");
     strictEqual(subSite.metadata.resourceScope, ResourceScope.Subscription);
@@ -1674,8 +1673,10 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
 
     // Find ServiceGroup-scoped Site (Tenant scope via ServiceGroup)
-    const sgSite = siteResources.find((r) =>
-      r.metadata.resourceIdPattern.includes("serviceGroups")
+    const sgSite = siteResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(sgSite, "Should have ServiceGroup-scoped Site");
     strictEqual(sgSite.metadata.resourceScope, ResourceScope.Tenant);
@@ -1720,8 +1721,10 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
 
     // Find the ServiceGroup-scoped Site in resolvedSchema
-    const resolvedSgSite = resolvedSchema.resources.find((r) =>
-      r.metadata.resourceIdPattern.includes("serviceGroups")
+    const resolvedSgSite = resolvedSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(
       resolvedSgSite,
@@ -1744,8 +1747,8 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Find the ResourceGroup-scoped Site in resolvedSchema
     const resolvedRgSite = resolvedSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
-        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(
       resolvedRgSite,
