@@ -19,6 +19,7 @@ import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "../src/sdk-context-options.js";
 import {
   ArmProviderSchema,
+  ArmResourceSchema,
   sortResourceMethods
 } from "../src/resource-metadata.js";
 
@@ -120,9 +121,13 @@ export async function createCSharpSdkContext(
  * This is useful when comparing schemas from different APIs (e.g., buildArmProviderSchema vs resolveArmResources).
  *
  * @param schema - The ARM provider schema to normalize
+ * @param additionalNormalization - Optional callback to apply additional normalization to each resource
  * @returns A normalized schema object suitable for deep comparison
  */
-export function normalizeSchemaForComparison(schema: ArmProviderSchema) {
+export function normalizeSchemaForComparison(
+  schema: ArmProviderSchema,
+  additionalNormalization?: (resource: ArmResourceSchema) => void
+) {
   // Work on a deep copy to avoid mutating the original schema used elsewhere in tests.
   const normalizedSchema: ArmProviderSchema = JSON.parse(
     JSON.stringify(schema)
@@ -134,6 +139,11 @@ export function normalizeSchemaForComparison(schema: ArmProviderSchema) {
   for (const resource of normalizedSchema.resources) {
     resource.metadata.resourceName = "<normalized>";
     resource.metadata.parentResourceModelId = "<normalized>";
+
+    // Apply additional normalization if provided
+    if (additionalNormalization) {
+      additionalNormalization(resource);
+    }
 
     // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
     sortResourceMethods(resource.metadata.methods);
