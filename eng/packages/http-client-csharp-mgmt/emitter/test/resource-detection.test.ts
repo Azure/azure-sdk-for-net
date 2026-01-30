@@ -1048,13 +1048,17 @@ interface Employees {
     strictEqual(metadata.resourceScope, "ResourceGroup");
     strictEqual(metadata.parentResourceId, undefined);
     strictEqual(metadata.resourceName, "EmployeeParent");
-    // Only Get - listByParent on Employee child resource doesn't match via prefix matching
-    // since Employee has no CRUD operations to establish a resource path
-    strictEqual(metadata.methods.length, 1);
+    // Get and ListByParent - the list operation from the Employee child resource
+    // is merged to the parent via post-processing based on @parentResource decorator
+    strictEqual(metadata.methods.length, 2);
 
-    // Validate EmployeeParent has only the get method (no listByParent since it can't be matched)
+    // Validate EmployeeParent has both get and listByParent methods
     const getEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getEntry);
+    const listByParentEntry = metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(listByParentEntry);
 
     // Note: We no longer compare with resolveArmResources since our prefix-only matching
     // produces different results than the ARM library's resource detection

@@ -188,12 +188,12 @@ export function buildArmProviderSchema(
           });
           return;
         }
-        // If no match found for List operations, skip them.
-        // Per design decision: if path prefix matching fails, the operation should not be matched.
-        // This applies to cases like listBySubscription on resource-group-scoped resources
-        // where the paths don't share a common prefix.
-        if (!foundMatchingResource) {
-          return;
+        // If no match found for List operations, use the operation path to create an incomplete
+        // resource entry. This will be handled by post-processing, which can merge the operation
+        // to the parent resource based on the @parentResource decorator.
+        // This allows list operations like listByParent on child resources to be placed on their parent.
+        if (!resourcePath) {
+          resourcePath = operationPath;
         }
       }
 
