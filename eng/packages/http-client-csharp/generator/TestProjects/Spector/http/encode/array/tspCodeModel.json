@@ -141,6 +141,11 @@
       "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CommaDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -184,6 +189,11 @@
       "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpaceDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "22",
@@ -216,6 +226,11 @@
       "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PipeDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "24",
@@ -248,6 +263,11 @@
       "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NewlineDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "26",

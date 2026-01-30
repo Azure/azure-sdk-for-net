@@ -32,7 +32,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource> Get(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource> GetAll(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource> GetAllAsync(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource>> GetAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource> GetIfExists(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportResource>> GetIfExistsAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -44,7 +46,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         public AppComplianceReportData(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties properties) { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -60,7 +65,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string evidenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource> Get(string evidenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource> GetAll(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource> GetAllAsync(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource>> GetAsync(string evidenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource> GetIfExists(string evidenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceResource>> GetIfExistsAsync(string evidenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -72,7 +79,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         public AppComplianceReportEvidenceData(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties properties) { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -162,7 +172,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         public AppComplianceReportScopingConfigurationData(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties properties) { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportScopingConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportScopingConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportScopingConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportScopingConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportScopingConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -195,7 +208,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource> Get(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource> GetAll(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource> GetAllAsync(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource>> GetAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource> GetIfExists(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotResource>> GetIfExistsAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -207,7 +222,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         public AppComplianceReportSnapshotData() { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportSnapshotData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -240,7 +258,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource> Get(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource> GetAll(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource> GetAllAsync(string skipToken = null, int? top = default(int?), string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource>> GetAsync(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource> GetIfExists(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookResource>> GetIfExistsAsync(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -252,7 +272,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         public AppComplianceReportWebhookData(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties properties) { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -320,11 +343,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class AppComplianceCategory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory>
     {
-        internal AppComplianceCategory() { }
+        public AppComplianceCategory() { }
         public string CategoryName { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus? CategoryStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily> ControlFamilies { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -346,12 +372,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategoryStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AppComplianceControl : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl>
     {
-        internal AppComplianceControl() { }
+        public AppComplianceControl() { }
         public string ControlDescription { get { throw null; } }
         public System.Uri ControlDescriptionHyperLink { get { throw null; } }
         public string ControlFullName { get { throw null; } }
@@ -359,7 +386,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string ControlName { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus? ControlStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility> Responsibilities { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -368,11 +398,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     }
     public partial class AppComplianceControlFamily : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily>
     {
-        internal AppComplianceControlFamily() { }
+        public AppComplianceControlFamily() { }
         public string ControlFamilyName { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus? ControlFamilyStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl> Controls { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -394,6 +427,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -404,7 +438,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public System.Uri CompliancePdfReportSasUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem> ComplianceReport { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem> ResourceList { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -426,6 +463,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -433,7 +471,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public AppComplianceGetOverviewStatusContent() { }
         public string GetOverviewStatusRequestType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -444,7 +485,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal AppComplianceGetOverviewStatusResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem> StatusList { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -455,7 +499,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public AppComplianceOnboardContent(System.Collections.Generic.IEnumerable<string> subscriptionIds) { }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -466,7 +513,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal AppComplianceOnboardResult() { }
         public System.Collections.Generic.IReadOnlyList<string> SubscriptionIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -492,6 +542,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -526,7 +577,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string FilePath { get { throw null; } set { } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState? ProvisioningState { get { throw null; } }
         public string ResponsibilityId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -547,6 +601,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -565,7 +620,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string ResponsibilityDescription { get { throw null; } }
         public string ResponsibilityTitle { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -577,7 +635,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public AppComplianceReportNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -590,7 +651,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -610,6 +674,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameUnavailabilityReason right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -617,7 +682,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public AppComplianceReportPatch() { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -641,7 +709,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public System.Guid? TenantId { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
         public System.DateTimeOffset? TriggerOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -665,7 +736,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public System.Guid? TenantId { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
         public System.DateTimeOffset TriggerOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -677,7 +751,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public AppComplianceReportScopingConfigurationProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer> Answers { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -704,7 +781,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties ReportProperties { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData ReportSystemData { get { throw null; } }
         public string SnapshotName { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -726,6 +806,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -744,7 +825,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public AppComplianceReportWebhookPatch() { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -767,7 +851,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string WebhookId { get { throw null; } }
         public string WebhookKey { get { throw null; } set { } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled? WebhookKeyEnabled { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -776,10 +863,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     }
     public partial class AppComplianceResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult>
     {
-        internal AppComplianceResult() { }
+        public AppComplianceResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory> Categories { get { throw null; } }
         public string ComplianceName { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -793,6 +883,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControlFamily AppComplianceControlFamily(string controlFamilyName = null, Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus? controlFamilyStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceControl> controls = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadResult AppComplianceDownloadResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem> resourceList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem> complianceReport = null, System.Uri compliancePdfReportSasUri = null, System.Uri complianceDetailedPdfReportSasUri = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult AppComplianceGetOverviewStatusResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem> statusList = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent AppComplianceOnboardContent(System.Collections.Generic.IEnumerable<string> subscriptionIds = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult AppComplianceOnboardResult(System.Collections.Generic.IEnumerable<string> subscriptionIds = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportData AppComplianceReportData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportEvidenceData AppComplianceReportEvidenceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties properties = null) { throw null; }
@@ -808,6 +899,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.AppComplianceReportWebhookData AppComplianceReportWebhookData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties AppComplianceReportWebhookProperties(string webhookId = null, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus? status = default(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent? sendAllEvents = default(Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent> events = null, System.Uri payloadUri = null, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType? contentType = default(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType?), string webhookKey = null, Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey? updateWebhookKey = default(Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey?), Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled? webhookKeyEnabled = default(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled?), Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification? enableSslVerification = default(Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification?), Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus? deliveryStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus?), Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState? provisioningState = default(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult AppComplianceResult(string complianceName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceCategory> categories = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord CertSyncRecord(string offerGuid = null, string certificationStatus = null, string ingestionStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord> controls = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility CustomerResponsibility(string responsibilityId = null, string responsibilityTitle = null, string responsibilityDescription = null, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType? responsibilityType = default(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType?), Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity? responsibilitySeverity = default(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity?), Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus? responsibilityStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus?), Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment? responsibilityEnvironment = default(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment?), int? failedResourceCount = default(int?), int? totalResourceCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem> resourceList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails> recommendationList = null, string guidance = null, string justification = null, System.Collections.Generic.IEnumerable<string> evidenceFiles = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult EvidenceFileDownloadResult(System.Uri evidenceFileUri = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem OverviewStatusItem(string statusName = null, string statusValue = null) { throw null; }
@@ -816,15 +908,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution RecommendationSolution(string recommendationSolutionIndex = null, string recommendationSolutionContent = null, Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution? isRecommendSolution = default(Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution?)) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult ReportCollectionGetCountResult(int? count = default(int?)) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult ReportFixResult(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult? result = default(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult?), string reason = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent ReportListInUseStorageAccountsContent(System.Collections.Generic.IEnumerable<string> subscriptionIds = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult ReportListInUseStorageAccountsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo> storageAccountList = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus ReportOverviewStatus(int? passedCount = default(int?), int? failedCount = default(int?), int? manualCount = default(int?), int? notApplicableCount = default(int?), int? pendingCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem ReportResourceItem(string subscriptionId = null, string resourceGroup = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult ReportVerificationResult(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult? result = default(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult?), string reason = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem ResponsibilityResourceItem(Azure.Core.ResourceIdentifier resourceId = null, string accountId = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin? resourceOrigin = default(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin?), Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus? resourceStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus?), System.DateTimeOffset? resourceStatusChangedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> recommendationIds = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer ScopingAnswer(string questionId = null, System.Collections.Generic.IEnumerable<string> answers = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion ScopingQuestion(string questionId = null, string superiorQuestionId = null, Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType inputType = default(Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType), System.Collections.Generic.IEnumerable<string> optionIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem> rules = null, string showSubQuestionsValue = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions ScopingQuestions(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion> questions = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent SnapshotDownloadRequestContent(System.Guid? reportCreatorTenantId = default(System.Guid?), Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType downloadType = default(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType), string offerGuid = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent SyncCertRecordContent(Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord certRecord = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult SyncCertRecordResult(Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord certRecord = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent TriggerEvaluationContent(System.Collections.Generic.IEnumerable<string> resourceIds = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty TriggerEvaluationProperty(System.DateTimeOffset? triggerOn = default(System.DateTimeOffset?), System.DateTimeOffset? evaluationEndOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> resourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment> quickAssessments = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult TriggerEvaluationResult(Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty properties = null) { throw null; }
     }
@@ -835,7 +931,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord> Controls { get { throw null; } }
         public string IngestionStatus { get { throw null; } set { } }
         public string OfferGuid { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -857,6 +956,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamilyStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -865,7 +965,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public ControlSyncRecord() { }
         public string ControlId { get { throw null; } set { } }
         public string ControlStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ControlSyncRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -874,9 +977,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     }
     public partial class CustomerResponsibility : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility>
     {
-        internal CustomerResponsibility() { }
+        public CustomerResponsibility() { }
         public System.Collections.Generic.IReadOnlyList<string> EvidenceFiles { get { throw null; } }
-        public int? FailedResourceCount { get { throw null; } }
+        public int? FailedResourceCount { get { throw null; } set { } }
         public string Guidance { get { throw null; } }
         public string Justification { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails> RecommendationList { get { throw null; } }
@@ -888,8 +991,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus? ResponsibilityStatus { get { throw null; } }
         public string ResponsibilityTitle { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType? ResponsibilityType { get { throw null; } }
-        public int? TotalResourceCount { get { throw null; } }
+        public int? TotalResourceCount { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.CustomerResponsibility>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -909,6 +1015,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification left, Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification left, Azure.ResourceManager.AppComplianceAutomation.Models.EnableSslVerification right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -917,7 +1024,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public EvidenceFileDownloadRequestContent() { }
         public string OfferGuid { get { throw null; } set { } }
         public System.Guid? ReportCreatorTenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadRequestContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadRequestContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -928,7 +1038,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal EvidenceFileDownloadResult() { }
         public System.Uri EvidenceFileUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.EvidenceFileDownloadResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -948,6 +1061,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution left, Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution left, Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -956,7 +1070,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         internal OverviewStatusItem() { }
         public string StatusName { get { throw null; } }
         public string StatusValue { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.OverviewStatusItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -988,6 +1105,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem left, Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem left, Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1001,7 +1119,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus? ResourceStatus { get { throw null; } }
         public string ResponsibilityId { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1010,11 +1131,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     }
     public partial class RecommendationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails>
     {
-        internal RecommendationDetails() { }
+        public RecommendationDetails() { }
         public string RecommendationId { get { throw null; } }
         public string RecommendationShortName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution> RecommendationSolutions { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1023,11 +1147,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     }
     public partial class RecommendationSolution : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution>
     {
-        internal RecommendationSolution() { }
+        public RecommendationSolution() { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.IsRecommendSolution? IsRecommendSolution { get { throw null; } }
         public string RecommendationSolutionContent { get { throw null; } }
         public string RecommendationSolutionIndex { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.RecommendationSolution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1038,7 +1165,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public ReportCollectionGetCountContent() { }
         public string GetCollectionCountRequestType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1049,7 +1179,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal ReportCollectionGetCountResult() { }
         public int? Count { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportCollectionGetCountResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1061,7 +1194,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         internal ReportFixResult() { }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult? Result { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportFixResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1072,7 +1208,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public ReportListInUseStorageAccountsContent() { }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1083,7 +1222,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal ReportListInUseStorageAccountsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo> StorageAccountList { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportListInUseStorageAccountsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1092,13 +1234,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     }
     public partial class ReportOverviewStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus>
     {
-        internal ReportOverviewStatus() { }
+        public ReportOverviewStatus() { }
         public int? FailedCount { get { throw null; } }
         public int? ManualCount { get { throw null; } }
         public int? NotApplicableCount { get { throw null; } }
         public int? PassedCount { get { throw null; } }
         public int? PendingCount { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportOverviewStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1112,7 +1257,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1127,7 +1275,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string ResourceKind { get { throw null; } set { } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin? ResourceOrigin { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1148,6 +1299,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceOrigin right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1164,6 +1316,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1180,6 +1333,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult left, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1190,7 +1344,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportStorageInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1202,7 +1359,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         internal ReportVerificationResult() { }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ReportResult? Result { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ReportVerificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1224,12 +1384,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityEnvironment right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ResponsibilityResourceItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem>
     {
-        internal ResponsibilityResourceItem() { }
+        public ResponsibilityResourceItem() { }
         public string AccountId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RecommendationIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
@@ -1237,7 +1398,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceStatus? ResourceStatus { get { throw null; } }
         public System.DateTimeOffset? ResourceStatusChangedOn { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityResourceItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1258,6 +1422,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilitySeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1276,6 +1441,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1293,6 +1459,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType left, Azure.ResourceManager.AppComplianceAutomation.Models.ResponsibilityType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1301,7 +1468,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public ScopingAnswer(string questionId, System.Collections.Generic.IEnumerable<string> answers) { }
         public System.Collections.Generic.IList<string> Answers { get { throw null; } }
         public string QuestionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingAnswer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1317,7 +1487,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.QuestionRuleItem> Rules { get { throw null; } }
         public string ShowSubQuestionsValue { get { throw null; } }
         public string SuperiorQuestionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1353,6 +1526,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType left, Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType left, Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestionInputType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1360,7 +1534,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal ScopingQuestions() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestion> Questions { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.ScopingQuestions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1380,6 +1557,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent left, Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent left, Azure.ResourceManager.AppComplianceAutomation.Models.SendAllEvent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1389,7 +1567,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceDownloadType DownloadType { get { throw null; } }
         public string OfferGuid { get { throw null; } set { } }
         public System.Guid? ReportCreatorTenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1400,7 +1581,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public SyncCertRecordContent(Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord certRecord) { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord CertRecord { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1411,7 +1595,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal SyncCertRecordResult() { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.CertSyncRecord CertRecord { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.SyncCertRecordResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1422,7 +1609,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         public TriggerEvaluationContent(System.Collections.Generic.IEnumerable<string> resourceIds) { }
         public System.Collections.Generic.IList<string> ResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1436,7 +1626,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.QuickAssessment> QuickAssessments { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResourceIds { get { throw null; } }
         public System.DateTimeOffset? TriggerOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1447,7 +1640,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal TriggerEvaluationResult() { }
         public Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1467,6 +1663,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey left, Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey left, Azure.ResourceManager.AppComplianceAutomation.Models.UpdateWebhookKey right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1482,6 +1679,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1499,6 +1697,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookDeliveryStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1515,6 +1714,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookKeyEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1534,6 +1734,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookNotificationEvent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1550,6 +1751,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus left, Azure.ResourceManager.AppComplianceAutomation.Models.WebhookStatus right) { throw null; }
         public override string ToString() { throw null; }
     }

@@ -1276,6 +1276,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a boolean property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BooleanProperty"
+        }
+      },
       "properties": [
         {
           "$id": "149",
@@ -1314,6 +1319,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a string property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "StringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "152",
@@ -1352,6 +1362,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a bytes property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BytesProperty"
+        }
+      },
       "properties": [
         {
           "$id": "155",
@@ -1391,6 +1406,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a int property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IntProperty"
+        }
+      },
       "properties": [
         {
           "$id": "158",
@@ -1429,6 +1449,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a float property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatProperty"
+        }
+      },
       "properties": [
         {
           "$id": "161",
@@ -1467,6 +1492,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a decimal property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DecimalProperty"
+        }
+      },
       "properties": [
         {
           "$id": "164",
@@ -1505,6 +1535,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a decimal128 property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Decimal128Property"
+        }
+      },
       "properties": [
         {
           "$id": "167",
@@ -1543,6 +1578,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a datetime property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "170",
@@ -1589,6 +1629,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a duration property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "174",
@@ -1635,6 +1680,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with enum properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "EnumProperty"
+        }
+      },
       "properties": [
         {
           "$id": "178",
@@ -1669,6 +1719,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with extensible enum properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtensibleEnumProperty"
+        }
+      },
       "properties": [
         {
           "$id": "180",
@@ -1703,6 +1758,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with model properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelProperty"
+        }
+      },
       "properties": [
         {
           "$id": "182",
@@ -1719,6 +1779,11 @@
             "usage": "Input,Output,Json",
             "doc": "Inner model. Will be a property type for ModelWithModelProperties",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "InnerModel"
+              }
+            },
             "properties": [
               {
                 "$id": "184",
@@ -1775,6 +1840,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with collection string properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsStringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "187",
@@ -1820,6 +1890,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with collection int properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsIntProperty"
+        }
+      },
       "properties": [
         {
           "$id": "191",
@@ -1865,6 +1940,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with collection model properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsModelProperty"
+        }
+      },
       "properties": [
         {
           "$id": "195",
@@ -1906,6 +1986,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with dictionary string properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DictionaryStringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "198",
@@ -1956,6 +2041,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a property never. (This property should not be included).",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NeverProperty"
+        }
+      },
       "properties": []
     },
     {
@@ -1967,6 +2057,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a property unknown, and the data is a string.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnknownStringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "204",
@@ -2005,6 +2100,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a property unknown, and the data is a int32.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnknownIntProperty"
+        }
+      },
       "properties": [
         {
           "$id": "207",
@@ -2043,6 +2143,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a property unknown, and the data is a dictionnary.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnknownDictProperty"
+        }
+      },
       "properties": [
         {
           "$id": "210",
@@ -2081,6 +2186,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a property unknown, and the data is an array.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnknownArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "213",
@@ -2119,6 +2229,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a string literal property.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "StringLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "216",
@@ -2153,6 +2268,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a int literal property.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IntLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "218",
@@ -2187,6 +2307,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a float literal property.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "220",
@@ -2221,6 +2346,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a boolean literal property.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BooleanLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "222",
@@ -2255,6 +2385,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a union of string literal as property.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnionStringLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "224",
@@ -2289,6 +2424,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a union of int literal as property.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnionIntLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "226",
@@ -2323,6 +2463,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with a union of float literal as property.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnionFloatLiteralProperty"
+        }
+      },
       "properties": [
         {
           "$id": "228",
@@ -2357,6 +2502,11 @@
       "usage": "Input,Output,Json",
       "doc": "Template type for testing models with specific properties. Pass in the type of the property you are looking for",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UnionEnumValueProperty"
+        }
+      },
       "properties": [
         {
           "$id": "230",

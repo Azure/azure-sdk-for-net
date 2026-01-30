@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
-    /// A Class representing a DeviceProvisioningServicesCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceProvisioningServicesCertificateResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDeviceProvisioningServicesCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource"/> using the GetDeviceProvisioningServicesCertificate method.
+    /// A class representing a DeviceProvisioningServicesCertificate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceProvisioningServicesCertificateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource"/> using the GetDeviceProvisioningServicesCertificates method.
     /// </summary>
     public partial class DeviceProvisioningServicesCertificateResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DeviceProvisioningServicesCertificateResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="provisioningServiceName"> The provisioningServiceName. </param>
-        /// <param name="certificateName"> The certificateName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics;
-        private readonly CertificateResponsesRestOperations _deviceProvisioningServicesCertificateCertificateResponsesRestClient;
+        private readonly ClientDiagnostics _certificateResponsesClientDiagnostics;
+        private readonly CertificateResponses _certificateResponsesRestClient;
         private readonly DeviceProvisioningServicesCertificateData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/certificates";
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateResource for mocking. </summary>
         protected DeviceProvisioningServicesCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceProvisioningServicesCertificateResource(ArmClient client, DeviceProvisioningServicesCertificateData data) : this(client, data.Id)
@@ -55,72 +44,94 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServicesCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deviceProvisioningServicesCertificateCertificateResponsesApiVersion);
-            _deviceProvisioningServicesCertificateCertificateResponsesRestClient = new CertificateResponsesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesCertificateCertificateResponsesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string deviceProvisioningServicesCertificateApiVersion);
+            _certificateResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
+            _certificateResponsesRestClient = new CertificateResponses(_certificateResponsesClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServicesCertificateApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DeviceProvisioningServicesCertificateData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="provisioningServiceName"> The provisioningServiceName. </param>
+        /// <param name="certificateName"> The certificateName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the certificate from the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> GetAsync(string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> GetAsync(ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Get");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,34 +145,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get the certificate from the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeviceProvisioningServicesCertificateResource> Get(string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceProvisioningServicesCertificateResource> Get(ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Get");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -175,41 +194,57 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Deletes the specified certificate associated with the Provisioning Service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="certificateCommonName"> This is optional, and it is the Common Name of the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data within the certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> A description that mentions the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains a private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, DeviceProvisioningServicesCertificateResourceDeleteOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken).ConfigureAwait(false);
-                var uri = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceProvisioningServicesArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceProvisioningServicesArmOperation operation = new DeviceProvisioningServicesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -223,41 +258,57 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Deletes the specified certificate associated with the Provisioning Service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="certificateCommonName"> This is optional, and it is the Common Name of the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data within the certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> A description that mentions the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains a private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, DeviceProvisioningServicesCertificateResourceDeleteOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken);
-                var uri = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceProvisioningServicesArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceProvisioningServicesArmOperation operation = new DeviceProvisioningServicesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -268,23 +319,271 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Add new certificate or update an existing certificate.
+        /// Generate verification code for Proof of Possession.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/generateVerificationCode. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_GenerateVerificationCode. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CertificateVerificationCodeResult> response = Response.FromValue(CertificateVerificationCodeResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate verification code for Proof of Possession.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/generateVerificationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_GenerateVerificationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CertificateVerificationCodeResult> GenerateVerificationCode(string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CertificateVerificationCodeResult> response = Response.FromValue(CertificateVerificationCodeResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_VerifyCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_VerifyCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DeviceProvisioningServicesCertificateResource> VerifyCertificate(string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a DeviceProvisioningServicesCertificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,20 +592,28 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeviceProvisioningServicesCertificateResource>> UpdateAsync(WaitUntil waitUntil, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeviceProvisioningServicesCertificateResource>> UpdateAsync(WaitUntil waitUntil, DeviceProvisioningServicesCertificateData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Update");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceProvisioningServicesCertificateData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -317,23 +624,23 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Add new certificate or update an existing certificate.
+        /// Update a DeviceProvisioningServicesCertificate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceProvisioningServicesCertificateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,189 +649,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DeviceProvisioningServicesCertificateResource> Update(WaitUntil waitUntil, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeviceProvisioningServicesCertificateResource> Update(WaitUntil waitUntil, DeviceProvisioningServicesCertificateData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Update");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var uri = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceProvisioningServicesCertificateData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generate verification code for Proof of Possession.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/generateVerificationCode</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponses_GenerateVerificationCode</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
-            scope.Start();
-            try
-            {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.GenerateVerificationCodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generate verification code for Proof of Possession.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/generateVerificationCode</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponses_GenerateVerificationCode</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<CertificateVerificationCodeResult> GenerateVerificationCode(DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
-            scope.Start();
-            try
-            {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.GenerateVerificationCode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/verify</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponses_VerifyCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
-            scope.Start();
-            try
-            {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.VerifyCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.Content, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/verify</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponses_VerifyCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<DeviceProvisioningServicesCertificateResource> VerifyCertificate(DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
-            scope.Start();
-            try
-            {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.VerifyCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.Content, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken);
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

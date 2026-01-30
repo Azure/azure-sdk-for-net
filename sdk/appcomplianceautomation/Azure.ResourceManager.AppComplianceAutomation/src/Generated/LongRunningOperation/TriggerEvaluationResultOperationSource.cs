@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    internal class TriggerEvaluationResultOperationSource : IOperationSource<TriggerEvaluationResult>
+    /// <summary></summary>
+    internal partial class TriggerEvaluationResultOperationSource : IOperationSource<TriggerEvaluationResult>
     {
-        TriggerEvaluationResult IOperationSource<TriggerEvaluationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal TriggerEvaluationResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return TriggerEvaluationResult.DeserializeTriggerEvaluationResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        TriggerEvaluationResult IOperationSource<TriggerEvaluationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            TriggerEvaluationResult result = TriggerEvaluationResult.DeserializeTriggerEvaluationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<TriggerEvaluationResult> IOperationSource<TriggerEvaluationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return TriggerEvaluationResult.DeserializeTriggerEvaluationResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            TriggerEvaluationResult result = TriggerEvaluationResult.DeserializeTriggerEvaluationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

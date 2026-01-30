@@ -10,7 +10,6 @@ namespace TestProjects.Spector.Tests.Http.Azure.Payload.Pageable
     public class PageableTests : SpectorTestBase
     {
         [SpectorTest]
-        [Ignore("https://github.com/microsoft/typespec/issues/9201")]
         public Task ListWithMaxPageSize() => Test(async (host) =>
         {
             var users = new PageableClient(host, null).GetAllAsync(maxpagesize: 3);

@@ -246,6 +246,162 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyAddParticipantsResult(response);
         }
 
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public async Task AddParticipantAsync_MicrosoftTeamsAppIdentifier_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyAddParticipantsResult(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyAddParticipantsResult(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsAppWithCloud))]
+        public async Task AddParticipantAsync_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyAddParticipantsResult(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+            Assert.IsTrue(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsAppWithCloud))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyAddParticipantsResult(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+            Assert.IsTrue(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public async Task AddParticipantAsync_MicrosoftTeamsAppIdentifier_WithAllOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var options = new AddParticipantOptions(callInvite)
+            {
+                OperationContext = "custom-context",
+                InvitationTimeoutInSeconds = 60,
+                OperationCallbackUri = new Uri("https://example.com/callback")
+            };
+
+            var response = await callConnection.AddParticipantAsync(options).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyAddParticipantsResult(response);
+
+            // Verify all optional properties can be set
+            Assert.AreEqual("custom-context", options.OperationContext);
+            Assert.AreEqual(60, options.InvitationTimeoutInSeconds);
+            Assert.IsNotNull(options.OperationCallbackUri);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_WithAllOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var options = new AddParticipantOptions(callInvite)
+            {
+                OperationContext = "custom-context",
+                InvitationTimeoutInSeconds = 60,
+                OperationCallbackUri = new Uri("https://example.com/callback")
+            };
+
+            var response = callConnection.AddParticipant(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyAddParticipantsResult(response);
+
+            // Verify all optional properties can be set
+            Assert.AreEqual("custom-context", options.OperationContext);
+            Assert.AreEqual(60, options.InvitationTimeoutInSeconds);
+            Assert.IsNotNull(options.OperationCallbackUri);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipantAsync_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipant(new AddParticipantOptions(callInvite)));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void AddParticipantAsync_NullMicrosoftTeamsAppCallInvite_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+            CallInvite? nullCallInvite = null;
+
+            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callConnection.AddParticipantAsync(new AddParticipantOptions(nullCallInvite!)).ConfigureAwait(false));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Contains("Value cannot be null"));
+        }
+
+        [Test]
+        public void AddParticipant_NullMicrosoftTeamsAppCallInvite_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+            CallInvite? nullCallInvite = null;
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.AddParticipant(new AddParticipantOptions(nullCallInvite!)));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Contains("Value cannot be null"));
+        }
+
         [Test]
         public void AddParticipantsAsync_NullParticipantToAdd()
         {
@@ -489,6 +645,196 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual(invitationId, response.Value.InvitationId);
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_simpleMethod_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_simpleMethod_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = callConnection.TransferCallToParticipant(callInvite.Target);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_WithOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+
+            var response = await callConnection.TransferCallToParticipantAsync(options).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify the options were created correctly
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(options.Target);
+            Assert.IsNotNull(options.CustomCallingContext);
+            Assert.IsEmpty(options.CustomCallingContext.SipHeaders);
+            Assert.IsNotNull(options.CustomCallingContext.VoipHeaders);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_WithOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+
+            var response = callConnection.TransferCallToParticipant(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify the options were created correctly
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(options.Target);
+            Assert.IsNotNull(options.CustomCallingContext);
+            Assert.IsEmpty(options.CustomCallingContext.SipHeaders);
+            Assert.IsNotNull(options.CustomCallingContext.VoipHeaders);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppWithCloud))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+            Assert.IsTrue(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppWithCloud))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = callConnection.TransferCallToParticipant(callInvite.Target);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.IsInstanceOf<MicrosoftTeamsAppIdentifier>(callInvite.Target);
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.IsNotNull(teamsApp);
+            Assert.AreEqual("testAppId", teamsApp!.AppId);
+            Assert.IsTrue(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_WithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeId");
+            options.OperationContext = "custom-context";
+            options.OperationCallbackUri = new Uri("https://example.com/callback");
+            options.SourceCallerIdNumber = new PhoneNumberIdentifier("+14255551234");
+
+            var response = await callConnection.TransferCallToParticipantAsync(options).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify all optional properties can be set
+            Assert.IsNotNull(options.Transferee);
+            Assert.IsNotNull(options.OperationCallbackUri);
+            Assert.IsNotNull(options.SourceCallerIdNumber);
+            Assert.AreEqual("custom-context", options.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_WithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeId");
+            options.OperationContext = "custom-context";
+            options.OperationCallbackUri = new Uri("https://example.com/callback");
+            options.SourceCallerIdNumber = new PhoneNumberIdentifier("+14255551234");
+
+            var response = callConnection.TransferCallToParticipant(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+
+            // Verify all optional properties can be set
+            Assert.IsNotNull(options.Transferee);
+            Assert.IsNotNull(options.OperationCallbackUri);
+            Assert.IsNotNull(options.SourceCallerIdNumber);
+            Assert.AreEqual("custom-context", options.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier)).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier)));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void TransferCallToParticipantAsync_NullMicrosoftTeamsAppIdentifier_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            MicrosoftTeamsAppIdentifier? nullTeamsAppIdentifier = null;
+
+            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callConnection.TransferCallToParticipantAsync(nullTeamsAppIdentifier!).ConfigureAwait(false));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("targetParticipant", ex!.ParamName);
+        }
+
+        [Test]
+        public void TransferCallToParticipant_NullMicrosoftTeamsAppIdentifier_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            MicrosoftTeamsAppIdentifier? nullTeamsAppIdentifier = null;
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.TransferCallToParticipant(nullTeamsAppIdentifier!));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("targetParticipant", ex!.ParamName);
+        }
+
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
         {
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId);
@@ -532,6 +878,38 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsApp()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId"));
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppWithCloud()
+        {
+            var callInvitePublic = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Public));
+            callInvitePublic.CustomCallingContext.AddVoip("key1", "value1");
+
+            var callInviteDod = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Dod));
+            callInviteDod.CustomCallingContext.AddVoip("key2", "value2");
+
+            var callInviteGcch = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Gcch));
+            callInviteGcch.CustomCallingContext.AddVoip("key3", "value3");
+
+            return new[]
+            {
+                new object?[] { callInvitePublic },
+                new object?[] { callInviteDod },
+                new object?[] { callInviteGcch },
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_GetParticipant()
         {
             return new[]
@@ -551,6 +929,38 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 {
                     new CommunicationUserIdentifier("userId")
                 },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_AddParticipant_MicrosoftTeamsApp()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId"));
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_AddParticipant_MicrosoftTeamsAppWithCloud()
+        {
+            var callInvitePublic = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Public));
+            callInvitePublic.CustomCallingContext.AddVoip("key1", "value1");
+
+            var callInviteDod = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Dod));
+            callInviteDod.CustomCallingContext.AddVoip("key2", "value2");
+
+            var callInviteGcch = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Gcch));
+            callInviteGcch.CustomCallingContext.AddVoip("key3", "value3");
+
+            return new[]
+            {
+                new object?[] { callInvitePublic },
+                new object?[] { callInviteDod },
+                new object?[] { callInviteGcch },
             };
         }
 

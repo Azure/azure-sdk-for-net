@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterUpgradeMode : IEquatable<ManagedClusterUpgradeMode>
     {
         private readonly string _value;
-        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, **clusterUpgradeCadence** will determine when the upgrade starts after the new version becomes available. </summary>
+        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, <b>clusterUpgradeCadence</b> will determine when the upgrade starts after the new version becomes available. </summary>
         private const string AutomaticValue = "Automatic";
-        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the **clusterCodeVersion** property in the cluster resource. </summary>
+        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the <b>clusterCodeVersion</b> property in the cluster resource. </summary>
         private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeMode"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             _value = value;
         }
 
-        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, **clusterUpgradeCadence** will determine when the upgrade starts after the new version becomes available. </summary>
+        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, <b>clusterUpgradeCadence</b> will determine when the upgrade starts after the new version becomes available. </summary>
         public static ManagedClusterUpgradeMode Automatic { get; } = new ManagedClusterUpgradeMode(AutomaticValue);
 
-        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the **clusterCodeVersion** property in the cluster resource. </summary>
+        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the <b>clusterCodeVersion</b> property in the cluster resource. </summary>
         public static ManagedClusterUpgradeMode Manual { get; } = new ManagedClusterUpgradeMode(ManualValue);
 
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeMode"/> values are the same. </summary>
