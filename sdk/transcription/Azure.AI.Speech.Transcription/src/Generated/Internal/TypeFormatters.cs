@@ -34,7 +34,7 @@ namespace Azure.AI.Speech.Transcription
 
         public static string ToString(TimeSpan value, string format) => format switch
         {
-            "P" => System.Xml.XmlConvert.ToString(value),
+            "P" => XmlConvert.ToString(value),
             _ => value.ToString(format, CultureInfo.InvariantCulture)
         };
 
@@ -127,7 +127,7 @@ namespace Azure.AI.Speech.Transcription
 
         public static TimeSpan ParseTimeSpan(string value, string format) => format switch
         {
-            "P" => System.Xml.XmlConvert.ToTimeSpan(value),
+            "P" => XmlConvert.ToTimeSpan(value),
             _ => TimeSpan.ParseExact(value, format, CultureInfo.InvariantCulture)
         };
 
@@ -168,7 +168,7 @@ namespace Azure.AI.Speech.Transcription
                 TimeSpan timeSpan1 when format == SerializationFormat.Duration_Milliseconds => Convert.ToInt32(timeSpan1.TotalMilliseconds).ToString(CultureInfo.InvariantCulture),
                 TimeSpan timeSpan2 when format == SerializationFormat.Duration_Milliseconds_Float || format == SerializationFormat.Duration_Milliseconds_Double => timeSpan2.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
                 TimeSpan timeSpan3 when formatSpecifier != null => ToString(timeSpan3, formatSpecifier),
-                TimeSpan timeSpan4 => System.Xml.XmlConvert.ToString(timeSpan4),
+                TimeSpan timeSpan4 => XmlConvert.ToString(timeSpan4),
                 Guid guid => guid.ToString(),
                 BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
                 _ => value.ToString()
