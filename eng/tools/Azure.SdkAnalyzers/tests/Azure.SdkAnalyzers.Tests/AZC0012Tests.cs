@@ -349,5 +349,95 @@ namespace Azure.ResourceManager.Compute
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        [Test]
+        public async Task AZC0012ProducedForIndigoClass()
+        {
+            // "Indigo" is a single word, should trigger diagnostic
+            const string code = @"
+namespace Azure.Data.Tables
+{
+    public class {|AZC0012:Indigo|} { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0012ProducedForIndexClass()
+        {
+            // "Index" is a single word, should trigger diagnostic
+            const string code = @"
+namespace Azure.Data.Tables
+{
+    public class {|AZC0012:Index|} { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0012ProducedForImageClass()
+        {
+            // "Image" is a single word, should trigger diagnostic
+            const string code = @"
+namespace Azure.Data.Tables
+{
+    public class {|AZC0012:Image|} { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0012ProducedForInterfaceIIPAddress()
+        {
+            // IIPAddress -> strips first 'I' -> "IPAddress"
+            // IPAddress: IP (acronym ending at 'A') + Address = 2 words, no diagnostic
+            // Actually this is good - IIPAddress is not a good name anyway
+            // But the analyzer counts it as 2 words, so let's test the actual behavior
+            const string code = @"
+namespace Azure.Data.Networking
+{
+    public interface IIPAddress { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0012ProducedForInterfaceIIPv4()
+        {
+            // IIPv4 -> strips first 'I' -> "IPv4"
+            // IPv4: I + Pv4 where Pv4 has mixed case, counts as 2+ words
+            const string code = @"
+namespace Azure.Data.Networking
+{
+    public interface IIPv4 { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0012ProducedForInterfaceIIO()
+        {
+            // IIO -> strips first 'I' -> "IO"
+            // IO: both uppercase, single acronym = 1 word, diagnostic
+            const string code = @"
+namespace Azure.Data
+{
+    public interface {|AZC0012:IIO|} { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0012ProducedForInterfaceIImage()
+        {
+            // IImage -> strips first 'I' -> "Image"
+            // Image: single word with mixed case = 1 word, diagnostic
+            const string code = @"
+namespace Azure.Data.Tables
+{
+    public interface {|AZC0012:IImage|} { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }

@@ -19,16 +19,27 @@ namespace Azure.SdkAnalyzers
                 return default;
             }
 
+            // Detect path separator from the entire path
+            char pathSeparator = filePath.IndexOf('/') >= 0 ? '/' : '\\';
+
             int generatedIndex = filePath.IndexOf("Generated", StringComparison.Ordinal);
+            if (filePath.Length < generatedIndex + GeneratedLength || filePath[generatedIndex + GeneratedLength - 1] != pathSeparator)
+            {
+                // This is a directory like GeneratedStuff
+                return default;
+            }
+            if (generatedIndex > 0 && filePath[generatedIndex - 1] != pathSeparator)
+            {
+                // This is a directory like PrefixGenerated
+                return default;
+            }
+
             bool isInGeneratedFolder = generatedIndex >= 0;
 
             if (!isInGeneratedFolder)
             {
                 return default;
             }
-
-            // Detect path separator from the entire path
-            char pathSeparator = filePath.IndexOf('/') >= 0 ? '/' : '\\';
 
             // Extract relative path after "Generated" (excluding filename)
             int afterGeneratedIndex = generatedIndex + GeneratedLength;
@@ -41,17 +52,5 @@ namespace Azure.SdkAnalyzers
 
             return new GeneratedFolderInfo(isInGeneratedFolder, customFolders);
         }
-    }
-
-    public readonly struct GeneratedFolderInfo
-    {
-        public GeneratedFolderInfo(bool isInGeneratedFolder, IEnumerable<string> customFolders)
-        {
-            IsInGeneratedFolder = isInGeneratedFolder;
-            CustomFolders = customFolders;
-        }
-
-        public bool IsInGeneratedFolder { get; }
-        public IEnumerable<string> CustomFolders { get; }
     }
 }

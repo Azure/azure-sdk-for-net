@@ -96,5 +96,38 @@ namespace Azure.SdkAnalyzers.Tests
 
             await test.RunAsync(CancellationToken.None);
         }
+
+        public static async Task VerifyNoCodeFixOfferedAsync(
+            string source,
+            string sourceFilePath,
+            LanguageVersion languageVersion = LanguageVersion.Latest)
+        {
+            CSharpCodeFixTest<TAnalyzer, TCodeFix, DefaultVerifier> test = new()
+            {
+                ReferenceAssemblies = AzureTestReferences.DefaultReferenceAssemblies,
+                SolutionTransforms = {(solution, projectId) =>
+                {
+                    Project? project = solution.GetProject(projectId);
+                    CSharpParseOptions? parseOptions = (CSharpParseOptions?)project?.ParseOptions;
+                    if (parseOptions != null && solution != null && project != null)
+                    {
+                        return solution.WithProjectParseOptions(projectId, parseOptions.WithLanguageVersion(languageVersion));
+                    }
+                    return solution!;
+                }},
+                TestBehaviors = TestBehaviors.SkipGeneratedCodeCheck,
+                NumberOfFixAllIterations = 0 // Expect 0 fixes to be offered
+            };
+
+            // Add CodeGenTypeAttribute to both test and fixed states
+            test.TestState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
+            test.TestState.Sources.Add((sourceFilePath, source));
+
+            // Fixed state should be identical to test state (no changes)
+            test.FixedState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
+            test.FixedState.Sources.Add((sourceFilePath, source));
+
+            await test.RunAsync(CancellationToken.None);
+        }
     }
 }

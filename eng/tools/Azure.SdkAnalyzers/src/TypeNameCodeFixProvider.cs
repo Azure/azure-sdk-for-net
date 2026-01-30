@@ -29,6 +29,11 @@ namespace Azure.SdkAnalyzers
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             SyntaxNode root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
+            if (root is null)
+            {
+                return;
+            }
+
             Diagnostic diagnostic = context.Diagnostics.First();
             TextSpan diagnosticSpan = diagnostic.Location.SourceSpan;
 
@@ -49,6 +54,13 @@ namespace Azure.SdkAnalyzers
             // Check if file is in Generated folder and determine path separator once
             string filePath = context.Document.FilePath;
             GeneratedFolderInfo generatedInfo = GeneratedFolderHelper.GetGeneratedFolderInfo(filePath);
+
+            // We don't generate interfaces, so if this is an interface in Generated folder, don't offer fix
+            // (we can't add [CodeGenType] attribute to interfaces)
+            if (generatedInfo.IsInGeneratedFolder && typeSymbol.TypeKind == TypeKind.Interface)
+            {
+                return;
+            }
 
             // Generate 3 name suggestions based on namespace parts
             ImmutableArray<string> suggestions = GenerateNameSuggestions(typeSymbol);
@@ -219,8 +231,26 @@ namespace Azure.SdkAnalyzers
             sb.AppendLine($"namespace {typeSymbol.ContainingNamespace.ToDisplayString()}");
             sb.AppendLine("{");
 
-            // Add XML doc comment if the original type has one
-            sb.AppendLine($"    /// <summary> {newName}. </summary>");
+            // Copy the original documentation comment exactly as written
+            SyntaxReference syntaxRef = typeSymbol.DeclaringSyntaxReferences.FirstOrDefault();
+            if (syntaxRef != null)
+            {
+                SyntaxNode syntaxNode = syntaxRef.GetSyntax();
+                string docComment = syntaxNode.GetLeadingTrivia()
+                    .Where(t => t.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia) ||
+                                t.IsKind(SyntaxKind.MultiLineDocumentationCommentTrivia))
+                    .Select(t => t.ToFullString())
+                    .FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(docComment))
+                {
+                    // Add indentation to each line
+                    foreach (string line in docComment.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        sb.AppendLine($"    {line.TrimStart()}");
+                    }
+                }
+            }
 
             // Add CodeGenType attribute with the original name
             sb.AppendLine($"    [CodeGenType(\"{typeSymbol.Name}\")]");

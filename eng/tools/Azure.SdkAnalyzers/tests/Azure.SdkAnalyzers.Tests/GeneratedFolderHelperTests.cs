@@ -86,6 +86,26 @@ namespace Azure.SdkAnalyzers.Tests
         }
 
         [Test]
+        public void GetGeneratedFolderInfo_RelativePath_DirectlyInGenerated_WithSuffix()
+        {
+            string filePath = "GeneratedSomething/Foo.cs";
+
+            GeneratedFolderInfo result = GeneratedFolderHelper.GetGeneratedFolderInfo(filePath);
+
+            Assert.That(result.IsInGeneratedFolder, Is.False);
+        }
+
+        [Test]
+        public void GetGeneratedFolderInfo_RelativePath_DirectlyInGenerated_WithPrefix()
+        {
+            string filePath = "PreGeneratedSomething/Foo.cs";
+
+            GeneratedFolderInfo result = GeneratedFolderHelper.GetGeneratedFolderInfo(filePath);
+
+            Assert.That(result.IsInGeneratedFolder, Is.False);
+        }
+
+        [Test]
         public void GetGeneratedFolderInfo_RelativePath_WithModelsFolder()
         {
             string filePath = "Generated/Models/Foo.cs";
