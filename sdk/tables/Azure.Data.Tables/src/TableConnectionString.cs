@@ -377,7 +377,10 @@ namespace Azure.Data.Tables
                 // If the URI is just http://localhost:8902/, segments will only have ["/"]
                 if (segments.Length < 2)
                 {
-                    // No account name in path, cannot create secondary URI
+                    // No account name in path, cannot create secondary URI.
+                    // This is typical for CosmosDB emulator endpoints (e.g., http://localhost:8902/)
+                    // where the account name is specified separately via credentials rather than in the URI path.
+                    // Returning null is appropriate here as secondary endpoints are not applicable for this configuration.
                     return default;
                 }
 
