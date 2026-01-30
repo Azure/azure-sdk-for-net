@@ -1,14 +1,14 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2026-01-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2020-01-01;package-flexibleserver-2024-08-01' to 'package-flexibleserver-2025-08-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/96086ecacd33f5e91557e03cf5838d5f45be9f3b/specification/postgresql/resource-manager/readme.md.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.47.1 to 1.50.0
 
 ## 1.3.1 (2025-08-06)
 

@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppComplianceAutomation.Mocking;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 using Azure.ResourceManager.Resources;
@@ -18,25 +20,26 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppComplianceAutomation. </summary>
     public static partial class AppComplianceAutomationExtensions
     {
+        /// <param name="client"></param>
         private static MockableAppComplianceAutomationArmClient GetMockableAppComplianceAutomationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableAppComplianceAutomationArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableAppComplianceAutomationArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableAppComplianceAutomationTenantResource GetMockableAppComplianceAutomationTenantResource(ArmResource resource)
+        /// <param name="tenantResource"></param>
+        private static MockableAppComplianceAutomationTenantResource GetMockableAppComplianceAutomationTenantResource(TenantResource tenantResource)
         {
-            return resource.GetCachedClient(client => new MockableAppComplianceAutomationTenantResource(client, resource.Id));
+            return tenantResource.GetCachedClient(client => new MockableAppComplianceAutomationTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppComplianceReportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppComplianceReportResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="AppComplianceReportResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="AppComplianceReportResource"/> object. </returns>
@@ -48,71 +51,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppComplianceReportEvidenceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppComplianceReportEvidenceResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportEvidenceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="AppComplianceReportWebhookResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportEvidenceResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportWebhookResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppComplianceReportEvidenceResource"/> object. </returns>
-        public static AppComplianceReportEvidenceResource GetAppComplianceReportEvidenceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppComplianceAutomationArmClient(client).GetAppComplianceReportEvidenceResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppComplianceReportScopingConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppComplianceReportScopingConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportScopingConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportScopingConfigurationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppComplianceReportScopingConfigurationResource"/> object. </returns>
-        public static AppComplianceReportScopingConfigurationResource GetAppComplianceReportScopingConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppComplianceAutomationArmClient(client).GetAppComplianceReportScopingConfigurationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppComplianceReportSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppComplianceReportSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportSnapshotResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppComplianceReportSnapshotResource"/> object. </returns>
-        public static AppComplianceReportSnapshotResource GetAppComplianceReportSnapshotResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppComplianceAutomationArmClient(client).GetAppComplianceReportSnapshotResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppComplianceReportWebhookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppComplianceReportWebhookResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportWebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportWebhookResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="AppComplianceReportWebhookResource"/> object. </returns>
@@ -124,15 +69,69 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
-        /// Gets a collection of AppComplianceReportResources in the TenantResource.
+        /// Gets an object representing a <see cref="AppComplianceReportSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetAppComplianceReports()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportSnapshotResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppComplianceReportSnapshotResource"/> object. </returns>
+        public static AppComplianceReportSnapshotResource GetAppComplianceReportSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppComplianceAutomationArmClient(client).GetAppComplianceReportSnapshotResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AppComplianceReportScopingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportScopingConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppComplianceReportScopingConfigurationResource"/> object. </returns>
+        public static AppComplianceReportScopingConfigurationResource GetAppComplianceReportScopingConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppComplianceAutomationArmClient(client).GetAppComplianceReportScopingConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AppComplianceReportEvidenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetAppComplianceReportEvidenceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppComplianceReportEvidenceResource"/> object. </returns>
+        public static AppComplianceReportEvidenceResource GetAppComplianceReportEvidenceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppComplianceAutomationArmClient(client).GetAppComplianceReportEvidenceResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of AppComplianceReports in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetAppComplianceReports()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of AppComplianceReportResources and their operations over a AppComplianceReportResource. </returns>
+        /// <returns> An object representing collection of AppComplianceReports and their operations over a AppComplianceReportResource. </returns>
         public static AppComplianceReportCollection GetAppComplianceReports(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -142,34 +141,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation report and its properties.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetAppComplianceReportAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetAppComplianceReportAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AppComplianceReportResource>> GetAppComplianceReportAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
@@ -180,34 +160,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation report and its properties.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Report_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetAppComplianceReport(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetAppComplianceReport(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<AppComplianceReportResource> GetAppComplianceReport(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
@@ -218,29 +179,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Check if the given name is available for a report.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailability(AppComplianceReportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailabilityAsync(AppComplianceReportNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response<AppComplianceReportNameAvailabilityResult>> CheckAppComplianceReportNameAvailabilityAsync(this TenantResource tenantResource, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -250,29 +197,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Check if the given name is available for a report.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailability(AppComplianceReportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailability(AppComplianceReportNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response<AppComplianceReportNameAvailabilityResult> CheckAppComplianceReportNameAvailability(this TenantResource tenantResource, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -282,29 +215,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the count of reports.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/getCollectionCount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_GetCollectionCount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction(ReportCollectionGetCountContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderActionAsync(ReportCollectionGetCountContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response<ReportCollectionGetCountResult>> GetCollectionCountProviderActionAsync(this TenantResource tenantResource, ReportCollectionGetCountContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -314,29 +233,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the count of reports.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/getCollectionCount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_GetCollectionCount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction(ReportCollectionGetCountContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction(ReportCollectionGetCountContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response<ReportCollectionGetCountResult> GetCollectionCountProviderAction(this TenantResource tenantResource, ReportCollectionGetCountContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -346,29 +251,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the resource overview status.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/getOverviewStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_GetOverviewStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction(AppComplianceGetOverviewStatusContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderActionAsync(AppComplianceGetOverviewStatusContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response<AppComplianceGetOverviewStatusResult>> GetOverviewStatusProviderActionAsync(this TenantResource tenantResource, AppComplianceGetOverviewStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -378,29 +269,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the resource overview status.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/getOverviewStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_GetOverviewStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction(AppComplianceGetOverviewStatusContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction(AppComplianceGetOverviewStatusContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response<AppComplianceGetOverviewStatusResult> GetOverviewStatusProviderAction(this TenantResource tenantResource, AppComplianceGetOverviewStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -409,95 +286,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
-        /// List the storage accounts which are in use by related reports
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_ListInUseStorageAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction(ReportListInUseStorageAccountsContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ReportListInUseStorageAccountsResult>> GetInUseStorageAccountsProviderActionAsync(this TenantResource tenantResource, ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).GetInUseStorageAccountsProviderActionAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// List the storage accounts which are in use by related reports
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_ListInUseStorageAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction(ReportListInUseStorageAccountsContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<ReportListInUseStorageAccountsResult> GetInUseStorageAccountsProviderAction(this TenantResource tenantResource, ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetInUseStorageAccountsProviderAction(content, cancellationToken);
-        }
-
-        /// <summary>
         /// Onboard given subscriptions to Microsoft.AppComplianceAutomation provider.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/onboard</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_Onboard</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.OnboardProviderAction(WaitUntil,AppComplianceOnboardContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.OnboardProviderActionAsync(WaitUntil, AppComplianceOnboardContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<ArmOperation<AppComplianceOnboardResult>> OnboardProviderActionAsync(this TenantResource tenantResource, WaitUntil waitUntil, AppComplianceOnboardContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -507,30 +306,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Onboard given subscriptions to Microsoft.AppComplianceAutomation provider.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/onboard</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_Onboard</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.OnboardProviderAction(WaitUntil,AppComplianceOnboardContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.OnboardProviderAction(WaitUntil, AppComplianceOnboardContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static ArmOperation<AppComplianceOnboardResult> OnboardProviderAction(this TenantResource tenantResource, WaitUntil waitUntil, AppComplianceOnboardContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -540,30 +325,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Trigger quick evaluation for the given subscriptions.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/triggerEvaluation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_TriggerEvaluation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction(WaitUntil,TriggerEvaluationContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderActionAsync(WaitUntil, TriggerEvaluationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<ArmOperation<TriggerEvaluationResult>> TriggerEvaluationProviderActionAsync(this TenantResource tenantResource, WaitUntil waitUntil, TriggerEvaluationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -573,35 +344,57 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Trigger quick evaluation for the given subscriptions.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/triggerEvaluation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderActions_TriggerEvaluation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction(WaitUntil,TriggerEvaluationContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction(WaitUntil, TriggerEvaluationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static ArmOperation<TriggerEvaluationResult> TriggerEvaluationProviderAction(this TenantResource tenantResource, WaitUntil waitUntil, TriggerEvaluationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAppComplianceAutomationTenantResource(tenantResource).TriggerEvaluationProviderAction(waitUntil, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the storage accounts which are in use by related reports
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderActionAsync(ReportListInUseStorageAccountsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<ReportListInUseStorageAccountsResult>> GetInUseStorageAccountsProviderActionAsync(this TenantResource tenantResource, ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).GetInUseStorageAccountsProviderActionAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List the storage accounts which are in use by related reports
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction(ReportListInUseStorageAccountsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<ReportListInUseStorageAccountsResult> GetInUseStorageAccountsProviderAction(this TenantResource tenantResource, ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetInUseStorageAccountsProviderAction(content, cancellationToken);
         }
     }
 }

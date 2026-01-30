@@ -12,6 +12,7 @@
       "crossLanguageDefinitionId": "Customization.GroupParametersOptions",
       "usage": "Input",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "2",
