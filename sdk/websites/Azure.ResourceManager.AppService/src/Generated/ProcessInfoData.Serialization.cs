@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
             double? iisProfileTimeoutInSeconds = default;
             string parent = default;
             IList<string> children = default;
-            IList<WebAppProcessThreadInfo> threads = default;
+            IList<WebAppProcessThreadProperties> threads = default;
             IList<string> openFileHandles = default;
             IList<ProcessModuleInfoData> modules = default;
             string fileName = default;
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<WebAppProcessThreadInfo> array = new List<WebAppProcessThreadInfo>();
+                            List<WebAppProcessThreadProperties> array = new List<WebAppProcessThreadProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppProcessThreadInfo.DeserializeWebAppProcessThreadInfo(item, options));
+                                array.Add(WebAppProcessThreadProperties.DeserializeWebAppProcessThreadProperties(item, options));
                             }
                             threads = array;
                             continue;
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.AppService
                 iisProfileTimeoutInSeconds,
                 parent,
                 children ?? new ChangeTrackingList<string>(),
-                threads ?? new ChangeTrackingList<WebAppProcessThreadInfo>(),
+                threads ?? new ChangeTrackingList<WebAppProcessThreadProperties>(),
                 openFileHandles ?? new ChangeTrackingList<string>(),
                 modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
                 fileName,

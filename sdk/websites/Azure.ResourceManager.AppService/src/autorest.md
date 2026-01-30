@@ -1113,9 +1113,9 @@ directive:
             }
           };
   - from: openapi.json
-    where: $.definitions.ProcessInfo
+    where: $.definitions.ProcessInfoProperties
     transform: >
-        $.properties.properties.properties.threads.items = {
+        $.properties.threads.items = {
             "$ref": "#/definitions/ProcessThreadProperties"
           };
   # Fix for issue: https://github.com/Azure/azure-sdk-for-net/issues/46854

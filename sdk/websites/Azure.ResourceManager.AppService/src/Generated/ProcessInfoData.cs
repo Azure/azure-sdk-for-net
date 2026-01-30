@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         public ProcessInfoData()
         {
             Children = new ChangeTrackingList<string>();
-            ProcessThreads = new ChangeTrackingList<WebAppProcessThreadInfo>();
+            ProcessThreads = new ChangeTrackingList<WebAppProcessThreadProperties>();
             OpenFileHandles = new ChangeTrackingList<string>();
             Modules = new ChangeTrackingList<ProcessModuleInfoData>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadInfo> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Identifier = identifier;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         public IList<string> Children { get; }
         /// <summary> Thread list. </summary>
         [WirePath("properties.threads")]
-        public IList<WebAppProcessThreadInfo> ProcessThreads { get; }
+        public IList<WebAppProcessThreadProperties> ProcessThreads { get; }
         /// <summary> List of open files. </summary>
         [WirePath("properties.open_file_handles")]
         public IList<string> OpenFileHandles { get; }
