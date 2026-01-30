@@ -28,39 +28,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.PrivateLink"/> instance for mocking. </returns>
-        public static PrivateLink PrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            return new PrivateLink(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                identity);
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -387,39 +354,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft, null));
-        }
-
-        /// <summary> An Employee resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.Employee"/> instance for mocking. </returns>
-        public static Employee Employee(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EmployeeProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new Employee(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties);
-        }
-
-        /// <summary> Employee properties. </summary>
-        /// <param name="age"> Age of employee. </param>
-        /// <param name="city"> City of employee. </param>
-        /// <returns> A new <see cref="Models.EmployeeProperties"/> instance for mocking. </returns>
-        public static EmployeeProperties EmployeeProperties(int? age = default, string city = default)
-        {
-            return new EmployeeProperties(age, city, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -922,33 +856,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 tags,
                 location,
                 properties);
-        }
-
-        /// <summary> The scheduled action extension. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResources"/> instance for mocking. </returns>
-        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionsExtensionProperties properties = default)
-        {
-            return new ScheduledActionResources(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Scheduled action properties. </summary>
-        /// <param name="actionId"> The scheduled action identifier. </param>
-        /// <param name="status"> The scheduled action status. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(string actionId = default, string status = default)
-        {
-            return new ScheduledActionsExtensionProperties(actionId, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parent resource for workload networks. </summary>

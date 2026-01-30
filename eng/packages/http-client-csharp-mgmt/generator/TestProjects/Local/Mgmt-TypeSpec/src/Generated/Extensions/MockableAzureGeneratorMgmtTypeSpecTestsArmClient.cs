@@ -22,8 +22,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _checkNameAvailabilityOperationGroupClientDiagnostics;
         private CheckNameAvailabilityOperationGroup _checkNameAvailabilityOperationGroupRestClient;
-        private ClientDiagnostics _scheduledActionExtensionClientDiagnostics;
-        private ScheduledActionExtension _scheduledActionExtensionRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsArmClient for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsArmClient()
@@ -40,10 +38,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
-
-        private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -466,72 +460,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 scope0.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List ScheduledActionResources resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/MgmtTypeSpec/associatedScheduledActions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActionExtension_ListByVms. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledActionResources> GetByVmsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
-        }
-
-        /// <summary>
-        /// List ScheduledActionResources resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/MgmtTypeSpec/associatedScheduledActions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActionExtension_ListByVms. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledActionResources> GetByVms(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
         }
     }
 }
