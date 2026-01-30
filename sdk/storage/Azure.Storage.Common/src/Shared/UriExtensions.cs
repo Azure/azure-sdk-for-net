@@ -94,7 +94,7 @@ namespace Azure.Storage
                 {
                     string accountName = host.Substring(0, accountEndIndex);
                     int dashIndex = accountName.IndexOf('-');
-                    if (dashIndex > 0)
+                    if (dashIndex > -1)
                     {
                         accountName = accountName.Substring(0, dashIndex);
                     }
