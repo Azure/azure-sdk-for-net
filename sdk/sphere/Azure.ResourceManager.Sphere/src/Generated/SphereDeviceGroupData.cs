@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    /// <summary>
-    /// A class representing the SphereDeviceGroup data model.
-    /// An device group resource belonging to a product resource.
-    /// </summary>
+    /// <summary> An device group resource belonging to a product resource. </summary>
     public partial class SphereDeviceGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
         public SphereDeviceGroupData()
@@ -57,43 +25,19 @@ namespace Azure.ResourceManager.Sphere
         }
 
         /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the device group. </param>
-        /// <param name="osFeedType"> Operating system feed type of the device group. </param>
-        /// <param name="updatePolicy"> Update policy of the device group. </param>
-        /// <param name="allowCrashDumpsCollection"> Flag to define if the user allows for crash dump collection. </param>
-        /// <param name="regionalDataBoundary"> Regional data boundary for the device group. </param>
-        /// <param name="hasDeployment"> Deployment status for the device group. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SphereDeviceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal SphereDeviceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeviceGroupProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            OSFeedType = osFeedType;
-            UpdatePolicy = updatePolicy;
-            AllowCrashDumpsCollection = allowCrashDumpsCollection;
-            RegionalDataBoundary = regionalDataBoundary;
-            HasDeployment = hasDeployment;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Description of the device group. </summary>
-        public string Description { get; set; }
-        /// <summary> Operating system feed type of the device group. </summary>
-        public SphereOSFeedType? OSFeedType { get; set; }
-        /// <summary> Update policy of the device group. </summary>
-        public SphereUpdatePolicy? UpdatePolicy { get; set; }
-        /// <summary> Flag to define if the user allows for crash dump collection. </summary>
-        public SphereAllowCrashDumpCollectionStatus? AllowCrashDumpsCollection { get; set; }
-        /// <summary> Regional data boundary for the device group. </summary>
-        public RegionalDataBoundary? RegionalDataBoundary { get; set; }
-        /// <summary> Deployment status for the device group. </summary>
-        public bool? HasDeployment { get; }
-        /// <summary> The status of the last operation. </summary>
-        public SphereProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public DeviceGroupProperties Properties { get; set; }
     }
 }

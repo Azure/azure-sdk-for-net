@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal class SphereDeviceGroupOperationSource : IOperationSource<SphereDeviceGroupResource>
+    /// <summary></summary>
+    internal partial class SphereDeviceGroupOperationSource : IOperationSource<SphereDeviceGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SphereDeviceGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SphereDeviceGroupResource IOperationSource<SphereDeviceGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereDeviceGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SphereDeviceGroupData data = SphereDeviceGroupData.DeserializeSphereDeviceGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SphereDeviceGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SphereDeviceGroupResource> IOperationSource<SphereDeviceGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereDeviceGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
-            return await Task.FromResult(new SphereDeviceGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SphereDeviceGroupData data = SphereDeviceGroupData.DeserializeSphereDeviceGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SphereDeviceGroupResource(_client, data);
         }
     }
 }

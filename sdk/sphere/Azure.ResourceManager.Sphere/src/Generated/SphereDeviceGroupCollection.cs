@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereDeviceGroupCollection : ArmCollection, IEnumerable<SphereDeviceGroupResource>, IAsyncEnumerable<SphereDeviceGroupResource>
     {
-        private readonly ClientDiagnostics _sphereDeviceGroupDeviceGroupsClientDiagnostics;
-        private readonly DeviceGroupsRestOperations _sphereDeviceGroupDeviceGroupsRestClient;
+        private readonly ClientDiagnostics _deviceGroupsClientDiagnostics;
+        private readonly DeviceGroups _deviceGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SphereDeviceGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SphereDeviceGroupCollection for mocking. </summary>
         protected SphereDeviceGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SphereDeviceGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SphereDeviceGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sphereDeviceGroupDeviceGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereDeviceGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SphereDeviceGroupResource.ResourceType, out string sphereDeviceGroupDeviceGroupsApiVersion);
-            _sphereDeviceGroupDeviceGroupsRestClient = new DeviceGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sphereDeviceGroupDeviceGroupsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SphereDeviceGroupResource.ResourceType, out string sphereDeviceGroupApiVersion);
+            _deviceGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereDeviceGroupResource.ResourceType.Namespace, Diagnostics);
+            _deviceGroupsRestClient = new DeviceGroups(_deviceGroupsClientDiagnostics, Pipeline, Endpoint, sphereDeviceGroupApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SphereProductResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SphereProductResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereProductResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SphereDeviceGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deviceGroupName, SphereDeviceGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sphereDeviceGroupDeviceGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation<SphereDeviceGroupResource>(new SphereDeviceGroupOperationSource(Client), _sphereDeviceGroupDeviceGroupsClientDiagnostics, Pipeline, _sphereDeviceGroupDeviceGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, SphereDeviceGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SphereArmOperation<SphereDeviceGroupResource> operation = new SphereArmOperation<SphereDeviceGroupResource>(
+                    new SphereDeviceGroupOperationSource(Client),
+                    _deviceGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Sphere
         /// Create a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SphereDeviceGroupResource> CreateOrUpdate(WaitUntil waitUntil, string deviceGroupName, SphereDeviceGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sphereDeviceGroupDeviceGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, data, cancellationToken);
-                var operation = new SphereArmOperation<SphereDeviceGroupResource>(new SphereDeviceGroupOperationSource(Client), _sphereDeviceGroupDeviceGroupsClientDiagnostics, Pipeline, _sphereDeviceGroupDeviceGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, SphereDeviceGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SphereArmOperation<SphereDeviceGroupResource> operation = new SphereArmOperation<SphereDeviceGroupResource>(
+                    new SphereDeviceGroupOperationSource(Client),
+                    _deviceGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Sphere
         /// Get a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SphereDeviceGroupResource>> GetAsync(string deviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Get");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sphereDeviceGroupDeviceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SphereDeviceGroupData> response = Response.FromValue(SphereDeviceGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereDeviceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Sphere
         /// Get a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SphereDeviceGroupResource> Get(string deviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Get");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _sphereDeviceGroupDeviceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SphereDeviceGroupData> response = Response.FromValue(SphereDeviceGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereDeviceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,54 +272,16 @@ namespace Azure.ResourceManager.Sphere
         /// List DeviceGroup resources by Product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_ListByProduct</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_ListByProduct. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SphereDeviceGroupResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeviceGroupDeviceGroupsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeviceGroupDeviceGroupsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereDeviceGroupDeviceGroupsClientDiagnostics, Pipeline, "SphereDeviceGroupCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
-        }
-
-        /// <summary>
-        /// List DeviceGroup resources by Product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_ListByProduct</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,47 +291,115 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SphereDeviceGroupResource> GetAll(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SphereDeviceGroupResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeviceGroupDeviceGroupsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeviceGroupDeviceGroupsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereDeviceGroupDeviceGroupsClientDiagnostics, Pipeline, "SphereDeviceGroupCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new DeviceGroupsGetByProductAsyncCollectionResultOfT(
+                _deviceGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                maxpagesize,
+                context), data => new SphereDeviceGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// List DeviceGroup resources by Product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_ListByProduct. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SphereDeviceGroupResource> GetAll(string filter = default, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new DeviceGroupsGetByProductCollectionResultOfT(
+                _deviceGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                maxpagesize,
+                context), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Exists");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sphereDeviceGroupDeviceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SphereDeviceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereDeviceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereDeviceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +413,50 @@ namespace Azure.ResourceManager.Sphere
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string deviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Exists");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sphereDeviceGroupDeviceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SphereDeviceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereDeviceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereDeviceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +470,54 @@ namespace Azure.ResourceManager.Sphere
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SphereDeviceGroupResource>> GetIfExistsAsync(string deviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sphereDeviceGroupDeviceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SphereDeviceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereDeviceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereDeviceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SphereDeviceGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereDeviceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +531,54 @@ namespace Azure.ResourceManager.Sphere
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SphereDeviceGroupResource> GetIfExists(string deviceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
-            using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _deviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sphereDeviceGroupDeviceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deviceGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SphereDeviceGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SphereDeviceGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SphereDeviceGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SphereDeviceGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereDeviceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,6 +598,7 @@ namespace Azure.ResourceManager.Sphere
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SphereDeviceGroupResource> IAsyncEnumerable<SphereDeviceGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

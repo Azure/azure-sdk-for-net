@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
 
@@ -13,21 +14,30 @@ namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CatalogListResult))]
+    [ModelReaderWriterBuildable(typeof(CatalogProperties))]
     [ModelReaderWriterBuildable(typeof(CertificateListResult))]
     [ModelReaderWriterBuildable(typeof(ClaimSphereDevicesContent))]
     [ModelReaderWriterBuildable(typeof(CountDevicesResult))]
     [ModelReaderWriterBuildable(typeof(CountElementsResult))]
     [ModelReaderWriterBuildable(typeof(DeploymentListResult))]
+    [ModelReaderWriterBuildable(typeof(DeploymentProperties))]
     [ModelReaderWriterBuildable(typeof(DeviceGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(DeviceGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(DeviceGroupUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(DeviceListResult))]
+    [ModelReaderWriterBuildable(typeof(DeviceProperties))]
+    [ModelReaderWriterBuildable(typeof(DeviceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(GenerateCapabilityImageContent))]
     [ModelReaderWriterBuildable(typeof(ImageListResult))]
+    [ModelReaderWriterBuildable(typeof(ImageProperties))]
     [ModelReaderWriterBuildable(typeof(ListSphereDeviceGroupsContent))]
     [ModelReaderWriterBuildable(typeof(PagedDeviceInsight))]
     [ModelReaderWriterBuildable(typeof(ProductListResult))]
+    [ModelReaderWriterBuildable(typeof(ProductProperties))]
+    [ModelReaderWriterBuildable(typeof(ProductUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceContent))]
     [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceResponse))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]

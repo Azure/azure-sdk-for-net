@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sphere.Models
     public readonly partial struct SphereAllowCrashDumpCollectionStatus : IEquatable<SphereAllowCrashDumpCollectionStatus>
     {
         private readonly string _value;
+        /// <summary> Crash dump collection enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Crash dump collection disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="SphereAllowCrashDumpCollectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SphereAllowCrashDumpCollectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Crash dump collection enabled. </summary>
         public static SphereAllowCrashDumpCollectionStatus Enabled { get; } = new SphereAllowCrashDumpCollectionStatus(EnabledValue);
+
         /// <summary> Crash dump collection disabled. </summary>
         public static SphereAllowCrashDumpCollectionStatus Disabled { get; } = new SphereAllowCrashDumpCollectionStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="SphereAllowCrashDumpCollectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SphereAllowCrashDumpCollectionStatus left, SphereAllowCrashDumpCollectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SphereAllowCrashDumpCollectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SphereAllowCrashDumpCollectionStatus left, SphereAllowCrashDumpCollectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereAllowCrashDumpCollectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SphereAllowCrashDumpCollectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SphereAllowCrashDumpCollectionStatus(string value) => new SphereAllowCrashDumpCollectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SphereAllowCrashDumpCollectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SphereAllowCrashDumpCollectionStatus?(string value) => value == null ? null : new SphereAllowCrashDumpCollectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SphereAllowCrashDumpCollectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SphereAllowCrashDumpCollectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

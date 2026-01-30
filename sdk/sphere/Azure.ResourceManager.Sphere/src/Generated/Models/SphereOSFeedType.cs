@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sphere.Models
     public readonly partial struct SphereOSFeedType : IEquatable<SphereOSFeedType>
     {
         private readonly string _value;
+        /// <summary> Retail OS feed type. </summary>
+        private const string RetailValue = "Retail";
+        /// <summary> Retail evaluation OS feed type. </summary>
+        private const string RetailEvalValue = "RetailEval";
 
         /// <summary> Initializes a new instance of <see cref="SphereOSFeedType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SphereOSFeedType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RetailValue = "Retail";
-        private const string RetailEvalValue = "RetailEval";
+            _value = value;
+        }
 
         /// <summary> Retail OS feed type. </summary>
         public static SphereOSFeedType Retail { get; } = new SphereOSFeedType(RetailValue);
+
         /// <summary> Retail evaluation OS feed type. </summary>
         public static SphereOSFeedType RetailEval { get; } = new SphereOSFeedType(RetailEvalValue);
+
         /// <summary> Determines if two <see cref="SphereOSFeedType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SphereOSFeedType left, SphereOSFeedType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SphereOSFeedType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SphereOSFeedType left, SphereOSFeedType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereOSFeedType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SphereOSFeedType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SphereOSFeedType(string value) => new SphereOSFeedType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SphereOSFeedType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SphereOSFeedType?(string value) => value == null ? null : new SphereOSFeedType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SphereOSFeedType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SphereOSFeedType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

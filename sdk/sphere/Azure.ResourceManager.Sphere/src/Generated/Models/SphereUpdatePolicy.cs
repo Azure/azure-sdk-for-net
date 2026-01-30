@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sphere.Models
     public readonly partial struct SphereUpdatePolicy : IEquatable<SphereUpdatePolicy>
     {
         private readonly string _value;
+        /// <summary> Update all policy. </summary>
+        private const string UpdateAllValue = "UpdateAll";
+        /// <summary> No update for 3rd party app policy. </summary>
+        private const string No3rdPartyAppUpdatesValue = "No3rdPartyAppUpdates";
 
         /// <summary> Initializes a new instance of <see cref="SphereUpdatePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SphereUpdatePolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UpdateAllValue = "UpdateAll";
-        private const string No3RdPartyAppUpdatesValue = "No3rdPartyAppUpdates";
+            _value = value;
+        }
 
         /// <summary> Update all policy. </summary>
         public static SphereUpdatePolicy UpdateAll { get; } = new SphereUpdatePolicy(UpdateAllValue);
+
         /// <summary> No update for 3rd party app policy. </summary>
-        public static SphereUpdatePolicy No3RdPartyAppUpdates { get; } = new SphereUpdatePolicy(No3RdPartyAppUpdatesValue);
+        public static SphereUpdatePolicy No3rdPartyAppUpdates { get; } = new SphereUpdatePolicy(No3rdPartyAppUpdatesValue);
+
         /// <summary> Determines if two <see cref="SphereUpdatePolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SphereUpdatePolicy left, SphereUpdatePolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SphereUpdatePolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SphereUpdatePolicy left, SphereUpdatePolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereUpdatePolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SphereUpdatePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SphereUpdatePolicy(string value) => new SphereUpdatePolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SphereUpdatePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SphereUpdatePolicy?(string value) => value == null ? null : new SphereUpdatePolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SphereUpdatePolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SphereUpdatePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

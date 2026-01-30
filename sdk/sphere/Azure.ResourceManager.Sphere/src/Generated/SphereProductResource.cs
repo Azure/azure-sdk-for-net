@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
-    /// A Class representing a SphereProduct along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereProductResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSphereProductResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource"/> using the GetSphereProduct method.
+    /// A class representing a SphereProduct along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereProductResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource"/> using the GetSphereProducts method.
     /// </summary>
     public partial class SphereProductResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SphereProductResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="catalogName"> The catalogName. </param>
-        /// <param name="productName"> The productName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _sphereProductProductsClientDiagnostics;
-        private readonly ProductsRestOperations _sphereProductProductsRestClient;
+        private readonly ClientDiagnostics _productsClientDiagnostics;
+        private readonly Products _productsRestClient;
         private readonly SphereProductData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products";
 
-        /// <summary> Initializes a new instance of the <see cref="SphereProductResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SphereProductResource for mocking. </summary>
         protected SphereProductResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SphereProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereProductResource(ArmClient client, SphereProductData data) : this(client, data.Id)
@@ -56,140 +44,93 @@ namespace Azure.ResourceManager.Sphere
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SphereProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SphereProductResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sphereProductProductsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sphereProductProductsApiVersion);
-            _sphereProductProductsRestClient = new ProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sphereProductProductsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string sphereProductApiVersion);
+            _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, sphereProductApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SphereProductData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="productName"> The productName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of SphereDeviceGroupResources in the SphereProduct. </summary>
-        /// <returns> An object representing collection of SphereDeviceGroupResources and their operations over a SphereDeviceGroupResource. </returns>
-        public virtual SphereDeviceGroupCollection GetSphereDeviceGroups()
-        {
-            return GetCachedClient(client => new SphereDeviceGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SphereDeviceGroupResource>> GetSphereDeviceGroupAsync(string deviceGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetSphereDeviceGroups().GetAsync(deviceGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SphereDeviceGroupResource> GetSphereDeviceGroup(string deviceGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetSphereDeviceGroups().Get(deviceGroupName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SphereProductResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Get");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.Get");
             scope.Start();
             try
             {
-                var response = await _sphereProductProductsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SphereProductData> response = Response.FromValue(SphereProductData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,118 +144,42 @@ namespace Azure.ResourceManager.Sphere
         /// Get a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SphereProductResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Get");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.Get");
             scope.Start();
             try
             {
-                var response = _sphereProductProductsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SphereProductData> response = Response.FromValue(SphereProductData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereProductResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name'
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _sphereProductProductsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation(_sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name'
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _sphereProductProductsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SphereArmOperation(_sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -327,20 +192,20 @@ namespace Azure.ResourceManager.Sphere
         /// Update a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,14 +217,27 @@ namespace Azure.ResourceManager.Sphere
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Update");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.Update");
             scope.Start();
             try
             {
-                var response = await _sphereProductProductsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation<SphereProductResource>(new SphereProductOperationSource(Client), _sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SphereProductPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SphereArmOperation<SphereProductResource> operation = new SphereArmOperation<SphereProductResource>(
+                    new SphereProductOperationSource(Client),
+                    _productsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -373,20 +251,20 @@ namespace Azure.ResourceManager.Sphere
         /// Update a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,14 +276,125 @@ namespace Azure.ResourceManager.Sphere
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Update");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.Update");
             scope.Start();
             try
             {
-                var response = _sphereProductProductsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new SphereArmOperation<SphereProductResource>(new SphereProductOperationSource(Client), _sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SphereProductPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SphereArmOperation<SphereProductResource> operation = new SphereArmOperation<SphereProductResource>(
+                    new SphereProductOperationSource(Client),
+                    _productsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name'
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SphereArmOperation operation = new SphereArmOperation(_productsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Product. '.default' and '.unassigned' are system defined values and cannot be used for product name'
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SphereArmOperation operation = new SphereArmOperation(_productsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -419,31 +408,41 @@ namespace Azure.ResourceManager.Sphere
         /// Counts devices in product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/countDevices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/countDevices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_CountDevices</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_CountDevices. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CountDevicesResult>> CountDevicesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.CountDevices");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.CountDevices");
             scope.Start();
             try
             {
-                var response = await _sphereProductProductsRestClient.CountDevicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateCountDevicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CountDevicesResult> response = Response.FromValue(CountDevicesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -457,31 +456,41 @@ namespace Azure.ResourceManager.Sphere
         /// Counts devices in product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/countDevices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/countDevices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_CountDevices</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_CountDevices. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CountDevicesResult> CountDevices(CancellationToken cancellationToken = default)
         {
-            using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.CountDevices");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("SphereProductResource.CountDevices");
             scope.Start();
             try
             {
-                var response = _sphereProductProductsRestClient.CountDevices(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateCountDevicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CountDevicesResult> response = Response.FromValue(CountDevicesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -495,50 +504,58 @@ namespace Azure.ResourceManager.Sphere
         /// Generates default device groups for the product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/generateDefaultDeviceGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/generateDefaultDeviceGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_GenerateDefaultDeviceGroups</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_GenerateDefaultDeviceGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeviceGroupResource> GenerateDefaultDeviceGroupsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductResource.GenerateDefaultDeviceGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new ProductsGenerateDefaultDeviceGroupsAsyncCollectionResultOfT(
+                _productsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary>
         /// Generates default device groups for the product. '.default' and '.unassigned' are system defined values and cannot be used for product name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/generateDefaultDeviceGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/generateDefaultDeviceGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_GenerateDefaultDeviceGroups</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_GenerateDefaultDeviceGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -546,9 +563,50 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> A collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeviceGroupResource> GenerateDefaultDeviceGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductResource.GenerateDefaultDeviceGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new ProductsGenerateDefaultDeviceGroupsCollectionResultOfT(
+                _productsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new SphereDeviceGroupResource(Client, data));
+        }
+
+        /// <summary> Gets a collection of SphereDeviceGroups in the <see cref="SphereProductResource"/>. </summary>
+        /// <returns> An object representing collection of SphereDeviceGroups and their operations over a SphereDeviceGroupResource. </returns>
+        public virtual SphereDeviceGroupCollection GetSphereDeviceGroups()
+        {
+            return GetCachedClient(client => new SphereDeviceGroupCollection(client, Id));
+        }
+
+        /// <summary> Get a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
+        /// <param name="deviceGroupName"> Name of device group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SphereDeviceGroupResource>> GetSphereDeviceGroupAsync(string deviceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+
+            return await GetSphereDeviceGroups().GetAsync(deviceGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
+        /// <param name="deviceGroupName"> Name of device group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SphereDeviceGroupResource> GetSphereDeviceGroup(string deviceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+
+            return GetSphereDeviceGroups().Get(deviceGroupName, cancellationToken);
         }
     }
 }
