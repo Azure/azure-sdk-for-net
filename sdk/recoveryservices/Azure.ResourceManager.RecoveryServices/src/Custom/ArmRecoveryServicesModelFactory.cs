@@ -16,17 +16,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public static partial class ArmRecoveryServicesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesSecuritySettings"/>. </summary>
-        /// <param name="immutabilityState"> Gets or sets the State. </param>
-        /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
-        /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
-        /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
-        {
-            return RecoveryServicesSecuritySettings(immutabilityState, softDeleteSettings, multiUserAuthorization, sourceScanConfiguration: null);
-        }
-
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="upgradeDetails"> Details for upgrading vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>

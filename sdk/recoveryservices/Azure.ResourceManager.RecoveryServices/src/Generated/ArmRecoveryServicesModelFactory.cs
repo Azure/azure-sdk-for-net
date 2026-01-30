@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -507,6 +508,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static DeletedVaultRestoreInput DeletedVaultRestoreInput(string deletedVaultRestoreInputRecoveryResourceGroupId = default)
         {
             return new DeletedVaultRestoreInput(deletedVaultRestoreInputRecoveryResourceGroupId is null ? default : new DeletedVaultRestoreInputProperties(deletedVaultRestoreInputRecoveryResourceGroupId, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesSecuritySettings"/>. </summary>
+        /// <param name="immutabilityState"> Immutability Settings of a vault. </param>
+        /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
+        /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
+        {
+            return RecoveryServicesSecuritySettings(immutabilityState, softDeleteSettings, multiUserAuthorization, sourceScanConfiguration: default);
         }
     }
 }
