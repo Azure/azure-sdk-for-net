@@ -34,12 +34,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string Endpoint => GetRecordedVariable("CONTENTUNDERSTANDING_ENDPOINT");
 
         /// <summary>
+        /// Gets the endpoint URL directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedVariable cannot be called.
+        /// </summary>
+        public string? EndpointRaw => System.Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_ENDPOINT");
+
+        /// <summary>
         /// Gets the API key for authenticating with the Content Understanding service.
         /// </summary>
         /// <remarks>
         /// The API key is sanitized in recordings to prevent exposing secrets.
         /// </remarks>
-        public string ApiKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_KEY", options => options.IsSecret());
+        public string ApiKey => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the gpt-4.1 deployment name (optional).
@@ -47,9 +53,21 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string? Gpt41Deployment => GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT");
 
         /// <summary>
+        /// Gets the gpt-4.1 deployment name directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedOptionalVariable cannot be called.
+        /// </summary>
+        public string? Gpt41DeploymentRaw => System.Environment.GetEnvironmentVariable("GPT_4_1_DEPLOYMENT");
+
+        /// <summary>
         /// Gets the gpt-4.1-mini deployment name (optional).
         /// </summary>
         public string? Gpt41MiniDeployment => GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT");
+
+        /// <summary>
+        /// Gets the gpt-4.1-mini deployment name directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedOptionalVariable cannot be called.
+        /// </summary>
+        public string? Gpt41MiniDeploymentRaw => System.Environment.GetEnvironmentVariable("GPT_4_1_MINI_DEPLOYMENT");
 
         /// <summary>
         /// Gets the text-embedding-3-large deployment name (optional).
@@ -57,14 +75,20 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string? TextEmbedding3LargeDeployment => GetRecordedOptionalVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
 
         /// <summary>
+        /// Gets the text-embedding-3-large deployment name directly from environment variable.
+        /// Use this in SetUpFixture where GetRecordedOptionalVariable cannot be called.
+        /// </summary>
+        public string? TextEmbedding3LargeDeploymentRaw => System.Environment.GetEnvironmentVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
+
+        /// <summary>
         /// Gets the source resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? SourceResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID", options => options.IsSecret());
+        public string? SourceResourceId => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the source region for cross-resource copying (optional).
         /// </summary>
-        public string? SourceRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION", options => options.IsSecret());
+        public string? SourceRegion => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_SOURCE_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target endpoint for cross-resource copying (optional).
@@ -74,17 +98,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the target resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? TargetResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID", options => options.IsSecret());
+        public string? TargetResourceId => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target region for cross-resource copying (optional).
         /// </summary>
-        public string? TargetRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION", options => options.IsSecret());
+        public string? TargetRegion => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target API key for cross-resource copying (optional).
         /// </summary>
-        public string? TargetKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_KEY", options => options.IsSecret());
+        public string? TargetKey => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Creates a file path for a test asset file.

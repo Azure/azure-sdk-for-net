@@ -10,6 +10,7 @@ using Azure;
 using Azure.AI.ContentUnderstanding;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Tests
@@ -47,9 +48,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
         private async Task ConfigureDefaultsAsync()
         {
             // Check if model deployments are configured in test environment
-            string? gpt41Deployment = Environment.Gpt41Deployment;
-            string? gpt41MiniDeployment = Environment.Gpt41MiniDeployment;
-            string? textEmbeddingDeployment = Environment.TextEmbedding3LargeDeployment;
+            // Note: Use *Raw properties to read directly from environment variables.
+            // GetRecordedOptionalVariable cannot be called outside test method invocation.
+            string? gpt41Deployment = Environment.Gpt41DeploymentRaw;
+            string? gpt41MiniDeployment = Environment.Gpt41MiniDeploymentRaw;
+            string? textEmbeddingDeployment = Environment.TextEmbedding3LargeDeploymentRaw;
 
             if (string.IsNullOrEmpty(gpt41Deployment) || string.IsNullOrEmpty(gpt41MiniDeployment) || string.IsNullOrEmpty(textEmbeddingDeployment))
             {
@@ -78,8 +81,16 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             try
             {
-                var endpoint = new Uri(Environment.Endpoint);
-                var credential = Environment.Credential;
+                // Use EndpointRaw and DefaultAzureCredential directly.
+                // Environment.Endpoint and Environment.Credential use GetRecordedVariable
+                // which cannot be called outside test method invocation.
+                var endpointStr = Environment.EndpointRaw;
+                if (string.IsNullOrEmpty(endpointStr))
+                {
+                    throw new InvalidOperationException("CONTENTUNDERSTANDING_ENDPOINT environment variable is not set.");
+                }
+                var endpoint = new Uri(endpointStr);
+                var credential = new DefaultAzureCredential();
                 var client = new ContentUnderstandingClient(endpoint, credential);
 
                 // Check if defaults are already configured
