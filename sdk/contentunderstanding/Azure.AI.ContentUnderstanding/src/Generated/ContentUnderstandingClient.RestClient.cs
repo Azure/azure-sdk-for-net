@@ -27,7 +27,7 @@ namespace Azure.AI.ContentUnderstanding
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateAnalyzeRequest(string analyzerId, RequestContent content, string stringEncoding, string processingLocation, RequestContext context)
+        internal HttpMessage CreateAnalyzeRequest(string analyzerId, RequestContent content, string stringEncoding, string processingLocation, Guid? clientRequestId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,13 +48,17 @@ namespace Azure.AI.ContentUnderstanding
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            if (clientRequestId != null)
+            {
+                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId));
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeBinaryRequest(string analyzerId, string contentType, RequestContent content, string stringEncoding, string processingLocation, string inputRange, RequestContext context)
+        internal HttpMessage CreateAnalyzeBinaryRequest(string analyzerId, string contentType, RequestContent content, string stringEncoding, string processingLocation, string inputRange, Guid? clientRequestId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -80,6 +84,10 @@ namespace Azure.AI.ContentUnderstanding
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", contentType);
+            if (clientRequestId != null)
+            {
+                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId));
+            }
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
