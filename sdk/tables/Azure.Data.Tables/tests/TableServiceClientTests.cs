@@ -26,9 +26,9 @@ namespace Azure.Data.Tables.Tests
         private const string TableName = "mytablename";
 
         /// <summary>
-        /// Well-known CosmosDB Emulator account key (publicly documented for development/testing)
+        /// Mock key for testing localhost/emulator endpoints
         /// </summary>
-        private const string CosmosDbEmulatorKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
+        private const string MockEmulatorKey = "bW9ja0VtdWxhdG9yS2V5Rm9yVGVzdGluZ09ubHk=";
 
         /// <summary>
         /// The table endpoint.
@@ -107,7 +107,7 @@ namespace Azure.Data.Tables.Tests
 
             // CosmosDB emulator endpoint without account name in path should not throw
             Assert.That(
-                () => new TableServiceClient(new Uri("http://localhost:8902/"), new TableSharedKeyCredential("localhost", CosmosDbEmulatorKey)),
+                () => new TableServiceClient(new Uri("http://localhost:8902/"), new TableSharedKeyCredential("localhost", MockEmulatorKey)),
                 Throws.Nothing,
                 "The constructor should accept CosmosDB emulator endpoint without throwing IndexOutOfRangeException");
         }
