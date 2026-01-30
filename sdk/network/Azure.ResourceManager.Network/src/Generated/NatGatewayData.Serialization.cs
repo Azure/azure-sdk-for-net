@@ -121,6 +121,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("sourceVirtualNetwork"u8);
                 ((IJsonModel<WritableSubResource>)SourceVirtualNetwork).Write(writer, options);
             }
+            if (Optional.IsDefined(ServiceGateway))
+            {
+                writer.WritePropertyName("serviceGateway"u8);
+                ((IJsonModel<WritableSubResource>)ServiceGateway).Write(writer, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.Network
             IList<WritableSubResource> publicIPPrefixesV6 = default;
             IReadOnlyList<WritableSubResource> subnets = default;
             WritableSubResource sourceVirtualNetwork = default;
+            WritableSubResource serviceGateway = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -350,6 +356,15 @@ namespace Azure.ResourceManager.Network
                             sourceVirtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
+                        if (property0.NameEquals("serviceGateway"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceGateway = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            continue;
+                        }
                         if (property0.NameEquals("resourceGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -394,6 +409,7 @@ namespace Azure.ResourceManager.Network
                 publicIPPrefixesV6 ?? new ChangeTrackingList<WritableSubResource>(),
                 subnets ?? new ChangeTrackingList<WritableSubResource>(),
                 sourceVirtualNetwork,
+                serviceGateway,
                 resourceGuid,
                 provisioningState);
         }
@@ -717,6 +733,26 @@ namespace Azure.ResourceManager.Network
                 {
                     builder.Append("    sourceVirtualNetwork: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SourceVirtualNetwork, options, 4, false, "    sourceVirtualNetwork: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ServiceGatewayId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceGateway: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      serviceGateway: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceGateway))
+                {
+                    builder.Append("    serviceGateway: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServiceGateway, options, 4, false, "    serviceGateway: ");
                 }
             }
 
