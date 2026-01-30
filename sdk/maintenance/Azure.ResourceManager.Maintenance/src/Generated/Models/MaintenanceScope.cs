@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -14,50 +15,82 @@ namespace Azure.ResourceManager.Maintenance.Models
     public readonly partial struct MaintenanceScope : IEquatable<MaintenanceScope>
     {
         private readonly string _value;
+        /// <summary> This maintenance scope controls installation of azure platform updates i.e. services on physical nodes hosting customer VMs. </summary>
+        private const string HostValue = "Host";
+        /// <summary> This maintenance scope controls the default update maintenance of the Azure Resource. </summary>
+        private const string ResourceValue = "Resource";
+        /// <summary> This maintenance scope controls os image installation on VM/VMSS. </summary>
+        private const string OSImageValue = "OSImage";
+        /// <summary> This maintenance scope controls extension installation on VM/VMSS. </summary>
+        private const string ExtensionValue = "Extension";
+        /// <summary> This maintenance scope controls installation of windows and linux packages on VM/VMSS. </summary>
+        private const string InGuestPatchValue = "InGuestPatch";
+        /// <summary> This maintenance scope controls installation of SQL server platform updates. </summary>
+        private const string SQLDBValue = "SQLDB";
+        /// <summary> This maintenance scope controls installation of SQL managed instance platform update. </summary>
+        private const string SQLManagedInstanceValue = "SQLManagedInstance";
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaintenanceScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HostValue = "Host";
-        private const string OSImageValue = "OSImage";
-        private const string ExtensionValue = "Extension";
-        private const string InGuestPatchValue = "InGuestPatch";
-        private const string SqlDBValue = "SQLDB";
-        private const string SqlManagedInstanceValue = "SQLManagedInstance";
+            _value = value;
+        }
 
         /// <summary> This maintenance scope controls installation of azure platform updates i.e. services on physical nodes hosting customer VMs. </summary>
         public static MaintenanceScope Host { get; } = new MaintenanceScope(HostValue);
+
+        /// <summary> This maintenance scope controls the default update maintenance of the Azure Resource. </summary>
+        public static MaintenanceScope Resource { get; } = new MaintenanceScope(ResourceValue);
+
         /// <summary> This maintenance scope controls os image installation on VM/VMSS. </summary>
         public static MaintenanceScope OSImage { get; } = new MaintenanceScope(OSImageValue);
+
         /// <summary> This maintenance scope controls extension installation on VM/VMSS. </summary>
         public static MaintenanceScope Extension { get; } = new MaintenanceScope(ExtensionValue);
+
         /// <summary> This maintenance scope controls installation of windows and linux packages on VM/VMSS. </summary>
         public static MaintenanceScope InGuestPatch { get; } = new MaintenanceScope(InGuestPatchValue);
+
         /// <summary> This maintenance scope controls installation of SQL server platform updates. </summary>
-        public static MaintenanceScope SqlDB { get; } = new MaintenanceScope(SqlDBValue);
+        public static MaintenanceScope SQLDB { get; } = new MaintenanceScope(SQLDBValue);
+
         /// <summary> This maintenance scope controls installation of SQL managed instance platform update. </summary>
-        public static MaintenanceScope SqlManagedInstance { get; } = new MaintenanceScope(SqlManagedInstanceValue);
+        public static MaintenanceScope SQLManagedInstance { get; } = new MaintenanceScope(SQLManagedInstanceValue);
+
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaintenanceScope left, MaintenanceScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaintenanceScope left, MaintenanceScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaintenanceScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaintenanceScope(string value) => new MaintenanceScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaintenanceScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaintenanceScope?(string value) => value == null ? null : new MaintenanceScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaintenanceScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaintenanceScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
