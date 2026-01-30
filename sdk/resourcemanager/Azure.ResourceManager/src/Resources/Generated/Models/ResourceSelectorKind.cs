@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The selector kind.
-    /// Serialized Name: SelectorKind
-    /// </summary>
+    /// <summary> The selector kind. </summary>
     public readonly partial struct ResourceSelectorKind : IEquatable<ResourceSelectorKind>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Resources.Models
         private const string ResourceWithoutLocationValue = "resourceWithoutLocation";
         private const string PolicyDefinitionReferenceIdValue = "policyDefinitionReferenceId";
 
-        /// <summary>
-        /// The selector kind to filter policies by the resource location.
-        /// Serialized Name: SelectorKind.resourceLocation
-        /// </summary>
+        /// <summary> The selector kind to filter policies by the resource location. </summary>
         public static ResourceSelectorKind ResourceLocation { get; } = new ResourceSelectorKind(ResourceLocationValue);
-        /// <summary>
-        /// The selector kind to filter policies by the resource type.
-        /// Serialized Name: SelectorKind.resourceType
-        /// </summary>
+        /// <summary> The selector kind to filter policies by the resource type. </summary>
         public static ResourceSelectorKind ResourceType { get; } = new ResourceSelectorKind(ResourceTypeValue);
-        /// <summary>
-        /// The selector kind to filter policies by the resource without location.
-        /// Serialized Name: SelectorKind.resourceWithoutLocation
-        /// </summary>
+        /// <summary> The selector kind to filter policies by the resource without location. </summary>
         public static ResourceSelectorKind ResourceWithoutLocation { get; } = new ResourceSelectorKind(ResourceWithoutLocationValue);
-        /// <summary>
-        /// The selector kind to filter policies by the policy definition reference ID.
-        /// Serialized Name: SelectorKind.policyDefinitionReferenceId
-        /// </summary>
+        /// <summary> The selector kind to filter policies by the policy definition reference ID. </summary>
         public static ResourceSelectorKind PolicyDefinitionReferenceId { get; } = new ResourceSelectorKind(PolicyDefinitionReferenceIdValue);
         /// <summary> Determines if two <see cref="ResourceSelectorKind"/> values are the same. </summary>
         public static bool operator ==(ResourceSelectorKind left, ResourceSelectorKind right) => left.Equals(right);

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// The descendant.
-    /// Serialized Name: DescendantData
-    /// </summary>
+    /// <summary> The descendant. </summary>
     public partial class DescendantData : ResourceData
     {
         /// <summary>
@@ -60,14 +57,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// The friendly name of the management group.
-        /// Serialized Name: DescendantData.properties.displayName
-        /// </param>
-        /// <param name="parent">
-        /// The ID of the parent management group.
-        /// Serialized Name: DescendantData.properties.parent
-        /// </param>
+        /// <param name="displayName"> The friendly name of the management group. </param>
+        /// <param name="parent"> The ID of the parent management group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DescendantData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DescendantParentGroupInfo parent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,21 +67,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The friendly name of the management group.
-        /// Serialized Name: DescendantData.properties.displayName
-        /// </summary>
+        /// <summary> The friendly name of the management group. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary>
-        /// The ID of the parent management group.
-        /// Serialized Name: DescendantData.properties.parent
-        /// </summary>
+        /// <summary> The ID of the parent management group. </summary>
         internal DescendantParentGroupInfo Parent { get; }
-        /// <summary>
-        /// The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
-        /// Serialized Name: DescendantParentGroupInfo.id
-        /// </summary>
+        /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         [WirePath("properties.parent.id")]
         public ResourceIdentifier ParentId
         {

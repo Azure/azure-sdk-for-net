@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// Management group patch parameters.
-    /// Serialized Name: PatchManagementGroupRequest
-    /// </summary>
+    /// <summary> Management group patch parameters. </summary>
     public partial class ManagementGroupPatch
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupPatch"/>. </summary>
-        /// <param name="displayName">
-        /// The friendly name of the management group.
-        /// Serialized Name: PatchManagementGroupRequest.displayName
-        /// </param>
-        /// <param name="parentGroupId">
-        /// (Optional) The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
-        /// Serialized Name: PatchManagementGroupRequest.parentGroupId
-        /// </param>
+        /// <param name="displayName"> The friendly name of the management group. </param>
+        /// <param name="parentGroupId"> (Optional) The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupPatch(string displayName, string parentGroupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The friendly name of the management group.
-        /// Serialized Name: PatchManagementGroupRequest.displayName
-        /// </summary>
+        /// <summary> The friendly name of the management group. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// (Optional) The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
-        /// Serialized Name: PatchManagementGroupRequest.parentGroupId
-        /// </summary>
+        /// <summary> (Optional) The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         [WirePath("parentGroupId")]
         public string ParentGroupId { get; set; }
     }

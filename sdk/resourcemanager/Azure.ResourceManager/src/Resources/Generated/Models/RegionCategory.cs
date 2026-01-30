@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The category of the region.
-    /// Serialized Name: RegionCategory
-    /// </summary>
+    /// <summary> The category of the region. </summary>
     public readonly partial struct RegionCategory : IEquatable<RegionCategory>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Resources.Models
         private const string ExtendedValue = "Extended";
         private const string OtherValue = "Other";
 
-        /// <summary>
-        /// Recommended
-        /// Serialized Name: RegionCategory.Recommended
-        /// </summary>
+        /// <summary> Recommended. </summary>
         public static RegionCategory Recommended { get; } = new RegionCategory(RecommendedValue);
-        /// <summary>
-        /// Extended
-        /// Serialized Name: RegionCategory.Extended
-        /// </summary>
+        /// <summary> Extended. </summary>
         public static RegionCategory Extended { get; } = new RegionCategory(ExtendedValue);
-        /// <summary>
-        /// Other
-        /// Serialized Name: RegionCategory.Other
-        /// </summary>
+        /// <summary> Other. </summary>
         public static RegionCategory Other { get; } = new RegionCategory(OtherValue);
         /// <summary> Determines if two <see cref="RegionCategory"/> values are the same. </summary>
         public static bool operator ==(RegionCategory left, RegionCategory right) => left.Equals(right);

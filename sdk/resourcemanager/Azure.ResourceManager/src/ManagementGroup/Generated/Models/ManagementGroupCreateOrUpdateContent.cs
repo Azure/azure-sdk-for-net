@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// Management group creation parameters.
-    /// Serialized Name: CreateManagementGroupRequest
-    /// </summary>
+    /// <summary> Management group creation parameters. </summary>
     public partial class ManagementGroupCreateOrUpdateContent
     {
         /// <summary>
@@ -56,34 +53,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupCreateOrUpdateContent"/>. </summary>
-        /// <param name="id">
-        /// The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
-        /// Serialized Name: CreateManagementGroupRequest.id
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of the resource.  For example, Microsoft.Management/managementGroups
-        /// Serialized Name: CreateManagementGroupRequest.type
-        /// </param>
-        /// <param name="name">
-        /// The name of the management group. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: CreateManagementGroupRequest.name
-        /// </param>
-        /// <param name="tenantId">
-        /// The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: CreateManagementGroupRequest.properties.tenantId
-        /// </param>
-        /// <param name="displayName">
-        /// The friendly name of the management group. If no value is passed then this  field will be set to the groupId.
-        /// Serialized Name: CreateManagementGroupRequest.properties.displayName
-        /// </param>
-        /// <param name="details">
-        /// The details of a management group used during creation.
-        /// Serialized Name: CreateManagementGroupRequest.properties.details
-        /// </param>
-        /// <param name="children">
-        /// The list of children.
-        /// Serialized Name: CreateManagementGroupRequest.properties.children
-        /// </param>
+        /// <param name="id"> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="resourceType"> The type of the resource.  For example, Microsoft.Management/managementGroups. </param>
+        /// <param name="name"> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the management group. If no value is passed then this  field will be set to the groupId. </param>
+        /// <param name="details"> The details of a management group used during creation. </param>
+        /// <param name="children"> The list of children. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupCreateOrUpdateContent(string id, ResourceType? resourceType, string name, Guid? tenantId, string displayName, CreateManagementGroupDetails details, IReadOnlyList<ManagementGroupChildOptions> children, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -97,46 +73,25 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
-        /// Serialized Name: CreateManagementGroupRequest.id
-        /// </summary>
+        /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// The type of the resource.  For example, Microsoft.Management/managementGroups
-        /// Serialized Name: CreateManagementGroupRequest.type
-        /// </summary>
+        /// <summary> The type of the resource.  For example, Microsoft.Management/managementGroups. </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; }
-        /// <summary>
-        /// The name of the management group. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: CreateManagementGroupRequest.name
-        /// </summary>
+        /// <summary> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: CreateManagementGroupRequest.properties.tenantId
-        /// </summary>
+        /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
-        /// <summary>
-        /// The friendly name of the management group. If no value is passed then this  field will be set to the groupId.
-        /// Serialized Name: CreateManagementGroupRequest.properties.displayName
-        /// </summary>
+        /// <summary> The friendly name of the management group. If no value is passed then this  field will be set to the groupId. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The details of a management group used during creation.
-        /// Serialized Name: CreateManagementGroupRequest.properties.details
-        /// </summary>
+        /// <summary> The details of a management group used during creation. </summary>
         [WirePath("properties.details")]
         public CreateManagementGroupDetails Details { get; set; }
-        /// <summary>
-        /// The list of children.
-        /// Serialized Name: CreateManagementGroupRequest.properties.children
-        /// </summary>
+        /// <summary> The list of children. </summary>
         [WirePath("properties.children")]
         public IReadOnlyList<ManagementGroupChildOptions> Children { get; }
     }

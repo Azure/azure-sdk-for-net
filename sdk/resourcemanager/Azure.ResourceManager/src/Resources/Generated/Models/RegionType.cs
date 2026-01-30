@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The type of the region.
-    /// Serialized Name: RegionType
-    /// </summary>
+    /// <summary> The type of the region. </summary>
     public readonly partial struct RegionType : IEquatable<RegionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         private const string PhysicalValue = "Physical";
         private const string LogicalValue = "Logical";
 
-        /// <summary>
-        /// Physical
-        /// Serialized Name: RegionType.Physical
-        /// </summary>
+        /// <summary> Physical. </summary>
         public static RegionType Physical { get; } = new RegionType(PhysicalValue);
-        /// <summary>
-        /// Logical
-        /// Serialized Name: RegionType.Logical
-        /// </summary>
+        /// <summary> Logical. </summary>
         public static RegionType Logical { get; } = new RegionType(LogicalValue);
         /// <summary> Determines if two <see cref="RegionType"/> values are the same. </summary>
         public static bool operator ==(RegionType left, RegionType right) => left.Equals(right);

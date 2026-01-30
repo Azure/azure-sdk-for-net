@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary>
-    /// Common fields that are returned in the response for all Azure Resource Manager resources
-    /// Serialized Name: ResourceData
-    /// </summary>
+    /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     [ReferenceType(new string[] { "SystemData" })]
     public abstract partial class ResourceData
     {
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceData"/>. </summary>
-        /// <param name="id">
-        /// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-        /// Serialized Name: ResourceData.id
-        /// </param>
-        /// <param name="name">
-        /// The name of the resource
-        /// Serialized Name: ResourceData.name
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-        /// Serialized Name: ResourceData.type
-        /// </param>
-        /// <param name="systemData">
-        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-        /// Serialized Name: ResourceData.systemData
-        /// </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         [SerializationConstructor]
         protected ResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
         {
@@ -48,25 +33,13 @@ namespace Azure.ResourceManager.Models
             SystemData = systemData;
         }
 
-        /// <summary>
-        /// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-        /// Serialized Name: ResourceData.id
-        /// </summary>
+        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// The name of the resource
-        /// Serialized Name: ResourceData.name
-        /// </summary>
+        /// <summary> The name of the resource. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-        /// Serialized Name: ResourceData.type
-        /// </summary>
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
         public ResourceType ResourceType { get; }
-        /// <summary>
-        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-        /// Serialized Name: ResourceData.systemData
-        /// </summary>
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
         public SystemData SystemData { get; }
     }
 }

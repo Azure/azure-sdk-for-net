@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the PolicyDefinition data model.
     /// The policy definition.
-    /// Serialized Name: PolicyDefinition
     /// </summary>
     public partial class PolicyDefinitionData : ResourceData
     {
@@ -63,34 +62,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType">
-        /// The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static.
-        /// Serialized Name: PolicyDefinition.properties.policyType
-        /// </param>
-        /// <param name="mode">
-        /// The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data.
-        /// Serialized Name: PolicyDefinition.properties.mode
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the policy definition.
-        /// Serialized Name: PolicyDefinition.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// The policy definition description.
-        /// Serialized Name: PolicyDefinition.properties.description
-        /// </param>
-        /// <param name="policyRule">
-        /// The policy rule.
-        /// Serialized Name: PolicyDefinition.properties.policyRule
-        /// </param>
-        /// <param name="metadata">
-        /// The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicyDefinition.properties.metadata
-        /// </param>
-        /// <param name="parameters">
-        /// The parameter definitions for parameters used in the policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyDefinition.properties.parameters
-        /// </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
+        /// <param name="displayName"> The display name of the policy definition. </param>
+        /// <param name="description"> The policy definition description. </param>
+        /// <param name="policyRule"> The policy rule. </param>
+        /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -104,33 +82,20 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static.
-        /// Serialized Name: PolicyDefinition.properties.policyType
-        /// </summary>
+        /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>
         [WirePath("properties.policyType")]
         public PolicyType? PolicyType { get; set; }
-        /// <summary>
-        /// The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data.
-        /// Serialized Name: PolicyDefinition.properties.mode
-        /// </summary>
+        /// <summary> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </summary>
         [WirePath("properties.mode")]
         public string Mode { get; set; }
-        /// <summary>
-        /// The display name of the policy definition.
-        /// Serialized Name: PolicyDefinition.properties.displayName
-        /// </summary>
+        /// <summary> The display name of the policy definition. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The policy definition description.
-        /// Serialized Name: PolicyDefinition.properties.description
-        /// </summary>
+        /// <summary> The policy definition description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The policy rule.
-        /// Serialized Name: PolicyDefinition.properties.policyRule
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -163,7 +128,6 @@ namespace Azure.ResourceManager.Resources
         public BinaryData PolicyRule { get; set; }
         /// <summary>
         /// The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicyDefinition.properties.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -194,10 +158,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
-        /// <summary>
-        /// The parameter definitions for parameters used in the policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyDefinition.properties.parameters
-        /// </summary>
+        /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, ArmPolicyParameter> Parameters { get; }
     }

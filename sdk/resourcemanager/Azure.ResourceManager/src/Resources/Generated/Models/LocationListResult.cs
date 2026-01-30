@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Location list operation response.
-    /// Serialized Name: LocationListResult
-    /// </summary>
+    /// <summary> Location list operation response. </summary>
     internal partial class LocationListResult
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LocationListResult"/>. </summary>
-        /// <param name="value">
-        /// An array of locations.
-        /// Serialized Name: LocationListResult.value
-        /// </param>
+        /// <param name="value"> An array of locations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LocationListResult(IReadOnlyList<LocationExpanded> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// An array of locations.
-        /// Serialized Name: LocationListResult.value
-        /// </summary>
+        /// <summary> An array of locations. </summary>
         public IReadOnlyList<LocationExpanded> Value { get; }
     }
 }

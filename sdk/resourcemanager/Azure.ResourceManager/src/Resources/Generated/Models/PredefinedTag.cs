@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Tag details.
-    /// Serialized Name: PredefinedTag
-    /// </summary>
+    /// <summary> Tag details. </summary>
     public partial class PredefinedTag
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PredefinedTag"/>. </summary>
-        /// <param name="id">
-        /// The tag name ID.
-        /// Serialized Name: PredefinedTag.id
-        /// </param>
-        /// <param name="tagName">
-        /// The tag name.
-        /// Serialized Name: PredefinedTag.tagName
-        /// </param>
-        /// <param name="count">
-        /// The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0.
-        /// Serialized Name: PredefinedTag.count
-        /// </param>
-        /// <param name="values">
-        /// The list of tag values.
-        /// Serialized Name: PredefinedTag.values
-        /// </param>
+        /// <param name="id"> The tag name ID. </param>
+        /// <param name="tagName"> The tag name. </param>
+        /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
+        /// <param name="values"> The list of tag values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PredefinedTag(string id, string tagName, PredefinedTagCount count, IReadOnlyList<PredefinedTagValue> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,28 +66,16 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The tag name ID.
-        /// Serialized Name: PredefinedTag.id
-        /// </summary>
+        /// <summary> The tag name ID. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// The tag name.
-        /// Serialized Name: PredefinedTag.tagName
-        /// </summary>
+        /// <summary> The tag name. </summary>
         [WirePath("tagName")]
         public string TagName { get; }
-        /// <summary>
-        /// The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0.
-        /// Serialized Name: PredefinedTag.count
-        /// </summary>
+        /// <summary> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </summary>
         [WirePath("count")]
         public PredefinedTagCount Count { get; }
-        /// <summary>
-        /// The list of tag values.
-        /// Serialized Name: PredefinedTag.values
-        /// </summary>
+        /// <summary> The list of tag values. </summary>
         [WirePath("values")]
         public IReadOnlyList<PredefinedTagValue> Values { get; }
     }

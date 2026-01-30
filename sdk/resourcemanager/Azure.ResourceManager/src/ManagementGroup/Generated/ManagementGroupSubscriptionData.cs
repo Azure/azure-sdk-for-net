@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ManagementGroups
     /// <summary>
     /// A class representing the ManagementGroupSubscription data model.
     /// The details of subscription under management group.
-    /// Serialized Name: SubscriptionUnderManagementGroup
     /// </summary>
     public partial class ManagementGroupSubscriptionData : ResourceData
     {
@@ -62,22 +61,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenant">
-        /// The AAD Tenant ID associated with the subscription. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.tenant
-        /// </param>
-        /// <param name="displayName">
-        /// The friendly name of the subscription.
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.displayName
-        /// </param>
-        /// <param name="parent">
-        /// The ID of the parent management group.
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.parent
-        /// </param>
-        /// <param name="state">
-        /// The state of the subscription.
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.state
-        /// </param>
+        /// <param name="tenant"> The AAD Tenant ID associated with the subscription. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="parent"> The ID of the parent management group. </param>
+        /// <param name="state"> The state of the subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tenant, string displayName, DescendantParentGroupInfo parent, string state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,37 +75,22 @@ namespace Azure.ResourceManager.ManagementGroups
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The AAD Tenant ID associated with the subscription. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.tenant
-        /// </summary>
+        /// <summary> The AAD Tenant ID associated with the subscription. For example, 00000000-0000-0000-0000-000000000000. </summary>
         [WirePath("properties.tenant")]
         public string Tenant { get; }
-        /// <summary>
-        /// The friendly name of the subscription.
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.displayName
-        /// </summary>
+        /// <summary> The friendly name of the subscription. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary>
-        /// The ID of the parent management group.
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.parent
-        /// </summary>
+        /// <summary> The ID of the parent management group. </summary>
         internal DescendantParentGroupInfo Parent { get; }
-        /// <summary>
-        /// The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
-        /// Serialized Name: DescendantParentGroupInfo.id
-        /// </summary>
+        /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         [WirePath("properties.parent.id")]
         public ResourceIdentifier ParentId
         {
             get => Parent?.Id;
         }
 
-        /// <summary>
-        /// The state of the subscription.
-        /// Serialized Name: SubscriptionUnderManagementGroup.properties.state
-        /// </summary>
+        /// <summary> The state of the subscription. </summary>
         [WirePath("properties.state")]
         public string State { get; }
     }

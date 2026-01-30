@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// The EntitySearchOption.
-    /// Serialized Name: EntitySearchType
-    /// </summary>
+    /// <summary> The EntitySearchOption. </summary>
     public readonly partial struct EntitySearchOption : IEquatable<EntitySearchOption>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private const string ParentOnlyValue = "ParentOnly";
         private const string ChildrenOnlyValue = "ChildrenOnly";
 
-        /// <summary>
-        /// AllowedParents
-        /// Serialized Name: EntitySearchType.AllowedParents
-        /// </summary>
+        /// <summary> AllowedParents. </summary>
         public static EntitySearchOption AllowedParents { get; } = new EntitySearchOption(AllowedParentsValue);
-        /// <summary>
-        /// AllowedChildren
-        /// Serialized Name: EntitySearchType.AllowedChildren
-        /// </summary>
+        /// <summary> AllowedChildren. </summary>
         public static EntitySearchOption AllowedChildren { get; } = new EntitySearchOption(AllowedChildrenValue);
-        /// <summary>
-        /// ParentAndFirstLevelChildren
-        /// Serialized Name: EntitySearchType.ParentAndFirstLevelChildren
-        /// </summary>
+        /// <summary> ParentAndFirstLevelChildren. </summary>
         public static EntitySearchOption ParentAndFirstLevelChildren { get; } = new EntitySearchOption(ParentAndFirstLevelChildrenValue);
-        /// <summary>
-        /// ParentOnly
-        /// Serialized Name: EntitySearchType.ParentOnly
-        /// </summary>
+        /// <summary> ParentOnly. </summary>
         public static EntitySearchOption ParentOnly { get; } = new EntitySearchOption(ParentOnlyValue);
-        /// <summary>
-        /// ChildrenOnly
-        /// Serialized Name: EntitySearchType.ChildrenOnly
-        /// </summary>
+        /// <summary> ChildrenOnly. </summary>
         public static EntitySearchOption ChildrenOnly { get; } = new EntitySearchOption(ChildrenOnlyValue);
         /// <summary> Determines if two <see cref="EntitySearchOption"/> values are the same. </summary>
         public static bool operator ==(EntitySearchOption left, EntitySearchOption right) => left.Equals(right);

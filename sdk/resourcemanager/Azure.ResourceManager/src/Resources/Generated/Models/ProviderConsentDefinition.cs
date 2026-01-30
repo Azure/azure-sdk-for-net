@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The provider consent.
-    /// Serialized Name: ProviderConsentDefinition
-    /// </summary>
+    /// <summary> The provider consent. </summary>
     internal partial class ProviderConsentDefinition
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderConsentDefinition"/>. </summary>
-        /// <param name="consentToAuthorization">
-        /// A value indicating whether authorization is consented or not.
-        /// Serialized Name: ProviderConsentDefinition.consentToAuthorization
-        /// </param>
+        /// <param name="consentToAuthorization"> A value indicating whether authorization is consented or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProviderConsentDefinition(bool? consentToAuthorization, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A value indicating whether authorization is consented or not.
-        /// Serialized Name: ProviderConsentDefinition.consentToAuthorization
-        /// </summary>
+        /// <summary> A value indicating whether authorization is consented or not. </summary>
         [WirePath("consentToAuthorization")]
         public bool? ConsentToAuthorization { get; set; }
     }

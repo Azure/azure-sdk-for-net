@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// General metadata for the parameter.
-    /// Serialized Name: ParameterDefinitionsValueMetadata
-    /// </summary>
+    /// <summary> General metadata for the parameter. </summary>
     public partial class ParameterDefinitionsValueMetadata
     {
         /// <summary> Initializes a new instance of <see cref="ParameterDefinitionsValueMetadata"/>. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ParameterDefinitionsValueMetadata"/>. </summary>
-        /// <param name="displayName">
-        /// The display name for the parameter.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.displayName
-        /// </param>
-        /// <param name="description">
-        /// The description of the parameter.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.description
-        /// </param>
-        /// <param name="strongType">
-        /// Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.strongType
-        /// </param>
-        /// <param name="assignPermissions">
-        /// Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.assignPermissions
-        /// </param>
+        /// <param name="displayName"> The display name for the parameter. </param>
+        /// <param name="description"> The description of the parameter. </param>
+        /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>
+        /// <param name="assignPermissions"> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ParameterDefinitionsValueMetadata(string displayName, string description, string strongType, bool? assignPermissions, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -49,28 +34,16 @@ namespace Azure.ResourceManager.Resources.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The display name for the parameter.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.displayName
-        /// </summary>
+        /// <summary> The display name for the parameter. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The description of the parameter.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.description
-        /// </summary>
+        /// <summary> The description of the parameter. </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.strongType
-        /// </summary>
+        /// <summary> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </summary>
         [WirePath("strongType")]
         public string StrongType { get; set; }
-        /// <summary>
-        /// Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope.
-        /// Serialized Name: ParameterDefinitionsValueMetadata.assignPermissions
-        /// </summary>
+        /// <summary> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </summary>
         [WirePath("assignPermissions")]
         public bool? AssignPermissions { get; set; }
         /// <summary>

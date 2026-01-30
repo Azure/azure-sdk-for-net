@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary>
-    /// Configuration of key for data encryption
-    /// Serialized Name: EncryptionProperties
-    /// </summary>
+    /// <summary> Configuration of key for data encryption. </summary>
     [PropertyReferenceType]
     public partial class EncryptionProperties
     {
@@ -23,14 +20,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
-        /// <param name="status">
-        /// Indicates whether or not the encryption is enabled for container registry.
-        /// Serialized Name: EncryptionProperties.status
-        /// </param>
-        /// <param name="keyVaultProperties">
-        /// Key vault properties.
-        /// Serialized Name: EncryptionProperties.keyVaultProperties
-        /// </param>
+        /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
+        /// <param name="keyVaultProperties"> Key vault properties. </param>
         [SerializationConstructor]
         internal EncryptionProperties(EncryptionStatus? status, KeyVaultProperties keyVaultProperties)
         {
@@ -38,16 +29,10 @@ namespace Azure.ResourceManager.Models
             KeyVaultProperties = keyVaultProperties;
         }
 
-        /// <summary>
-        /// Indicates whether or not the encryption is enabled for container registry.
-        /// Serialized Name: EncryptionProperties.status
-        /// </summary>
+        /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>
         [WirePath("status")]
         public EncryptionStatus? Status { get; set; }
-        /// <summary>
-        /// Key vault properties.
-        /// Serialized Name: EncryptionProperties.keyVaultProperties
-        /// </summary>
+        /// <summary> Key vault properties. </summary>
         [WirePath("keyVaultProperties")]
         public KeyVaultProperties KeyVaultProperties { get; set; }
     }

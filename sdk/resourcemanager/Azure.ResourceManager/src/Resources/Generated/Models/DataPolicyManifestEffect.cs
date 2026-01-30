@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The data effect definition.
-    /// Serialized Name: DataPolicyManifestEffect
-    /// </summary>
+    /// <summary> The data effect definition. </summary>
     public partial class DataPolicyManifestEffect
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataPolicyManifestEffect"/>. </summary>
-        /// <param name="name">
-        /// The data effect name.
-        /// Serialized Name: DataPolicyManifestEffect.name
-        /// </param>
-        /// <param name="detailsSchema">
-        /// The data effect details schema.
-        /// Serialized Name: DataPolicyManifestEffect.detailsSchema
-        /// </param>
+        /// <param name="name"> The data effect name. </param>
+        /// <param name="detailsSchema"> The data effect details schema. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataPolicyManifestEffect(string name, BinaryData detailsSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The data effect name.
-        /// Serialized Name: DataPolicyManifestEffect.name
-        /// </summary>
+        /// <summary> The data effect name. </summary>
         [WirePath("name")]
         public string Name { get; }
         /// <summary>
         /// The data effect details schema.
-        /// Serialized Name: DataPolicyManifestEffect.detailsSchema
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

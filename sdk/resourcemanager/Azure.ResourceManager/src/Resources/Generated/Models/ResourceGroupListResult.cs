@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// List of resource groups.
-    /// Serialized Name: ResourceGroupListResult
-    /// </summary>
+    /// <summary> List of resource groups. </summary>
     internal partial class ResourceGroupListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceGroupListResult"/>. </summary>
-        /// <param name="value">
-        /// An array of resource groups.
-        /// Serialized Name: ResourceGroupListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: ResourceGroupListResult.nextLink
-        /// </param>
+        /// <param name="value"> An array of resource groups. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceGroupListResult(IReadOnlyList<ResourceGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// An array of resource groups.
-        /// Serialized Name: ResourceGroupListResult.value
-        /// </summary>
+        /// <summary> An array of resource groups. </summary>
         public IReadOnlyList<ResourceGroupData> Value { get; }
-        /// <summary>
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: ResourceGroupListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
 }

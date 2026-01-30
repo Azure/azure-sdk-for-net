@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary>
-    /// User assigned identity properties
-    /// Serialized Name: UserAssignedIdentity
-    /// </summary>
+    /// <summary> User assigned identity properties. </summary>
     [PropertyReferenceType]
     public partial class UserAssignedIdentity
     {
@@ -24,14 +21,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
-        /// <param name="principalId">
-        /// The principal ID of the assigned identity.
-        /// Serialized Name: UserAssignedIdentity.principalId
-        /// </param>
-        /// <param name="clientId">
-        /// The client ID of the assigned identity.
-        /// Serialized Name: UserAssignedIdentity.clientId
-        /// </param>
+        /// <param name="principalId"> The principal ID of the assigned identity. </param>
+        /// <param name="clientId"> The client ID of the assigned identity. </param>
         [SerializationConstructor]
         internal UserAssignedIdentity(Guid? principalId, Guid? clientId)
         {
@@ -39,16 +30,10 @@ namespace Azure.ResourceManager.Models
             ClientId = clientId;
         }
 
-        /// <summary>
-        /// The principal ID of the assigned identity.
-        /// Serialized Name: UserAssignedIdentity.principalId
-        /// </summary>
+        /// <summary> The principal ID of the assigned identity. </summary>
         [WirePath("principalId")]
         public Guid? PrincipalId { get; }
-        /// <summary>
-        /// The client ID of the assigned identity.
-        /// Serialized Name: UserAssignedIdentity.clientId
-        /// </summary>
+        /// <summary> The client ID of the assigned identity. </summary>
         [WirePath("clientId")]
         public Guid? ClientId { get; }
     }

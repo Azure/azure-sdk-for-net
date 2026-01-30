@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The operation type for the patch API.
-    /// Serialized Name: TagPatchMode
-    /// </summary>
+    /// <summary> The operation type for the patch API. </summary>
     public readonly partial struct TagPatchMode : IEquatable<TagPatchMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Resources.Models
         private const string MergeValue = "Merge";
         private const string DeleteValue = "Delete";
 
-        /// <summary>
-        /// The 'replace' option replaces the entire set of existing tags with a new set.
-        /// Serialized Name: TagPatchMode.Replace
-        /// </summary>
+        /// <summary> The 'replace' option replaces the entire set of existing tags with a new set. </summary>
         public static TagPatchMode Replace { get; } = new TagPatchMode(ReplaceValue);
-        /// <summary>
-        /// The 'merge' option allows adding tags with new names and updating the values of tags with existing names.
-        /// Serialized Name: TagPatchMode.Merge
-        /// </summary>
+        /// <summary> The 'merge' option allows adding tags with new names and updating the values of tags with existing names. </summary>
         public static TagPatchMode Merge { get; } = new TagPatchMode(MergeValue);
-        /// <summary>
-        /// The 'delete' option allows selectively deleting tags based on given names or name/value pairs.
-        /// Serialized Name: TagPatchMode.Delete
-        /// </summary>
+        /// <summary> The 'delete' option allows selectively deleting tags based on given names or name/value pairs. </summary>
         public static TagPatchMode Delete { get; } = new TagPatchMode(DeleteValue);
         /// <summary> Determines if two <see cref="TagPatchMode"/> values are the same. </summary>
         public static bool operator ==(TagPatchMode left, TagPatchMode right) => left.Equals(right);

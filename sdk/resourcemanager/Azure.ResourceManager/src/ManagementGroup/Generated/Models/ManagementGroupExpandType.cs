@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// The ManagementGroupExpandType.
-    /// Serialized Name: ManagementGroupExpandType
-    /// </summary>
+    /// <summary> The ManagementGroupExpandType. </summary>
     public readonly partial struct ManagementGroupExpandType : IEquatable<ManagementGroupExpandType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private const string PathValue = "path";
         private const string AncestorsValue = "ancestors";
 
-        /// <summary>
-        /// children
-        /// Serialized Name: ManagementGroupExpandType.children
-        /// </summary>
+        /// <summary> children. </summary>
         public static ManagementGroupExpandType Children { get; } = new ManagementGroupExpandType(ChildrenValue);
-        /// <summary>
-        /// path
-        /// Serialized Name: ManagementGroupExpandType.path
-        /// </summary>
+        /// <summary> path. </summary>
         public static ManagementGroupExpandType Path { get; } = new ManagementGroupExpandType(PathValue);
-        /// <summary>
-        /// ancestors
-        /// Serialized Name: ManagementGroupExpandType.ancestors
-        /// </summary>
+        /// <summary> ancestors. </summary>
         public static ManagementGroupExpandType Ancestors { get; } = new ManagementGroupExpandType(AncestorsValue);
         /// <summary> Determines if two <see cref="ManagementGroupExpandType"/> values are the same. </summary>
         public static bool operator ==(ManagementGroupExpandType left, ManagementGroupExpandType right) => left.Equals(right);

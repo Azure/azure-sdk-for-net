@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The data type of the parameter.
-    /// Serialized Name: ArmPolicyParameterType
-    /// </summary>
+    /// <summary> The data type of the parameter. </summary>
     public readonly partial struct ArmPolicyParameterType : IEquatable<ArmPolicyParameterType>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Resources.Models
         private const string FloatValue = "Float";
         private const string DateTimeValue = "DateTime";
 
-        /// <summary>
-        /// String
-        /// Serialized Name: ArmPolicyParameterType.String
-        /// </summary>
+        /// <summary> String. </summary>
         public static ArmPolicyParameterType String { get; } = new ArmPolicyParameterType(StringValue);
-        /// <summary>
-        /// Array
-        /// Serialized Name: ArmPolicyParameterType.Array
-        /// </summary>
+        /// <summary> Array. </summary>
         public static ArmPolicyParameterType Array { get; } = new ArmPolicyParameterType(ArrayValue);
-        /// <summary>
-        /// Object
-        /// Serialized Name: ArmPolicyParameterType.Object
-        /// </summary>
+        /// <summary> Object. </summary>
         public static ArmPolicyParameterType Object { get; } = new ArmPolicyParameterType(ObjectValue);
-        /// <summary>
-        /// Boolean
-        /// Serialized Name: ArmPolicyParameterType.Boolean
-        /// </summary>
+        /// <summary> Boolean. </summary>
         public static ArmPolicyParameterType Boolean { get; } = new ArmPolicyParameterType(BooleanValue);
-        /// <summary>
-        /// Integer
-        /// Serialized Name: ArmPolicyParameterType.Integer
-        /// </summary>
+        /// <summary> Integer. </summary>
         public static ArmPolicyParameterType Integer { get; } = new ArmPolicyParameterType(IntegerValue);
-        /// <summary>
-        /// Float
-        /// Serialized Name: ArmPolicyParameterType.Float
-        /// </summary>
+        /// <summary> Float. </summary>
         public static ArmPolicyParameterType Float { get; } = new ArmPolicyParameterType(FloatValue);
-        /// <summary>
-        /// DateTime
-        /// Serialized Name: ArmPolicyParameterType.DateTime
-        /// </summary>
+        /// <summary> DateTime. </summary>
         public static ArmPolicyParameterType DateTime { get; } = new ArmPolicyParameterType(DateTimeValue);
         /// <summary> Determines if two <see cref="ArmPolicyParameterType"/> values are the same. </summary>
         public static bool operator ==(ArmPolicyParameterType left, ArmPolicyParameterType right) => left.Equals(right);

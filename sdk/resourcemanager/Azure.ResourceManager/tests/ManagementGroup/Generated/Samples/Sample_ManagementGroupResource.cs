@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroup()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroup.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroup.json
             // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupWithAncestors()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithAncestors.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithAncestors.json
             // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupWithExpand()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithExpand.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithExpand.json
             // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupWithPath()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithPath.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithPath.json
             // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupsWithExpandAndRecurse()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithExpandAndRecurse.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetManagementGroupWithExpandAndRecurse.json
             // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteManagementGroup()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/DeleteManagementGroup.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/DeleteManagementGroup.json
             // this example is just showing the usage of "ManagementGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchManagementGroup()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/PatchManagementGroup.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/PatchManagementGroup.json
             // this example is just showing the usage of "ManagementGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDescendants_GetDescendants()
         {
-            // Generated from example definition: specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetDescendants.json
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/examples/GetDescendants.json
             // this example is just showing the usage of "ManagementGroups_GetDescendants" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

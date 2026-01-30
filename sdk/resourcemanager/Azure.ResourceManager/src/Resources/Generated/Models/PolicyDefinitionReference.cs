@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The policy definition reference.
-    /// Serialized Name: PolicyDefinitionReference
-    /// </summary>
+    /// <summary> The policy definition reference. </summary>
     public partial class PolicyDefinitionReference
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
-        /// <param name="policyDefinitionId">
-        /// The ID of the policy definition or policy set definition.
-        /// Serialized Name: PolicyDefinitionReference.policyDefinitionId
-        /// </param>
+        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> is null. </exception>
         public PolicyDefinitionReference(string policyDefinitionId)
         {
@@ -64,22 +58,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
-        /// <param name="policyDefinitionId">
-        /// The ID of the policy definition or policy set definition.
-        /// Serialized Name: PolicyDefinitionReference.policyDefinitionId
-        /// </param>
-        /// <param name="parameters">
-        /// The parameter values for the referenced policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyDefinitionReference.parameters
-        /// </param>
-        /// <param name="policyDefinitionReferenceId">
-        /// A unique id (within the policy set definition) for this policy definition reference.
-        /// Serialized Name: PolicyDefinitionReference.policyDefinitionReferenceId
-        /// </param>
-        /// <param name="groupNames">
-        /// The name of the groups that this policy definition reference belongs to.
-        /// Serialized Name: PolicyDefinitionReference.groupNames
-        /// </param>
+        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
+        /// <param name="parameters"> The parameter values for the referenced policy rule. The keys are the parameter names. </param>
+        /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>
+        /// <param name="groupNames"> The name of the groups that this policy definition reference belongs to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyDefinitionReference(string policyDefinitionId, IDictionary<string, ArmPolicyParameterValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,28 +77,16 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary>
-        /// The ID of the policy definition or policy set definition.
-        /// Serialized Name: PolicyDefinitionReference.policyDefinitionId
-        /// </summary>
+        /// <summary> The ID of the policy definition or policy set definition. </summary>
         [WirePath("policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
-        /// <summary>
-        /// The parameter values for the referenced policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyDefinitionReference.parameters
-        /// </summary>
+        /// <summary> The parameter values for the referenced policy rule. The keys are the parameter names. </summary>
         [WirePath("parameters")]
         public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }
-        /// <summary>
-        /// A unique id (within the policy set definition) for this policy definition reference.
-        /// Serialized Name: PolicyDefinitionReference.policyDefinitionReferenceId
-        /// </summary>
+        /// <summary> A unique id (within the policy set definition) for this policy definition reference. </summary>
         [WirePath("policyDefinitionReferenceId")]
         public string PolicyDefinitionReferenceId { get; set; }
-        /// <summary>
-        /// The name of the groups that this policy definition reference belongs to.
-        /// Serialized Name: PolicyDefinitionReference.groupNames
-        /// </summary>
+        /// <summary> The name of the groups that this policy definition reference belongs to. </summary>
         [WirePath("groupNames")]
         public IList<string> GroupNames { get; }
     }

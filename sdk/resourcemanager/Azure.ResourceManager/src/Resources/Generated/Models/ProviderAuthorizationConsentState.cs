@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The provider authorization consent state.
-    /// Serialized Name: ProviderAuthorizationConsentState
-    /// </summary>
+    /// <summary> The provider authorization consent state. </summary>
     public readonly partial struct ProviderAuthorizationConsentState : IEquatable<ProviderAuthorizationConsentState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Resources.Models
         private const string NotRequiredValue = "NotRequired";
         private const string ConsentedValue = "Consented";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ProviderAuthorizationConsentState.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ProviderAuthorizationConsentState NotSpecified { get; } = new ProviderAuthorizationConsentState(NotSpecifiedValue);
-        /// <summary>
-        /// Required
-        /// Serialized Name: ProviderAuthorizationConsentState.Required
-        /// </summary>
+        /// <summary> Required. </summary>
         public static ProviderAuthorizationConsentState Required { get; } = new ProviderAuthorizationConsentState(RequiredValue);
-        /// <summary>
-        /// NotRequired
-        /// Serialized Name: ProviderAuthorizationConsentState.NotRequired
-        /// </summary>
+        /// <summary> NotRequired. </summary>
         public static ProviderAuthorizationConsentState NotRequired { get; } = new ProviderAuthorizationConsentState(NotRequiredValue);
-        /// <summary>
-        /// Consented
-        /// Serialized Name: ProviderAuthorizationConsentState.Consented
-        /// </summary>
+        /// <summary> Consented. </summary>
         public static ProviderAuthorizationConsentState Consented { get; } = new ProviderAuthorizationConsentState(ConsentedValue);
         /// <summary> Determines if two <see cref="ProviderAuthorizationConsentState"/> values are the same. </summary>
         public static bool operator ==(ProviderAuthorizationConsentState left, ProviderAuthorizationConsentState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The value of a parameter.
-    /// Serialized Name: ArmPolicyParameterValue
-    /// </summary>
+    /// <summary> The value of a parameter. </summary>
     public partial class ArmPolicyParameterValue
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmPolicyParameterValue"/>. </summary>
-        /// <param name="value">
-        /// The value of the parameter.
-        /// Serialized Name: ArmPolicyParameterValue.value
-        /// </param>
+        /// <param name="value"> The value of the parameter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArmPolicyParameterValue(BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,7 +61,6 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary>
         /// The value of the parameter.
-        /// Serialized Name: ArmPolicyParameterValue.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Tag count.
-    /// Serialized Name: PredefinedTagCount
-    /// </summary>
+    /// <summary> Tag count. </summary>
     public partial class PredefinedTagCount
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PredefinedTagCount"/>. </summary>
-        /// <param name="predefinedTagCountType">
-        /// Type of count.
-        /// Serialized Name: PredefinedTagCount.type
-        /// </param>
-        /// <param name="value">
-        /// Value of count.
-        /// Serialized Name: PredefinedTagCount.value
-        /// </param>
+        /// <param name="predefinedTagCountType"> Type of count. </param>
+        /// <param name="value"> Value of count. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PredefinedTagCount(string predefinedTagCountType, int? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Type of count.
-        /// Serialized Name: PredefinedTagCount.type
-        /// </summary>
+        /// <summary> Type of count. </summary>
         [WirePath("type")]
         public string PredefinedTagCountType { get; }
-        /// <summary>
-        /// Value of count.
-        /// Serialized Name: PredefinedTagCount.value
-        /// </summary>
+        /// <summary> Value of count. </summary>
         [WirePath("value")]
         public int? Value { get; }
     }

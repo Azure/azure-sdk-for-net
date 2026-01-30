@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// The details of a management group.
-    /// Serialized Name: ManagementGroupInfo
-    /// </summary>
+    /// <summary> The details of a management group. </summary>
     public partial class ManagementGroupInfo
     {
         /// <summary>
@@ -57,34 +54,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupInfo"/>. </summary>
-        /// <param name="version">
-        /// The version number of the object.
-        /// Serialized Name: ManagementGroupInfo.version
-        /// </param>
-        /// <param name="updatedOn">
-        /// The date and time when this object was last updated.
-        /// Serialized Name: ManagementGroupInfo.updatedTime
-        /// </param>
-        /// <param name="updatedBy">
-        /// The identity of the principal or process that updated the object.
-        /// Serialized Name: ManagementGroupInfo.updatedBy
-        /// </param>
-        /// <param name="parent">
-        /// (Optional) The ID of the parent management group.
-        /// Serialized Name: ManagementGroupInfo.parent
-        /// </param>
-        /// <param name="path">
-        /// The path from the root to the current group.
-        /// Serialized Name: ManagementGroupInfo.path
-        /// </param>
-        /// <param name="managementGroupAncestors">
-        /// The ancestors of the management group.
-        /// Serialized Name: ManagementGroupInfo.managementGroupAncestors
-        /// </param>
-        /// <param name="managementGroupAncestorChain">
-        /// The ancestors of the management group displayed in reversed order, from immediate parent to the root.
-        /// Serialized Name: ManagementGroupInfo.managementGroupAncestorsChain
-        /// </param>
+        /// <param name="version"> The version number of the object. </param>
+        /// <param name="updatedOn"> The date and time when this object was last updated. </param>
+        /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
+        /// <param name="parent"> (Optional) The ID of the parent management group. </param>
+        /// <param name="path"> The path from the root to the current group. </param>
+        /// <param name="managementGroupAncestors"> The ancestors of the management group. </param>
+        /// <param name="managementGroupAncestorChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupInfo(int? version, DateTimeOffset? updatedOn, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -98,46 +74,25 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The version number of the object.
-        /// Serialized Name: ManagementGroupInfo.version
-        /// </summary>
+        /// <summary> The version number of the object. </summary>
         [WirePath("version")]
         public int? Version { get; }
-        /// <summary>
-        /// The date and time when this object was last updated.
-        /// Serialized Name: ManagementGroupInfo.updatedTime
-        /// </summary>
+        /// <summary> The date and time when this object was last updated. </summary>
         [WirePath("updatedTime")]
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary>
-        /// The identity of the principal or process that updated the object.
-        /// Serialized Name: ManagementGroupInfo.updatedBy
-        /// </summary>
+        /// <summary> The identity of the principal or process that updated the object. </summary>
         [WirePath("updatedBy")]
         public string UpdatedBy { get; }
-        /// <summary>
-        /// (Optional) The ID of the parent management group.
-        /// Serialized Name: ManagementGroupInfo.parent
-        /// </summary>
+        /// <summary> (Optional) The ID of the parent management group. </summary>
         [WirePath("parent")]
         public ParentManagementGroupInfo Parent { get; }
-        /// <summary>
-        /// The path from the root to the current group.
-        /// Serialized Name: ManagementGroupInfo.path
-        /// </summary>
+        /// <summary> The path from the root to the current group. </summary>
         [WirePath("path")]
         public IReadOnlyList<ManagementGroupPathElement> Path { get; }
-        /// <summary>
-        /// The ancestors of the management group.
-        /// Serialized Name: ManagementGroupInfo.managementGroupAncestors
-        /// </summary>
+        /// <summary> The ancestors of the management group. </summary>
         [WirePath("managementGroupAncestors")]
         public IReadOnlyList<string> ManagementGroupAncestors { get; }
-        /// <summary>
-        /// The ancestors of the management group displayed in reversed order, from immediate parent to the root.
-        /// Serialized Name: ManagementGroupInfo.managementGroupAncestorsChain
-        /// </summary>
+        /// <summary> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </summary>
         [WirePath("managementGroupAncestorsChain")]
         public IReadOnlyList<ManagementGroupPathElement> ManagementGroupAncestorChain { get; }
     }

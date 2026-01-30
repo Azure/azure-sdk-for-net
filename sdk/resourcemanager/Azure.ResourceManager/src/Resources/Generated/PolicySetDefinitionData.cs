@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the PolicySetDefinition data model.
     /// The policy set definition.
-    /// Serialized Name: PolicySetDefinition
     /// </summary>
     public partial class PolicySetDefinitionData : ResourceData
     {
@@ -65,34 +64,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType">
-        /// The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static.
-        /// Serialized Name: PolicySetDefinition.properties.policyType
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the policy set definition.
-        /// Serialized Name: PolicySetDefinition.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// The policy set definition description.
-        /// Serialized Name: PolicySetDefinition.properties.description
-        /// </param>
-        /// <param name="metadata">
-        /// The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicySetDefinition.properties.metadata
-        /// </param>
-        /// <param name="parameters">
-        /// The policy set definition parameters that can be used in policy definition references.
-        /// Serialized Name: PolicySetDefinition.properties.parameters
-        /// </param>
-        /// <param name="policyDefinitions">
-        /// An array of policy definition references.
-        /// Serialized Name: PolicySetDefinition.properties.policyDefinitions
-        /// </param>
-        /// <param name="policyDefinitionGroups">
-        /// The metadata describing groups of policy definition references within the policy set definition.
-        /// Serialized Name: PolicySetDefinition.properties.policyDefinitionGroups
-        /// </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="displayName"> The display name of the policy set definition. </param>
+        /// <param name="description"> The policy set definition description. </param>
+        /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
+        /// <param name="policyDefinitions"> An array of policy definition references. </param>
+        /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicySetDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string displayName, string description, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -106,27 +84,17 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static.
-        /// Serialized Name: PolicySetDefinition.properties.policyType
-        /// </summary>
+        /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>
         [WirePath("properties.policyType")]
         public PolicyType? PolicyType { get; set; }
-        /// <summary>
-        /// The display name of the policy set definition.
-        /// Serialized Name: PolicySetDefinition.properties.displayName
-        /// </summary>
+        /// <summary> The display name of the policy set definition. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The policy set definition description.
-        /// Serialized Name: PolicySetDefinition.properties.description
-        /// </summary>
+        /// <summary> The policy set definition description. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicySetDefinition.properties.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -157,22 +125,13 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
-        /// <summary>
-        /// The policy set definition parameters that can be used in policy definition references.
-        /// Serialized Name: PolicySetDefinition.properties.parameters
-        /// </summary>
+        /// <summary> The policy set definition parameters that can be used in policy definition references. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, ArmPolicyParameter> Parameters { get; }
-        /// <summary>
-        /// An array of policy definition references.
-        /// Serialized Name: PolicySetDefinition.properties.policyDefinitions
-        /// </summary>
+        /// <summary> An array of policy definition references. </summary>
         [WirePath("properties.policyDefinitions")]
         public IList<PolicyDefinitionReference> PolicyDefinitions { get; }
-        /// <summary>
-        /// The metadata describing groups of policy definition references within the policy set definition.
-        /// Serialized Name: PolicySetDefinition.properties.policyDefinitionGroups
-        /// </summary>
+        /// <summary> The metadata describing groups of policy definition references within the policy set definition. </summary>
         [WirePath("properties.policyDefinitionGroups")]
         public IList<PolicyDefinitionGroup> PolicyDefinitionGroups { get; }
     }

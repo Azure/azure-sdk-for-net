@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The type of the alias.
-    /// Serialized Name: ResourceTypeAliasType
-    /// </summary>
+    /// <summary> The type of the alias. </summary>
     public enum ResourceTypeAliasType
     {
-        /// <summary>
-        /// Alias type is unknown (same as not providing alias type).
-        /// Serialized Name: ResourceTypeAliasType.NotSpecified
-        /// </summary>
+        /// <summary> Alias type is unknown (same as not providing alias type). </summary>
         NotSpecified,
-        /// <summary>
-        /// Alias value is not secret.
-        /// Serialized Name: ResourceTypeAliasType.PlainText
-        /// </summary>
+        /// <summary> Alias value is not secret. </summary>
         PlainText,
-        /// <summary>
-        /// Alias value is secret.
-        /// Serialized Name: ResourceTypeAliasType.Mask
-        /// </summary>
+        /// <summary> Alias value is secret. </summary>
         Mask
     }
 }

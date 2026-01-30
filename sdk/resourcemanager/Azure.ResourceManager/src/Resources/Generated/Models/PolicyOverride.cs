@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The policy property value override.
-    /// Serialized Name: Override
-    /// </summary>
+    /// <summary> The policy property value override. </summary>
     public partial class PolicyOverride
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyOverride"/>. </summary>
-        /// <param name="kind">
-        /// The override kind.
-        /// Serialized Name: Override.kind
-        /// </param>
-        /// <param name="value">
-        /// The value to override the policy property.
-        /// Serialized Name: Override.value
-        /// </param>
-        /// <param name="selectors">
-        /// The list of the selector expressions.
-        /// Serialized Name: Override.selectors
-        /// </param>
+        /// <param name="kind"> The override kind. </param>
+        /// <param name="value"> The value to override the policy property. </param>
+        /// <param name="selectors"> The list of the selector expressions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyOverride(PolicyOverrideKind? kind, string value, IList<ResourceSelectorExpression> selectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The override kind.
-        /// Serialized Name: Override.kind
-        /// </summary>
+        /// <summary> The override kind. </summary>
         [WirePath("kind")]
         public PolicyOverrideKind? Kind { get; set; }
-        /// <summary>
-        /// The value to override the policy property.
-        /// Serialized Name: Override.value
-        /// </summary>
+        /// <summary> The value to override the policy property. </summary>
         [WirePath("value")]
         public string Value { get; set; }
-        /// <summary>
-        /// The list of the selector expressions.
-        /// Serialized Name: Override.selectors
-        /// </summary>
+        /// <summary> The list of the selector expressions. </summary>
         [WirePath("selectors")]
         public IList<ResourceSelectorExpression> Selectors { get; }
     }

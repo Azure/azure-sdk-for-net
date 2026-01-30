@@ -10,26 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary>
-    /// Plan for the resource.
-    /// Serialized Name: Plan
-    /// </summary>
+    /// <summary> Plan for the resource. </summary>
     [PropertyReferenceType]
     public partial class ArmPlan
     {
         /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
-        /// <param name="name">
-        /// A user defined name of the 3rd Party Artifact that is being procured.
-        /// Serialized Name: Plan.name
-        /// </param>
-        /// <param name="publisher">
-        /// The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic
-        /// Serialized Name: Plan.publisher
-        /// </param>
-        /// <param name="product">
-        /// The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding.
-        /// Serialized Name: Plan.product
-        /// </param>
+        /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
+        /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
+        /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/> or <paramref name="product"/> is null. </exception>
         [InitializationConstructor]
         public ArmPlan(string name, string publisher, string product)
@@ -44,26 +32,11 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
-        /// <param name="name">
-        /// A user defined name of the 3rd Party Artifact that is being procured.
-        /// Serialized Name: Plan.name
-        /// </param>
-        /// <param name="publisher">
-        /// The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic
-        /// Serialized Name: Plan.publisher
-        /// </param>
-        /// <param name="product">
-        /// The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding.
-        /// Serialized Name: Plan.product
-        /// </param>
-        /// <param name="promotionCode">
-        /// A publisher provided promotion code as provisioned in Data Market for the said product/artifact.
-        /// Serialized Name: Plan.promotionCode
-        /// </param>
-        /// <param name="version">
-        /// The version of the desired product/artifact.
-        /// Serialized Name: Plan.version
-        /// </param>
+        /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
+        /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
+        /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
+        /// <param name="promotionCode"> A publisher provided promotion code as provisioned in Data Market for the said product/artifact. </param>
+        /// <param name="version"> The version of the desired product/artifact. </param>
         [SerializationConstructor]
         internal ArmPlan(string name, string publisher, string product, string promotionCode, string version)
         {
@@ -79,34 +52,19 @@ namespace Azure.ResourceManager.Models
         {
         }
 
-        /// <summary>
-        /// A user defined name of the 3rd Party Artifact that is being procured.
-        /// Serialized Name: Plan.name
-        /// </summary>
+        /// <summary> A user defined name of the 3rd Party Artifact that is being procured. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic
-        /// Serialized Name: Plan.publisher
-        /// </summary>
+        /// <summary> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </summary>
         [WirePath("publisher")]
         public string Publisher { get; set; }
-        /// <summary>
-        /// The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding.
-        /// Serialized Name: Plan.product
-        /// </summary>
+        /// <summary> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </summary>
         [WirePath("product")]
         public string Product { get; set; }
-        /// <summary>
-        /// A publisher provided promotion code as provisioned in Data Market for the said product/artifact.
-        /// Serialized Name: Plan.promotionCode
-        /// </summary>
+        /// <summary> A publisher provided promotion code as provisioned in Data Market for the said product/artifact. </summary>
         [WirePath("promotionCode")]
         public string PromotionCode { get; set; }
-        /// <summary>
-        /// The version of the desired product/artifact.
-        /// Serialized Name: Plan.version
-        /// </summary>
+        /// <summary> The version of the desired product/artifact. </summary>
         [WirePath("version")]
         public string Version { get; set; }
     }

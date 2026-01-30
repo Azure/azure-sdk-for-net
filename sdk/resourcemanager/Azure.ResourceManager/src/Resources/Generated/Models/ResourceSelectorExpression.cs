@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The selector expression.
-    /// Serialized Name: Selector
-    /// </summary>
+    /// <summary> The selector expression. </summary>
     public partial class ResourceSelectorExpression
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceSelectorExpression"/>. </summary>
-        /// <param name="kind">
-        /// The selector kind.
-        /// Serialized Name: Selector.kind
-        /// </param>
-        /// <param name="in">
-        /// The list of values to filter in.
-        /// Serialized Name: Selector.in
-        /// </param>
-        /// <param name="notIn">
-        /// The list of values to filter out.
-        /// Serialized Name: Selector.notIn
-        /// </param>
+        /// <param name="kind"> The selector kind. </param>
+        /// <param name="in"> The list of values to filter in. </param>
+        /// <param name="notIn"> The list of values to filter out. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceSelectorExpression(ResourceSelectorKind? kind, IList<string> @in, IList<string> notIn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,22 +65,13 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The selector kind.
-        /// Serialized Name: Selector.kind
-        /// </summary>
+        /// <summary> The selector kind. </summary>
         [WirePath("kind")]
         public ResourceSelectorKind? Kind { get; set; }
-        /// <summary>
-        /// The list of values to filter in.
-        /// Serialized Name: Selector.in
-        /// </summary>
+        /// <summary> The list of values to filter in. </summary>
         [WirePath("in")]
         public IList<string> In { get; }
-        /// <summary>
-        /// The list of values to filter out.
-        /// Serialized Name: Selector.notIn
-        /// </summary>
+        /// <summary> The list of values to filter out. </summary>
         [WirePath("notIn")]
         public IList<string> NotIn { get; }
     }

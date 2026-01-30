@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// A path element of a management group ancestors.
-    /// Serialized Name: ManagementGroupPathElement
-    /// </summary>
+    /// <summary> A path element of a management group ancestors. </summary>
     public partial class ManagementGroupPathElement
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupPathElement"/>. </summary>
-        /// <param name="name">
-        /// The name of the group.
-        /// Serialized Name: ManagementGroupPathElement.name
-        /// </param>
-        /// <param name="displayName">
-        /// The friendly name of the group.
-        /// Serialized Name: ManagementGroupPathElement.displayName
-        /// </param>
+        /// <param name="name"> The name of the group. </param>
+        /// <param name="displayName"> The friendly name of the group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupPathElement(string name, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the group.
-        /// Serialized Name: ManagementGroupPathElement.name
-        /// </summary>
+        /// <summary> The name of the group. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// The friendly name of the group.
-        /// Serialized Name: ManagementGroupPathElement.displayName
-        /// </summary>
+        /// <summary> The friendly name of the group. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
     }

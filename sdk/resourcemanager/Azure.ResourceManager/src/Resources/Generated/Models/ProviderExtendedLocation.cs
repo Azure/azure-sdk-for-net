@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The provider extended location.
-    /// Serialized Name: ProviderExtendedLocation
-    /// </summary>
+    /// <summary> The provider extended location. </summary>
     public partial class ProviderExtendedLocation
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderExtendedLocation"/>. </summary>
-        /// <param name="location">
-        /// The azure location.
-        /// Serialized Name: ProviderExtendedLocation.location
-        /// </param>
-        /// <param name="providerExtendedLocationType">
-        /// The extended location type.
-        /// Serialized Name: ProviderExtendedLocation.type
-        /// </param>
-        /// <param name="extendedLocations">
-        /// The extended locations for the azure location.
-        /// Serialized Name: ProviderExtendedLocation.extendedLocations
-        /// </param>
+        /// <param name="location"> The azure location. </param>
+        /// <param name="providerExtendedLocationType"> The extended location type. </param>
+        /// <param name="extendedLocations"> The extended locations for the azure location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProviderExtendedLocation(AzureLocation? location, string providerExtendedLocationType, IReadOnlyList<string> extendedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,22 +65,13 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The azure location.
-        /// Serialized Name: ProviderExtendedLocation.location
-        /// </summary>
+        /// <summary> The azure location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The extended location type.
-        /// Serialized Name: ProviderExtendedLocation.type
-        /// </summary>
+        /// <summary> The extended location type. </summary>
         [WirePath("type")]
         public string ProviderExtendedLocationType { get; }
-        /// <summary>
-        /// The extended locations for the azure location.
-        /// Serialized Name: ProviderExtendedLocation.extendedLocations
-        /// </summary>
+        /// <summary> The extended locations for the azure location. </summary>
         [WirePath("extendedLocations")]
         public IReadOnlyList<string> ExtendedLocations { get; }
     }
