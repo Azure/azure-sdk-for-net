@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Tests
         private string _mgmtGroupName;
 
         public ManagementGroupCollectionTests(bool isAsync)
-        : base(isAsync)//, RecordedTestMode.Record)
+        : base(isAsync)//, RecordedTestMode.Record
         {
         }
 
