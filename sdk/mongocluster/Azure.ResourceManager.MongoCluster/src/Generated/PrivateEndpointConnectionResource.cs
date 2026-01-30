@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MongoCluster
 {
     /// <summary>
-    /// A class representing a MongoClusterUser along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoClusterUserResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MongoClusterResource"/> using the GetMongoClusterUsers method.
+    /// A class representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MongoClusterResource"/> using the GetPrivateEndpointConnectionResources method.
     /// </summary>
-    public partial class MongoClusterUserResource : ArmResource
+    public partial class PrivateEndpointConnectionResource : ArmResource
     {
-        private readonly ClientDiagnostics _usersClientDiagnostics;
-        private readonly Users _usersRestClient;
-        private readonly MongoClusterUserData _data;
+        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
+        private readonly MongoClusterPrivateEndpointConnectionResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters/users";
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of MongoClusterUserResource for mocking. </summary>
-        protected MongoClusterUserResource()
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionResource for mocking. </summary>
+        protected PrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MongoClusterUserResource(ArmClient client, MongoClusterUserData data) : this(client, data.Id)
+        internal PrivateEndpointConnectionResource(ArmClient client, MongoClusterPrivateEndpointConnectionResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MongoClusterUserResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string mongoClusterUserApiVersion);
-            _usersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
-            _usersRestClient = new Users(_usersClientDiagnostics, Pipeline, Endpoint, mongoClusterUserApiVersion ?? "2025-09-01");
+            TryGetApiVersion(ResourceType, out string privateEndpointConnectionResourceApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionResourceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MongoCluster
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MongoClusterUserData Data
+        public virtual MongoClusterPrivateEndpointConnectionResourceData Data
         {
             get
             {
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="mongoClusterName"> The mongoClusterName. </param>
-        /// <param name="userName"> The userName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName, string userName)
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName, string privateEndpointConnectionName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,15 +92,15 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets the defintion of a Mongo cluster user.
+        /// Get a specific private connection
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MongoClusterUserResource"/>. </description>
+        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MongoClusterUserResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MongoClusterUserData> response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
+                Response<MongoClusterPrivateEndpointConnectionResourceData> response = Response.FromValue(MongoClusterPrivateEndpointConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MongoClusterUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,15 +140,15 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets the defintion of a Mongo cluster user.
+        /// Get a specific private connection
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MongoClusterUserResource"/>. </description>
+        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MongoClusterUserResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MongoClusterUserData> response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
+                Response<MongoClusterPrivateEndpointConnectionResourceData> response = Response.FromValue(MongoClusterPrivateEndpointConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MongoClusterUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,15 +188,15 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster user.
+        /// Delete the private endpoint connection
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Users_Delete. </description>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MongoClusterUserResource"/>. </description>
+        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MongoClusterArmOperation operation = new MongoClusterArmOperation(_usersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MongoClusterArmOperation operation = new MongoClusterArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -237,15 +237,15 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster user.
+        /// Delete the private endpoint connection
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Users_Delete. </description>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MongoClusterUserResource"/>. </description>
+        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MongoClusterArmOperation operation = new MongoClusterArmOperation(_usersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MongoClusterArmOperation operation = new MongoClusterArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -286,15 +286,15 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Update a MongoClusterUser.
+        /// Update a PrivateEndpointConnectionResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Users_CreateOrUpdate. </description>
+        /// <description> PrivateEndpointConnections_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MongoClusterUserResource"/>. </description>
+        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MongoClusterUserResource>> UpdateAsync(WaitUntil waitUntil, MongoClusterUserData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, MongoClusterPrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterUserData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterPrivateEndpointConnectionResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MongoClusterArmOperation<MongoClusterUserResource> operation = new MongoClusterArmOperation<MongoClusterUserResource>(
-                    new MongoClusterUserOperationSource(Client),
-                    _usersClientDiagnostics,
+                MongoClusterArmOperation<PrivateEndpointConnectionResource> operation = new MongoClusterArmOperation<PrivateEndpointConnectionResource>(
+                    new PrivateEndpointConnectionResourceOperationSource(Client),
+                    _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -345,15 +345,15 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Update a MongoClusterUser.
+        /// Update a PrivateEndpointConnectionResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Users_CreateOrUpdate. </description>
+        /// <description> PrivateEndpointConnections_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MongoClusterUserResource"/>. </description>
+        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MongoClusterUserResource> Update(WaitUntil waitUntil, MongoClusterUserData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateEndpointConnectionResource> Update(WaitUntil waitUntil, MongoClusterPrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterUserData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterPrivateEndpointConnectionResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MongoClusterArmOperation<MongoClusterUserResource> operation = new MongoClusterArmOperation<MongoClusterUserResource>(
-                    new MongoClusterUserOperationSource(Client),
-                    _usersClientDiagnostics,
+                MongoClusterArmOperation<PrivateEndpointConnectionResource> operation = new MongoClusterArmOperation<PrivateEndpointConnectionResource>(
+                    new PrivateEndpointConnectionResourceOperationSource(Client),
+                    _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

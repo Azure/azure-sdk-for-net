@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(DataApiProperties))]
     [ModelReaderWriterBuildable(typeof(Models.EncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(FirewallRuleResource))]
     [ModelReaderWriterBuildable(typeof(HighAvailabilityProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MongoClusterAdministratorProperties))]
@@ -34,7 +35,6 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(MongoClusterEntraIdentityProviderProperties))]
     [ModelReaderWriterBuildable(typeof(MongoClusterFirewallRuleData))]
     [ModelReaderWriterBuildable(typeof(MongoClusterFirewallRuleProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoClusterFirewallRuleResource))]
     [ModelReaderWriterBuildable(typeof(MongoClusterIdentityProvider))]
     [ModelReaderWriterBuildable(typeof(MongoClusterKeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(MongoClusterListResult))]
@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(MongoClusterPatch))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateEndpointConnectionProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoClusterPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateEndpointConnectionResourceData))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateLinkResourceListResult))]
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(MongoClusterUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(MongoClusterUserData))]
     [ModelReaderWriterBuildable(typeof(MongoClusterUserProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoClusterUserResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
     [ModelReaderWriterBuildable(typeof(PromoteReplicaContent))]
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
@@ -69,6 +68,7 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(UnknownMongoClusterIdentityProvider))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserListResult))]
+    [ModelReaderWriterBuildable(typeof(UserResource))]
     public partial class AzureResourceManagerMongoClusterContext : ModelReaderWriterContext
     {
     }

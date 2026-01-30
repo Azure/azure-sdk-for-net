@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MongoCluster
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByMongoClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _mongoClusterName, _context) : _client.CreateGetByMongoClusterRequest(_subscriptionId, _resourceGroupName, _mongoClusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MongoClusterPrivateEndpointConnectionResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.GetAll");
             scope.Start();
             try
             {

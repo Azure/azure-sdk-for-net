@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MongoCluster
 {
     /// <summary></summary>
-    public partial class MongoClusterFirewallRuleResource : IJsonModel<MongoClusterFirewallRuleData>
+    public partial class FirewallRuleResource : IJsonModel<MongoClusterFirewallRuleData>
     {
         private static IJsonModel<MongoClusterFirewallRuleData> s_dataDeserializationInstance;
 

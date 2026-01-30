@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MongoCluster
 {
     /// <summary></summary>
-    public partial class MongoClusterUserResource : IJsonModel<MongoClusterUserData>
+    public partial class UserResource : IJsonModel<MongoClusterUserData>
     {
         private static IJsonModel<MongoClusterUserData> s_dataDeserializationInstance;
 
