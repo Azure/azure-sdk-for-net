@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    /// <summary> The SqlTempDBSettings. </summary>
+    /// <summary> Set tempDb storage settings for SQL Server. </summary>
     public partial class SqlTempDBSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlTempDBSettings"/>. </summary>
         public SqlTempDBSettings()
@@ -61,8 +33,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="persistFolderPath"> SQL Server tempdb persist folder location. </param>
         /// <param name="logicalUnitNumbers"> Logical Unit Numbers for the disks. </param>
         /// <param name="defaultFilePath"> SQL Server default file path. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlTempDBSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> logicalUnitNumbers, string defaultFilePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="useStoragePool"> Use storage pool to build a drive if true or not provided. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlTempDBSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> logicalUnitNumbers, string defaultFilePath, bool? useStoragePool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataFileSize = dataFileSize;
             DataGrowth = dataGrowth;
@@ -73,26 +46,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             PersistFolderPath = persistFolderPath;
             LogicalUnitNumbers = logicalUnitNumbers;
             DefaultFilePath = defaultFilePath;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            UseStoragePool = useStoragePool;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SQL Server tempdb data file size. </summary>
         public int? DataFileSize { get; set; }
+
         /// <summary> SQL Server tempdb data file autoGrowth size. </summary>
         public int? DataGrowth { get; set; }
+
         /// <summary> SQL Server tempdb log file size. </summary>
         public int? LogFileSize { get; set; }
+
         /// <summary> SQL Server tempdb log file autoGrowth size. </summary>
         public int? LogGrowth { get; set; }
+
         /// <summary> SQL Server tempdb data file count. </summary>
         public int? DataFileCount { get; set; }
+
         /// <summary> SQL Server tempdb persist folder choice. </summary>
         public bool? PersistFolder { get; set; }
+
         /// <summary> SQL Server tempdb persist folder location. </summary>
         public string PersistFolderPath { get; set; }
+
         /// <summary> Logical Unit Numbers for the disks. </summary>
         public IList<int> LogicalUnitNumbers { get; }
+
         /// <summary> SQL Server default file path. </summary>
         public string DefaultFilePath { get; set; }
+
+        /// <summary> Use storage pool to build a drive if true or not provided. </summary>
+        public bool? UseStoragePool { get; set; }
     }
 }

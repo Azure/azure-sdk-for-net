@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct SqlImageSku : IEquatable<SqlImageSku>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SqlImageSku"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SqlImageSku(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DeveloperValue = "Developer";
         private const string ExpressValue = "Express";
         private const string StandardValue = "Standard";
         private const string EnterpriseValue = "Enterprise";
         private const string WebValue = "Web";
 
-        /// <summary> Developer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlImageSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SqlImageSku(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Developer. </summary>
         public static SqlImageSku Developer { get; } = new SqlImageSku(DeveloperValue);
-        /// <summary> Express. </summary>
+
+        /// <summary> Gets the Express. </summary>
         public static SqlImageSku Express { get; } = new SqlImageSku(ExpressValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> Gets the Standard. </summary>
         public static SqlImageSku Standard { get; } = new SqlImageSku(StandardValue);
-        /// <summary> Enterprise. </summary>
+
+        /// <summary> Gets the Enterprise. </summary>
         public static SqlImageSku Enterprise { get; } = new SqlImageSku(EnterpriseValue);
-        /// <summary> Web. </summary>
+
+        /// <summary> Gets the Web. </summary>
         public static SqlImageSku Web { get; } = new SqlImageSku(WebValue);
+
         /// <summary> Determines if two <see cref="SqlImageSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlImageSku left, SqlImageSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlImageSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlImageSku left, SqlImageSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlImageSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlImageSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlImageSku(string value) => new SqlImageSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlImageSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlImageSku?(string value) => value == null ? null : new SqlImageSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlImageSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlImageSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

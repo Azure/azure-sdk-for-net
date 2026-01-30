@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
+    /// <summary></summary>
     public partial class AvailabilityGroupListenerResource : IJsonModel<AvailabilityGroupListenerData>
     {
-        private static AvailabilityGroupListenerData s_dataDeserializationInstance;
-        private static AvailabilityGroupListenerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvailabilityGroupListenerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvailabilityGroupListenerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvailabilityGroupListenerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvailabilityGroupListenerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilityGroupListenerData>)Data).Write(writer, options);
 
-        AvailabilityGroupListenerData IJsonModel<AvailabilityGroupListenerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilityGroupListenerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvailabilityGroupListenerData IJsonModel<AvailabilityGroupListenerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailabilityGroupListenerData>(Data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AvailabilityGroupListenerData IPersistableModel<AvailabilityGroupListenerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailabilityGroupListenerData>(data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
-        string IPersistableModel<AvailabilityGroupListenerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailabilityGroupListenerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvailabilityGroupListenerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

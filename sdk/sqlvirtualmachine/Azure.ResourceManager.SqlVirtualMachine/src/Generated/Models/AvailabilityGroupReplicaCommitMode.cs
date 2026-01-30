@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct AvailabilityGroupReplicaCommitMode : IEquatable<AvailabilityGroupReplicaCommitMode>
     {
         private readonly string _value;
+        private const string SynchronousCommitValue = "Synchronous_Commit";
+        private const string AsynchronousCommitValue = "Asynchronous_Commit";
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityGroupReplicaCommitMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvailabilityGroupReplicaCommitMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SynchronousCommitValue = "SYNCHRONOUS_COMMIT";
-        private const string AsynchronousCommitValue = "ASYNCHRONOUS_COMMIT";
-
-        /// <summary> SYNCHRONOUS_COMMIT. </summary>
+        /// <summary> Gets the SynchronousCommit. </summary>
         public static AvailabilityGroupReplicaCommitMode SynchronousCommit { get; } = new AvailabilityGroupReplicaCommitMode(SynchronousCommitValue);
-        /// <summary> ASYNCHRONOUS_COMMIT. </summary>
+
+        /// <summary> Gets the AsynchronousCommit. </summary>
         public static AvailabilityGroupReplicaCommitMode AsynchronousCommit { get; } = new AvailabilityGroupReplicaCommitMode(AsynchronousCommitValue);
+
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaCommitMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailabilityGroupReplicaCommitMode left, AvailabilityGroupReplicaCommitMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaCommitMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailabilityGroupReplicaCommitMode left, AvailabilityGroupReplicaCommitMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityGroupReplicaCommitMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvailabilityGroupReplicaCommitMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvailabilityGroupReplicaCommitMode(string value) => new AvailabilityGroupReplicaCommitMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvailabilityGroupReplicaCommitMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvailabilityGroupReplicaCommitMode?(string value) => value == null ? null : new AvailabilityGroupReplicaCommitMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailabilityGroupReplicaCommitMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvailabilityGroupReplicaCommitMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

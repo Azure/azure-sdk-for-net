@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set the connectivity, storage and workload settings. </summary>
     public partial class SqlServerConfigurationsManagementSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerConfigurationsManagementSettings"/>. </summary>
         public SqlServerConfigurationsManagementSettings()
@@ -56,50 +27,86 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="sqlStorageUpdateSettings"> SQL storage update settings. </param>
         /// <param name="additionalFeaturesServerConfigurations"> Additional SQL feature settings. </param>
         /// <param name="sqlInstanceSettings"> SQL Instance settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings, SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings, SqlStorageUpdateSettings sqlStorageUpdateSettings, AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations, SqlInstanceSettings sqlInstanceSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="azureAdAuthenticationSettings"> Azure AD authentication Settings. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings, SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings, SqlStorageUpdateSettings sqlStorageUpdateSettings, AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations, SqlInstanceSettings sqlInstanceSettings, AADAuthenticationSettings azureAdAuthenticationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SqlConnectivityUpdateSettings = sqlConnectivityUpdateSettings;
             SqlWorkloadTypeUpdateSettings = sqlWorkloadTypeUpdateSettings;
             SqlStorageUpdateSettings = sqlStorageUpdateSettings;
             AdditionalFeaturesServerConfigurations = additionalFeaturesServerConfigurations;
             SqlInstanceSettings = sqlInstanceSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AzureAdAuthenticationSettings = azureAdAuthenticationSettings;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SQL connectivity type settings. </summary>
         public SqlConnectivityUpdateSettings SqlConnectivityUpdateSettings { get; set; }
+
         /// <summary> SQL workload type settings. </summary>
         internal SqlWorkloadTypeUpdateSettings SqlWorkloadTypeUpdateSettings { get; set; }
+
+        /// <summary> SQL storage update settings. </summary>
+        public SqlStorageUpdateSettings SqlStorageUpdateSettings { get; set; }
+
+        /// <summary> Additional SQL feature settings. </summary>
+        internal AdditionalFeaturesServerConfigurations AdditionalFeaturesServerConfigurations { get; set; }
+
+        /// <summary> SQL Instance settings. </summary>
+        public SqlInstanceSettings SqlInstanceSettings { get; set; }
+
+        /// <summary> Azure AD authentication Settings. </summary>
+        internal AADAuthenticationSettings AzureAdAuthenticationSettings { get; set; }
+
         /// <summary> SQL Server workload type. </summary>
         public SqlWorkloadType? SqlWorkloadType
         {
-            get => SqlWorkloadTypeUpdateSettings is null ? default : SqlWorkloadTypeUpdateSettings.SqlWorkloadType;
+            get
+            {
+                return SqlWorkloadTypeUpdateSettings is null ? default : SqlWorkloadTypeUpdateSettings.SqlWorkloadType;
+            }
             set
             {
                 if (SqlWorkloadTypeUpdateSettings is null)
+                {
                     SqlWorkloadTypeUpdateSettings = new SqlWorkloadTypeUpdateSettings();
+                }
                 SqlWorkloadTypeUpdateSettings.SqlWorkloadType = value;
             }
         }
 
-        /// <summary> SQL storage update settings. </summary>
-        public SqlStorageUpdateSettings SqlStorageUpdateSettings { get; set; }
-        /// <summary> Additional SQL feature settings. </summary>
-        internal AdditionalFeaturesServerConfigurations AdditionalFeaturesServerConfigurations { get; set; }
         /// <summary> Enable or disable R services (SQL 2016 onwards). </summary>
         public bool? IsRServicesEnabled
         {
-            get => AdditionalFeaturesServerConfigurations is null ? default : AdditionalFeaturesServerConfigurations.IsRServicesEnabled;
+            get
+            {
+                return AdditionalFeaturesServerConfigurations is null ? default : AdditionalFeaturesServerConfigurations.IsRServicesEnabled;
+            }
             set
             {
                 if (AdditionalFeaturesServerConfigurations is null)
+                {
                     AdditionalFeaturesServerConfigurations = new AdditionalFeaturesServerConfigurations();
+                }
                 AdditionalFeaturesServerConfigurations.IsRServicesEnabled = value;
             }
         }
 
-        /// <summary> SQL Instance settings. </summary>
-        public SqlInstanceSettings SqlInstanceSettings { get; set; }
+        /// <summary> The client Id of the Managed Identity to query Microsoft Graph API. An empty string must be used for the system assigned Managed Identity. </summary>
+        public string AzureAdAuthenticationClientId
+        {
+            get
+            {
+                return AzureAdAuthenticationSettings is null ? default : AzureAdAuthenticationSettings.ClientId;
+            }
+            set
+            {
+                if (AzureAdAuthenticationSettings is null)
+                {
+                    AzureAdAuthenticationSettings = new AADAuthenticationSettings();
+                }
+                AzureAdAuthenticationSettings.ClientId = value;
+            }
+        }
     }
 }
