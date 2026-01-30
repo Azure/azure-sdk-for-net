@@ -11,7 +11,7 @@ using Azure.AI.Speech.Transcription;
 namespace Azure.Core.Foundations
 {
     /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
-    public partial class InnerError : IJsonModel<InnerError>
+    internal partial class InnerError : IJsonModel<InnerError>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

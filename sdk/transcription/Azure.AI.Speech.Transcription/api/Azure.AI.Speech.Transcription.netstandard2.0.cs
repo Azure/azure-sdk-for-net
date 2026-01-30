@@ -74,9 +74,6 @@ namespace Azure.AI.Speech.Transcription
     {
         public static Azure.AI.Speech.Transcription.ChannelCombinedPhrases ChannelCombinedPhrases(int? channel = default(int?), string text = null) { throw null; }
         public static Azure.AI.Speech.Transcription.EnhancedModeProperties EnhancedModeProperties(bool? enabled = default(bool?), string task = null, string targetLanguage = null, System.Collections.Generic.IEnumerable<string> prompt = null) { throw null; }
-        public static Azure.Core.Foundations.Error Error(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Core.Foundations.Error> details = null, Azure.Core.Foundations.InnerError innererror = null) { throw null; }
-        public static Azure.Core.Foundations.ErrorResponse ErrorResponse(Azure.Core.Foundations.Error error = null, string errorCode = null) { throw null; }
-        public static Azure.Core.Foundations.InnerError InnerError(string code = null, Azure.Core.Foundations.InnerError innererror = null) { throw null; }
         public static Azure.AI.Speech.Transcription.PhraseListProperties PhraseListProperties(System.Collections.Generic.IEnumerable<string> phrases = null, float? biasingWeight = default(float?)) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscribedPhrase TranscribedPhrase(int? channel = default(int?), int? speaker = default(int?), int offsetMilliseconds = 0, int durationMilliseconds = 0, string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedWord> words = null, string locale = null, float confidence = 0f) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscribedWord TranscribedWord(string text = null, int offsetMilliseconds = 0, int durationMilliseconds = 0) { throw null; }
@@ -199,56 +196,5 @@ namespace Azure.AI.Speech.Transcription
         Azure.AI.Speech.Transcription.TranscriptionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Azure.Core.Foundations
-{
-    public partial class Error : System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.Error>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.Error>
-    {
-        internal Error() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Core.Foundations.Error> Details { get { throw null; } }
-        public Azure.Core.Foundations.InnerError Innererror { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-        protected virtual Azure.Core.Foundations.Error JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Core.Foundations.Error PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Core.Foundations.Error System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.Error>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.Error>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Core.Foundations.Error System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.Error>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.Error>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.Error>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ErrorResponse : System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.ErrorResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.ErrorResponse>
-    {
-        internal ErrorResponse() { }
-        public Azure.Core.Foundations.Error Error { get { throw null; } }
-        public string ErrorCode { get { throw null; } }
-        protected virtual Azure.Core.Foundations.ErrorResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Core.Foundations.ErrorResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Core.Foundations.ErrorResponse System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.ErrorResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.ErrorResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Core.Foundations.ErrorResponse System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.ErrorResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.ErrorResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.ErrorResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class InnerError : System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.InnerError>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.InnerError>
-    {
-        internal InnerError() { }
-        public string Code { get { throw null; } }
-        public Azure.Core.Foundations.InnerError Innererror { get { throw null; } }
-        protected virtual Azure.Core.Foundations.InnerError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Core.Foundations.InnerError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Core.Foundations.InnerError System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.InnerError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Core.Foundations.InnerError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Core.Foundations.InnerError System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.InnerError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.InnerError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.Foundations.InnerError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

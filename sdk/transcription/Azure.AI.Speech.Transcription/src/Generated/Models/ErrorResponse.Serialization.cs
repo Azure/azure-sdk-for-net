@@ -11,7 +11,7 @@ using Azure.AI.Speech.Transcription;
 namespace Azure.Core.Foundations
 {
     /// <summary> A response containing error details. </summary>
-    public partial class ErrorResponse : IJsonModel<ErrorResponse>
+    internal partial class ErrorResponse : IJsonModel<ErrorResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ErrorResponse"/> for deserialization. </summary>
         internal ErrorResponse()

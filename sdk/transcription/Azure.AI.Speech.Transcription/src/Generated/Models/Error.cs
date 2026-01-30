@@ -9,7 +9,7 @@ using Azure.AI.Speech.Transcription;
 namespace Azure.Core.Foundations
 {
     /// <summary> The error object. </summary>
-    public partial class Error
+    internal partial class Error
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

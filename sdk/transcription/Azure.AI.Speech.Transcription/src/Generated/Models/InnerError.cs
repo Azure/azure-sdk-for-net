@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.Core.Foundations
 {
     /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
-    public partial class InnerError
+    internal partial class InnerError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

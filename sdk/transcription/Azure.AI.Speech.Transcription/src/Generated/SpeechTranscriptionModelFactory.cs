@@ -130,43 +130,5 @@ namespace Azure.AI.Speech.Transcription
         {
             return new TranscribedWord(text, offsetMilliseconds, durationMilliseconds, additionalBinaryDataProperties: null);
         }
-
-        /// <summary> A response containing error details. </summary>
-        /// <param name="error"> The error object. </param>
-        /// <param name="errorCode"> String error code indicating what went wrong. </param>
-        /// <returns> A new <see cref="Core.Foundations.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(Error error = default, string errorCode = default)
-        {
-            return new ErrorResponse(error, errorCode, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The error object. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="target"> The target of the error. </param>
-        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="Core.Foundations.Error"/> instance for mocking. </returns>
-        public static Error Error(string code = default, string message = default, string target = default, IEnumerable<Error> details = default, InnerError innererror = default)
-        {
-            details ??= new ChangeTrackingList<Error>();
-
-            return new Error(
-                code,
-                message,
-                target,
-                details.ToList(),
-                innererror,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="innererror"> Inner error. </param>
-        /// <returns> A new <see cref="Core.Foundations.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = default, InnerError innererror = default)
-        {
-            return new InnerError(code, innererror, additionalBinaryDataProperties: null);
-        }
     }
 }

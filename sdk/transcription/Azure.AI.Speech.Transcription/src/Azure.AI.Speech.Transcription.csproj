@@ -13,12 +13,8 @@
   <PropertyGroup>
     <!-- Ignore Azure-Core-specific constructor rule -->
     <NoWarn>$(NoWarn);AZC0007</NoWarn>
-    <!-- Ignore Azure-Core-specific single word type name rule -->
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <!-- Ignore Azure-Core-specific pageable rule -->
     <NoWarn>$(NoWarn);AZC0015</NoWarn>
-    <!-- Ignore Azure-Core-specific cancellation token parameter rule -->
-    <NoWarn>$(NoWarn);AZC0034</NoWarn>
     <!-- Ignore Azure-Core-specific client method naming rule -->
     <NoWarn>$(NoWarn);AZC0102</NoWarn>
   </PropertyGroup>
@@ -30,5 +26,6 @@
   <!-- Import Azure.Core shared source for attributes -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 </Project>

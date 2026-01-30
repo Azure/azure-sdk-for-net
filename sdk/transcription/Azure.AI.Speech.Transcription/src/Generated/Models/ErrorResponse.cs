@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.Core.Foundations
 {
     /// <summary> A response containing error details. </summary>
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
