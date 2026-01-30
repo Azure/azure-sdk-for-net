@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.DeviceRegistry
     {
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _credentialsClientDiagnostics;
+        private readonly Credentials _credentialsRestClient;
         private readonly DeviceRegistryNamespaceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DeviceRegistry/namespaces";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.DeviceRegistry
             TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
             _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceApiVersion ?? "2025-11-01-preview");
+            _credentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
+            _credentialsRestClient = new Credentials(_credentialsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -406,15 +410,15 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Migrate the resources into Namespace
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/migrate. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/credentials/default/synchronize. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_Migrate. </description>
+        /// <description> Credentials_Synchronize. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -427,14 +431,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> MigrateAsync(WaitUntil waitUntil, NamespaceMigrateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SynchronizeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("DeviceRegistryNamespaceResource.Migrate");
+            using DiagnosticScope scope = _credentialsClientDiagnostics.CreateScope("DeviceRegistryNamespaceResource.Synchronize");
             scope.Start();
             try
             {
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NamespaceMigrateContent.ToRequestContent(content), context);
+                HttpMessage message = _credentialsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_namespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_credentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -459,15 +459,15 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Migrate the resources into Namespace
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/migrate. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/credentials/default/synchronize. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Namespaces_Migrate. </description>
+        /// <description> Credentials_Synchronize. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -480,14 +480,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Migrate(WaitUntil waitUntil, NamespaceMigrateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Synchronize(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("DeviceRegistryNamespaceResource.Migrate");
+            using DiagnosticScope scope = _credentialsClientDiagnostics.CreateScope("DeviceRegistryNamespaceResource.Synchronize");
             scope.Start();
             try
             {
@@ -495,9 +491,9 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NamespaceMigrateContent.ToRequestContent(content), context);
+                HttpMessage message = _credentialsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_namespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_credentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

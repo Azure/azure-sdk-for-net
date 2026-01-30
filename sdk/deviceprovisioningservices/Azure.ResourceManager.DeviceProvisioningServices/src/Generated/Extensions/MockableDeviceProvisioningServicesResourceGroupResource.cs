@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceProvisioningServices;
+using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
@@ -19,6 +21,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDeviceProvisioningServicesResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _certificateResponsesClientDiagnostics;
+        private CertificateResponses _certificateResponsesRestClient;
+        private ClientDiagnostics _provisioningServiceDescriptionsClientDiagnostics;
+        private ProvisioningServiceDescriptions _provisioningServiceDescriptionsRestClient;
+
         /// <summary> Initializes a new instance of MockableDeviceProvisioningServicesResourceGroupResource for mocking. </summary>
         protected MockableDeviceProvisioningServicesResourceGroupResource()
         {
@@ -30,6 +37,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         internal MockableDeviceProvisioningServicesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics CertificateResponsesClientDiagnostics => _certificateResponsesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CertificateResponses CertificateResponsesRestClient => _certificateResponsesRestClient ??= new CertificateResponses(CertificateResponsesClientDiagnostics, Pipeline, Endpoint, "2025-02-01-preview");
+
+        private ClientDiagnostics ProvisioningServiceDescriptionsClientDiagnostics => _provisioningServiceDescriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ProvisioningServiceDescriptions ProvisioningServiceDescriptionsRestClient => _provisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptions(ProvisioningServiceDescriptionsClientDiagnostics, Pipeline, Endpoint, "2025-02-01-preview");
 
         /// <summary> Gets a collection of DeviceProvisioningServices in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DeviceProvisioningServices and their operations over a DeviceProvisioningServiceResource. </returns>
@@ -94,6 +109,488 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
             return GetDeviceProvisioningServices().Get(provisioningServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Generate verification code for Proof of Possession.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/generateVerificationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_GenerateVerificationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = CertificateResponsesClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GenerateVerificationCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CertificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CertificateVerificationCodeResult> response = Response.FromValue(CertificateVerificationCodeResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate verification code for Proof of Possession.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/generateVerificationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_GenerateVerificationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CertificateVerificationCodeResult> GenerateVerificationCode(string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = CertificateResponsesClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GenerateVerificationCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CertificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CertificateVerificationCodeResult> response = Response.FromValue(CertificateVerificationCodeResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_VerifyCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CertificateResponsesClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.VerifyCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CertificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, certificateName, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_VerifyCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DeviceProvisioningServicesCertificateResource> VerifyCertificate(string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CertificateResponsesClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.VerifyCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CertificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, certificateName, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of valid SKUs and tiers for a provisioning service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_ListValidSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceProvisioningServicesSkuDefinition> GetValidSkusAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProvisioningServiceDescriptionsGetValidSkusAsyncCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+        }
+
+        /// <summary>
+        /// Gets the list of valid SKUs and tiers for a provisioning service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_ListValidSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceProvisioningServicesSkuDefinition> GetValidSkus(string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProvisioningServiceDescriptionsGetValidSkusCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+        }
+
+        /// <summary>
+        /// List the primary and secondary keys for a provisioning service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/listkeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_ListKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceProvisioningServicesSharedAccessKey> GetKeysAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProvisioningServiceDescriptionsGetKeysAsyncCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+        }
+
+        /// <summary>
+        /// List the primary and secondary keys for a provisioning service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/listkeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_ListKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceProvisioningServicesSharedAccessKey> GetKeys(string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProvisioningServiceDescriptionsGetKeysCollectionResultOfT(ProvisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+        }
+
+        /// <summary>
+        /// List primary and secondary keys for a specific key name
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/keys/{keyName}/listkeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_ListKeysForKeyName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="keyName"> Logical key name to get key-values for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DeviceProvisioningServicesSharedAccessKey>> GetKeyAsync(string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+
+            using DiagnosticScope scope = ProvisioningServiceDescriptionsClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProvisioningServiceDescriptionsRestClient.CreateGetKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, keyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesSharedAccessKey> response = Response.FromValue(DeviceProvisioningServicesSharedAccessKey.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List primary and secondary keys for a specific key name
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/keys/{keyName}/listkeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_ListKeysForKeyName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="keyName"> Logical key name to get key-values for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DeviceProvisioningServicesSharedAccessKey> GetKey(string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+
+            using DiagnosticScope scope = ProvisioningServiceDescriptionsClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProvisioningServiceDescriptionsRestClient.CreateGetKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, keyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesSharedAccessKey> response = Response.FromValue(DeviceProvisioningServicesSharedAccessKey.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

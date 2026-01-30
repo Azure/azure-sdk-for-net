@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.DeviceRegistry
     {
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _credentialsClientDiagnostics;
+        private readonly Credentials _credentialsRestClient;
 
         /// <summary> Initializes a new instance of DeviceRegistryNamespaceCollection for mocking. </summary>
         protected DeviceRegistryNamespaceCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.DeviceRegistry
             TryGetApiVersion(DeviceRegistryNamespaceResource.ResourceType, out string deviceRegistryNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceResource.ResourceType.Namespace, Diagnostics);
             _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceApiVersion ?? "2025-11-01-preview");
+            _credentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceResource.ResourceType.Namespace, Diagnostics);
+            _credentialsRestClient = new Credentials(_credentialsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

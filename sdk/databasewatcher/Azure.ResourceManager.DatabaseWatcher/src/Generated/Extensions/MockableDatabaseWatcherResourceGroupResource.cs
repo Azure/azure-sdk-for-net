@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DatabaseWatcher;
 using Azure.ResourceManager.Resources;
@@ -19,6 +20,9 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDatabaseWatcherResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _healthValidationsClientDiagnostics;
+        private HealthValidations _healthValidationsRestClient;
+
         /// <summary> Initializes a new instance of MockableDatabaseWatcherResourceGroupResource for mocking. </summary>
         protected MockableDatabaseWatcherResourceGroupResource()
         {
@@ -30,6 +34,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         internal MockableDatabaseWatcherResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics HealthValidationsClientDiagnostics => _healthValidationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private HealthValidations HealthValidationsRestClient => _healthValidationsRestClient ??= new HealthValidations(HealthValidationsClientDiagnostics, Pipeline, Endpoint, "2025-01-02");
 
         /// <summary> Gets a collection of DatabaseWatchers in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DatabaseWatchers and their operations over a DatabaseWatcherResource. </returns>
@@ -94,6 +102,122 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             return GetDatabaseWatchers().Get(watcherName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts health validation for a watcher.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}/startValidation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HealthValidations_StartValidation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="watcherName"> The database watcher name. </param>
+        /// <param name="healthValidationName"> The health validation resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DatabaseWatcherHealthValidationResource>> StartValidationAsync(WaitUntil waitUntil, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNullOrEmpty(healthValidationName, nameof(healthValidationName));
+
+            using DiagnosticScope scope = HealthValidationsClientDiagnostics.CreateScope("MockableDatabaseWatcherResourceGroupResource.StartValidation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HealthValidationsRestClient.CreateStartValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, healthValidationName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(
+                    new DatabaseWatcherHealthValidationOperationSource(Client),
+                    HealthValidationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts health validation for a watcher.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}/startValidation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HealthValidations_StartValidation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="watcherName"> The database watcher name. </param>
+        /// <param name="healthValidationName"> The health validation resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DatabaseWatcherHealthValidationResource> StartValidation(WaitUntil waitUntil, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNullOrEmpty(healthValidationName, nameof(healthValidationName));
+
+            using DiagnosticScope scope = HealthValidationsClientDiagnostics.CreateScope("MockableDatabaseWatcherResourceGroupResource.StartValidation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HealthValidationsRestClient.CreateStartValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, healthValidationName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(
+                    new DatabaseWatcherHealthValidationOperationSource(Client),
+                    HealthValidationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

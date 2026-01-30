@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Dynatrace
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetLinkableEnvironmentsRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _content, _context) : _client.CreateGetLinkableEnvironmentsRequest(_subscriptionId, _resourceGroupName, _monitorName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DynatraceMonitorResource.GetLinkableEnvironments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetLinkableEnvironments");
             scope.Start();
             try
             {

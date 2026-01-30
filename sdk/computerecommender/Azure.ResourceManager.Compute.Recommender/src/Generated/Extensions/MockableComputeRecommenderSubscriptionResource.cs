@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Recommender;
+using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Recommender.Mocking
@@ -15,6 +21,9 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableComputeRecommenderSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _spotPlacementScoresClientDiagnostics;
+        private SpotPlacementScores _spotPlacementScoresRestClient;
+
         /// <summary> Initializes a new instance of MockableComputeRecommenderSubscriptionResource for mocking. </summary>
         protected MockableComputeRecommenderSubscriptionResource()
         {
@@ -26,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         internal MockableComputeRecommenderSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics SpotPlacementScoresClientDiagnostics => _spotPlacementScoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Recommender.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SpotPlacementScores SpotPlacementScoresRestClient => _spotPlacementScoresRestClient ??= new SpotPlacementScores(SpotPlacementScoresClientDiagnostics, Pipeline, Endpoint, "2025-06-05");
 
         /// <summary>
         /// Gets Spot Placement Scores metadata.
@@ -52,6 +65,104 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnostic()
         {
             return new ComputeRecommenderDiagnosticResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "spot"));
+        }
+
+        /// <summary>
+        /// Generates placement scores for Spot VM skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComputeDiagnosticBases_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ComputeRecommenderGenerateResult>> GenerateAsync(AzureLocation location, ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SpotPlacementScoresClientDiagnostics.CreateScope("MockableComputeRecommenderSubscriptionResource.Generate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SpotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), location, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates placement scores for Spot VM skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComputeDiagnosticBases_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ComputeRecommenderGenerateResult> Generate(AzureLocation location, ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SpotPlacementScoresClientDiagnostics.CreateScope("MockableComputeRecommenderSubscriptionResource.Generate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SpotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), location, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

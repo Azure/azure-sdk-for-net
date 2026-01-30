@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDevOpsInfrastructureResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _poolsClientDiagnostics;
+        private Pools _poolsRestClient;
         private ClientDiagnostics _imageVersionsClientDiagnostics;
         private ImageVersions _imageVersionsRestClient;
 
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         internal MockableDevOpsInfrastructureResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics PoolsClientDiagnostics => _poolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
 
         private ClientDiagnostics ImageVersionsClientDiagnostics => _imageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -103,6 +109,98 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             return GetDevOpsPools().Get(poolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}/resources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_DeleteResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteResourcesAsync(string poolName, DevOpsDeleteResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using DiagnosticScope scope = PoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureResourceGroupResource.DeleteResources");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PoolsRestClient.CreateDeleteResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, DevOpsDeleteResourcesDetails.ToRequestContent(details), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}/resources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_DeleteResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteResources(string poolName, DevOpsDeleteResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using DiagnosticScope scope = PoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureResourceGroupResource.DeleteResources");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PoolsRestClient.CreateDeleteResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, DevOpsDeleteResourcesDetails.ToRequestContent(details), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DisconnectedOperations.Mocking;
+using Azure.ResourceManager.DisconnectedOperations.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DisconnectedOperations
@@ -144,6 +145,84 @@ namespace Azure.ResourceManager.DisconnectedOperations
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDisconnectedOperationsResourceGroupResource(resourceGroupResource).GetDisconnectedOperation(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the URI to download the image.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDownloadUriAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DisconnectedOperationsImageDownloadResult>> GetDownloadUriAsync(this ResourceGroupResource resourceGroupResource, string name, string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDisconnectedOperationsResourceGroupResource(resourceGroupResource).GetDownloadUriAsync(name, imageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the URI to download the image.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDownloadUri(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DisconnectedOperationsImageDownloadResult> GetDownloadUri(this ResourceGroupResource resourceGroupResource, string name, string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDisconnectedOperationsResourceGroupResource(resourceGroupResource).GetDownloadUri(name, imageName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get artifact download link.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDownloadUriAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="artifactName"> The name of the Artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DisconnectedOperationsArtifactDownloadResult>> GetDownloadUriAsync(this ResourceGroupResource resourceGroupResource, string name, string imageName, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDisconnectedOperationsResourceGroupResource(resourceGroupResource).GetDownloadUriAsync(name, imageName, artifactName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get artifact download link.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDownloadUri(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="artifactName"> The name of the Artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DisconnectedOperationsArtifactDownloadResult> GetDownloadUri(this ResourceGroupResource resourceGroupResource, string name, string imageName, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDisconnectedOperationsResourceGroupResource(resourceGroupResource).GetDownloadUri(name, imageName, artifactName, cancellationToken);
         }
 
         /// <summary>

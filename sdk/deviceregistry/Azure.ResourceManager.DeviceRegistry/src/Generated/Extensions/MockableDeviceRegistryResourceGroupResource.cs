@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceRegistry;
+using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDeviceRegistryResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _namespacesClientDiagnostics;
+        private Namespaces _namespacesRestClient;
+
         /// <summary> Initializes a new instance of MockableDeviceRegistryResourceGroupResource for mocking. </summary>
         protected MockableDeviceRegistryResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         internal MockableDeviceRegistryResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
         /// <summary> Gets a collection of DeviceRegistryAssets in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DeviceRegistryAssets and their operations over a DeviceRegistryAssetResource. </returns>
@@ -289,6 +298,110 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
 
             return GetDeviceRegistrySchemaRegistries().Get(schemaRegistryName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Migrate the resources into Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/migrate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Namespaces_Migrate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="namespaceName"> The name of the namespace. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> MigrateAsync(WaitUntil waitUntil, string namespaceName, NamespaceMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = NamespacesClientDiagnostics.CreateScope("MockableDeviceRegistryResourceGroupResource.Migrate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NamespacesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, NamespaceMigrateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(NamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate the resources into Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/migrate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Namespaces_Migrate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="namespaceName"> The name of the namespace. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Migrate(WaitUntil waitUntil, string namespaceName, NamespaceMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = NamespacesClientDiagnostics.CreateScope("MockableDeviceRegistryResourceGroupResource.Migrate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NamespacesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, NamespaceMigrateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(NamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

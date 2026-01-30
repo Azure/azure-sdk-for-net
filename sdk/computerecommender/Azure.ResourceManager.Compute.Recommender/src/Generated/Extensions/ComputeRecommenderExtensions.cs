@@ -6,9 +6,13 @@
 #nullable disable
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Recommender.Mocking;
+using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Recommender
@@ -61,6 +65,44 @@ namespace Azure.ResourceManager.Compute.Recommender
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeRecommenderDiagnostic();
+        }
+
+        /// <summary>
+        /// Generates placement scores for Spot VM skus.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GenerateAsync(AzureLocation, ComputeRecommenderGenerateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<ComputeRecommenderGenerateResult>> GenerateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GenerateAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Generates placement scores for Spot VM skus.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.Generate(AzureLocation, ComputeRecommenderGenerateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<ComputeRecommenderGenerateResult> Generate(this SubscriptionResource subscriptionResource, AzureLocation location, ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).Generate(location, content, cancellationToken);
         }
     }
 }

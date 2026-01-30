@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dynatrace;
+using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dynatrace.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDynatraceResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _monitorsClientDiagnostics;
+        private Monitors _monitorsRestClient;
+
         /// <summary> Initializes a new instance of MockableDynatraceResourceGroupResource for mocking. </summary>
         protected MockableDynatraceResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         internal MockableDynatraceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics MonitorsClientDiagnostics => _monitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dynatrace.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Endpoint, "2024-04-24");
 
         /// <summary> Gets a collection of DynatraceMonitors in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DynatraceMonitors and their operations over a DynatraceMonitorResource. </returns>
@@ -94,6 +103,794 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             return GetDynatraceMonitors().Get(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the resources currently being monitored by the Dynatrace monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listMonitoredResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListMonitoredResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the log status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(string monitorName, DynatraceMonitoredResourceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(
+                MonitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                monitorName,
+                DynatraceMonitoredResourceContent.ToRequestContent(content),
+                context);
+        }
+
+        /// <summary>
+        /// List the resources currently being monitored by the Dynatrace monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listMonitoredResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListMonitoredResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the log status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(string monitorName, DynatraceMonitoredResourceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetMonitoredResourcesCollectionResultOfT(
+                MonitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                monitorName,
+                DynatraceMonitoredResourceContent.ToRequestContent(content),
+                context);
+        }
+
+        /// <summary>
+        /// Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getVMHostPayload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_GetVMHostPayload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DynatraceVmExtensionPayload>> GetVmHostPayloadAsync(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetVmHostPayload");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateGetVmHostPayloadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DynatraceVmExtensionPayload> response = Response.FromValue(DynatraceVmExtensionPayload.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getVMHostPayload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_GetVMHostPayload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DynatraceVmExtensionPayload> GetVmHostPayload(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetVmHostPayload");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateGetVmHostPayloadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DynatraceVmExtensionPayload> response = Response.FromValue(DynatraceVmExtensionPayload.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/manageAgentInstallation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ManageAgentInstallation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> List of resources and action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> ManageAgentInstallationAsync(string monitorName, ManageAgentInstallationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.ManageAgentInstallation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateManageAgentInstallationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ManageAgentInstallationContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/manageAgentInstallation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ManageAgentInstallation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> List of resources and action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response ManageAgentInstallation(string monitorName, ManageAgentInstallationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.ManageAgentInstallation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateManageAgentInstallationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ManageAgentInstallationContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the VM/VMSS resources currently being monitored by the Dynatrace resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitorVmInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DynatraceMonitorVmInfo> GetHostsAsync(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetHostsAsyncCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+        }
+
+        /// <summary>
+        /// List the VM/VMSS resources currently being monitored by the Dynatrace resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitorVmInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DynatraceMonitorVmInfo> GetHosts(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetHostsCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+        }
+
+        /// <summary>
+        /// Get metric status
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getMetricStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_GetMetricStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the metric status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DynatraceMetricsStatusResult>> GetMetricStatusAsync(string monitorName, DynatraceMetricStatusContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetMetricStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateGetMetricStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceMetricStatusContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DynatraceMetricsStatusResult> response = Response.FromValue(DynatraceMetricsStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get metric status
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getMetricStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_GetMetricStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the metric status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DynatraceMetricsStatusResult> GetMetricStatus(string monitorName, DynatraceMetricStatusContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetMetricStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateGetMetricStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceMetricStatusContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DynatraceMetricsStatusResult> response = Response.FromValue(DynatraceMetricsStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets list of App Services with Dynatrace PaaS OneAgent enabled
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listAppServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListAppServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DynatraceOneAgentEnabledAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DynatraceOneAgentEnabledAppServiceInfo> GetAppServicesAsync(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetAppServicesAsyncCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+        }
+
+        /// <summary>
+        /// Gets list of App Services with Dynatrace PaaS OneAgent enabled
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listAppServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListAppServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DynatraceOneAgentEnabledAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DynatraceOneAgentEnabledAppServiceInfo> GetAppServices(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetAppServicesCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+        }
+
+        /// <summary>
+        /// Upgrades the billing Plan for Dynatrace monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/upgradePlan. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_UpgradePlan. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the upgrade plan request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> UpgradePlanAsync(WaitUntil waitUntil, string monitorName, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.UpgradePlan");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateUpgradePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceUpgradePlanContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DynatraceArmOperation operation = new DynatraceArmOperation(MonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrades the billing Plan for Dynatrace monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/upgradePlan. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_UpgradePlan. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the upgrade plan request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation UpgradePlan(WaitUntil waitUntil, string monitorName, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.UpgradePlan");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateUpgradePlanRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceUpgradePlanContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DynatraceArmOperation operation = new DynatraceArmOperation(MonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the SSO configuration details from the partner.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getSSODetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_GetSSODetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the get sso details request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DynatraceSsoDetailsResult>> GetSsoDetailsAsync(string monitorName, DynatraceSsoDetailsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetSsoDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateGetSsoDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceSsoDetailsContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DynatraceSsoDetailsResult> response = Response.FromValue(DynatraceSsoDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the SSO configuration details from the partner.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getSSODetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_GetSSODetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the get sso details request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DynatraceSsoDetailsResult> GetSsoDetails(string monitorName, DynatraceSsoDetailsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using DiagnosticScope scope = MonitorsClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetSsoDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MonitorsRestClient.CreateGetSsoDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceSsoDetailsContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DynatraceSsoDetailsResult> response = Response.FromValue(DynatraceSsoDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the Dynatrace environments that a user can link a azure resource to
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listLinkableEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListLinkableEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the linkable environment request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="LinkableEnvironmentResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetLinkableEnvironmentsAsyncCollectionResultOfT(
+                MonitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                monitorName,
+                LinkableEnvironmentContent.ToRequestContent(content),
+                context);
+        }
+
+        /// <summary>
+        /// Gets all the Dynatrace environments that a user can link a azure resource to
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/listLinkableEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_ListLinkableEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the linkable environment request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="LinkableEnvironmentResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LinkableEnvironmentResult> GetLinkableEnvironments(string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsGetLinkableEnvironmentsCollectionResultOfT(
+                MonitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                monitorName,
+                LinkableEnvironmentContent.ToRequestContent(content),
+                context);
         }
     }
 }

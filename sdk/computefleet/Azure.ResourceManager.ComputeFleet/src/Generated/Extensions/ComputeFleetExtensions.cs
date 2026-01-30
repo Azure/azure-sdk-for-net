@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ComputeFleet.Mocking;
+using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeFleet
@@ -108,6 +109,124 @@ namespace Azure.ResourceManager.ComputeFleet
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableComputeFleetResourceGroupResource(resourceGroupResource).GetComputeFleet(fleetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List VirtualMachineScaleSet resources by Fleet
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetVirtualMachineScaleSetsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVmss"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComputeFleetVmss> GetVirtualMachineScaleSetsAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeFleetResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetsAsync(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// List VirtualMachineScaleSet resources by Fleet
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetVirtualMachineScaleSets(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVmss"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComputeFleetVmss> GetVirtualMachineScaleSets(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeFleetResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSets(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// List VirtualMachine resources of an instance Fleet.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetVirtualMachinesAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="filter"> Filter expression to filter the virtual machines. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComputeFleetVirtualMachine> GetVirtualMachinesAsync(this ResourceGroupResource resourceGroupResource, string name, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeFleetResourceGroupResource(resourceGroupResource).GetVirtualMachinesAsync(name, filter, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// List VirtualMachine resources of an instance Fleet.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetVirtualMachines(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="filter"> Filter expression to filter the virtual machines. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComputeFleetVirtualMachine> GetVirtualMachines(this ResourceGroupResource resourceGroupResource, string name, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeFleetResourceGroupResource(resourceGroupResource).GetVirtualMachines(name, filter, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancels an instance Fleet creation that is in progress.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.CancelAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> CancelAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string fleetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeFleetResourceGroupResource(resourceGroupResource).CancelAsync(waitUntil, fleetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Cancels an instance Fleet creation that is in progress.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.Cancel(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Cancel(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string fleetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeFleetResourceGroupResource(resourceGroupResource).Cancel(waitUntil, fleetName, cancellationToken);
         }
 
         /// <summary>

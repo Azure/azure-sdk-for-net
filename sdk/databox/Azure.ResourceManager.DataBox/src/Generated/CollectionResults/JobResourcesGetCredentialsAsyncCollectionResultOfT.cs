@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBox
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetCredentialsRequest(nextLink, _subscriptionId, _resourceGroupName, _jobName, _context) : _client.CreateGetCredentialsRequest(_subscriptionId, _resourceGroupName, _jobName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataBoxJobResource.GetCredentials");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.GetCredentials");
             scope.Start();
             try
             {

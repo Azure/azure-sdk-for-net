@@ -186,5 +186,231 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 occurrenceId,
                 context);
         }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Occurrences_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ScheduledActionResourceOperationResult>> CancelAsync(string scheduledActionName, string occurrenceId, OccurrenceCancelContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OccurrencesClientDiagnostics.CreateScope("MockableComputeScheduleResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OccurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, occurrenceId, OccurrenceCancelContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Occurrences_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ScheduledActionResourceOperationResult> Cancel(string scheduledActionName, string occurrenceId, OccurrenceCancelContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OccurrencesClientDiagnostics.CreateScope("MockableComputeScheduleResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OccurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, occurrenceId, OccurrenceCancelContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/delay. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Occurrences_Delay. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ScheduledActionResourceOperationResult>> DelayAsync(WaitUntil waitUntil, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OccurrencesClientDiagnostics.CreateScope("MockableComputeScheduleResourceGroupResource.Delay");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OccurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, occurrenceId, OccurrenceDelayContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeScheduleArmOperation<ScheduledActionResourceOperationResult> operation = new ComputeScheduleArmOperation<ScheduledActionResourceOperationResult>(
+                    new ScheduledActionResourceOperationResultOperationSource(),
+                    OccurrencesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/delay. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Occurrences_Delay. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/>, <paramref name="occurrenceId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ScheduledActionResourceOperationResult> Delay(WaitUntil waitUntil, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OccurrencesClientDiagnostics.CreateScope("MockableComputeScheduleResourceGroupResource.Delay");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OccurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, occurrenceId, OccurrenceDelayContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeScheduleArmOperation<ScheduledActionResourceOperationResult> operation = new ComputeScheduleArmOperation<ScheduledActionResourceOperationResult>(
+                    new ScheduledActionResourceOperationResultOperationSource(),
+                    OccurrencesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

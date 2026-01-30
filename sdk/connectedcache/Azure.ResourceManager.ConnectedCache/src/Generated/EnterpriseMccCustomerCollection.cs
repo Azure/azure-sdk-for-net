@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ConnectedCache
     {
         private readonly ClientDiagnostics _enterpriseMccCustomersClientDiagnostics;
         private readonly EnterpriseMccCustomers _enterpriseMccCustomersRestClient;
+        private readonly ClientDiagnostics _enterpriseMccCacheNodesOperationsClientDiagnostics;
+        private readonly EnterpriseMccCacheNodesOperations _enterpriseMccCacheNodesOperationsRestClient;
 
         /// <summary> Initializes a new instance of EnterpriseMccCustomerCollection for mocking. </summary>
         protected EnterpriseMccCustomerCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.ConnectedCache
             TryGetApiVersion(EnterpriseMccCustomerResource.ResourceType, out string enterpriseMccCustomerApiVersion);
             _enterpriseMccCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
             _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Endpoint, enterpriseMccCustomerApiVersion ?? "2024-11-30-preview");
+            _enterpriseMccCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
+            _enterpriseMccCacheNodesOperationsRestClient = new EnterpriseMccCacheNodesOperations(_enterpriseMccCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, enterpriseMccCustomerApiVersion ?? "2024-11-30-preview");
             ValidateResourceId(id);
         }
 

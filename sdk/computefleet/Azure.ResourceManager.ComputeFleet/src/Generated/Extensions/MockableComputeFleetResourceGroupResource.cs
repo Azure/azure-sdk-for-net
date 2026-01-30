@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ComputeFleet;
+using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeFleet.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableComputeFleetResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _fleetsClientDiagnostics;
+        private Fleets _fleetsRestClient;
+
         /// <summary> Initializes a new instance of MockableComputeFleetResourceGroupResource for mocking. </summary>
         protected MockableComputeFleetResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         internal MockableComputeFleetResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeFleet.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
 
         /// <summary> Gets a collection of ComputeFleets in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of ComputeFleets and their operations over a ComputeFleetResource. </returns>
@@ -94,6 +103,256 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
             return GetComputeFleets().Get(fleetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List VirtualMachineScaleSet resources by Fleet
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListVirtualMachineScaleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVmss"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeFleetVmss> GetVirtualMachineScaleSetsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FleetsGetVirtualMachineScaleSetsAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+        }
+
+        /// <summary>
+        /// List VirtualMachineScaleSet resources by Fleet
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListVirtualMachineScaleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVmss"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeFleetVmss> GetVirtualMachineScaleSets(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FleetsGetVirtualMachineScaleSetsCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+        }
+
+        /// <summary>
+        /// List VirtualMachine resources of an instance Fleet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListVirtualMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="filter"> Filter expression to filter the virtual machines. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeFleetVirtualMachine> GetVirtualMachinesAsync(string name, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FleetsGetVirtualMachinesAsyncCollectionResultOfT(
+                FleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                name,
+                filter,
+                skipToken,
+                context);
+        }
+
+        /// <summary>
+        /// List VirtualMachine resources of an instance Fleet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListVirtualMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the Fleet. </param>
+        /// <param name="filter"> Filter expression to filter the virtual machines. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeFleetVirtualMachine> GetVirtualMachines(string name, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FleetsGetVirtualMachinesCollectionResultOfT(
+                FleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                name,
+                filter,
+                skipToken,
+                context);
+        }
+
+        /// <summary>
+        /// Cancels an instance Fleet creation that is in progress.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, string fleetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+
+            using DiagnosticScope scope = FleetsClientDiagnostics.CreateScope("MockableComputeFleetResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FleetsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeFleetArmOperation operation = new ComputeFleetArmOperation(FleetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels an instance Fleet creation that is in progress.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Cancel(WaitUntil waitUntil, string fleetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+
+            using DiagnosticScope scope = FleetsClientDiagnostics.CreateScope("MockableComputeFleetResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FleetsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeFleetArmOperation operation = new ComputeFleetArmOperation(FleetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceRegistry.Mocking;
+using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry
@@ -489,6 +490,46 @@ namespace Azure.ResourceManager.DeviceRegistry
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistrySchemaRegistry(schemaRegistryName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Migrate the resources into Namespace
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.MigrateAsync(WaitUntil, string, NamespaceMigrateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="namespaceName"> The name of the namespace. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> MigrateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string namespaceName, NamespaceMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).MigrateAsync(waitUntil, namespaceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Migrate the resources into Namespace
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.Migrate(WaitUntil, string, NamespaceMigrateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="namespaceName"> The name of the namespace. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Migrate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string namespaceName, NamespaceMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).Migrate(waitUntil, namespaceName, content, cancellationToken);
         }
 
         /// <summary>

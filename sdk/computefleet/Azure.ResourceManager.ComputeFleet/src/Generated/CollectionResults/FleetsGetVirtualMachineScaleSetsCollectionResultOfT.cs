@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ComputeFleet
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetVirtualMachineScaleSetsRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetVirtualMachineScaleSetsRequest(_subscriptionId, _resourceGroupName, _name, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ComputeFleetResource.GetVirtualMachineScaleSets");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeFleetResourceGroupResource.GetVirtualMachineScaleSets");
             scope.Start();
             try
             {

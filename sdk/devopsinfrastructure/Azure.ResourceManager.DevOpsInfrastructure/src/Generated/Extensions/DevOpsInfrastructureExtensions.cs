@@ -112,6 +112,44 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         }
 
         /// <summary>
+        /// A synchronous resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureResourceGroupResource.DeleteResourcesAsync(string, DevOpsDeleteResourcesDetails, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> DeleteResourcesAsync(this ResourceGroupResource resourceGroupResource, string poolName, DevOpsDeleteResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDevOpsInfrastructureResourceGroupResource(resourceGroupResource).DeleteResourcesAsync(poolName, details, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureResourceGroupResource.DeleteResources(string, DevOpsDeleteResourcesDetails, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response DeleteResources(this ResourceGroupResource resourceGroupResource, string poolName, DevOpsDeleteResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDevOpsInfrastructureResourceGroupResource(resourceGroupResource).DeleteResources(poolName, details, cancellationToken);
+        }
+
+        /// <summary>
         /// List ImageVersion resources by Image
         /// <item>
         /// <term> Mocking. </term>

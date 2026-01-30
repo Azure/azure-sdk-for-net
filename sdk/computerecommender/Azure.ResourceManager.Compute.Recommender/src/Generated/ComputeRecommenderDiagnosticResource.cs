@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Recommender
@@ -179,110 +178,6 @@ namespace Azure.ResourceManager.Compute.Recommender
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new ComputeRecommenderDiagnosticResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates placement scores for Spot VM skus.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComputeDiagnosticBases_Post. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-05. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ComputeRecommenderGenerateResult>> GenerateAsync(ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Generate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates placement scores for Spot VM skus.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComputeDiagnosticBases_Post. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-05. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ComputeRecommenderGenerateResult> Generate(ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Generate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {

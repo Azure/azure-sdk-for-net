@@ -114,6 +114,196 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
+        /// Request to mitigate for a given job
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.MitigateAsync(string, MitigateJobContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> MitigateAsync(this ResourceGroupResource resourceGroupResource, string jobName, MitigateJobContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).MitigateAsync(jobName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Request to mitigate for a given job
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.Mitigate(string, MitigateJobContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response Mitigate(this ResourceGroupResource resourceGroupResource, string jobName, MitigateJobContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).Mitigate(jobName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Book shipment pick up.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.BookShipmentPickUpAsync(string, ShipmentPickUpContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Details of shipment pick up request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DataBoxShipmentPickUpResult>> BookShipmentPickUpAsync(this ResourceGroupResource resourceGroupResource, string jobName, ShipmentPickUpContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).BookShipmentPickUpAsync(jobName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Book shipment pick up.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.BookShipmentPickUp(string, ShipmentPickUpContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Details of shipment pick up request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DataBoxShipmentPickUpResult> BookShipmentPickUp(this ResourceGroupResource resourceGroupResource, string jobName, ShipmentPickUpContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).BookShipmentPickUp(jobName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// CancelJob.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.CancelAsync(string, DataBoxJobCancellationReason, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> CancelAsync(this ResourceGroupResource resourceGroupResource, string jobName, DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).CancelAsync(jobName, cancellationReason, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// CancelJob.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.Cancel(string, DataBoxJobCancellationReason, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response Cancel(this ResourceGroupResource resourceGroupResource, string jobName, DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).Cancel(jobName, cancellationReason, cancellationToken);
+        }
+
+        /// <summary>
+        /// This method gets the unencrypted secrets related to the job.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetCredentialsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="UnencryptedCredentials"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<UnencryptedCredentials> GetCredentialsAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetCredentialsAsync(jobName, cancellationToken);
+        }
+
+        /// <summary>
+        /// This method gets the unencrypted secrets related to the job.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetCredentials(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="UnencryptedCredentials"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<UnencryptedCredentials> GetCredentials(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetCredentials(jobName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Request to mark devices for a given job as shipped
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.MarkDevicesShippedAsync(string, MarkDevicesShippedContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mark Devices Shipped Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> MarkDevicesShippedAsync(this ResourceGroupResource resourceGroupResource, string jobName, MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).MarkDevicesShippedAsync(jobName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Request to mark devices for a given job as shipped
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.MarkDevicesShipped(string, MarkDevicesShippedContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mark Devices Shipped Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response MarkDevicesShipped(this ResourceGroupResource resourceGroupResource, string jobName, MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).MarkDevicesShipped(jobName, content, cancellationToken);
+        }
+
+        /// <summary>
         /// This method provides the list of available skus for the given subscription, resource group and location.
         /// <item>
         /// <term> Mocking. </term>

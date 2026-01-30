@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ConnectedCache
     {
         private readonly ClientDiagnostics _ispCustomersClientDiagnostics;
         private readonly IspCustomers _ispCustomersRestClient;
+        private readonly ClientDiagnostics _ispCacheNodesOperationsClientDiagnostics;
+        private readonly IspCacheNodesOperations _ispCacheNodesOperationsRestClient;
 
         /// <summary> Initializes a new instance of IspCustomerCollection for mocking. </summary>
         protected IspCustomerCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.ConnectedCache
             TryGetApiVersion(IspCustomerResource.ResourceType, out string ispCustomerApiVersion);
             _ispCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
             _ispCustomersRestClient = new IspCustomers(_ispCustomersClientDiagnostics, Pipeline, Endpoint, ispCustomerApiVersion ?? "2024-11-30-preview");
+            _ispCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
+            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, ispCustomerApiVersion ?? "2024-11-30-preview");
             ValidateResourceId(id);
         }
 

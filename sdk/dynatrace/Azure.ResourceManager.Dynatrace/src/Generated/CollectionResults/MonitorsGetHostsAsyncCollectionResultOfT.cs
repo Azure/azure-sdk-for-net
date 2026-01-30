@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dynatrace
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetHostsRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _context) : _client.CreateGetHostsRequest(_subscriptionId, _resourceGroupName, _monitorName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DynatraceMonitorResource.GetHosts");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetHosts");
             scope.Start();
             try
             {

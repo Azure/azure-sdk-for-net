@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetValidSkusRequest(nextLink, _subscriptionId, _resourceGroupName, _provisioningServiceName, _context) : _client.CreateGetValidSkusRequest(_subscriptionId, _resourceGroupName, _provisioningServiceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetValidSkus");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetValidSkus");
             scope.Start();
             try
             {

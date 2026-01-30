@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DisconnectedOperations;
+using Azure.ResourceManager.DisconnectedOperations.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Mocking
@@ -19,6 +21,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDisconnectedOperationsResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _imagesClientDiagnostics;
+        private Images _imagesRestClient;
+        private ClientDiagnostics _artifactsClientDiagnostics;
+        private Artifacts _artifactsRestClient;
+
         /// <summary> Initializes a new instance of MockableDisconnectedOperationsResourceGroupResource for mocking. </summary>
         protected MockableDisconnectedOperationsResourceGroupResource()
         {
@@ -30,6 +37,14 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         internal MockableDisconnectedOperationsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ImagesClientDiagnostics => _imagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        private ClientDiagnostics ArtifactsClientDiagnostics => _artifactsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Artifacts ArtifactsRestClient => _artifactsRestClient ??= new Artifacts(ArtifactsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
         /// <summary> Gets a collection of DisconnectedOperations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DisconnectedOperations and their operations over a DisconnectedOperationResource. </returns>
@@ -94,6 +109,214 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetDisconnectedOperations().Get(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the URI to download the image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/listDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Images_ListDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DisconnectedOperationsImageDownloadResult>> GetDownloadUriAsync(string name, string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using DiagnosticScope scope = ImagesClientDiagnostics.CreateScope("MockableDisconnectedOperationsResourceGroupResource.GetDownloadUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ImagesRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, imageName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DisconnectedOperationsImageDownloadResult> response = Response.FromValue(DisconnectedOperationsImageDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the URI to download the image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/listDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Images_ListDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DisconnectedOperationsImageDownloadResult> GetDownloadUri(string name, string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using DiagnosticScope scope = ImagesClientDiagnostics.CreateScope("MockableDisconnectedOperationsResourceGroupResource.GetDownloadUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ImagesRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, imageName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DisconnectedOperationsImageDownloadResult> response = Response.FromValue(DisconnectedOperationsImageDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get artifact download link.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}/listDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_ListDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="artifactName"> The name of the Artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="imageName"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="imageName"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DisconnectedOperationsArtifactDownloadResult>> GetDownloadUriAsync(string name, string imageName, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            using DiagnosticScope scope = ArtifactsClientDiagnostics.CreateScope("MockableDisconnectedOperationsResourceGroupResource.GetDownloadUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ArtifactsRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, imageName, artifactName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DisconnectedOperationsArtifactDownloadResult> response = Response.FromValue(DisconnectedOperationsArtifactDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get artifact download link.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}/artifacts/{artifactName}/listDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_ListDownloadUri. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="imageName"> The name of the Image. </param>
+        /// <param name="artifactName"> The name of the Artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="imageName"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="imageName"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DisconnectedOperationsArtifactDownloadResult> GetDownloadUri(string name, string imageName, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            using DiagnosticScope scope = ArtifactsClientDiagnostics.CreateScope("MockableDisconnectedOperationsResourceGroupResource.GetDownloadUri");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ArtifactsRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, imageName, artifactName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DisconnectedOperationsArtifactDownloadResult> response = Response.FromValue(DisconnectedOperationsArtifactDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dynatrace
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetMonitoredResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _content, _context) : _client.CreateGetMonitoredResourcesRequest(_subscriptionId, _resourceGroupName, _monitorName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMonitoredResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDynatraceResourceGroupResource.GetMonitoredResources");
             scope.Start();
             try
             {

@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ConnectedCache
     {
         private readonly ClientDiagnostics _ispCustomersClientDiagnostics;
         private readonly IspCustomers _ispCustomersRestClient;
+        private readonly ClientDiagnostics _ispCacheNodesOperationsClientDiagnostics;
+        private readonly IspCacheNodesOperations _ispCacheNodesOperationsRestClient;
         private readonly IspCustomerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ConnectedCache/ispCustomers";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.ConnectedCache
             TryGetApiVersion(ResourceType, out string ispCustomerApiVersion);
             _ispCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
             _ispCustomersRestClient = new IspCustomers(_ispCustomersClientDiagnostics, Pipeline, Endpoint, ispCustomerApiVersion ?? "2024-11-30-preview");
+            _ispCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
+            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, ispCustomerApiVersion ?? "2024-11-30-preview");
             ValidateResourceId(id);
         }
 
@@ -383,6 +387,430 @@ namespace Azure.ResourceManager.ConnectedCache
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets ispCacheNode resource information
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getBgpCidrs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetBgpCidrs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MccCacheNodeBgpCidrDetails>> GetBgpCidrsAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetBgpCidrs");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetBgpCidrsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeBgpCidrDetails> response = Response.FromValue(MccCacheNodeBgpCidrDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets ispCacheNode resource information
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getBgpCidrs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetBgpCidrs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MccCacheNodeBgpCidrDetails> GetBgpCidrs(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetBgpCidrs");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetBgpCidrsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeBgpCidrDetails> response = Response.FromValue(MccCacheNodeBgpCidrDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets ispCacheNode resource auto update histrory information
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeAutoUpdateHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeAutoUpdateHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MccCacheNodeAutoUpdateHistoryData>> GetCacheNodeAutoUpdateHistoryAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetCacheNodeAutoUpdateHistory");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeAutoUpdateHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeAutoUpdateHistoryData> response = Response.FromValue(MccCacheNodeAutoUpdateHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets ispCacheNode resource auto update histrory information
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeAutoUpdateHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeAutoUpdateHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MccCacheNodeAutoUpdateHistoryData> GetCacheNodeAutoUpdateHistory(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetCacheNodeAutoUpdateHistory");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeAutoUpdateHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeAutoUpdateHistoryData> response = Response.FromValue(MccCacheNodeAutoUpdateHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets secrets of the ispCacheNode resource install details
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MccCacheNodeInstallDetails>> GetCacheNodeInstallDetailsAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetCacheNodeInstallDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets secrets of the ispCacheNode resource install details
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MccCacheNodeInstallDetails> GetCacheNodeInstallDetails(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetCacheNodeInstallDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets ispCacheNode resource issues details histrory information
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeMccIssueDetailsHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeMccIssueDetailsHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MccCacheNodeIssueHistoryData>> GetCacheNodeMccIssueDetailsHistoryAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetCacheNodeMccIssueDetailsHistory");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeMccIssueDetailsHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeIssueHistoryData> response = Response.FromValue(MccCacheNodeIssueHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets ispCacheNode resource issues details histrory information
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeMccIssueDetailsHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeMccIssueDetailsHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheNodeResourceName"> Name of the ConnectedCache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MccCacheNodeIssueHistoryData> GetCacheNodeMccIssueDetailsHistory(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheNodeResourceName, nameof(cacheNodeResourceName));
+
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCustomerResource.GetCacheNodeMccIssueDetailsHistory");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeMccIssueDetailsHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeIssueHistoryData> response = Response.FromValue(MccCacheNodeIssueHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

@@ -166,6 +166,352 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
+        /// List the resources currently being monitored by the Dynatrace monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetMonitoredResourcesAsync(string, DynatraceMonitoredResourceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the log status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(this ResourceGroupResource resourceGroupResource, string monitorName, DynatraceMonitoredResourceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetMonitoredResourcesAsync(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the resources currently being monitored by the Dynatrace monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetMonitoredResources(string, DynatraceMonitoredResourceContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the log status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(this ResourceGroupResource resourceGroupResource, string monitorName, DynatraceMonitoredResourceContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetMonitoredResources(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetVmHostPayloadAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DynatraceVmExtensionPayload>> GetVmHostPayloadAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetVmHostPayloadAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetVmHostPayload(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DynatraceVmExtensionPayload> GetVmHostPayload(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetVmHostPayload(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of resources.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.ManageAgentInstallationAsync(string, ManageAgentInstallationContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> List of resources and action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> ManageAgentInstallationAsync(this ResourceGroupResource resourceGroupResource, string monitorName, ManageAgentInstallationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDynatraceResourceGroupResource(resourceGroupResource).ManageAgentInstallationAsync(monitorName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of resources.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.ManageAgentInstallation(string, ManageAgentInstallationContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> List of resources and action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response ManageAgentInstallation(this ResourceGroupResource resourceGroupResource, string monitorName, ManageAgentInstallationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).ManageAgentInstallation(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the VM/VMSS resources currently being monitored by the Dynatrace resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetHostsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitorVmInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DynatraceMonitorVmInfo> GetHostsAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetHostsAsync(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the VM/VMSS resources currently being monitored by the Dynatrace resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetHosts(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DynatraceMonitorVmInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DynatraceMonitorVmInfo> GetHosts(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetHosts(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get metric status
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetMetricStatusAsync(string, DynatraceMetricStatusContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the metric status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DynatraceMetricsStatusResult>> GetMetricStatusAsync(this ResourceGroupResource resourceGroupResource, string monitorName, DynatraceMetricStatusContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetMetricStatusAsync(monitorName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get metric status
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetMetricStatus(string, DynatraceMetricStatusContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the metric status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DynatraceMetricsStatusResult> GetMetricStatus(this ResourceGroupResource resourceGroupResource, string monitorName, DynatraceMetricStatusContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetMetricStatus(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets list of App Services with Dynatrace PaaS OneAgent enabled
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetAppServicesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DynatraceOneAgentEnabledAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DynatraceOneAgentEnabledAppServiceInfo> GetAppServicesAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetAppServicesAsync(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets list of App Services with Dynatrace PaaS OneAgent enabled
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetAppServices(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DynatraceOneAgentEnabledAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DynatraceOneAgentEnabledAppServiceInfo> GetAppServices(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetAppServices(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Upgrades the billing Plan for Dynatrace monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.UpgradePlanAsync(WaitUntil, string, DynatraceUpgradePlanContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the upgrade plan request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> UpgradePlanAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDynatraceResourceGroupResource(resourceGroupResource).UpgradePlanAsync(waitUntil, monitorName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upgrades the billing Plan for Dynatrace monitor resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.UpgradePlan(WaitUntil, string, DynatraceUpgradePlanContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the upgrade plan request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation UpgradePlan(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string monitorName, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).UpgradePlan(waitUntil, monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the SSO configuration details from the partner.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetSsoDetailsAsync(string, DynatraceSsoDetailsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the get sso details request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DynatraceSsoDetailsResult>> GetSsoDetailsAsync(this ResourceGroupResource resourceGroupResource, string monitorName, DynatraceSsoDetailsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetSsoDetailsAsync(monitorName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the SSO configuration details from the partner.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetSsoDetails(string, DynatraceSsoDetailsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the get sso details request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DynatraceSsoDetailsResult> GetSsoDetails(this ResourceGroupResource resourceGroupResource, string monitorName, DynatraceSsoDetailsContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetSsoDetails(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the Dynatrace environments that a user can link a azure resource to
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetLinkableEnvironmentsAsync(string, LinkableEnvironmentContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the linkable environment request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="LinkableEnvironmentResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(this ResourceGroupResource resourceGroupResource, string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetLinkableEnvironmentsAsync(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the Dynatrace environments that a user can link a azure resource to
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetLinkableEnvironments(string, LinkableEnvironmentContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="content"> The details of the linkable environment request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="LinkableEnvironmentResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<LinkableEnvironmentResult> GetLinkableEnvironments(this ResourceGroupResource resourceGroupResource, string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetLinkableEnvironments(monitorName, content, cancellationToken);
+        }
+
+        /// <summary>
         /// List all MonitorResource by subscriptionId
         /// <item>
         /// <term> Mocking. </term>

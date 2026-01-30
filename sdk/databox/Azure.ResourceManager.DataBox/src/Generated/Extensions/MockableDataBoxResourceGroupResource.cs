@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDataBoxResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _dataBoxClientClientDiagnostics;
+        private DataBoxClient _dataBoxClientRestClient;
+        private ClientDiagnostics _jobResourcesClientDiagnostics;
+        private JobResources _jobResourcesRestClient;
         private ClientDiagnostics _serviceOperationGroupClientDiagnostics;
         private ServiceOperationGroup _serviceOperationGroupRestClient;
 
@@ -35,6 +39,14 @@ namespace Azure.ResourceManager.DataBox.Mocking
         internal MockableDataBoxResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics DataBoxClientClientDiagnostics => _dataBoxClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DataBoxClient DataBoxClientRestClient => _dataBoxClientRestClient ??= new DataBoxClient(DataBoxClientClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics JobResourcesClientDiagnostics => _jobResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private JobResources JobResourcesRestClient => _jobResourcesRestClient ??= new JobResources(JobResourcesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
         private ClientDiagnostics ServiceOperationGroupClientDiagnostics => _serviceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -105,6 +117,450 @@ namespace Azure.ResourceManager.DataBox.Mocking
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             return GetDataBoxJobs().Get(jobName, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Request to mitigate for a given job
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBox_Mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> MitigateAsync(string jobName, MitigateJobContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = DataBoxClientClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.Mitigate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DataBoxClientRestClient.CreateMitigateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, MitigateJobContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Request to mitigate for a given job
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBox_Mitigate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Mitigate(string jobName, MitigateJobContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = DataBoxClientClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.Mitigate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DataBoxClientRestClient.CreateMitigateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, MitigateJobContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Book shipment pick up.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/bookShipmentPickUp. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_BookShipmentPickUp. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Details of shipment pick up request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataBoxShipmentPickUpResult>> BookShipmentPickUpAsync(string jobName, ShipmentPickUpContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = JobResourcesClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.BookShipmentPickUp");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobResourcesRestClient.CreateBookShipmentPickUpRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, ShipmentPickUpContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxShipmentPickUpResult> response = Response.FromValue(DataBoxShipmentPickUpResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Book shipment pick up.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/bookShipmentPickUp. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_BookShipmentPickUp. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Details of shipment pick up request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataBoxShipmentPickUpResult> BookShipmentPickUp(string jobName, ShipmentPickUpContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = JobResourcesClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.BookShipmentPickUp");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobResourcesRestClient.CreateBookShipmentPickUpRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, ShipmentPickUpContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxShipmentPickUpResult> response = Response.FromValue(DataBoxShipmentPickUpResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// CancelJob.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CancelAsync(string jobName, DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
+
+            using DiagnosticScope scope = JobResourcesClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobResourcesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobCancellationReason.ToRequestContent(cancellationReason), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// CancelJob.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Cancel(string jobName, DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
+
+            using DiagnosticScope scope = JobResourcesClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobResourcesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobCancellationReason.ToRequestContent(cancellationReason), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This method gets the unencrypted secrets related to the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/listCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_ListCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="UnencryptedCredentials"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UnencryptedCredentials> GetCredentialsAsync(string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new JobResourcesGetCredentialsAsyncCollectionResultOfT(JobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, jobName, context);
+        }
+
+        /// <summary>
+        /// This method gets the unencrypted secrets related to the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/listCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_ListCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="UnencryptedCredentials"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UnencryptedCredentials> GetCredentials(string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new JobResourcesGetCredentialsCollectionResultOfT(JobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, jobName, context);
+        }
+
+        /// <summary>
+        /// Request to mark devices for a given job as shipped
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/markDevicesShipped. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_MarkDevicesShipped. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mark Devices Shipped Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> MarkDevicesShippedAsync(string jobName, MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = JobResourcesClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.MarkDevicesShipped");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobResourcesRestClient.CreateMarkDevicesShippedRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, MarkDevicesShippedContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Request to mark devices for a given job as shipped
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/markDevicesShipped. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_MarkDevicesShipped. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="content"> Mark Devices Shipped Request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response MarkDevicesShipped(string jobName, MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = JobResourcesClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.MarkDevicesShipped");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobResourcesRestClient.CreateMarkDevicesShippedRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, MarkDevicesShippedContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

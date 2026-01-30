@@ -183,6 +183,46 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
+        /// Starts health validation for a watcher.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.StartValidationAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="watcherName"> The database watcher name. </param>
+        /// <param name="healthValidationName"> The health validation resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<DatabaseWatcherHealthValidationResource>> StartValidationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDatabaseWatcherResourceGroupResource(resourceGroupResource).StartValidationAsync(waitUntil, watcherName, healthValidationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts health validation for a watcher.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.StartValidation(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="watcherName"> The database watcher name. </param>
+        /// <param name="healthValidationName"> The health validation resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<DatabaseWatcherHealthValidationResource> StartValidation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDatabaseWatcherResourceGroupResource(resourceGroupResource).StartValidation(waitUntil, watcherName, healthValidationName, cancellationToken);
+        }
+
+        /// <summary>
         /// List Watcher resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>

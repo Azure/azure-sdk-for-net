@@ -166,6 +166,234 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
+        /// Generate verification code for Proof of Possession.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GenerateVerificationCodeAsync(string, string, string, string, BinaryData, bool?, DeviceProvisioningServicesCertificatePurpose?, DateTimeOffset?, DateTimeOffset?, bool?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GenerateVerificationCodeAsync(provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Generate verification code for Proof of Possession.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GenerateVerificationCode(string, string, string, string, BinaryData, bool?, DeviceProvisioningServicesCertificatePurpose?, DateTimeOffset?, DateTimeOffset?, bool?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<CertificateVerificationCodeResult> GenerateVerificationCode(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GenerateVerificationCode(provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken);
+        }
+
+        /// <summary>
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.VerifyCertificateAsync(string, string, string, CertificateVerificationCodeContent, string, BinaryData, bool?, DeviceProvisioningServicesCertificatePurpose?, DateTimeOffset?, DateTimeOffset?, bool?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).VerifyCertificateAsync(provisioningServiceName, certificateName, ifMatch, content, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.VerifyCertificate(string, string, string, CertificateVerificationCodeContent, string, BinaryData, bool?, DeviceProvisioningServicesCertificatePurpose?, DateTimeOffset?, DateTimeOffset?, bool?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="content"> The name of the certificate. </param>
+        /// <param name="certificateCommonName"> Common Name for the certificate. </param>
+        /// <param name="certificateRawBytes"> Raw data of certificate. </param>
+        /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
+        /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
+        /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
+        /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DeviceProvisioningServicesCertificateResource> VerifyCertificate(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = default, BinaryData certificateRawBytes = default, bool? certificateIsVerified = default, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default, DateTimeOffset? certificateCreatedOn = default, DateTimeOffset? certificateLastUpdatedOn = default, bool? certificateHasPrivateKey = default, string certificateNonce = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).VerifyCertificate(provisioningServiceName, certificateName, ifMatch, content, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of valid SKUs and tiers for a provisioning service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetValidSkusAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeviceProvisioningServicesSkuDefinition> GetValidSkusAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetValidSkusAsync(provisioningServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of valid SKUs and tiers for a provisioning service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetValidSkus(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeviceProvisioningServicesSkuDefinition> GetValidSkus(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetValidSkus(provisioningServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the primary and secondary keys for a provisioning service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetKeysAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeviceProvisioningServicesSharedAccessKey> GetKeysAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetKeysAsync(provisioningServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the primary and secondary keys for a provisioning service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetKeys(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeviceProvisioningServicesSharedAccessKey> GetKeys(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetKeys(provisioningServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List primary and secondary keys for a specific key name
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetKeyAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="keyName"> Logical key name to get key-values for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DeviceProvisioningServicesSharedAccessKey>> GetKeyAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetKeyAsync(provisioningServiceName, keyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List primary and secondary keys for a specific key name
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetKey(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="keyName"> Logical key name to get key-values for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DeviceProvisioningServicesSharedAccessKey> GetKey(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetKey(provisioningServiceName, keyName, cancellationToken);
+        }
+
+        /// <summary>
         /// List all the provisioning services for a given subscription id.
         /// <item>
         /// <term> Mocking. </term>

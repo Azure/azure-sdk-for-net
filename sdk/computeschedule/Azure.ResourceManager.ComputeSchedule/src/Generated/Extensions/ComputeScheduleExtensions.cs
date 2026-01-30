@@ -246,6 +246,88 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
+        /// A synchronous resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.CancelAsync(string, string, OccurrenceCancelContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ScheduledActionResourceOperationResult>> CancelAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, string occurrenceId, OccurrenceCancelContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).CancelAsync(scheduledActionName, occurrenceId, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.Cancel(string, string, OccurrenceCancelContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ScheduledActionResourceOperationResult> Cancel(this ResourceGroupResource resourceGroupResource, string scheduledActionName, string occurrenceId, OccurrenceCancelContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).Cancel(scheduledActionName, occurrenceId, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.DelayAsync(WaitUntil, string, string, OccurrenceDelayContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ScheduledActionResourceOperationResult>> DelayAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).DelayAsync(waitUntil, scheduledActionName, occurrenceId, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.Delay(WaitUntil, string, string, OccurrenceDelayContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ScheduledActionResourceOperationResult> Delay(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string scheduledActionName, string occurrenceId, OccurrenceDelayContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).Delay(waitUntil, scheduledActionName, occurrenceId, content, cancellationToken);
+        }
+
+        /// <summary>
         /// List ScheduledAction resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetKeysRequest(nextLink, _subscriptionId, _resourceGroupName, _provisioningServiceName, _context) : _client.CreateGetKeysRequest(_subscriptionId, _resourceGroupName, _provisioningServiceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetKeys");
             scope.Start();
             try
             {
