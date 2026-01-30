@@ -74,8 +74,8 @@ namespace Azure.AI.Speech.Transcription.Tests
         /// </summary>
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
-            { "TRANSCRIPTION_ENDPOINT", Environment.GetEnvironmentVariable("TRANSCRIPTION_ENDPOINT") ?? "https://test-endpoint.cognitiveservices.azure.com/" },
-            { "TRANSCRIPTION_API_KEY", Environment.GetEnvironmentVariable("TRANSCRIPTION_API_KEY") ?? "api-key" }
+            { "TRANSCRIPTION_ENDPOINT", Environment.GetEnvironmentVariable("TRANSCRIPTION_ENDPOINT") },
+            { "TRANSCRIPTION_API_KEY", Environment.GetEnvironmentVariable("TRANSCRIPTION_API_KEY") }
         };
 
         /// <summary>
