@@ -36,9 +36,16 @@ description: 'Identify languages configured in the TypeSpec project and add it t
 **Success Criteria**: Release plan exists or user informed to create one.
 
 # Step 3: Update Release Plan with SDK Information
-> **(MANDATORY - DO NOT SKIP) ALWAYS validate all package names against the format rules before calling any update tool, even if the user provides SDK details directly. Auto-correct and inform the user of invalid package names.**
+> **(MANDATORY - DO NOT SKIP) ALWAYS validate all package names against the format rules AND the examples table before calling any update tool, even if the user provides SDK details directly. Auto-correct and inform the user of invalid package names.**
 > - **JavaScript**: Must start with `@azure/`
 > - **Go**: Must start with `sdk/`
+>
+> **Valid package name examples (compare against these to catch invalid formats):**
+> | Language | Valid | Invalid |
+> |----------|-------|---------|
+> | JavaScript | `@azure/arm-compute` | `arm-compute`, `azure/arm-compute`,`@azure-arm-compute` |
+> | Go (management plane) | `sdk/resourcemanager/compute/armcompute` | `sdk/armcompute`, `/sdk/compute`, `github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/compute` |
+
 **Goal**: Update the release plan with the languages and package names identified in Step 1.
 1. Use `azsdk_update_sdk_details_in_release_plan` to update the release plan work item with the JSON object created in Step 1.
 2. Confirm successful update of the release plan with the SDK information and summary of languages and package names.
