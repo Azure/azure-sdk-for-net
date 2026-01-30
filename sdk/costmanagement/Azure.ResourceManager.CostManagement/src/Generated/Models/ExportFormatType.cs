@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>
+    /// <summary> The format of the export being delivered. </summary>
     public readonly partial struct ExportFormatType : IEquatable<ExportFormatType>
     {
         private readonly string _value;
@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         private const string CsvValue = "Csv";
+        private const string ParquetValue = "Parquet";
 
         /// <summary> Csv. </summary>
         public static ExportFormatType Csv { get; } = new ExportFormatType(CsvValue);
+        /// <summary> Parquet. </summary>
+        public static ExportFormatType Parquet { get; } = new ExportFormatType(ParquetValue);
         /// <summary> Determines if two <see cref="ExportFormatType"/> values are the same. </summary>
         public static bool operator ==(ExportFormatType left, ExportFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportFormatType"/> values are not the same. </summary>

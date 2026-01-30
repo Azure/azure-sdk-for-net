@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="CostManagementDimensionsListResult"/>. </summary>
         /// <param name="value"> The list of dimensions. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CostManagementDimensionsListResult(IReadOnlyList<CostManagementDimension> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CostManagementDimensionsListResult(IReadOnlyList<CostManagementDimension> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of dimensions. </summary>
         public IReadOnlyList<CostManagementDimension> Value { get; }
+        /// <summary> The link (url) to the next page of results. </summary>
+        public string NextLink { get; }
     }
 }

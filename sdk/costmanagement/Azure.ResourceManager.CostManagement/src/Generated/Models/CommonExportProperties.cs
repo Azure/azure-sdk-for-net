@@ -59,21 +59,29 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
-        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
+        /// <param name="format"> The format of the export being delivered. </param>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <param name="runHistory"> If requested, has the most recent run history for the export. </param>
-        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </param>
+        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </param>
+        /// <param name="dataOverwriteBehavior"> Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will enable overwrite data for the same month in customer storage account. By default set to CreateNewReport. </param>
+        /// <param name="compressionMode"> Allow customers to select compress data for exports. This setting will enable destination file compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet. </param>
+        /// <param name="exportDescription"> The export description set by customer at time of export creation/update. </param>
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
+        /// <param name="systemSuspensionContext"> The export suspension reason if export is in SystemSuspended state. This is not populated currently. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonExportProperties(ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommonExportProperties(ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DataOverwriteBehaviorType? dataOverwriteBehavior, CompressionModeType? compressionMode, string exportDescription, DateTimeOffset? nextRunTimeEstimate, ExportSuspensionContext systemSuspensionContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Format = format;
             DeliveryInfo = deliveryInfo;
             Definition = definition;
             RunHistory = runHistory;
             PartitionData = partitionData;
+            DataOverwriteBehavior = dataOverwriteBehavior;
+            CompressionMode = compressionMode;
+            ExportDescription = exportDescription;
             NextRunTimeEstimate = nextRunTimeEstimate;
+            SystemSuspensionContext = systemSuspensionContext;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,7 +90,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
         }
 
-        /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>
+        /// <summary> The format of the export being delivered. </summary>
         public ExportFormatType? Format { get; set; }
         /// <summary> Has delivery information for the export. </summary>
         internal ExportDeliveryInfo DeliveryInfo { get; set; }
@@ -108,9 +116,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        /// <summary> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </summary>
+        /// <summary> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </summary>
         public bool? PartitionData { get; set; }
+        /// <summary> Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will enable overwrite data for the same month in customer storage account. By default set to CreateNewReport. </summary>
+        public DataOverwriteBehaviorType? DataOverwriteBehavior { get; set; }
+        /// <summary> Allow customers to select compress data for exports. This setting will enable destination file compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet. </summary>
+        public CompressionModeType? CompressionMode { get; set; }
+        /// <summary> The export description set by customer at time of export creation/update. </summary>
+        public string ExportDescription { get; set; }
         /// <summary> If the export has an active schedule, provides an estimate of the next run time. </summary>
         public DateTimeOffset? NextRunTimeEstimate { get; }
+        /// <summary> The export suspension reason if export is in SystemSuspended state. This is not populated currently. </summary>
+        public ExportSuspensionContext SystemSuspensionContext { get; }
     }
 }

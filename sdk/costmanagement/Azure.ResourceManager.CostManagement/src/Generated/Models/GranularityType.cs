@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The granularity of rows in the export. Currently only 'Daily' is supported. </summary>
+    /// <summary> The granularity of rows in the export. Currently 'Daily' is supported for most cases. </summary>
     public readonly partial struct GranularityType : IEquatable<GranularityType>
     {
         private readonly string _value;
@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         private const string DailyValue = "Daily";
+        private const string MonthlyValue = "Monthly";
 
         /// <summary> Daily. </summary>
         public static GranularityType Daily { get; } = new GranularityType(DailyValue);
+        /// <summary> Monthly. </summary>
+        public static GranularityType Monthly { get; } = new GranularityType(MonthlyValue);
         /// <summary> Determines if two <see cref="GranularityType"/> values are the same. </summary>
         public static bool operator ==(GranularityType left, GranularityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GranularityType"/> values are not the same. </summary>

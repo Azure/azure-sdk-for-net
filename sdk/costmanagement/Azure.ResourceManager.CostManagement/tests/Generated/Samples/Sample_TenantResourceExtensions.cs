@@ -20,256 +20,9 @@ namespace Azure.ResourceManager.CostManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetBenefitUtilizationSummariesByBillingAccountId_SavingsPlanUtilizationSummariesBillingAccount()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingAccount.json
-            // this example is just showing the usage of "BenefitUtilizationSummaries_ListByBillingAccountId" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation and iterate over the result
-            string billingAccountId = "12345";
-            string filter = "properties/usageDate ge 2022-10-15 and properties/usageDate le 2022-10-18";
-            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, filter: filter))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetBenefitUtilizationSummariesByBillingProfileId_SavingsPlanUtilizationSummariesBillingProfile()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingProfile.json
-            // this example is just showing the usage of "BenefitUtilizationSummaries_ListByBillingProfileId" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation and iterate over the result
-            string billingAccountId = "c0a00000-0e04-5ee3-000e-f0c6e00000ec:c0a00000-0e04-5ee3-000e-f0c6e00000ec";
-            string billingProfileId = "200e5e90-000e-4960-8dcd-8d00a02db000";
-            string filter = "properties/usageDate ge 2022-10-15 and properties/usageDate le 2022-10-18";
-            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, filter: filter))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetBenefitUtilizationSummariesBySavingsPlanOrder_SavingsPlanUtilizationSummariesDaily()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanOrderId-Daily.json
-            // this example is just showing the usage of "BenefitUtilizationSummaries_ListBySavingsPlanOrder" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation and iterate over the result
-            string savingsPlanOrderId = "66cccc66-6ccc-6c66-666c-66cc6c6c66c6";
-            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetBenefitUtilizationSummariesBySavingsPlanId_SavingsPlanUtilizationSummariesMonthlyWithSavingsPlanId()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanId-Monthly.json
-            // this example is just showing the usage of "BenefitUtilizationSummaries_ListBySavingsPlanId" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation and iterate over the result
-            string savingsPlanOrderId = "66cccc66-6ccc-6c66-666c-66cc6c6c66c6";
-            string savingsPlanId = "222d22dd-d2d2-2dd2-222d-2dd2222ddddd";
-            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBenefitUtilizationSummariesReportBillingAccountScope_GenerateUtilizationSummariesReportByBillingAccount()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingAccount.json
-            // this example is just showing the usage of "BillingAccountScope_GenerateBenefitUtilizationSummariesReport" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            string billingAccountId = "8099099";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
-            {
-                Kind = BillingAccountBenefitKind.Reservation,
-            };
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil.Completed, billingAccountId, content);
-            BenefitUtilizationSummariesOperationStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBenefitUtilizationSummariesReportBillingProfileScope_GenerateUtilizationSummariesReportByBillingProfile()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingProfile.json
-            // this example is just showing the usage of "BillingProfileScope_GenerateBenefitUtilizationSummariesReport" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            string billingAccountId = "00000000-0000-0000-0000-000000000000";
-            string billingProfileId = "CZSFR-SDFXC-DSDF";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
-            {
-                Kind = BillingAccountBenefitKind.Reservation,
-            };
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil.Completed, billingAccountId, billingProfileId, content);
-            BenefitUtilizationSummariesOperationStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBenefitUtilizationSummariesReportReservationOrderScope_GenerateUtilizationSummariesReportByReservationOrder()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservationOrder.json
-            // this example is just showing the usage of "ReservationOrderScope_GenerateBenefitUtilizationSummariesReport" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            string reservationOrderId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil.Completed, reservationOrderId, content);
-            BenefitUtilizationSummariesOperationStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBenefitUtilizationSummariesReportReservationScope_GenerateUtilizationSummariesReportByReservation()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservation.json
-            // this example is just showing the usage of "ReservationScope_GenerateBenefitUtilizationSummariesReport" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            string reservationOrderId = "00000000-0000-0000-0000-000000000000";
-            string reservationId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil.Completed, reservationOrderId, reservationId, content);
-            BenefitUtilizationSummariesOperationStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope_GenerateUtilizationSummariesReportBySavingsPlanOrder()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlanOrder.json
-            // this example is just showing the usage of "SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil.Completed, savingsPlanOrderId, content);
-            BenefitUtilizationSummariesOperationStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope_GenerateUtilizationSummariesReportBySavingsPlan()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlan.json
-            // this example is just showing the usage of "SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
-            string savingsPlanId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil.Completed, savingsPlanOrderId, savingsPlanId, content);
-            BenefitUtilizationSummariesOperationStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetCostManagementAlerts_ExternalBillingAccountAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalBillingAccountAlerts.json
             // this example is just showing the usage of "Alerts_ListExternal" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -298,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCostManagementAlerts_ExternalSubscriptionAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalSubscriptionAlerts.json
             // this example is just showing the usage of "Alerts_ListExternal" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -325,9 +78,86 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CheckCostManagementNameAvailabilityByScheduledAction_ScheduledActionCheckNameAvailability()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/scheduledActions/checkNameAvailability-private-scheduledAction.json
+            // this example is just showing the usage of "ScheduledActions_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            CostManagementNameAvailabilityContent content = new CostManagementNameAvailabilityContent
+            {
+                Name = "testName",
+                ResourceType = "Microsoft.CostManagement/ScheduledActions",
+            };
+            CostManagementNameAvailabilityResult result = await tenantResource.CheckCostManagementNameAvailabilityByScheduledActionAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ByExternalCloudProviderTypeDimensions_ExternalBillingAccountDimensionList()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalBillingAccountsDimensions.json
+            // this example is just showing the usage of "Dimensions_ByExternalCloudProviderType" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalBillingAccounts;
+            string externalCloudProviderId = "100";
+            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType, externalCloudProviderId);
+            await foreach (CostManagementDimension item in tenantResource.ByExternalCloudProviderTypeDimensionsAsync(options))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ByExternalCloudProviderTypeDimensions_ExternalSubscriptionDimensionList()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalSubscriptionsDimensions.json
+            // this example is just showing the usage of "Dimensions_ByExternalCloudProviderType" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalSubscriptions;
+            string externalCloudProviderId = "100";
+            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType, externalCloudProviderId);
+            await foreach (CostManagementDimension item in tenantResource.ByExternalCloudProviderTypeDimensionsAsync(options))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExternalCloudProviderUsageForecast_ExternalBillingAccountForecast()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountForecast.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalBillingAccountForecast.json
             // this example is just showing the usage of "Forecast_ExternalCloudProviderUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -375,7 +205,7 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup", ForecastOperatorT
         [Ignore("Only validating compilation of examples")]
         public async Task ExternalCloudProviderUsageForecast_ExternalSubscriptionForecast()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionForecast.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalSubscriptionForecast.json
             // this example is just showing the usage of "Forecast_ExternalCloudProviderUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -421,61 +251,9 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup", ForecastOperatorT
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ByExternalCloudProviderTypeDimensions_ExternalBillingAccountDimensionList()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountsDimensions.json
-            // this example is just showing the usage of "Dimensions_ByExternalCloudProviderType" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation and iterate over the result
-            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalBillingAccounts;
-            string externalCloudProviderId = "100";
-            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType, externalCloudProviderId);
-            await foreach (CostManagementDimension item in tenantResource.ByExternalCloudProviderTypeDimensionsAsync(options))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ByExternalCloudProviderTypeDimensions_ExternalSubscriptionDimensionList()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionsDimensions.json
-            // this example is just showing the usage of "Dimensions_ByExternalCloudProviderType" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation and iterate over the result
-            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalSubscriptions;
-            string externalCloudProviderId = "100";
-            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType, externalCloudProviderId);
-            await foreach (CostManagementDimension item in tenantResource.ByExternalCloudProviderTypeDimensionsAsync(options))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task UsageByExternalCloudProviderTypeQuery_ExternalBillingAccountQueryList()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountsQuery.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalBillingAccountsQuery.json
             // this example is just showing the usage of "Query_UsageByExternalCloudProviderType" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -517,7 +295,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
         [Ignore("Only validating compilation of examples")]
         public async Task UsageByExternalCloudProviderTypeQuery_ExternalSubscriptionsQuery()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionsQuery.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExternalSubscriptionsQuery.json
             // this example is just showing the usage of "Query_UsageByExternalCloudProviderType" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -557,10 +335,10 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ByBillingAccountIdGenerateReservationDetailsReport_ReservationDetails()
+        public async Task DownloadByBillingAccountPriceSheet_EAPriceSheetForBillingPeriod()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/GenerateReservationDetailsReportByBillingAccount.json
-            // this example is just showing the usage of "GenerateReservationDetailsReport_ByBillingAccountId" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/EAPriceSheetForBillingPeriod.json
+            // this example is just showing the usage of "PriceSheet_DownloadByBillingAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -570,11 +348,304 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            string billingAccountId = "9845612";
-            string startDate = "2020-01-01";
-            string endDate = "2020-01-30";
-            ArmOperation<OperationStatus> lro = await tenantResource.ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil.Completed, billingAccountId, startDate, endDate);
+            string billingAccountId = "0000000";
+            string billingPeriodName = "202311";
+            ArmOperation<OperationStatus> lro = await tenantResource.DownloadByBillingAccountPriceSheetAsync(WaitUntil.Completed, billingAccountId, billingPeriodName);
             OperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DownloadPriceSheet_PricesheetDownload()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/PricesheetDownload.json
+            // this example is just showing the usage of "PriceSheet_DownloadByInvoice" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
+            string billingProfileName = "2USN-TPCD-BG7-TGB";
+            string invoiceName = "T000940677";
+            ArmOperation<DownloadURL> lro = await tenantResource.DownloadPriceSheetAsync(WaitUntil.Completed, billingAccountName, billingProfileName, invoiceName);
+            DownloadURL result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DownloadPriceSheetByBillingProfile_PricesheetDownloadByBillingProfile()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/PricesheetDownloadByBillingProfile.json
+            // this example is just showing the usage of "PriceSheet_DownloadByBillingProfile" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
+            string billingProfileName = "2USN-TPCD-BG7-TGB";
+            ArmOperation<PricesheetDownloadProperties> lro = await tenantResource.DownloadPriceSheetByBillingProfileAsync(WaitUntil.Completed, billingAccountName, billingProfileName);
+            PricesheetDownloadProperties result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBenefitUtilizationSummariesByBillingProfileId_SavingsPlanUtilizationSummariesBillingProfile()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingProfile.json
+            // this example is just showing the usage of "BenefitUtilizationSummaries_ListByBillingProfileId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            string billingAccountId = "c0a00000-0e04-5ee3-000e-f0c6e00000ec:c0a00000-0e04-5ee3-000e-f0c6e00000ec";
+            string billingProfileId = "200e5e90-000e-4960-8dcd-8d00a02db000";
+            string filter = "properties/usageDate ge 2022-10-15 and properties/usageDate le 2022-10-18";
+            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, filter: filter))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBenefitUtilizationSummariesByBillingAccountId_SavingsPlanUtilizationSummariesBillingAccount()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingAccount.json
+            // this example is just showing the usage of "BenefitUtilizationSummaries_ListByBillingAccountId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            string billingAccountId = "12345";
+            string filter = "properties/usageDate ge 2022-10-15 and properties/usageDate le 2022-10-18";
+            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, filter: filter))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBenefitUtilizationSummariesBySavingsPlanOrder_SavingsPlanUtilizationSummariesDaily()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanOrderId-Daily.json
+            // this example is just showing the usage of "BenefitUtilizationSummaries_ListBySavingsPlanOrder" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            string savingsPlanOrderId = "66cccc66-6ccc-6c66-666c-66cc6c6c66c6";
+            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBenefitUtilizationSummariesBySavingsPlanId_SavingsPlanUtilizationSummariesMonthlyWithSavingsPlanId()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanId-Monthly.json
+            // this example is just showing the usage of "BenefitUtilizationSummaries_ListBySavingsPlanId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            string savingsPlanOrderId = "66cccc66-6ccc-6c66-666c-66cc6c6c66c6";
+            string savingsPlanId = "222d22dd-d2d2-2dd2-222d-2dd2222ddddd";
+            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateBenefitUtilizationSummariesReportBillingProfileScope_GenerateUtilizationSummariesReportByBillingProfile()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingProfile.json
+            // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string billingAccountId = "00000000-0000-0000-0000-000000000000";
+            string billingProfileId = "CZSFR-SDFXC-DSDF";
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
+            {
+                Kind = BillingAccountBenefitKind.Reservation,
+            };
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil.Completed, billingAccountId, billingProfileId, content);
+            BenefitUtilizationSummariesOperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateBenefitUtilizationSummariesReportBillingAccountScope_GenerateUtilizationSummariesReportByBillingAccount()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingAccount.json
+            // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string billingAccountId = "8099099";
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
+            {
+                Kind = BillingAccountBenefitKind.Reservation,
+            };
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil.Completed, billingAccountId, content);
+            BenefitUtilizationSummariesOperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope_GenerateUtilizationSummariesReportBySavingsPlanOrder()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlanOrder.json
+            // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil.Completed, savingsPlanOrderId, content);
+            BenefitUtilizationSummariesOperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope_GenerateUtilizationSummariesReportBySavingsPlan()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlan.json
+            // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
+            string savingsPlanId = "00000000-0000-0000-0000-000000000000";
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil.Completed, savingsPlanOrderId, savingsPlanId, content);
+            BenefitUtilizationSummariesOperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateBenefitUtilizationSummariesReportReservationOrderScope_GenerateUtilizationSummariesReportByReservationOrder()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservationOrder.json
+            // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string reservationOrderId = "00000000-0000-0000-0000-000000000000";
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil.Completed, reservationOrderId, content);
+            BenefitUtilizationSummariesOperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateBenefitUtilizationSummariesReportReservationScope_GenerateUtilizationSummariesReportByReservation()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservation.json
+            // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByReservationId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string reservationOrderId = "00000000-0000-0000-0000-000000000000";
+            string reservationId = "00000000-0000-0000-0000-000000000000";
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil.Completed, reservationOrderId, reservationId, content);
+            BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -583,7 +654,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
         [Ignore("Only validating compilation of examples")]
         public async Task ByBillingProfileIdGenerateReservationDetailsReport_ReservationDetails()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/GenerateReservationDetailsReportByBillingProfile.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/GenerateReservationDetailsReportByBillingProfile.json
             // this example is just showing the usage of "GenerateReservationDetailsReport_ByBillingProfileId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -606,10 +677,10 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task DownloadPriceSheet_PricesheetDownload()
+        public async Task ByBillingAccountIdGenerateReservationDetailsReport_ReservationDetails()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PricesheetDownload.json
-            // this example is just showing the usage of "PriceSheet_Download" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/GenerateReservationDetailsReportByBillingAccount.json
+            // this example is just showing the usage of "GenerateReservationDetailsReport_ByBillingAccountId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -619,21 +690,21 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
-            string billingProfileName = "2USN-TPCD-BG7-TGB";
-            string invoiceName = "T000940677";
-            ArmOperation<DownloadURL> lro = await tenantResource.DownloadPriceSheetAsync(WaitUntil.Completed, billingAccountName, billingProfileName, invoiceName);
-            DownloadURL result = lro.Value;
+            string billingAccountId = "9845612";
+            string startDate = "2020-01-01";
+            string endDate = "2020-01-30";
+            ArmOperation<OperationStatus> lro = await tenantResource.ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil.Completed, billingAccountId, startDate, endDate);
+            OperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task DownloadByBillingProfilePriceSheet_PricesheetDownloadByBillingProfile()
+        public async Task CheckNameAvailabilityCostAllocationRule_CostAllocationRuleCheckNameAvailability()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PricesheetDownloadByBillingProfile.json
-            // this example is just showing the usage of "PriceSheet_DownloadByBillingProfile" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/CostAllocationRuleCheckNameAvailability.json
+            // this example is just showing the usage of "CostAllocationRules_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -643,35 +714,12 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
-            string billingProfileName = "2USN-TPCD-BG7-TGB";
-            ArmOperation<DownloadURL> lro = await tenantResource.DownloadByBillingProfilePriceSheetAsync(WaitUntil.Completed, billingAccountName, billingProfileName);
-            DownloadURL result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckCostManagementNameAvailabilityByScheduledAction_ScheduledActionCheckNameAvailability()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/checkNameAvailability-private-scheduledAction.json
-            // this example is just showing the usage of "ScheduledActions_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            CostManagementNameAvailabilityContent content = new CostManagementNameAvailabilityContent
+            CostAllocationRuleCheckNameAvailabilityContent content = new CostAllocationRuleCheckNameAvailabilityContent
             {
-                Name = "testName",
-                ResourceType = "Microsoft.CostManagement/ScheduledActions",
+                Name = "testRule",
+                ResourceType = "Microsoft.CostManagement/costAllocationRules",
             };
-            CostManagementNameAvailabilityResult result = await tenantResource.CheckCostManagementNameAvailabilityByScheduledActionAsync(content);
+            CostAllocationRuleCheckNameAvailabilityResponse result = await tenantResource.CheckNameAvailabilityCostAllocationRuleAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

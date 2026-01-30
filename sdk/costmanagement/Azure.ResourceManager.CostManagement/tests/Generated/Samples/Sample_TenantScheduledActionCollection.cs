@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdatePrivateScheduledAction()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-createOrUpdate-private.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/scheduledActions/scheduledAction-createOrUpdate-private.json
             // this example is just showing the usage of "ScheduledActions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             string name = "monthlyCostByResource";
             ScheduledActionData data = new ScheduledActionData
             {
+                Kind = ScheduledActionKind.Email,
                 DisplayName = "Monthly Cost By Resource",
                 Notification = new NotificationProperties(new string[] { "user@gmail.com", "team@gmail.com" }, "Cost by resource this month"),
                 Schedule = new ScheduleProperties(ScheduleFrequency.Monthly, DateTimeOffset.Parse("2020-06-19T22:21:51.1287144Z"), DateTimeOffset.Parse("2021-06-19T22:21:51.1287144Z"))
@@ -48,7 +49,6 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 },
                 Status = ScheduledActionStatus.Enabled,
                 ViewId = new ResourceIdentifier("/providers/Microsoft.CostManagement/views/swaggerExample"),
-                Kind = ScheduledActionKind.Email,
             };
             string ifMatch = "";
             ArmOperation<TenantScheduledActionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, ifMatch: ifMatch);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateScheduledAction()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-private.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/scheduledActions/scheduledAction-get-private.json
             // this example is just showing the usage of "ScheduledActions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateScheduledAction()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-private.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/scheduledActions/scheduledAction-get-private.json
             // this example is just showing the usage of "ScheduledActions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateScheduledAction()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-private.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/scheduledActions/scheduledAction-get-private.json
             // this example is just showing the usage of "ScheduledActions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

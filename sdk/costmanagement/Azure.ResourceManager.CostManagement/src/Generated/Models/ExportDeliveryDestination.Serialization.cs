@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(DestinationType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(DestinationType.Value.ToString());
+            }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
+            DestinationType? type = default;
             ResourceIdentifier resourceId = default;
             string container = default;
             string rootFolderPath = default;
@@ -102,6 +108,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new DestinationType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -138,6 +153,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ExportDeliveryDestination(
+                type,
                 resourceId,
                 container,
                 rootFolderPath,

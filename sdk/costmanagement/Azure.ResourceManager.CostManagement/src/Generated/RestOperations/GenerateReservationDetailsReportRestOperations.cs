@@ -30,104 +30,22 @@ namespace Azure.ResourceManager.CostManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateByBillingAccountIdRequestUri(string billingAccountId, string startDate, string endDate)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountId, true);
-            uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
-            uri.AppendQuery("startDate", startDate, true);
-            uri.AppendQuery("endDate", endDate, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateByBillingAccountIdRequest(string billingAccountId, string startDate, string endDate)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountId, true);
-            uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
-            uri.AppendQuery("startDate", startDate, true);
-            uri.AppendQuery("endDate", endDate, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role. </summary>
-        /// <param name="billingAccountId"> Enrollment ID (Legacy BillingAccount ID). </param>
-        /// <param name="startDate"> Start Date. </param>
-        /// <param name="endDate"> End Date. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ByBillingAccountIdAsync(string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
-
-            using var message = CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role. </summary>
-        /// <param name="billingAccountId"> Enrollment ID (Legacy BillingAccount ID). </param>
-        /// <param name="startDate"> Start Date. </param>
-        /// <param name="endDate"> End Date. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ByBillingAccountId(string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
-
-            using var message = CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateByBillingProfileIdRequestUri(string billingAccountId, string billingProfileId, string startDate, string endDate)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileId, true);
             uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("startDate", startDate, true);
             uri.AppendQuery("endDate", endDate, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -138,14 +56,14 @@ namespace Azure.ResourceManager.CostManagement
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileId, true);
             uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("startDate", startDate, true);
             uri.AppendQuery("endDate", endDate, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -153,8 +71,8 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Generates the reservations details report for provided date range asynchronously by billing profile. The Reservation usage details can be viewed by only certain enterprise roles by default. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization#view-utilization-in-the-azure-portal-with-azure-rbac-access. </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,8 +98,8 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Generates the reservations details report for provided date range asynchronously by billing profile. The Reservation usage details can be viewed by only certain enterprise roles by default. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization#view-utilization-in-the-azure-portal-with-azure-rbac-access. </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,6 +113,88 @@ namespace Azure.ResourceManager.CostManagement
             Argument.AssertNotNull(endDate, nameof(endDate));
 
             using var message = CreateByBillingProfileIdRequest(billingAccountId, billingProfileId, startDate, endDate);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateByBillingAccountIdRequestUri(string billingAccountId, string startDate, string endDate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("startDate", startDate, true);
+            uri.AppendQuery("endDate", endDate, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateByBillingAccountIdRequest(string billingAccountId, string startDate, string endDate)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("startDate", startDate, true);
+            uri.AppendQuery("endDate", endDate, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role. </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ByBillingAccountIdAsync(string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
+
+            using var message = CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role. </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ByBillingAccountId(string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
+
+            using var message = CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

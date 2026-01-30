@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: CostManagement
 namespace: Azure.ResourceManager.CostManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/20e9229b38b94c8975386b75c652b75e6d691995/specification/cost-management/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f61e11971b66e35d893c182e01cef00243e37e01/specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -22,6 +22,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+#   lenient-model-deduplication: true
 use-model-reader-writer: true
 
 # mgmt-debug:
@@ -74,6 +75,14 @@ request-path-to-resource-name:
 override-operation-name:
   ScheduledActions_CheckNameAvailabilityByScope: CheckCostManagementNameAvailabilityByScopeScheduledAction
   ScheduledActions_CheckNameAvailability: CheckCostManagementNameAvailabilityByScheduledAction
+  PriceSheet_DownloadByInvoice: DownloadPriceSheet
+  GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId: GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByReservationId: GenerateBenefitUtilizationSummariesReportReservationScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId: GenerateBenefitUtilizationSummariesReportReservationOrderScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile: GenerateBenefitUtilizationSummariesReportBillingProfileScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount: GenerateBenefitUtilizationSummariesReportBillingAccountScope
+  GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId: GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope
+  PriceSheet_DownloadByBillingProfile: DownloadPriceSheetByBillingProfile
 
 prepend-rp-prefix:
   - Alert
@@ -144,16 +153,70 @@ directive:
   - remove-operation: GenerateDetailedCostReportOperationResults_Get
   - remove-operation: GenerateDetailedCostReportOperationStatus_Get
   - remove-operation: Operations_List
+#   - remove-operation: CostAllocationRules_CheckNameAvailability
 
   # Could not set ResourceTypeSegment for request path /{scope}
-  - from: scheduledActions.json
-    where: $.parameters.scopeParameter
-    transform: $['x-ms-skip-url-encoding'] = true;
-  - from: costmanagement.json
-    where: $.parameters.scopeViewParameter
-    transform: $['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/scheduledActions'].get
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}'].get
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}'].put
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}'].delete
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute'].post
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/checkNameAvailability'].post
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/views'].get
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/views/{viewName}'].get
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/views/{viewName}'].put
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/views/{viewName}'].delete
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/settings'].get
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/settings/{type}'].get
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/settings/{type}'].put
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
+  - from: openapi.json
+    where: $.paths['/{scope}/providers/Microsoft.CostManagement/settings/{type}'].delete
+    transform: >
+        $['parameters'][1]['x-ms-skip-url-encoding'] = true;
   # Dup schema
-  - from: common-types.json
+  - from: openapi.json
     where: $.definitions.ErrorResponse
     transform: $['x-ms-client-name'] = 'OperationErrorResponse';
+  - from: openapi.json
+    where: $.definitions
+    transform: delete $.SettingType;
 ```
