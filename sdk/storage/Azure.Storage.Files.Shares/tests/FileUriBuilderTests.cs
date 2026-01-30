@@ -58,6 +58,34 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase("https://myaccount.file.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.file.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.file.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.file.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.file.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.file.core.windows.net/")]
+        public void FileUriBuilder_Secondary_IPV6_Dualstack(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual("myaccount", fileUriBuilder.AccountName);
+            Assert.AreEqual("", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
         public void FileUriBuilder_ShareTest()
         {
             // Arrange
