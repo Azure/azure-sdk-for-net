@@ -725,6 +725,7 @@ namespace Azure.Storage.Test
                         blobEndpoint);
             var storageConnectionString = StorageConnectionString.Parse(connectionString);
             Assert.AreEqual(accountName, storageConnectionString.AccountName);
+            Assert.AreEqual(new Uri(blobEndpoint), storageConnectionString.BlobEndpoint);
         }
     }
 }
