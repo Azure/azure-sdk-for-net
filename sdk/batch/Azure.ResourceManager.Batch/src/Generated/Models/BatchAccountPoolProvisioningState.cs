@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchAccountPoolProvisioningState : IEquatable<BatchAccountPoolProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The pool is available to run tasks subject to the availability of compute nodes. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The user has requested that the pool be deleted, but the delete operation has not yet completed. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountPoolProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchAccountPoolProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> The pool is available to run tasks subject to the availability of compute nodes. </summary>
         public static BatchAccountPoolProvisioningState Succeeded { get; } = new BatchAccountPoolProvisioningState(SucceededValue);
+
         /// <summary> The user has requested that the pool be deleted, but the delete operation has not yet completed. </summary>
         public static BatchAccountPoolProvisioningState Deleting { get; } = new BatchAccountPoolProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="BatchAccountPoolProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchAccountPoolProvisioningState left, BatchAccountPoolProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchAccountPoolProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchAccountPoolProvisioningState left, BatchAccountPoolProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchAccountPoolProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchAccountPoolProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchAccountPoolProvisioningState(string value) => new BatchAccountPoolProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchAccountPoolProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchAccountPoolProvisioningState?(string value) => value == null ? null : new BatchAccountPoolProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchAccountPoolProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchAccountPoolProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

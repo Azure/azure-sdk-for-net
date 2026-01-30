@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchPublicNetworkAccessExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchPublicNetworkAccess value) => value switch
         {
             BatchPublicNetworkAccess.Enabled => "Enabled",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPublicNetworkAccess value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchPublicNetworkAccess ToBatchPublicNetworkAccess(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return BatchPublicNetworkAccess.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return BatchPublicNetworkAccess.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecuredByPerimeter")) return BatchPublicNetworkAccess.SecuredByPerimeter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return BatchPublicNetworkAccess.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return BatchPublicNetworkAccess.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecuredByPerimeter"))
+            {
+                return BatchPublicNetworkAccess.SecuredByPerimeter;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPublicNetworkAccess value.");
         }
     }

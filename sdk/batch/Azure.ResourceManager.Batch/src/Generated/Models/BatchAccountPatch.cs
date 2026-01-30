@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -14,79 +15,103 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters for updating an Azure Batch account. </summary>
     public partial class BatchAccountPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
         public BatchAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
         /// <param name="tags"> The user-specified tags associated with the account. </param>
-        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
-        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
-        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="publicNetworkAccess"> If not specified, the default value is 'enabled'. </param>
-        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, BatchAccountAutoStorageBaseConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, IList<BatchAuthenticationMode> allowedAuthenticationModes, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of the account. </param>
+        /// <param name="identity"> The identity of the Batch account. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountPatch(IDictionary<string, string> tags, BatchAccountUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
+            Properties = properties;
             Identity = identity;
-            AutoStorage = autoStorage;
-            Encryption = encryption;
-            AllowedAuthenticationModes = allowedAuthenticationModes;
-            PublicNetworkAccess = publicNetworkAccess;
-            NetworkProfile = networkProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The user-specified tags associated with the account. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+
+        /// <summary> The properties of the account. </summary>
+        internal BatchAccountUpdateProperties Properties { get; set; }
+
+        /// <summary> The identity of the Batch account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The properties related to the auto-storage account. </summary>
-        public BatchAccountAutoStorageBaseConfiguration AutoStorage { get; set; }
+        public BatchAccountAutoStorageBaseConfiguration AutoStorage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoStorage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountUpdateProperties();
+                }
+                Properties.AutoStorage = value;
+            }
+        }
+
         /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
-        public BatchAccountEncryptionConfiguration Encryption { get; set; }
-        /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IList<BatchAuthenticationMode> AllowedAuthenticationModes { get; set; }
-        /// <summary> If not specified, the default value is 'enabled'. </summary>
-        public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public BatchAccountEncryptionConfiguration Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountUpdateProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
+        /// <summary> The network access type for operating on the resources in the Batch account. </summary>
+        public BatchPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
-        public BatchNetworkProfile NetworkProfile { get; set; }
+        public BatchNetworkProfile NetworkProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountUpdateProperties();
+                }
+                Properties.NetworkProfile = value;
+            }
+        }
     }
 }
