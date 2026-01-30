@@ -38,7 +38,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         PipelineMessageClassifier pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
         ProjectOpenAIClientOptions options = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>();
         options.UserAgentApplicationId = customUserAgent;
-        ClientPipeline pipeline = ProjectOpenAIClient.CreatePipeline(new BearerTokenPolicy(new AzureCliCredential(), "https://ai.azure.com/.default"), options);
+        ClientPipeline pipeline = ProjectOpenAIClient.CreatePipeline(new BearerTokenPolicy(TestEnvironment.Credential, "https://ai.azure.com/.default"), options);
         ClientUriBuilder uri = new();
         uri.Reset(new System.Uri(TestEnvironment.PROJECT_ENDPOINT));
         uri.AppendPath("/openai/responses", false);

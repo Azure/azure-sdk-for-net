@@ -12,7 +12,7 @@ namespace Azure.AI.Projects.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
-        public string PROJECT_ENDPOINT => WrappedGetRecordedVariable(nameof(PROJECT_ENDPOINT), isSecret: false);
+        public string PROJECT_ENDPOINT => GetRecordedVariable(nameof(PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string AGENT_NAME => WrappedGetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME", isSecret: false);
         public string MODELDEPLOYMENTNAME => WrappedGetRecordedVariable("MODEL_DEPLOYMENT_NAME", isSecret: false);
         public string EMBEDDINGMODELDEPLOYMENTNAME => WrappedGetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME", isSecret: false);
