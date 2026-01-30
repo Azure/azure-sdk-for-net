@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Avs
     {
         private readonly ClientDiagnostics _privateCloudsClientDiagnostics;
         private readonly PrivateClouds _privateCloudsRestClient;
+        private readonly ClientDiagnostics _scriptExecutionsClientDiagnostics;
+        private readonly ScriptExecutions _scriptExecutionsRestClient;
 
         /// <summary> Initializes a new instance of AvsPrivateCloudCollection for mocking. </summary>
         protected AvsPrivateCloudCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.Avs
             TryGetApiVersion(AvsPrivateCloudResource.ResourceType, out string avsPrivateCloudApiVersion);
             _privateCloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
             _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
+            _scriptExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
+            _scriptExecutionsRestClient = new ScriptExecutions(_scriptExecutionsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

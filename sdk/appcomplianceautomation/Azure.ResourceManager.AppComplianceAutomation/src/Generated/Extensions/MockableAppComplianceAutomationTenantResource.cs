@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableAppComplianceAutomationTenantResource : ArmResource
     {
+        private ClientDiagnostics _reportClientDiagnostics;
+        private Report _reportRestClient;
+        private ClientDiagnostics _snapshotClientDiagnostics;
+        private Snapshot _snapshotRestClient;
+        private ClientDiagnostics _evidenceClientDiagnostics;
+        private Evidence _evidenceRestClient;
         private ClientDiagnostics _providerActionsClientDiagnostics;
         private ProviderActions _providerActionsRestClient;
 
@@ -35,6 +41,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         internal MockableAppComplianceAutomationTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ReportClientDiagnostics => _reportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Report ReportRestClient => _reportRestClient ??= new Report(ReportClientDiagnostics, Pipeline, Endpoint, "2024-06-27");
+
+        private ClientDiagnostics SnapshotClientDiagnostics => _snapshotClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Snapshot SnapshotRestClient => _snapshotRestClient ??= new Snapshot(SnapshotClientDiagnostics, Pipeline, Endpoint, "2024-06-27");
+
+        private ClientDiagnostics EvidenceClientDiagnostics => _evidenceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Evidence EvidenceRestClient => _evidenceRestClient ??= new Evidence(EvidenceClientDiagnostics, Pipeline, Endpoint, "2024-06-27");
 
         private ClientDiagnostics ProviderActionsClientDiagnostics => _providerActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -103,6 +121,772 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             return GetAppComplianceReports().Get(reportName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Synchronize attestation record from app compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/syncCertRecord. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_SyncCertRecord. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> Parameters for synchronize certification record operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SyncCertRecordResult>> SyncCertRecordAsync(WaitUntil waitUntil, string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.SyncCertRecord");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateSyncCertRecordRequest(reportName, SyncCertRecordContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppComplianceAutomationArmOperation<SyncCertRecordResult> operation = new AppComplianceAutomationArmOperation<SyncCertRecordResult>(
+                    new SyncCertRecordResultOperationSource(),
+                    ReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Synchronize attestation record from app compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/syncCertRecord. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_SyncCertRecord. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> Parameters for synchronize certification record operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SyncCertRecordResult> SyncCertRecord(WaitUntil waitUntil, string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.SyncCertRecord");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateSyncCertRecordRequest(reportName, SyncCertRecordContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppComplianceAutomationArmOperation<SyncCertRecordResult> operation = new AppComplianceAutomationArmOperation<SyncCertRecordResult>(
+                    new SyncCertRecordResultOperationSource(),
+                    ReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the report's nested resource name availability, e.g: Webhooks, Evidences, Snapshots.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> NameAvailabilityRequest object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AppComplianceReportNameAvailabilityResult>> CheckAppComplianceReportNestedResourceNameAvailabilityAsync(string reportName, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNestedResourceNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateCheckAppComplianceReportNestedResourceNameAvailabilityRequest(reportName, AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the report's nested resource name availability, e.g: Webhooks, Evidences, Snapshots.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> NameAvailabilityRequest object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AppComplianceReportNameAvailabilityResult> CheckAppComplianceReportNestedResourceNameAvailability(string reportName, AppComplianceReportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNestedResourceNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateCheckAppComplianceReportNestedResourceNameAvailabilityRequest(reportName, AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/fix. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Fix. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ReportFixResult>> FixAsync(WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Fix");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateFixRequest(reportName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppComplianceAutomationArmOperation<ReportFixResult> operation = new AppComplianceAutomationArmOperation<ReportFixResult>(
+                    new ReportFixResultOperationSource(),
+                    ReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/fix. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Fix. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ReportFixResult> Fix(WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Fix");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateFixRequest(reportName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppComplianceAutomationArmOperation<ReportFixResult> operation = new AppComplianceAutomationArmOperation<ReportFixResult>(
+                    new ReportFixResultOperationSource(),
+                    ReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/getScopingQuestions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_GetScopingQuestions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ScopingQuestions>> GetScopingQuestionsAsync(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetScopingQuestions");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateGetScopingQuestionsRequest(reportName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScopingQuestions> response = Response.FromValue(ScopingQuestions.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fix the AppComplianceAutomation report error. e.g: App Compliance Automation Tool service unregistered, automation removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/getScopingQuestions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_GetScopingQuestions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ScopingQuestions> GetScopingQuestions(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetScopingQuestions");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateGetScopingQuestionsRequest(reportName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScopingQuestions> response = Response.FromValue(ScopingQuestions.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verify the AppComplianceAutomation report health status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ReportVerificationResult>> VerifyAsync(WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Verify");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateVerifyRequest(reportName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppComplianceAutomationArmOperation<ReportVerificationResult> operation = new AppComplianceAutomationArmOperation<ReportVerificationResult>(
+                    new ReportVerificationResultOperationSource(),
+                    ReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verify the AppComplianceAutomation report health status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Report_Verify. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ReportVerificationResult> Verify(WaitUntil waitUntil, string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using DiagnosticScope scope = ReportClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Verify");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReportRestClient.CreateVerifyRequest(reportName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppComplianceAutomationArmOperation<ReportVerificationResult> operation = new AppComplianceAutomationArmOperation<ReportVerificationResult>(
+                    new ReportVerificationResultOperationSource(),
+                    ReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Download compliance needs from snapshot, like: Compliance Report, Resource List.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshot_Download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="snapshotName"> Snapshot Name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<AppComplianceDownloadResult>> DownloadAsync(WaitUntil waitUntil, string reportName, string snapshotName, SnapshotDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SnapshotClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Download");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SnapshotRestClient.CreateDownloadRequest(reportName, snapshotName, SnapshotDownloadRequestContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppComplianceAutomationArmOperation<AppComplianceDownloadResult> operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(
+                    new AppComplianceDownloadResultOperationSource(),
+                    SnapshotClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Download compliance needs from snapshot, like: Compliance Report, Resource List.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshot_Download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="snapshotName"> Snapshot Name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<AppComplianceDownloadResult> Download(WaitUntil waitUntil, string reportName, string snapshotName, SnapshotDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SnapshotClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Download");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SnapshotRestClient.CreateDownloadRequest(reportName, snapshotName, SnapshotDownloadRequestContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppComplianceAutomationArmOperation<AppComplianceDownloadResult> operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(
+                    new AppComplianceDownloadResultOperationSource(),
+                    SnapshotClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Download evidence file.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="evidenceName"> The evidence name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="evidenceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="evidenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<EvidenceFileDownloadResult>> DownloadAsync(string reportName, string evidenceName, EvidenceFileDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(evidenceName, nameof(evidenceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EvidenceClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Download");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EvidenceRestClient.CreateDownloadRequest(reportName, evidenceName, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EvidenceFileDownloadResult> response = Response.FromValue(EvidenceFileDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Download evidence file.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="evidenceName"> The evidence name. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="evidenceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="evidenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<EvidenceFileDownloadResult> Download(string reportName, string evidenceName, EvidenceFileDownloadRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(evidenceName, nameof(evidenceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = EvidenceClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.Download");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EvidenceRestClient.CreateDownloadRequest(reportName, evidenceName, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EvidenceFileDownloadResult> response = Response.FromValue(EvidenceFileDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

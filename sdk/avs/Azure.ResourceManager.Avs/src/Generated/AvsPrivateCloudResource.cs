@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Avs
     {
         private readonly ClientDiagnostics _privateCloudsClientDiagnostics;
         private readonly PrivateClouds _privateCloudsRestClient;
+        private readonly ClientDiagnostics _scriptExecutionsClientDiagnostics;
+        private readonly ScriptExecutions _scriptExecutionsRestClient;
         private readonly AvsPrivateCloudData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.Avs
             TryGetApiVersion(ResourceType, out string avsPrivateCloudApiVersion);
             _privateCloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
             _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
+            _scriptExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _scriptExecutionsRestClient = new ScriptExecutions(_scriptExecutionsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -406,15 +410,15 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get the license for the private cloud
+        /// Return the logs for a script execution resource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/getVcfLicense. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}/getExecutionLogs. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_GetVcfLicense. </description>
+        /// <description> ScriptExecutions_GetExecutionLogs. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -426,10 +430,16 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="scriptExecutionName"> Name of the script cmdlet. </param>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VcfLicense>> GetVcfLicenseAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ScriptExecutionResource>> GetExecutionLogsAsync(string scriptExecutionName, IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetVcfLicense");
+            Argument.AssertNotNullOrEmpty(scriptExecutionName, nameof(scriptExecutionName));
+
+            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetExecutionLogs");
             scope.Start();
             try
             {
@@ -437,14 +447,14 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scriptExecutionName, IEnumerable<ScriptOutputStreamType>.ToRequestContent(scriptOutputStreamType), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VcfLicense> response = Response.FromValue(VcfLicense.FromResponse(result), result);
+                Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return response;
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -454,15 +464,15 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get the license for the private cloud
+        /// Return the logs for a script execution resource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/getVcfLicense. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}/getExecutionLogs. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_GetVcfLicense. </description>
+        /// <description> ScriptExecutions_GetExecutionLogs. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -474,10 +484,16 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="scriptExecutionName"> Name of the script cmdlet. </param>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VcfLicense> GetVcfLicense(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ScriptExecutionResource> GetExecutionLogs(string scriptExecutionName, IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetVcfLicense");
+            Argument.AssertNotNullOrEmpty(scriptExecutionName, nameof(scriptExecutionName));
+
+            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetExecutionLogs");
             scope.Start();
             try
             {
@@ -485,306 +501,14 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scriptExecutionName, IEnumerable<ScriptOutputStreamType>.ToRequestContent(scriptOutputStreamType), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VcfLicense> response = Response.FromValue(VcfLicense.FromResponse(result), result);
+                Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the admin credentials for the private cloud
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_ListAdminCredentials. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AvsPrivateCloudResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdminCredentials>> GetAdminCredentialsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AdminCredentials> response = Response.FromValue(AdminCredentials.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the admin credentials for the private cloud
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_ListAdminCredentials. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AvsPrivateCloudResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdminCredentials> GetAdminCredentials(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AdminCredentials> response = Response.FromValue(AdminCredentials.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Rotate the NSX-T Manager password
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateNsxtPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_RotateNsxtPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AvsPrivateCloudResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RotateNsxtPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateNsxtPassword");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Rotate the NSX-T Manager password
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateNsxtPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_RotateNsxtPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AvsPrivateCloudResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RotateNsxtPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateNsxtPassword");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Rotate the vCenter password
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_RotateVcenterPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AvsPrivateCloudResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RotateVCenterPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Rotate the vCenter password
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateClouds_RotateVcenterPassword. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AvsPrivateCloudResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RotateVCenterPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

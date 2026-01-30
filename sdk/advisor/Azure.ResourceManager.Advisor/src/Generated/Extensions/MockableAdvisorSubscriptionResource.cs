@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Advisor.Mocking
     {
         private ClientDiagnostics _advisorClientClientDiagnostics;
         private AdvisorClient _advisorClientRestClient;
+        private ClientDiagnostics _triageRecommendationsClientDiagnostics;
+        private TriageRecommendations _triageRecommendationsRestClient;
         private ClientDiagnostics _configurationsClientDiagnostics;
         private Configurations _configurationsRestClient;
         private ClientDiagnostics _recommendationsOperationGroupClientDiagnostics;
@@ -49,6 +51,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         private ClientDiagnostics AdvisorClientClientDiagnostics => _advisorClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private AdvisorClient AdvisorClientRestClient => _advisorClientRestClient ??= new AdvisorClient(AdvisorClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics TriageRecommendationsClientDiagnostics => _triageRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private TriageRecommendations TriageRecommendationsRestClient => _triageRecommendationsRestClient ??= new TriageRecommendations(TriageRecommendationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -352,6 +358,286 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Approve a triage recommendation for a given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/approve. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriageRecommendations_ApproveTriageRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> ApproveTriageRecommendationAsync(string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            using DiagnosticScope scope = TriageRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.ApproveTriageRecommendation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriageRecommendationsRestClient.CreateApproveTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), reviewId, recommendationId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Approve a triage recommendation for a given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/approve. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriageRecommendations_ApproveTriageRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response ApproveTriageRecommendation(string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            using DiagnosticScope scope = TriageRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.ApproveTriageRecommendation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriageRecommendationsRestClient.CreateApproveTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), reviewId, recommendationId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reject an existing triage recommendation for a given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/reject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriageRecommendations_RejectTriageRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="content"> JSON object that contains reason for rejecting triage recommendation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/>, <paramref name="recommendationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RejectTriageRecommendationAsync(string reviewId, string recommendationId, RecommendationRejectContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = TriageRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.RejectTriageRecommendation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriageRecommendationsRestClient.CreateRejectTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), reviewId, recommendationId, RecommendationRejectContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reject an existing triage recommendation for a given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/reject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriageRecommendations_RejectTriageRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="content"> JSON object that contains reason for rejecting triage recommendation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/>, <paramref name="recommendationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RejectTriageRecommendation(string reviewId, string recommendationId, RecommendationRejectContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = TriageRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.RejectTriageRecommendation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriageRecommendationsRestClient.CreateRejectTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), reviewId, recommendationId, RecommendationRejectContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset an existing triage recommendation for a given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/reset. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriageRecommendations_ResetTriageRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> ResetTriageRecommendationAsync(string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            using DiagnosticScope scope = TriageRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.ResetTriageRecommendation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriageRecommendationsRestClient.CreateResetTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), reviewId, recommendationId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset an existing triage recommendation for a given id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/reset. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriageRecommendations_ResetTriageRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response ResetTriageRecommendation(string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            using DiagnosticScope scope = TriageRecommendationsClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.ResetTriageRecommendation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriageRecommendationsRestClient.CreateResetTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), reviewId, recommendationId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)

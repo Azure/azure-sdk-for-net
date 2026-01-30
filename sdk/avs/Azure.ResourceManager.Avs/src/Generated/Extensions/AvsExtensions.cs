@@ -616,6 +616,392 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
+        /// List hosts by zone in a cluster
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetClusterZonesAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AvsClusterZoneListResult>> GetClusterZonesAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).GetClusterZonesAsync(privateCloudName, clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List hosts by zone in a cluster
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetClusterZones(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AvsClusterZoneListResult> GetClusterZones(this ResourceGroupResource resourceGroupResource, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).GetClusterZones(privateCloudName, clusterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Just like ArmResourceActionSync, but with no request body.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetPropertiesAsync(string, AvsLicenseName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="licenseName"> Name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AvsLicenseProperties>> GetPropertiesAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, AvsLicenseName licenseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).GetPropertiesAsync(privateCloudName, licenseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Just like ArmResourceActionSync, but with no request body.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetProperties(string, AvsLicenseName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="licenseName"> Name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AvsLicenseProperties> GetProperties(this ResourceGroupResource resourceGroupResource, string privateCloudName, AvsLicenseName licenseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).GetProperties(privateCloudName, licenseName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reschedule a maintenance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.RescheduleAsync(string, string, AvsMaintenanceReschedule, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AvsMaintenanceResource>> RescheduleAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, string maintenanceName, AvsMaintenanceReschedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).RescheduleAsync(privateCloudName, maintenanceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reschedule a maintenance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.Reschedule(string, string, AvsMaintenanceReschedule, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AvsMaintenanceResource> Reschedule(this ResourceGroupResource resourceGroupResource, string privateCloudName, string maintenanceName, AvsMaintenanceReschedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).Reschedule(privateCloudName, maintenanceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Schedule a maintenance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.ScheduleAsync(string, string, AvsMaintenanceSchedule, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AvsMaintenanceResource>> ScheduleAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, string maintenanceName, AvsMaintenanceSchedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).ScheduleAsync(privateCloudName, maintenanceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Schedule a maintenance
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.Schedule(string, string, AvsMaintenanceSchedule, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AvsMaintenanceResource> Schedule(this ResourceGroupResource resourceGroupResource, string privateCloudName, string maintenanceName, AvsMaintenanceSchedule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).Schedule(privateCloudName, maintenanceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Initiate maintenance readiness checks
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.InitiateChecksAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AvsMaintenanceResource>> InitiateChecksAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, string maintenanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).InitiateChecksAsync(privateCloudName, maintenanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Initiate maintenance readiness checks
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.InitiateChecks(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AvsMaintenanceResource> InitiateChecks(this ResourceGroupResource resourceGroupResource, string privateCloudName, string maintenanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).InitiateChecks(privateCloudName, maintenanceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Rotate the vCenter password
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.RotateVCenterPasswordAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RotateVCenterPasswordAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).RotateVCenterPasswordAsync(waitUntil, privateCloudName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Rotate the vCenter password
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.RotateVCenterPassword(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RotateVCenterPassword(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).RotateVCenterPassword(waitUntil, privateCloudName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Rotate the NSX-T Manager password
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.RotateNsxtPasswordAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RotateNsxtPasswordAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).RotateNsxtPasswordAsync(waitUntil, privateCloudName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Rotate the NSX-T Manager password
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.RotateNsxtPassword(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RotateNsxtPassword(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).RotateNsxtPassword(waitUntil, privateCloudName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the admin credentials for the private cloud
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetAdminCredentialsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AdminCredentials>> GetAdminCredentialsAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).GetAdminCredentialsAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List the admin credentials for the private cloud
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetAdminCredentials(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AdminCredentials> GetAdminCredentials(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).GetAdminCredentials(privateCloudName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the license for the private cloud
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetVcfLicenseAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<VcfLicense>> GetVcfLicenseAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).GetVcfLicenseAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the license for the private cloud
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.GetVcfLicense(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<VcfLicense> GetVcfLicense(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).GetVcfLicense(privateCloudName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Enable or disable DRS-driven VM movement restriction
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.RestrictMovementAsync(WaitUntil, string, string, string, AvsPrivateCloudClusterVirtualMachineRestrictMovement, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="restrictMovement"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RestrictMovementAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateCloudName, string clusterName, string virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAvsResourceGroupResource(resourceGroupResource).RestrictMovementAsync(waitUntil, privateCloudName, clusterName, virtualMachineId, restrictMovement, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Enable or disable DRS-driven VM movement restriction
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAvsResourceGroupResource.RestrictMovement(WaitUntil, string, string, string, AvsPrivateCloudClusterVirtualMachineRestrictMovement, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="restrictMovement"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RestrictMovement(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateCloudName, string clusterName, string virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAvsResourceGroupResource(resourceGroupResource).RestrictMovement(waitUntil, privateCloudName, clusterName, virtualMachineId, restrictMovement, cancellationToken);
+        }
+
+        /// <summary>
         /// List PrivateCloud resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
