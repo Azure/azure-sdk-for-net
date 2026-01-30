@@ -41,7 +41,7 @@ stages:
   - ${{if and(in(variables['Build.Reason'], 'Manual', ''), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
       - ${{if ne(artifact.skipReleaseStage, 'true')}}:
-        - stage:
+        - stage: Release_${{artifact.safeName}}
           variables:
             - template: /eng/pipelines/templates/variables/globals.yml
             - template: /eng/pipelines/templates/variables/image.yml
