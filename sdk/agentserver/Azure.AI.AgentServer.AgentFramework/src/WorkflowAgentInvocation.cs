@@ -20,7 +20,7 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// <param name="workflowAgentFactory">A factory to create the workflow agent.</param>
 /// <param name="threadRepository">Optional repository for managing agent threads.</param>
 public class WorkflowAgentInvocation(
-        IWorkflowAgentFactory workflowAgentFactory,
+        WorkflowAgentFactory workflowAgentFactory,
         IAgentThreadRepository? threadRepository = null) : AgentInvocationBase
 {
     /// <summary>
@@ -35,7 +35,7 @@ public class WorkflowAgentInvocation(
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
-        var workflowAgent = workflowAgentFactory.BuildWorkflow();
+        var workflowAgent = await workflowAgentFactory().ConfigureAwait(false);
 
         var request = context.Request;
         AgentThread? thread = await GetThread(context, workflowAgent).ConfigureAwait(false);
@@ -64,7 +64,7 @@ public class WorkflowAgentInvocation(
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
-        var workflowAgent = workflowAgentFactory.BuildWorkflow();
+        var workflowAgent = await workflowAgentFactory().ConfigureAwait(false);
 
         AgentThread? thread = await GetThread(context, workflowAgent).ConfigureAwait(false);
 

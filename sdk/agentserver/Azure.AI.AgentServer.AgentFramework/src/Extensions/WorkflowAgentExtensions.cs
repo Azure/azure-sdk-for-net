@@ -24,7 +24,7 @@ public static class WorkflowAgentExtensions
     /// <param name="threadRepository">Optional thread repository for managing agent threads</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public static Task RunWorkflowAgentAsync(
-        this IWorkflowAgentFactory workflowAgentFactory,
+        this WorkflowAgentFactory workflowAgentFactory,
         IServiceProvider sp, string telemetrySourceName = "Agents",
         IAgentThreadRepository? threadRepository = null)
     {
@@ -52,7 +52,7 @@ public static class WorkflowAgentExtensions
     /// <param name="threadRepository">Optional thread repository for managing agent threads</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     public static Task RunWorkflowAgentAsync(
-        this IWorkflowAgentFactory workflowAgentFactory,
+        this WorkflowAgentFactory workflowAgentFactory,
         ILoggerFactory? loggerFactory = null,
         string telemetrySourceName = "Agents",
         IAgentThreadRepository? threadRepository = null)
@@ -81,7 +81,7 @@ public static class WorkflowAgentExtensions
     /// <returns>A task that represents the asynchronous operation.</returns>
     public static Task RunWorkflowAgentAsync(
             this IServiceProvider sp,
-            IWorkflowAgentFactory? workflowAgentFactory = null,
+            WorkflowAgentFactory? workflowAgentFactory = null,
             string telemetrySourceName = "Agents",
             IAgentThreadRepository? threadRepository = null)
     {
@@ -90,7 +90,7 @@ public static class WorkflowAgentExtensions
             {
                 if (sp.GetService<IAgentInvocation>() == null)
                 {
-                    services.AddSingleton(workflowAgentFactory ?? sp.GetRequiredService<IWorkflowAgentFactory>()).AddSingleton<WorkflowAgentInvocation>();
+                    services.AddSingleton(workflowAgentFactory ?? sp.GetRequiredService<WorkflowAgentFactory>()).AddSingleton<WorkflowAgentInvocation>();
                 }
                 else
                 {
