@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public abstract partial class ResourceCertificateDetails
     {
         /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected ResourceCertificateDetails()
         {
         }
