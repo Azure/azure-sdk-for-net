@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Resource provider information.
-    /// Serialized Name: TenantResourceProvider
-    /// </summary>
+    /// <summary> Resource provider information. </summary>
     public partial class TenantResourceProvider
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TenantResourceProvider"/>. </summary>
-        /// <param name="namespace">
-        /// The namespace of the resource provider.
-        /// Serialized Name: TenantResourceProvider.namespace
-        /// </param>
-        /// <param name="resourceTypes">
-        /// The collection of provider resource types.
-        /// Serialized Name: TenantResourceProvider.resourceTypes
-        /// </param>
+        /// <param name="namespace"> The namespace of the resource provider. </param>
+        /// <param name="resourceTypes"> The collection of provider resource types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TenantResourceProvider(string @namespace, IReadOnlyList<ProviderResourceType> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The namespace of the resource provider.
-        /// Serialized Name: TenantResourceProvider.namespace
-        /// </summary>
+        /// <summary> The namespace of the resource provider. </summary>
         [WirePath("namespace")]
         public string Namespace { get; }
-        /// <summary>
-        /// The collection of provider resource types.
-        /// Serialized Name: TenantResourceProvider.resourceTypes
-        /// </summary>
+        /// <summary> The collection of provider resource types. </summary>
         [WirePath("resourceTypes")]
         public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
     }

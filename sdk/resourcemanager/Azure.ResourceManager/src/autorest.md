@@ -16,8 +16,8 @@ use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 batch:
   - tag: package-common-type
@@ -683,7 +683,7 @@ sample-gen:
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/8b0ad3e71102ad633f716845e5bc2d2d25d9f6a0/specification/management/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/management.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/efa49a123da7ce3ffe093a13832258305f529711/specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/management.json
 request-path-to-parent:
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/getEntities: /providers/Microsoft.Management/managementGroups/{groupId}

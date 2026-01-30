@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it.
-    /// Serialized Name: ManagementLockLevel
-    /// </summary>
+    /// <summary> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </summary>
     public readonly partial struct ManagementLockLevel : IEquatable<ManagementLockLevel>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Resources.Models
         private const string CanNotDeleteValue = "CanNotDelete";
         private const string ReadOnlyValue = "ReadOnly";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ManagementLockLevel.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ManagementLockLevel NotSpecified { get; } = new ManagementLockLevel(NotSpecifiedValue);
-        /// <summary>
-        /// CanNotDelete
-        /// Serialized Name: ManagementLockLevel.CanNotDelete
-        /// </summary>
+        /// <summary> CanNotDelete. </summary>
         public static ManagementLockLevel CanNotDelete { get; } = new ManagementLockLevel(CanNotDeleteValue);
-        /// <summary>
-        /// ReadOnly
-        /// Serialized Name: ManagementLockLevel.ReadOnly
-        /// </summary>
+        /// <summary> ReadOnly. </summary>
         public static ManagementLockLevel ReadOnly { get; } = new ManagementLockLevel(ReadOnlyValue);
         /// <summary> Determines if two <see cref="ManagementLockLevel"/> values are the same. </summary>
         public static bool operator ==(ManagementLockLevel left, ManagementLockLevel right) => left.Equals(right);

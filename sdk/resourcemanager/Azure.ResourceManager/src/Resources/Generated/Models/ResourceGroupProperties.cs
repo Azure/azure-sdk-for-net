@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The resource group properties.
-    /// Serialized Name: ResourceGroupProperties
-    /// </summary>
+    /// <summary> The resource group properties. </summary>
     internal partial class ResourceGroupProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceGroupProperties"/>. </summary>
-        /// <param name="provisioningState">
-        /// The provisioning state.
-        /// Serialized Name: ResourceGroupProperties.provisioningState
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceGroupProperties(string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: ResourceGroupProperties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }

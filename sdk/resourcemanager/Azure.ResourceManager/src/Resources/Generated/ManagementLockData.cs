@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the ManagementLock data model.
     /// The lock information.
-    /// Serialized Name: ManagementLock
     /// </summary>
     public partial class ManagementLockData : ResourceData
     {
@@ -53,10 +52,7 @@ namespace Azure.ResourceManager.Resources
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagementLockData"/>. </summary>
-        /// <param name="level">
-        /// The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it.
-        /// Serialized Name: ManagementLock.properties.level
-        /// </param>
+        /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
         public ManagementLockData(ManagementLockLevel level)
         {
             Level = level;
@@ -68,18 +64,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="level">
-        /// The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it.
-        /// Serialized Name: ManagementLock.properties.level
-        /// </param>
-        /// <param name="notes">
-        /// Notes about the lock. Maximum of 512 characters.
-        /// Serialized Name: ManagementLock.properties.notes
-        /// </param>
-        /// <param name="owners">
-        /// The owners of the lock.
-        /// Serialized Name: ManagementLock.properties.owners
-        /// </param>
+        /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
+        /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
+        /// <param name="owners"> The owners of the lock. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementLockData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagementLockLevel level, string notes, IList<ManagementLockOwner> owners, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -94,22 +81,13 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary>
-        /// The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it.
-        /// Serialized Name: ManagementLock.properties.level
-        /// </summary>
+        /// <summary> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </summary>
         [WirePath("properties.level")]
         public ManagementLockLevel Level { get; set; }
-        /// <summary>
-        /// Notes about the lock. Maximum of 512 characters.
-        /// Serialized Name: ManagementLock.properties.notes
-        /// </summary>
+        /// <summary> Notes about the lock. Maximum of 512 characters. </summary>
         [WirePath("properties.notes")]
         public string Notes { get; set; }
-        /// <summary>
-        /// The owners of the lock.
-        /// Serialized Name: ManagementLock.properties.owners
-        /// </summary>
+        /// <summary> The owners of the lock. </summary>
         [WirePath("properties.owners")]
         public IList<ManagementLockOwner> Owners { get; }
     }

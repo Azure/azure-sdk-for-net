@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// The EntityViewOption.
-    /// Serialized Name: EntityViewParameterType
-    /// </summary>
+    /// <summary> The EntityViewOption. </summary>
     public readonly partial struct EntityViewOption : IEquatable<EntityViewOption>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private const string SubscriptionsOnlyValue = "SubscriptionsOnly";
         private const string AuditValue = "Audit";
 
-        /// <summary>
-        /// FullHierarchy
-        /// Serialized Name: EntityViewParameterType.FullHierarchy
-        /// </summary>
+        /// <summary> FullHierarchy. </summary>
         public static EntityViewOption FullHierarchy { get; } = new EntityViewOption(FullHierarchyValue);
-        /// <summary>
-        /// GroupsOnly
-        /// Serialized Name: EntityViewParameterType.GroupsOnly
-        /// </summary>
+        /// <summary> GroupsOnly. </summary>
         public static EntityViewOption GroupsOnly { get; } = new EntityViewOption(GroupsOnlyValue);
-        /// <summary>
-        /// SubscriptionsOnly
-        /// Serialized Name: EntityViewParameterType.SubscriptionsOnly
-        /// </summary>
+        /// <summary> SubscriptionsOnly. </summary>
         public static EntityViewOption SubscriptionsOnly { get; } = new EntityViewOption(SubscriptionsOnlyValue);
-        /// <summary>
-        /// Audit
-        /// Serialized Name: EntityViewParameterType.Audit
-        /// </summary>
+        /// <summary> Audit. </summary>
         public static EntityViewOption Audit { get; } = new EntityViewOption(AuditValue);
         /// <summary> Determines if two <see cref="EntityViewOption"/> values are the same. </summary>
         public static bool operator ==(EntityViewOption left, EntityViewOption right) => left.Equals(right);

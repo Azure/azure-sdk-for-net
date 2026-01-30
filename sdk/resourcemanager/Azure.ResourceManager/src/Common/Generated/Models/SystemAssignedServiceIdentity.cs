@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary>
-    /// Managed service identity (either system assigned, or none)
-    /// Serialized Name: SystemAssignedServiceIdentity
-    /// </summary>
+    /// <summary> Managed service identity (either system assigned, or none). </summary>
     [PropertyReferenceType]
     public partial class SystemAssignedServiceIdentity
     {

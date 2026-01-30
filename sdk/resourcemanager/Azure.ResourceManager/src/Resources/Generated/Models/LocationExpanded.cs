@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Location information.
-    /// Serialized Name: Location
-    /// </summary>
+    /// <summary> Location information. </summary>
     public partial class LocationExpanded
     {
         /// <summary>
@@ -55,38 +52,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LocationExpanded"/>. </summary>
-        /// <param name="id">
-        /// The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus.
-        /// Serialized Name: Location.id
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID.
-        /// Serialized Name: Location.subscriptionId
-        /// </param>
-        /// <param name="name">
-        /// The location name.
-        /// Serialized Name: Location.name
-        /// </param>
-        /// <param name="locationType">
-        /// The location type.
-        /// Serialized Name: Location.type
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the location.
-        /// Serialized Name: Location.displayName
-        /// </param>
-        /// <param name="regionalDisplayName">
-        /// The display name of the location and its region.
-        /// Serialized Name: Location.regionalDisplayName
-        /// </param>
-        /// <param name="metadata">
-        /// Metadata of the location, such as lat/long, paired region, and others.
-        /// Serialized Name: Location.metadata
-        /// </param>
-        /// <param name="availabilityZoneMappings">
-        /// The availability zone mappings for this region.
-        /// Serialized Name: Location.availabilityZoneMappings
-        /// </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="name"> The location name. </param>
+        /// <param name="locationType"> The location type. </param>
+        /// <param name="displayName"> The display name of the location. </param>
+        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
+        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
+        /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LocationExpanded(string id, string subscriptionId, string name, LocationType? locationType, string displayName, string regionalDisplayName, LocationMetadata metadata, IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -101,52 +74,28 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus.
-        /// Serialized Name: Location.id
-        /// </summary>
+        /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// The subscription ID.
-        /// Serialized Name: Location.subscriptionId
-        /// </summary>
+        /// <summary> The subscription ID. </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
-        /// <summary>
-        /// The location name.
-        /// Serialized Name: Location.name
-        /// </summary>
+        /// <summary> The location name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// The location type.
-        /// Serialized Name: Location.type
-        /// </summary>
+        /// <summary> The location type. </summary>
         [WirePath("type")]
         public LocationType? LocationType { get; }
-        /// <summary>
-        /// The display name of the location.
-        /// Serialized Name: Location.displayName
-        /// </summary>
+        /// <summary> The display name of the location. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary>
-        /// The display name of the location and its region.
-        /// Serialized Name: Location.regionalDisplayName
-        /// </summary>
+        /// <summary> The display name of the location and its region. </summary>
         [WirePath("regionalDisplayName")]
         public string RegionalDisplayName { get; }
-        /// <summary>
-        /// Metadata of the location, such as lat/long, paired region, and others.
-        /// Serialized Name: Location.metadata
-        /// </summary>
+        /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>
         [WirePath("metadata")]
         public LocationMetadata Metadata { get; }
-        /// <summary>
-        /// The availability zone mappings for this region.
-        /// Serialized Name: Location.availabilityZoneMappings
-        /// </summary>
+        /// <summary> The availability zone mappings for this region. </summary>
         [WirePath("availabilityZoneMappings")]
         public IReadOnlyList<AvailabilityZoneMappings> AvailabilityZoneMappings { get; }
     }

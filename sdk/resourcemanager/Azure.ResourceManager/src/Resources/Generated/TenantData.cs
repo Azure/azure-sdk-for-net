@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the Tenant data model.
     /// Tenant Id information.
-    /// Serialized Name: Tenant
     /// </summary>
     public partial class TenantData
     {
@@ -57,46 +56,16 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of <see cref="TenantData"/>. </summary>
-        /// <param name="id">
-        /// The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74
-        /// Serialized Name: Tenant.id
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74
-        /// Serialized Name: Tenant.tenantId
-        /// </param>
-        /// <param name="tenantCategory">
-        /// Category of the tenant.
-        /// Serialized Name: Tenant.tenantCategory
-        /// </param>
-        /// <param name="country">
-        /// Country/region name of the address for the tenant.
-        /// Serialized Name: Tenant.country
-        /// </param>
-        /// <param name="countryCode">
-        /// Country/region abbreviation for the tenant.
-        /// Serialized Name: Tenant.countryCode
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the tenant.
-        /// Serialized Name: Tenant.displayName
-        /// </param>
-        /// <param name="domains">
-        /// The list of domains for the tenant.
-        /// Serialized Name: Tenant.domains
-        /// </param>
-        /// <param name="defaultDomain">
-        /// The default domain for the tenant.
-        /// Serialized Name: Tenant.defaultDomain
-        /// </param>
-        /// <param name="tenantType">
-        /// The tenant type. Only available for 'Home' tenant category.
-        /// Serialized Name: Tenant.tenantType
-        /// </param>
-        /// <param name="tenantBrandingLogoUri">
-        /// The tenant's branding logo URL. Only available for 'Home' tenant category.
-        /// Serialized Name: Tenant.tenantBrandingLogoUrl
-        /// </param>
+        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantCategory"> Category of the tenant. </param>
+        /// <param name="country"> Country/region name of the address for the tenant. </param>
+        /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
+        /// <param name="displayName"> The display name of the tenant. </param>
+        /// <param name="domains"> The list of domains for the tenant. </param>
+        /// <param name="defaultDomain"> The default domain for the tenant. </param>
+        /// <param name="tenantType"> The tenant type. Only available for 'Home' tenant category. </param>
+        /// <param name="tenantBrandingLogoUri"> The tenant's branding logo URL. Only available for 'Home' tenant category. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TenantData(string id, Guid? tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains, string defaultDomain, string tenantType, Uri tenantBrandingLogoUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -113,64 +82,34 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74
-        /// Serialized Name: Tenant.id
-        /// </summary>
+        /// <summary> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74
-        /// Serialized Name: Tenant.tenantId
-        /// </summary>
+        /// <summary> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; }
-        /// <summary>
-        /// Category of the tenant.
-        /// Serialized Name: Tenant.tenantCategory
-        /// </summary>
+        /// <summary> Category of the tenant. </summary>
         [WirePath("tenantCategory")]
         public TenantCategory? TenantCategory { get; }
-        /// <summary>
-        /// Country/region name of the address for the tenant.
-        /// Serialized Name: Tenant.country
-        /// </summary>
+        /// <summary> Country/region name of the address for the tenant. </summary>
         [WirePath("country")]
         public string Country { get; }
-        /// <summary>
-        /// Country/region abbreviation for the tenant.
-        /// Serialized Name: Tenant.countryCode
-        /// </summary>
+        /// <summary> Country/region abbreviation for the tenant. </summary>
         [WirePath("countryCode")]
         public string CountryCode { get; }
-        /// <summary>
-        /// The display name of the tenant.
-        /// Serialized Name: Tenant.displayName
-        /// </summary>
+        /// <summary> The display name of the tenant. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary>
-        /// The list of domains for the tenant.
-        /// Serialized Name: Tenant.domains
-        /// </summary>
+        /// <summary> The list of domains for the tenant. </summary>
         [WirePath("domains")]
         public IReadOnlyList<string> Domains { get; }
-        /// <summary>
-        /// The default domain for the tenant.
-        /// Serialized Name: Tenant.defaultDomain
-        /// </summary>
+        /// <summary> The default domain for the tenant. </summary>
         [WirePath("defaultDomain")]
         public string DefaultDomain { get; }
-        /// <summary>
-        /// The tenant type. Only available for 'Home' tenant category.
-        /// Serialized Name: Tenant.tenantType
-        /// </summary>
+        /// <summary> The tenant type. Only available for 'Home' tenant category. </summary>
         [WirePath("tenantType")]
         public string TenantType { get; }
-        /// <summary>
-        /// The tenant's branding logo URL. Only available for 'Home' tenant category.
-        /// Serialized Name: Tenant.tenantBrandingLogoUrl
-        /// </summary>
+        /// <summary> The tenant's branding logo URL. Only available for 'Home' tenant category. </summary>
         [WirePath("tenantBrandingLogoUrl")]
         public Uri TenantBrandingLogoUri { get; }
     }

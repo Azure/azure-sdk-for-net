@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The type of the token that the alias path is referring to.
-    /// Serialized Name: ResourceTypeAliasPathTokenType
-    /// </summary>
+    /// <summary> The type of the token that the alias path is referring to. </summary>
     public readonly partial struct ResourceTypeAliasPathTokenType : IEquatable<ResourceTypeAliasPathTokenType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.Resources.Models
         private const string NumberValue = "Number";
         private const string BooleanValue = "Boolean";
 
-        /// <summary>
-        /// The token type is not specified.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.NotSpecified
-        /// </summary>
+        /// <summary> The token type is not specified. </summary>
         public static ResourceTypeAliasPathTokenType NotSpecified { get; } = new ResourceTypeAliasPathTokenType(NotSpecifiedValue);
-        /// <summary>
-        /// The token type can be anything.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.Any
-        /// </summary>
+        /// <summary> The token type can be anything. </summary>
         public static ResourceTypeAliasPathTokenType Any { get; } = new ResourceTypeAliasPathTokenType(AnyValue);
-        /// <summary>
-        /// The token type is string.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.String
-        /// </summary>
+        /// <summary> The token type is string. </summary>
         public static ResourceTypeAliasPathTokenType String { get; } = new ResourceTypeAliasPathTokenType(StringValue);
-        /// <summary>
-        /// The token type is object.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.Object
-        /// </summary>
+        /// <summary> The token type is object. </summary>
         public static ResourceTypeAliasPathTokenType Object { get; } = new ResourceTypeAliasPathTokenType(ObjectValue);
-        /// <summary>
-        /// The token type is array.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.Array
-        /// </summary>
+        /// <summary> The token type is array. </summary>
         public static ResourceTypeAliasPathTokenType Array { get; } = new ResourceTypeAliasPathTokenType(ArrayValue);
-        /// <summary>
-        /// The token type is integer.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.Integer
-        /// </summary>
+        /// <summary> The token type is integer. </summary>
         public static ResourceTypeAliasPathTokenType Integer { get; } = new ResourceTypeAliasPathTokenType(IntegerValue);
-        /// <summary>
-        /// The token type is number.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.Number
-        /// </summary>
+        /// <summary> The token type is number. </summary>
         public static ResourceTypeAliasPathTokenType Number { get; } = new ResourceTypeAliasPathTokenType(NumberValue);
-        /// <summary>
-        /// The token type is boolean.
-        /// Serialized Name: ResourceTypeAliasPathTokenType.Boolean
-        /// </summary>
+        /// <summary> The token type is boolean. </summary>
         public static ResourceTypeAliasPathTokenType Boolean { get; } = new ResourceTypeAliasPathTokenType(BooleanValue);
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathTokenType"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeAliasPathTokenType left, ResourceTypeAliasPathTokenType right) => left.Equals(right);

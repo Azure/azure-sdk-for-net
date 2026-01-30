@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the PolicyAssignment data model.
     /// The policy assignment.
-    /// Serialized Name: PolicyAssignment
     /// </summary>
     public partial class PolicyAssignmentData : ResourceData
     {
@@ -67,58 +66,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// The location of the policy assignment. Only required when utilizing managed identity.
-        /// Serialized Name: PolicyAssignment.location
-        /// </param>
-        /// <param name="managedIdentity">
-        /// The managed identity associated with the policy assignment.
-        /// Serialized Name: PolicyAssignment.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the policy assignment.
-        /// Serialized Name: PolicyAssignment.properties.displayName
-        /// </param>
-        /// <param name="policyDefinitionId">
-        /// The ID of the policy definition or policy set definition being assigned.
-        /// Serialized Name: PolicyAssignment.properties.policyDefinitionId
-        /// </param>
-        /// <param name="scope">
-        /// The scope for the policy assignment.
-        /// Serialized Name: PolicyAssignment.properties.scope
-        /// </param>
-        /// <param name="excludedScopes">
-        /// The policy's excluded scopes.
-        /// Serialized Name: PolicyAssignment.properties.notScopes
-        /// </param>
-        /// <param name="parameters">
-        /// The parameter values for the assigned policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyAssignment.properties.parameters
-        /// </param>
-        /// <param name="description">
-        /// This message will be part of response in case of policy violation.
-        /// Serialized Name: PolicyAssignment.properties.description
-        /// </param>
-        /// <param name="metadata">
-        /// The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicyAssignment.properties.metadata
-        /// </param>
-        /// <param name="enforcementMode">
-        /// The policy assignment enforcement mode. Possible values are Default and DoNotEnforce.
-        /// Serialized Name: PolicyAssignment.properties.enforcementMode
-        /// </param>
-        /// <param name="nonComplianceMessages">
-        /// The messages that describe why a resource is non-compliant with the policy.
-        /// Serialized Name: PolicyAssignment.properties.nonComplianceMessages
-        /// </param>
-        /// <param name="resourceSelectors">
-        /// The resource selector list to filter policies by resource properties.
-        /// Serialized Name: PolicyAssignment.properties.resourceSelectors
-        /// </param>
-        /// <param name="overrides">
-        /// The policy property value override.
-        /// Serialized Name: PolicyAssignment.properties.overrides
-        /// </param>
+        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
+        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="displayName"> The display name of the policy assignment. </param>
+        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
+        /// <param name="scope"> The scope for the policy assignment. </param>
+        /// <param name="excludedScopes"> The policy's excluded scopes. </param>
+        /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
+        /// <param name="description"> This message will be part of response in case of policy violation. </param>
+        /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
+        /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
+        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
+        /// <param name="overrides"> The policy property value override. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ManagedServiceIdentity managedIdentity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -138,57 +98,32 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The location of the policy assignment. Only required when utilizing managed identity.
-        /// Serialized Name: PolicyAssignment.location
-        /// </summary>
+        /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// The managed identity associated with the policy assignment.
-        /// Serialized Name: PolicyAssignment.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </summary>
+        /// <summary> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity ManagedIdentity { get; set; }
-        /// <summary>
-        /// The display name of the policy assignment.
-        /// Serialized Name: PolicyAssignment.properties.displayName
-        /// </summary>
+        /// <summary> The display name of the policy assignment. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The ID of the policy definition or policy set definition being assigned.
-        /// Serialized Name: PolicyAssignment.properties.policyDefinitionId
-        /// </summary>
+        /// <summary> The ID of the policy definition or policy set definition being assigned. </summary>
         [WirePath("properties.policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
-        /// <summary>
-        /// The scope for the policy assignment.
-        /// Serialized Name: PolicyAssignment.properties.scope
-        /// </summary>
+        /// <summary> The scope for the policy assignment. </summary>
         [WirePath("properties.scope")]
         public string Scope { get; }
-        /// <summary>
-        /// The policy's excluded scopes.
-        /// Serialized Name: PolicyAssignment.properties.notScopes
-        /// </summary>
+        /// <summary> The policy's excluded scopes. </summary>
         [WirePath("properties.notScopes")]
         public IList<string> ExcludedScopes { get; }
-        /// <summary>
-        /// The parameter values for the assigned policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyAssignment.properties.parameters
-        /// </summary>
+        /// <summary> The parameter values for the assigned policy rule. The keys are the parameter names. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }
-        /// <summary>
-        /// This message will be part of response in case of policy violation.
-        /// Serialized Name: PolicyAssignment.properties.description
-        /// </summary>
+        /// <summary> This message will be part of response in case of policy violation. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicyAssignment.properties.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -219,28 +154,16 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
-        /// <summary>
-        /// The policy assignment enforcement mode. Possible values are Default and DoNotEnforce.
-        /// Serialized Name: PolicyAssignment.properties.enforcementMode
-        /// </summary>
+        /// <summary> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </summary>
         [WirePath("properties.enforcementMode")]
         public EnforcementMode? EnforcementMode { get; set; }
-        /// <summary>
-        /// The messages that describe why a resource is non-compliant with the policy.
-        /// Serialized Name: PolicyAssignment.properties.nonComplianceMessages
-        /// </summary>
+        /// <summary> The messages that describe why a resource is non-compliant with the policy. </summary>
         [WirePath("properties.nonComplianceMessages")]
         public IList<NonComplianceMessage> NonComplianceMessages { get; }
-        /// <summary>
-        /// The resource selector list to filter policies by resource properties.
-        /// Serialized Name: PolicyAssignment.properties.resourceSelectors
-        /// </summary>
+        /// <summary> The resource selector list to filter policies by resource properties. </summary>
         [WirePath("properties.resourceSelectors")]
         public IList<ResourceSelector> ResourceSelectors { get; }
-        /// <summary>
-        /// The policy property value override.
-        /// Serialized Name: PolicyAssignment.properties.overrides
-        /// </summary>
+        /// <summary> The policy property value override. </summary>
         [WirePath("properties.overrides")]
         public IList<PolicyOverride> Overrides { get; }
     }

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ManagementGroups
     /// <summary>
     /// A class representing the ManagementGroup data model.
     /// The management group details.
-    /// Serialized Name: ManagementGroup
     /// </summary>
     public partial class ManagementGroupData : ResourceData
     {
@@ -63,22 +62,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId">
-        /// The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: ManagementGroup.properties.tenantId
-        /// </param>
-        /// <param name="displayName">
-        /// The friendly name of the management group.
-        /// Serialized Name: ManagementGroup.properties.displayName
-        /// </param>
-        /// <param name="details">
-        /// The details of a management group.
-        /// Serialized Name: ManagementGroup.properties.details
-        /// </param>
-        /// <param name="children">
-        /// The list of children.
-        /// Serialized Name: ManagementGroup.properties.children
-        /// </param>
+        /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the management group. </param>
+        /// <param name="details"> The details of a management group. </param>
+        /// <param name="children"> The list of children. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, ManagementGroupInfo details, IReadOnlyList<ManagementGroupChildInfo> children, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -89,28 +76,16 @@ namespace Azure.ResourceManager.ManagementGroups
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000
-        /// Serialized Name: ManagementGroup.properties.tenantId
-        /// </summary>
+        /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
-        /// <summary>
-        /// The friendly name of the management group.
-        /// Serialized Name: ManagementGroup.properties.displayName
-        /// </summary>
+        /// <summary> The friendly name of the management group. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary>
-        /// The details of a management group.
-        /// Serialized Name: ManagementGroup.properties.details
-        /// </summary>
+        /// <summary> The details of a management group. </summary>
         [WirePath("properties.details")]
         public ManagementGroupInfo Details { get; }
-        /// <summary>
-        /// The list of children.
-        /// Serialized Name: ManagementGroup.properties.children
-        /// </summary>
+        /// <summary> The list of children. </summary>
         [WirePath("properties.children")]
         public IReadOnlyList<ManagementGroupChildInfo> Children { get; }
     }

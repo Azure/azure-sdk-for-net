@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Resource extended location.
-    /// Serialized Name: ExtendedLocation
-    /// </summary>
+    /// <summary> Resource extended location. </summary>
     [PropertyReferenceType]
     public partial class ExtendedLocation
     {
@@ -23,14 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
-        /// <param name="extendedLocationType">
-        /// The extended location type.
-        /// Serialized Name: ExtendedLocation.type
-        /// </param>
-        /// <param name="name">
-        /// The extended location name.
-        /// Serialized Name: ExtendedLocation.name
-        /// </param>
+        /// <param name="extendedLocationType"> The extended location type. </param>
+        /// <param name="name"> The extended location name. </param>
         [SerializationConstructor]
         internal ExtendedLocation(ExtendedLocationType? extendedLocationType, string name)
         {
@@ -38,16 +29,10 @@ namespace Azure.ResourceManager.Resources.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The extended location type.
-        /// Serialized Name: ExtendedLocation.type
-        /// </summary>
+        /// <summary> The extended location type. </summary>
         [WirePath("type")]
         public ExtendedLocationType? ExtendedLocationType { get; set; }
-        /// <summary>
-        /// The extended location name.
-        /// Serialized Name: ExtendedLocation.name
-        /// </summary>
+        /// <summary> The extended location name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
     }

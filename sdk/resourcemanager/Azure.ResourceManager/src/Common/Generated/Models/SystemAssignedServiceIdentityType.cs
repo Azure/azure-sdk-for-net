@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary>
-    /// Type of managed service identity (either system assigned, or none).
-    /// Serialized Name: SystemAssignedServiceIdentityType
-    /// </summary>
+    /// <summary> Type of managed service identity (either system assigned, or none). </summary>
     public readonly partial struct SystemAssignedServiceIdentityType : IEquatable<SystemAssignedServiceIdentityType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Models
         private const string NoneValue = "None";
         private const string SystemAssignedValue = "SystemAssigned";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: SystemAssignedServiceIdentityType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static SystemAssignedServiceIdentityType None { get; } = new SystemAssignedServiceIdentityType(NoneValue);
-        /// <summary>
-        /// SystemAssigned
-        /// Serialized Name: SystemAssignedServiceIdentityType.SystemAssigned
-        /// </summary>
+        /// <summary> SystemAssigned. </summary>
         public static SystemAssignedServiceIdentityType SystemAssigned { get; } = new SystemAssignedServiceIdentityType(SystemAssignedValue);
         /// <summary> Determines if two <see cref="SystemAssignedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(SystemAssignedServiceIdentityType left, SystemAssignedServiceIdentityType right) => left.Equals(right);

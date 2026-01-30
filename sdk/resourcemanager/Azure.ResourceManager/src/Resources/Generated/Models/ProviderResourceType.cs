@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Resource type managed by the resource provider.
-    /// Serialized Name: ProviderResourceType
-    /// </summary>
+    /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType
     {
         /// <summary>
@@ -61,43 +58,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
-        /// <param name="resourceType">
-        /// The resource type.
-        /// Serialized Name: ProviderResourceType.resourceType
-        /// </param>
-        /// <param name="locations">
-        /// The collection of locations where this resource type can be created.
-        /// Serialized Name: ProviderResourceType.locations
-        /// </param>
-        /// <param name="locationMappings">
-        /// The location mappings that are supported by this resource type.
-        /// Serialized Name: ProviderResourceType.locationMappings
-        /// </param>
-        /// <param name="aliases">
-        /// The aliases that are supported by this resource type.
-        /// Serialized Name: ProviderResourceType.aliases
-        /// </param>
-        /// <param name="apiVersions">
-        /// The API version.
-        /// Serialized Name: ProviderResourceType.apiVersions
-        /// </param>
-        /// <param name="defaultApiVersion">
-        /// The default API version.
-        /// Serialized Name: ProviderResourceType.defaultApiVersion
-        /// </param>
-        /// <param name="zoneMappings"> Serialized Name: ProviderResourceType.zoneMappings. </param>
-        /// <param name="apiProfiles">
-        /// The API profiles for the resource provider.
-        /// Serialized Name: ProviderResourceType.apiProfiles
-        /// </param>
-        /// <param name="capabilities">
-        /// The additional capabilities offered by this resource type.
-        /// Serialized Name: ProviderResourceType.capabilities
-        /// </param>
-        /// <param name="properties">
-        /// The properties.
-        /// Serialized Name: ProviderResourceType.properties
-        /// </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="locations"> The collection of locations where this resource type can be created. </param>
+        /// <param name="locationMappings"> The location mappings that are supported by this resource type. </param>
+        /// <param name="aliases"> The aliases that are supported by this resource type. </param>
+        /// <param name="apiVersions"> The API version. </param>
+        /// <param name="defaultApiVersion"> The default API version. </param>
+        /// <param name="zoneMappings"></param>
+        /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
+        /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
+        /// <param name="properties"> The properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ZoneMapping> zoneMappings, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -114,61 +84,34 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource type.
-        /// Serialized Name: ProviderResourceType.resourceType
-        /// </summary>
+        /// <summary> The resource type. </summary>
         [WirePath("resourceType")]
         public string ResourceType { get; }
-        /// <summary>
-        /// The collection of locations where this resource type can be created.
-        /// Serialized Name: ProviderResourceType.locations
-        /// </summary>
+        /// <summary> The collection of locations where this resource type can be created. </summary>
         [WirePath("locations")]
         public IReadOnlyList<string> Locations { get; }
-        /// <summary>
-        /// The location mappings that are supported by this resource type.
-        /// Serialized Name: ProviderResourceType.locationMappings
-        /// </summary>
+        /// <summary> The location mappings that are supported by this resource type. </summary>
         [WirePath("locationMappings")]
         public IReadOnlyList<ProviderExtendedLocation> LocationMappings { get; }
-        /// <summary>
-        /// The aliases that are supported by this resource type.
-        /// Serialized Name: ProviderResourceType.aliases
-        /// </summary>
+        /// <summary> The aliases that are supported by this resource type. </summary>
         [WirePath("aliases")]
         public IReadOnlyList<ResourceTypeAlias> Aliases { get; }
-        /// <summary>
-        /// The API version.
-        /// Serialized Name: ProviderResourceType.apiVersions
-        /// </summary>
+        /// <summary> The API version. </summary>
         [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
-        /// <summary>
-        /// The default API version.
-        /// Serialized Name: ProviderResourceType.defaultApiVersion
-        /// </summary>
+        /// <summary> The default API version. </summary>
         [WirePath("defaultApiVersion")]
         public string DefaultApiVersion { get; }
-        /// <summary> Serialized Name: ProviderResourceType.zoneMappings. </summary>
+        /// <summary> Gets the zone mappings. </summary>
         [WirePath("zoneMappings")]
         public IReadOnlyList<ZoneMapping> ZoneMappings { get; }
-        /// <summary>
-        /// The API profiles for the resource provider.
-        /// Serialized Name: ProviderResourceType.apiProfiles
-        /// </summary>
+        /// <summary> The API profiles for the resource provider. </summary>
         [WirePath("apiProfiles")]
         public IReadOnlyList<ApiProfile> ApiProfiles { get; }
-        /// <summary>
-        /// The additional capabilities offered by this resource type.
-        /// Serialized Name: ProviderResourceType.capabilities
-        /// </summary>
+        /// <summary> The additional capabilities offered by this resource type. </summary>
         [WirePath("capabilities")]
         public string Capabilities { get; }
-        /// <summary>
-        /// The properties.
-        /// Serialized Name: ProviderResourceType.properties
-        /// </summary>
+        /// <summary> The properties. </summary>
         [WirePath("properties")]
         public IReadOnlyDictionary<string, string> Properties { get; }
     }

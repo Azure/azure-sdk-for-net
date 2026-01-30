@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Resource Name valid if not a reserved word, does not contain a reserved word and does not start with a reserved word
-    /// Serialized Name: CheckResourceNameResult
-    /// </summary>
+    /// <summary> Resource Name valid if not a reserved word, does not contain a reserved word and does not start with a reserved word. </summary>
     public partial class ResourceNameValidationResult
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNameValidationResult"/>. </summary>
-        /// <param name="name">
-        /// Name of Resource
-        /// Serialized Name: CheckResourceNameResult.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Type of Resource
-        /// Serialized Name: CheckResourceNameResult.type
-        /// </param>
-        /// <param name="status">
-        /// Is the resource name Allowed or Reserved
-        /// Serialized Name: CheckResourceNameResult.status
-        /// </param>
+        /// <param name="name"> Name of Resource. </param>
+        /// <param name="resourceType"> Type of Resource. </param>
+        /// <param name="status"> Is the resource name Allowed or Reserved. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceNameValidationResult(string name, ResourceType? resourceType, ResourceNameValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of Resource
-        /// Serialized Name: CheckResourceNameResult.name
-        /// </summary>
+        /// <summary> Name of Resource. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Type of Resource
-        /// Serialized Name: CheckResourceNameResult.type
-        /// </summary>
+        /// <summary> Type of Resource. </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; }
-        /// <summary>
-        /// Is the resource name Allowed or Reserved
-        /// Serialized Name: CheckResourceNameResult.status
-        /// </summary>
+        /// <summary> Is the resource name Allowed or Reserved. </summary>
         [WirePath("status")]
         public ResourceNameValidationStatus? Status { get; }
     }

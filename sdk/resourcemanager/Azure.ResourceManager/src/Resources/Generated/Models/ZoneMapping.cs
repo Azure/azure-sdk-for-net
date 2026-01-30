@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The ZoneMapping.
-    /// Serialized Name: ZoneMapping
-    /// </summary>
+    /// <summary> The ZoneMapping. </summary>
     public partial class ZoneMapping
     {
         /// <summary>
@@ -56,11 +53,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ZoneMapping"/>. </summary>
-        /// <param name="location">
-        /// The location of the zone mapping.
-        /// Serialized Name: ZoneMapping.location
-        /// </param>
-        /// <param name="zones"> Serialized Name: ZoneMapping.zones. </param>
+        /// <param name="location"> The location of the zone mapping. </param>
+        /// <param name="zones"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ZoneMapping(AzureLocation? location, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,13 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The location of the zone mapping.
-        /// Serialized Name: ZoneMapping.location
-        /// </summary>
+        /// <summary> The location of the zone mapping. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Serialized Name: ZoneMapping.zones. </summary>
+        /// <summary> Gets the zones. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }

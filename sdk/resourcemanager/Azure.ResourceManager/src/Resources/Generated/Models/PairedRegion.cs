@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Information regarding paired region.
-    /// Serialized Name: PairedRegion
-    /// </summary>
+    /// <summary> Information regarding paired region. </summary>
     public partial class PairedRegion
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PairedRegion"/>. </summary>
-        /// <param name="name">
-        /// The name of the paired region.
-        /// Serialized Name: PairedRegion.name
-        /// </param>
-        /// <param name="id">
-        /// The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus.
-        /// Serialized Name: PairedRegion.id
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID.
-        /// Serialized Name: PairedRegion.subscriptionId
-        /// </param>
+        /// <param name="name"> The name of the paired region. </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PairedRegion(string name, string id, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the paired region.
-        /// Serialized Name: PairedRegion.name
-        /// </summary>
+        /// <summary> The name of the paired region. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus.
-        /// Serialized Name: PairedRegion.id
-        /// </summary>
+        /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// The subscription ID.
-        /// Serialized Name: PairedRegion.subscriptionId
-        /// </summary>
+        /// <summary> The subscription ID. </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
     }

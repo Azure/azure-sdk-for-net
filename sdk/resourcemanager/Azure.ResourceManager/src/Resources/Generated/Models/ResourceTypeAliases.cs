@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The resource type aliases definition.
-    /// Serialized Name: ResourceTypeAliases
-    /// </summary>
+    /// <summary> The resource type aliases definition. </summary>
     public partial class ResourceTypeAliases
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
-        /// <param name="resourceType">
-        /// The resource type name.
-        /// Serialized Name: ResourceTypeAliases.resourceType
-        /// </param>
-        /// <param name="aliases">
-        /// The aliases for property names.
-        /// Serialized Name: ResourceTypeAliases.aliases
-        /// </param>
+        /// <param name="resourceType"> The resource type name. </param>
+        /// <param name="aliases"> The aliases for property names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeAliases(string resourceType, IReadOnlyList<ResourceTypeAlias> aliases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource type name.
-        /// Serialized Name: ResourceTypeAliases.resourceType
-        /// </summary>
+        /// <summary> The resource type name. </summary>
         [WirePath("resourceType")]
         public string ResourceType { get; }
-        /// <summary>
-        /// The aliases for property names.
-        /// Serialized Name: ResourceTypeAliases.aliases
-        /// </summary>
+        /// <summary> The aliases for property names. </summary>
         [WirePath("aliases")]
         public IReadOnlyList<ResourceTypeAlias> Aliases { get; }
     }

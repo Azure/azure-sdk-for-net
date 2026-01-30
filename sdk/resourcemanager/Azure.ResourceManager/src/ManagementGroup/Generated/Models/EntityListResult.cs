@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// Describes the result of the request to view entities.
-    /// Serialized Name: EntityListResult
-    /// </summary>
+    /// <summary> Describes the result of the request to view entities. </summary>
     internal partial class EntityListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EntityListResult"/>. </summary>
-        /// <param name="value">
-        /// The EntityInfo items on this page
-        /// Serialized Name: EntityListResult.value
-        /// </param>
+        /// <param name="value"> The EntityInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal EntityListResult(IEnumerable<EntityData> value)
         {
@@ -63,18 +57,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityListResult"/>. </summary>
-        /// <param name="value">
-        /// The EntityInfo items on this page
-        /// Serialized Name: EntityListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: EntityListResult.nextLink
-        /// </param>
-        /// <param name="count">
-        /// Total count of records that match the filter.
-        /// Serialized Name: EntityListResult.count
-        /// </param>
+        /// <param name="value"> The EntityInfo items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="count"> Total count of records that match the filter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityListResult(IReadOnlyList<EntityData> value, Uri nextLink, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,20 +74,11 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         {
         }
 
-        /// <summary>
-        /// The EntityInfo items on this page
-        /// Serialized Name: EntityListResult.value
-        /// </summary>
+        /// <summary> The EntityInfo items on this page. </summary>
         public IReadOnlyList<EntityData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: EntityListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
-        /// <summary>
-        /// Total count of records that match the filter.
-        /// Serialized Name: EntityListResult.count
-        /// </summary>
+        /// <summary> Total count of records that match the filter. </summary>
         public int? Count { get; }
     }
 }

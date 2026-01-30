@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The definition of a parameter that can be provided to the policy.
-    /// Serialized Name: ArmPolicyParameter
-    /// </summary>
+    /// <summary> The definition of a parameter that can be provided to the policy. </summary>
     public partial class ArmPolicyParameter
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmPolicyParameter"/>. </summary>
-        /// <param name="parameterType">
-        /// The data type of the parameter.
-        /// Serialized Name: ArmPolicyParameter.type
-        /// </param>
-        /// <param name="allowedValues">
-        /// The allowed values for the parameter.
-        /// Serialized Name: ArmPolicyParameter.allowedValues
-        /// </param>
-        /// <param name="defaultValue">
-        /// The default value for the parameter if no value is provided.
-        /// Serialized Name: ArmPolicyParameter.defaultValue
-        /// </param>
-        /// <param name="metadata">
-        /// General metadata for the parameter.
-        /// Serialized Name: ArmPolicyParameter.metadata
-        /// </param>
+        /// <param name="parameterType"> The data type of the parameter. </param>
+        /// <param name="allowedValues"> The allowed values for the parameter. </param>
+        /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
+        /// <param name="metadata"> General metadata for the parameter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArmPolicyParameter(ArmPolicyParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,15 +66,11 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The data type of the parameter.
-        /// Serialized Name: ArmPolicyParameter.type
-        /// </summary>
+        /// <summary> The data type of the parameter. </summary>
         [WirePath("type")]
         public ArmPolicyParameterType? ParameterType { get; set; }
         /// <summary>
         /// The allowed values for the parameter.
-        /// Serialized Name: ArmPolicyParameter.allowedValues
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -122,7 +103,6 @@ namespace Azure.ResourceManager.Resources.Models
         public IList<BinaryData> AllowedValues { get; }
         /// <summary>
         /// The default value for the parameter if no value is provided.
-        /// Serialized Name: ArmPolicyParameter.defaultValue
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -153,10 +133,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         [WirePath("defaultValue")]
         public BinaryData DefaultValue { get; set; }
-        /// <summary>
-        /// General metadata for the parameter.
-        /// Serialized Name: ArmPolicyParameter.metadata
-        /// </summary>
+        /// <summary> General metadata for the parameter. </summary>
         [WirePath("metadata")]
         public ParameterDefinitionsValueMetadata Metadata { get; set; }
     }

@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    /// <summary>
-    /// The KeyVaultProperties.
-    /// Serialized Name: KeyVaultProperties
-    /// </summary>
+    /// <summary> The KeyVaultProperties. </summary>
     [PropertyReferenceType]
     public partial class KeyVaultProperties
     {
@@ -23,14 +20,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
-        /// <param name="keyIdentifier">
-        /// Key vault uri to access the encryption key.
-        /// Serialized Name: KeyVaultProperties.keyIdentifier
-        /// </param>
-        /// <param name="identity">
-        /// The client ID of the identity which will be used to access key vault.
-        /// Serialized Name: KeyVaultProperties.identity
-        /// </param>
+        /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
+        /// <param name="identity"> The client ID of the identity which will be used to access key vault. </param>
         [SerializationConstructor]
         internal KeyVaultProperties(string keyIdentifier, string identity)
         {
@@ -38,16 +29,10 @@ namespace Azure.ResourceManager.Models
             Identity = identity;
         }
 
-        /// <summary>
-        /// Key vault uri to access the encryption key.
-        /// Serialized Name: KeyVaultProperties.keyIdentifier
-        /// </summary>
+        /// <summary> Key vault uri to access the encryption key. </summary>
         [WirePath("keyIdentifier")]
         public string KeyIdentifier { get; set; }
-        /// <summary>
-        /// The client ID of the identity which will be used to access key vault.
-        /// Serialized Name: KeyVaultProperties.identity
-        /// </summary>
+        /// <summary> The client ID of the identity which will be used to access key vault. </summary>
         [WirePath("identity")]
         public string Identity { get; set; }
     }

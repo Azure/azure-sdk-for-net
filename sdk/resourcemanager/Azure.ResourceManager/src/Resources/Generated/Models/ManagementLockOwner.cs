@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Lock owner properties.
-    /// Serialized Name: ManagementLockOwner
-    /// </summary>
+    /// <summary> Lock owner properties. </summary>
     public partial class ManagementLockOwner
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementLockOwner"/>. </summary>
-        /// <param name="applicationId">
-        /// The application ID of the lock owner.
-        /// Serialized Name: ManagementLockOwner.applicationId
-        /// </param>
+        /// <param name="applicationId"> The application ID of the lock owner. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagementLockOwner(string applicationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The application ID of the lock owner.
-        /// Serialized Name: ManagementLockOwner.applicationId
-        /// </summary>
+        /// <summary> The application ID of the lock owner. </summary>
         [WirePath("applicationId")]
         public string ApplicationId { get; set; }
     }

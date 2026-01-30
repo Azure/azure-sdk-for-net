@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The location type.
-    /// Serialized Name: LocationType
-    /// </summary>
+    /// <summary> The location type. </summary>
     public enum LocationType
     {
-        /// <summary>
-        /// Region
-        /// Serialized Name: LocationType.Region
-        /// </summary>
+        /// <summary> Region. </summary>
         Region,
-        /// <summary>
-        /// EdgeZone
-        /// Serialized Name: LocationType.EdgeZone
-        /// </summary>
+        /// <summary> EdgeZone. </summary>
         EdgeZone
     }
 }

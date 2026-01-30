@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// List of resource groups.
-    /// Serialized Name: ResourceListResult
-    /// </summary>
+    /// <summary> List of resource groups. </summary>
     internal partial class ResourceListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// An array of resources.
-        /// Serialized Name: ResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: ResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> An array of resources. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceListResult(IReadOnlyList<GenericResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// An array of resources.
-        /// Serialized Name: ResourceListResult.value
-        /// </summary>
+        /// <summary> An array of resources. </summary>
         public IReadOnlyList<GenericResourceData> Value { get; }
-        /// <summary>
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: ResourceListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
 }

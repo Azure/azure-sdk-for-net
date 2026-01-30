@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Resource group information.
-    /// Serialized Name: ResourceGroupPatchable
-    /// </summary>
+    /// <summary> Resource group information. </summary>
     public partial class ResourceGroupPatch
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceGroupPatch"/>. </summary>
-        /// <param name="name">
-        /// The name of the resource group.
-        /// Serialized Name: ResourceGroupPatchable.name
-        /// </param>
-        /// <param name="properties">
-        /// The resource group properties.
-        /// Serialized Name: ResourceGroupPatchable.properties
-        /// </param>
-        /// <param name="managedBy">
-        /// The ID of the resource that manages this resource group.
-        /// Serialized Name: ResourceGroupPatchable.managedBy
-        /// </param>
-        /// <param name="tags">
-        /// The tags attached to the resource group.
-        /// Serialized Name: ResourceGroupPatchable.tags
-        /// </param>
+        /// <param name="name"> The name of the resource group. </param>
+        /// <param name="properties"> The resource group properties. </param>
+        /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
+        /// <param name="tags"> The tags attached to the resource group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceGroupPatch(string name, ResourceGroupProperties properties, string managedBy, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,37 +66,22 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the resource group.
-        /// Serialized Name: ResourceGroupPatchable.name
-        /// </summary>
+        /// <summary> The name of the resource group. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The resource group properties.
-        /// Serialized Name: ResourceGroupPatchable.properties
-        /// </summary>
+        /// <summary> The resource group properties. </summary>
         internal ResourceGroupProperties Properties { get; set; }
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: ResourceGroupProperties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public string ResourceGroupProvisioningState
         {
             get => Properties is null ? default : Properties.ProvisioningState;
         }
 
-        /// <summary>
-        /// The ID of the resource that manages this resource group.
-        /// Serialized Name: ResourceGroupPatchable.managedBy
-        /// </summary>
+        /// <summary> The ID of the resource that manages this resource group. </summary>
         [WirePath("managedBy")]
         public string ManagedBy { get; set; }
-        /// <summary>
-        /// The tags attached to the resource group.
-        /// Serialized Name: ResourceGroupPatchable.tags
-        /// </summary>
+        /// <summary> The tags attached to the resource group. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }

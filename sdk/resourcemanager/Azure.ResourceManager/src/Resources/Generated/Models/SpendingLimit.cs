@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The subscription spending limit.
-    /// Serialized Name: SpendingLimit
-    /// </summary>
+    /// <summary> The subscription spending limit. </summary>
     public enum SpendingLimit
     {
-        /// <summary>
-        /// On
-        /// Serialized Name: SpendingLimit.On
-        /// </summary>
+        /// <summary> On. </summary>
         On,
-        /// <summary>
-        /// Off
-        /// Serialized Name: SpendingLimit.Off
-        /// </summary>
+        /// <summary> Off. </summary>
         Off,
-        /// <summary>
-        /// CurrentPeriodOff
-        /// Serialized Name: SpendingLimit.CurrentPeriodOff
-        /// </summary>
+        /// <summary> CurrentPeriodOff. </summary>
         CurrentPeriodOff
     }
 }

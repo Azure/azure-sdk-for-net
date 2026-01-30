@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// The details of all subscriptions under management group.
-    /// Serialized Name: ListSubscriptionUnderManagementGroup
-    /// </summary>
+    /// <summary> The details of all subscriptions under management group. </summary>
     internal partial class ListSubscriptionUnderManagementGroup
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListSubscriptionUnderManagementGroup"/>. </summary>
-        /// <param name="value">
-        /// The SubscriptionUnderManagementGroup items on this page
-        /// Serialized Name: ListSubscriptionUnderManagementGroup.value
-        /// </param>
+        /// <param name="value"> The SubscriptionUnderManagementGroup items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ListSubscriptionUnderManagementGroup(IEnumerable<ManagementGroupSubscriptionData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListSubscriptionUnderManagementGroup"/>. </summary>
-        /// <param name="value">
-        /// The SubscriptionUnderManagementGroup items on this page
-        /// Serialized Name: ListSubscriptionUnderManagementGroup.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: ListSubscriptionUnderManagementGroup.nextLink
-        /// </param>
+        /// <param name="value"> The SubscriptionUnderManagementGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ListSubscriptionUnderManagementGroup(IReadOnlyList<ManagementGroupSubscriptionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         {
         }
 
-        /// <summary>
-        /// The SubscriptionUnderManagementGroup items on this page
-        /// Serialized Name: ListSubscriptionUnderManagementGroup.value
-        /// </summary>
+        /// <summary> The SubscriptionUnderManagementGroup items on this page. </summary>
         public IReadOnlyList<ManagementGroupSubscriptionData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: ListSubscriptionUnderManagementGroup.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

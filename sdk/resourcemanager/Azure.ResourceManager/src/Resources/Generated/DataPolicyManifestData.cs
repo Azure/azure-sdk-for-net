@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the DataPolicyManifest data model.
     /// The data policy manifest.
-    /// Serialized Name: DataPolicyManifest
     /// </summary>
     public partial class DataPolicyManifestData : ResourceData
     {
@@ -68,38 +67,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="namespaces">
-        /// The list of namespaces for the data policy manifest.
-        /// Serialized Name: DataPolicyManifest.properties.namespaces
-        /// </param>
-        /// <param name="policyMode">
-        /// The policy mode of the data policy manifest.
-        /// Serialized Name: DataPolicyManifest.properties.policyMode
-        /// </param>
-        /// <param name="isBuiltInOnly">
-        /// A value indicating whether policy mode is allowed only in built-in definitions.
-        /// Serialized Name: DataPolicyManifest.properties.isBuiltInOnly
-        /// </param>
-        /// <param name="resourceTypeAliases">
-        /// An array of resource type aliases.
-        /// Serialized Name: DataPolicyManifest.properties.resourceTypeAliases
-        /// </param>
-        /// <param name="effects">
-        /// The effect definition.
-        /// Serialized Name: DataPolicyManifest.properties.effects
-        /// </param>
-        /// <param name="fieldValues">
-        /// The non-alias field accessor values that can be used in the policy rule.
-        /// Serialized Name: DataPolicyManifest.properties.fieldValues
-        /// </param>
-        /// <param name="standard">
-        /// The standard resource functions (subscription and/or resourceGroup).
-        /// Serialized Name: DataPolicyManifest.properties.resourceFunctions.standard
-        /// </param>
-        /// <param name="customDefinitions">
-        /// An array of data manifest custom resource definition.
-        /// Serialized Name: DataPolicyManifest.properties.resourceFunctions.custom
-        /// </param>
+        /// <param name="namespaces"> The list of namespaces for the data policy manifest. </param>
+        /// <param name="policyMode"> The policy mode of the data policy manifest. </param>
+        /// <param name="isBuiltInOnly"> A value indicating whether policy mode is allowed only in built-in definitions. </param>
+        /// <param name="resourceTypeAliases"> An array of resource type aliases. </param>
+        /// <param name="effects"> The effect definition. </param>
+        /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
+        /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
+        /// <param name="customDefinitions"> An array of data manifest custom resource definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataPolicyManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> namespaces, string policyMode, bool? isBuiltInOnly, IReadOnlyList<ResourceTypeAliases> resourceTypeAliases, IReadOnlyList<DataPolicyManifestEffect> effects, IReadOnlyList<string> fieldValues, IReadOnlyList<string> standard, IReadOnlyList<DataManifestCustomResourceFunctionDefinition> customDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -114,52 +89,28 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The list of namespaces for the data policy manifest.
-        /// Serialized Name: DataPolicyManifest.properties.namespaces
-        /// </summary>
+        /// <summary> The list of namespaces for the data policy manifest. </summary>
         [WirePath("properties.namespaces")]
         public IReadOnlyList<string> Namespaces { get; }
-        /// <summary>
-        /// The policy mode of the data policy manifest.
-        /// Serialized Name: DataPolicyManifest.properties.policyMode
-        /// </summary>
+        /// <summary> The policy mode of the data policy manifest. </summary>
         [WirePath("properties.policyMode")]
         public string PolicyMode { get; }
-        /// <summary>
-        /// A value indicating whether policy mode is allowed only in built-in definitions.
-        /// Serialized Name: DataPolicyManifest.properties.isBuiltInOnly
-        /// </summary>
+        /// <summary> A value indicating whether policy mode is allowed only in built-in definitions. </summary>
         [WirePath("properties.isBuiltInOnly")]
         public bool? IsBuiltInOnly { get; }
-        /// <summary>
-        /// An array of resource type aliases.
-        /// Serialized Name: DataPolicyManifest.properties.resourceTypeAliases
-        /// </summary>
+        /// <summary> An array of resource type aliases. </summary>
         [WirePath("properties.resourceTypeAliases")]
         public IReadOnlyList<ResourceTypeAliases> ResourceTypeAliases { get; }
-        /// <summary>
-        /// The effect definition.
-        /// Serialized Name: DataPolicyManifest.properties.effects
-        /// </summary>
+        /// <summary> The effect definition. </summary>
         [WirePath("properties.effects")]
         public IReadOnlyList<DataPolicyManifestEffect> Effects { get; }
-        /// <summary>
-        /// The non-alias field accessor values that can be used in the policy rule.
-        /// Serialized Name: DataPolicyManifest.properties.fieldValues
-        /// </summary>
+        /// <summary> The non-alias field accessor values that can be used in the policy rule. </summary>
         [WirePath("properties.fieldValues")]
         public IReadOnlyList<string> FieldValues { get; }
-        /// <summary>
-        /// The standard resource functions (subscription and/or resourceGroup).
-        /// Serialized Name: DataPolicyManifest.properties.resourceFunctions.standard
-        /// </summary>
+        /// <summary> The standard resource functions (subscription and/or resourceGroup). </summary>
         [WirePath("properties.standard")]
         public IReadOnlyList<string> Standard { get; }
-        /// <summary>
-        /// An array of data manifest custom resource definition.
-        /// Serialized Name: DataPolicyManifest.properties.resourceFunctions.custom
-        /// </summary>
+        /// <summary> An array of data manifest custom resource definition. </summary>
         [WirePath("properties.custom")]
         public IReadOnlyList<DataManifestCustomResourceFunctionDefinition> CustomDefinitions { get; }
     }

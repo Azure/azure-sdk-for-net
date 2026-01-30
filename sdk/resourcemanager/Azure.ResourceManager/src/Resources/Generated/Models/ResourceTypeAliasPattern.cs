@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// The type of the pattern for an alias path.
-    /// Serialized Name: ResourceTypeAliasPattern
-    /// </summary>
+    /// <summary> The type of the pattern for an alias path. </summary>
     public partial class ResourceTypeAliasPattern
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPattern"/>. </summary>
-        /// <param name="phrase">
-        /// The alias pattern phrase.
-        /// Serialized Name: ResourceTypeAliasPattern.phrase
-        /// </param>
-        /// <param name="variable">
-        /// The alias pattern variable.
-        /// Serialized Name: ResourceTypeAliasPattern.variable
-        /// </param>
-        /// <param name="patternType">
-        /// The type of alias pattern
-        /// Serialized Name: ResourceTypeAliasPattern.type
-        /// </param>
+        /// <param name="phrase"> The alias pattern phrase. </param>
+        /// <param name="variable"> The alias pattern variable. </param>
+        /// <param name="patternType"> The type of alias pattern. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeAliasPattern(string phrase, string variable, ResourceTypeAliasPatternType? patternType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The alias pattern phrase.
-        /// Serialized Name: ResourceTypeAliasPattern.phrase
-        /// </summary>
+        /// <summary> The alias pattern phrase. </summary>
         [WirePath("phrase")]
         public string Phrase { get; }
-        /// <summary>
-        /// The alias pattern variable.
-        /// Serialized Name: ResourceTypeAliasPattern.variable
-        /// </summary>
+        /// <summary> The alias pattern variable. </summary>
         [WirePath("variable")]
         public string Variable { get; }
-        /// <summary>
-        /// The type of alias pattern
-        /// Serialized Name: ResourceTypeAliasPattern.type
-        /// </summary>
+        /// <summary> The type of alias pattern. </summary>
         [WirePath("type")]
         public ResourceTypeAliasPatternType? PatternType { get; }
     }

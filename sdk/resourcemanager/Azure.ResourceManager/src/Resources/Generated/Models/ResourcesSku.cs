@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// SKU for the resource.
-    /// Serialized Name: Sku
-    /// </summary>
+    /// <summary> SKU for the resource. </summary>
     public partial class ResourcesSku
     {
         /// <summary>
@@ -54,30 +51,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcesSku"/>. </summary>
-        /// <param name="name">
-        /// The SKU name.
-        /// Serialized Name: Sku.name
-        /// </param>
-        /// <param name="tier">
-        /// The SKU tier.
-        /// Serialized Name: Sku.tier
-        /// </param>
-        /// <param name="size">
-        /// The SKU size.
-        /// Serialized Name: Sku.size
-        /// </param>
-        /// <param name="family">
-        /// The SKU family.
-        /// Serialized Name: Sku.family
-        /// </param>
-        /// <param name="model">
-        /// The SKU model.
-        /// Serialized Name: Sku.model
-        /// </param>
-        /// <param name="capacity">
-        /// The SKU capacity.
-        /// Serialized Name: Sku.capacity
-        /// </param>
+        /// <param name="name"> The SKU name. </param>
+        /// <param name="tier"> The SKU tier. </param>
+        /// <param name="size"> The SKU size. </param>
+        /// <param name="family"> The SKU family. </param>
+        /// <param name="model"> The SKU model. </param>
+        /// <param name="capacity"> The SKU capacity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourcesSku(string name, string tier, string size, string family, string model, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,40 +69,22 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The SKU name.
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> The SKU name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The SKU tier.
-        /// Serialized Name: Sku.tier
-        /// </summary>
+        /// <summary> The SKU tier. </summary>
         [WirePath("tier")]
         public string Tier { get; set; }
-        /// <summary>
-        /// The SKU size.
-        /// Serialized Name: Sku.size
-        /// </summary>
+        /// <summary> The SKU size. </summary>
         [WirePath("size")]
         public string Size { get; set; }
-        /// <summary>
-        /// The SKU family.
-        /// Serialized Name: Sku.family
-        /// </summary>
+        /// <summary> The SKU family. </summary>
         [WirePath("family")]
         public string Family { get; set; }
-        /// <summary>
-        /// The SKU model.
-        /// Serialized Name: Sku.model
-        /// </summary>
+        /// <summary> The SKU model. </summary>
         [WirePath("model")]
         public string Model { get; set; }
-        /// <summary>
-        /// The SKU capacity.
-        /// Serialized Name: Sku.capacity
-        /// </summary>
+        /// <summary> The SKU capacity. </summary>
         [WirePath("capacity")]
         public int? Capacity { get; set; }
     }

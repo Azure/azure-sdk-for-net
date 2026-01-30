@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Role definition properties.
-    /// Serialized Name: AzureRoleDefinition
-    /// </summary>
+    /// <summary> Role definition properties. </summary>
     public partial class AzureRoleDefinition
     {
         /// <summary>
@@ -56,26 +53,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureRoleDefinition"/>. </summary>
-        /// <param name="id">
-        /// The role definition ID.
-        /// Serialized Name: AzureRoleDefinition.id
-        /// </param>
-        /// <param name="name">
-        /// The role definition name.
-        /// Serialized Name: AzureRoleDefinition.name
-        /// </param>
-        /// <param name="isServiceRole">
-        /// If this is a service role.
-        /// Serialized Name: AzureRoleDefinition.isServiceRole
-        /// </param>
-        /// <param name="permissions">
-        /// Role definition permissions.
-        /// Serialized Name: AzureRoleDefinition.permissions
-        /// </param>
-        /// <param name="scopes">
-        /// Role definition assignable scopes.
-        /// Serialized Name: AzureRoleDefinition.scopes
-        /// </param>
+        /// <param name="id"> The role definition ID. </param>
+        /// <param name="name"> The role definition name. </param>
+        /// <param name="isServiceRole"> If this is a service role. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="scopes"> Role definition assignable scopes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AzureRoleDefinition(string id, string name, bool? isServiceRole, IReadOnlyList<Permission> permissions, IReadOnlyList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,34 +69,19 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The role definition ID.
-        /// Serialized Name: AzureRoleDefinition.id
-        /// </summary>
+        /// <summary> The role definition ID. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// The role definition name.
-        /// Serialized Name: AzureRoleDefinition.name
-        /// </summary>
+        /// <summary> The role definition name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// If this is a service role.
-        /// Serialized Name: AzureRoleDefinition.isServiceRole
-        /// </summary>
+        /// <summary> If this is a service role. </summary>
         [WirePath("isServiceRole")]
         public bool? IsServiceRole { get; }
-        /// <summary>
-        /// Role definition permissions.
-        /// Serialized Name: AzureRoleDefinition.permissions
-        /// </summary>
+        /// <summary> Role definition permissions. </summary>
         [WirePath("permissions")]
         public IReadOnlyList<Permission> Permissions { get; }
-        /// <summary>
-        /// Role definition assignable scopes.
-        /// Serialized Name: AzureRoleDefinition.scopes
-        /// </summary>
+        /// <summary> Role definition assignable scopes. </summary>
         [WirePath("scopes")]
         public IReadOnlyList<string> Scopes { get; }
     }

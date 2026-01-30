@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Information about feature.
-    /// Serialized Name: FeatureProperties
-    /// </summary>
+    /// <summary> Information about feature. </summary>
     internal partial class FeatureProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureProperties"/>. </summary>
-        /// <param name="state">
-        /// The registration state of the feature for the subscription.
-        /// Serialized Name: FeatureProperties.state
-        /// </param>
+        /// <param name="state"> The registration state of the feature for the subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FeatureProperties(string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The registration state of the feature for the subscription.
-        /// Serialized Name: FeatureProperties.state
-        /// </summary>
+        /// <summary> The registration state of the feature for the subscription. </summary>
         [WirePath("state")]
         public string State { get; }
     }

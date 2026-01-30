@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Availability zone mappings for the region
-    /// Serialized Name: AvailabilityZoneMappings
-    /// </summary>
+    /// <summary> Availability zone mappings for the region. </summary>
     public partial class AvailabilityZoneMappings
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
-        /// <param name="logicalZone">
-        /// The logical zone id for the availability zone
-        /// Serialized Name: AvailabilityZoneMappings.logicalZone
-        /// </param>
-        /// <param name="physicalZone">
-        /// The fully qualified physical zone id of availability zone to which logical zone id is mapped to
-        /// Serialized Name: AvailabilityZoneMappings.physicalZone
-        /// </param>
+        /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
+        /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AvailabilityZoneMappings(string logicalZone, string physicalZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The logical zone id for the availability zone
-        /// Serialized Name: AvailabilityZoneMappings.logicalZone
-        /// </summary>
+        /// <summary> The logical zone id for the availability zone. </summary>
         [WirePath("logicalZone")]
         public string LogicalZone { get; }
-        /// <summary>
-        /// The fully qualified physical zone id of availability zone to which logical zone id is mapped to
-        /// Serialized Name: AvailabilityZoneMappings.physicalZone
-        /// </summary>
+        /// <summary> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </summary>
         [WirePath("physicalZone")]
         public string PhysicalZone { get; }
     }

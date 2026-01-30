@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the ResourceGroup data model.
     /// Resource group information.
-    /// Serialized Name: ResourceGroup
     /// </summary>
     public partial class ResourceGroupData : TrackedResourceData
     {
@@ -65,14 +64,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The resource group properties.
-        /// Serialized Name: ResourceGroup.properties
-        /// </param>
-        /// <param name="managedBy">
-        /// The ID of the resource that manages this resource group.
-        /// Serialized Name: ResourceGroup.managedBy
-        /// </param>
+        /// <param name="properties"> The resource group properties. </param>
+        /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGroupProperties properties, string managedBy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -86,25 +79,16 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary>
-        /// The resource group properties.
-        /// Serialized Name: ResourceGroup.properties
-        /// </summary>
+        /// <summary> The resource group properties. </summary>
         internal ResourceGroupProperties Properties { get; set; }
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: ResourceGroupProperties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public string ResourceGroupProvisioningState
         {
             get => Properties is null ? default : Properties.ProvisioningState;
         }
 
-        /// <summary>
-        /// The ID of the resource that manages this resource group.
-        /// Serialized Name: ResourceGroup.managedBy
-        /// </summary>
+        /// <summary> The ID of the resource that manages this resource group. </summary>
         [WirePath("managedBy")]
         public string ManagedBy { get; set; }
     }

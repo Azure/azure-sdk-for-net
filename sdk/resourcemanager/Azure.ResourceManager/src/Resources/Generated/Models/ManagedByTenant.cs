@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Information about a tenant managing the subscription.
-    /// Serialized Name: ManagedByTenant
-    /// </summary>
+    /// <summary> Information about a tenant managing the subscription. </summary>
     public partial class ManagedByTenant
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedByTenant"/>. </summary>
-        /// <param name="tenantId">
-        /// The tenant ID of the managing tenant. This is a GUID.
-        /// Serialized Name: ManagedByTenant.tenantId
-        /// </param>
+        /// <param name="tenantId"> The tenant ID of the managing tenant. This is a GUID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedByTenant(Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The tenant ID of the managing tenant. This is a GUID.
-        /// Serialized Name: ManagedByTenant.tenantId
-        /// </summary>
+        /// <summary> The tenant ID of the managing tenant. This is a GUID. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; }
     }

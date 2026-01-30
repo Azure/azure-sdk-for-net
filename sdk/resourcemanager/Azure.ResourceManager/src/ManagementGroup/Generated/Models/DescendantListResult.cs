@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// Paged collection of DescendantInfo items
-    /// Serialized Name: DescendantListResult
-    /// </summary>
+    /// <summary> Paged collection of DescendantInfo items. </summary>
     internal partial class DescendantListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DescendantListResult"/>. </summary>
-        /// <param name="value">
-        /// The DescendantInfo items on this page
-        /// Serialized Name: DescendantListResult.value
-        /// </param>
+        /// <param name="value"> The DescendantInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DescendantListResult(IEnumerable<DescendantData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DescendantListResult"/>. </summary>
-        /// <param name="value">
-        /// The DescendantInfo items on this page
-        /// Serialized Name: DescendantListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: DescendantListResult.nextLink
-        /// </param>
+        /// <param name="value"> The DescendantInfo items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DescendantListResult(IReadOnlyList<DescendantData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         {
         }
 
-        /// <summary>
-        /// The DescendantInfo items on this page
-        /// Serialized Name: DescendantListResult.value
-        /// </summary>
+        /// <summary> The DescendantInfo items on this page. </summary>
         public IReadOnlyList<DescendantData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: DescendantListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

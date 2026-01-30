@@ -22,58 +22,19 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// The location of the policy assignment. Only required when utilizing managed identity.
-        /// Serialized Name: PolicyAssignment.location
-        /// </param>
-        /// <param name="managedIdentity">
-        /// The managed identity associated with the policy assignment.
-        /// Serialized Name: PolicyAssignment.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the policy assignment.
-        /// Serialized Name: PolicyAssignment.properties.displayName
-        /// </param>
-        /// <param name="policyDefinitionId">
-        /// The ID of the policy definition or policy set definition being assigned.
-        /// Serialized Name: PolicyAssignment.properties.policyDefinitionId
-        /// </param>
-        /// <param name="scope">
-        /// The scope for the policy assignment.
-        /// Serialized Name: PolicyAssignment.properties.scope
-        /// </param>
-        /// <param name="excludedScopes">
-        /// The policy's excluded scopes.
-        /// Serialized Name: PolicyAssignment.properties.notScopes
-        /// </param>
-        /// <param name="parameters">
-        /// The parameter values for the assigned policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyAssignment.properties.parameters
-        /// </param>
-        /// <param name="description">
-        /// This message will be part of response in case of policy violation.
-        /// Serialized Name: PolicyAssignment.properties.description
-        /// </param>
-        /// <param name="metadata">
-        /// The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicyAssignment.properties.metadata
-        /// </param>
-        /// <param name="enforcementMode">
-        /// The policy assignment enforcement mode. Possible values are Default and DoNotEnforce.
-        /// Serialized Name: PolicyAssignment.properties.enforcementMode
-        /// </param>
-        /// <param name="nonComplianceMessages">
-        /// The messages that describe why a resource is non-compliant with the policy.
-        /// Serialized Name: PolicyAssignment.properties.nonComplianceMessages
-        /// </param>
-        /// <param name="resourceSelectors">
-        /// The resource selector list to filter policies by resource properties.
-        /// Serialized Name: PolicyAssignment.properties.resourceSelectors
-        /// </param>
-        /// <param name="overrides">
-        /// The policy property value override.
-        /// Serialized Name: PolicyAssignment.properties.overrides
-        /// </param>
+        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
+        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="displayName"> The display name of the policy assignment. </param>
+        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
+        /// <param name="scope"> The scope for the policy assignment. </param>
+        /// <param name="excludedScopes"> The policy's excluded scopes. </param>
+        /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
+        /// <param name="description"> This message will be part of response in case of policy violation. </param>
+        /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
+        /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
+        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
+        /// <param name="overrides"> The policy property value override. </param>
         /// <returns> A new <see cref="Resources.PolicyAssignmentData"/> instance for mocking. </returns>
         public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null, IEnumerable<ResourceSelector> resourceSelectors = null, IEnumerable<PolicyOverride> overrides = null)
         {
@@ -109,34 +70,13 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType">
-        /// The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static.
-        /// Serialized Name: PolicyDefinition.properties.policyType
-        /// </param>
-        /// <param name="mode">
-        /// The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data.
-        /// Serialized Name: PolicyDefinition.properties.mode
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the policy definition.
-        /// Serialized Name: PolicyDefinition.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// The policy definition description.
-        /// Serialized Name: PolicyDefinition.properties.description
-        /// </param>
-        /// <param name="policyRule">
-        /// The policy rule.
-        /// Serialized Name: PolicyDefinition.properties.policyRule
-        /// </param>
-        /// <param name="metadata">
-        /// The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicyDefinition.properties.metadata
-        /// </param>
-        /// <param name="parameters">
-        /// The parameter definitions for parameters used in the policy rule. The keys are the parameter names.
-        /// Serialized Name: PolicyDefinition.properties.parameters
-        /// </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
+        /// <param name="displayName"> The display name of the policy definition. </param>
+        /// <param name="description"> The policy definition description. </param>
+        /// <param name="policyRule"> The policy rule. </param>
+        /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
         /// <returns> A new <see cref="Resources.PolicyDefinitionData"/> instance for mocking. </returns>
         public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null)
         {
@@ -162,34 +102,13 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType">
-        /// The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static.
-        /// Serialized Name: PolicySetDefinition.properties.policyType
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the policy set definition.
-        /// Serialized Name: PolicySetDefinition.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// The policy set definition description.
-        /// Serialized Name: PolicySetDefinition.properties.description
-        /// </param>
-        /// <param name="metadata">
-        /// The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
-        /// Serialized Name: PolicySetDefinition.properties.metadata
-        /// </param>
-        /// <param name="parameters">
-        /// The policy set definition parameters that can be used in policy definition references.
-        /// Serialized Name: PolicySetDefinition.properties.parameters
-        /// </param>
-        /// <param name="policyDefinitions">
-        /// An array of policy definition references.
-        /// Serialized Name: PolicySetDefinition.properties.policyDefinitions
-        /// </param>
-        /// <param name="policyDefinitionGroups">
-        /// The metadata describing groups of policy definition references within the policy set definition.
-        /// Serialized Name: PolicySetDefinition.properties.policyDefinitionGroups
-        /// </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="displayName"> The display name of the policy set definition. </param>
+        /// <param name="description"> The policy set definition description. </param>
+        /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
+        /// <param name="policyDefinitions"> An array of policy definition references. </param>
+        /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
         /// <returns> A new <see cref="Resources.PolicySetDefinitionData"/> instance for mocking. </returns>
         public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null)
         {
@@ -217,38 +136,14 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="namespaces">
-        /// The list of namespaces for the data policy manifest.
-        /// Serialized Name: DataPolicyManifest.properties.namespaces
-        /// </param>
-        /// <param name="policyMode">
-        /// The policy mode of the data policy manifest.
-        /// Serialized Name: DataPolicyManifest.properties.policyMode
-        /// </param>
-        /// <param name="isBuiltInOnly">
-        /// A value indicating whether policy mode is allowed only in built-in definitions.
-        /// Serialized Name: DataPolicyManifest.properties.isBuiltInOnly
-        /// </param>
-        /// <param name="resourceTypeAliases">
-        /// An array of resource type aliases.
-        /// Serialized Name: DataPolicyManifest.properties.resourceTypeAliases
-        /// </param>
-        /// <param name="effects">
-        /// The effect definition.
-        /// Serialized Name: DataPolicyManifest.properties.effects
-        /// </param>
-        /// <param name="fieldValues">
-        /// The non-alias field accessor values that can be used in the policy rule.
-        /// Serialized Name: DataPolicyManifest.properties.fieldValues
-        /// </param>
-        /// <param name="standard">
-        /// The standard resource functions (subscription and/or resourceGroup).
-        /// Serialized Name: DataPolicyManifest.properties.resourceFunctions.standard
-        /// </param>
-        /// <param name="customDefinitions">
-        /// An array of data manifest custom resource definition.
-        /// Serialized Name: DataPolicyManifest.properties.resourceFunctions.custom
-        /// </param>
+        /// <param name="namespaces"> The list of namespaces for the data policy manifest. </param>
+        /// <param name="policyMode"> The policy mode of the data policy manifest. </param>
+        /// <param name="isBuiltInOnly"> A value indicating whether policy mode is allowed only in built-in definitions. </param>
+        /// <param name="resourceTypeAliases"> An array of resource type aliases. </param>
+        /// <param name="effects"> The effect definition. </param>
+        /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
+        /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
+        /// <param name="customDefinitions"> An array of data manifest custom resource definition. </param>
         /// <returns> A new <see cref="Resources.DataPolicyManifestData"/> instance for mocking. </returns>
         public static DataPolicyManifestData DataPolicyManifestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> namespaces = null, string policyMode = null, bool? isBuiltInOnly = null, IEnumerable<ResourceTypeAliases> resourceTypeAliases = null, IEnumerable<DataPolicyManifestEffect> effects = null, IEnumerable<string> fieldValues = null, IEnumerable<string> standard = null, IEnumerable<DataManifestCustomResourceFunctionDefinition> customDefinitions = null)
         {
@@ -276,14 +171,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliases"/>. </summary>
-        /// <param name="resourceType">
-        /// The resource type name.
-        /// Serialized Name: ResourceTypeAliases.resourceType
-        /// </param>
-        /// <param name="aliases">
-        /// The aliases for property names.
-        /// Serialized Name: ResourceTypeAliases.aliases
-        /// </param>
+        /// <param name="resourceType"> The resource type name. </param>
+        /// <param name="aliases"> The aliases for property names. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAliases"/> instance for mocking. </returns>
         public static ResourceTypeAliases ResourceTypeAliases(string resourceType = null, IEnumerable<ResourceTypeAlias> aliases = null)
         {
@@ -293,30 +182,12 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAlias"/>. </summary>
-        /// <param name="name">
-        /// The alias name.
-        /// Serialized Name: ResourceTypeAlias.name
-        /// </param>
-        /// <param name="paths">
-        /// The paths for an alias.
-        /// Serialized Name: ResourceTypeAlias.paths
-        /// </param>
-        /// <param name="aliasType">
-        /// The type of the alias.
-        /// Serialized Name: ResourceTypeAlias.type
-        /// </param>
-        /// <param name="defaultPath">
-        /// The default path for an alias.
-        /// Serialized Name: ResourceTypeAlias.defaultPath
-        /// </param>
-        /// <param name="defaultPattern">
-        /// The default pattern for an alias.
-        /// Serialized Name: ResourceTypeAlias.defaultPattern
-        /// </param>
-        /// <param name="defaultMetadata">
-        /// The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata
-        /// Serialized Name: ResourceTypeAlias.defaultMetadata
-        /// </param>
+        /// <param name="name"> The alias name. </param>
+        /// <param name="paths"> The paths for an alias. </param>
+        /// <param name="aliasType"> The type of the alias. </param>
+        /// <param name="defaultPath"> The default path for an alias. </param>
+        /// <param name="defaultPattern"> The default pattern for an alias. </param>
+        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAlias"/> instance for mocking. </returns>
         public static ResourceTypeAlias ResourceTypeAlias(string name = null, IEnumerable<ResourceTypeAliasPath> paths = null, ResourceTypeAliasType? aliasType = null, string defaultPath = null, ResourceTypeAliasPattern defaultPattern = null, ResourceTypeAliasPathMetadata defaultMetadata = null)
         {
@@ -333,22 +204,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPath"/>. </summary>
-        /// <param name="path">
-        /// The path of an alias.
-        /// Serialized Name: ResourceTypeAliasPath.path
-        /// </param>
-        /// <param name="apiVersions">
-        /// The API versions.
-        /// Serialized Name: ResourceTypeAliasPath.apiVersions
-        /// </param>
-        /// <param name="pattern">
-        /// The pattern for an alias path.
-        /// Serialized Name: ResourceTypeAliasPath.pattern
-        /// </param>
-        /// <param name="metadata">
-        /// The metadata of the alias path. If missing, fall back to the default metadata of the alias.
-        /// Serialized Name: ResourceTypeAliasPath.metadata
-        /// </param>
+        /// <param name="path"> The path of an alias. </param>
+        /// <param name="apiVersions"> The API versions. </param>
+        /// <param name="pattern"> The pattern for an alias path. </param>
+        /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPath"/> instance for mocking. </returns>
         public static ResourceTypeAliasPath ResourceTypeAliasPath(string path = null, IEnumerable<string> apiVersions = null, ResourceTypeAliasPattern pattern = null, ResourceTypeAliasPathMetadata metadata = null)
         {
@@ -358,18 +217,9 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPattern"/>. </summary>
-        /// <param name="phrase">
-        /// The alias pattern phrase.
-        /// Serialized Name: ResourceTypeAliasPattern.phrase
-        /// </param>
-        /// <param name="variable">
-        /// The alias pattern variable.
-        /// Serialized Name: ResourceTypeAliasPattern.variable
-        /// </param>
-        /// <param name="patternType">
-        /// The type of alias pattern
-        /// Serialized Name: ResourceTypeAliasPattern.type
-        /// </param>
+        /// <param name="phrase"> The alias pattern phrase. </param>
+        /// <param name="variable"> The alias pattern variable. </param>
+        /// <param name="patternType"> The type of alias pattern. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPattern"/> instance for mocking. </returns>
         public static ResourceTypeAliasPattern ResourceTypeAliasPattern(string phrase = null, string variable = null, ResourceTypeAliasPatternType? patternType = null)
         {
@@ -377,14 +227,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/>. </summary>
-        /// <param name="tokenType">
-        /// The type of the token that the alias path is referring to.
-        /// Serialized Name: ResourceTypeAliasPathMetadata.type
-        /// </param>
-        /// <param name="attributes">
-        /// The attributes of the token that the alias path is referring to.
-        /// Serialized Name: ResourceTypeAliasPathMetadata.attributes
-        /// </param>
+        /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
+        /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/> instance for mocking. </returns>
         public static ResourceTypeAliasPathMetadata ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? tokenType = null, ResourceTypeAliasPathAttributes? attributes = null)
         {
@@ -392,14 +236,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.DataPolicyManifestEffect"/>. </summary>
-        /// <param name="name">
-        /// The data effect name.
-        /// Serialized Name: DataPolicyManifestEffect.name
-        /// </param>
-        /// <param name="detailsSchema">
-        /// The data effect details schema.
-        /// Serialized Name: DataPolicyManifestEffect.detailsSchema
-        /// </param>
+        /// <param name="name"> The data effect name. </param>
+        /// <param name="detailsSchema"> The data effect details schema. </param>
         /// <returns> A new <see cref="Resources.Models.DataPolicyManifestEffect"/> instance for mocking. </returns>
         public static DataPolicyManifestEffect DataPolicyManifestEffect(string name = null, BinaryData detailsSchema = null)
         {
@@ -407,22 +245,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.DataManifestCustomResourceFunctionDefinition"/>. </summary>
-        /// <param name="name">
-        /// The function name as it will appear in the policy rule. eg - 'vault'.
-        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.name
-        /// </param>
-        /// <param name="fullyQualifiedResourceType">
-        /// The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'.
-        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.fullyQualifiedResourceType
-        /// </param>
-        /// <param name="defaultProperties">
-        /// The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported
-        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.defaultProperties
-        /// </param>
-        /// <param name="allowCustomProperties">
-        /// A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01').
-        /// Serialized Name: DataManifestCustomResourceFunctionDefinition.allowCustomProperties
-        /// </param>
+        /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
+        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
+        /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
+        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
         /// <returns> A new <see cref="Resources.Models.DataManifestCustomResourceFunctionDefinition"/> instance for mocking. </returns>
         public static DataManifestCustomResourceFunctionDefinition DataManifestCustomResourceFunctionDefinition(string name = null, ResourceType? fullyQualifiedResourceType = null, IEnumerable<string> defaultProperties = null, bool? allowCustomProperties = null)
         {
@@ -436,18 +262,9 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="level">
-        /// The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it.
-        /// Serialized Name: ManagementLock.properties.level
-        /// </param>
-        /// <param name="notes">
-        /// Notes about the lock. Maximum of 512 characters.
-        /// Serialized Name: ManagementLock.properties.notes
-        /// </param>
-        /// <param name="owners">
-        /// The owners of the lock.
-        /// Serialized Name: ManagementLock.properties.owners
-        /// </param>
+        /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
+        /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
+        /// <param name="owners"> The owners of the lock. </param>
         /// <returns> A new <see cref="Resources.ManagementLockData"/> instance for mocking. </returns>
         public static ManagementLockData ManagementLockData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagementLockLevel level = default, string notes = null, IEnumerable<ManagementLockOwner> owners = null)
         {
@@ -465,30 +282,12 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ResourceProviderData"/>. </summary>
-        /// <param name="id">
-        /// The provider ID.
-        /// Serialized Name: ResourceProvider.id
-        /// </param>
-        /// <param name="namespace">
-        /// The namespace of the resource provider.
-        /// Serialized Name: ResourceProvider.namespace
-        /// </param>
-        /// <param name="registrationState">
-        /// The registration state of the resource provider.
-        /// Serialized Name: ResourceProvider.registrationState
-        /// </param>
-        /// <param name="registrationPolicy">
-        /// The registration policy of the resource provider.
-        /// Serialized Name: ResourceProvider.registrationPolicy
-        /// </param>
-        /// <param name="resourceTypes">
-        /// The collection of provider resource types.
-        /// Serialized Name: ResourceProvider.resourceTypes
-        /// </param>
-        /// <param name="providerAuthorizationConsentState">
-        /// The provider authorization consent state.
-        /// Serialized Name: ResourceProvider.providerAuthorizationConsentState
-        /// </param>
+        /// <param name="id"> The provider ID. </param>
+        /// <param name="namespace"> The namespace of the resource provider. </param>
+        /// <param name="registrationState"> The registration state of the resource provider. </param>
+        /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
+        /// <param name="resourceTypes"> The collection of provider resource types. </param>
+        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
         /// <returns> A new <see cref="Resources.ResourceProviderData"/> instance for mocking. </returns>
         public static ResourceProviderData ResourceProviderData(ResourceIdentifier id = null, string @namespace = null, string registrationState = null, string registrationPolicy = null, IEnumerable<ProviderResourceType> resourceTypes = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
         {
@@ -505,43 +304,16 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderResourceType"/>. </summary>
-        /// <param name="resourceType">
-        /// The resource type.
-        /// Serialized Name: ProviderResourceType.resourceType
-        /// </param>
-        /// <param name="locations">
-        /// The collection of locations where this resource type can be created.
-        /// Serialized Name: ProviderResourceType.locations
-        /// </param>
-        /// <param name="locationMappings">
-        /// The location mappings that are supported by this resource type.
-        /// Serialized Name: ProviderResourceType.locationMappings
-        /// </param>
-        /// <param name="aliases">
-        /// The aliases that are supported by this resource type.
-        /// Serialized Name: ProviderResourceType.aliases
-        /// </param>
-        /// <param name="apiVersions">
-        /// The API version.
-        /// Serialized Name: ProviderResourceType.apiVersions
-        /// </param>
-        /// <param name="defaultApiVersion">
-        /// The default API version.
-        /// Serialized Name: ProviderResourceType.defaultApiVersion
-        /// </param>
-        /// <param name="zoneMappings"> Serialized Name: ProviderResourceType.zoneMappings. </param>
-        /// <param name="apiProfiles">
-        /// The API profiles for the resource provider.
-        /// Serialized Name: ProviderResourceType.apiProfiles
-        /// </param>
-        /// <param name="capabilities">
-        /// The additional capabilities offered by this resource type.
-        /// Serialized Name: ProviderResourceType.capabilities
-        /// </param>
-        /// <param name="properties">
-        /// The properties.
-        /// Serialized Name: ProviderResourceType.properties
-        /// </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="locations"> The collection of locations where this resource type can be created. </param>
+        /// <param name="locationMappings"> The location mappings that are supported by this resource type. </param>
+        /// <param name="aliases"> The aliases that are supported by this resource type. </param>
+        /// <param name="apiVersions"> The API version. </param>
+        /// <param name="defaultApiVersion"> The default API version. </param>
+        /// <param name="zoneMappings"></param>
+        /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
+        /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
+        /// <param name="properties"> The properties. </param>
         /// <returns> A new <see cref="Resources.Models.ProviderResourceType"/> instance for mocking. </returns>
         public static ProviderResourceType ProviderResourceType(string resourceType = null, IEnumerable<string> locations = null, IEnumerable<ProviderExtendedLocation> locationMappings = null, IEnumerable<ResourceTypeAlias> aliases = null, IEnumerable<string> apiVersions = null, string defaultApiVersion = null, IEnumerable<ZoneMapping> zoneMappings = null, IEnumerable<ApiProfile> apiProfiles = null, string capabilities = null, IReadOnlyDictionary<string, string> properties = null)
         {
@@ -568,18 +340,9 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderExtendedLocation"/>. </summary>
-        /// <param name="location">
-        /// The azure location.
-        /// Serialized Name: ProviderExtendedLocation.location
-        /// </param>
-        /// <param name="providerExtendedLocationType">
-        /// The extended location type.
-        /// Serialized Name: ProviderExtendedLocation.type
-        /// </param>
-        /// <param name="extendedLocations">
-        /// The extended locations for the azure location.
-        /// Serialized Name: ProviderExtendedLocation.extendedLocations
-        /// </param>
+        /// <param name="location"> The azure location. </param>
+        /// <param name="providerExtendedLocationType"> The extended location type. </param>
+        /// <param name="extendedLocations"> The extended locations for the azure location. </param>
         /// <returns> A new <see cref="Resources.Models.ProviderExtendedLocation"/> instance for mocking. </returns>
         public static ProviderExtendedLocation ProviderExtendedLocation(AzureLocation? location = null, string providerExtendedLocationType = null, IEnumerable<string> extendedLocations = null)
         {
@@ -589,11 +352,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ZoneMapping"/>. </summary>
-        /// <param name="location">
-        /// The location of the zone mapping.
-        /// Serialized Name: ZoneMapping.location
-        /// </param>
-        /// <param name="zones"> Serialized Name: ZoneMapping.zones. </param>
+        /// <param name="location"> The location of the zone mapping. </param>
+        /// <param name="zones"></param>
         /// <returns> A new <see cref="Resources.Models.ZoneMapping"/> instance for mocking. </returns>
         public static ZoneMapping ZoneMapping(AzureLocation? location = null, IEnumerable<string> zones = null)
         {
@@ -603,14 +363,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ApiProfile"/>. </summary>
-        /// <param name="profileVersion">
-        /// The profile version.
-        /// Serialized Name: ApiProfile.profileVersion
-        /// </param>
-        /// <param name="apiVersion">
-        /// The API version.
-        /// Serialized Name: ApiProfile.apiVersion
-        /// </param>
+        /// <param name="profileVersion"> The profile version. </param>
+        /// <param name="apiVersion"> The API version. </param>
         /// <returns> A new <see cref="Resources.Models.ApiProfile"/> instance for mocking. </returns>
         public static ApiProfile ApiProfile(string profileVersion = null, string apiVersion = null)
         {
@@ -618,22 +372,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderPermission"/>. </summary>
-        /// <param name="applicationId">
-        /// The application id.
-        /// Serialized Name: ProviderPermission.applicationId
-        /// </param>
-        /// <param name="roleDefinition">
-        /// Role definition properties.
-        /// Serialized Name: ProviderPermission.roleDefinition
-        /// </param>
-        /// <param name="managedByRoleDefinition">
-        /// Role definition properties.
-        /// Serialized Name: ProviderPermission.managedByRoleDefinition
-        /// </param>
-        /// <param name="providerAuthorizationConsentState">
-        /// The provider authorization consent state.
-        /// Serialized Name: ProviderPermission.providerAuthorizationConsentState
-        /// </param>
+        /// <param name="applicationId"> The application id. </param>
+        /// <param name="roleDefinition"> Role definition properties. </param>
+        /// <param name="managedByRoleDefinition"> Role definition properties. </param>
+        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
         /// <returns> A new <see cref="Resources.Models.ProviderPermission"/> instance for mocking. </returns>
         public static ProviderPermission ProviderPermission(string applicationId = null, AzureRoleDefinition roleDefinition = null, AzureRoleDefinition managedByRoleDefinition = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
         {
@@ -641,26 +383,11 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.AzureRoleDefinition"/>. </summary>
-        /// <param name="id">
-        /// The role definition ID.
-        /// Serialized Name: AzureRoleDefinition.id
-        /// </param>
-        /// <param name="name">
-        /// The role definition name.
-        /// Serialized Name: AzureRoleDefinition.name
-        /// </param>
-        /// <param name="isServiceRole">
-        /// If this is a service role.
-        /// Serialized Name: AzureRoleDefinition.isServiceRole
-        /// </param>
-        /// <param name="permissions">
-        /// Role definition permissions.
-        /// Serialized Name: AzureRoleDefinition.permissions
-        /// </param>
-        /// <param name="scopes">
-        /// Role definition assignable scopes.
-        /// Serialized Name: AzureRoleDefinition.scopes
-        /// </param>
+        /// <param name="id"> The role definition ID. </param>
+        /// <param name="name"> The role definition name. </param>
+        /// <param name="isServiceRole"> If this is a service role. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="scopes"> Role definition assignable scopes. </param>
         /// <returns> A new <see cref="Resources.Models.AzureRoleDefinition"/> instance for mocking. </returns>
         public static AzureRoleDefinition AzureRoleDefinition(string id = null, string name = null, bool? isServiceRole = null, IEnumerable<Permission> permissions = null, IEnumerable<string> scopes = null)
         {
@@ -677,22 +404,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.Permission"/>. </summary>
-        /// <param name="allowedActions">
-        /// Allowed actions.
-        /// Serialized Name: Permission.actions
-        /// </param>
-        /// <param name="deniedActions">
-        /// Denied actions.
-        /// Serialized Name: Permission.notActions
-        /// </param>
-        /// <param name="allowedDataActions">
-        /// Allowed Data actions.
-        /// Serialized Name: Permission.dataActions
-        /// </param>
-        /// <param name="deniedDataActions">
-        /// Denied Data actions.
-        /// Serialized Name: Permission.notDataActions
-        /// </param>
+        /// <param name="allowedActions"> Allowed actions. </param>
+        /// <param name="deniedActions"> Denied actions. </param>
+        /// <param name="allowedDataActions"> Allowed Data actions. </param>
+        /// <param name="deniedDataActions"> Denied Data actions. </param>
         /// <returns> A new <see cref="Resources.Models.Permission"/> instance for mocking. </returns>
         public static Permission Permission(IEnumerable<string> allowedActions = null, IEnumerable<string> deniedActions = null, IEnumerable<string> allowedDataActions = null, IEnumerable<string> deniedDataActions = null)
         {
@@ -705,14 +420,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.TenantResourceProvider"/>. </summary>
-        /// <param name="namespace">
-        /// The namespace of the resource provider.
-        /// Serialized Name: TenantResourceProvider.namespace
-        /// </param>
-        /// <param name="resourceTypes">
-        /// The collection of provider resource types.
-        /// Serialized Name: TenantResourceProvider.resourceTypes
-        /// </param>
+        /// <param name="namespace"> The namespace of the resource provider. </param>
+        /// <param name="resourceTypes"> The collection of provider resource types. </param>
         /// <returns> A new <see cref="Resources.Models.TenantResourceProvider"/> instance for mocking. </returns>
         public static TenantResourceProvider TenantResourceProvider(string @namespace = null, IEnumerable<ProviderResourceType> resourceTypes = null)
         {
@@ -728,46 +437,16 @@ namespace Azure.ResourceManager.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation">
-        /// Resource extended location.
-        /// Serialized Name: TrackedResourceExtendedData.extendedLocation
-        /// </param>
-        /// <param name="plan">
-        /// The plan of the resource.
-        /// Serialized Name: GenericResource.plan
-        /// </param>
-        /// <param name="properties">
-        /// The resource properties.
-        /// Serialized Name: GenericResource.properties
-        /// </param>
-        /// <param name="kind">
-        /// The kind of the resource.
-        /// Serialized Name: GenericResource.kind
-        /// </param>
-        /// <param name="managedBy">
-        /// ID of the resource that manages this resource.
-        /// Serialized Name: GenericResource.managedBy
-        /// </param>
-        /// <param name="sku">
-        /// The SKU of the resource.
-        /// Serialized Name: GenericResource.sku
-        /// </param>
-        /// <param name="identity">
-        /// The identity of the resource.
-        /// Serialized Name: GenericResource.identity
-        /// </param>
-        /// <param name="createdOn">
-        /// The created time of the resource. This is only present if requested via the $expand query parameter.
-        /// Serialized Name: GenericResource.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// The changed time of the resource. This is only present if requested via the $expand query parameter.
-        /// Serialized Name: GenericResource.changedTime
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the resource. This is only present if requested via the $expand query parameter.
-        /// Serialized Name: GenericResource.provisioningState
-        /// </param>
+        /// <param name="extendedLocation"> Resource extended location. </param>
+        /// <param name="plan"> The plan of the resource. </param>
+        /// <param name="properties"> The resource properties. </param>
+        /// <param name="kind"> The kind of the resource. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <returns> A new <see cref="Resources.GenericResourceData"/> instance for mocking. </returns>
         public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
         {
@@ -800,10 +479,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation">
-        /// Resource extended location.
-        /// Serialized Name: TrackedResourceExtendedData.extendedLocation
-        /// </param>
+        /// <param name="extendedLocation"> Resource extended location. </param>
         /// <returns> A new <see cref="Resources.Models.TrackedResourceExtendedData"/> instance for mocking. </returns>
         public static TrackedResourceExtendedData TrackedResourceExtendedData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null)
         {
@@ -827,14 +503,8 @@ namespace Azure.ResourceManager.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="resourceGroupProvisioningState">
-        /// The resource group properties.
-        /// Serialized Name: ResourceGroup.properties
-        /// </param>
-        /// <param name="managedBy">
-        /// The ID of the resource that manages this resource group.
-        /// Serialized Name: ResourceGroup.managedBy
-        /// </param>
+        /// <param name="resourceGroupProvisioningState"> The resource group properties. </param>
+        /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
         /// <returns> A new <see cref="Resources.ResourceGroupData"/> instance for mocking. </returns>
         public static ResourceGroupData ResourceGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string resourceGroupProvisioningState = null, string managedBy = null)
         {
@@ -853,14 +523,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceGroupExportResult"/>. </summary>
-        /// <param name="template">
-        /// The template content.
-        /// Serialized Name: ResourceGroupExportResult.template
-        /// </param>
-        /// <param name="error">
-        /// The template export error.
-        /// Serialized Name: ResourceGroupExportResult.error
-        /// </param>
+        /// <param name="template"> The template content. </param>
+        /// <param name="error"> The template export error. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceGroupExportResult"/> instance for mocking. </returns>
         public static ResourceGroupExportResult ResourceGroupExportResult(BinaryData template = null, ResponseError error = null)
         {
@@ -868,18 +532,9 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTagValue"/>. </summary>
-        /// <param name="id">
-        /// The tag value ID.
-        /// Serialized Name: PredefinedTagValue.id
-        /// </param>
-        /// <param name="tagValue">
-        /// The tag value.
-        /// Serialized Name: PredefinedTagValue.tagValue
-        /// </param>
-        /// <param name="count">
-        /// The tag value count.
-        /// Serialized Name: PredefinedTagValue.count
-        /// </param>
+        /// <param name="id"> The tag value ID. </param>
+        /// <param name="tagValue"> The tag value. </param>
+        /// <param name="count"> The tag value count. </param>
         /// <returns> A new <see cref="Resources.Models.PredefinedTagValue"/> instance for mocking. </returns>
         public static PredefinedTagValue PredefinedTagValue(string id = null, string tagValue = null, PredefinedTagCount count = null)
         {
@@ -887,14 +542,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTagCount"/>. </summary>
-        /// <param name="predefinedTagCountType">
-        /// Type of count.
-        /// Serialized Name: PredefinedTagCount.type
-        /// </param>
-        /// <param name="value">
-        /// Value of count.
-        /// Serialized Name: PredefinedTagCount.value
-        /// </param>
+        /// <param name="predefinedTagCountType"> Type of count. </param>
+        /// <param name="value"> Value of count. </param>
         /// <returns> A new <see cref="Resources.Models.PredefinedTagCount"/> instance for mocking. </returns>
         public static PredefinedTagCount PredefinedTagCount(string predefinedTagCountType = null, int? value = null)
         {
@@ -902,22 +551,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTag"/>. </summary>
-        /// <param name="id">
-        /// The tag name ID.
-        /// Serialized Name: PredefinedTag.id
-        /// </param>
-        /// <param name="tagName">
-        /// The tag name.
-        /// Serialized Name: PredefinedTag.tagName
-        /// </param>
-        /// <param name="count">
-        /// The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0.
-        /// Serialized Name: PredefinedTag.count
-        /// </param>
-        /// <param name="values">
-        /// The list of tag values.
-        /// Serialized Name: PredefinedTag.values
-        /// </param>
+        /// <param name="id"> The tag name ID. </param>
+        /// <param name="tagName"> The tag name. </param>
+        /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
+        /// <param name="values"> The list of tag values. </param>
         /// <returns> A new <see cref="Resources.Models.PredefinedTag"/> instance for mocking. </returns>
         public static PredefinedTag PredefinedTag(string id = null, string tagName = null, PredefinedTagCount count = null, IEnumerable<PredefinedTagValue> values = null)
         {
@@ -931,10 +568,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tagValues">
-        /// The set of tags.
-        /// Serialized Name: TagResource.properties
-        /// </param>
+        /// <param name="tagValues"> The set of tags. </param>
         /// <returns> A new <see cref="Resources.TagResourceData"/> instance for mocking. </returns>
         public static TagResourceData TagResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tagValues = null)
         {
@@ -950,38 +584,14 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationExpanded"/>. </summary>
-        /// <param name="id">
-        /// The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus.
-        /// Serialized Name: Location.id
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID.
-        /// Serialized Name: Location.subscriptionId
-        /// </param>
-        /// <param name="name">
-        /// The location name.
-        /// Serialized Name: Location.name
-        /// </param>
-        /// <param name="locationType">
-        /// The location type.
-        /// Serialized Name: Location.type
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the location.
-        /// Serialized Name: Location.displayName
-        /// </param>
-        /// <param name="regionalDisplayName">
-        /// The display name of the location and its region.
-        /// Serialized Name: Location.regionalDisplayName
-        /// </param>
-        /// <param name="metadata">
-        /// Metadata of the location, such as lat/long, paired region, and others.
-        /// Serialized Name: Location.metadata
-        /// </param>
-        /// <param name="availabilityZoneMappings">
-        /// The availability zone mappings for this region.
-        /// Serialized Name: Location.availabilityZoneMappings
-        /// </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="name"> The location name. </param>
+        /// <param name="locationType"> The location type. </param>
+        /// <param name="displayName"> The display name of the location. </param>
+        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
+        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
+        /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
         /// <returns> A new <see cref="Resources.Models.LocationExpanded"/> instance for mocking. </returns>
         public static LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, LocationType? locationType = null, string displayName = null, string regionalDisplayName = null, LocationMetadata metadata = null, IEnumerable<AvailabilityZoneMappings> availabilityZoneMappings = null)
         {
@@ -1000,42 +610,15 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationMetadata"/>. </summary>
-        /// <param name="regionType">
-        /// The type of the region.
-        /// Serialized Name: LocationMetadata.regionType
-        /// </param>
-        /// <param name="regionCategory">
-        /// The category of the region.
-        /// Serialized Name: LocationMetadata.regionCategory
-        /// </param>
-        /// <param name="geography">
-        /// The geography of the location.
-        /// Serialized Name: LocationMetadata.geography
-        /// </param>
-        /// <param name="geographyGroup">
-        /// The geography group of the location.
-        /// Serialized Name: LocationMetadata.geographyGroup
-        /// </param>
-        /// <param name="longitude">
-        /// The longitude of the location.
-        /// Serialized Name: LocationMetadata.longitude
-        /// </param>
-        /// <param name="latitude">
-        /// The latitude of the location.
-        /// Serialized Name: LocationMetadata.latitude
-        /// </param>
-        /// <param name="physicalLocation">
-        /// The physical location of the Azure location.
-        /// Serialized Name: LocationMetadata.physicalLocation
-        /// </param>
-        /// <param name="pairedRegions">
-        /// The regions paired to this region.
-        /// Serialized Name: LocationMetadata.pairedRegion
-        /// </param>
-        /// <param name="homeLocation">
-        /// The home location of an edge zone.
-        /// Serialized Name: LocationMetadata.homeLocation
-        /// </param>
+        /// <param name="regionType"> The type of the region. </param>
+        /// <param name="regionCategory"> The category of the region. </param>
+        /// <param name="geography"> The geography of the location. </param>
+        /// <param name="geographyGroup"> The geography group of the location. </param>
+        /// <param name="longitude"> The longitude of the location. </param>
+        /// <param name="latitude"> The latitude of the location. </param>
+        /// <param name="physicalLocation"> The physical location of the Azure location. </param>
+        /// <param name="pairedRegions"> The regions paired to this region. </param>
+        /// <param name="homeLocation"> The home location of an edge zone. </param>
         /// <returns> A new <see cref="Resources.Models.LocationMetadata"/> instance for mocking. </returns>
         public static LocationMetadata LocationMetadata(RegionType? regionType = null, RegionCategory? regionCategory = null, string geography = null, string geographyGroup = null, double? longitude = null, double? latitude = null, string physicalLocation = null, IEnumerable<PairedRegion> pairedRegions = null, string homeLocation = null)
         {
@@ -1055,18 +638,9 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.PairedRegion"/>. </summary>
-        /// <param name="name">
-        /// The name of the paired region.
-        /// Serialized Name: PairedRegion.name
-        /// </param>
-        /// <param name="id">
-        /// The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus.
-        /// Serialized Name: PairedRegion.id
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID.
-        /// Serialized Name: PairedRegion.subscriptionId
-        /// </param>
+        /// <param name="name"> The name of the paired region. </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
         /// <returns> A new <see cref="Resources.Models.PairedRegion"/> instance for mocking. </returns>
         public static PairedRegion PairedRegion(string name = null, string id = null, string subscriptionId = null)
         {
@@ -1074,14 +648,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.AvailabilityZoneMappings"/>. </summary>
-        /// <param name="logicalZone">
-        /// The logical zone id for the availability zone
-        /// Serialized Name: AvailabilityZoneMappings.logicalZone
-        /// </param>
-        /// <param name="physicalZone">
-        /// The fully qualified physical zone id of availability zone to which logical zone id is mapped to
-        /// Serialized Name: AvailabilityZoneMappings.physicalZone
-        /// </param>
+        /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
+        /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
         /// <returns> A new <see cref="Resources.Models.AvailabilityZoneMappings"/> instance for mocking. </returns>
         public static AvailabilityZoneMappings AvailabilityZoneMappings(string logicalZone = null, string physicalZone = null)
         {
@@ -1089,42 +657,15 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.SubscriptionData"/>. </summary>
-        /// <param name="id">
-        /// The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74
-        /// Serialized Name: Subscription.id
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID.
-        /// Serialized Name: Subscription.subscriptionId
-        /// </param>
-        /// <param name="displayName">
-        /// The subscription display name.
-        /// Serialized Name: Subscription.displayName
-        /// </param>
-        /// <param name="tenantId">
-        /// The subscription tenant ID.
-        /// Serialized Name: Subscription.tenantId
-        /// </param>
-        /// <param name="state">
-        /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
-        /// Serialized Name: Subscription.state
-        /// </param>
-        /// <param name="subscriptionPolicies">
-        /// The subscription policies.
-        /// Serialized Name: Subscription.subscriptionPolicies
-        /// </param>
-        /// <param name="authorizationSource">
-        /// The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'.
-        /// Serialized Name: Subscription.authorizationSource
-        /// </param>
-        /// <param name="managedByTenants">
-        /// An array containing the tenants managing the subscription.
-        /// Serialized Name: Subscription.managedByTenants
-        /// </param>
-        /// <param name="tags">
-        /// The tags attached to the subscription.
-        /// Serialized Name: Subscription.tags
-        /// </param>
+        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="displayName"> The subscription display name. </param>
+        /// <param name="tenantId"> The subscription tenant ID. </param>
+        /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
+        /// <param name="subscriptionPolicies"> The subscription policies. </param>
+        /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </param>
+        /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
+        /// <param name="tags"> The tags attached to the subscription. </param>
         /// <returns> A new <see cref="Resources.SubscriptionData"/> instance for mocking. </returns>
         public static SubscriptionData SubscriptionData(ResourceIdentifier id = null, string subscriptionId = null, string displayName = null, Guid? tenantId = null, SubscriptionState? state = null, SubscriptionPolicies subscriptionPolicies = null, string authorizationSource = null, IEnumerable<ManagedByTenant> managedByTenants = null, IReadOnlyDictionary<string, string> tags = null)
         {
@@ -1145,18 +686,9 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.SubscriptionPolicies"/>. </summary>
-        /// <param name="locationPlacementId">
-        /// The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions.
-        /// Serialized Name: SubscriptionPolicies.locationPlacementId
-        /// </param>
-        /// <param name="quotaId">
-        /// The subscription quota ID.
-        /// Serialized Name: SubscriptionPolicies.quotaId
-        /// </param>
-        /// <param name="spendingLimit">
-        /// The subscription spending limit.
-        /// Serialized Name: SubscriptionPolicies.spendingLimit
-        /// </param>
+        /// <param name="locationPlacementId"> The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions. </param>
+        /// <param name="quotaId"> The subscription quota ID. </param>
+        /// <param name="spendingLimit"> The subscription spending limit. </param>
         /// <returns> A new <see cref="Resources.Models.SubscriptionPolicies"/> instance for mocking. </returns>
         public static SubscriptionPolicies SubscriptionPolicies(string locationPlacementId = null, string quotaId = null, SpendingLimit? spendingLimit = null)
         {
@@ -1164,10 +696,7 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ManagedByTenant"/>. </summary>
-        /// <param name="tenantId">
-        /// The tenant ID of the managing tenant. This is a GUID.
-        /// Serialized Name: ManagedByTenant.tenantId
-        /// </param>
+        /// <param name="tenantId"> The tenant ID of the managing tenant. This is a GUID. </param>
         /// <returns> A new <see cref="Resources.Models.ManagedByTenant"/> instance for mocking. </returns>
         public static ManagedByTenant ManagedByTenant(Guid? tenantId = null)
         {
@@ -1175,46 +704,16 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.TenantData"/>. </summary>
-        /// <param name="id">
-        /// The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74
-        /// Serialized Name: Tenant.id
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74
-        /// Serialized Name: Tenant.tenantId
-        /// </param>
-        /// <param name="tenantCategory">
-        /// Category of the tenant.
-        /// Serialized Name: Tenant.tenantCategory
-        /// </param>
-        /// <param name="country">
-        /// Country/region name of the address for the tenant.
-        /// Serialized Name: Tenant.country
-        /// </param>
-        /// <param name="countryCode">
-        /// Country/region abbreviation for the tenant.
-        /// Serialized Name: Tenant.countryCode
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the tenant.
-        /// Serialized Name: Tenant.displayName
-        /// </param>
-        /// <param name="domains">
-        /// The list of domains for the tenant.
-        /// Serialized Name: Tenant.domains
-        /// </param>
-        /// <param name="defaultDomain">
-        /// The default domain for the tenant.
-        /// Serialized Name: Tenant.defaultDomain
-        /// </param>
-        /// <param name="tenantType">
-        /// The tenant type. Only available for 'Home' tenant category.
-        /// Serialized Name: Tenant.tenantType
-        /// </param>
-        /// <param name="tenantBrandingLogoUri">
-        /// The tenant's branding logo URL. Only available for 'Home' tenant category.
-        /// Serialized Name: Tenant.tenantBrandingLogoUrl
-        /// </param>
+        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantCategory"> Category of the tenant. </param>
+        /// <param name="country"> Country/region name of the address for the tenant. </param>
+        /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
+        /// <param name="displayName"> The display name of the tenant. </param>
+        /// <param name="domains"> The list of domains for the tenant. </param>
+        /// <param name="defaultDomain"> The default domain for the tenant. </param>
+        /// <param name="tenantType"> The tenant type. Only available for 'Home' tenant category. </param>
+        /// <param name="tenantBrandingLogoUri"> The tenant's branding logo URL. Only available for 'Home' tenant category. </param>
         /// <returns> A new <see cref="Resources.TenantData"/> instance for mocking. </returns>
         public static TenantData TenantData(string id = null, Guid? tenantId = null, TenantCategory? tenantCategory = null, string country = null, string countryCode = null, string displayName = null, IEnumerable<string> domains = null, string defaultDomain = null, string tenantType = null, Uri tenantBrandingLogoUri = null)
         {
@@ -1235,18 +734,9 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceNameValidationResult"/>. </summary>
-        /// <param name="name">
-        /// Name of Resource
-        /// Serialized Name: CheckResourceNameResult.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Type of Resource
-        /// Serialized Name: CheckResourceNameResult.type
-        /// </param>
-        /// <param name="status">
-        /// Is the resource name Allowed or Reserved
-        /// Serialized Name: CheckResourceNameResult.status
-        /// </param>
+        /// <param name="name"> Name of Resource. </param>
+        /// <param name="resourceType"> Type of Resource. </param>
+        /// <param name="status"> Is the resource name Allowed or Reserved. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceNameValidationResult"/> instance for mocking. </returns>
         public static ResourceNameValidationResult ResourceNameValidationResult(string name = null, ResourceType? resourceType = null, ResourceNameValidationStatus? status = null)
         {
@@ -1258,10 +748,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="featureState">
-        /// Properties of the previewed feature.
-        /// Serialized Name: Feature.properties
-        /// </param>
+        /// <param name="featureState"> Properties of the previewed feature. </param>
         /// <returns> A new <see cref="Resources.FeatureData"/> instance for mocking. </returns>
         public static FeatureData FeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string featureState = null)
         {

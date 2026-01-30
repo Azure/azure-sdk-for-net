@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary>
-    /// The users specific permissions to this item.
-    /// Serialized Name: Permissions
-    /// </summary>
+    /// <summary> The users specific permissions to this item. </summary>
     public enum EntityPermission
     {
-        /// <summary>
-        /// noaccess
-        /// Serialized Name: Permissions.noaccess
-        /// </summary>
+        /// <summary> noaccess. </summary>
         NoAccess,
-        /// <summary>
-        /// view
-        /// Serialized Name: Permissions.view
-        /// </summary>
+        /// <summary> view. </summary>
         View,
-        /// <summary>
-        /// edit
-        /// Serialized Name: Permissions.edit
-        /// </summary>
+        /// <summary> edit. </summary>
         Edit,
-        /// <summary>
-        /// delete
-        /// Serialized Name: Permissions.delete
-        /// </summary>
+        /// <summary> delete. </summary>
         Delete
     }
 }

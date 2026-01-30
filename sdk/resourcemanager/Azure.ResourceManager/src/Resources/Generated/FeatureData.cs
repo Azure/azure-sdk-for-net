@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the Feature data model.
     /// Previewed feature information.
-    /// Serialized Name: Feature
     /// </summary>
     public partial class FeatureData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Properties of the previewed feature.
-        /// Serialized Name: Feature.properties
-        /// </param>
+        /// <param name="properties"> Properties of the previewed feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FeatureProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,15 +69,9 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Properties of the previewed feature.
-        /// Serialized Name: Feature.properties
-        /// </summary>
+        /// <summary> Properties of the previewed feature. </summary>
         internal FeatureProperties Properties { get; }
-        /// <summary>
-        /// The registration state of the feature for the subscription.
-        /// Serialized Name: FeatureProperties.state
-        /// </summary>
+        /// <summary> The registration state of the feature for the subscription. </summary>
         [WirePath("properties.state")]
         public string FeatureState
         {
