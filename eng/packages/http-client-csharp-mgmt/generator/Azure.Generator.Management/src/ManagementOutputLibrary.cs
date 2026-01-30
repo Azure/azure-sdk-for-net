@@ -226,7 +226,7 @@ namespace Azure.Generator.Management
         {
             get
             {
-                BuildModelTypes();
+                EnsureModelTypesBuilt();
                 return _modelFactoryModels!;
             }
         }
@@ -235,12 +235,15 @@ namespace Azure.Generator.Management
         {
             get
             {
-                BuildModelTypes();
+                EnsureModelTypesBuilt();
                 return _allModelTypes!;
             }
         }
 
-        private void BuildModelTypes()
+        /// <summary>
+        /// Ensures model types are built. This should be called after all model modifications (like flattening) are complete.
+        /// </summary>
+        internal void EnsureModelTypesBuilt()
         {
             if (_modelFactoryModels is not null && _allModelTypes is not null)
             {
