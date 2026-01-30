@@ -48,9 +48,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     #region Snippet:ClaimCheckSendMessage
 
 #if SNIPPET
-                    ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
+                    await using ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
 #else
-                    ServiceBusClient client = new(TestEnvironment.FullyQualifiedNamespace, credential);
+                    await using ServiceBusClient client = new(TestEnvironment.FullyQualifiedNamespace, credential);
 #endif
                     ServiceBusSender sender = client.CreateSender(scope.QueueName);
                     await sender.SendMessageAsync(message);
