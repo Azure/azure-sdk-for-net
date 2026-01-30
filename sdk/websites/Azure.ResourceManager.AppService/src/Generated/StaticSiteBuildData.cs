@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="buildId"> An identifier for the static site build. </param>
         /// <param name="sourceBranch"> The source branch. </param>
         /// <param name="pullRequestTitle"> The title of a pull request that a static site build is related to. </param>
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
         /// <param name="linkedBackends"> Backends linked to the static side build. </param>
         /// <param name="databaseConnections"> Database connections for the static site build. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             BuildId = buildId;
             SourceBranch = sourceBranch;
             PullRequestTitle = pullRequestTitle;
@@ -88,10 +89,12 @@ namespace Azure.ResourceManager.AppService
             UserProvidedFunctionApps = userProvidedFunctionApps;
             LinkedBackends = linkedBackends;
             DatabaseConnections = databaseConnections;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> An identifier for the static site build. </summary>
         [WirePath("properties.buildId")]
         public string BuildId { get; }
@@ -122,8 +125,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Database connections for the static site build. </summary>
         [WirePath("properties.databaseConnections")]
         public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

@@ -257,6 +257,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 baseAddress,
                 fileName,
                 href,
@@ -268,7 +269,6 @@ namespace Azure.ResourceManager.AppService
                 productVersion,
                 isDebug,
                 language,
-                kind,
                 serializedAdditionalRawData);
         }
 

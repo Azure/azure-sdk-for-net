@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="windowsOutboundIPAddresses"></param>
         /// <param name="linuxOutboundIPAddresses"></param>
         /// <param name="externalInboundIPAddresses"></param>
@@ -73,10 +74,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
         /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
         /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
             LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
             ExternalInboundIPAddresses = externalInboundIPAddresses;
@@ -85,10 +86,12 @@ namespace Azure.ResourceManager.AppService
             IsFtpEnabled = isFtpEnabled;
             IsRemoteDebugEnabled = isRemoteDebugEnabled;
             InboundIPAddressOverride = inboundIPAddressOverride;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Gets the windows outbound ip addresses. </summary>
         [WirePath("properties.windowsOutboundIpAddresses")]
         public IReadOnlyList<IPAddress> WindowsOutboundIPAddresses { get; }
@@ -113,8 +116,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
         [WirePath("properties.inboundIpAddressOverride")]
         public string InboundIPAddressOverride { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

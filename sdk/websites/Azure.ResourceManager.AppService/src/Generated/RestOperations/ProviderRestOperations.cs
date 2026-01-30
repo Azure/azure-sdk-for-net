@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-11-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (osTypeSelected != null)
             {
                 uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.AppService
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (osTypeSelected != null)
             {
                 uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.AppService
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/functionAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.AppService
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/functionAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/functionAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/functionAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
-        /// <param name="location"> Function App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<FunctionAppStackListResult>> GetFunctionAppStacksForLocationAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
-        /// <param name="location"> Function App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<FunctionAppStackListResult> GetFunctionAppStacksForLocation(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/webAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -289,11 +289,11 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/webAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
-        /// <param name="location"> Web App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<WebAppStackListResult>> GetWebAppStacksForLocationAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
-        /// <param name="location"> Web App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<WebAppStackListResult> GetWebAppStacksForLocation(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.AppService
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/webAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.AppService
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/webAppStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (stackOSType != null)
             {
                 uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -489,11 +489,11 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (osTypeSelected != null)
             {
                 uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (osTypeSelected != null)
             {
                 uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> Function App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> Function App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> Web App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> Web App stack location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>

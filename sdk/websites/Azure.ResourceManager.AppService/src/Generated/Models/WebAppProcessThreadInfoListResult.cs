@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfoListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value"> The ProcessThreadInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebAppProcessThreadInfoListResult(IEnumerable<WebAppProcessThreadInfo> value)
         {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfoListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value"> The ProcessThreadInfo items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppProcessThreadInfoListResult(IReadOnlyList<WebAppProcessThreadInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebAppProcessThreadInfoListResult(IReadOnlyList<WebAppProcessThreadInfo> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary> The ProcessThreadInfo items on this page. </summary>
         public IReadOnlyList<WebAppProcessThreadInfo> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

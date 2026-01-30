@@ -62,20 +62,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
-        /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-        /// Point-To-Site VPN connection.
-        /// </param>
+        /// <param name="certBlob"> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
         /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprintString, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ResourceIdentifier vnetResourceId, string certThumbprintString, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             VnetResourceId = vnetResourceId;
             CertThumbprintString = certThumbprintString;
             CertBlob = certBlob;
@@ -83,20 +81,19 @@ namespace Azure.ResourceManager.AppService
             IsResyncRequired = isResyncRequired;
             DnsServers = dnsServers;
             IsSwift = isSwift;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The Virtual Network's resource ID. </summary>
         [WirePath("properties.vnetResourceId")]
         public ResourceIdentifier VnetResourceId { get; set; }
         /// <summary> The client certificate thumbprint. </summary>
         [WirePath("properties.certThumbprint")]
         public string CertThumbprintString { get; }
-        /// <summary>
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-        /// Point-To-Site VPN connection.
-        /// </summary>
+        /// <summary> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </summary>
         [WirePath("properties.certBlob")]
         public string CertBlob { get; set; }
         /// <summary> The routes that this Virtual Network connection uses. </summary>
@@ -111,8 +108,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Flag that is used to denote if this is VNET injection. </summary>
         [WirePath("properties.isSwift")]
         public bool? IsSwift { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

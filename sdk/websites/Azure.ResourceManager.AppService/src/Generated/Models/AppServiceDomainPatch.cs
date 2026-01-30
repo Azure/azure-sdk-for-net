@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             NameServers = new ChangeTrackingList<string>();
             ManagedHostNames = new ChangeTrackingList<AppServiceHostName>();
-            DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
+            DomainNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDomainPatch"/>. </summary>
@@ -72,20 +72,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="expireOn"> Domain expiration timestamp. </param>
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isReadyForDnsRecordManagement">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
-        ///  it is hosted on name servers Azure has programmatic access to.
-        /// </param>
+        /// <param name="isReadyForDnsRecordManagement"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
         /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
         /// <param name="consent"> Legal agreement consent. </param>
         /// <param name="domainNotRenewableReasons"> Reasons why domain is not renewable. </param>
         /// <param name="dnsType"> Current DNS type. </param>
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
-        /// <param name="authCode"></param>
+        /// <param name="authCode"> Authorization code for the domain. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isReadyForDnsRecordManagement, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isReadyForDnsRecordManagement, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<AppServiceCertificateNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -147,10 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.autoRenew")]
         public bool? IsAutoRenew { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
-        ///  it is hosted on name servers Azure has programmatic access to.
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </summary>
         [WirePath("properties.readyForDnsRecordManagement")]
         public bool? IsReadyForDnsRecordManagement { get; }
         /// <summary> All hostnames derived from the domain and assigned to Azure resources. </summary>
@@ -161,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
         public DomainPurchaseConsent Consent { get; set; }
         /// <summary> Reasons why domain is not renewable. </summary>
         [WirePath("properties.domainNotRenewableReasons")]
-        public IReadOnlyList<DomainNotRenewableReason> DomainNotRenewableReasons { get; }
+        public IReadOnlyList<AppServiceCertificateNotRenewableReason> DomainNotRenewableReasons { get; }
         /// <summary> Current DNS type. </summary>
         [WirePath("properties.dnsType")]
         public AppServiceDnsType? DnsType { get; set; }
@@ -171,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Target DNS type (would be used for migration). </summary>
         [WirePath("properties.targetDnsType")]
         public AppServiceDnsType? TargetDnsType { get; set; }
-        /// <summary> Gets or sets the auth code. </summary>
+        /// <summary> Authorization code for the domain. </summary>
         [WirePath("properties.authCode")]
         public string AuthCode { get; set; }
         /// <summary> Kind of resource. </summary>

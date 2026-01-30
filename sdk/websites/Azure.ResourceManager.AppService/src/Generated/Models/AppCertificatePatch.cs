@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Certificate password. </summary>
         [WirePath("properties.password")]
-        public string Password { get; set; }
+        public string Password { get; }
         /// <summary> Friendly name of the certificate. </summary>
         [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }

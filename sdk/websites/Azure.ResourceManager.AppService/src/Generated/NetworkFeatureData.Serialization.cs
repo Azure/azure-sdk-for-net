@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 virtualNetworkName,
                 virtualNetworkConnection,
                 hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(),
                 hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.AppService
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                kind,
                 keyVaultId,
                 keyVaultSecretName,
                 provisioningState,
-                kind,
                 serializedAdditionalRawData);
         }
 

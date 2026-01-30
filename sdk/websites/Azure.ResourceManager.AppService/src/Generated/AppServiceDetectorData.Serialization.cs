@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 metadata,
                 dataset ?? new ChangeTrackingList<DiagnosticDataset>(),
                 status,
                 dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(),
                 suggestedUtterances,
-                kind,
                 serializedAdditionalRawData);
         }
 

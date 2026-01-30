@@ -238,6 +238,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 repoUrl,
                 branch,
                 isManualIntegration,
@@ -245,7 +246,6 @@ namespace Azure.ResourceManager.AppService
                 deploymentRollbackEnabled,
                 isMercurial,
                 gitHubActionConfiguration,
-                kind,
                 serializedAdditionalRawData);
         }
 

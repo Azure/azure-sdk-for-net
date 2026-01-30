@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 migrationOperationStatus,
                 operationId,
                 localMySqlEnabled,
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="image"> Image Name. </param>
         /// <param name="targetPort"> Target Port. </param>
         /// <param name="isMain"> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -76,10 +77,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="volumeMounts"> List of volume mounts. </param>
         /// <param name="inheritAppSettingsAndConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="environmentVariables"> List of environment variables. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<SiteContainerVolumeMount> volumeMounts, bool? inheritAppSettingsAndConnectionStrings, IList<WebAppEnvironmentVariable> environmentVariables, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<SiteContainerVolumeMount> volumeMounts, bool? inheritAppSettingsAndConnectionStrings, IList<WebAppEnvironmentVariable> environmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Image = image;
             TargetPort = targetPort;
             IsMain = isMain;
@@ -93,10 +94,12 @@ namespace Azure.ResourceManager.AppService
             VolumeMounts = volumeMounts;
             InheritAppSettingsAndConnectionStrings = inheritAppSettingsAndConnectionStrings;
             EnvironmentVariables = environmentVariables;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Image Name. </summary>
         [WirePath("properties.image")]
         public string Image { get; set; }
@@ -136,8 +139,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> List of environment variables. </summary>
         [WirePath("properties.environmentVariables")]
         public IList<WebAppEnvironmentVariable> EnvironmentVariables { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

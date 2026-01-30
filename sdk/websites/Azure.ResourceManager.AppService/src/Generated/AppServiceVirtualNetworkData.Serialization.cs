@@ -233,6 +233,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 vnetResourceId,
                 certThumbprint,
                 certBlob,
@@ -240,7 +241,6 @@ namespace Azure.ResourceManager.AppService
                 resyncRequired,
                 dnsServers,
                 isSwift,
-                kind,
                 serializedAdditionalRawData);
         }
 

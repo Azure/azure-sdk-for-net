@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 type,
                 systemData,
+                kind,
                 startAddress,
                 endAddress,
                 routeType,
-                kind,
                 serializedAdditionalRawData);
         }
 

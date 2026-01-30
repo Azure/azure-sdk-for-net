@@ -60,26 +60,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="current"> The current number of Hybrid Connections. </param>
         /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? maximum, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HybridConnectionLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? current, int? maximum, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Current = current;
             Maximum = maximum;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The current number of Hybrid Connections. </summary>
         [WirePath("properties.current")]
         public int? Current { get; }
         /// <summary> The maximum number of Hybrid Connections allowed. </summary>
         [WirePath("properties.maximum")]
         public int? Maximum { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

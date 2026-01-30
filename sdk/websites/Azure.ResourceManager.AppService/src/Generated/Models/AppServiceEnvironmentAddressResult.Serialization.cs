@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 type,
                 systemData,
+                kind,
                 serviceIPAddress,
                 internalIPAddress,
                 outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 type,
                 systemData,
+                kind,
                 platform,
                 globalValidation,
                 identityProviders,
                 login,
                 httpSettings,
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -62,21 +62,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="runs"> List of triggered web job runs. </param>
         /// <param name="kind"> Kind of resource. </param>
+        /// <param name="runs"> List of triggered web job runs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TriggeredJobRun> runs, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IList<TriggeredJobRun> runs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Runs = runs;
             Kind = kind;
+            Runs = runs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of triggered web job runs. </summary>
-        [WirePath("properties.runs")]
-        public IList<TriggeredJobRun> Runs { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary> List of triggered web job runs. </summary>
+        [WirePath("properties.runs")]
+        public IList<TriggeredJobRun> Runs { get; }
     }
 }

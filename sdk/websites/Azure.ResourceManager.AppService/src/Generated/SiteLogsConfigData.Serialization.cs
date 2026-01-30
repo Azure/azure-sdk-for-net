@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 applicationLogs,
                 httpLogs,
                 failedRequestsTracing,
                 detailedErrorMessages,
-                kind,
                 serializedAdditionalRawData);
         }
 

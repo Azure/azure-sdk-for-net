@@ -238,6 +238,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 state,
                 statusUrl,
                 detectorUrl,
@@ -245,7 +246,6 @@ namespace Azure.ResourceManager.AppService
                 healthCheckUrl,
                 containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
                 physicalZone,
-                kind,
                 serializedAdditionalRawData);
         }
 

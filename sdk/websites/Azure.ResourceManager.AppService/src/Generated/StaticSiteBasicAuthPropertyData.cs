@@ -61,24 +61,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="password"> The password for basic auth. </param>
         /// <param name="secretUri"> Url to the secret in Key Vault. </param>
         /// <param name="applicableEnvironmentsMode"> State indicating if basic auth is enabled and for what environments it is active. </param>
         /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
         /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBasicAuthPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, Uri secretUri, string applicableEnvironmentsMode, IList<string> environments, string secretState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteBasicAuthPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string password, Uri secretUri, string applicableEnvironmentsMode, IList<string> environments, string secretState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Password = password;
             SecretUri = secretUri;
             ApplicableEnvironmentsMode = applicableEnvironmentsMode;
             Environments = environments;
             SecretState = secretState;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The password for basic auth. </summary>
         [WirePath("properties.password")]
         public string Password { get; set; }
@@ -94,8 +97,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> State indicating if basic auth has a secret and what type it is. </summary>
         [WirePath("properties.secretState")]
         public string SecretState { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerData"/>. </summary>
-        internal WorkflowTriggerData()
+        public WorkflowTriggerData()
         {
         }
 

@@ -1066,6 +1066,7 @@ namespace Azure.ResourceManager.AppService
                 location,
                 identity,
                 extendedLocation,
+                kind,
                 state,
                 hostNames ?? new ChangeTrackingList<string>(),
                 repositorySiteName,
@@ -1122,7 +1123,6 @@ namespace Azure.ResourceManager.AppService
                 virtualNetworkSubnetId,
                 managedEnvironmentId,
                 sku,
-                kind,
                 serializedAdditionalRawData);
         }
 

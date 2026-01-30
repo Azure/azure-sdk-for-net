@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="deletedSiteId"> Numeric id for the deleted site. </param>
         /// <param name="deletedTimestamp"> Time in UTC when the app was deleted. </param>
         /// <param name="subscription"> Subscription containing the deleted site. </param>
@@ -68,10 +69,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Slot of the deleted site. </param>
         /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
         /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             DeletedSiteId = deletedSiteId;
             DeletedTimestamp = deletedTimestamp;
             Subscription = subscription;
@@ -80,10 +81,12 @@ namespace Azure.ResourceManager.AppService
             Slot = slot;
             KindPropertiesKind = kindPropertiesKind;
             GeoRegionName = geoRegionName;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Numeric id for the deleted site. </summary>
         [WirePath("properties.deletedSiteId")]
         public int? DeletedSiteId { get; }
@@ -108,8 +111,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Geo Region of the deleted site. </summary>
         [WirePath("properties.geoRegionName")]
         public string GeoRegionName { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

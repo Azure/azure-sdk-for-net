@@ -465,6 +465,7 @@ namespace Azure.ResourceManager.AppService
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                kind,
                 provisioningState,
                 status,
                 virtualNetwork,
@@ -485,7 +486,6 @@ namespace Azure.ResourceManager.AppService
                 customDnsSuffixConfiguration,
                 networkingConfiguration,
                 upgradeAvailability,
-                kind,
                 serializedAdditionalRawData);
         }
 

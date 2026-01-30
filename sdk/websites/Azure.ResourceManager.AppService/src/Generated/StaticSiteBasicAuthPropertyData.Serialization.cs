@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 password,
                 secretUrl,
                 applicableEnvironmentsMode,
                 environments ?? new ChangeTrackingList<string>(),
                 secretState,
-                kind,
                 serializedAdditionalRawData);
         }
 

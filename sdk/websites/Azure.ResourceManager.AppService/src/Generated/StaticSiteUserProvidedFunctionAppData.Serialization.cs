@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 functionAppResourceId,
                 functionAppRegion,
                 createdOn,
-                kind,
                 serializedAdditionalRawData);
         }
 

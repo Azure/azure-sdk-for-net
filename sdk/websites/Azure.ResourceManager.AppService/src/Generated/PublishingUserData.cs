@@ -60,24 +60,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="publishingUserName"> Username used for publishing. </param>
         /// <param name="publishingPassword"> Password used for publishing. </param>
         /// <param name="publishingPasswordHash"> Password hash used for publishing. </param>
         /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
         /// <param name="scmUri"> Url of SCM site. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
             PublishingPasswordHash = publishingPasswordHash;
             PublishingPasswordHashSalt = publishingPasswordHashSalt;
             ScmUri = scmUri;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Username used for publishing. </summary>
         [WirePath("properties.publishingUserName")]
         public string PublishingUserName { get; set; }
@@ -93,8 +96,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Url of SCM site. </summary>
         [WirePath("properties.scmUri")]
         public Uri ScmUri { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }
