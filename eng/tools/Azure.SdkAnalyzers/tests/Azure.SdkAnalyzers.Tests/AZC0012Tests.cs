@@ -338,5 +338,16 @@ namespace Azure.Data
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        [Test]
+        public async Task AZC0012ProducedForResourceManagerNamespace()
+        {
+            const string code = @"
+namespace Azure.ResourceManager.Compute
+{
+    public class {|AZC0012:Bad|} { }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }

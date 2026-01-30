@@ -9,7 +9,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
 
 namespace Azure.SdkAnalyzers.Tests
 {
@@ -22,9 +21,9 @@ namespace Azure.SdkAnalyzers.Tests
                 new PackageIdentity("System.Text.Json", "4.7.2"),
                 new PackageIdentity("System.Threading.Tasks.Extensions", "4.5.4")));
 
-        public static CSharpAnalyzerTest<TAnalyzer, NUnitVerifier> CreateAnalyzer(string source, LanguageVersion languageVersion = LanguageVersion.Latest, Type[]? additionalReferences = null)
+        public static CSharpAnalyzerTest<TAnalyzer, DefaultVerifier> CreateAnalyzer(string source, LanguageVersion languageVersion = LanguageVersion.Latest, Type[]? additionalReferences = null)
         {
-            var test = new CSharpAnalyzerTest<TAnalyzer, NUnitVerifier>
+            CSharpAnalyzerTest<TAnalyzer, DefaultVerifier> test = new CSharpAnalyzerTest<TAnalyzer, DefaultVerifier>
             {
                 ReferenceAssemblies = DefaultReferenceAssemblies,
                 SolutionTransforms = {(solution, projectId) =>
