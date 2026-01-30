@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct RecoveryServicesAuthType : IEquatable<RecoveryServicesAuthType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAuthType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecoveryServicesAuthType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string AcsValue = "ACS";
         private const string AadValue = "AAD";
         private const string AccessControlServiceValue = "AccessControlService";
         private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryServicesAuthType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static RecoveryServicesAuthType Invalid { get; } = new RecoveryServicesAuthType(InvalidValue);
-        /// <summary> ACS. </summary>
+
+        /// <summary> Gets the Acs. </summary>
         public static RecoveryServicesAuthType Acs { get; } = new RecoveryServicesAuthType(AcsValue);
-        /// <summary> AAD. </summary>
+
+        /// <summary> Gets the Aad. </summary>
         public static RecoveryServicesAuthType Aad { get; } = new RecoveryServicesAuthType(AadValue);
-        /// <summary> AccessControlService. </summary>
+
+        /// <summary> Gets the AccessControlService. </summary>
         public static RecoveryServicesAuthType AccessControlService { get; } = new RecoveryServicesAuthType(AccessControlServiceValue);
-        /// <summary> AzureActiveDirectory. </summary>
+
+        /// <summary> Gets the AzureActiveDirectory. </summary>
         public static RecoveryServicesAuthType AzureActiveDirectory { get; } = new RecoveryServicesAuthType(AzureActiveDirectoryValue);
+
         /// <summary> Determines if two <see cref="RecoveryServicesAuthType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesAuthType left, RecoveryServicesAuthType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecoveryServicesAuthType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesAuthType left, RecoveryServicesAuthType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesAuthType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecoveryServicesAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecoveryServicesAuthType(string value) => new RecoveryServicesAuthType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecoveryServicesAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryServicesAuthType?(string value) => value == null ? null : new RecoveryServicesAuthType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesAuthType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecoveryServicesAuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
