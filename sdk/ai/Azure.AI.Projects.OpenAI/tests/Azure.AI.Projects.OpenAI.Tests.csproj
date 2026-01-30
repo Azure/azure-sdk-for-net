@@ -6,6 +6,9 @@
     <!-- OPENAI001 - Ignore experimental warnings-->
     <NoWarn>$(NoWarn);OPENAI001;SCME0001;</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\favorite_foods.pdf" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.Projects\src\Azure.AI.Projects.csproj" />
@@ -24,5 +27,11 @@
 			<_Parameter1>SourcePath</_Parameter1>
 			<_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
 		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Assets\favorite_foods.pdf">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 </Project>
