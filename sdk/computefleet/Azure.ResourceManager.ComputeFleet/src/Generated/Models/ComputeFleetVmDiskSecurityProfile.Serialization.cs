@@ -14,7 +14,7 @@ using Azure.ResourceManager.ComputeFleet;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
-    /// Specifies the security profile settings for the managed disk. **Note:** It can
+    /// Specifies the security profile settings for the managed disk. <b>Note:</b> It can
     /// only be set for Confidential VMs.
     /// </summary>
     public partial class ComputeFleetVmDiskSecurityProfile : IJsonModel<ComputeFleetVmDiskSecurityProfile>

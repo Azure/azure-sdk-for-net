@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.VaultPropertiesRedundancySettings"/> instance for mocking. </returns>
         public static VaultPropertiesRedundancySettings VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy = null, CrossRegionRestore? crossRegionRestore = null)
         {
-            return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore, serializedAdditionalRawData: null);
+            return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultData"/>. </summary>

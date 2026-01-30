@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> Description of the Device Registry namespace that is linked to the provisioning service. </summary>
     public partial class DeviceRegistryNamespaceDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceDescription"/>. </summary>
         /// <param name="resourceId"> The ARM resource ID of the Device Registry namespace. </param>
@@ -62,24 +34,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="resourceId"> The ARM resource ID of the Device Registry namespace. </param>
         /// <param name="authenticationType"> Device Registry Namespace MI authentication type: UserAssigned, SystemAssigned. </param>
         /// <param name="selectedUserAssignedIdentityResourceId"> The selected user-assigned identity resource Id associated with Device Registry namespace. This is required when authenticationType is UserAssigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId, DeviceRegistryNamespaceAuthenticationType authenticationType, ResourceIdentifier selectedUserAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId, DeviceRegistryNamespaceAuthenticationType authenticationType, ResourceIdentifier selectedUserAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             AuthenticationType = authenticationType;
             SelectedUserAssignedIdentityResourceId = selectedUserAssignedIdentityResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceDescription"/> for deserialization. </summary>
-        internal DeviceRegistryNamespaceDescription()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM resource ID of the Device Registry namespace. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> Device Registry Namespace MI authentication type: UserAssigned, SystemAssigned. </summary>
         public DeviceRegistryNamespaceAuthenticationType AuthenticationType { get; set; }
+
         /// <summary> The selected user-assigned identity resource Id associated with Device Registry namespace. This is required when authenticationType is UserAssigned. </summary>
         public ResourceIdentifier SelectedUserAssignedIdentityResourceId { get; set; }
     }

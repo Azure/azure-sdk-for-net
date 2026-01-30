@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Details for upgrading vault. </summary>
     public partial class VaultUpgradeDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VaultUpgradeDetails"/>. </summary>
         public VaultUpgradeDetails()
@@ -61,8 +32,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="triggerType"> The way the vault upgrade was triggered. </param>
         /// <param name="upgradedResourceId"> Resource ID of the upgraded vault. </param>
         /// <param name="previousResourceId"> Resource ID of the vault before the upgrade. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultUpgradeDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? endOn, VaultUpgradeState? status, string message, VaultUpgradeTriggerType? triggerType, ResourceIdentifier upgradedResourceId, ResourceIdentifier previousResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VaultUpgradeDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? endOn, VaultUpgradeState? status, string message, VaultUpgradeTriggerType? triggerType, ResourceIdentifier upgradedResourceId, ResourceIdentifier previousResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             StartOn = startOn;
@@ -73,25 +44,33 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             TriggerType = triggerType;
             UpgradedResourceId = upgradedResourceId;
             PreviousResourceId = previousResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the vault upgrade operation. </summary>
         public string OperationId { get; }
+
         /// <summary> UTC time at which the upgrade operation has started. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> UTC time at which the upgrade operation status was last updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
+
         /// <summary> UTC time at which the upgrade operation has ended. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> Status of the vault upgrade operation. </summary>
         public VaultUpgradeState? Status { get; }
+
         /// <summary> Message to the user containing information about the upgrade operation. </summary>
         public string Message { get; }
+
         /// <summary> The way the vault upgrade was triggered. </summary>
         public VaultUpgradeTriggerType? TriggerType { get; }
+
         /// <summary> Resource ID of the upgraded vault. </summary>
         public ResourceIdentifier UpgradedResourceId { get; }
+
         /// <summary> Resource ID of the vault before the upgrade. </summary>
         public ResourceIdentifier PreviousResourceId { get; }
     }

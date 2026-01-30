@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     public readonly partial struct DeviceProvisioningServicesState : IEquatable<DeviceProvisioningServicesState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeviceProvisioningServicesState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ActivatingValue = "Activating";
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
@@ -35,47 +28,82 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         private const string FailingOverValue = "FailingOver";
         private const string FailoverFailedValue = "FailoverFailed";
 
-        /// <summary> Activating. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeviceProvisioningServicesState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Activating. </summary>
         public static DeviceProvisioningServicesState Activating { get; } = new DeviceProvisioningServicesState(ActivatingValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static DeviceProvisioningServicesState Active { get; } = new DeviceProvisioningServicesState(ActiveValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static DeviceProvisioningServicesState Deleting { get; } = new DeviceProvisioningServicesState(DeletingValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static DeviceProvisioningServicesState Deleted { get; } = new DeviceProvisioningServicesState(DeletedValue);
-        /// <summary> ActivationFailed. </summary>
+
+        /// <summary> Gets the ActivationFailed. </summary>
         public static DeviceProvisioningServicesState ActivationFailed { get; } = new DeviceProvisioningServicesState(ActivationFailedValue);
-        /// <summary> DeletionFailed. </summary>
+
+        /// <summary> Gets the DeletionFailed. </summary>
         public static DeviceProvisioningServicesState DeletionFailed { get; } = new DeviceProvisioningServicesState(DeletionFailedValue);
-        /// <summary> Transitioning. </summary>
+
+        /// <summary> Gets the Transitioning. </summary>
         public static DeviceProvisioningServicesState Transitioning { get; } = new DeviceProvisioningServicesState(TransitioningValue);
-        /// <summary> Suspending. </summary>
+
+        /// <summary> Gets the Suspending. </summary>
         public static DeviceProvisioningServicesState Suspending { get; } = new DeviceProvisioningServicesState(SuspendingValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static DeviceProvisioningServicesState Suspended { get; } = new DeviceProvisioningServicesState(SuspendedValue);
-        /// <summary> Resuming. </summary>
+
+        /// <summary> Gets the Resuming. </summary>
         public static DeviceProvisioningServicesState Resuming { get; } = new DeviceProvisioningServicesState(ResumingValue);
-        /// <summary> FailingOver. </summary>
+
+        /// <summary> Gets the FailingOver. </summary>
         public static DeviceProvisioningServicesState FailingOver { get; } = new DeviceProvisioningServicesState(FailingOverValue);
-        /// <summary> FailoverFailed. </summary>
+
+        /// <summary> Gets the FailoverFailed. </summary>
         public static DeviceProvisioningServicesState FailoverFailed { get; } = new DeviceProvisioningServicesState(FailoverFailedValue);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceProvisioningServicesState left, DeviceProvisioningServicesState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceProvisioningServicesState left, DeviceProvisioningServicesState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceProvisioningServicesState(string value) => new DeviceProvisioningServicesState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceProvisioningServicesState?(string value) => value == null ? null : new DeviceProvisioningServicesState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceProvisioningServicesState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceProvisioningServicesState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

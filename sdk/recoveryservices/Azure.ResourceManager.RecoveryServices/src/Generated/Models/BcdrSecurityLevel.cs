@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct BcdrSecurityLevel : IEquatable<BcdrSecurityLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BcdrSecurityLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BcdrSecurityLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PoorValue = "Poor";
         private const string FairValue = "Fair";
         private const string GoodValue = "Good";
         private const string ExcellentValue = "Excellent";
 
-        /// <summary> Poor. </summary>
+        /// <summary> Initializes a new instance of <see cref="BcdrSecurityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BcdrSecurityLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Poor. </summary>
         public static BcdrSecurityLevel Poor { get; } = new BcdrSecurityLevel(PoorValue);
-        /// <summary> Fair. </summary>
+
+        /// <summary> Gets the Fair. </summary>
         public static BcdrSecurityLevel Fair { get; } = new BcdrSecurityLevel(FairValue);
-        /// <summary> Good. </summary>
+
+        /// <summary> Gets the Good. </summary>
         public static BcdrSecurityLevel Good { get; } = new BcdrSecurityLevel(GoodValue);
-        /// <summary> Excellent. </summary>
+
+        /// <summary> Gets the Excellent. </summary>
         public static BcdrSecurityLevel Excellent { get; } = new BcdrSecurityLevel(ExcellentValue);
+
         /// <summary> Determines if two <see cref="BcdrSecurityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BcdrSecurityLevel left, BcdrSecurityLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BcdrSecurityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BcdrSecurityLevel left, BcdrSecurityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BcdrSecurityLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BcdrSecurityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BcdrSecurityLevel(string value) => new BcdrSecurityLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BcdrSecurityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BcdrSecurityLevel?(string value) => value == null ? null : new BcdrSecurityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BcdrSecurityLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BcdrSecurityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

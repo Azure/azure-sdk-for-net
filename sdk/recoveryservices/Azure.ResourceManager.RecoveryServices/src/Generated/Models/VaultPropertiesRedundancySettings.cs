@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The redundancy Settings of a Vault. </summary>
     public partial class VaultPropertiesRedundancySettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VaultPropertiesRedundancySettings"/>. </summary>
         public VaultPropertiesRedundancySettings()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of <see cref="VaultPropertiesRedundancySettings"/>. </summary>
         /// <param name="standardTierStorageRedundancy"> The storage redundancy setting of a vault. </param>
         /// <param name="crossRegionRestore"> Flag to show if Cross Region Restore is enabled on the Vault or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy, CrossRegionRestore? crossRegionRestore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy, CrossRegionRestore? crossRegionRestore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StandardTierStorageRedundancy = standardTierStorageRedundancy;
             CrossRegionRestore = crossRegionRestore;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The storage redundancy setting of a vault. </summary>
         public StandardTierStorageRedundancy? StandardTierStorageRedundancy { get; set; }
+
         /// <summary> Flag to show if Cross Region Restore is enabled on the Vault or not. </summary>
         public CrossRegionRestore? CrossRegionRestore { get; set; }
     }

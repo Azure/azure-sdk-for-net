@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Playwright.Mocking
 
         private PlaywrightWorkspaces PlaywrightWorkspacesRestClient => _playwrightWorkspacesRestClient ??= new PlaywrightWorkspaces(PlaywrightWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
+        /// <returns> An object representing collection of PlaywrightQuota and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
             return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));

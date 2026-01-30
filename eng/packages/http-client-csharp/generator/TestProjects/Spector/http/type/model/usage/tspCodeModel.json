@@ -78,6 +78,11 @@
       "usage": "Input,Json",
       "doc": "Record used in operation parameters",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InputRecord"
+        }
+      },
       "properties": [
         {
           "$id": "10",
@@ -115,6 +120,11 @@
       "usage": "Output,Json",
       "doc": "Record used in operation return type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OutputRecord"
+        }
+      },
       "properties": [
         {
           "$id": "13",
@@ -152,6 +162,11 @@
       "usage": "Input,Output,Json",
       "doc": "Record used both as operation parameter and return type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InputOutputRecord"
+        }
+      },
       "properties": [
         {
           "$id": "16",

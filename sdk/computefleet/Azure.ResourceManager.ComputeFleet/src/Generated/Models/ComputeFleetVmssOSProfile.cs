@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="adminUsername">
         /// Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **Windows-only
-        /// restriction:** Cannot end in "." &lt;br&gt;&lt;br&gt; **Disallowed values:**
+        /// restriction:<b> Cannot end in "." &lt;br&gt;&lt;br&gt; </b>Disallowed values:**
         /// "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3",
         /// "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup",
         /// "console", "david", "guest", "john", "owner", "root", "server", "sql",
         /// "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
-        /// &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 1  character &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Linux):** 64 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 20 characters
+        /// &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 1  character &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):<b> 64 characters &lt;br&gt;&lt;br&gt; </b>Max-length (Windows):** 20 characters
         /// </param>
         /// <param name="adminPassword">
         /// Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length
-        /// (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters
-        /// &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 123 characters &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Linux):** 72 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4
+        /// (Windows):<b> 8 characters &lt;br&gt;&lt;br&gt; </b>Minimum-length (Linux):** 6 characters
+        /// &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 123 characters &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):<b> 72 characters &lt;br&gt;&lt;br&gt; </b>Complexity requirements:** 3 out of 4
         /// conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper
         /// characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_])
-        /// &lt;br&gt;&lt;br&gt; **Disallowed values:** "abc@123", "P@$$w0rd", "P@ssw0rd",
+        /// &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "abc@123", "P@$$w0rd", "P@ssw0rd",
         /// "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1",
         /// "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to
         /// reset the Remote Desktop service or its login password in a Windows
@@ -104,24 +104,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary>
         /// Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **Windows-only
-        /// restriction:** Cannot end in "." &lt;br&gt;&lt;br&gt; **Disallowed values:**
+        /// restriction:<b> Cannot end in "." &lt;br&gt;&lt;br&gt; </b>Disallowed values:**
         /// "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3",
         /// "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup",
         /// "console", "david", "guest", "john", "owner", "root", "server", "sql",
         /// "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
-        /// &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 1  character &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Linux):** 64 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 20 characters
+        /// &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 1  character &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):<b> 64 characters &lt;br&gt;&lt;br&gt; </b>Max-length (Windows):** 20 characters
         /// </summary>
         public string AdminUsername { get; set; }
 
         /// <summary>
         /// Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length
-        /// (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters
-        /// &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 123 characters &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Linux):** 72 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4
+        /// (Windows):<b> 8 characters &lt;br&gt;&lt;br&gt; </b>Minimum-length (Linux):** 6 characters
+        /// &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 123 characters &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):<b> 72 characters &lt;br&gt;&lt;br&gt; </b>Complexity requirements:** 3 out of 4
         /// conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper
         /// characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_])
-        /// &lt;br&gt;&lt;br&gt; **Disallowed values:** "abc@123", "P@$$w0rd", "P@ssw0rd",
+        /// &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "abc@123", "P@$$w0rd", "P@ssw0rd",
         /// "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1",
         /// "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to
         /// reset the Remote Desktop service or its login password in a Windows

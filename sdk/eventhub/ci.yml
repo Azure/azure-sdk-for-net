@@ -23,9 +23,11 @@ extends:
     Artifacts:
     - name: Azure.Messaging.EventHubs
       safeName: AzureMessagingEventHubs
+      directoryName: Azure.Messaging.EventHubs
       triggeringPaths:
       - Azure.Messaging.EventHubs.Shared
     - name: Azure.Messaging.EventHubs.Processor
       safeName: AzureMessagingEventHubsProcessor
+      directoryName: Azure.Messaging.EventHubs.Processor
       triggeringPaths:
       - Azure.Messaging.EventHubs.Shared
