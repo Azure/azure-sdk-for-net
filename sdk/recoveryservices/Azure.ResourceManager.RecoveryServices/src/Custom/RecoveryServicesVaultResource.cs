@@ -78,59 +78,5 @@ namespace Azure.ResourceManager.RecoveryServices
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<RecoveryServicesVaultResource> Update(WaitUntil waitUntil, RecoveryServicesVaultPatch patch, CancellationToken cancellationToken)
             => Update(waitUntil, patch, null, cancellationToken);
-
-        /// <summary>
-        /// Uploads a certificate for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<VaultCertificateResult>> CreateVaultCertificateAsync(string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            return null;
-        }
-
-               /// <summary>
-        /// Uploads a certificate for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<VaultCertificateResult> CreateVaultCertificate(string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            return null;
-        }
     }
 }

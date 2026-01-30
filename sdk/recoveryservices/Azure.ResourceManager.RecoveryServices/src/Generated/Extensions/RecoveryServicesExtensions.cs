@@ -166,46 +166,6 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary>
-        /// Uploads a certificate for a resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.CreateVaultCertificateAsync(string, string, RecoveryServicesCertificateContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<VaultCertificateResult>> CreateVaultCertificateAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).CreateVaultCertificateAsync(vaultName, certificateName, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Uploads a certificate for a resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.CreateVaultCertificate(string, string, RecoveryServicesCertificateContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<VaultCertificateResult> CreateVaultCertificate(this ResourceGroupResource resourceGroupResource, string vaultName, string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).CreateVaultCertificate(vaultName, certificateName, content, cancellationToken);
-        }
-
-        /// <summary>
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
         /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
