@@ -512,7 +512,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RawCertificateData() { }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType? AuthType { get { throw null; } set { } }
         public byte[] Certificate { get { throw null; } set { } }
-        public System.BinaryData CertificateData { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.RecoveryServices.Models.RawCertificateData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.RecoveryServices.Models.RawCertificateData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -23,34 +23,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="RawCertificateData"/>. </summary>
         /// <param name="authType"> Specifies the authentication type. </param>
-        /// <param name="certificateData"> The base64 encoded certificate raw data string. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RawCertificateData(RecoveryServicesAuthType? authType, BinaryData certificateData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RawCertificateData(RecoveryServicesAuthType? authType, byte[] certificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthType = authType;
-            CertificateData = certificateData;
+            Certificate = certificate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the authentication type. </summary>
         public RecoveryServicesAuthType? AuthType { get; set; }
-
-        /// <summary>
-        /// The base64 encoded certificate raw data string
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData CertificateData { get; set; }
     }
 }
