@@ -14,6 +14,8 @@ using Azure.AI.Projects.OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+// We need this alias to avoid conflict with internal enum MessageRole.
+using RealOpenAI = OpenAI;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
 
@@ -255,7 +257,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         Assert.That(completedUpdate?.Response?.Id, Is.EqualTo(createdUpdate.Response.Id));
 
         MessageResponseItem messageItem = completedUpdate.Response.OutputItems?.LastOrDefault() as MessageResponseItem;
-        Assert.That(messageItem?.Role, Is.EqualTo(MessageRole.Assistant));
+        Assert.That(messageItem?.Role, Is.EqualTo(RealOpenAI::Responses.MessageRole.Assistant));
 
         StringBuilder deltaBuilder = new();
         foreach (StreamingResponseUpdate streamedUpdate in streamedUpdates)
