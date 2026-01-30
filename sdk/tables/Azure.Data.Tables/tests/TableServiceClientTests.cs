@@ -28,7 +28,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Mock key for testing localhost/emulator endpoints
         /// </summary>
-        private const string MockEmulatorKey = "bW9ja0VtdWxhdG9yS2V5Rm9yVGVzdGluZ09ubHk=";
+        private const string MockEmulatorKey = "Kg==";
 
         /// <summary>
         /// The table endpoint.
