@@ -115,5 +115,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
+
+        /// <summary> Gets or sets the CrossSubscriptionRestoreState. </summary>
+        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        {
+            get
+            {
+                return RestoreSettings is null ? default : RestoreSettings.CrossSubscriptionRestoreState;
+            }
+            set
+            {
+                if (RestoreSettings is null)
+                {
+                    RestoreSettings = new RestoreSettings();
+                }
+                RestoreSettings.CrossSubscriptionRestoreState = value;
+            }
+        }
     }
 }
