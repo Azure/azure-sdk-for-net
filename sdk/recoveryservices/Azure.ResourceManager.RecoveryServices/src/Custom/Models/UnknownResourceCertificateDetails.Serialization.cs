@@ -17,6 +17,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
+    /// remove it after https://github.com/Azure/azure-sdk-for-net/issues/55367 is fixed
     [CodeGenSerialization(nameof(Certificate), DeserializationValueHook = nameof(DeserializeCertificate))]
     internal partial class UnknownResourceCertificateDetails
     {
