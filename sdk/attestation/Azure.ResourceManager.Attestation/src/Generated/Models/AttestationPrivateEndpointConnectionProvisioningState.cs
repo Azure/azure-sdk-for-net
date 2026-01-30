@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Attestation.Models
     public readonly partial struct AttestationPrivateEndpointConnectionProvisioningState : IEquatable<AttestationPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Connection has been provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Connection is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Connection is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Connection provisioning has failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="AttestationPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttestationPrivateEndpointConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Connection has been provisioned. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Succeeded { get; } = new AttestationPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Connection is being created. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Creating { get; } = new AttestationPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Connection is being deleted. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Deleting { get; } = new AttestationPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Connection provisioning has failed. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Failed { get; } = new AttestationPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttestationPrivateEndpointConnectionProvisioningState left, AttestationPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttestationPrivateEndpointConnectionProvisioningState left, AttestationPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestationPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AttestationPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AttestationPrivateEndpointConnectionProvisioningState(string value) => new AttestationPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AttestationPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttestationPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new AttestationPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttestationPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AttestationPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

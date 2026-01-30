@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Attestation.Samples
             string providerName = "myattestationprovider";
             AttestationProviderCreateOrUpdateContent content = new AttestationProviderCreateOrUpdateContent(new AzureLocation("East US"), new AttestationServiceCreationSpecificParams
             {
-                PublicNetworkAccess = PublicNetworkAccessType.Enabled,
+                PublicNetworkAccess = AttestationPublicNetworkAccessType.Enabled,
             })
             {
                 Tags =

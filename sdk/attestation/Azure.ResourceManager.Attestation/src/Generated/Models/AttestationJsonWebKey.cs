@@ -7,45 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> The JsonWebKey. </summary>
-    public partial class JsonWebKey
+    /// <summary> The AttestationJsonWebKey. </summary>
+    public partial class AttestationJsonWebKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationJsonWebKey"/>. </summary>
         /// <param name="kty">
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should
@@ -54,7 +26,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
-        public JsonWebKey(string kty)
+        public AttestationJsonWebKey(string kty)
         {
             Argument.AssertNotNull(kty, nameof(kty));
 
@@ -62,7 +34,7 @@ namespace Azure.ResourceManager.Attestation.Models
             X5C = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationJsonWebKey"/>. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -115,8 +87,8 @@ namespace Azure.ResourceManager.Attestation.Models
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationJsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alg = alg;
             Crv = crv;
@@ -135,12 +107,7 @@ namespace Azure.ResourceManager.Attestation.Models
             X = x;
             X5C = x5C;
             Y = y;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/> for deserialization. </summary>
-        internal JsonWebKey()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -151,18 +118,25 @@ namespace Azure.ResourceManager.Attestation.Models
         /// Resistant Name.
         /// </summary>
         public string Alg { get; set; }
+
         /// <summary> The "crv" (curve) parameter identifies the curve type. </summary>
         public string Crv { get; set; }
+
         /// <summary> RSA private exponent or ECC private key. </summary>
         public string D { get; set; }
+
         /// <summary> RSA Private Key Parameter. </summary>
         public string Dp { get; set; }
+
         /// <summary> RSA Private Key Parameter. </summary>
         public string Dq { get; set; }
+
         /// <summary> RSA public exponent, in Base64. </summary>
         public string E { get; set; }
+
         /// <summary> Symmetric key. </summary>
         public string K { get; set; }
+
         /// <summary>
         /// The "kid" (key ID) parameter is used to match a specific key.  This
         /// is used, for instance, to choose among a set of keys within a JWK Set
@@ -175,6 +149,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// value is a case-sensitive string.
         /// </summary>
         public string Kid { get; set; }
+
         /// <summary>
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should
@@ -183,14 +158,19 @@ namespace Azure.ResourceManager.Attestation.Models
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </summary>
         public string Kty { get; }
+
         /// <summary> RSA modulus, in Base64. </summary>
         public string N { get; set; }
+
         /// <summary> RSA secret prime. </summary>
         public string P { get; set; }
+
         /// <summary> RSA secret prime, with p &lt; q. </summary>
         public string Q { get; set; }
+
         /// <summary> RSA Private Key Parameter. </summary>
         public string Qi { get; set; }
+
         /// <summary>
         /// Use ("public key use") identifies the intended use of
         /// the public key. The "use" parameter is employed to indicate whether
@@ -198,8 +178,10 @@ namespace Azure.ResourceManager.Attestation.Models
         /// on data. Values are commonly "sig" (signature) or "enc" (encryption).
         /// </summary>
         public string Use { get; set; }
+
         /// <summary> X coordinate for the Elliptic Curve point. </summary>
         public string X { get; set; }
+
         /// <summary>
         /// The "x5c" (X.509 certificate chain) parameter contains a chain of one
         /// or more PKIX certificates [RFC5280].  The certificate chain is
@@ -210,6 +192,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// certificate.
         /// </summary>
         public IList<string> X5C { get; }
+
         /// <summary> Y coordinate for the Elliptic Curve point. </summary>
         public string Y { get; set; }
     }

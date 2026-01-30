@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Attestation;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Attestation.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAttestationResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAttestationResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAttestationResourceGroupResource for mocking. </summary>
         protected MockableAttestationResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAttestationResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAttestationResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAttestationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of AttestationProviderResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AttestationProviderResources and their operations over a AttestationProviderResource. </returns>
+        /// <summary> Gets a collection of AttestationProviders in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AttestationProviders and their operations over a AttestationProviderResource. </returns>
         public virtual AttestationProviderCollection GetAttestationProviders()
         {
             return GetCachedClient(client => new AttestationProviderCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// Get the status of Attestation Provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProviders_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Attestation.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AttestationProviderResource>> GetAttestationProviderAsync(string providerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+
             return await GetAttestationProviders().GetAsync(providerName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// Get the status of Attestation Provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProviders_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Attestation.Mocking
         [ForwardsClientCalls]
         public virtual Response<AttestationProviderResource> GetAttestationProvider(string providerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+
             return GetAttestationProviders().Get(providerName, cancellationToken);
         }
     }

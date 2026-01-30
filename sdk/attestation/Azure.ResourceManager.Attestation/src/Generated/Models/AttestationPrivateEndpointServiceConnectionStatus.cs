@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Attestation.Models
     public readonly partial struct AttestationPrivateEndpointServiceConnectionStatus : IEquatable<AttestationPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Connection waiting for approval or rejection. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Connection approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Connection Rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="AttestationPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttestationPrivateEndpointServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-
-        /// <summary> Pending. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static AttestationPrivateEndpointServiceConnectionStatus Pending { get; } = new AttestationPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Connection approved. </summary>
         public static AttestationPrivateEndpointServiceConnectionStatus Approved { get; } = new AttestationPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Connection Rejected. </summary>
         public static AttestationPrivateEndpointServiceConnectionStatus Rejected { get; } = new AttestationPrivateEndpointServiceConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttestationPrivateEndpointServiceConnectionStatus left, AttestationPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttestationPrivateEndpointServiceConnectionStatus left, AttestationPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestationPrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AttestationPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AttestationPrivateEndpointServiceConnectionStatus(string value) => new AttestationPrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AttestationPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttestationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new AttestationPrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttestationPrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AttestationPrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

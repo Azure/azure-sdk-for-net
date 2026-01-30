@@ -101,7 +101,10 @@ namespace Azure.ResourceManager.Attestation.Samples
 ["Property2"] = "Value2",
 ["Property3"] = "Value3"
 },
-                AttestationServicePatchSpecificParamsPublicNetworkAccess = PublicNetworkAccessType.Disabled,
+                Properties = new AttestationProviderPatchProperties
+                {
+                    PublicNetworkAccess = AttestationPublicNetworkAccessType.Disabled,
+                },
             };
             AttestationProviderResource result = await attestationProvider.UpdateAsync(patch);
 
@@ -133,7 +136,7 @@ namespace Azure.ResourceManager.Attestation.Samples
             AttestationProviderResource attestationProvider = client.GetAttestationProviderResource(attestationProviderResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AttestationPrivateLinkResource item in attestationProvider.GetPrivateLinkResourcesByProviderAsync())
+            await foreach (AttestationPrivateLinkResource item in attestationProvider.GetByProviderAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -8,86 +8,79 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Attestation;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Attestation.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableAttestationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _attestationProviderClientDiagnostics;
-        private AttestationProvidersRestOperations _attestationProviderRestClient;
+        private ClientDiagnostics _attestationProvidersClientDiagnostics;
+        private AttestationProviders _attestationProvidersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAttestationSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAttestationSubscriptionResource for mocking. </summary>
         protected MockableAttestationSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAttestationSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAttestationSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAttestationSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AttestationProviderClientDiagnostics => _attestationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
-        private AttestationProvidersRestOperations AttestationProviderRestClient => _attestationProviderRestClient ??= new AttestationProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AttestationProviderResource.ResourceType));
+        private ClientDiagnostics AttestationProvidersClientDiagnostics => _attestationProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Attestation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private AttestationProviders AttestationProvidersRestClient => _attestationProvidersRestClient ??= new AttestationProviders(AttestationProvidersClientDiagnostics, Pipeline, Endpoint, "2021-06-01");
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProviders_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProviders", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProviders_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,98 +88,109 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAttestationProviders(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProviders", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
         /// Get the default provider
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_ListDefault</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProvidersOperationGroup_ListDefault. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the default provider
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_ListDefault</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AttestationProviderResource> GetDefaultAttestationProviderAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get the default provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProvidersOperationGroup_ListDefault. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AttestationProviderResource> GetDefaultAttestationProvider(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
         /// Get the default provider by location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
-            using var scope = AttestationProviderClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
             scope.Start();
             try
             {
-                var response = await AttestationProviderRestClient.GetDefaultByLocationAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,32 +204,42 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// Get the default provider by location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttestationProvidersOperationGroup_GetDefaultByLocation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttestationProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttestationProviderResource> GetDefaultByLocationAttestationProvider(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AttestationProviderResource> GetDefaultAttestationProviderByLocation(string location, CancellationToken cancellationToken = default)
         {
-            using var scope = AttestationProviderClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using DiagnosticScope scope = AttestationProvidersClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
             scope.Start();
             try
             {
-                var response = AttestationProviderRestClient.GetDefaultByLocation(Id.SubscriptionId, location, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
