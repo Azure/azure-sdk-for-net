@@ -10,15 +10,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync;
+using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableStorageSyncResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _serverEndpointsClientDiagnostics;
+        private ServerEndpoints _serverEndpointsRestClient;
+        private ClientDiagnostics _registeredServersClientDiagnostics;
+        private RegisteredServers _registeredServersRestClient;
+        private ClientDiagnostics _workflowsClientDiagnostics;
+        private Workflows _workflowsRestClient;
+
         /// <summary> Initializes a new instance of MockableStorageSyncResourceGroupResource for mocking. </summary>
         protected MockableStorageSyncResourceGroupResource()
         {
@@ -30,6 +39,18 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         internal MockableStorageSyncResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ServerEndpointsClientDiagnostics => _serverEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ServerEndpoints ServerEndpointsRestClient => _serverEndpointsRestClient ??= new ServerEndpoints(ServerEndpointsClientDiagnostics, Pipeline, Endpoint, "2022-09-01");
+
+        private ClientDiagnostics RegisteredServersClientDiagnostics => _registeredServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RegisteredServers RegisteredServersRestClient => _registeredServersRestClient ??= new RegisteredServers(RegisteredServersClientDiagnostics, Pipeline, Endpoint, "2022-09-01");
+
+        private ClientDiagnostics WorkflowsClientDiagnostics => _workflowsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Workflows WorkflowsRestClient => _workflowsRestClient ??= new Workflows(WorkflowsClientDiagnostics, Pipeline, Endpoint, "2022-09-01");
 
         /// <summary> Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of StorageSyncServices and their operations over a StorageSyncServiceResource. </returns>
@@ -94,6 +115,316 @@ namespace Azure.ResourceManager.StorageSync.Mocking
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
 
             return GetStorageSyncServices().Get(storageSyncServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Recall a server endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/serverEndpoints/{serverEndpointName}/recallAction. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerEndpoints_RecallAction. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
+        /// <param name="content"> Body of Recall Action object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="serverEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> RecallActionAsync(WaitUntil waitUntil, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ServerEndpointsClientDiagnostics.CreateScope("MockableStorageSyncResourceGroupResource.RecallAction");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerEndpointsRestClient.CreateRecallActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, RecallActionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageSyncArmOperation operation = new StorageSyncArmOperation(ServerEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recall a server endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/serverEndpoints/{serverEndpointName}/recallAction. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerEndpoints_RecallAction. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
+        /// <param name="content"> Body of Recall Action object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="serverEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation RecallAction(WaitUntil waitUntil, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ServerEndpointsClientDiagnostics.CreateScope("MockableStorageSyncResourceGroupResource.RecallAction");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerEndpointsRestClient.CreateRecallActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, RecallActionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageSyncArmOperation operation = new StorageSyncArmOperation(ServerEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers Server certificate rollover.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}/triggerRollover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RegisteredServers_TriggerRollover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="content"> Body of Trigger Rollover request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> TriggerRolloverAsync(WaitUntil waitUntil, string storageSyncServiceName, Guid serverId, TriggerRolloverContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = RegisteredServersClientDiagnostics.CreateScope("MockableStorageSyncResourceGroupResource.TriggerRollover");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RegisteredServersRestClient.CreateTriggerRolloverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, serverId, TriggerRolloverContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageSyncArmOperation operation = new StorageSyncArmOperation(RegisteredServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers Server certificate rollover.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}/triggerRollover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RegisteredServers_TriggerRollover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="content"> Body of Trigger Rollover request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation TriggerRollover(WaitUntil waitUntil, string storageSyncServiceName, Guid serverId, TriggerRolloverContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = RegisteredServersClientDiagnostics.CreateScope("MockableStorageSyncResourceGroupResource.TriggerRollover");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RegisteredServersRestClient.CreateTriggerRolloverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, serverId, TriggerRolloverContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageSyncArmOperation operation = new StorageSyncArmOperation(RegisteredServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Abort the given workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}/abort. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Abort. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="workflowId"> workflow Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> or <paramref name="workflowId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> or <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AbortAsync(string storageSyncServiceName, string workflowId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
+
+            using DiagnosticScope scope = WorkflowsClientDiagnostics.CreateScope("MockableStorageSyncResourceGroupResource.Abort");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WorkflowsRestClient.CreateAbortRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, workflowId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Abort the given workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}/abort. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Abort. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="workflowId"> workflow Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> or <paramref name="workflowId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> or <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Abort(string storageSyncServiceName, string workflowId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
+
+            using DiagnosticScope scope = WorkflowsClientDiagnostics.CreateScope("MockableStorageSyncResourceGroupResource.Abort");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WorkflowsRestClient.CreateAbortRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, workflowId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

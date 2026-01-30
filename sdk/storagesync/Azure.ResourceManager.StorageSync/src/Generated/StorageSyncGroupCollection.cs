@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.StorageSync
     {
         private readonly ClientDiagnostics _syncGroupsClientDiagnostics;
         private readonly SyncGroups _syncGroupsRestClient;
+        private readonly ClientDiagnostics _cloudEndpointsClientDiagnostics;
+        private readonly CloudEndpoints _cloudEndpointsRestClient;
 
         /// <summary> Initializes a new instance of StorageSyncGroupCollection for mocking. </summary>
         protected StorageSyncGroupCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.StorageSync
             TryGetApiVersion(StorageSyncGroupResource.ResourceType, out string storageSyncGroupApiVersion);
             _syncGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncGroupResource.ResourceType.Namespace, Diagnostics);
             _syncGroupsRestClient = new SyncGroups(_syncGroupsClientDiagnostics, Pipeline, Endpoint, storageSyncGroupApiVersion ?? "2022-09-01");
+            _cloudEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncGroupResource.ResourceType.Namespace, Diagnostics);
+            _cloudEndpointsRestClient = new CloudEndpoints(_cloudEndpointsClientDiagnostics, Pipeline, Endpoint, storageSyncGroupApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 

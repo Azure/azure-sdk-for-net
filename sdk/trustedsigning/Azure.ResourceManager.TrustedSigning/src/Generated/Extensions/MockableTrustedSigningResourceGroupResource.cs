@@ -10,15 +10,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrustedSigning;
+using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableTrustedSigningResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _certificateProfilesClientDiagnostics;
+        private CertificateProfiles _certificateProfilesRestClient;
+
         /// <summary> Initializes a new instance of MockableTrustedSigningResourceGroupResource for mocking. </summary>
         protected MockableTrustedSigningResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         internal MockableTrustedSigningResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics CertificateProfilesClientDiagnostics => _certificateProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrustedSigning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CertificateProfiles CertificateProfilesRestClient => _certificateProfilesRestClient ??= new CertificateProfiles(CertificateProfilesClientDiagnostics, Pipeline, Endpoint, "2025-10-13");
 
         /// <summary> Gets a collection of TrustedSigningAccounts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of TrustedSigningAccounts and their operations over a TrustedSigningAccountResource. </returns>
@@ -94,6 +103,102 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             return GetTrustedSigningAccounts().Get(accountName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Revoke a certificate under a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}/revokeCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_RevokeCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> Trusted Signing account name. </param>
+        /// <param name="profileName"> Certificate profile name. </param>
+        /// <param name="content"> Parameters to revoke the certificate profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RevokeCertificateAsync(string accountName, string profileName, RevokeCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CertificateProfilesClientDiagnostics.CreateScope("MockableTrustedSigningResourceGroupResource.RevokeCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CertificateProfilesRestClient.CreateRevokeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, profileName, RevokeCertificateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Revoke a certificate under a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}/revokeCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_RevokeCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> Trusted Signing account name. </param>
+        /// <param name="profileName"> Certificate profile name. </param>
+        /// <param name="content"> Parameters to revoke the certificate profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RevokeCertificate(string accountName, string profileName, RevokeCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CertificateProfilesClientDiagnostics.CreateScope("MockableTrustedSigningResourceGroupResource.RevokeCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CertificateProfilesRestClient.CreateRevokeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, profileName, RevokeCertificateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

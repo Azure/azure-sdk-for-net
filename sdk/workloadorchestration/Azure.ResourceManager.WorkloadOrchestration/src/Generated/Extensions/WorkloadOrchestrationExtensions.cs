@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadOrchestration.Mocking;
+using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
@@ -859,6 +860,606 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeContext(contextName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Schema Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.CreateVersionAsync(WaitUntil, string, EdgeSchemaVersionWithUpdateType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="schemaName"> The name of the Schema. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeSchemaVersionResource>> CreateVersionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string schemaName, EdgeSchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).CreateVersionAsync(waitUntil, schemaName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a Schema Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.CreateVersion(WaitUntil, string, EdgeSchemaVersionWithUpdateType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="schemaName"> The name of the Schema. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeSchemaVersionResource> CreateVersion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string schemaName, EdgeSchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).CreateVersion(waitUntil, schemaName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Remove Schema Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveVersionAsync(string, EdgeVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="schemaName"> The name of the Schema. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<RemoveVersionResult>> RemoveVersionAsync(this ResourceGroupResource resourceGroupResource, string schemaName, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveVersionAsync(schemaName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Remove Schema Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveVersion(string, EdgeVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="schemaName"> The name of the Schema. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<RemoveVersionResult> RemoveVersion(this ResourceGroupResource resourceGroupResource, string schemaName, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveVersion(schemaName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request to deploy
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.InstallSolutionAsync(WaitUntil, string, InstallSolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> InstallSolutionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, InstallSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).InstallSolutionAsync(waitUntil, targetName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request to deploy
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.InstallSolution(WaitUntil, string, InstallSolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation InstallSolution(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, InstallSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).InstallSolution(waitUntil, targetName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request to uninstall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.UninstallSolutionAsync(WaitUntil, string, UninstallSolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> UninstallSolutionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, UninstallSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).UninstallSolutionAsync(waitUntil, targetName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request to uninstall
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.UninstallSolution(WaitUntil, string, UninstallSolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation UninstallSolution(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, UninstallSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).UninstallSolution(waitUntil, targetName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request to remove solution version revision
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveRevisionAsync(WaitUntil, string, RemoveRevisionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RemoveRevisionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, RemoveRevisionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveRevisionAsync(waitUntil, targetName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request to remove solution version revision
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveRevision(WaitUntil, string, RemoveRevisionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RemoveRevision(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, RemoveRevisionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveRevision(waitUntil, targetName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request to resolve configuration
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.ResolveConfigurationAsync(WaitUntil, string, EdgeSolutionTemplateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ResolvedConfiguration>> ResolveConfigurationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).ResolveConfigurationAsync(waitUntil, targetName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request to resolve configuration
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.ResolveConfiguration(WaitUntil, string, EdgeSolutionTemplateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ResolvedConfiguration> ResolveConfiguration(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).ResolveConfiguration(waitUntil, targetName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request to review configuration
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.ReviewSolutionVersionAsync(WaitUntil, string, EdgeSolutionTemplateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeSolutionVersionResource>> ReviewSolutionVersionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).ReviewSolutionVersionAsync(waitUntil, targetName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request to review configuration
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.ReviewSolutionVersion(WaitUntil, string, EdgeSolutionTemplateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeSolutionVersionResource> ReviewSolutionVersion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).ReviewSolutionVersion(waitUntil, targetName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request to publish
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.PublishSolutionVersionAsync(WaitUntil, string, EdgeSolutionVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeSolutionVersionResource>> PublishSolutionVersionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).PublishSolutionVersionAsync(waitUntil, targetName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request to publish
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.PublishSolutionVersion(WaitUntil, string, EdgeSolutionVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeSolutionVersionResource> PublishSolutionVersion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).PublishSolutionVersion(waitUntil, targetName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request to update external validation status
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.UpdateExternalValidationStatusAsync(WaitUntil, string, UpdateExternalValidationStatusContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeSolutionVersionResource>> UpdateExternalValidationStatusAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, UpdateExternalValidationStatusContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).UpdateExternalValidationStatusAsync(waitUntil, targetName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request to update external validation status
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.UpdateExternalValidationStatus(WaitUntil, string, UpdateExternalValidationStatusContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeSolutionVersionResource> UpdateExternalValidationStatus(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string targetName, UpdateExternalValidationStatusContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).UpdateExternalValidationStatus(waitUntil, targetName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request for bulk deploy
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.BulkDeploySolutionAsync(WaitUntil, string, string, BulkDeploySolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="solutionTemplateVersionName"> The name of the SolutionTemplateVersion. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> BulkDeploySolutionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, string solutionTemplateVersionName, BulkDeploySolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).BulkDeploySolutionAsync(waitUntil, solutionTemplateName, solutionTemplateVersionName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request for bulk deploy
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.BulkDeploySolution(WaitUntil, string, string, BulkDeploySolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="solutionTemplateVersionName"> The name of the SolutionTemplateVersion. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation BulkDeploySolution(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, string solutionTemplateVersionName, BulkDeploySolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).BulkDeploySolution(waitUntil, solutionTemplateName, solutionTemplateVersionName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post request for bulk publish
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.BulkPublishSolutionAsync(WaitUntil, string, string, BulkPublishSolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="solutionTemplateVersionName"> The name of the SolutionTemplateVersion. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> BulkPublishSolutionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, string solutionTemplateVersionName, BulkPublishSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).BulkPublishSolutionAsync(waitUntil, solutionTemplateName, solutionTemplateVersionName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post request for bulk publish
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.BulkPublishSolution(WaitUntil, string, string, BulkPublishSolutionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="solutionTemplateVersionName"> The name of the SolutionTemplateVersion. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation BulkPublishSolution(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, string solutionTemplateVersionName, BulkPublishSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).BulkPublishSolution(waitUntil, solutionTemplateName, solutionTemplateVersionName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Solution Template Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.CreateVersionAsync(WaitUntil, string, EdgeSolutionTemplateVersionWithUpdateType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeSolutionTemplateVersionResource>> CreateVersionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, EdgeSolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).CreateVersionAsync(waitUntil, solutionTemplateName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a Solution Template Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.CreateVersion(WaitUntil, string, EdgeSolutionTemplateVersionWithUpdateType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeSolutionTemplateVersionResource> CreateVersion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, EdgeSolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).CreateVersion(waitUntil, solutionTemplateName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Remove Solution Template Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveVersionAsync(WaitUntil, string, EdgeVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> RemoveVersionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveVersionAsync(waitUntil, solutionTemplateName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Remove Solution Template Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveVersion(WaitUntil, string, EdgeVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation RemoveVersion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string solutionTemplateName, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveVersion(waitUntil, solutionTemplateName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create or update a Config Template Version Resource with the specified UpdateType
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.CreateVersionAsync(WaitUntil, string, ConfigTemplateVersionWithUpdateType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<EdgeConfigTemplateVersionResource>> CreateVersionAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string configTemplateName, ConfigTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).CreateVersionAsync(waitUntil, configTemplateName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create or update a Config Template Version Resource with the specified UpdateType
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.CreateVersion(WaitUntil, string, ConfigTemplateVersionWithUpdateType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<EdgeConfigTemplateVersionResource> CreateVersion(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string configTemplateName, ConfigTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).CreateVersion(waitUntil, configTemplateName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Remove Config Template Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveVersionAsync(string, EdgeVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<RemoveVersionResult>> RemoveVersionAsync(this ResourceGroupResource resourceGroupResource, string configTemplateName, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveVersionAsync(configTemplateName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Remove Config Template Version Resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.RemoveVersion(string, EdgeVersionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="configTemplateName"> The name of the ConfigTemplate. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<RemoveVersionResult> RemoveVersion(this ResourceGroupResource resourceGroupResource, string configTemplateName, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).RemoveVersion(configTemplateName, content, cancellationToken);
         }
 
         /// <summary>

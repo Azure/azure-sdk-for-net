@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceConnector;
+using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceConnector.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableResourceConnectorResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _appliancesClientDiagnostics;
+        private Appliances _appliancesRestClient;
+
         /// <summary> Initializes a new instance of MockableResourceConnectorResourceGroupResource for mocking. </summary>
         protected MockableResourceConnectorResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         internal MockableResourceConnectorResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics AppliancesClientDiagnostics => _appliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceConnector.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Appliances AppliancesRestClient => _appliancesRestClient ??= new Appliances(AppliancesClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
 
         /// <summary> Gets a collection of ResourceConnectorAppliances in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of ResourceConnectorAppliances and their operations over a ResourceConnectorApplianceResource. </returns>
@@ -94,6 +103,306 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             return GetResourceConnectorAppliances().Get(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the cluster user credentials for the dedicated appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/listClusterUserCredential. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_ListClusterUserCredential. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplianceListCredentialResult>> GetClusterUserCredentialAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorResourceGroupResource.GetClusterUserCredential");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplianceListCredentialResult> response = Response.FromValue(ApplianceListCredentialResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the cluster user credentials for the dedicated appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/listClusterUserCredential. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_ListClusterUserCredential. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplianceListCredentialResult> GetClusterUserCredential(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorResourceGroupResource.GetClusterUserCredential");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplianceListCredentialResult> response = Response.FromValue(ApplianceListCredentialResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the cluster customer credentials for the dedicated appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/listkeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_ListKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="artifactType"> This sets the type of artifact being returned, when empty no artifact endpoint is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplianceListKeysResult>> GetKeysAsync(string resourceName, string artifactType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorResourceGroupResource.GetKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, artifactType, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplianceListKeysResult> response = Response.FromValue(ApplianceListKeysResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the cluster customer credentials for the dedicated appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/listkeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_ListKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="artifactType"> This sets the type of artifact being returned, when empty no artifact endpoint is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplianceListKeysResult> GetKeys(string resourceName, string artifactType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorResourceGroupResource.GetKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, artifactType, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplianceListKeysResult> response = Response.FromValue(ApplianceListKeysResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the upgrade graph of an Appliance with a specified resource group and name and specific release train.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/upgradeGraphs/{upgradeGraph}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_GetUpgradeGraph. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="upgradeGraph"> Upgrade graph version, ex - stable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="upgradeGraph"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="upgradeGraph"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplianceUpgradeGraph>> GetUpgradeGraphAsync(string resourceName, string upgradeGraph, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(upgradeGraph, nameof(upgradeGraph));
+
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorResourceGroupResource.GetUpgradeGraph");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, upgradeGraph, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplianceUpgradeGraph> response = Response.FromValue(ApplianceUpgradeGraph.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the upgrade graph of an Appliance with a specified resource group and name and specific release train.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/upgradeGraphs/{upgradeGraph}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_GetUpgradeGraph. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="upgradeGraph"> Upgrade graph version, ex - stable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="upgradeGraph"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="upgradeGraph"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplianceUpgradeGraph> GetUpgradeGraph(string resourceName, string upgradeGraph, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(upgradeGraph, nameof(upgradeGraph));
+
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorResourceGroupResource.GetUpgradeGraph");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AppliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, upgradeGraph, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplianceUpgradeGraph> response = Response.FromValue(ApplianceUpgradeGraph.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

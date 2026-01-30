@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.StorageMover
     {
         private readonly ClientDiagnostics _projectsClientDiagnostics;
         private readonly Projects _projectsRestClient;
+        private readonly ClientDiagnostics _jobDefinitionsClientDiagnostics;
+        private readonly JobDefinitions _jobDefinitionsRestClient;
         private readonly StorageMoverProjectData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/projects";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.StorageMover
             TryGetApiVersion(ResourceType, out string storageMoverProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ResourceType.Namespace, Diagnostics);
             _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, storageMoverProjectApiVersion ?? "2025-08-01");
+            _jobDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ResourceType.Namespace, Diagnostics);
+            _jobDefinitionsRestClient = new JobDefinitions(_jobDefinitionsClientDiagnostics, Pipeline, Endpoint, storageMoverProjectApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -382,6 +386,218 @@ namespace Azure.ResourceManager.StorageMover
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new Job Run resource for the specified Job Definition and passes it to the Agent for execution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/startJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobDefinitions_StartJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageMoverProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<JobRunResourceId>> StartJobAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+
+            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("StorageMoverProjectResource.StartJob");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobDefinitionsRestClient.CreateStartJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new Job Run resource for the specified Job Definition and passes it to the Agent for execution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/startJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobDefinitions_StartJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageMoverProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<JobRunResourceId> StartJob(string jobDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+
+            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("StorageMoverProjectResource.StartJob");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobDefinitionsRestClient.CreateStartJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Requests the Agent of any active instance of this Job Definition to stop.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/stopJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobDefinitions_StopJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageMoverProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<JobRunResourceId>> StopJobAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+
+            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("StorageMoverProjectResource.StopJob");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobDefinitionsRestClient.CreateStopJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Requests the Agent of any active instance of this Job Definition to stop.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/stopJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobDefinitions_StopJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageMoverProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<JobRunResourceId> StopJob(string jobDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+
+            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("StorageMoverProjectResource.StopJob");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobDefinitionsRestClient.CreateStopJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

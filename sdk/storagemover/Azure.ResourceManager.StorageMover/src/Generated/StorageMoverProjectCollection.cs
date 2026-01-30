@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.StorageMover
     {
         private readonly ClientDiagnostics _projectsClientDiagnostics;
         private readonly Projects _projectsRestClient;
+        private readonly ClientDiagnostics _jobDefinitionsClientDiagnostics;
+        private readonly JobDefinitions _jobDefinitionsRestClient;
 
         /// <summary> Initializes a new instance of StorageMoverProjectCollection for mocking. </summary>
         protected StorageMoverProjectCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.StorageMover
             TryGetApiVersion(StorageMoverProjectResource.ResourceType, out string storageMoverProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", StorageMoverProjectResource.ResourceType.Namespace, Diagnostics);
             _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, storageMoverProjectApiVersion ?? "2025-08-01");
+            _jobDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", StorageMoverProjectResource.ResourceType.Namespace, Diagnostics);
+            _jobDefinitionsRestClient = new JobDefinitions(_jobDefinitionsClientDiagnostics, Pipeline, Endpoint, storageMoverProjectApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
