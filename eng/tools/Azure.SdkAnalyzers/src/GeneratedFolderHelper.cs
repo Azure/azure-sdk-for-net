@@ -2,11 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.SdkAnalyzers
 {
-    internal static class GeneratedFolderHelper
+    public static class GeneratedFolderHelper
     {
+        // Cache common folder arrays to avoid allocations
+        private static readonly string[] CustomOnly = ["Custom"];
+        private const int GeneratedLength = 10;
+
         public static GeneratedFolderInfo GetGeneratedFolderInfo(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
@@ -14,45 +19,39 @@ namespace Azure.SdkAnalyzers
                 return default;
             }
 
-            // Check for Windows-style path
-            var generatedIndex = filePath.LastIndexOf("\\Generated\\", StringComparison.OrdinalIgnoreCase);
-            if (generatedIndex != -1)
+            int generatedIndex = filePath.IndexOf("Generated", StringComparison.Ordinal);
+            bool isInGeneratedFolder = generatedIndex >= 0;
+
+            if (!isInGeneratedFolder)
             {
-                return new GeneratedFolderInfo(
-                    isInGeneratedFolder: true,
-                    generatedIndex: generatedIndex,
-                    pathSeparator: "\\",
-                    generatedLength: "\\Generated\\".Length);
+                return default;
             }
 
-            // Check for Unix-style path
-            generatedIndex = filePath.LastIndexOf("/Generated/", StringComparison.OrdinalIgnoreCase);
-            if (generatedIndex != -1)
-            {
-                return new GeneratedFolderInfo(
-                    isInGeneratedFolder: true,
-                    generatedIndex: generatedIndex,
-                    pathSeparator: "/",
-                    generatedLength: "/Generated/".Length);
-            }
+            // Detect path separator from the entire path
+            char pathSeparator = filePath.IndexOf('/') >= 0 ? '/' : '\\';
 
-            return default;
+            // Extract relative path after "Generated" (excluding filename)
+            int afterGeneratedIndex = generatedIndex + GeneratedLength;
+            int fileStartIndex = filePath.LastIndexOf(pathSeparator) + 1;
+            int afterLength = fileStartIndex - afterGeneratedIndex - 1;
+
+            IEnumerable<string> customFolders = afterLength <= 0
+                ? CustomOnly
+                : ["Custom", .. filePath.Substring(afterGeneratedIndex, afterLength).Split(pathSeparator)];
+
+            return new GeneratedFolderInfo(isInGeneratedFolder, customFolders);
         }
     }
 
-    internal readonly struct GeneratedFolderInfo
+    public readonly struct GeneratedFolderInfo
     {
-        public GeneratedFolderInfo(bool isInGeneratedFolder, int generatedIndex, string pathSeparator, int generatedLength)
+        public GeneratedFolderInfo(bool isInGeneratedFolder, IEnumerable<string> customFolders)
         {
             IsInGeneratedFolder = isInGeneratedFolder;
-            GeneratedIndex = generatedIndex;
-            PathSeparator = pathSeparator;
-            GeneratedLength = generatedLength;
+            CustomFolders = customFolders;
         }
 
         public bool IsInGeneratedFolder { get; }
-        public int GeneratedIndex { get; }
-        public string PathSeparator { get; }
-        public int GeneratedLength { get; }
+        public IEnumerable<string> CustomFolders { get; }
     }
 }

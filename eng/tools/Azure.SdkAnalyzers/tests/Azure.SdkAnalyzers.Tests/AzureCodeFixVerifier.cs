@@ -41,6 +41,10 @@ namespace Azure.SdkAnalyzers.Tests
                 TestBehaviors = TestBehaviors.SkipGeneratedCodeCheck
             };
 
+            // Always add CodeGenTypeAttribute to support Generated code scenarios
+            test.TestState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
+            test.FixedState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
+
             return test;
         }
 
@@ -78,13 +82,15 @@ namespace Azure.SdkAnalyzers.Tests
                     return solution!;
                 }},
                 CodeActionIndex = codeActionIndex,
-                TestBehaviors = TestBehaviors.SkipGeneratedCodeCheck,
-                CompilerDiagnostics = CompilerDiagnostics.None // Don't compile since Custom file references missing assembly
+                TestBehaviors = TestBehaviors.SkipGeneratedCodeCheck
             };
 
+            // Add CodeGenTypeAttribute to both test and fixed states
+            test.TestState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
             test.TestState.Sources.Add((sourceFilePath, source));
 
             // Set both expected output files after the fix
+            test.FixedState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
             test.FixedState.Sources.Add((fixedGeneratedFilePath, fixedGeneratedSource));
             test.FixedState.Sources.Add((customFilePath, customSource));
 

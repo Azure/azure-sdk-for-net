@@ -40,6 +40,9 @@ namespace Azure.SdkAnalyzers.Tests
                 }
             }
 
+            // Always add CodeGenTypeAttribute to support Generated code scenarios
+            test.TestState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
+
             return test;
         }
 

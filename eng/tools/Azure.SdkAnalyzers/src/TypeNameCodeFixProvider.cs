@@ -172,22 +172,14 @@ namespace Azure.SdkAnalyzers
                 return solution;
             }
 
-            // Build custom file path by replacing "Generated" with "Custom" - single allocation using StringBuilder
-            int afterGenerated = generatedInfo.GeneratedIndex + generatedInfo.GeneratedLength;
+            // Build custom file name
             string customFileName = newName + ".cs";
-            string customFilePath = new StringBuilder(filePath.Length - generatedInfo.GeneratedLength + 6)
-                .Append(filePath, 0, generatedInfo.GeneratedIndex + 1)
-                .Append("Custom")
-                .Append(generatedInfo.PathSeparator)
-                .Append(filePath, afterGenerated, filePath.Length - afterGenerated)
-                .ToString();
 
             // Generate the custom code content
             string customCode = GenerateCustomTypeCode(typeSymbol, newName);
 
-            // Add the document with the full file path
-            DocumentId customDocId = DocumentId.CreateNewId(project.Id);
-            Document customDocument = project.AddDocument(customFileName, customCode, filePath: customFilePath);
+            // Add the document with folders from helper - VS will create the directories
+            Document customDocument = project.AddDocument(customFileName, customCode, generatedInfo.CustomFolders);
             solution = customDocument.Project.Solution;
 
             // Also perform the rename to update the generated file symbols
