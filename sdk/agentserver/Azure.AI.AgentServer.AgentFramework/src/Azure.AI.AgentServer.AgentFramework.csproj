@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.Agents.AI" />
     <!-- Explicit PackageReference for exact version constraint (controlled by Packages.Data.props) -->
     <PackageReference Include="Azure.AI.AgentServer.Core" />
+    <PackageReference Include="Microsoft.Agents.AI.Workflows" />
   </ItemGroup>
 
   <ItemGroup>
