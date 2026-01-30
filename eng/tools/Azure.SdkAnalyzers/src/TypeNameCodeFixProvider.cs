@@ -266,9 +266,7 @@ namespace Azure.SdkAnalyzers
 
             string readonlyModifier = typeSymbol.TypeKind == TypeKind.Struct ? "readonly " : "";
 
-            sb.AppendLine($"    public {readonlyModifier}partial {typeKind} {newName}");
-            sb.AppendLine("    {");
-            sb.AppendLine("    }");
+            sb.AppendLine($"    public {readonlyModifier}partial {typeKind} {newName} { }");
             sb.AppendLine("}");
 
             return sb.ToString();
