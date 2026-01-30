@@ -1,0 +1,3591 @@
+{
+  "name": "Azure.ResourceManager.CommonProperties",
+  "apiVersions": [
+    "2023-12-01-preview"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ManagedServiceIdentityType",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "None",
+          "value": "None",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "No managed identity.",
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "SystemAssigned",
+          "value": "SystemAssigned",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "System assigned managed identity.",
+          "decorators": []
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "UserAssigned",
+          "value": "UserAssigned",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "User assigned managed identity.",
+          "decorators": []
+        },
+        {
+          "$id": "6",
+          "kind": "enumvalue",
+          "name": "SystemAssigned,UserAssigned",
+          "value": "SystemAssigned,UserAssigned",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "System and user assigned managed identity.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonTypes",
+      "doc": "Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Input,Output,Json",
+      "decorators": []
+    },
+    {
+      "$id": "7",
+      "kind": "enum",
+      "name": "createdByType",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "9",
+          "kind": "enumvalue",
+          "name": "User",
+          "value": "User",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "doc": "The entity was created by a user.",
+          "decorators": []
+        },
+        {
+          "$id": "10",
+          "kind": "enumvalue",
+          "name": "Application",
+          "value": "Application",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "doc": "The entity was created by an application.",
+          "decorators": []
+        },
+        {
+          "$id": "11",
+          "kind": "enumvalue",
+          "name": "ManagedIdentity",
+          "value": "ManagedIdentity",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "doc": "The entity was created by a managed identity.",
+          "decorators": []
+        },
+        {
+          "$id": "12",
+          "kind": "enumvalue",
+          "name": "Key",
+          "value": "Key",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "doc": "The entity was created by a key.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonTypes",
+      "doc": "The kind of entity that created the resource.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json",
+      "decorators": []
+    },
+    {
+      "$id": "13",
+      "kind": "enum",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Versions",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "15",
+          "kind": "enumvalue",
+          "name": "v2023_12_01_preview",
+          "value": "2023-12-01-preview",
+          "valueType": {
+            "$ref": "14"
+          },
+          "enumType": {
+            "$ref": "13"
+          },
+          "doc": "Preview API version 2023-12-01-preview.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonProperties",
+      "doc": "Azure API versions.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": []
+    }
+  ],
+  "constants": [
+    {
+      "$id": "16",
+      "kind": "constant",
+      "name": "getContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "17",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "18",
+      "kind": "constant",
+      "name": "createWithSystemAssignedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "19",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "20",
+      "kind": "constant",
+      "name": "createWithSystemAssignedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "21",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "22",
+      "kind": "constant",
+      "name": "updateWithUserAssignedAndSystemAssignedContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "23",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "24",
+      "kind": "constant",
+      "name": "updateWithUserAssignedAndSystemAssignedContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "25",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "26",
+      "kind": "constant",
+      "name": "getForPredefinedErrorContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "27",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "28",
+      "kind": "constant",
+      "name": "createForUserDefinedErrorContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "29",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "30",
+      "kind": "constant",
+      "name": "createForUserDefinedErrorContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "31",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "32",
+      "kind": "model",
+      "name": "ManagedIdentityTrackedResource",
+      "namespace": "Azure.ResourceManager.CommonProperties",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentityTrackedResource",
+      "usage": "Input,Output,Json",
+      "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ResourceManager.Private.@armResourceInternal",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@resourceSchema",
+          "arguments": {
+            "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+            "resourceType": "Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources",
+            "methods": [
+              {
+                "$id": "33",
+                "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}"
+              },
+              {
+                "$id": "34",
+                "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}"
+              },
+              {
+                "$id": "35",
+                "methodId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned",
+                "kind": "Update",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}"
+              }
+            ],
+            "resourceScope": "ResourceGroup",
+            "resourceName": "ManagedIdentityTrackedResource"
+          }
+        }
+      ],
+      "baseModel": {
+        "$id": "36",
+        "kind": "model",
+        "name": "TrackedResource",
+        "namespace": "Azure.ResourceManager.CommonTypes",
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
+        "usage": "Input,Output,Json",
+        "doc": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+        "summary": "Tracked Resource",
+        "decorators": [],
+        "baseModel": {
+          "$id": "37",
+          "kind": "model",
+          "name": "Resource",
+          "namespace": "Azure.ResourceManager.CommonTypes",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+          "usage": "Input,Output,Json",
+          "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
+          "summary": "Resource",
+          "decorators": [],
+          "properties": [
+            {
+              "$id": "38",
+              "kind": "property",
+              "name": "id",
+              "serializedName": "id",
+              "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+              "type": {
+                "$id": "39",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id",
+              "serializationOptions": {
+                "json": {
+                  "name": "id"
+                }
+              },
+              "isHttpMetadata": false
+            },
+            {
+              "$id": "40",
+              "kind": "property",
+              "name": "name",
+              "serializedName": "name",
+              "doc": "The name of the resource",
+              "type": {
+                "$id": "41",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name",
+              "serializationOptions": {
+                "json": {
+                  "name": "name"
+                }
+              },
+              "isHttpMetadata": false
+            },
+            {
+              "$id": "42",
+              "kind": "property",
+              "name": "type",
+              "serializedName": "type",
+              "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+              "type": {
+                "$id": "43",
+                "kind": "string",
+                "name": "armResourceType",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceType",
+                "baseType": {
+                  "$id": "44",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type",
+              "serializationOptions": {
+                "json": {
+                  "name": "type"
+                }
+              },
+              "isHttpMetadata": false
+            },
+            {
+              "$id": "45",
+              "kind": "property",
+              "name": "systemData",
+              "serializedName": "systemData",
+              "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+              "type": {
+                "$id": "46",
+                "kind": "model",
+                "name": "SystemData",
+                "namespace": "Azure.ResourceManager.CommonTypes",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
+                "usage": "Output,Json",
+                "doc": "Metadata pertaining to creation and last modification of the resource.",
+                "decorators": [],
+                "properties": [
+                  {
+                    "$id": "47",
+                    "kind": "property",
+                    "name": "createdBy",
+                    "serializedName": "createdBy",
+                    "doc": "The identity that created the resource.",
+                    "type": {
+                      "$id": "48",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdBy"
+                      }
+                    },
+                    "isHttpMetadata": false
+                  },
+                  {
+                    "$id": "49",
+                    "kind": "property",
+                    "name": "createdByType",
+                    "serializedName": "createdByType",
+                    "doc": "The type of identity that created the resource.",
+                    "type": {
+                      "$ref": "7"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdByType"
+                      }
+                    },
+                    "isHttpMetadata": false
+                  },
+                  {
+                    "$id": "50",
+                    "kind": "property",
+                    "name": "createdAt",
+                    "serializedName": "createdAt",
+                    "doc": "The timestamp of resource creation (UTC).",
+                    "type": {
+                      "$id": "51",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "52",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdAt"
+                      }
+                    },
+                    "isHttpMetadata": false
+                  },
+                  {
+                    "$id": "53",
+                    "kind": "property",
+                    "name": "lastModifiedBy",
+                    "serializedName": "lastModifiedBy",
+                    "doc": "The identity that last modified the resource.",
+                    "type": {
+                      "$id": "54",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedBy"
+                      }
+                    },
+                    "isHttpMetadata": false
+                  },
+                  {
+                    "$id": "55",
+                    "kind": "property",
+                    "name": "lastModifiedByType",
+                    "serializedName": "lastModifiedByType",
+                    "doc": "The type of identity that last modified the resource.",
+                    "type": {
+                      "$ref": "7"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedByType"
+                      }
+                    },
+                    "isHttpMetadata": false
+                  },
+                  {
+                    "$id": "56",
+                    "kind": "property",
+                    "name": "lastModifiedAt",
+                    "serializedName": "lastModifiedAt",
+                    "doc": "The timestamp of resource last modification (UTC)",
+                    "type": {
+                      "$id": "57",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "58",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedAt"
+                      }
+                    },
+                    "isHttpMetadata": false
+                  }
+                ]
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData",
+              "serializationOptions": {
+                "json": {
+                  "name": "systemData"
+                }
+              },
+              "isHttpMetadata": false
+            }
+          ]
+        },
+        "properties": [
+          {
+            "$id": "59",
+            "kind": "property",
+            "name": "tags",
+            "serializedName": "tags",
+            "doc": "Resource tags.",
+            "type": {
+              "$id": "60",
+              "kind": "dict",
+              "keyType": {
+                "$id": "61",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "valueType": {
+                "$id": "62",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.tags",
+            "serializationOptions": {
+              "json": {
+                "name": "tags"
+              }
+            },
+            "isHttpMetadata": false
+          },
+          {
+            "$id": "63",
+            "kind": "property",
+            "name": "location",
+            "serializedName": "location",
+            "doc": "The geo-location where the resource lives",
+            "type": {
+              "$id": "64",
+              "kind": "string",
+              "name": "azureLocation",
+              "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+              "baseType": {
+                "$id": "65",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.location",
+            "serializationOptions": {
+              "json": {
+                "name": "location"
+              }
+            },
+            "isHttpMetadata": false
+          }
+        ]
+      },
+      "properties": [
+        {
+          "$id": "66",
+          "kind": "property",
+          "name": "properties",
+          "serializedName": "properties",
+          "doc": "The resource-specific properties for this resource.",
+          "type": {
+            "$id": "67",
+            "kind": "model",
+            "name": "ManagedIdentityTrackedResourceProperties",
+            "namespace": "Azure.ResourceManager.CommonProperties",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentityTrackedResourceProperties",
+            "usage": "Input,Output,Json",
+            "doc": "Managed Identity Arm Resource Properties.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "properties": [
+              {
+                "$id": "68",
+                "kind": "property",
+                "name": "provisioningState",
+                "serializedName": "provisioningState",
+                "doc": "The status of the last operation.",
+                "type": {
+                  "$id": "69",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentityTrackedResourceProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentityTrackedResource.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "70",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "doc": "arm resource name for path",
+          "type": {
+            "$id": "71",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentityTrackedResource.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true
+        },
+        {
+          "$id": "72",
+          "kind": "property",
+          "name": "identity",
+          "serializedName": "identity",
+          "doc": "The managed service identities assigned to this resource.",
+          "type": {
+            "$id": "73",
+            "kind": "model",
+            "name": "ManagedServiceIdentity",
+            "namespace": "Azure.ResourceManager.CommonTypes",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity",
+            "usage": "Input,Output,Json",
+            "doc": "Managed service identity (system assigned and/or user assigned identities)",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "74",
+                "kind": "property",
+                "name": "principalId",
+                "serializedName": "principalId",
+                "doc": "The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.",
+                "type": {
+                  "$id": "75",
+                  "kind": "string",
+                  "name": "uuid",
+                  "crossLanguageDefinitionId": "Azure.Core.uuid",
+                  "baseType": {
+                    "$id": "76",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity.principalId",
+                "serializationOptions": {
+                  "json": {
+                    "name": "principalId"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "77",
+                "kind": "property",
+                "name": "tenantId",
+                "serializedName": "tenantId",
+                "doc": "The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.",
+                "type": {
+                  "$id": "78",
+                  "kind": "string",
+                  "name": "uuid",
+                  "crossLanguageDefinitionId": "Azure.Core.uuid",
+                  "baseType": {
+                    "$id": "79",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity.tenantId",
+                "serializationOptions": {
+                  "json": {
+                    "name": "tenantId"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "80",
+                "kind": "property",
+                "name": "type",
+                "serializedName": "type",
+                "doc": "The type of managed identity assigned to this resource.",
+                "type": {
+                  "$ref": "1"
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity.type",
+                "serializationOptions": {
+                  "json": {
+                    "name": "type"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "81",
+                "kind": "property",
+                "name": "userAssignedIdentities",
+                "serializedName": "userAssignedIdentities",
+                "doc": "The identities assigned to this resource by the user.",
+                "type": {
+                  "$id": "82",
+                  "kind": "dict",
+                  "keyType": {
+                    "$id": "83",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "valueType": {
+                    "$id": "84",
+                    "kind": "model",
+                    "name": "UserAssignedIdentity",
+                    "namespace": "Azure.ResourceManager.CommonTypes",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity",
+                    "usage": "Input,Output,Json",
+                    "doc": "User assigned identity properties",
+                    "decorators": [],
+                    "properties": [
+                      {
+                        "$id": "85",
+                        "kind": "property",
+                        "name": "principalId",
+                        "serializedName": "principalId",
+                        "doc": "The principal ID of the assigned identity.",
+                        "type": {
+                          "$id": "86",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "87",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.principalId",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "principalId"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      },
+                      {
+                        "$id": "88",
+                        "kind": "property",
+                        "name": "clientId",
+                        "serializedName": "clientId",
+                        "doc": "The client ID of the assigned identity.",
+                        "type": {
+                          "$id": "89",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "90",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity.clientId",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "clientId"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      }
+                    ]
+                  },
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity.userAssignedIdentities",
+                "serializationOptions": {
+                  "json": {
+                    "name": "userAssignedIdentities"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentityTrackedResource.identity",
+          "serializationOptions": {
+            "json": {
+              "name": "identity"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "67"
+    },
+    {
+      "$ref": "73"
+    },
+    {
+      "$ref": "84"
+    },
+    {
+      "$ref": "36"
+    },
+    {
+      "$ref": "37"
+    },
+    {
+      "$ref": "46"
+    },
+    {
+      "$id": "91",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "namespace": "Azure.ResourceManager.CommonTypes",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+      "summary": "Error response",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "92",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "93",
+            "kind": "model",
+            "name": "ErrorDetail",
+            "namespace": "Azure.ResourceManager.CommonTypes",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+            "usage": "Json,Exception",
+            "doc": "The error detail.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "94",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "The error code.",
+                "type": {
+                  "$id": "95",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "96",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "The error message.",
+                "type": {
+                  "$id": "97",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "98",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The error target.",
+                "type": {
+                  "$id": "99",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "100",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "The error details.",
+                "type": {
+                  "$id": "101",
+                  "kind": "array",
+                  "name": "ArrayErrorDetail",
+                  "valueType": {
+                    "$ref": "93"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "102",
+                "kind": "property",
+                "name": "additionalInfo",
+                "serializedName": "additionalInfo",
+                "doc": "The error additional info.",
+                "type": {
+                  "$id": "103",
+                  "kind": "array",
+                  "name": "ArrayErrorAdditionalInfo",
+                  "valueType": {
+                    "$id": "104",
+                    "kind": "model",
+                    "name": "ErrorAdditionalInfo",
+                    "namespace": "Azure.ResourceManager.CommonTypes",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+                    "usage": "Json,Exception",
+                    "doc": "The resource management error additional info.",
+                    "decorators": [],
+                    "properties": [
+                      {
+                        "$id": "105",
+                        "kind": "property",
+                        "name": "type",
+                        "serializedName": "type",
+                        "doc": "The additional info type.",
+                        "type": {
+                          "$id": "106",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "type"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      },
+                      {
+                        "$id": "107",
+                        "kind": "property",
+                        "name": "info",
+                        "serializedName": "info",
+                        "doc": "The additional info.",
+                        "type": {
+                          "$id": "108",
+                          "kind": "unknown",
+                          "name": "unknown",
+                          "crossLanguageDefinitionId": "",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "info"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      }
+                    ]
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo",
+                "serializationOptions": {
+                  "json": {
+                    "name": "additionalInfo"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "93"
+    },
+    {
+      "$ref": "104"
+    },
+    {
+      "$id": "109",
+      "kind": "model",
+      "name": "ConfidentialResource",
+      "namespace": "Azure.ResourceManager.CommonProperties",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ConfidentialResource",
+      "usage": "Input,Output,Json",
+      "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ResourceManager.Private.@armResourceInternal",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@resourceSchema",
+          "arguments": {
+            "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
+            "resourceType": "Azure.ResourceManager.CommonProperties/confidentialResources",
+            "methods": [
+              {
+                "$id": "110",
+                "methodId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}"
+              },
+              {
+                "$id": "111",
+                "methodId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}"
+              }
+            ],
+            "resourceScope": "ResourceGroup",
+            "resourceName": "ConfidentialResource"
+          }
+        }
+      ],
+      "baseModel": {
+        "$ref": "36"
+      },
+      "properties": [
+        {
+          "$id": "112",
+          "kind": "property",
+          "name": "properties",
+          "serializedName": "properties",
+          "doc": "The resource-specific properties for this resource.",
+          "type": {
+            "$id": "113",
+            "kind": "model",
+            "name": "ConfidentialResourceProperties",
+            "namespace": "Azure.ResourceManager.CommonProperties",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ConfidentialResourceProperties",
+            "usage": "Input,Output,Json",
+            "doc": "Confidential Resource Properties.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "properties": [
+              {
+                "$id": "114",
+                "kind": "property",
+                "name": "provisioningState",
+                "serializedName": "provisioningState",
+                "doc": "The status of the last operation.",
+                "type": {
+                  "$id": "115",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ConfidentialResourceProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "116",
+                "kind": "property",
+                "name": "username",
+                "serializedName": "username",
+                "type": {
+                  "$id": "117",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ConfidentialResourceProperties.username",
+                "serializationOptions": {
+                  "json": {
+                    "name": "username"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ConfidentialResource.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "118",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "doc": "The name of the ConfidentialResource",
+          "type": {
+            "$id": "119",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ConfidentialResource.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true
+        }
+      ]
+    },
+    {
+      "$ref": "113"
+    },
+    {
+      "$id": "120",
+      "kind": "model",
+      "name": "CloudError",
+      "namespace": "Azure.ResourceManager.CommonProperties",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.CloudError",
+      "usage": "Json,Exception",
+      "doc": "An error response.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "properties": [
+        {
+          "$id": "121",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "Api error.",
+          "type": {
+            "$id": "122",
+            "kind": "model",
+            "name": "ApiError",
+            "namespace": "Azure.ResourceManager.CommonProperties",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiError",
+            "usage": "Json,Exception",
+            "doc": "Api error.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "properties": [
+              {
+                "$id": "123",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "The Api error details",
+                "type": {
+                  "$id": "124",
+                  "kind": "array",
+                  "name": "ArrayApiErrorBase",
+                  "valueType": {
+                    "$id": "125",
+                    "kind": "model",
+                    "name": "ApiErrorBase",
+                    "namespace": "Azure.ResourceManager.CommonProperties",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiErrorBase",
+                    "usage": "Json,Exception",
+                    "doc": "Api error base.",
+                    "decorators": [
+                      {
+                        "name": "Azure.ResourceManager.@armProviderNamespace",
+                        "arguments": {}
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "$id": "126",
+                        "kind": "property",
+                        "name": "code",
+                        "serializedName": "code",
+                        "doc": "The error code.",
+                        "type": {
+                          "$id": "127",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": false,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiErrorBase.code",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "code"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      },
+                      {
+                        "$id": "128",
+                        "kind": "property",
+                        "name": "target",
+                        "serializedName": "target",
+                        "doc": "The target of the particular error.",
+                        "type": {
+                          "$id": "129",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": false,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiErrorBase.target",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "target"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      },
+                      {
+                        "$id": "130",
+                        "kind": "property",
+                        "name": "message",
+                        "serializedName": "message",
+                        "doc": "The error message.",
+                        "type": {
+                          "$id": "131",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": false,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiErrorBase.message",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "message"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      }
+                    ]
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiError.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "132",
+                "kind": "property",
+                "name": "innererror",
+                "serializedName": "innererror",
+                "doc": "The Api inner error",
+                "type": {
+                  "$id": "133",
+                  "kind": "model",
+                  "name": "InnerError",
+                  "namespace": "Azure.ResourceManager.CommonProperties",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.InnerError",
+                  "usage": "Json,Exception",
+                  "doc": "Inner error details.",
+                  "decorators": [
+                    {
+                      "name": "Azure.ResourceManager.@armProviderNamespace",
+                      "arguments": {}
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "$id": "134",
+                      "kind": "property",
+                      "name": "exceptiontype",
+                      "serializedName": "exceptiontype",
+                      "doc": "The exception type.",
+                      "type": {
+                        "$id": "135",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.InnerError.exceptiontype",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "exceptiontype"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    },
+                    {
+                      "$id": "136",
+                      "kind": "property",
+                      "name": "errordetail",
+                      "serializedName": "errordetail",
+                      "doc": "The internal error message or exception dump.",
+                      "type": {
+                        "$id": "137",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.InnerError.errordetail",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "errordetail"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiError.innererror",
+                "serializationOptions": {
+                  "json": {
+                    "name": "innererror"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "138",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "The error code.",
+                "type": {
+                  "$id": "139",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiError.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "140",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The target of the particular error.",
+                "type": {
+                  "$id": "141",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiError.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "142",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "The error message.",
+                "type": {
+                  "$id": "143",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ApiError.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.CloudError.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "122"
+    },
+    {
+      "$ref": "125"
+    },
+    {
+      "$ref": "133"
+    }
+  ],
+  "clients": [
+    {
+      "$id": "144",
+      "kind": "client",
+      "name": "CommonPropertiesClient",
+      "namespace": "Azure.ResourceManager.CommonProperties",
+      "doc": "Arm Managed Identity Provider management API.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "145",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "146",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "147",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "https://management.azure.com"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.endpoint"
+        },
+        {
+          "$id": "148",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "149",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "150",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2023-12-01-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
+        },
+        {
+          "$id": "151",
+          "kind": "method",
+          "name": "subscriptionId",
+          "serializedName": "subscriptionId",
+          "doc": "The ID of the target subscription. The value must be an UUID.",
+          "type": {
+            "$id": "152",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.subscriptionId",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@nonResourceMethodSchema",
+          "arguments": {
+            "nonResourceMethods": []
+          }
+        }
+      ],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
+      "children": [
+        {
+          "$id": "153",
+          "kind": "client",
+          "name": "ManagedIdentity",
+          "namespace": "Azure.ResourceManager.CommonProperties",
+          "methods": [
+            {
+              "$id": "154",
+              "kind": "basic",
+              "name": "get",
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Get a ManagedIdentityTrackedResource",
+              "operation": {
+                "$id": "155",
+                "name": "get",
+                "resourceName": "ManagedIdentityTrackedResource",
+                "doc": "Get a ManagedIdentityTrackedResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "156",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "157",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "158",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "159",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "160",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.subscriptionId"
+                  },
+                  {
+                    "$id": "161",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "162",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.resourceGroupName"
+                  },
+                  {
+                    "$id": "163",
+                    "kind": "path",
+                    "name": "managedIdentityTrackedResourceName",
+                    "serializedName": "managedIdentityTrackedResourceName",
+                    "doc": "arm resource name for path",
+                    "type": {
+                      "$id": "164",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.managedIdentityTrackedResourceName"
+                  },
+                  {
+                    "$id": "165",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "16"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.accept"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "32"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceRead",
+                    "arguments": {}
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "$id": "166",
+                  "kind": "method",
+                  "name": "resourceGroupName",
+                  "serializedName": "resourceGroupName",
+                  "doc": "The name of the resource group. The name is case insensitive.",
+                  "type": {
+                    "$id": "167",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.resourceGroupName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "168",
+                  "kind": "method",
+                  "name": "managedIdentityTrackedResourceName",
+                  "serializedName": "managedIdentityTrackedResourceName",
+                  "doc": "arm resource name for path",
+                  "type": {
+                    "$id": "169",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.managedIdentityTrackedResourceName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "170",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "16"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "32"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.get"
+            },
+            {
+              "$id": "171",
+              "kind": "basic",
+              "name": "createWithSystemAssigned",
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Create a ManagedIdentityTrackedResource",
+              "operation": {
+                "$id": "172",
+                "name": "createWithSystemAssigned",
+                "resourceName": "ManagedIdentityTrackedResource",
+                "doc": "Create a ManagedIdentityTrackedResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "173",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "174",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "175",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "176",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "177",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.subscriptionId"
+                  },
+                  {
+                    "$id": "178",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "179",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.resourceGroupName"
+                  },
+                  {
+                    "$id": "180",
+                    "kind": "path",
+                    "name": "managedIdentityTrackedResourceName",
+                    "serializedName": "managedIdentityTrackedResourceName",
+                    "doc": "arm resource name for path",
+                    "type": {
+                      "$id": "181",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.managedIdentityTrackedResourceName"
+                  },
+                  {
+                    "$id": "182",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "18"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.contentType"
+                  },
+                  {
+                    "$id": "183",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "20"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.accept"
+                  },
+                  {
+                    "$id": "184",
+                    "kind": "body",
+                    "name": "resource",
+                    "serializedName": "resource",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "32"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.resource"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "32"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "32"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
+                    "arguments": {}
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "$id": "185",
+                  "kind": "method",
+                  "name": "resourceGroupName",
+                  "serializedName": "resourceGroupName",
+                  "doc": "The name of the resource group. The name is case insensitive.",
+                  "type": {
+                    "$id": "186",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.resourceGroupName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "187",
+                  "kind": "method",
+                  "name": "managedIdentityTrackedResourceName",
+                  "serializedName": "managedIdentityTrackedResourceName",
+                  "doc": "arm resource name for path",
+                  "type": {
+                    "$id": "188",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.managedIdentityTrackedResourceName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "189",
+                  "kind": "method",
+                  "name": "resource",
+                  "serializedName": "resource",
+                  "doc": "Resource create parameters.",
+                  "type": {
+                    "$ref": "32"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.resource",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "190",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "18"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "191",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "20"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "32"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.createWithSystemAssigned"
+            },
+            {
+              "$id": "192",
+              "kind": "basic",
+              "name": "updateWithUserAssignedAndSystemAssigned",
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Update a ManagedIdentityTrackedResource",
+              "operation": {
+                "$id": "193",
+                "name": "updateWithUserAssignedAndSystemAssigned",
+                "resourceName": "ManagedIdentityTrackedResource",
+                "doc": "Update a ManagedIdentityTrackedResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "194",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "195",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "196",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "197",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "198",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.subscriptionId"
+                  },
+                  {
+                    "$id": "199",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "200",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.resourceGroupName"
+                  },
+                  {
+                    "$id": "201",
+                    "kind": "path",
+                    "name": "managedIdentityTrackedResourceName",
+                    "serializedName": "managedIdentityTrackedResourceName",
+                    "doc": "arm resource name for path",
+                    "type": {
+                      "$id": "202",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.managedIdentityTrackedResourceName"
+                  },
+                  {
+                    "$id": "203",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "22"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.contentType"
+                  },
+                  {
+                    "$id": "204",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "24"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.accept"
+                  },
+                  {
+                    "$id": "205",
+                    "kind": "body",
+                    "name": "properties",
+                    "serializedName": "properties",
+                    "doc": "The resource properties to be updated.",
+                    "type": {
+                      "$ref": "32"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.properties"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "32"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "PATCH",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/{managedIdentityTrackedResourceName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": false,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceUpdate",
+                    "arguments": {}
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "$id": "206",
+                  "kind": "method",
+                  "name": "resourceGroupName",
+                  "serializedName": "resourceGroupName",
+                  "doc": "The name of the resource group. The name is case insensitive.",
+                  "type": {
+                    "$id": "207",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.resourceGroupName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "208",
+                  "kind": "method",
+                  "name": "managedIdentityTrackedResourceName",
+                  "serializedName": "managedIdentityTrackedResourceName",
+                  "doc": "arm resource name for path",
+                  "type": {
+                    "$id": "209",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.managedIdentityTrackedResourceName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "210",
+                  "kind": "method",
+                  "name": "properties",
+                  "serializedName": "properties",
+                  "doc": "The resource properties to be updated.",
+                  "type": {
+                    "$ref": "32"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.properties",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "211",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "22"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "212",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "24"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "32"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity.updateWithUserAssignedAndSystemAssigned"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "213",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "214",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "215",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.endpoint"
+            },
+            {
+              "$ref": "148"
+            },
+            {
+              "$ref": "151"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@armResourceOperations",
+              "arguments": {}
+            }
+          ],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.ManagedIdentity",
+          "apiVersions": [
+            "2023-12-01-preview"
+          ],
+          "parent": {
+            "$ref": "144"
+          }
+        },
+        {
+          "$id": "216",
+          "kind": "client",
+          "name": "Error",
+          "namespace": "Azure.ResourceManager.CommonProperties",
+          "methods": [
+            {
+              "$id": "217",
+              "kind": "basic",
+              "name": "getForPredefinedError",
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Get a ConfidentialResource",
+              "operation": {
+                "$id": "218",
+                "name": "getForPredefinedError",
+                "resourceName": "ConfidentialResource",
+                "doc": "Get a ConfidentialResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "219",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "220",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "221",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "222",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "223",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.subscriptionId"
+                  },
+                  {
+                    "$id": "224",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "225",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.resourceGroupName"
+                  },
+                  {
+                    "$id": "226",
+                    "kind": "path",
+                    "name": "confidentialResourceName",
+                    "serializedName": "confidentialResourceName",
+                    "doc": "The name of the ConfidentialResource",
+                    "type": {
+                      "$id": "227",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.confidentialResourceName"
+                  },
+                  {
+                    "$id": "228",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "26"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.accept"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "109"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceRead",
+                    "arguments": {}
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "$id": "229",
+                  "kind": "method",
+                  "name": "resourceGroupName",
+                  "serializedName": "resourceGroupName",
+                  "doc": "The name of the resource group. The name is case insensitive.",
+                  "type": {
+                    "$id": "230",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.resourceGroupName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "231",
+                  "kind": "method",
+                  "name": "confidentialResourceName",
+                  "serializedName": "confidentialResourceName",
+                  "doc": "The name of the ConfidentialResource",
+                  "type": {
+                    "$id": "232",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.confidentialResourceName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "233",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "26"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "109"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError"
+            },
+            {
+              "$id": "234",
+              "kind": "basic",
+              "name": "createForUserDefinedError",
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Create a ConfidentialResource",
+              "operation": {
+                "$id": "235",
+                "name": "createForUserDefinedError",
+                "resourceName": "ConfidentialResource",
+                "doc": "Create a ConfidentialResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "236",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "237",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "238",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "239",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "240",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.subscriptionId"
+                  },
+                  {
+                    "$id": "241",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "242",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.resourceGroupName"
+                  },
+                  {
+                    "$id": "243",
+                    "kind": "path",
+                    "name": "confidentialResourceName",
+                    "serializedName": "confidentialResourceName",
+                    "doc": "The name of the ConfidentialResource",
+                    "type": {
+                      "$id": "244",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.confidentialResourceName"
+                  },
+                  {
+                    "$id": "245",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "28"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.contentType"
+                  },
+                  {
+                    "$id": "246",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "30"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.accept"
+                  },
+                  {
+                    "$id": "247",
+                    "kind": "body",
+                    "name": "resource",
+                    "serializedName": "resource",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "109"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.resource"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "109"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "109"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
+                    "arguments": {}
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "$id": "248",
+                  "kind": "method",
+                  "name": "resourceGroupName",
+                  "serializedName": "resourceGroupName",
+                  "doc": "The name of the resource group. The name is case insensitive.",
+                  "type": {
+                    "$id": "249",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.resourceGroupName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "250",
+                  "kind": "method",
+                  "name": "confidentialResourceName",
+                  "serializedName": "confidentialResourceName",
+                  "doc": "The name of the ConfidentialResource",
+                  "type": {
+                    "$id": "251",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.confidentialResourceName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "252",
+                  "kind": "method",
+                  "name": "resource",
+                  "serializedName": "resource",
+                  "doc": "Resource create parameters.",
+                  "type": {
+                    "$ref": "109"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.resource",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "253",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "28"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "254",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "30"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "109"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.createForUserDefinedError"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "255",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "256",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "257",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.endpoint"
+            },
+            {
+              "$id": "258",
+              "kind": "method",
+              "name": "apiVersion",
+              "serializedName": "apiVersion",
+              "doc": "The API version to use for this operation.",
+              "type": {
+                "$id": "259",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "",
+              "isApiVersion": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "260",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "2023-12-01-preview"
+              },
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.apiVersion",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "261",
+              "kind": "method",
+              "name": "subscriptionId",
+              "serializedName": "subscriptionId",
+              "doc": "The ID of the target subscription. The value must be an UUID.",
+              "type": {
+                "$id": "262",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error.getForPredefinedError.subscriptionId",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@armResourceOperations",
+              "arguments": {}
+            }
+          ],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonProperties.Error",
+          "apiVersions": [
+            "2023-12-01-preview"
+          ],
+          "parent": {
+            "$ref": "144"
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "user_impersonation"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}
