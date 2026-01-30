@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Search.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DefaultValue = "default";
-        private const string ConfidentialValue = "confidential";
+        private const string DefaultValue = "Default";
+        private const string ConfidentialValue = "Confidential";
 
         /// <summary> Create the service with the Default Compute. </summary>
         public static SearchServiceComputeType Default { get; } = new SearchServiceComputeType(DefaultValue);

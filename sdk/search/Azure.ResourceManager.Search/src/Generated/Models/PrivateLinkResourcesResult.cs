@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesResult"/>. </summary>
         /// <param name="value"> The list of supported Private Link Resources. </param>
+        /// <param name="nextLink"> The URL to get the next set of private link resources, if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourcesResult(IReadOnlyList<SearchPrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateLinkResourcesResult(IReadOnlyList<SearchPrivateLinkResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of supported Private Link Resources. </summary>
         public IReadOnlyList<SearchPrivateLinkResource> Value { get; }
+        /// <summary> The URL to get the next set of private link resources, if there are any. </summary>
+        public string NextLink { get; }
     }
 }
