@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.SignalR.Models
     public readonly partial struct SignalRRequestType : IEquatable<SignalRRequestType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SignalRRequestType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRRequestType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ClientConnectionValue = "ClientConnection";
         private const string ServerConnectionValue = "ServerConnection";
         private const string RestApiValue = "RESTAPI";
         private const string TraceValue = "Trace";
 
-        /// <summary> ClientConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SignalRRequestType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ClientConnection. </summary>
         public static SignalRRequestType ClientConnection { get; } = new SignalRRequestType(ClientConnectionValue);
-        /// <summary> ServerConnection. </summary>
+
+        /// <summary> Gets the ServerConnection. </summary>
         public static SignalRRequestType ServerConnection { get; } = new SignalRRequestType(ServerConnectionValue);
-        /// <summary> RESTAPI. </summary>
+
+        /// <summary> Gets the RestApi. </summary>
         public static SignalRRequestType RestApi { get; } = new SignalRRequestType(RestApiValue);
-        /// <summary> Trace. </summary>
+
+        /// <summary> Gets the Trace. </summary>
         public static SignalRRequestType Trace { get; } = new SignalRRequestType(TraceValue);
+
         /// <summary> Determines if two <see cref="SignalRRequestType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignalRRequestType left, SignalRRequestType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SignalRRequestType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignalRRequestType left, SignalRRequestType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRRequestType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SignalRRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SignalRRequestType(string value) => new SignalRRequestType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SignalRRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SignalRRequestType?(string value) => value == null ? null : new SignalRRequestType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignalRRequestType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SignalRRequestType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

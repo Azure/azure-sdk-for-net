@@ -7,49 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> The billing information of the resource. </summary>
     public partial class SignalRResourceSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        ///
-        /// Allowed values: Standard_S1, Free_F1
+        /// 
+        /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SignalRResourceSku(string name)
@@ -62,67 +34,67 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        ///
-        /// Allowed values: Standard_S1, Free_F1
+        /// 
+        /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </param>
         /// <param name="tier">
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-        ///
+        /// 
         /// `Basic` is deprecated, use `Standard` instead.
         /// </param>
         /// <param name="size"> Not used. Retained for future use. </param>
         /// <param name="family"> Not used. Retained for future use. </param>
         /// <param name="capacity">
-        /// Optional, integer. The unit count of the resource. 1 by default.
-        ///
+        /// Optional, integer. The unit count of the resource.
+        /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
+        /// 
         /// If present, following values are allowed:
-        ///     Free: 1
-        ///     Standard: 1,2,5,10,20,50,100
+        /// Free_F1: 1;
+        /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRResourceSku(string name, SignalRSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRResourceSku(string name, SignalRSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
             Size = size;
             Family = family;
             Capacity = capacity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/> for deserialization. </summary>
-        internal SignalRResourceSku()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// The name of the SKU. Required.
-        ///
-        /// Allowed values: Standard_S1, Free_F1
+        /// 
+        /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary>
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-        ///
+        /// 
         /// `Basic` is deprecated, use `Standard` instead.
         /// </summary>
-        [WirePath("tier")]
         public SignalRSkuTier? Tier { get; set; }
+
         /// <summary> Not used. Retained for future use. </summary>
-        [WirePath("size")]
         public string Size { get; }
+
         /// <summary> Not used. Retained for future use. </summary>
-        [WirePath("family")]
         public string Family { get; }
+
         /// <summary>
-        /// Optional, integer. The unit count of the resource. 1 by default.
-        ///
+        /// Optional, integer. The unit count of the resource.
+        /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
+        /// 
         /// If present, following values are allowed:
-        ///     Free: 1
-        ///     Standard: 1,2,5,10,20,50,100
+        /// Free_F1: 1;
+        /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
         /// </summary>
-        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
-    internal class SignalRCustomCertificateOperationSource : IOperationSource<SignalRCustomCertificateResource>
+    /// <summary></summary>
+    internal partial class SignalRCustomCertificateOperationSource : IOperationSource<SignalRCustomCertificateResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SignalRCustomCertificateOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SignalRCustomCertificateResource IOperationSource<SignalRCustomCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRCustomCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SignalRCustomCertificateData data = SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SignalRCustomCertificateResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SignalRCustomCertificateResource> IOperationSource<SignalRCustomCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRCustomCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
-            return await Task.FromResult(new SignalRCustomCertificateResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SignalRCustomCertificateData data = SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SignalRCustomCertificateResource(_client, data);
         }
     }
 }

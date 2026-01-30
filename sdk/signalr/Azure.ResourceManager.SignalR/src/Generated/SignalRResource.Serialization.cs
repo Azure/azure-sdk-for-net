@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SignalR
 {
+    /// <summary></summary>
     public partial class SignalRResource : IJsonModel<SignalRData>
     {
-        private static SignalRData s_dataDeserializationInstance;
-        private static SignalRData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SignalRData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SignalRData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SignalRData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRData>)Data).Write(writer, options);
 
-        SignalRData IJsonModel<SignalRData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SignalRData IJsonModel<SignalRData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SignalRData IPersistableModel<SignalRData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRData>(data, options, AzureResourceManagerSignalRContext.Default);
 
-        string IPersistableModel<SignalRData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SignalRData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
