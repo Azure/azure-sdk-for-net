@@ -1665,17 +1665,22 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
     // - Legacy detection (buildArmProviderSchema): uses Tenant scope
     // - resolveArmResources: uses Extension scope
-    // We normalize resourceScope and operationScope to handle this known difference
-    const normalizeScopes = (resource: ArmResourceSchema) => {
-      (resource.metadata as { resourceScope: unknown }).resourceScope =
-        "<normalized>";
-      for (const method of resource.metadata.methods) {
-        (method as { operationScope: unknown }).operationScope = "<normalized>";
+    // We normalize resourceScope and operationScope only for the ServiceGroup-scoped resource
+    const serviceGroupResourcePattern =
+      "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
+    const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
+      if (resource.metadata.resourceIdPattern === serviceGroupResourcePattern) {
+        (resource.metadata as { resourceScope: unknown }).resourceScope =
+          "<normalized>";
+        for (const method of resource.metadata.methods) {
+          (method as { operationScope: unknown }).operationScope =
+            "<normalized>";
+        }
       }
     };
     deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema, normalizeScopes),
-      normalizeSchemaForComparison(armProviderSchema, normalizeScopes)
+      normalizeSchemaForComparison(resolvedSchema, normalizeServiceGroupScopes),
+      normalizeSchemaForComparison(armProviderSchema, normalizeServiceGroupScopes)
     );
   });
 });
