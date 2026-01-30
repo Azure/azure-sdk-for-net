@@ -1,4 +1,4 @@
 directory: specification/appcomplianceautomation/AppComplianceAutomation.Management
-commit: b554606d90db4cd74618c62e05bc5ccfd0ee95c5
+commit: a55d91ccfe8da680e35e4d96914b8521f53fc43a
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
