@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Microsoft Azure client library for Azure AI Speech Transcription service.</Description>
+    <AssemblyTitle>Azure AI Speech Transcription Client Library</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.AI.Speech.Transcription</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Disable AutoRest dependency since this SDK uses @typespec/http-client-csharp -->
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Ignore Azure-Core-specific constructor rule -->
+    <NoWarn>$(NoWarn);AZC0007</NoWarn>
+    <!-- Ignore Azure-Core-specific pageable rule -->
+    <NoWarn>$(NoWarn);AZC0015</NoWarn>
+    <!-- Ignore Azure-Core-specific client method naming rule -->
+    <NoWarn>$(NoWarn);AZC0102</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <!-- Import Azure.Core shared source for attributes -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+</Project>
