@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relay
 {
-    internal class RelayNamespaceOperationSource : IOperationSource<RelayNamespaceResource>
+    /// <summary></summary>
+    internal partial class RelayNamespaceOperationSource : IOperationSource<RelayNamespaceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal RelayNamespaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         RelayNamespaceResource IOperationSource<RelayNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RelayNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRelayContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            RelayNamespaceData data = RelayNamespaceData.DeserializeRelayNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RelayNamespaceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<RelayNamespaceResource> IOperationSource<RelayNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RelayNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRelayContext.Default);
-            return await Task.FromResult(new RelayNamespaceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            RelayNamespaceData data = RelayNamespaceData.DeserializeRelayNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RelayNamespaceResource(_client, data);
         }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Description of the check name availability request properties. </summary>
     public partial class RelayNameAvailabilityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RelayNameAvailabilityResult"/>. </summary>
         internal RelayNameAvailabilityResult()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
         /// <param name="isNameAvailable"> Value indicating namespace is available. Returns true if the namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a namespace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RelayNameAvailabilityResult(string message, bool? isNameAvailable, RelayNameUnavailableReason? reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RelayNameAvailabilityResult(string message, bool? isNameAvailable, RelayNameUnavailableReason? reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;
             Reason = reason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The detailed info regarding the reason associated with the namespace. </summary>
         public string Message { get; }
+
         /// <summary> Value indicating namespace is available. Returns true if the namespace is available; otherwise, false. </summary>
         public bool? IsNameAvailable { get; }
+
         /// <summary> The reason for unavailability of a namespace. </summary>
         public RelayNameUnavailableReason? Reason { get; }
     }

@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    /// <summary> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </summary>
+    /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
     public readonly partial struct RelayPublicNetworkAccess : IEquatable<RelayPublicNetworkAccess>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RelayPublicNetworkAccess"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RelayPublicNetworkAccess(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RelayPublicNetworkAccess(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static RelayPublicNetworkAccess Enabled { get; } = new RelayPublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static RelayPublicNetworkAccess Disabled { get; } = new RelayPublicNetworkAccess(DisabledValue);
-        /// <summary> SecuredByPerimeter. </summary>
+
+        /// <summary> Gets the SecuredByPerimeter. </summary>
         public static RelayPublicNetworkAccess SecuredByPerimeter { get; } = new RelayPublicNetworkAccess(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="RelayPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RelayPublicNetworkAccess left, RelayPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RelayPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RelayPublicNetworkAccess left, RelayPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RelayPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RelayPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RelayPublicNetworkAccess(string value) => new RelayPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RelayPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RelayPublicNetworkAccess?(string value) => value == null ? null : new RelayPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RelayPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RelayPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
