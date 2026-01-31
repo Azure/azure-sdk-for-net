@@ -23,7 +23,6 @@ namespace Azure.Identity
         private ManagedIdentitySource _tokenExchangeManagedIdentitySource;
         private bool _isChainedCredential;
         private ManagedIdentityClientOptions _options;
-        private bool _probeRequestSent;
 
         protected ManagedIdentityClient()
         {
@@ -63,17 +62,34 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
-            MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+            var miBuilder = ManagedIdentityApplicationBuilder.Create(_msalManagedIdentityClient.ManagedIdentityId)
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false);
+
+            ManagedIdentityApplication mi = miBuilder.Build() as ManagedIdentityApplication;
+
+            MSAL.ManagedIdentitySourceResult availableSourceResult = async
+                ? await mi.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                : mi.GetManagedIdentitySourceAsync(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+
+            MSAL.ManagedIdentitySource availableSource = availableSourceResult.Source;
+
+            if (availableSource == MSAL.ManagedIdentitySource.Imds && !string.IsNullOrEmpty(availableSourceResult.ImdsV1FailureReason))
+            {
+                string baseMessage = availableSourceResult.ImdsV1FailureReason switch
+                {
+                    "IdentityUnavailable" => ImdsManagedIdentityProbeSource.IdentityUnavailableError,
+                    "GatewayError" => ImdsManagedIdentityProbeSource.GatewayError,
+                    "Timeout" => ImdsManagedIdentityProbeSource.TimeoutError,
+                    "NoResponse" => ImdsManagedIdentityProbeSource.NoResponseError,
+                    _ => ImdsManagedIdentityProbeSource.UnknownError
+                };
+
+                throw new CredentialUnavailableException(baseMessage);
+            }
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
-
-            // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
-            if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential && !_probeRequestSent)
-            {
-                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
-                _probeRequestSent = true;
-                return probedFlowTokenResult;
-            }
 
             // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
             if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
@@ -94,6 +110,11 @@ namespace Azure.Identity
                 result = async ?
                     await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
                     _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
+            }
+            // If all managed identity sources are unavailable, throw a CredentialUnavailableException.
+            catch (MsalClientException ex) when (ex.ErrorCode == "managed_identity_all_sources_unavailable")
+            {
+                throw new CredentialUnavailableException(MsiUnavailableError, ex);
             }
             // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
             catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
