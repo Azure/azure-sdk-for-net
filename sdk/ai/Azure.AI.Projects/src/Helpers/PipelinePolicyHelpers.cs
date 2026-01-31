@@ -169,14 +169,32 @@ internal static partial class PipelinePolicyHelpers
                     PipelinePosition.PerTry);
         }
 
+        /**
+         * Foundry OpenAI /files routes inherit historical compatibility quirks from early Azure OpenAI behavior.
+         * This policy updates multipart/form-data handling when necessary to ensure things work smoothly.
+         *
+         *  Specifically, the non-OpenAI-originating limitations accounted for:
+         *
+         *  1. When uploading a file for fine-tuning (purpose=fine-tune), the "file" part *must* specify a
+         *     Content-Type or else the file will be rejected;
+         *  2. When uploading certain file formats (e.g.: .pdf) for use with vector stores, providing a
+         *     Content-Type will typically cause future indexing via a vector store to fail with a parsing
+         *     error.
+         *
+         * To address the two in a mutually successful way, a Content-Type will be injected into the request
+         * data if and only if a file upload request contains a multipart/form-data segment for "file" without
+         * a Content-Type *and* a "purpose" segment is present with the value of fine-tune.
+         */
         public static void AddAzureFinetuningParityPolicy(ClientPipelineOptions options)
         {
             options.AddPolicy(
                 new GenericActionPipelinePolicy(
                     messageAction: message =>
                     {
-                        bool isFileOperation = message?.Request?.Uri?.AbsoluteUri?.Contains("openai/files") == true;
-                        bool isFineTuningOperation = message?.Request?.Uri?.AbsoluteUri?.Contains("openai/fine_tuning") == true;
+                        bool isFileOperation = message?.Request?.Uri?.AbsoluteUri?.Contains("openai/files") == true
+                            || message?.Request?.Uri?.AbsoluteUri?.Contains("openai/v1/files") == true;
+                        bool isFineTuningOperation = message?.Request?.Uri?.AbsoluteUri?.Contains("openai/fine_tuning") == true
+                            || message?.Request?.Uri?.AbsoluteUri?.Contains("openai/v1/fine_tuning") == true;
 
                         // Skip this policy for everything except file and fine-tuning operations
                         if (!isFileOperation && !isFineTuningOperation)
@@ -185,7 +203,7 @@ internal static partial class PipelinePolicyHelpers
                         }
 
                         // When processing the message to send the request (no response yet), perform a fixup to ensure a multipart/form-data Content-Type is
-                        // provided for the "file" content part (non-parity limitation) - only for file operations
+                        // provided for the "file" content part (non-parity limitation) - only for fine-tuning file operations
                         if (isFileOperation && message?.Request?.Method == "POST" && message?.Response is null)
                         {
                             using MemoryStream requestStream = new();
@@ -195,9 +213,14 @@ internal static partial class PipelinePolicyHelpers
 
                             MemoryStream newRequestStream = new();
                             StreamWriter newRequestWriter = new(newRequestStream);
+                            bool adjustmentNeeded = true;
                             string previousLine = null;
+                            string previousPreviousLine = null;
 
-                            for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine())
+                            for (
+                                string line = reader.ReadLine();
+                                line is not null && adjustmentNeeded;
+                                line = reader.ReadLine())
                             {
                                 if (line == string.Empty
                                     && Regex.Match(
@@ -210,16 +233,24 @@ internal static partial class PipelinePolicyHelpers
                                     // Which will result in error 400 on te service side.
                                     newRequestWriter.Write("Content-Type: application/octet-stream\r\n");
                                 }
+                                else if (previousLine == string.Empty && previousPreviousLine.EndsWith("name=purpose"))
+                                {
+                                    adjustmentNeeded = line == "fine-tune";
+                                }
+
                                 newRequestWriter.Write($"{line}\r\n");
+                                previousPreviousLine = previousLine;
                                 previousLine = line;
                             }
 
-                            newRequestWriter.Flush();
-                            newRequestStream.Position = 0;
-                            message.Request.Content = BinaryContent.Create(newRequestStream);
+                            if (adjustmentNeeded)
+                            {
+                                newRequestWriter.Flush();
+                                newRequestStream.Position = 0;
+                                message.Request.Content = BinaryContent.Create(newRequestStream);
+                            }
                         }
 
-                        // Set response classifier to accept both 200 and 201 status codes for both file and fine-tuning operations
                         message.ResponseClassifier = PipelineMessageClassifier;
 
                         // When processing the message for the response, force non-OpenAI "status" values to "processed" and relocate the extended value
