@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
             {
                 writer.WritePropertyName("validationStatus"u8);
-                writer.WriteStringValue(ValidationStatus.ToString());
+                writer.WriteStringValue(ValidationStatus.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
             }
             writer.WritePropertyName("isDefaultVersion"u8);
             writer.WriteStringValue(IsDefaultVersion.ToString());
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(LastPackageUpdatedOn))
             {
                 writer.WritePropertyName("lastPackageUpdateTime"u8);
-                writer.WriteStringValue(LastPackageUpdatedOn, "O");
+                writer.WriteStringValue(LastPackageUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 return null;
             }
             EdgeActionVersionDeploymentType deploymentType = default;
-            EdgeActionVersionValidationStatus validationStatus = default;
+            EdgeActionVersionValidationStatus? validationStatus = default;
             EdgeActionProvisioningState? provisioningState = default;
             EdgeActionIsDefaultVersion isDefaultVersion = default;
-            DateTimeOffset lastPackageUpdatedOn = default;
+            DateTimeOffset? lastPackageUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 }
                 if (prop.NameEquals("validationStatus"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     validationStatus = new EdgeActionVersionValidationStatus(prop.Value.GetString());
                     continue;
                 }
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 }
                 if (prop.NameEquals("lastPackageUpdateTime"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     lastPackageUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }

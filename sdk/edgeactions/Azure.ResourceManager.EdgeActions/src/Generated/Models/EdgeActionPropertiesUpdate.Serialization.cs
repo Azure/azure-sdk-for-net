@@ -9,22 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.EdgeActions;
 
 namespace Azure.ResourceManager.EdgeActions.Models
 {
-    /// <summary> Edge action attachment information. </summary>
-    public partial class EdgeActionAttachment : IJsonModel<EdgeActionAttachment>
+    /// <summary> Represents an edge action properties. </summary>
+    public partial class EdgeActionPropertiesUpdate : IJsonModel<EdgeActionPropertiesUpdate>
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeActionAttachment"/> for deserialization. </summary>
-        internal EdgeActionAttachment()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EdgeActionAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeActionPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,18 +29,11 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeActionAttachment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeActionPropertiesUpdate)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            writer.WritePropertyName("attachedResourceId"u8);
-            writer.WriteStringValue(AttachedResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -66,90 +53,78 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeActionAttachment IJsonModel<EdgeActionAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeActionPropertiesUpdate IJsonModel<EdgeActionPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeActionAttachment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeActionPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeActionAttachment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeActionPropertiesUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEdgeActionAttachment(document.RootElement, options);
+            return DeserializeEdgeActionPropertiesUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeActionAttachment DeserializeEdgeActionAttachment(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeActionPropertiesUpdate DeserializeEdgeActionPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
-            ResourceIdentifier attachedResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("attachedResourceId"u8))
-                {
-                    attachedResourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeActionAttachment(id, attachedResourceId, additionalBinaryDataProperties);
+            return new EdgeActionPropertiesUpdate(additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeActionAttachment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeActionPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeActionAttachment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeActionPropertiesUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeActionAttachment IPersistableModel<EdgeActionAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeActionPropertiesUpdate IPersistableModel<EdgeActionPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeActionAttachment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeActionPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEdgeActionAttachment(document.RootElement, options);
+                        return DeserializeEdgeActionPropertiesUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeActionAttachment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeActionPropertiesUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeActionAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeActionPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
