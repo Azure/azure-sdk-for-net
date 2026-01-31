@@ -127,7 +127,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "string",
                 valueString);
         }
 
@@ -147,7 +146,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "date",
                 valueDate);
         }
 
@@ -167,7 +165,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "time",
                 valueTime);
         }
 
@@ -187,7 +184,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "number",
                 valueNumber);
         }
 
@@ -207,7 +203,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "integer",
                 valueInteger);
         }
 
@@ -227,7 +222,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "boolean",
                 valueBoolean);
         }
 
@@ -248,7 +242,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "array",
                 valueArray.ToList());
         }
 
@@ -269,7 +262,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "object",
                 valueObject);
         }
 
@@ -289,7 +281,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties: null,
-                "json",
                 valueJson);
         }
 

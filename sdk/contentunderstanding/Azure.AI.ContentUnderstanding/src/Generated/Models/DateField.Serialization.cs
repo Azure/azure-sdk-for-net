@@ -34,8 +34,6 @@ namespace Azure.AI.ContentUnderstanding
                 throw new FormatException($"The model {nameof(DateField)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(FieldType.ToString());
             if (Optional.IsDefined(ValueDate))
             {
                 writer.WritePropertyName("valueDate"u8);
@@ -73,7 +71,6 @@ namespace Azure.AI.ContentUnderstanding
             float? confidence = default;
             string source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ContentFieldType fieldType = default;
             DateTimeOffset? valueDate = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -110,11 +107,6 @@ namespace Azure.AI.ContentUnderstanding
                     source = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
-                {
-                    fieldType = new ContentFieldType(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("valueDate"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -135,7 +127,6 @@ namespace Azure.AI.ContentUnderstanding
                 confidence,
                 source,
                 additionalBinaryDataProperties,
-                fieldType,
                 valueDate);
         }
 

@@ -24,16 +24,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="fieldType"> Semantic data type of the field value. </param>
         /// <param name="valueTime"> Time field value, in ISO 8601 (hh:mm:ss) format. </param>
-        internal TimeField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContentFieldType fieldType, TimeSpan? valueTime) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
+        internal TimeField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan? valueTime) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
         {
-            FieldType = fieldType;
             ValueTime = valueTime;
         }
-
-        /// <summary> Semantic data type of the field value. </summary>
-        internal ContentFieldType FieldType { get; set; } = "time";
 
         /// <summary> Time field value, in ISO 8601 (hh:mm:ss) format. </summary>
         public TimeSpan? ValueTime { get; }
