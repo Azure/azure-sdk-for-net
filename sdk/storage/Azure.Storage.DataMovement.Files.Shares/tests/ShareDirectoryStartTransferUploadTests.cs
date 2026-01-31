@@ -262,8 +262,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileClient destFile4 = destPikDirClient.GetFileClient("item4");
             Assert.IsTrue(await destFile4.ExistsAsync(), "pik/item4 should exist");
             await VerifyFileContentsAsync(
-                itemName1,
-                destFile1,
+                itemName4,
+                destFile4,
                 CancellationToken.None);
 
             // Assert: Verify directory properties were NOT changed (directory was skipped)
