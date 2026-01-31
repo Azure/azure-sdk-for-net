@@ -143,7 +143,7 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
-In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples) for both synchronous and asynchronous code.
+In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples][samples] for both synchronous and asynchronous code.
 
 ## Examples
 
@@ -1628,7 +1628,7 @@ To further diagnose and troubleshoot issues, you can enable logging following th
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples)
+Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples][samples]
 
 ## Contributing
 
@@ -1642,15 +1642,11 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
-<!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples
-<!-- remove "Persistent" -->
+[samples]: https://aka.ms/azsdk/Azure.AI.Projects.OpenAI/net/samples
 [api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
-<!-- replace with https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/ -->
-[nuget]: https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.AI.Projects.OpenAI
-<!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI
-[product_doc]: https://learn.microsoft.com//azure/ai-foundry/
+[nuget]: https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/
+[source_code]: https://aka.ms/azsdk/Azure.AI.Projects.OpenAI/net/code
+[product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
