@@ -110,7 +110,7 @@ namespace Azure.AI.ContentSafety
             return message;
         }
 
-        internal HttpMessage CreateGetTextBlocklistItemsRequest(string name, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTextBlocklistItemsRequest(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -119,9 +119,9 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath(name, true);
             uri.AppendPath("/blocklistItems", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
@@ -143,6 +143,7 @@ namespace Azure.AI.ContentSafety
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             if (maxpagesize != null)
             {
                 uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
@@ -174,6 +175,7 @@ namespace Azure.AI.ContentSafety
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
