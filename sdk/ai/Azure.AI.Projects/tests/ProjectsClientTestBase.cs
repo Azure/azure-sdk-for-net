@@ -34,11 +34,11 @@ namespace Azure.AI.Projects.Tests
             {
                 if (message.Request is not null && message.Response is null)
                 {
+                    Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
                     Console.WriteLine($"--- New request ---");
                     IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
                     string headers = string.Join("", headerPairs);
                     Console.WriteLine($"Request headers:{headers}");
-                    Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
                     if (message.Request?.Content != null)
                     {
                         string contentType = "Unknown Content Type";
