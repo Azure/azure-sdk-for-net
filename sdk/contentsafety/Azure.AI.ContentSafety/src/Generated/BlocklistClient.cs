@@ -550,7 +550,7 @@ namespace Azure.AI.ContentSafety
         /// </list>
         /// </summary>
         /// <param name="name"> Text blocklist name. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -558,14 +558,14 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTextBlocklistItems(string name, int? top, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetTextBlocklistItems(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsCollectionResult(
                 this,
                 name,
-                top,
+                maxCount,
                 skip,
                 maxpagesize,
                 context);
@@ -580,7 +580,7 @@ namespace Azure.AI.ContentSafety
         /// </list>
         /// </summary>
         /// <param name="name"> Text blocklist name. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -588,14 +588,14 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTextBlocklistItemsAsync(string name, int? top, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTextBlocklistItemsAsync(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsAsyncCollectionResult(
                 this,
                 name,
-                top,
+                maxCount,
                 skip,
                 maxpagesize,
                 context);
@@ -603,21 +603,21 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Get all blocklistItems in a text blocklist. </summary>
         /// <param name="name"> Text blocklist name. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextBlocklistItem> GetTextBlocklistItems(string name, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<TextBlocklistItem> GetTextBlocklistItems(string name, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsCollectionResultOfT(
                 this,
                 name,
-                top,
+                maxCount,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());
@@ -625,21 +625,21 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Get all blocklistItems in a text blocklist. </summary>
         /// <param name="name"> Text blocklist name. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextBlocklistItem> GetTextBlocklistItemsAsync(string name, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TextBlocklistItem> GetTextBlocklistItemsAsync(string name, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return new BlocklistClientGetTextBlocklistItemsAsyncCollectionResultOfT(
                 this,
                 name,
-                top,
+                maxCount,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());

@@ -90,7 +90,6 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
-        [Ignore("Service bug: pagination may fail due to nextLink returning wrong API version.")]
         public async Task TestGetTextBlocklists()
         {
             var client = CreateBlocklistClient();
@@ -168,7 +167,6 @@ namespace Azure.AI.ContentSafety.Tests
         }
 
         [RecordedTest]
-        [Ignore("Service bug: nextLink returns wrong API version during pagination causing 404.")]
         public async Task TestGetTextBlocklistItems()
         {
             var client = CreateBlocklistClient();
@@ -194,8 +192,8 @@ namespace Azure.AI.ContentSafety.Tests
             var blocklistItemId1 = addBlocklistItemResponse.Value.BlocklistItems[0].BlocklistItemId;
             Assert.IsNotNull(blocklistItemId1);
 
-            // Test maxpagesize
-            var response = client.GetTextBlocklistItemsAsync(blocklistName, maxpagesize: 2);
+            // Test maxCount
+            var response = client.GetTextBlocklistItemsAsync(blocklistName, maxCount: 2);
             Assert.IsNotNull(response);
             List<TextBlocklistItem> blocklistItems = await response.ToListAsync();
             Assert.LessOrEqual(blocklistItems.Count, 2);
